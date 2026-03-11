@@ -126,7 +126,7 @@ const HowItWorksAnimation = () => {
     // Collect data for up down movement.
     await Promise.all([
       microbitOnWristRef.current?.play({
-        move: "up-down",
+        move: "bob",
         ledPattern: "smile",
         duration: duration.collectData.action,
       }),
@@ -199,7 +199,7 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       microbitOnWristRef.current?.play({
         ledPattern: "smile",
-        move: "up-down",
+        move: "bob",
         duration: duration.testingModel.action,
       }),
       graphLinesRef.current?.play("chaotic", duration.testingModel.action),
@@ -281,7 +281,7 @@ const HowItWorksAnimation = () => {
     stepFlowRef.current?.setStep(5, "completed");
     await microbitOnWristRef.current?.play({
       ledPattern: "cross",
-      move: "up-down",
+      move: "bob",
       backgroundMode: "sparkly-cross",
       duration: duration.use.action,
     });

@@ -110,9 +110,6 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
   );
 
   const paths = motionPaths[motion];
-
-  // Unique keyframe name encodes both motion and window width so the
-  // correct translateX offset is used whenever either changes.
   const keyframeName = `waveScroll-${motion}-${visibleWindowWidth}`;
 
   return (

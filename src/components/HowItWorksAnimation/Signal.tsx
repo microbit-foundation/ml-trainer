@@ -27,20 +27,20 @@ export interface SignalRef {
 
 // ─── Layout constants ────────────────────────────────────────────────────────
 // Base dot sizing — scales down proportionally on small gaps
-const BASE_DOT_SIZE = 7; // px at full gap
-const BASE_DOT_GAP = 4; // px at full gap
-const FULL_GAP = 270; // px — the largest signalGap value
+const baseDotSize = 7; // px at full gap
+const baseDotGap = 4; // px at full gap
+const fullGap = 270; // px — the largest signalGap value
 
-// Travel group is always ~40% of total dots, minimum 3
-const TRAVEL_DOT_RATIO = 0.2;
+// Travel group is always ~20% of total dots, minimum 3
+const travelDotRatio = 0.2;
 
 // ─── Gap-derived dot metrics ──────────────────────────────────────────────────
 // Scale dot size + gap proportionally so dots shrink on small screens.
 // Clamped: never go below 3px dot or 2px gap so they remain visible.
 const dotMetricsForGap = (gap: number) => {
-  const scale = Math.min(gap / FULL_GAP, 1);
-  const dotSize = Math.max(Math.round(BASE_DOT_SIZE * scale), 3);
-  const dotGap = Math.max(Math.round(BASE_DOT_GAP * scale), 2);
+  const scale = Math.min(gap / fullGap, 1);
+  const dotSize = Math.max(Math.round(baseDotSize * scale), 3);
+  const dotGap = Math.max(Math.round(baseDotGap * scale), 2);
   return { dotSize, dotGap };
 };
 
@@ -109,9 +109,9 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   // Total dots sized to exactly fill the gap when settled
   const totalNumDots = useMemo(() => dotsForGap(signalGap), [signalGap]);
 
-  // Travel group: ~40% of total, minimum 3, kept odd so it centres cleanly
+  // Travel group: ~20% of total, minimum 3, kept odd so it centres cleanly
   const numTravelDots = useMemo(() => {
-    const n = Math.max(3, Math.round(totalNumDots * TRAVEL_DOT_RATIO));
+    const n = Math.max(3, Math.round(totalNumDots * travelDotRatio));
     return n % 2 === 0 ? n + 1 : n;
   }, [totalNumDots]);
 

@@ -10,9 +10,8 @@ import HeartLedIcon from "./HeartLedIcon";
 import CrossLedIcon from "./CrossLedIcon";
 import { useAnimation } from "../AnimationProvider";
 
-type MoveType = "still" | "wave" | "up-down";
+type MoveType = "still" | "wave" | "bob";
 
-// Natural waving hand: pivots from wrist, decays in amplitude like a real wave
 const animationKeyframes = {
   wave: keyframes({
     "0%": { transform: "rotate(12deg)" },
@@ -21,8 +20,7 @@ const animationKeyframes = {
     "75%": { transform: "rotate(-7deg)" },
     "100%": { transform: "rotate(12deg)" },
   }),
-  // Smooth sinusoidal bob using ease-in-out between each stop
-  "up-down": keyframes({
+  bob: keyframes({
     "0%": { transform: "translateY(0px)" },
     "25%": { transform: "translateY(-20px)" },
     "50%": { transform: "translateY(0px)" },
@@ -163,10 +161,10 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
           width="100%"
           height="auto"
           transform="rotate(15deg)"
-          {...(move === "up-down"
+          {...(move === "bob"
             ? {
                 animation: withPlayState(
-                  `${animationKeyframes["up-down"]} 1.1s ease-in-out infinite`
+                  `${animationKeyframes["bob"]} 1.1s ease-in-out infinite`
                 ),
               }
             : move === "wave"
