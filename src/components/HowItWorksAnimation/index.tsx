@@ -373,7 +373,7 @@ const HowItWorksAnimation = () => {
             <Laptop
               height="auto"
               ref={laptopRef}
-              boxSize={{ base: "100%", sm: "80%", md: "60%" }}
+              width={{ base: "100%", sm: "80%", md: "60%" }}
             />
           }
         />
