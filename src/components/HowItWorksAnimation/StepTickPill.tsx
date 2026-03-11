@@ -32,11 +32,11 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
       () => {
         return {
           setState(newState) {
-            setState({ ...state, ...newState });
+            setState((prev) => ({ ...prev, ...newState }));
           },
         };
       },
-      [state]
+      []
     );
     const color = state.active ? activeColor : inactiveColor;
     return (
