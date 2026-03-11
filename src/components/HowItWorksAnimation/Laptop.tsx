@@ -12,7 +12,7 @@ import DataSamplesCollection, {
 } from "./DataSamplesCollection";
 import TestModelScreen, { TestModelScreenRef } from "./TestModelScreen";
 import Tick from "./Tick";
-import { animations } from "./utils";
+import { animations } from "../../utils/animations";
 import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
 import { useAnimation } from "../AnimationProvider";
 

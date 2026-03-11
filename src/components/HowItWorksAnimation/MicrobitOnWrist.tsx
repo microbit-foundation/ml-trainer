@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, keyframes, Stack, StackProps } from "@chakra-ui/react";
+import { Icon, keyframes, Stack, StackProps, useToken } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { LedPattern, ledPatterns, litLedColor, unlitLedColor } from "./utils";
-import HeartLedIcon from "./HeartLedIcon";
-import CrossLedIcon from "./CrossLedIcon";
+import { icons, LedIconType, Off } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
+import CrossLedIcon from "./CrossLedIcon";
+import HeartLedIcon from "./HeartLedIcon";
 
 type MoveType = "still" | "wave" | "bob";
 
@@ -43,14 +43,14 @@ const sparkle = keyframes({
 type BackgroundMode = "default" | "sparkly-heart" | "sparkly-cross";
 
 interface PlayOption {
-  ledPattern?: LedPattern;
+  ledPattern?: LedIconType;
   move?: MoveType;
   backgroundMode?: BackgroundMode;
   duration: number; // sec
 }
 
 const defaultShowOption: PlayOption = {
-  ledPattern: "none",
+  ledPattern: "off",
   move: "still",
   backgroundMode: "default",
   duration: 1,
@@ -66,8 +66,12 @@ export interface MicrobitOnWristRef {
 
 const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
   function MicrobitOnWrist({ ...props }: MicrobitOnWristProps, ref) {
+    const [litLedColor, unlitLedColor] = useToken("colors", [
+      "pink.500",
+      "gray.500",
+    ]);
     const { withPlayState, delayInSec } = useAnimation();
-    const [ledPattern, setLedPattern] = useState<number[]>(ledPatterns.none);
+    const [ledPattern, setLedPattern] = useState<string>(Off);
     const [move, setMove] = useState<MoveType>("still");
     const [backgroundMode, setMode] = useState<BackgroundMode>("default");
 
@@ -81,7 +85,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
             const config = { ...defaultShowOption, ...option };
             setVisible(true);
             if (config?.ledPattern) {
-              setLedPattern(ledPatterns[config.ledPattern]);
+              setLedPattern(icons[config.ledPattern]);
             }
             if (config?.move) {
               setMove(config.move);
@@ -94,7 +98,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
           setMove,
           reset() {
             setVisible(false);
-            setLedPattern(ledPatterns.none);
+            setLedPattern(Off);
           },
         };
       },
@@ -316,8 +320,8 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef, MicrobitOnWristProps>(
               key={i}
               cx={x}
               cy={y}
-              r={ledPattern[i] ? 2 : 1.5}
-              fill={ledPattern[i] ? litLedColor : unlitLedColor}
+              r={parseInt(ledPattern[i]) ? 2 : 1.5}
+              fill={parseInt(ledPattern[i]) ? litLedColor : unlitLedColor}
             />
           ))}
         </Icon>

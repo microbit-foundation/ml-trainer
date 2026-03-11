@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps } from "@chakra-ui/react";
+import { Icon, IconProps, useToken } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { ledPatterns, litLedColor, unlitLedColor } from "./utils";
+import { icons, Off } from "../../utils/icons";
 
 interface HandHoldingMicrobitProps extends IconProps {}
 
 export interface HandHoldingMicrobitRef {
-  displaySmileLed(): void;
+  displayHappyLed(): void;
   show(): void;
   reset(): void;
 }
@@ -22,21 +22,25 @@ const HandHoldingMicrobit = forwardRef<
   HandHoldingMicrobitRef,
   HandHoldingMicrobitProps
 >(function HandHoldingMicrobit({ ...props }: HandHoldingMicrobitProps, ref) {
-  const [ledPattern, setLedPattern] = useState<number[]>(ledPatterns.none);
+  const [litLedColor, unlitLedColor] = useToken("colors", [
+    "pink.500",
+    "gray.200",
+  ]);
+  const [ledPattern, setLedPattern] = useState<string>(Off);
   const [visible, setVisible] = useState<boolean>(false);
   useImperativeHandle(
     ref,
     () => {
       return {
-        displaySmileLed() {
-          setLedPattern(ledPatterns.smile);
+        displayHappyLed() {
+          setLedPattern(icons.Happy);
         },
         show() {
           setVisible(true);
         },
         reset() {
           setVisible(false);
-          setLedPattern(ledPatterns.none);
+          setLedPattern(Off);
         },
       };
     },
@@ -47,13 +51,13 @@ const HandHoldingMicrobit = forwardRef<
   }
   return (
     <Icon viewBox="0 0 194.7 200.05" w="100%" {...props}>
-      {ledPattern.map((lit, i) => (
+      {[...ledPattern].map((lit, i) => (
         <circle
           key={i}
           cx={102.47 + (i % ledDim) * ledSpacing}
           cy={39.07 + Math.floor(i / ledDim) * ledSpacing}
-          r={lit ? 3 : 1.5}
-          fill={lit ? litLedColor : unlitLedColor}
+          r={parseInt(lit) ? 3 : 1.5}
+          fill={parseInt(lit) ? litLedColor : unlitLedColor}
         />
       ))}
       <path

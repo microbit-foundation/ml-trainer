@@ -85,7 +85,7 @@ const HowItWorksAnimation = () => {
     // Connected.
     await Promise.all([
       signalRef.current?.playConnected(),
-      handHoldingMicrobitRef.current?.displaySmileLed(),
+      handHoldingMicrobitRef.current?.displayHappyLed(),
       laptopRef.current?.setDisplay("tick"),
     ]);
 
@@ -106,7 +106,7 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       microbitOnWristRef.current?.play({
         move: "still",
-        ledPattern: "smile",
+        ledPattern: "Happy",
         duration: duration.collectData.prep,
       }),
       graphLinesRef.current?.play("smooth", duration.collectData.prep),
@@ -116,7 +116,7 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       microbitOnWristRef.current?.play({
         move: "wave",
-        ledPattern: "smile",
+        ledPattern: "Happy",
         duration: duration.collectData.action,
       }),
       graphLinesRef.current?.play("wavy", duration.collectData.action),
@@ -127,7 +127,7 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       microbitOnWristRef.current?.play({
         move: "bob",
-        ledPattern: "smile",
+        ledPattern: "Happy",
         duration: duration.collectData.action,
       }),
       graphLinesRef.current?.play("chaotic", duration.collectData.action),
@@ -148,7 +148,7 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       microbitOnWristRef.current?.play({
         move: "still",
-        ledPattern: "smile",
+        ledPattern: "Happy",
         duration: duration.training.action,
       }),
       graphLinesRef.current?.play("smooth", duration.training.action),
@@ -167,7 +167,7 @@ const HowItWorksAnimation = () => {
     laptopRef.current?.testModel?.show();
     await Promise.all([
       microbitOnWristRef.current?.play({
-        ledPattern: "smile",
+        ledPattern: "Happy",
         move: "still",
         duration: duration.testingModel.prep,
       }),
@@ -177,7 +177,7 @@ const HowItWorksAnimation = () => {
     // Test model for wave movement.
     await Promise.all([
       microbitOnWristRef.current?.play({
-        ledPattern: "smile",
+        ledPattern: "Happy",
         move: "wave",
         duration: duration.testingModel.action,
       }),
@@ -188,7 +188,7 @@ const HowItWorksAnimation = () => {
     // Pause between testing actions.
     await Promise.all([
       microbitOnWristRef.current?.play({
-        ledPattern: "smile",
+        ledPattern: "Happy",
         move: "still",
         duration: duration.testingModel.pause,
       }),
@@ -198,7 +198,7 @@ const HowItWorksAnimation = () => {
     // Test model for up down movement.
     await Promise.all([
       microbitOnWristRef.current?.play({
-        ledPattern: "smile",
+        ledPattern: "Happy",
         move: "bob",
         duration: duration.testingModel.action,
       }),
@@ -208,7 +208,7 @@ const HowItWorksAnimation = () => {
 
     // Show iterative flow.
     await microbitOnWristRef.current?.play({
-      ledPattern: "smile",
+      ledPattern: "Happy",
       move: "still",
       duration: duration.testingModel.stepPause,
     }),
@@ -234,7 +234,7 @@ const HowItWorksAnimation = () => {
     laptopRef.current?.codeBlock?.show();
     stepFlowRef.current?.setStep(4, "active");
     await microbitOnWristRef.current?.play({
-      ledPattern: "smile",
+      ledPattern: "Happy",
       move: "still",
       duration: duration.code.prep,
     });
@@ -248,7 +248,7 @@ const HowItWorksAnimation = () => {
       codeArrowRef.current?.play(duration.code.download),
       microbitOnWristRef.current?.play({
         move: "still",
-        ledPattern: "none",
+        ledPattern: "off",
         duration: duration.code.download,
       }),
     ]);
@@ -263,7 +263,7 @@ const HowItWorksAnimation = () => {
     stepFlowRef.current?.setStep(5, "active");
     await Promise.all([
       microbitOnWristRef.current?.play({
-        ledPattern: "none",
+        ledPattern: "off",
         move: "still",
         duration: duration.use.prep,
       }),
@@ -273,14 +273,14 @@ const HowItWorksAnimation = () => {
 
     // Use.
     await microbitOnWristRef.current?.play({
-      ledPattern: "heart",
+      ledPattern: "Heart",
       move: "wave",
       backgroundMode: "sparkly-heart",
       duration: duration.use.action,
     });
     stepFlowRef.current?.setStep(5, "completed");
     await microbitOnWristRef.current?.play({
-      ledPattern: "cross",
+      ledPattern: "No",
       move: "bob",
       backgroundMode: "sparkly-cross",
       duration: duration.use.action,
@@ -296,12 +296,12 @@ const HowItWorksAnimation = () => {
       while (true) {
         try {
           setVisible(true);
-          // await runConnect();
+          await runConnect();
           await runCollectData();
-          // await runTraining();
-          // await runTestModel();
-          // await runCode();
-          // await runUse();
+          await runTraining();
+          await runTestModel();
+          await runCode();
+          await runUse();
           setVisible(false);
           await delayInSec(fadeInOutDuration);
         } catch (e) {

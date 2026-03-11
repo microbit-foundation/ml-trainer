@@ -15,7 +15,7 @@ import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 import HeartLedIcon from "./HeartLedIcon";
 import CrossLedIcon from "./CrossLedIcon";
-import { animations } from "./utils";
+import { animations } from "../../utils/animations";
 
 export interface DataSamplesCollectionRef {
   playTopSamples(): Promise<void>;

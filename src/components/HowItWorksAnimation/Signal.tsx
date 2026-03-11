@@ -13,7 +13,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState, useMemo } from "react";
-import { animations } from "./utils";
+import { animations } from "../../utils/animations";
 import { useAnimation } from "../AnimationProvider";
 
 interface SignalProps extends StackProps {}
