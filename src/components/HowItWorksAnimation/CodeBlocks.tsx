@@ -69,11 +69,7 @@ const CodeBlock = forwardRef<CodeBlockRef, IconProps>(function CodeBlock(
     [delayInSec]
   );
   return (
-    <Box
-      position="relative"
-      display={visible ? "block" : "none"}
-      overflow="hidden"
-    >
+    <Box position="relative" display={visible ? "block" : "none"}>
       <OuterCodeBlock
         width={outerBlockSize}
         height={outerBlockSize}

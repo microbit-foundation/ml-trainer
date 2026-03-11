@@ -344,6 +344,7 @@ const HowItWorksAnimation = () => {
         transition={`opacity ${fadeInOutDuration}s ease`}
         height={{ base: "28em", sm: "30em", md: "23em" }}
         position="relative"
+        overflow="hidden"
       >
         <HStack justifyContent="center" width="100%" gap={5}>
           <StepFlow ref={stepFlowRef} />
