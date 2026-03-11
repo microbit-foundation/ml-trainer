@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Icon, IconProps, Stack, Text, VStack } from "@chakra-ui/react";
+import { Box, Heading, Icon, IconProps, Stack, VStack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import ProgressBar, { ProgressBarRef } from "./ProgressBar";
@@ -117,9 +117,13 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
         <DataSamplesCollection ref={dataSamplesRef} />
         {/* Training display */}
         <VStack display={display === "training" ? "flex" : "none"}>
-          <Text fontWeight="bold" fontSize={{ base: "sm", sm: "sm", md: "md" }}>
+          <Heading
+            variant="marketing"
+            fontWeight="bold"
+            fontSize={{ base: "sm", sm: "sm", md: "md" }}
+          >
             <FormattedMessage id="animation-training" />
-          </Text>
+          </Heading>
           <ProgressBar ref={progressBarRef} />
         </VStack>
         <TestModelScreen ref={testModelRef} />

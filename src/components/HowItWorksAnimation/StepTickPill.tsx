@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, HStack, useToken, VStack } from "@chakra-ui/react";
+import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import Tick from "./Tick";
 
@@ -38,8 +38,6 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
       },
       [state]
     );
-
-    const fontFamily = useToken("fonts", "heading");
     const color = state.active ? activeColor : inactiveColor;
     return (
       <>
@@ -54,10 +52,11 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
             backgroundColor={color}
             textColor="white"
             border="none"
-            fontFamily={fontFamily}
             py={0}
           >
-            {text}
+            <Heading variant="marketing" fontSize="lg">
+              {text}
+            </Heading>
           </Button>
         </VStack>
         <HStack
@@ -71,11 +70,12 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
             backgroundColor={state.active ? activeColor : "transparent"}
             textColor={state.active ? "white" : activeColor}
             border="none"
-            fontFamily={fontFamily}
             size="sm"
             width="100%"
           >
-            {text}
+            <Heading variant="marketing" fontSize="sm">
+              {text}
+            </Heading>
           </Button>
           <Tick
             position="absolute"
