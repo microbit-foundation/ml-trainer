@@ -13,7 +13,7 @@ import GraphLines, { GraphLinesRef } from "./GraphLines";
 import HandHoldingMicrobit, {
   HandHoldingMicrobitRef,
 } from "./HandHoldingMicrobit";
-import Laptop, { LaptopRef } from "./Laptop";
+import Computer, { ComputerRef } from "./Computer";
 import Layout, { LayoutRef } from "./Layout";
 import MicrobitOnWrist, { MicrobitOnWristRef } from "./MicrobitOnWrist";
 import Signal, { SignalRef } from "./Signal";
@@ -57,7 +57,7 @@ const HowItWorksAnimation = () => {
   const codeArrowRef = useRef<ArrowRef>(null);
   const handHoldingMicrobitRef = useRef<HandHoldingMicrobitRef>(null);
   const microbitOnWristRef = useRef<MicrobitOnWristRef>(null);
-  const laptopRef = useRef<LaptopRef>(null);
+  const computerRef = useRef<ComputerRef>(null);
   const graphLinesRef = useRef<GraphLinesRef>(null);
   const layoutRef = useRef<LayoutRef>(null);
   const [visible, setVisible] = useState<boolean>(true);
@@ -67,7 +67,7 @@ const HowItWorksAnimation = () => {
     graphLinesRef.current?.reset();
     microbitOnWristRef.current?.reset();
     stepFlowRef.current?.reset();
-    laptopRef.current?.reset();
+    computerRef.current?.reset();
     signalRef.current?.reset();
     layoutRef.current?.reset();
     codeArrowRef.current?.reset();
@@ -77,7 +77,7 @@ const HowItWorksAnimation = () => {
     // Setup.
     stepFlowRef.current?.setStep(1, "active");
     handHoldingMicrobitRef.current?.show();
-    laptopRef.current?.setVisible(true);
+    computerRef.current?.setVisible(true);
 
     // Connecting.
     await signalRef.current?.playConnecting();
@@ -86,7 +86,7 @@ const HowItWorksAnimation = () => {
     await Promise.all([
       signalRef.current?.playConnected(),
       handHoldingMicrobitRef.current?.displayHappyLed(),
-      laptopRef.current?.setDisplay("tick"),
+      computerRef.current?.setDisplay("tick"),
     ]);
 
     stepFlowRef.current?.setStep(1, "completed");
@@ -98,7 +98,7 @@ const HowItWorksAnimation = () => {
 
   const runCollectData = useCallback(async () => {
     // Setup.
-    laptopRef.current?.setVisible(true);
+    computerRef.current?.setVisible(true);
     stepFlowRef.current?.setStep(2, "active");
     signalRef.current?.connected();
 
@@ -120,7 +120,7 @@ const HowItWorksAnimation = () => {
         duration: duration.collectData.action,
       }),
       graphLinesRef.current?.play("wavy", duration.collectData.action),
-      laptopRef.current?.dataSamples?.playTopSamples(),
+      computerRef.current?.dataSamples?.playTopSamples(),
     ]);
 
     // Collect data for up down movement.
@@ -131,7 +131,7 @@ const HowItWorksAnimation = () => {
         duration: duration.collectData.action,
       }),
       graphLinesRef.current?.play("chaotic", duration.collectData.action),
-      laptopRef.current?.dataSamples?.playBottomSamples(),
+      computerRef.current?.dataSamples?.playBottomSamples(),
     ]);
 
     stepFlowRef.current?.setStep(2, "completed");
@@ -143,7 +143,7 @@ const HowItWorksAnimation = () => {
   const runTraining = useCallback(async () => {
     // Setup.
     signalRef.current?.connected();
-    laptopRef.current?.setVisible(true);
+    computerRef.current?.setVisible(true);
     stepFlowRef.current?.setTraining();
 
     await Promise.all([
@@ -153,7 +153,7 @@ const HowItWorksAnimation = () => {
         duration: duration.training.action,
       }),
       graphLinesRef.current?.play("smooth", duration.training.action),
-      laptopRef.current?.playTraining(duration.training.action),
+      computerRef.current?.playTraining(duration.training.action),
     ]);
 
     // Clean up.
@@ -164,8 +164,8 @@ const HowItWorksAnimation = () => {
     // Setup
     signalRef.current?.connected();
     stepFlowRef.current?.setStep(3, "active");
-    laptopRef.current?.setVisible(true);
-    laptopRef.current?.testModel?.show();
+    computerRef.current?.setVisible(true);
+    computerRef.current?.testModel?.show();
     await Promise.all([
       microbitOnWristRef.current?.play({
         ledPattern: "Happy",
@@ -183,7 +183,7 @@ const HowItWorksAnimation = () => {
         duration: duration.testingModel.action,
       }),
       graphLinesRef.current?.play("wavy", duration.testingModel.action),
-      laptopRef.current?.testModel?.playAction1(),
+      computerRef.current?.testModel?.playAction1(),
     ]);
 
     // Pause between testing actions.
@@ -204,7 +204,7 @@ const HowItWorksAnimation = () => {
         duration: duration.testingModel.action,
       }),
       graphLinesRef.current?.play("chaotic", duration.testingModel.action),
-      laptopRef.current?.testModel?.playAction2(),
+      computerRef.current?.testModel?.playAction2(),
     ]);
 
     // Show iterative flow.
@@ -221,7 +221,7 @@ const HowItWorksAnimation = () => {
     await delayInSec(duration.testingModel.stepPause);
 
     stepFlowRef.current?.setAllInactive();
-    laptopRef.current?.setDisplay("none");
+    computerRef.current?.setDisplay("none");
     await delayInSec(duration.testingModel.stepPause);
 
     // Clean up.
@@ -231,8 +231,8 @@ const HowItWorksAnimation = () => {
   const runCode = useCallback(async () => {
     // Setup.
     signalRef.current?.connected();
-    laptopRef.current?.setVisible(true);
-    laptopRef.current?.codeBlock?.show();
+    computerRef.current?.setVisible(true);
+    computerRef.current?.codeBlock?.show();
     stepFlowRef.current?.setStep(4, "active");
     await microbitOnWristRef.current?.play({
       ledPattern: "Happy",
@@ -241,7 +241,7 @@ const HowItWorksAnimation = () => {
     });
 
     // Code.
-    await laptopRef.current?.codeBlock?.play();
+    await computerRef.current?.codeBlock?.play();
     stepFlowRef.current?.setStep(4, "completed");
 
     // Download program.
@@ -370,9 +370,9 @@ const HowItWorksAnimation = () => {
             </>
           }
           rightItems={
-            <Laptop
+            <Computer
               height="auto"
-              ref={laptopRef}
+              ref={computerRef}
               width={{ base: "100%", sm: "80%", md: "60%" }}
             />
           }

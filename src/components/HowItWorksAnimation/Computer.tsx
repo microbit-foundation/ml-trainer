@@ -16,7 +16,7 @@ import { animations } from "../../utils/animations";
 import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
 import { useAnimation } from "../AnimationProvider";
 
-interface LaptopProps extends IconProps {}
+interface ComputerProps extends IconProps {}
 type DisplayType =
   | "none"
   | "tick"
@@ -24,7 +24,7 @@ type DisplayType =
   | "training"
   | "test-model"
   | "code";
-export interface LaptopRef {
+export interface ComputerRef {
   setDisplay(type: DisplayType): void;
   dataSamples: DataSamplesCollectionRef | null;
   testModel: TestModelScreenRef | null;
@@ -35,8 +35,8 @@ export interface LaptopRef {
   reset(): void;
 }
 
-const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
-  { ...props }: LaptopProps,
+const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
+  { ...props }: ComputerProps,
   ref
 ) {
   const { withPlayState } = useAnimation();
@@ -139,4 +139,4 @@ const Laptop = forwardRef<LaptopRef, LaptopProps>(function Laptop(
   );
 });
 
-export default Laptop;
+export default Computer;
