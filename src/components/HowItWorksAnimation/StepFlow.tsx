@@ -29,6 +29,7 @@ const commonStepTickPillProps = {
 };
 export interface StepFlowRef {
   setStep(stepNum: 1 | 2 | 3 | 4 | 5, state: "active" | "completed"): void;
+  setTraining(): void;
   setAllInactive(): void;
   setArrows(state: ArrowState): void;
   reset(): void;
@@ -72,6 +73,15 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           }
           if (state === "completed") {
             step.setState({ active: true, completed: true });
+          }
+        },
+        setTraining() {
+          // Set first two steps as completed, but not active.
+          for (let i = 0; i < 2; i++) {
+            stepRefs.current[i].current?.setState({
+              active: false,
+              completed: true,
+            });
           }
         },
         setAllInactive() {

@@ -144,6 +144,7 @@ const HowItWorksAnimation = () => {
     // Setup.
     signalRef.current?.connected();
     laptopRef.current?.setVisible(true);
+    stepFlowRef.current?.setTraining();
 
     await Promise.all([
       microbitOnWristRef.current?.play({
