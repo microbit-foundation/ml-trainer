@@ -18,7 +18,7 @@ export interface LayoutRef {
   reset(): void;
 }
 
-const Layout = forwardRef<LayoutRef, LayoutProps>(function Signal(
+const Layout = forwardRef<LayoutRef, LayoutProps>(function Layout(
   { leftItems, middleItems, rightItems, ...props }: LayoutProps,
   ref
 ) {
