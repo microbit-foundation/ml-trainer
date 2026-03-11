@@ -3,12 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, VisuallyHidden, VStack, Box, Button } from "@chakra-ui/react";
+import { Box, HStack, VisuallyHidden, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { useAnimation } from "../AnimationProvider";
 import Arrow, { ArrowRef } from "./Arrow";
-import GraphLines, { GraphLinesRef } from "./GraphLines";
 import { dataCollectionDurationInSec } from "./DataSamplesCollection";
+import GraphLines, { GraphLinesRef } from "./GraphLines";
 import HandHoldingMicrobit, {
   HandHoldingMicrobitRef,
 } from "./HandHoldingMicrobit";
@@ -18,7 +19,6 @@ import MicrobitOnWrist, { MicrobitOnWristRef } from "./MicrobitOnWrist";
 import Signal, { SignalRef } from "./Signal";
 import StepFlow, { StepFlowRef } from "./StepFlow";
 import { testModeldurationInSec } from "./TestModelScreen";
-import { useIntl } from "react-intl";
 
 const fadeInOutDuration = 2; //s
 const duration = {
@@ -51,8 +51,7 @@ const duration = {
 
 const HowItWorksAnimation = () => {
   const intl = useIntl();
-  const { delayInSec, restartAbortController, resume, pause, isPaused } =
-    useAnimation();
+  const { delayInSec, restartAbortController } = useAnimation();
   const stepFlowRef = useRef<StepFlowRef>(null);
   const signalRef = useRef<SignalRef>(null);
   const codeArrowRef = useRef<ArrowRef>(null);
@@ -334,15 +333,17 @@ const HowItWorksAnimation = () => {
     <>
       <VisuallyHidden>
         <Box
-          as="video"
+          as="img"
           aria-label={intl.formatMessage({ id: "animation-label" })}
         />
       </VisuallyHidden>
       <VStack
+        aria-hidden
         gap={7}
         opacity={visible ? 1 : 0}
         transition={`opacity ${fadeInOutDuration}s ease`}
-        height={{ base: "30em", md: "20em" }}
+        height={{ base: "28em", sm: "30em", md: "23em" }}
+        position="relative"
       >
         <HStack justifyContent="center" width="100%" gap={5}>
           <StepFlow ref={stepFlowRef} />
@@ -376,9 +377,6 @@ const HowItWorksAnimation = () => {
           }
         />
       </VStack>
-      <Button size="small" onClick={isPaused ? resume : pause}>
-        {isPaused ? "Play" : "Pause"}
-      </Button>
     </>
   );
 };

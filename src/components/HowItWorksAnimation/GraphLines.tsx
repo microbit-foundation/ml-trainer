@@ -53,79 +53,79 @@ export interface GraphLinesRef {
 }
 
 const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
-    const { delayInSec, withPlayState } = useAnimation();
-    const [{ graphColorScheme }] = useSettings();
-    const [visible, setVisible] = useState<boolean>(false);
-    const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
-    const colors = useGraphColors(graphColorScheme);
-    const [motion, setMotion] = useState<MotionType>("wavy");
+  const { delayInSec, withPlayState } = useAnimation();
+  const [{ graphColorScheme }] = useSettings();
+  const [visible, setVisible] = useState<boolean>(false);
+  const [fadeDuration, setFadeDuration] = useState<number>(fadeOutDuration);
+  const colors = useGraphColors(graphColorScheme);
+  const [motion, setMotion] = useState<MotionType>("wavy");
 
-    // Responsive dimensions
-    const visibleWindowWidth =
-      useBreakpointValue({
-        base: 20,
-        sm: 85,
-        md: 100,
-      }) ?? 100;
+  // Responsive dimensions
+  const visibleWindowWidth =
+    useBreakpointValue({
+      base: 20,
+      sm: 85,
+      md: 100,
+    }) ?? 100;
 
-    const height =
-      useBreakpointValue({
-        sm: 24,
-        md: 28,
-        lg: 32,
-      }) ?? baseHeight;
+  const height =
+    useBreakpointValue({
+      sm: 24,
+      md: 28,
+      lg: 32,
+    }) ?? baseHeight;
 
-    const waves = useMemo(
-      () => [
-        { color: colors.x, pathKey: "x" as const },
-        { color: colors.y, pathKey: "y" as const },
-        { color: colors.z, pathKey: "z" as const },
-      ],
-      [colors.x, colors.y, colors.z]
-    );
+  const waves = useMemo(
+    () => [
+      { color: colors.x, pathKey: "x" as const },
+      { color: colors.y, pathKey: "y" as const },
+      { color: colors.z, pathKey: "z" as const },
+    ],
+    [colors.x, colors.y, colors.z]
+  );
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        setDisplayState: setVisible,
-        async play(motionType, durationInSecs = 3) {
-          setVisible(true);
-          setFadeDuration(0);
-          if (motionType) {
-            setMotion(motionType);
-          }
-          await delayInSec(durationInSecs);
-        },
-        async fadeOut(durationInSecs = fadeOutDuration) {
-          setFadeDuration(durationInSecs);
-          await delayInSec(durationInSecs);
-          setVisible(false);
-        },
-        reset() {
-          setFadeDuration(0);
-          setVisible(false);
-        },
-      }),
-      [delayInSec]
-    );
+  useImperativeHandle(
+    ref,
+    () => ({
+      setDisplayState: setVisible,
+      async play(motionType, durationInSecs = 3) {
+        setVisible(true);
+        setFadeDuration(0);
+        if (motionType) {
+          setMotion(motionType);
+        }
+        await delayInSec(durationInSecs);
+      },
+      async fadeOut(durationInSecs = fadeOutDuration) {
+        setFadeDuration(durationInSecs);
+        await delayInSec(durationInSecs);
+        setVisible(false);
+      },
+      reset() {
+        setFadeDuration(0);
+        setVisible(false);
+      },
+    }),
+    [delayInSec]
+  );
 
-    const paths = motionPaths[motion];
+  const paths = motionPaths[motion];
 
-    // Unique keyframe name encodes both motion and window width so the
-    // correct translateX offset is used whenever either changes.
-    const keyframeName = `waveScroll-${motion}-${visibleWindowWidth}`;
+  // Unique keyframe name encodes both motion and window width so the
+  // correct translateX offset is used whenever either changes.
+  const keyframeName = `waveScroll-${motion}-${visibleWindowWidth}`;
 
-    return (
-      <Flex
-        opacity={visible ? 1 : 0}
-        transition={`opacity ${fadeDuration}s ease-out`}
-        direction="column"
-        align="center"
-        justify="center"
-        position="relative"
-      >
-        <Box position="relative" zIndex={2}>
-          <style>{`
+  return (
+    <Flex
+      opacity={visible ? 1 : 0}
+      transition={`opacity ${fadeDuration}s ease-out`}
+      direction="column"
+      align="center"
+      justify="center"
+      position="relative"
+    >
+      <Box position="relative" zIndex={1}>
+        <style>{`
             @keyframes ${keyframeName} {
               from { transform: translateX(${
                 -tileWidth + visibleWindowWidth
@@ -134,48 +134,47 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
             }
           `}</style>
 
-          <Box
-            width={`${visibleWindowWidth}px`}
-            height={`${height}px`}
-            overflow="hidden"
+        <Box
+          width={`${visibleWindowWidth}px`}
+          height={`${height}px`}
+          overflow="hidden"
+        >
+          <Flex
+            animation={withPlayState(
+              `${keyframeName} ${animationDuration}s linear infinite`
+            )}
           >
-            <Flex
-              animation={withPlayState(
-                `${keyframeName} ${animationDuration}s linear infinite`
-              )}
-            >
-              {[0, 1].map((copy) => (
-                <Box
-                  as="svg"
-                  key={copy}
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox={viewBox}
-                  width={`${tileWidth}px`}
-                  height={`${height}px`}
-                  display="block"
-                  flexShrink={0}
-                  preserveAspectRatio="none"
-                >
-                  {waves.map((wave) => (
-                    <path
-                      key={wave.pathKey}
-                      d={paths[wave.pathKey]}
-                      fill="none"
-                      stroke={wave.color}
-                      strokeOpacity={1}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                    />
-                  ))}
-                </Box>
-              ))}
-            </Flex>
-          </Box>
+            {[0, 1].map((copy) => (
+              <Box
+                as="svg"
+                key={copy}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox={viewBox}
+                width={`${tileWidth}px`}
+                height={`${height}px`}
+                display="block"
+                flexShrink={0}
+                preserveAspectRatio="none"
+              >
+                {waves.map((wave) => (
+                  <path
+                    key={wave.pathKey}
+                    d={paths[wave.pathKey]}
+                    fill="none"
+                    stroke={wave.color}
+                    strokeOpacity={1}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                  />
+                ))}
+              </Box>
+            ))}
+          </Flex>
         </Box>
-      </Flex>
-    );
-  }
-);
+      </Box>
+    </Flex>
+  );
+});
 
 export default GraphLines;

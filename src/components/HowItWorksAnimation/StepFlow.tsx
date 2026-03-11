@@ -132,7 +132,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
       <ArrowIcon
         display={{ sm: "block", md: "none" }}
         position="absolute"
-        zIndex={2}
+        zIndex={1}
         top="32%"
         left="2em"
         width="2em"
@@ -142,7 +142,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
       <ArrowIcon
         display={{ sm: "block", md: "none" }}
         position="absolute"
-        zIndex={2}
+        zIndex={1}
         top="32%"
         right="2em"
         width="2em"
