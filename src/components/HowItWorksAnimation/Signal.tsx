@@ -13,7 +13,6 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useImperativeHandle, forwardRef, useState, useMemo } from "react";
-import { animations } from "../../utils/animations";
 import { useAnimation } from "../AnimationProvider";
 
 interface SignalProps extends StackProps {}
@@ -190,11 +189,8 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
       alignItems="center"
       gap={`${signalGap}px`}
       position="relative"
-      animation={
-        !visible
-          ? withPlayState(`${animations.fadeOut} 0.3s ease-in-out forwards`)
-          : undefined
-      }
+      opacity={visible ? 1 : 0}
+      transition="opacity 0.3s ease"
       {...props}
     >
       <SignalIcon

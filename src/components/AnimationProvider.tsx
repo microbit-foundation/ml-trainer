@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box } from "@chakra-ui/react";
+import { Box, usePrefersReducedMotion } from "@chakra-ui/react";
 import {
   createContext,
   ReactNode,
@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 interface AnimationContextValue {
   delayInSec: (sec: number) => Promise<void>;
   restartAbortController: () => void;
@@ -35,20 +36,33 @@ export const useAnimation = () => {
 
 export const AnimationProvider = ({ children }: { children: ReactNode }) => {
   const controllerRef = useRef<AbortController>(new AbortController());
-  const [isPaused, setIsPaused] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const isInitiallyPaused = prefersReducedMotion;
+  const [isPaused, setIsPaused] = useState(isInitiallyPaused);
 
   const resumeRef = useRef<(() => void) | null>(null);
-  const pausePromiseRef = useRef<Promise<void>>(Promise.resolve());
+  const pausePromiseRef = useRef<Promise<void> | null>(null);
   const pauseSubscribersRef = useRef<Set<() => void>>(new Set());
+
+  const createPausePromise = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      resumeRef.current = resolve;
+    });
+  }, []);
+
+  // Initialise pausePromiseRef.
+  if (pausePromiseRef.current === null) {
+    pausePromiseRef.current = isInitiallyPaused
+      ? createPausePromise()
+      : Promise.resolve();
+  }
 
   const pause = useCallback(() => {
     setIsPaused(true);
-    pausePromiseRef.current = new Promise((resolve) => {
-      resumeRef.current = resolve;
-    });
-    // Interrupt all currently-running delays
+    pausePromiseRef.current = createPausePromise();
+    // Interrupt all currently-running delays.
     pauseSubscribersRef.current.forEach((fn) => fn());
-  }, []);
+  }, [createPausePromise]);
 
   const resume = useCallback(() => {
     setIsPaused(false);
@@ -92,7 +106,7 @@ export const AnimationProvider = ({ children }: { children: ReactNode }) => {
         pauseSubscribersRef.current.delete(onPause);
         remainingMs -= performance.now() - startedAt;
         // Wait for resume, then restart with remaining time
-        void pausePromiseRef.current.then(() => {
+        void pausePromiseRef.current?.then(() => {
           if (signal.aborted) return onAbort();
           start();
         });
@@ -101,7 +115,7 @@ export const AnimationProvider = ({ children }: { children: ReactNode }) => {
       signal.addEventListener("abort", onAbort, { once: true });
 
       // If already paused when called, wait before starting
-      void pausePromiseRef.current.then(() => {
+      void pausePromiseRef.current?.then(() => {
         if (signal.aborted) return onAbort();
         start();
       });
