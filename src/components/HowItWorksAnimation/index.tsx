@@ -212,8 +212,8 @@ const HowItWorksAnimation = () => {
       ledPattern: "Happy",
       move: "still",
       duration: duration.testingModel.stepPause,
-    }),
-      await graphLinesRef.current?.fadeOut();
+    });
+    await graphLinesRef.current?.fadeOut();
 
     stepFlowRef.current?.setArrows("active");
     await delayInSec(duration.testingModel.stepPause);
