@@ -827,10 +827,6 @@
     "defaultMessage": "First lessons",
     "description": "Home page resource card title"
   },
-  "get-started-action": {
-    "defaultMessage": "Empieza",
-    "description": "Get started action"
-  },
   "go-action": {
     "defaultMessage": "Ir",
     "description": "Go action"
@@ -907,22 +903,6 @@
     "defaultMessage": "Página de inicio",
     "description": "Link to home page"
   },
-  "homepage-alt": {
-    "defaultMessage": "gráfico que muestra las líneas gráficas x, y, z que representan los datos del acelerómetro del micro:bit con palmas superpuestas",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-graph": {
-    "defaultMessage": "gráfico que muestra las líneas gráficas x, y, z que representan los datos del acelerómetro del micro:bit",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-hands": {
-    "defaultMessage": "palmas aplaudiendo",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-media": {
-    "defaultMessage": "video showing CreateAI detecting different movements",
-    "description": "Alt text for media in homepage"
-  },
   "homepage-banner-heading": {
     "defaultMessage": "New to {appName}?",
     "description": "Homepage banner heading"
@@ -930,86 +910,6 @@
   "homepage-banner-subtitle": {
     "defaultMessage": "Machine learning with movement and the micro:bit",
     "description": "Homepage banner subtitle"
-  },
-  "homepage-description": {
-    "defaultMessage": "Entrena un modelo de aprendizaje automático con tus propios datos de movimiento y ejecútalo en tu micro:bit.",
-    "description": "Home page description"
-  },
-  "homepage-how-it-works": {
-    "defaultMessage": "Cómo funciona",
-    "description": "Home page section heading"
-  },
-  "homepage-how-it-works-paragraph": {
-    "defaultMessage": "Mira el vídeo para empezar. Más información en la <link>guía del usuario</link>.",
-    "description": "Home page content under the video"
-  },
-  "homepage-media-description": {
-    "defaultMessage": "Video descriptive transcript",
-    "description": "Homepage media description"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "There is no sound in this video.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "This video plays on a continuous loop.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "Descriptive transcript",
-    "description": "Homepage media descriptive transcript dialog heading"
-  },
-  "homepage-media-pause-action": {
-    "defaultMessage": "Pause video",
-    "description": "Homepage media pause video button text"
-  },
-  "homepage-media-play-action": {
-    "defaultMessage": "Play video",
-    "description": "Homepage media play video button text"
-  },
-  "homepage-projects": {
-    "defaultMessage": "Proyectos",
-    "description": "Home page section heading"
-  },
-  "homepage-projects-more": {
-    "defaultMessage": "Explora más <link>contenidos y recursos sobre micro:bit e IA</link>.",
-    "description": "Link back to AI landing page"
-  },
-  "homepage-step-by-step": {
-    "defaultMessage": "Paso a paso",
-    "description": "Home page section heading"
-  },
-  "homepage-subtitle": {
-    "defaultMessage": "Crea IA en tu BBC micro:bit utilizando el movimiento y el aprendizaje automático.",
-    "description": "Home page subtitle"
-  },
-  "homepage-video-alt": {
-    "defaultMessage": "Vídeo de introducción",
-    "description": "Home page video alt text"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importar muestras de datos",
@@ -1343,61 +1243,9 @@
     "defaultMessage": "New project setup",
     "description": "New project setup title"
   },
-  "new-projects-row-carousel": {
-    "defaultMessage": "List of new project actions",
-    "description": "Label for home page row carousel"
-  },
-  "new-projects-row-title": {
-    "defaultMessage": "New projects",
-    "description": "Title for home page row"
-  },
-  "newpage-continue-session-subtitle": {
-    "defaultMessage": "Utiliza un archivo hexadecimal o un archivo de muestras de datos que hayas guardado en tu ordenador para continuar una sesión.",
-    "description": "Continue session subtitle"
-  },
-  "newpage-continue-session-title": {
-    "defaultMessage": "Continúa con una sesión guardada",
-    "description": "Continue session title"
-  },
-  "newpage-last-session-date": {
-    "defaultMessage": "<strong>Fecha:</strong> {date}",
-    "description": "Last session date label"
-  },
-  "newpage-last-session-name": {
-    "defaultMessage": "<strong>Nombre:</strong> {name}",
-    "description": "Last session name label"
-  },
-  "newpage-last-session-none": {
-    "defaultMessage": "Sesión no encontrada",
-    "description": "Last session not found text"
-  },
-  "newpage-last-session-title": {
-    "defaultMessage": "Abrir la última sesión",
-    "description": "Open last session title"
-  },
   "newpage-new-project-title": {
     "defaultMessage": "New project",
     "description": "Start new project title"
-  },
-  "newpage-new-session-subtitle": {
-    "defaultMessage": "Conecta tu micro:bit y recoge datos de movimiento para construir un modelo de aprendizaje automático.",
-    "description": "Start new session subtitle"
-  },
-  "newpage-new-session-title": {
-    "defaultMessage": "Nueva sesión",
-    "description": "Start new session title"
-  },
-  "newpage-section-one-title": {
-    "defaultMessage": "Continúa donde lo dejaste",
-    "description": "Homepage section one title"
-  },
-  "newpage-section-two-title": {
-    "defaultMessage": "Empieza algo nuevo",
-    "description": "Homepage section two title"
-  },
-  "newpage-title": {
-    "defaultMessage": "Nueva sesión",
-    "description": "New page title"
   },
   "next-action": {
     "defaultMessage": "Siguiente",
@@ -1422,10 +1270,6 @@
   "not-found-title": {
     "defaultMessage": "Página no encontrada",
     "description": "Page not found page title"
-  },
-  "open-file-action": {
-    "defaultMessage": "Abrir…",
-    "description": "Open file button text"
   },
   "open-file-dropped": {
     "defaultMessage": "Abrir archivo al soltarlo",
@@ -1775,17 +1619,9 @@
     "defaultMessage": "Sort projects",
     "description": "Label for select element to sort projects"
   },
-  "start-session-action": {
-    "defaultMessage": "Iniciar sesión",
-    "description": "Start session button text"
-  },
   "start-training-action": {
     "defaultMessage": "Empieza a entrenar",
     "description": "Start training button text"
-  },
-  "steps-alt": {
-    "defaultMessage": "diagrama que muestra el proceso iterativo de recogida de datos, entrenamiento de un modelo, prueba del modelo y mejora del modelo mediante la mejora de los datos recogidos antes de programar finalmente utilizando el modelo.",
-    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "Programa",
