@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, usePrefersReducedMotion } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import {
   createContext,
   ReactNode,
@@ -34,10 +34,12 @@ export const useAnimation = () => {
   return ctx;
 };
 
+const isInitiallyPaused =
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export const AnimationProvider = ({ children }: { children: ReactNode }) => {
   const controllerRef = useRef<AbortController>(new AbortController());
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const isInitiallyPaused = prefersReducedMotion;
   const [isPaused, setIsPaused] = useState(isInitiallyPaused);
 
   const resumeRef = useRef<(() => void) | null>(null);
