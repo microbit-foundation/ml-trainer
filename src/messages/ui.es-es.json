@@ -1451,12 +1451,6 @@
       "value": "First lessons"
     }
   ],
-  "get-started-action": [
-    {
-      "type": 0,
-      "value": "Empieza"
-    }
-  ],
   "go-action": [
     {
       "type": 0,
@@ -1571,30 +1565,6 @@
       "value": "Página de inicio"
     }
   ],
-  "homepage-alt": [
-    {
-      "type": 0,
-      "value": "gráfico que muestra las líneas gráficas x, y, z que representan los datos del acelerómetro del micro:bit con palmas superpuestas"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "gráfico que muestra las líneas gráficas x, y, z que representan los datos del acelerómetro del micro:bit"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "palmas aplaudiendo"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
   "homepage-banner-heading": [
     {
       "type": 0,
@@ -1613,154 +1583,6 @@
     {
       "type": 0,
       "value": "Machine learning with movement and the micro:bit"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "Entrena un modelo de aprendizaje automático con tus propios datos de movimiento y ejecútalo en tu micro:bit."
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "Cómo funciona"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "Mira el vídeo para empezar. Más información en la "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "guía del usuario"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-media-description": [
-    {
-      "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "Proyectos"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "Explora más "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "contenidos y recursos sobre micro:bit e IA"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "Paso a paso"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Crea IA en tu BBC micro:bit utilizando el movimiento y el aprendizaje automático."
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "Vídeo de introducción"
     }
   ],
   "import-data-samples-action": [
@@ -2311,116 +2133,10 @@
       "value": "New project setup"
     }
   ],
-  "new-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of new project actions"
-    }
-  ],
-  "new-projects-row-title": [
-    {
-      "type": 0,
-      "value": "New projects"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Utiliza un archivo hexadecimal o un archivo de muestras de datos que hayas guardado en tu ordenador para continuar una sesión."
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "Continúa con una sesión guardada"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Fecha:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Nombre:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "Sesión no encontrada"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "Abrir la última sesión"
-    }
-  ],
   "newpage-new-project-title": [
     {
       "type": 0,
       "value": "New project"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Conecta tu micro:bit y recoge datos de movimiento para construir un modelo de aprendizaje automático."
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "Nueva sesión"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "Continúa donde lo dejaste"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "Empieza algo nuevo"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "Nueva sesión"
     }
   ],
   "next-action": [
@@ -2461,12 +2177,6 @@
     {
       "type": 0,
       "value": "Página no encontrada"
-    }
-  ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "Abrir…"
     }
   ],
   "open-file-dropped": [
@@ -3175,22 +2885,10 @@
       "value": "Sort projects"
     }
   ],
-  "start-session-action": [
-    {
-      "type": 0,
-      "value": "Iniciar sesión"
-    }
-  ],
   "start-training-action": [
     {
       "type": 0,
       "value": "Empieza a entrenar"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "diagrama que muestra el proceso iterativo de recogida de datos, entrenamiento de un modelo, prueba del modelo y mejora del modelo mediante la mejora de los datos recogidos antes de programar finalmente utilizando el modelo."
     }
   ],
   "steps-code": [

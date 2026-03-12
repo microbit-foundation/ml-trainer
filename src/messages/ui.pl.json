@@ -1455,12 +1455,6 @@
       "value": "First lessons"
     }
   ],
-  "get-started-action": [
-    {
-      "type": 0,
-      "value": "Rozpocznij"
-    }
-  ],
   "go-action": [
     {
       "type": 0,
@@ -1575,30 +1569,6 @@
       "value": "Strona główna"
     }
   ],
-  "homepage-alt": [
-    {
-      "type": 0,
-      "value": "wykres pokazujący linie x, y, z reprezentujące dane akcelerometru micro:bita z nałożonym klaskaniem dłońmi"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "wykres pokazujący linie x, y, z reprezentujące dane akcelerometru micro:bita"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "klaszczące dłonie"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
   "homepage-banner-heading": [
     {
       "type": 0,
@@ -1617,154 +1587,6 @@
     {
       "type": 0,
       "value": "Machine learning with movement and the micro:bit"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "Wytrenuj model uczenia maszynowego na danych z własnych ruchów i uruchom go na swoim micro:bicie."
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "Jak to działa"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "Obejrzyj wideo, aby rozpocząć. Dowiedz się więcej z "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "przewodnika użytkownika"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-media-description": [
-    {
-      "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "Projekty"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "Poznaj więcej "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "treści i zasobów na temat micro:bita i AI"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "Krok po kroku"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Utwórz AI na swoim BBC micro:bit poprzez ruch i uczenie maszynowe."
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "Film wprowadzający"
     }
   ],
   "import-data-samples-action": [
@@ -2315,116 +2137,10 @@
       "value": "New project setup"
     }
   ],
-  "new-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of new project actions"
-    }
-  ],
-  "new-projects-row-title": [
-    {
-      "type": 0,
-      "value": "New projects"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Użyj pliku hex lub przykładowego pliku danych, który zapisałeś na komputerze, aby kontynuować sesję."
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "Kontynuuj zapisaną sesję"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Data:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Imię:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "Nie znaleziono sesji"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "Otwórz ostatnią sesję"
-    }
-  ],
   "newpage-new-project-title": [
     {
       "type": 0,
       "value": "New project"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Połącz swój micro:bit i zebierz dane o ruchach, aby zbudować model uczenia maszynowego."
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "Nowa sesja"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "Wróć tam, gdzie wcześniej skończyłeś."
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "Rozpocznij coś nowego"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "Nowa sesja"
     }
   ],
   "next-action": [
@@ -2465,12 +2181,6 @@
     {
       "type": 0,
       "value": "Nie znaleziono strony"
-    }
-  ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "Otwórz…"
     }
   ],
   "open-file-dropped": [
@@ -3171,22 +2881,10 @@
       "value": "Sort projects"
     }
   ],
-  "start-session-action": [
-    {
-      "type": 0,
-      "value": "Rozpocznij sesję"
-    }
-  ],
   "start-training-action": [
     {
       "type": 0,
       "value": "Rozpocznij trenowanie"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "schemat przedstawiający iteracyjny proces gromadzenia danych, trenowanie modelu, testowanie modelu, doskonalenie modelu poprzez ulepszenie zgromadzonych danych przed wykorzystaniem modelu w ostatecznym kodowaniu."
     }
   ],
   "steps-code": [

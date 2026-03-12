@@ -1431,12 +1431,6 @@
       "value": "First lessons"
     }
   ],
-  "get-started-action": [
-    {
-      "type": 0,
-      "value": "crwdns363002:0crwdne363002:0"
-    }
-  ],
   "go-action": [
     {
       "type": 0,
@@ -1551,30 +1545,6 @@
       "value": "crwdns363020:0crwdne363020:0"
     }
   ],
-  "homepage-alt": [
-    {
-      "type": 0,
-      "value": "crwdns363022:0crwdne363022:0"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "crwdns363024:0crwdne363024:0"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "crwdns363026:0crwdne363026:0"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "crwdns368557:0crwdne368557:0"
-    }
-  ],
   "homepage-banner-heading": [
     {
       "type": 0,
@@ -1593,126 +1563,6 @@
     {
       "type": 0,
       "value": "Machine learning with movement and the micro:bit"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "crwdns363028:0crwdne363028:0"
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "crwdns363030:0crwdne363030:0"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "crwdns363032:0crwdne363032:0"
-    }
-  ],
-  "homepage-media-description": [
-    {
-      "type": 0,
-      "value": "crwdns368559:0crwdne368559:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "crwdns368561:0crwdne368561:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "crwdns368563:0crwdne368563:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "crwdns368565:0crwdne368565:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "crwdns368567:0crwdne368567:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "crwdns368569:0crwdne368569:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "crwdns368571:0crwdne368571:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "crwdns368573:0crwdne368573:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "crwdns368575:0crwdne368575:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "crwdns368577:0crwdne368577:0"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "crwdns368579:0crwdne368579:0"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "crwdns368581:0crwdne368581:0"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "crwdns363034:0crwdne363034:0"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "crwdns363036:0crwdne363036:0"
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "crwdns363038:0crwdne363038:0"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "crwdns363040:0crwdne363040:0"
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "crwdns363042:0crwdne363042:0"
     }
   ],
   "import-data-samples-action": [
@@ -2229,104 +2079,10 @@
       "value": "New project setup"
     }
   ],
-  "new-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of new project actions"
-    }
-  ],
-  "new-projects-row-title": [
-    {
-      "type": 0,
-      "value": "New projects"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "crwdns363192:0crwdne363192:0"
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "crwdns363194:0crwdne363194:0"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "type": 0,
-      "value": "crwdns363196:0"
-    },
-    {
-      "type": 1,
-      "value": "date"
-    },
-    {
-      "type": 0,
-      "value": "crwdne363196:0"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "type": 0,
-      "value": "crwdns363198:0"
-    },
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": "crwdne363198:0"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "crwdns363200:0crwdne363200:0"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "crwdns363202:0crwdne363202:0"
-    }
-  ],
   "newpage-new-project-title": [
     {
       "type": 0,
       "value": "New project"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "crwdns363204:0crwdne363204:0"
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "crwdns363206:0crwdne363206:0"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "crwdns363208:0crwdne363208:0"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "crwdns363210:0crwdne363210:0"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "crwdns363212:0crwdne363212:0"
     }
   ],
   "next-action": [
@@ -2371,12 +2127,6 @@
     {
       "type": 0,
       "value": "crwdns363224:0crwdne363224:0"
-    }
-  ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "crwdns363226:0crwdne363226:0"
     }
   ],
   "open-file-dropped": [
@@ -3085,22 +2835,10 @@
       "value": "Sort projects"
     }
   ],
-  "start-session-action": [
-    {
-      "type": 0,
-      "value": "crwdns363344:0crwdne363344:0"
-    }
-  ],
   "start-training-action": [
     {
       "type": 0,
       "value": "crwdns363346:0crwdne363346:0"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "crwdns363348:0crwdne363348:0"
     }
   ],
   "steps-code": [
