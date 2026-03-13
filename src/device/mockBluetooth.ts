@@ -58,6 +58,13 @@ export class MockBluetoothConnection
   status: ConnectionStatus = ConnectionStatus.NoAuthorizedDevice;
 
   /**
+   * Whether a successful connection has occurred.
+   * Mirrors the real implementation where getBoardVersion() caches
+   * the board version after the first successful connection.
+   */
+  private hasConnected = false;
+
+  /**
    * Queue of behaviors for subsequent connect() calls.
    * Each call to connect() shifts one behavior from this queue.
    * When empty, defaults to success.
@@ -210,6 +217,7 @@ export class MockBluetoothConnection
         this.setStatus(ConnectionStatus.Connecting);
         await this.progressStage(progress, ProgressStage.Connecting, undefined);
         this.setStatus(ConnectionStatus.Connected);
+        this.hasConnected = true;
         await this.delay();
         break;
 
@@ -241,6 +249,9 @@ export class MockBluetoothConnection
   }
 
   getBoardVersion(): BoardVersion {
+    if (!this.hasConnected) {
+      return notConnected();
+    }
     return "V2";
   }
 
@@ -294,6 +305,7 @@ export class MockBluetoothConnection
     this.setStatus(ConnectionStatus.Disconnected);
     await this.delay();
     this.setStatus(ConnectionStatus.NoAuthorizedDevice);
+    this.hasConnected = false;
   }
 
   getAccelerometerData = notConnected;

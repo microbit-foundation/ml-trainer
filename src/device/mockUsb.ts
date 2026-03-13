@@ -24,6 +24,13 @@ export class MockUSBConnection
 {
   status: ConnectionStatus = ConnectionStatus.NoAuthorizedDevice;
 
+  /**
+   * Whether a successful connection has occurred.
+   * Mirrors the real implementation where getBoardVersion()/getDeviceId()
+   * cache values after the first successful connection.
+   */
+  private hasConnected = false;
+
   private fakeDeviceId: number | undefined = 123;
 
   constructor() {
@@ -77,13 +84,25 @@ export class MockUSBConnection
     progress?.(ProgressStage.Connecting);
     await new Promise((resolve) => setTimeout(resolve, 100));
     this.setStatus(ConnectionStatus.Connected);
+    this.hasConnected = true;
+  }
+
+  private assertConnected(): void {
+    if (!this.hasConnected) {
+      throw new DeviceError({
+        code: "not-connected",
+        message: "Not connected",
+      });
+    }
   }
 
   getDeviceId(): number {
+    this.assertConnected();
     return this.fakeDeviceId ?? 0;
   }
 
   getBoardVersion(): BoardVersion {
+    this.assertConnected();
     return "V2";
   }
 
@@ -123,6 +142,7 @@ export class MockUSBConnection
 
   clearDevice(): void {
     this.fakeDeviceId = undefined;
+    this.hasConnected = false;
     this.setStatus(ConnectionStatus.NoAuthorizedDevice);
   }
 
