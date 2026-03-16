@@ -64,11 +64,11 @@ const ActionNameCard = ({
     // Occurs when the name is updated in another tab.
     setLocalName(value.name);
   }, [value.name]);
-  const predictionResult = useStore((s) => s.predictionResult);
-  const isTriggered =
+  const isTriggered = useStore((s) =>
     viewMode === ActionCardNameViewMode.ReadOnly
-      ? predictionResult?.detected?.id === value.id
-      : undefined;
+      ? s.predictionResult?.detected?.id === value.id
+      : undefined
+  );
   // Avoid autofocus on mobile/native as it triggers the keyboard
   const allowAutoFocus =
     useBreakpointValue({ base: false, md: true }) && !isNativePlatform();

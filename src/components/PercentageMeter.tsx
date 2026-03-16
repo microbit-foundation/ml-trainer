@@ -4,20 +4,39 @@
  * SPDX-License-Identifier: MIT
  */
 import { HStack, StackProps } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
+import { useStore } from "../store";
 
 interface PercentageMeterProps extends StackProps {
-  value: number;
-  colorScheme?: string;
-  meterBarWidthPx?: number;
+  actionId: string;
+  meterBarWidthPx: number;
 }
 
 const PercentageMeter = ({
-  value,
-  colorScheme = "gray.600",
+  actionId,
   meterBarWidthPx,
 }: PercentageMeterProps) => {
   const height = 3;
   const numTicks = 9;
+
+  const meterRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    useStore.subscribe(
+      (s) => s.predictionResult,
+      (predictionResult) => {
+        if (!meterRef.current) return;
+        meterRef.current.style.backgroundColor =
+          predictionResult?.detected?.id === actionId
+            ? "brand2.500"
+            : "gray.600";
+        meterRef.current.style.width = `${
+          (predictionResult?.confidences[actionId] ?? 0) * 100
+        }%`;
+      }
+    );
+  }, [actionId]);
+
   return (
     <HStack
       w={`${meterBarWidthPx}px`}
@@ -28,14 +47,13 @@ const PercentageMeter = ({
       position="relative"
     >
       <HStack
+        ref={meterRef}
         // Use inline style attribute to avoid style tags being
         // constantly appended to the <head/> element.
-        style={{
-          width: `${value}%`,
-        }}
+        w={0}
         h={height}
         rounded="full"
-        bgColor={colorScheme}
+        bgColor={"gray.600"}
       />
       <HStack
         display="inline-flex"
