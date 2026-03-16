@@ -204,6 +204,8 @@ export interface State {
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
 
+  welcomeDialogDismissed: boolean;
+
   allProjectData: ProjectDataWithActions[];
 }
 
@@ -303,6 +305,7 @@ export interface Actions {
   incompatibleEditorDeviceDialogOnOpen(): void;
   recordingDialogOnOpen(): void;
   connectToRecordDialogOnOpen(): void;
+  dismissWelcomeDialog(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
 }
@@ -364,6 +367,8 @@ const createMlStore = (logging: Logging) => {
         isConnectToRecordDialogOpen: false,
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
+
+        welcomeDialogDismissed: false,
 
         allProjectData: [],
 
@@ -435,6 +440,7 @@ const createMlStore = (logging: Logging) => {
               appEditNeedsFlushToEditor: true,
               timestamp,
               hint: getHint(actions, false),
+              welcomeDialogDismissed: false,
             },
             false,
             "newSession"
@@ -499,6 +505,7 @@ const createMlStore = (logging: Logging) => {
             dataWindow: getDataWindowFromActions(persistedData.actions),
             appEditNeedsFlushToEditor: true,
             isEditorOpen: false,
+            welcomeDialogDismissed: false,
             ...persistedData,
           });
         },
@@ -1110,6 +1117,7 @@ const createMlStore = (logging: Logging) => {
               projectEdited,
               appEditNeedsFlushToEditor: true,
               timestamp,
+              welcomeDialogDismissed: false,
               // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
             };
           });
@@ -1762,6 +1770,10 @@ const createMlStore = (logging: Logging) => {
         incompatibleEditorDeviceDialogOnOpen() {
           set({ isIncompatibleEditorDeviceDialogOpen: true });
         },
+        dismissWelcomeDialog() {
+          set({ welcomeDialogDismissed: true }, false, "dismissWelcomeDialog");
+        },
+
         closeDialog() {
           set({
             isLanguageDialogOpen: false,
