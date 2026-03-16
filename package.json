@@ -86,7 +86,7 @@
     "@microbit/capacitor-community-nordic-dfu": "^7.0.0-microbit.3",
     "@microbit/capacitor-sqlite-vanilla": "^0.1.0-alpha.5",
     "@microbit/makecode-embed": "^0.5.0",
-    "@microbit/microbit-connection": "^0.9.0-apps.alpha.17",
+    "@microbit/microbit-connection": "^0.9.0-apps.alpha.18",
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/smoothie": "^1.37.0-microbit.2",
     "@tensorflow/tfjs": "^4.20.0",

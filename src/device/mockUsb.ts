@@ -3,25 +3,22 @@ import {
   ConnectOptions,
   ConnectionAvailabilityStatus,
   ConnectionStatus,
-  DeviceConnectionEventMap,
   DeviceError,
   FlashDataSource,
   FlashOptions,
   ProgressStage,
-  TypedEventTarget,
 } from "@microbit/microbit-connection";
-import {
-  MicrobitUSBConnection,
-  SerialConnectionEventMap,
-} from "@microbit/microbit-connection/usb";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
+import { MockEventTarget } from "./mockEventTarget";
 
 /**
  * A mock USB connection used during end-to-end testing.
  */
 export class MockUSBConnection
-  extends TypedEventTarget<DeviceConnectionEventMap & SerialConnectionEventMap>
+  extends MockEventTarget
   implements MicrobitUSBConnection
 {
+  readonly type = "usb" as const;
   status: ConnectionStatus = ConnectionStatus.NoAuthorizedDevice;
 
   /**
