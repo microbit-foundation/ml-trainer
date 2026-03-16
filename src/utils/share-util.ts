@@ -6,6 +6,7 @@
 import { Encoding, Directory, Filesystem } from "@capacitor/filesystem";
 import { Share } from "@capacitor/share";
 import { HexData } from "../model";
+import { isIOS } from "../platform";
 
 const shareFromDirectory = "share";
 const tempStorageLocation = Directory.Temporary;
@@ -29,9 +30,13 @@ export const shareFile = async (
     recursive: true,
   });
 
+  // On iOS, UIActivityViewController treats `text` as a separate shareable
+  // item alongside the file, so saving via the share sheet produces an
+  // unwanted extra "text" file. Android uses EXTRA_TEXT which is handled
+  // correctly as message body metadata, so we keep it there.
   await Share.share({
     title,
-    text,
+    ...(isIOS() ? {} : { text }),
     files: [url],
   });
 };
