@@ -34,6 +34,7 @@ import {
   createCodePageUrl,
   createDataSamplesPageUrl,
   createTestingModelPageUrl,
+  TestingModelPageHistoryState,
 } from "../urls";
 import { getTotalNumSamples } from "../utils/actions";
 import {
@@ -52,7 +53,7 @@ export type LoadType = "drop-load" | "file-upload";
 
 interface ProjectContext {
   browserNavigationToEditor(): Promise<boolean>;
-  openEditor(): Promise<void>;
+  openEditor(focusVisible?: boolean): Promise<void>;
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
@@ -269,28 +270,36 @@ export const ProjectProvider = ({
       editorTimedOut,
     ]
   );
-  const openEditor = useCallback(async () => {
-    logging.event({
-      type: "edit-in-makecode",
-    });
-    try {
-      setProjectEdited();
-      await doAfterEditorUpdate(() => {
-        navigate(createCodePageUrl());
-        return Promise.resolve();
+  // We can't tell whether back from MakeCode is triggered by mouse or
+  // keyboard when re-focusing "Edit in MakeCode" as it's in the iframe.
+  // So instead we track whether we opened it by mouse or keyboard.
+  const openedViaKeyboardRef = useRef(false);
+  const openEditor = useCallback(
+    async (focusVisible?: boolean) => {
+      openedViaKeyboardRef.current = focusVisible ?? false;
+      logging.event({
+        type: "edit-in-makecode",
       });
-    } catch (e) {
-      if (e instanceof CodeEditorError) {
-        openEditorTimedOutDialog();
+      try {
+        setProjectEdited();
+        await doAfterEditorUpdate(() => {
+          navigate(createCodePageUrl());
+          return Promise.resolve();
+        });
+      } catch (e) {
+        if (e instanceof CodeEditorError) {
+          openEditorTimedOutDialog();
+        }
       }
-    }
-  }, [
-    doAfterEditorUpdate,
-    logging,
-    navigate,
-    openEditorTimedOutDialog,
-    setProjectEdited,
-  ]);
+    },
+    [
+      doAfterEditorUpdate,
+      logging,
+      navigate,
+      openEditorTimedOutDialog,
+      setProjectEdited,
+    ]
+  );
   const browserNavigationToEditor = useCallback(async () => {
     try {
       setProjectEdited();
@@ -449,7 +458,11 @@ export const ProjectProvider = ({
   );
 
   const onBack = useCallback(() => {
-    navigate(createTestingModelPageUrl());
+    const state: TestingModelPageHistoryState = {
+      fromEditor: true,
+      focusVisible: openedViaKeyboardRef.current,
+    };
+    navigate(createTestingModelPageUrl(), { state });
   }, [navigate]);
   const onSave = saveHex;
   const downloadActions = useDownloadActions();

@@ -16,10 +16,10 @@ import {
   usePrevious,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useBufferedData } from "../buffered-data-hooks";
 import BackArrow from "../components/BackArrow";
 import DefaultPageLayout, {
@@ -36,12 +36,17 @@ import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
-import { createDataSamplesPageUrl } from "../urls";
+import {
+  createDataSamplesPageUrl,
+  TestingModelPageHistoryState,
+} from "../urls";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const model = useStore((s) => s.model);
+  const editButtonRef = useRef<HTMLButtonElement>(null);
   const startPredicting = useStore((s) => s.startPredicting);
   const stopPredicting = useStore((s) => s.stopPredicting);
   const bufferedData = useBufferedData();
@@ -94,8 +99,10 @@ const TestingModelPage = () => {
     if (getDataCollectionBoardVersion() === "V1") {
       return incompatibleEditorDeviceDialogOnOpen();
     }
+    const focusVisible =
+      editButtonRef.current?.matches(":focus-visible") ?? false;
     setEditorLoading(true);
-    await openEditor();
+    await openEditor(focusVisible);
     setEditorLoading(false);
   }, [
     getDataCollectionBoardVersion,
@@ -110,6 +117,16 @@ const TestingModelPage = () => {
     setEditorLoading(false);
   }, [closeDialog, openEditor]);
   useShortcut(keyboardShortcuts.editInMakeCode, maybeOpenEditor);
+  useEffect(() => {
+    const state = location.state as TestingModelPageHistoryState | undefined;
+    if (state?.fromEditor) {
+      editButtonRef.current?.focus({
+        focusVisible: state.focusVisible ?? false,
+      });
+      // Clear the state so a page refresh doesn't re-focus the button.
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state, location.pathname, navigate]);
 
   return model ? (
     <DefaultPageLayout
@@ -155,6 +172,7 @@ const TestingModelPage = () => {
           <Menu>
             <ButtonGroup isAttached>
               <ButtonWithLoading
+                ref={editButtonRef}
                 variant="primary"
                 onClick={maybeOpenEditor}
                 className={tourElClassname.editInMakeCodeButton}
