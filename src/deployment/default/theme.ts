@@ -12,7 +12,7 @@ import fonts from "./fonts";
 import radii from "./radii";
 import shadows from "./shadows";
 
-// See https://chakra-ui.com/docs/theming/customize-theme
+// See https://v2.chakra-ui.com/docs/styled-system/customize-theme
 const overrides = {
   fonts,
   radii,

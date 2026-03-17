@@ -79,6 +79,42 @@
     "defaultMessage": "crwdns363518:0crwdne363518:0",
     "description": "Home page resource card title"
   },
+  "animation-label": {
+    "defaultMessage": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected.",
+    "description": "Aria label for animation"
+  },
+  "animation-pause-action": {
+    "defaultMessage": "Pause animation",
+    "description": "Pause animation button text"
+  },
+  "animation-resume-action": {
+    "defaultMessage": "Resume animation",
+    "description": "Resume animation button text"
+  },
+  "animation-step-1": {
+    "defaultMessage": "Connect",
+    "description": "Step 1 of how it works animation"
+  },
+  "animation-step-2": {
+    "defaultMessage": "Collect data",
+    "description": "Step 2 of how it works animation"
+  },
+  "animation-step-3": {
+    "defaultMessage": "Test model",
+    "description": "Step 3 of how it works animation"
+  },
+  "animation-step-4": {
+    "defaultMessage": "Code",
+    "description": "Step 4 of how it works animation"
+  },
+  "animation-step-5": {
+    "defaultMessage": "Use",
+    "description": "Step 5 of how it works animation"
+  },
+  "animation-training": {
+    "defaultMessage": "Training",
+    "description": "Machine learning training on computer screen of how it works animation"
+  },
   "back-action": {
     "defaultMessage": "crwdns362676:0crwdne362676:0",
     "description": "Back button text"
@@ -891,10 +927,6 @@
     "defaultMessage": "First lessons",
     "description": "Home page resource card title"
   },
-  "get-started-action": {
-    "defaultMessage": "crwdns363002:0crwdne363002:0",
-    "description": "Get started action"
-  },
   "go-action": {
     "defaultMessage": "crwdns363004:0crwdne363004:0",
     "description": "Go action"
@@ -971,22 +1003,6 @@
     "defaultMessage": "crwdns363020:0crwdne363020:0",
     "description": "Link to home page"
   },
-  "homepage-alt": {
-    "defaultMessage": "crwdns363022:0crwdne363022:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-graph": {
-    "defaultMessage": "crwdns363024:0crwdne363024:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-hands": {
-    "defaultMessage": "crwdns363026:0crwdne363026:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-media": {
-    "defaultMessage": "crwdns368557:0crwdne368557:0",
-    "description": "Alt text for media in homepage"
-  },
   "homepage-banner-heading": {
     "defaultMessage": "New to {appName}?",
     "description": "Homepage banner heading"
@@ -994,86 +1010,6 @@
   "homepage-banner-subtitle": {
     "defaultMessage": "Machine learning with movement and the micro:bit",
     "description": "Homepage banner subtitle"
-  },
-  "homepage-description": {
-    "defaultMessage": "crwdns363028:0crwdne363028:0",
-    "description": "Home page description"
-  },
-  "homepage-how-it-works": {
-    "defaultMessage": "crwdns363030:0crwdne363030:0",
-    "description": "Home page section heading"
-  },
-  "homepage-how-it-works-paragraph": {
-    "defaultMessage": "crwdns363032:0crwdne363032:0",
-    "description": "Home page content under the video"
-  },
-  "homepage-media-description": {
-    "defaultMessage": "crwdns368559:0crwdne368559:0",
-    "description": "Homepage media description"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "crwdns368561:0crwdne368561:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "crwdns368563:0crwdne368563:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "crwdns368565:0crwdne368565:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "crwdns368567:0crwdne368567:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "crwdns368569:0crwdne368569:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "crwdns368571:0crwdne368571:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "crwdns368573:0crwdne368573:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "crwdns368575:0crwdne368575:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "crwdns368577:0crwdne368577:0",
-    "description": "Homepage media descriptive transcript dialog heading"
-  },
-  "homepage-media-pause-action": {
-    "defaultMessage": "crwdns368579:0crwdne368579:0",
-    "description": "Homepage media pause video button text"
-  },
-  "homepage-media-play-action": {
-    "defaultMessage": "crwdns368581:0crwdne368581:0",
-    "description": "Homepage media play video button text"
-  },
-  "homepage-projects": {
-    "defaultMessage": "crwdns363034:0crwdne363034:0",
-    "description": "Home page section heading"
-  },
-  "homepage-projects-more": {
-    "defaultMessage": "crwdns363036:0crwdne363036:0",
-    "description": "Link back to AI landing page"
-  },
-  "homepage-step-by-step": {
-    "defaultMessage": "crwdns363038:0crwdne363038:0",
-    "description": "Home page section heading"
-  },
-  "homepage-subtitle": {
-    "defaultMessage": "crwdns363040:0crwdne363040:0",
-    "description": "Home page subtitle"
-  },
-  "homepage-video-alt": {
-    "defaultMessage": "crwdns363042:0crwdne363042:0",
-    "description": "Home page video alt text"
   },
   "import-data-samples-action": {
     "defaultMessage": "crwdns363044:0crwdne363044:0",
@@ -1463,61 +1399,9 @@
     "defaultMessage": "New project setup",
     "description": "New project setup title"
   },
-  "new-projects-row-carousel": {
-    "defaultMessage": "List of new project actions",
-    "description": "Label for home page row carousel"
-  },
-  "new-projects-row-title": {
-    "defaultMessage": "New projects",
-    "description": "Title for home page row"
-  },
-  "newpage-continue-session-subtitle": {
-    "defaultMessage": "crwdns363192:0crwdne363192:0",
-    "description": "Continue session subtitle"
-  },
-  "newpage-continue-session-title": {
-    "defaultMessage": "crwdns363194:0crwdne363194:0",
-    "description": "Continue session title"
-  },
-  "newpage-last-session-date": {
-    "defaultMessage": "crwdns363196:0{date}crwdne363196:0",
-    "description": "Last session date label"
-  },
-  "newpage-last-session-name": {
-    "defaultMessage": "crwdns363198:0{name}crwdne363198:0",
-    "description": "Last session name label"
-  },
-  "newpage-last-session-none": {
-    "defaultMessage": "crwdns363200:0crwdne363200:0",
-    "description": "Last session not found text"
-  },
-  "newpage-last-session-title": {
-    "defaultMessage": "crwdns363202:0crwdne363202:0",
-    "description": "Open last session title"
-  },
   "newpage-new-project-title": {
     "defaultMessage": "New project",
     "description": "Start new project title"
-  },
-  "newpage-new-session-subtitle": {
-    "defaultMessage": "crwdns363204:0crwdne363204:0",
-    "description": "Start new session subtitle"
-  },
-  "newpage-new-session-title": {
-    "defaultMessage": "crwdns363206:0crwdne363206:0",
-    "description": "Start new session title"
-  },
-  "newpage-section-one-title": {
-    "defaultMessage": "crwdns363208:0crwdne363208:0",
-    "description": "Homepage section one title"
-  },
-  "newpage-section-two-title": {
-    "defaultMessage": "crwdns363210:0crwdne363210:0",
-    "description": "Homepage section two title"
-  },
-  "newpage-title": {
-    "defaultMessage": "crwdns363212:0crwdne363212:0",
-    "description": "New page title"
   },
   "next-action": {
     "defaultMessage": "crwdns363214:0crwdne363214:0",
@@ -1542,10 +1426,6 @@
   "not-found-title": {
     "defaultMessage": "crwdns363224:0crwdne363224:0",
     "description": "Page not found page title"
-  },
-  "open-file-action": {
-    "defaultMessage": "crwdns363226:0crwdne363226:0",
-    "description": "Open file button text"
   },
   "open-file-dropped": {
     "defaultMessage": "crwdns363228:0crwdne363228:0",
@@ -1939,17 +1819,9 @@
     "defaultMessage": "Sort projects",
     "description": "Label for select element to sort projects"
   },
-  "start-session-action": {
-    "defaultMessage": "crwdns363344:0crwdne363344:0",
-    "description": "Start session button text"
-  },
   "start-training-action": {
     "defaultMessage": "crwdns363346:0crwdne363346:0",
     "description": "Start training button text"
-  },
-  "steps-alt": {
-    "defaultMessage": "crwdns363348:0crwdne363348:0",
-    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "crwdns363350:0crwdne363350:0",
