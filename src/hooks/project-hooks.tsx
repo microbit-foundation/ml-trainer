@@ -444,9 +444,10 @@ export const ProjectProvider = ({
             saveType,
           },
         });
+        // Dismiss the progress dialog now that the hex is ready.
+        setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
         if (saveType === SaveType.Share) {
           try {
-            setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
             await shareHex(hex);
           } catch (e) {
             if (!isShareCanceled(e)) {
@@ -458,7 +459,7 @@ export const ProjectProvider = ({
         }
         setSave({ step: SaveStep.None, type: SaveType.Download });
         if (saveType === SaveType.Download && !isIOS()) {
-          // iOS share sheet provides its own feedback
+          // iOS share sheet provides its own feedback.
           toast({
             id: "save-complete",
             position: "top",
