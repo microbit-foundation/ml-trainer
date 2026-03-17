@@ -195,7 +195,7 @@ const executeAction = async (
  * from IndexedDB or updated mid-flow are reflected on the connection.
  */
 const syncConnectionSettings = (deps: DownloadDependencies) => {
-  const { bluetoothMicrobitName } = useStore.getState().settings;
+  const { bluetoothMicrobitName } = getDownloadState();
   if (bluetoothMicrobitName) {
     deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
   }

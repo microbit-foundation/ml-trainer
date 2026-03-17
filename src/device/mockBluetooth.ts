@@ -257,7 +257,15 @@ export class MockBluetoothConnection
 
   async disconnect(): Promise<void> {}
   async serialWrite(_data: string): Promise<void> {}
-  setNameFilter(_name: string): void {}
+  /**
+   * The most recent name filter set via setNameFilter().
+   * Exposed for e2e test assertions.
+   */
+  nameFilter: string | undefined;
+
+  setNameFilter(name: string): void {
+    this.nameFilter = name;
+  }
 
   private async progressStage(
     progressCallback: FlashOptions["progress"],
