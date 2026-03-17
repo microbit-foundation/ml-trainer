@@ -19,7 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
 import {
   RiAddLine,
@@ -59,6 +59,10 @@ import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 const HomePage = () => {
   const intl = useIntl();
   const [{ languageId }] = useSettings();
+  const resetWelcomeDialog = useStore((s) => s.resetWelcomeDialog);
+  useEffect(() => {
+    resetWelcomeDialog();
+  }, [resetWelcomeDialog]);
 
   return (
     <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>

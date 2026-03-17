@@ -204,6 +204,8 @@ export interface State {
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
 
+  welcomeDialogDismissedForProject: string | undefined;
+
   allProjectData: ProjectDataWithActions[];
 }
 
@@ -303,6 +305,8 @@ export interface Actions {
   incompatibleEditorDeviceDialogOnOpen(): void;
   recordingDialogOnOpen(): void;
   connectToRecordDialogOnOpen(): void;
+  dismissWelcomeDialog(): void;
+  resetWelcomeDialog(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
 }
@@ -364,6 +368,8 @@ const createMlStore = (logging: Logging) => {
         isConnectToRecordDialogOpen: false,
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
+
+        welcomeDialogDismissedForProject: undefined,
 
         allProjectData: [],
 
@@ -1762,6 +1768,21 @@ const createMlStore = (logging: Logging) => {
         incompatibleEditorDeviceDialogOnOpen() {
           set({ isIncompatibleEditorDeviceDialogOpen: true });
         },
+        dismissWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: get().id },
+            false,
+            "dismissWelcomeDialog"
+          );
+        },
+        resetWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: undefined },
+            false,
+            "resetWelcomeDialog"
+          );
+        },
+
         closeDialog() {
           set({
             isLanguageDialogOpen: false,
