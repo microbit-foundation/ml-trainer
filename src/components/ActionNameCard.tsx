@@ -64,11 +64,6 @@ const ActionNameCard = ({
     // Occurs when the name is updated in another tab.
     setLocalName(value.name);
   }, [value.name]);
-  const isTriggered = useStore((s) =>
-    viewMode === ActionCardNameViewMode.ReadOnly
-      ? s.predictionResult?.detected?.id === value.id
-      : undefined
-  );
   // Avoid autofocus on mobile/native as it triggers the keyboard
   const allowAutoFocus =
     useBreakpointValue({ base: false, md: true }) && !isNativePlatform();
@@ -161,7 +156,11 @@ const ActionNameCard = ({
         <HStack>
           <HStack>
             {viewMode === ActionCardNameViewMode.ReadOnly ? (
-              <LedIcon icon={icon} isTriggered={isTriggered} />
+              <LedIcon
+                icon={icon}
+                actionId={value.id}
+                isTriggerable={viewMode === ActionCardNameViewMode.ReadOnly}
+              />
             ) : (
               <LedIconSvg icon={icon} />
             )}

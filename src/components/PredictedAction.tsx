@@ -78,7 +78,8 @@ const PredictedAction = () => {
         <LedIcon
           icon={predictionDetected?.icon ?? "off"}
           size="70px"
-          isTriggered
+          actionId={estimatedAction}
+          isTriggerable={true}
         />
       </VStack>
       {/* Display workaround for in-context translation error caused by DOM change. */}
