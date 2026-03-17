@@ -306,6 +306,7 @@ export interface Actions {
   recordingDialogOnOpen(): void;
   connectToRecordDialogOnOpen(): void;
   dismissWelcomeDialog(): void;
+  resetWelcomeDialog(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
 }
@@ -1772,6 +1773,13 @@ const createMlStore = (logging: Logging) => {
             { welcomeDialogDismissedForProject: get().id },
             false,
             "dismissWelcomeDialog"
+          );
+        },
+        resetWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: undefined },
+            false,
+            "resetWelcomeDialog"
           );
         },
 
