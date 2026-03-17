@@ -3,17 +3,15 @@ import {
   ConnectOptions,
   ConnectionAvailabilityStatus,
   ConnectionStatus,
-  DeviceConnectionEventMap,
   DeviceError,
   DeviceErrorCode,
   FlashDataSource,
   FlashOptions,
   LedMatrix,
   ProgressStage,
-  ServiceConnectionEventMap,
-  TypedEventTarget,
 } from "@microbit/microbit-connection";
 import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MockEventTarget } from "./mockEventTarget";
 
 const notConnected = (): never => {
   throw new DeviceError({ code: "not-connected", message: "Not connected" });
@@ -52,9 +50,10 @@ export type ConnectBehavior =
  * ```
  */
 export class MockBluetoothConnection
-  extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
+  extends MockEventTarget
   implements MicrobitBluetoothConnection
 {
+  readonly type = "bluetooth" as const;
   status: ConnectionStatus = ConnectionStatus.NoAuthorizedDevice;
 
   /**

@@ -2,20 +2,17 @@ import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluet
 import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { isNativePlatform } from "../platform";
 
-/**
- * DeviceConnection is a messy generic type.
- * This is more practical.
- */
 export type MicrobitConnection =
   | MicrobitBluetoothConnection
   | MicrobitUSBConnection;
 
 export const isBluetoothConnection = (
   connection: MicrobitConnection
-): connection is MicrobitBluetoothConnection => "setNameFilter" in connection;
+): connection is MicrobitBluetoothConnection => connection.type === "bluetooth";
 
-export const isWebUSBConnection = (connection: MicrobitConnection) =>
-  "setRequestDeviceExclusionFilters" in connection;
+export const isWebUSBConnection = (
+  connection: MicrobitConnection
+): connection is MicrobitUSBConnection => connection.type === "usb";
 
 export const isNativeBluetoothConnection = (
   connection: MicrobitConnection

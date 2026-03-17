@@ -238,7 +238,9 @@ export const guards = {
   isBadFirmwareError: (
     _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
-  ) => event.type === "connectFlashFailure" && event.code === "update-req",
+  ) =>
+    event.type === "connectFlashFailure" &&
+    event.code === "firmware-update-required",
 
   // Native Bluetooth permission errors - can occur in both flash and data connection contexts.
   // In native Bluetooth, both connectFlash and connectData use Bluetooth, so permission errors
@@ -291,7 +293,7 @@ export const guards = {
       event.type === "connectDataFailure" ||
       event.type === "flashFailure"
     ) {
-      return event.code === "clear-connect";
+      return event.code === "device-in-use";
     }
     return false;
   },

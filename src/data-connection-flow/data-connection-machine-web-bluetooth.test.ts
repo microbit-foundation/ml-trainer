@@ -230,7 +230,7 @@ describe("Data connection flow: Web Bluetooth", () => {
     it("connectFlashFailure with bad firmware -> BadFirmware", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
         type: "connectFlashFailure",
-        code: "update-req",
+        code: "firmware-update-required",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BadFirmware);

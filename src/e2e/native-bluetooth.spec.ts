@@ -284,7 +284,7 @@ test.describe("native bluetooth", () => {
 
     // Configure to fail on connect
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "error", code: "reconnect-microbit" },
+      { outcome: "error", code: "connection-error" },
     ]);
 
     await connectionDialogs.waitForText(
@@ -419,7 +419,7 @@ test.describe("native bluetooth", () => {
 
     // Configure to fail on connect
     await downloadDialogs.setBluetoothConnectBehaviors([
-      { outcome: "error", code: "reconnect-microbit" },
+      { outcome: "error", code: "connection-error" },
     ]);
 
     await downloadDialogs.waitForText(

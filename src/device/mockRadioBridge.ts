@@ -4,13 +4,11 @@ import {
   ConnectionAvailabilityStatus,
   ConnectionStatus,
   ConnectionStatusChange,
-  DeviceConnectionEventMap,
-  ServiceConnectionEventMap,
-  TypedEventTarget,
 } from "@microbit/microbit-connection";
 import { MicrobitRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
 import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { ConnectBehavior } from "./mockBluetooth";
+import { MockEventTarget } from "./mockEventTarget";
 
 /**
  * A mock Radio Bridge connection used during end-to-end testing.
@@ -20,9 +18,10 @@ import { ConnectBehavior } from "./mockBluetooth";
  * then radio communication is established with the remote micro:bit.
  */
 export class MockRadioBridgeConnection
-  extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
+  extends MockEventTarget
   implements MicrobitRadioBridgeConnection
 {
+  readonly type = "radio-bridge" as const;
   status: ConnectionStatus;
 
   /**
