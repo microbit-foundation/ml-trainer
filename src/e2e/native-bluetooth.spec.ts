@@ -8,6 +8,7 @@
  */
 import * as fs from "fs";
 import * as path from "path";
+import { expect } from "@playwright/test";
 import { ConnectionStatus, ProgressStage } from "@microbit/microbit-connection";
 import { test } from "./fixtures";
 
@@ -445,5 +446,69 @@ test.describe("native bluetooth", () => {
     await downloadDialogs.waitForText(
       downloadDialogs.titles.nativeBluetooth.resetToBluetooth
     );
+  });
+
+  test("download flow - change pattern during FindingDevice", async ({
+    homePage,
+    dataSamplesPage,
+    testModelPage,
+  }) => {
+    await homePage.goto(["android"]);
+    await homePage.importProject("test-data/dataset.json");
+    await dataSamplesPage.welcomeDialog.close();
+
+    const trainModelDialog = await dataSamplesPage.trainModel();
+    await trainModelDialog.train();
+
+    const makecodeEditor = await testModelPage.editInMakeCode();
+    await makecodeEditor.closeTourDialog();
+    const downloadDialogs = await makecodeEditor.clickDownload();
+
+    // Navigate to pattern entry
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.help
+    );
+    await downloadDialogs.clickNext();
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.resetToBluetooth
+    );
+    await downloadDialogs.clickNext();
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.copyPattern
+    );
+
+    // Enter first pattern (1,2,3,4,5) and start connecting
+    await downloadDialogs.enterBluetoothPatternValues([1, 2, 3, 4, 5]);
+    await downloadDialogs.setBluetoothProgressPause(
+      ProgressStage.FindingDevice,
+      undefined
+    );
+    await downloadDialogs.clickNext();
+
+    // Paused at FindingDevice — click "My pattern is different"
+    await downloadDialogs.clickMyPatternIsDifferent();
+
+    // Should be back at pattern entry
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.copyPattern
+    );
+
+    // Enter a different pattern (5,4,3,2,1) and start connecting again
+    await downloadDialogs.enterBluetoothPatternValues([5, 4, 3, 2, 1]);
+    await downloadDialogs.setBluetoothProgressPause(
+      ProgressStage.FindingDevice,
+      undefined
+    );
+    await downloadDialogs.clickNext();
+
+    // Verify the name filter was updated to match the new pattern.
+    // Pattern (5,4,3,2,1) corresponds to micro:bit name "tegoz".
+    const nameFilter = await downloadDialogs.getBluetoothNameFilter();
+    expect(nameFilter).toBe("tegoz");
+
+    // Resume and let the download complete
+    await downloadDialogs.resumeBluetoothProgress();
+    await downloadDialogs.setBluetoothProgressPause(undefined, undefined);
+    await downloadDialogs.expectDialogClosed();
   });
 });
