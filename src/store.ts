@@ -377,8 +377,7 @@ export const isCloseableDialogOpen = (state: State): boolean =>
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
     devtools(
-      subscribeWithSelector(
-      (set, get) => ({
+      subscribeWithSelector((set, get) => ({
         id: undefined,
         timestamp: 0,
         actions: [createFirstAction()],
@@ -1956,8 +1955,7 @@ const createMlStore = (logging: Logging) => {
             isWelcomeDialogOpen
           );
         },
-        })
-      ),
+      })),
       { enabled: flags.devtools }
     )
   );
