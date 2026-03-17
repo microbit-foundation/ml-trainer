@@ -204,7 +204,7 @@ export interface State {
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
 
-  welcomeDialogDismissed: boolean;
+  welcomeDialogDismissedForProject: string | undefined;
 
   allProjectData: ProjectDataWithActions[];
 }
@@ -368,7 +368,7 @@ const createMlStore = (logging: Logging) => {
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
 
-        welcomeDialogDismissed: false,
+        welcomeDialogDismissedForProject: undefined,
 
         allProjectData: [],
 
@@ -440,7 +440,6 @@ const createMlStore = (logging: Logging) => {
               appEditNeedsFlushToEditor: true,
               timestamp,
               hint: getHint(actions, false),
-              welcomeDialogDismissed: false,
             },
             false,
             "newSession"
@@ -505,7 +504,6 @@ const createMlStore = (logging: Logging) => {
             dataWindow: getDataWindowFromActions(persistedData.actions),
             appEditNeedsFlushToEditor: true,
             isEditorOpen: false,
-            welcomeDialogDismissed: false,
             ...persistedData,
           });
         },
@@ -1117,7 +1115,6 @@ const createMlStore = (logging: Logging) => {
               projectEdited,
               appEditNeedsFlushToEditor: true,
               timestamp,
-              welcomeDialogDismissed: false,
               // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
             };
           });
@@ -1771,7 +1768,11 @@ const createMlStore = (logging: Logging) => {
           set({ isIncompatibleEditorDeviceDialogOpen: true });
         },
         dismissWelcomeDialog() {
-          set({ welcomeDialogDismissed: true }, false, "dismissWelcomeDialog");
+          set(
+            { welcomeDialogDismissedForProject: get().id },
+            false,
+            "dismissWelcomeDialog"
+          );
         },
 
         closeDialog() {

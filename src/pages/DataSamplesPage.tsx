@@ -86,9 +86,25 @@ const DataSamplesPage = () => {
   });
   const intl = useIntl();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const welcomeDialogDismissed = useStore((s) => s.welcomeDialogDismissed);
+  const welcomeDialogDismissedForProject = useStore(
+    (s) => s.welcomeDialogDismissedForProject
+  );
+  const projectId = useStore((s) => s.id);
   const dismissWelcomeDialog = useStore((s) => s.dismissWelcomeDialog);
-  const isWelcomeDialogOpen = !isConnected && !welcomeDialogDismissed;
+  const isWelcomeDialogOpen =
+    !isConnected && welcomeDialogDismissedForProject !== projectId;
+  // Lock in the decision to skip the welcome dialog when arriving already
+  // connected so that a later disconnection doesn't resurface it.
+  useEffect(() => {
+    if (isConnected && welcomeDialogDismissedForProject !== projectId) {
+      dismissWelcomeDialog();
+    }
+  }, [
+    isConnected,
+    projectId,
+    welcomeDialogDismissedForProject,
+    dismissWelcomeDialog,
+  ]);
   const hasMoved = useHasMoved();
   const tourInProgress = useStore((s) => !!s.tourState);
   const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
