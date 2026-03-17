@@ -78,7 +78,7 @@ const PredictedAction = () => {
         <LedIcon
           icon={predictionDetected?.icon ?? "off"}
           size="70px"
-          actionId={estimatedAction}
+          actionId={predictionDetected?.id}
           isTriggerable={true}
         />
       </VStack>

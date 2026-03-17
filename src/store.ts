@@ -1806,10 +1806,7 @@ const createMlStore = (logging: Logging) => {
               classificationIds: actions.map((a) => a.id),
             };
             if (input.data.x.length > dataWindow.minSamples) {
-              performance.mark("predict-start");
               const result = predict(input, dataWindow);
-              performance.mark("predict-end");
-              performance.measure("predict", "predict-start", "predict-end");
               if (result.error) {
                 logging.error("Prediction error", result.detail);
               } else {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { BoxProps, Text, VisuallyHidden } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useStore } from "../store";
 import { useIntl } from "react-intl";
 
@@ -23,13 +23,16 @@ const PercentageDisplay = ({
   const textRef = useRef<HTMLParagraphElement>(null);
   const accessibleTextRef = useRef<HTMLParagraphElement>(null);
 
-  const getAriaLabel = (currentConfidence: string) =>
-    intl.formatMessage(
-      {
-        id: "certainty-percentage-label",
-      },
-      { currentConfidence, action: actionName }
-    );
+  const getAriaLabel = useCallback(
+    (currentConfidence: string) =>
+      intl.formatMessage(
+        {
+          id: "certainty-percentage-label",
+        },
+        { currentConfidence, action: actionName }
+      ),
+    [intl, actionName]
+  );
 
   useEffect(
     () =>
@@ -46,9 +49,14 @@ const PercentageDisplay = ({
             (predictionResult?.confidences[actionId] ?? 0) * 100
           );
           textRef.current.textContent = `${confidence}%`;
+          if (accessibleTextRef.current) {
+            accessibleTextRef.current.textContent = getAriaLabel(
+              `${confidence}%`
+            );
+          }
         }
       ),
-    [actionId]
+    [actionId, getAriaLabel]
   );
 
   return (

@@ -156,11 +156,7 @@ const ActionNameCard = ({
         <HStack>
           <HStack>
             {viewMode === ActionCardNameViewMode.ReadOnly ? (
-              <LedIcon
-                icon={icon}
-                actionId={value.id}
-                isTriggerable={viewMode === ActionCardNameViewMode.ReadOnly}
-              />
+              <LedIcon icon={icon} actionId={value.id} isTriggerable={true} />
             ) : (
               <LedIconSvg icon={icon} />
             )}

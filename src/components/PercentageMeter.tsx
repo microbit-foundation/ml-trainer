@@ -21,21 +21,23 @@ const PercentageMeter = ({
 
   const meterRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    useStore.subscribe(
-      (s) => s.predictionResult,
-      (predictionResult) => {
-        if (!meterRef.current) return;
-        meterRef.current.style.backgroundColor =
-          predictionResult?.detected?.id === actionId
-            ? "brand2.500"
-            : "gray.600";
-        meterRef.current.style.width = `${
-          (predictionResult?.confidences[actionId] ?? 0) * 100
-        }%`;
-      }
-    );
-  }, [actionId]);
+  useEffect(
+    () =>
+      useStore.subscribe(
+        (s) => s.predictionResult,
+        (predictionResult) => {
+          if (!meterRef.current) return;
+          meterRef.current.style.backgroundColor =
+            predictionResult?.detected?.id === actionId
+              ? "--chakra-color-brand2-500"
+              : "--chakra-color-gray-600";
+          meterRef.current.style.width = `${
+            (predictionResult?.confidences[actionId] ?? 0) * 100
+          }%`;
+        }
+      ),
+    [actionId]
+  );
 
   return (
     <HStack

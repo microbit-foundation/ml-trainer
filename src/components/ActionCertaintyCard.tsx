@@ -69,7 +69,7 @@ const ActionCertaintyCard = ({
       >
         <HStack w="100%" gap={5}>
           <PercentageMeter meterBarWidthPx={barWidth} actionId={actionId} />
-          {<PercentageDisplay actionName={actionName} actionId={actionId} />}
+          <PercentageDisplay actionName={actionName} actionId={actionId} />
         </HStack>
         <VStack alignItems="left" gap={1}>
           <Text fontSize="sm" textColor="gray.600">
