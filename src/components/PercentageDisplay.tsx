@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps, Text, VisuallyHidden } from "@chakra-ui/react";
+import { BoxProps, Text, useToken, VisuallyHidden } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef } from "react";
 import { useStore } from "../store";
 import { useIntl } from "react-intl";
@@ -22,6 +22,10 @@ const PercentageDisplay = ({
 
   const textRef = useRef<HTMLParagraphElement>(null);
   const accessibleTextRef = useRef<HTMLParagraphElement>(null);
+  const [triggeredColor, defaultColor] = useToken("colors", [
+    "brand2.500",
+    "gray.600",
+  ]);
 
   const getAriaLabel = useCallback(
     (currentConfidence: string) =>
@@ -43,8 +47,8 @@ const PercentageDisplay = ({
           if (!textRef.current) return;
           textRef.current.style.backgroundColor =
             predictionResult?.detected?.id === actionId
-              ? "brand2.500"
-              : "gray.600";
+              ? triggeredColor
+              : defaultColor;
           const confidence = Math.round(
             (predictionResult?.confidences[actionId] ?? 0) * 100
           );
@@ -56,7 +60,7 @@ const PercentageDisplay = ({
           }
         }
       ),
-    [actionId, getAriaLabel]
+    [actionId, getAriaLabel, triggeredColor, defaultColor]
   );
 
   return (

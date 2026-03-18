@@ -26,6 +26,7 @@ const PredictedAction = () => {
     useShallow((s) => s.predictionResult?.detected)
   );
   const estimatedAction = predictionDetected?.name;
+  const estimatedIcon = predictionDetected?.icon ?? "off";
   const [liveRegionEstimatedAction, setLiveRegionEstimatedAction] = useState<
     string | undefined
   >(estimatedAction);
@@ -75,12 +76,7 @@ const PredictedAction = () => {
         />
       </HStack>
       <VStack justifyContent="center" flexGrow={1} mb={0.5}>
-        <LedIcon
-          icon={predictionDetected?.icon ?? "off"}
-          size="70px"
-          actionId={predictionDetected?.id}
-          isTriggerable={true}
-        />
+        <LedIcon icon={estimatedIcon} size="70px" colorScheme="brand2" />
       </VStack>
       {/* Display workaround for in-context translation error caused by DOM change. */}
       <Text

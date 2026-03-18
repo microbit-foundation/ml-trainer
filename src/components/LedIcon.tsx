@@ -3,91 +3,89 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AspectRatio, Box, HStack, keyframes, VStack } from "@chakra-ui/react";
-import { memo, useCallback, useEffect, useRef } from "react";
+import {
+  AspectRatio,
+  Box,
+  HStack,
+  keyframes,
+  useToken,
+  VStack,
+} from "@chakra-ui/react";
+import { forwardRef, memo, useImperativeHandle, useRef } from "react";
 import { icons, LedIconType } from "../utils/icons";
 import { useIntl } from "react-intl";
-import { useStore } from "../store";
 
-interface LedIconProps {
-  actionId?: string;
-  icon: LedIconType;
-  size?: string | number;
-  isTriggerable: boolean;
+export interface LedIconHandle {
+  /**
+   * Toggle between the colorScheme color and gray without a React re-render.
+   */
+  setLedsOn(on: boolean): void;
 }
 
-const LedIcon = ({
-  icon,
-  size = 20,
-  actionId,
-  isTriggerable,
-}: LedIconProps) => {
-  const iconData = icons[icon];
-  const intl = useIntl();
-  const iconRef = useRef<HTMLDivElement>(null);
+interface LedIconProps {
+  colorScheme?: string;
+  icon: LedIconType;
+  size?: string | number;
+}
 
-  const getOnColor = useCallback(
-    (isTriggered?: boolean) => {
-      if (!isTriggerable) {
-        return "var(--chakra-colors-brand-500)";
-      } else if (isTriggered) {
-        return "var(--chakra-colors-brand2-500)";
-      } else {
-        return "var(--chakra-colors-gray-600)";
-      }
-    },
-    [isTriggerable]
-  );
+const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
+  ({ colorScheme = "brand", icon, size = 20 }, ref) => {
+    const iconData = icons[icon];
+    const intl = useIntl();
+    const vstackRef = useRef<HTMLDivElement>(null);
+    const [activeColor, offColor] = useToken("colors", [
+      `${colorScheme}.500`,
+      "gray.600",
+    ]);
 
-  useEffect(() => {
-    if (!isTriggerable) {
-      iconRef.current?.style.setProperty("--led-on-color", getOnColor());
-    } else {
-      return useStore.subscribe(
-        (store) => store.predictionResult?.detected?.id === actionId,
-        (isTriggered: boolean) => {
-          if (!iconRef.current) return;
-          iconRef.current.style.setProperty(
-            "--led-on-color",
-            getOnColor(isTriggered)
+    useImperativeHandle(
+      ref,
+      () => ({
+        setLedsOn(on: boolean) {
+          vstackRef.current?.style.setProperty(
+            "--led-color",
+            on ? activeColor : offColor
           );
-        }
-      );
-    }
-  }, [actionId, isTriggerable, getOnColor]);
+        },
+      }),
+      [activeColor, offColor]
+    );
 
-  return (
-    <AspectRatio
-      width={size}
-      height={size}
-      ratio={1}
-      role="img"
-      aria-label={intl.formatMessage({
-        id: `led-icon-option-${icon.toLowerCase()}`,
-      })}
-    >
-      <VStack
-        w="100%"
-        h="100%"
-        spacing={0.5}
-        ref={iconRef}
-        style={
-          {
-            "--led-off-color": "var(--chakra-colors-gray-200)",
-            "--led-on-color": getOnColor(),
-          } as React.CSSProperties
-        }
-      >
-        {Array.from(Array(5)).map((_, idx) => {
-          const start = idx * 5;
-          return (
-            <LedIconRow key={idx} data={iconData.substring(start, start + 5)} />
-          );
+    return (
+      <AspectRatio
+        width={size}
+        height={size}
+        ratio={1}
+        role="img"
+        aria-label={intl.formatMessage({
+          id: `led-icon-option-${icon.toLowerCase()}`,
         })}
-      </VStack>
-    </AspectRatio>
-  );
-};
+      >
+        <VStack
+          w="100%"
+          h="100%"
+          spacing={0.5}
+          ref={vstackRef}
+          style={
+            {
+              "--led-color": activeColor,
+            } as React.CSSProperties
+          }
+        >
+          {Array.from(Array(5)).map((_, idx) => {
+            const start = idx * 5;
+            return (
+              <LedIconRow
+                key={idx}
+                data={iconData.substring(start, start + 5)}
+              />
+            );
+          })}
+        </VStack>
+      </AspectRatio>
+    );
+  }
+);
 
 const turnOn = keyframes`
   0% {
@@ -128,9 +126,7 @@ const LedIconRow = ({ data }: LedIconRowProps) => {
           h="100%"
           w="100%"
           key={idx}
-          bgColor={
-            data[idx] === "1" ? "var(--led-on-color)" : "var(--led-off-color)"
-          }
+          bgColor={data[idx] === "1" ? "var(--led-color)" : "gray.200"}
           borderRadius="sm"
           transitionTimingFunction="ease"
           transitionProperty="background-color"

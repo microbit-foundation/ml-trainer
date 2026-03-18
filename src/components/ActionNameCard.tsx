@@ -12,14 +12,14 @@ import {
   useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { Action } from "../model";
-import { useStore } from "../store";
+import { State, useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIconSvg from "./icons/LedIconSvg";
-import LedIcon from "./LedIcon";
+import LedIcon, { LedIconHandle } from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
 import debounce from "lodash.debounce";
 import { isNativePlatform } from "../platform";
@@ -64,6 +64,17 @@ const ActionNameCard = ({
     // Occurs when the name is updated in another tab.
     setLocalName(value.name);
   }, [value.name]);
+  const ledIconRef = useRef<LedIconHandle>(null);
+  useEffect(() => {
+    if (viewMode !== ActionCardNameViewMode.ReadOnly) return;
+    const isTriggered = (s: State) =>
+      s.predictionResult?.detected?.id === value.id;
+    ledIconRef.current?.setLedsOn(isTriggered(useStore.getState()));
+    return useStore.subscribe(isTriggered, (v) =>
+      ledIconRef.current?.setLedsOn(v)
+    );
+  }, [value.id, viewMode]);
+
   // Avoid autofocus on mobile/native as it triggers the keyboard
   const allowAutoFocus =
     useBreakpointValue({ base: false, md: true }) && !isNativePlatform();
@@ -156,7 +167,7 @@ const ActionNameCard = ({
         <HStack>
           <HStack>
             {viewMode === ActionCardNameViewMode.ReadOnly ? (
-              <LedIcon icon={icon} actionId={value.id} isTriggerable={true} />
+              <LedIcon ref={ledIconRef} icon={icon} colorScheme="brand2" />
             ) : (
               <LedIconSvg icon={icon} />
             )}

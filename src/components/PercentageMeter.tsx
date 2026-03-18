@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, StackProps } from "@chakra-ui/react";
+import { HStack, StackProps, useToken } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { useStore } from "../store";
 
@@ -20,6 +20,10 @@ const PercentageMeter = ({
   const numTicks = 9;
 
   const meterRef = useRef<HTMLDivElement>(null);
+  const [triggeredColor, defaultColor] = useToken("colors", [
+    "brand2.500",
+    "gray.600",
+  ]);
 
   useEffect(
     () =>
@@ -29,14 +33,14 @@ const PercentageMeter = ({
           if (!meterRef.current) return;
           meterRef.current.style.backgroundColor =
             predictionResult?.detected?.id === actionId
-              ? "--chakra-color-brand2-500"
-              : "--chakra-color-gray-600";
+              ? triggeredColor
+              : defaultColor;
           meterRef.current.style.width = `${
             (predictionResult?.confidences[actionId] ?? 0) * 100
           }%`;
         }
       ),
-    [actionId]
+    [actionId, triggeredColor, defaultColor]
   );
 
   return (
