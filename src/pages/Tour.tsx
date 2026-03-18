@@ -82,6 +82,11 @@ const Tour = () => {
   return (
     <Modal
       closeOnOverlayClick={false}
+      // Let focus move to the body so the next Tab enters the page from the
+      // top. The default behavior restores focus to the element that was
+      // focused when the modal opened, which on the MakeCode page would be
+      // the iframe, pulling focus into the MakeCode workspace.
+      returnFocusOnClose={false}
       key={step.selector}
       isOpen={isOpen}
       onClose={() => {}}
