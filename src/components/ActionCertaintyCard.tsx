@@ -15,12 +15,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
-import { useStore } from "../store";
 
 const markClass = "CertaintyThresholdGridItem--mark";
 
@@ -41,20 +40,12 @@ const ActionCertaintyCard = ({
 }: ActionCertaintyCardProps) => {
   const intl = useIntl();
   const barWidth = 240;
-  const predictionResult = useStore((s) => s.predictionResult);
-  const isTriggered = predictionResult?.detected?.id === actionId;
-  const colorScheme = useMemo(
-    () => (isTriggered ? "brand2.500" : undefined),
-    [isTriggered]
-  );
+
   const handleThresholdChange = useCallback(
     (val: number) => onThresholdChange(val * 0.01),
     [onThresholdChange]
   );
   const sliderValue = requiredConfidence * 100;
-  const currentConfidence = Math.round(
-    (predictionResult?.confidences[actionId] ?? 0) * 100
-  );
   return (
     <Card
       py={2}
@@ -77,21 +68,8 @@ const ActionCertaintyCard = ({
         justifyContent="center"
       >
         <HStack w="100%" gap={5}>
-          <PercentageMeter
-            meterBarWidthPx={barWidth}
-            value={currentConfidence}
-            colorScheme={colorScheme}
-          />
-          <PercentageDisplay
-            ariaLabel={intl.formatMessage(
-              {
-                id: "certainty-percentage-label",
-              },
-              { currentConfidence, action: actionName }
-            )}
-            value={currentConfidence}
-            colorScheme={colorScheme}
-          />
+          <PercentageMeter meterBarWidthPx={barWidth} actionId={actionId} />
+          <PercentageDisplay actionName={actionName} actionId={actionId} />
         </HStack>
         <VStack alignItems="left" gap={1}>
           <Text fontSize="sm" textColor="gray.600">

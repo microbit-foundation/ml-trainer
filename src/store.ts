@@ -11,7 +11,7 @@ import { DeviceBondState } from "@microbit/microbit-connection/bluetooth";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import {
   broadcastChannel,
@@ -377,7 +377,7 @@ export const isCloseableDialogOpen = (state: State): boolean =>
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
     devtools(
-      (set, get) => ({
+      subscribeWithSelector((set, get) => ({
         id: undefined,
         timestamp: 0,
         actions: [createFirstAction()],
@@ -1952,7 +1952,7 @@ const createMlStore = (logging: Logging) => {
             isWelcomeDialogOpen
           );
         },
-      }),
+      })),
       { enabled: flags.devtools }
     )
   );
