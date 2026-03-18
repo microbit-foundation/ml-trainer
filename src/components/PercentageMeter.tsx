@@ -57,7 +57,7 @@ const PercentageMeter = ({
         w={0}
         h={height}
         rounded="full"
-        bgColor={"gray.600"}
+        bgColor="gray.600"
       />
       <HStack
         display="inline-flex"

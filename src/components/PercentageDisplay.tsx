@@ -70,7 +70,7 @@ const PercentageDisplay = ({
       </VisuallyHidden>
       <Text
         ref={textRef}
-        bgColor={"gray.600"}
+        bgColor="gray.600"
         color="white"
         rounded="md"
         textAlign="center"
