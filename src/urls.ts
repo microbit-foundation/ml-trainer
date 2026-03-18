@@ -19,6 +19,11 @@ export const createOpenSharedProjectPageUrl = () => `${basepath}:shareId`;
 
 export const createDataSamplesPageUrl = () => `${basepath}data-samples`;
 
+export interface TestingModelPageHistoryState {
+  fromEditor?: boolean;
+  focusVisible?: boolean;
+}
+
 export const createTestingModelPageUrl = () => `${basepath}testing-model`;
 
 export const createCodePageUrl = () => `${basepath}code`;
