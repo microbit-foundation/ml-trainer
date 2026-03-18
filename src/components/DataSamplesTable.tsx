@@ -6,7 +6,9 @@
  */
 import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
 import { ButtonData } from "@microbit/microbit-connection";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import useKeyboardHeight from "../hooks/use-keyboard-height";
+import { isIOS } from "../platform";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
 import { useDataConnected } from "../data-connection-flow";
@@ -62,6 +64,37 @@ const DataSamplesTable = ({
   hint,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
+  const keyboardHeight = useKeyboardHeight();
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // Calculate how much of the grid is actually obscured by the keyboard.
+  // The keyboard covers bottomContent first, so the grid loses less than
+  // the full keyboard height. Extra padding ensures the last item isn't
+  // flush against the keyboard edge.
+  const extraPadding = isIOS() ? 32 : 16;
+  const [gridPadding, setGridPadding] = useState(0);
+  useEffect(() => {
+    if (keyboardHeight > 0 && gridRef.current) {
+      const gridBottom = gridRef.current.getBoundingClientRect().bottom;
+      const visibleBottom = window.innerHeight - keyboardHeight;
+      const obscured = gridBottom - visibleBottom;
+      setGridPadding(obscured > 0 ? obscured + extraPadding : 0);
+    } else {
+      setGridPadding(0);
+    }
+  }, [extraPadding, keyboardHeight]);
+
+  // Scroll the focused element into view after the padding has been applied,
+  // so the scroll container has enough room.
+  useEffect(() => {
+    if (gridPadding > 0 && document.activeElement instanceof HTMLElement) {
+      document.activeElement.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+      });
+    }
+  }, [gridPadding]);
+
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
@@ -206,8 +239,10 @@ const DataSamplesTable = ({
         headings={headings}
       />
       <Grid
+        ref={gridRef}
         {...gridCommonProps}
         py={2}
+        pb={gridPadding > 0 ? `${gridPadding}px` : 2}
         alignItems="start"
         autoRows="max-content"
         overflow="auto"

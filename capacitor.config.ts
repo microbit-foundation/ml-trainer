@@ -19,6 +19,11 @@ const config: CapacitorConfig = {
     SystemBars: {
       insetsHandling: "disable",
     },
+    Keyboard: {
+      // Prevent iOS from resizing the WebView when the keyboard opens.
+      // We handle scroll-into-view manually via useKeyboardHeight.
+      resize: "none",
+    },
   },
 };
 
