@@ -54,8 +54,6 @@ const PercentageMeter = ({
     >
       <HStack
         ref={meterRef}
-        // Use inline style attribute to avoid style tags being
-        // constantly appended to the <head/> element.
         w={0}
         h={height}
         rounded="full"

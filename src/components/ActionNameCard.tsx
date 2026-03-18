@@ -15,7 +15,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { Action } from "../model";
-import { State, useStore } from "../store";
+import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIconSvg from "./icons/LedIconSvg";
@@ -67,11 +67,9 @@ const ActionNameCard = ({
   const ledIconRef = useRef<LedIconHandle>(null);
   useEffect(() => {
     if (viewMode !== ActionCardNameViewMode.ReadOnly) return;
-    const isTriggered = (s: State) =>
-      s.predictionResult?.detected?.id === value.id;
-    ledIconRef.current?.setLedsOn(isTriggered(useStore.getState()));
-    return useStore.subscribe(isTriggered, (v) =>
-      ledIconRef.current?.setLedsOn(v)
+    return useStore.subscribe(
+      (s) => s.predictionResult?.detected?.id === value.id,
+      (v) => ledIconRef.current?.setLedsOn(v)
     );
   }, [value.id, viewMode]);
 
@@ -167,7 +165,12 @@ const ActionNameCard = ({
         <HStack>
           <HStack>
             {viewMode === ActionCardNameViewMode.ReadOnly ? (
-              <LedIcon ref={ledIconRef} icon={icon} colorScheme="brand2" />
+              <LedIcon
+                ref={ledIconRef}
+                icon={icon}
+                colorScheme="brand2"
+                initiallyOn={false}
+              />
             ) : (
               <LedIconSvg icon={icon} />
             )}

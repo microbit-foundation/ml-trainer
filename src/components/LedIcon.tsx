@@ -25,11 +25,12 @@ export interface LedIconHandle {
 interface LedIconProps {
   colorScheme?: string;
   icon: LedIconType;
+  initiallyOn?: boolean;
   size?: string | number;
 }
 
 const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
-  ({ colorScheme = "brand", icon, size = 20 }, ref) => {
+  ({ colorScheme = "brand", icon, initiallyOn = true, size = 20 }, ref) => {
     const iconData = icons[icon];
     const intl = useIntl();
     const vstackRef = useRef<HTMLDivElement>(null);
@@ -68,7 +69,7 @@ const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
           ref={vstackRef}
           style={
             {
-              "--led-color": activeColor,
+              "--led-color": initiallyOn ? activeColor : offColor,
             } as React.CSSProperties
           }
         >
@@ -137,5 +138,7 @@ const LedIconRow = ({ data }: LedIconRowProps) => {
     </HStack>
   );
 };
+
+LedIcon.displayName = "LedIcon";
 
 export default memo(LedIcon);
