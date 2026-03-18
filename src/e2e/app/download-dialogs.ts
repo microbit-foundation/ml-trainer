@@ -132,11 +132,30 @@ export class DownloadDialogs {
   }
 
   async enterBluetoothPattern() {
-    const numCols = 5;
-    for (let i = 0; i < numCols; i++) {
-      const n = (i + 1).toString();
-      await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
+    await this.enterBluetoothPatternValues([1, 2, 3, 4, 5]);
+  }
+
+  async enterBluetoothPatternValues(values: number[]) {
+    for (let i = 0; i < values.length; i++) {
+      await this.page
+        .getByLabel(`Column ${i + 1} - number of LEDs lit`)
+        .fill(values[i].toString());
     }
+  }
+
+  async clickMyPatternIsDifferent() {
+    await this.page
+      .getByRole("button", { name: "My pattern is different" })
+      .click();
+  }
+
+  async getBluetoothNameFilter(): Promise<string | undefined> {
+    return this.page.evaluate(() => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockBluetoothConnection;
+      return mockBluetooth.nameFilter;
+    });
   }
 
   /**
