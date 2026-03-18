@@ -16,6 +16,7 @@ import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useHasMoved } from "../buffered-data-hooks";
+import { actionNameInputId } from "../components/ActionNameCard";
 import DataSamplesTable from "../components/DataSamplesTable";
 import {
   AddActionHint,
@@ -84,6 +85,15 @@ const DataSamplesPage = () => {
   const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
     await addNewAction();
+    requestAnimationFrame(() => {
+      const updatedActions = useStore.getState().actions;
+      const newAction = updatedActions[updatedActions.length - 1];
+      if (newAction) {
+        document
+          .getElementById(actionNameInputId(newAction))
+          ?.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+    });
   }, [addNewAction, actions]);
   useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
