@@ -12,6 +12,7 @@ import {
   useState,
 } from "react";
 import { LoadAction, useProject } from "../hooks/project-hooks";
+import { isAndroid } from "../platform";
 
 export interface LoadProjectInputProps {
   /**
@@ -77,12 +78,20 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
       [onOpen]
     );
 
+    // On Android, the file picker filters by MIME type rather than extension.
+    // .hex files have no standard MIME type, so we add application/octet-stream
+    // to ensure they appear in the picker.
+    const effectiveAccept =
+      isAndroid() && accept.includes(".hex")
+        ? `${accept},application/octet-stream`
+        : accept;
+
     return (
       <Input
         type="file"
         display="none"
         multiple={false}
-        accept={accept}
+        accept={effectiveAccept}
         onChange={handleOpenFile}
         ref={inputRef}
       />
