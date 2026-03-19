@@ -45,6 +45,12 @@
       "value": "Toegankelijkheid"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -117,16 +123,120 @@
       "value": "Voeg actie toe"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Press ‘Add action’ button to add another action"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
       "value": "AI activiteiten timer"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
       "value": "AI verhalenvertellende vriend"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "Pause animation"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "Resume animation"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "Collect data"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "Use"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Training"
     }
   ],
   "back-action": [
@@ -145,6 +255,80 @@
     {
       "type": 0,
       "value": "Blocks preview"
+    }
+  ],
+  "bluetooth-disabled-body": [
+    {
+      "type": 0,
+      "value": "Please turn on Bluetooth and try again."
+    }
+  ],
+  "bluetooth-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth is turned off"
+    }
+  ],
+  "bluetooth-permission-denied-body-android": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "appNameShort"
+        },
+        {
+          "type": 0,
+          "value": " settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-body-ios": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "appNameShort"
+        },
+        {
+          "type": 0,
+          "value": " settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth permission required"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -175,6 +359,32 @@
     {
       "type": 0,
       "value": "Opname annuleren"
+    }
+  ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
     }
   ],
   "certainty-label": [
@@ -215,6 +425,12 @@
     {
       "type": 0,
       "value": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert."
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -265,6 +481,12 @@
       "value": "Bevestigen en opslaan"
     }
   ],
+  "confirm-share-action": [
+    {
+      "type": 0,
+      "value": "Confirm and share"
+    }
+  ],
   "connect-action": [
     {
       "type": 0,
@@ -305,6 +527,12 @@
     {
       "type": 0,
       "value": "Je hebt geen micro:bit gekozen. Wil je het opnieuw proberen?"
+    }
+  ],
+  "connect-bluetooth-enabled": [
+    {
+      "type": 0,
+      "value": "Bluetooth enabled"
     }
   ],
   "connect-bluetooth-heading": [
@@ -439,6 +667,36 @@
       "value": "Micro USB-kabel"
     }
   ],
+  "connect-native-change-pattern": [
+    {
+      "type": 0,
+      "value": "My pattern is different"
+    }
+  ],
+  "connect-native-compare-pattern-heading": [
+    {
+      "type": 0,
+      "value": "Compare pattern"
+    }
+  ],
+  "connect-native-compare-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "Compare this pattern with the one displayed on your micro:bit."
+    }
+  ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "children": [
@@ -483,6 +741,52 @@
     {
       "type": 0,
       "value": " - aantal verlichte LEDs op de micro:bit display"
+    }
+  ],
+  "connect-pattern-label": [
+    {
+      "type": 0,
+      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol1"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol2"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol3"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol4"
+    },
+    {
+      "type": 0,
+      "value": ", and "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol5"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "connect-pattern-subtitle": [
@@ -647,6 +951,42 @@
       "value": "Probleemoplossing"
     }
   ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "Try another way"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode": [
+    {
+      "type": 0,
+      "value": "Unable to enter Bluetooth mode?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Unable to enter Bluetooth mode?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
+    {
+      "type": 0,
+      "value": "Try the following:"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
+    {
+      "type": 0,
+      "value": "Disconnect and then reconnect the micro:bit with the power source."
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
+    {
+      "type": 0,
+      "value": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
+    }
+  ],
   "connect-with-batteries": [
     {
       "type": 0,
@@ -687,6 +1027,24 @@
     {
       "type": 0,
       "value": "Kopiëer"
+    }
+  ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Taster lessons"
     }
   ],
   "data-actions-menu": [
@@ -833,6 +1191,80 @@
     {
       "type": 0,
       "value": "Weet je zeker dat je alle data samples wil verwijderen?"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projects"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
     }
   ],
   "delete-recording-aria": [
@@ -1005,10 +1437,52 @@
       "value": "Het radiolink-programma downloaden"
     }
   ],
-  "downloading-subtitle": [
+  "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Even geduld. Programma is aan het downloaden naar de micro:bit."
+      "value": "Choose ‘Pair’ if asked"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "Connecting to micro:bit…"
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "Finding micro:bit…"
+    }
+  ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
+  "downloading-stage-flashing-native": [
+    {
+      "type": 0,
+      "value": "Please do not interact with the micro:bit before the download is complete."
+    }
+  ],
+  "downloading-stage-resetting-device": [
+    {
+      "type": 0,
+      "value": "Waiting for micro:bit to reboot..."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicate project"
     }
   ],
   "edit-in-makecode-action": [
@@ -1231,10 +1705,10 @@
       "value": "Firmware update vereist"
     }
   ],
-  "get-started-action": [
+  "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "Hoe te beginnen"
+      "value": "First lessons"
     }
   ],
   "go-action": [
@@ -1315,6 +1789,18 @@
       "value": "Help"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1339,176 +1825,24 @@
       "value": "Startpagina"
     }
   ],
-  "homepage-alt": [
+  "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "grafiek met de x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven met klappende handen er overheen getekend"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "grafiek toont x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "klappende handen"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "Train een machine learning model op je eigen bewegingsgegevens en voer het uit op je micro:bit."
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "Zo werkt het"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "Bekijk de video om te beginnen. Lees meer in de "
+      "value": "New to "
     },
     {
-      "children": [
-        {
-          "type": 0,
-          "value": "gebruikershandleiding"
-        }
-      ],
-      "type": 8,
-      "value": "link"
+      "type": 1,
+      "value": "appName"
     },
     {
       "type": 0,
-      "value": "."
+      "value": "?"
     }
   ],
-  "homepage-media-description": [
+  "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "Projecten"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "Ontdek meer "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "inhoud en bronnen over micro:bit en AI"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "Stap voor stap"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Maak AI aan op je BBC micro:bit met behulp van beweging en machine learning."
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "Introductievideo"
+      "value": "Machine learning with movement and the micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -1535,6 +1869,12 @@
     {
       "type": 0,
       "value": "Niet-ondersteund bestandstype"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1663,6 +2003,12 @@
     {
       "type": 0,
       "value": "Meer informatie over firewall vereisten"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Learn more"
     }
   ],
   "led-icon-option-angry": [
@@ -1941,6 +2287,32 @@
       "value": "Laden"
     }
   ],
+  "location-disabled-body": [
+    {
+      "type": 0,
+      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " and try again."
+    }
+  ],
+  "location-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Location services required"
+    }
+  ],
   "main-menu": [
     {
       "type": 0,
@@ -1981,6 +2353,16 @@
       "value": "Kon Microsoft MakeCode niet laden"
     }
   ],
+  "microbit-name-label": [
+    {
+      "type": 0,
+      "value": "micro:bit name: "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
   "microbit-not-connected": [
     {
       "type": 0,
@@ -1997,6 +2379,24 @@
     {
       "type": 0,
       "value": "Meer opties voor bewerken in MakeCode"
+    }
+  ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Move the micro:bit to explore how different actions change the graph"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
     }
   ],
   "name-action-hint": [
@@ -2023,124 +2423,96 @@
       "value": "De naam wordt gebruikt wanneer je een hex-bestand opslaat."
     }
   ],
-  "new-session-setup-description": [
+  "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "Een nieuwe sessie starten overschrijft je bestaande sessie. Mogelijk wil je eerst "
+      "value": "The connection to the micro:bit failed."
+    }
+  ],
+  "native-bluetooth-error-check": [
+    {
+      "type": 0,
+      "value": "Please check that:"
+    }
+  ],
+  "native-bluetooth-error-check-distance": [
+    {
+      "type": 0,
+      "value": "the micro:bit is close to this device"
+    }
+  ],
+  "native-bluetooth-error-check-mode": [
+    {
+      "type": 0,
+      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+    }
+  ],
+  "native-bluetooth-error-check-pattern": [
+    {
+      "type": 0,
+      "value": "the pattern you entered is correct"
+    }
+  ],
+  "native-bluetooth-error-forget-device": [
+    {
+      "type": 0,
+      "value": "Please forget this device in your Bluetooth settings and try again."
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-1": [
+    {
+      "type": 0,
+      "value": "Go to Bluetooth in the Settings app"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-2": [
+    {
+      "type": 0,
+      "value": "Tap the "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "je bestaande sessie opslaan"
+          "value": "information"
         }
       ],
       "type": 8,
-      "value": "link"
+      "value": "infoIcon"
     },
     {
       "type": 0,
-      "value": "."
+      "value": " icon next to the BBC micro:bit device"
     }
   ],
-  "new-session-setup-title": [
+  "native-bluetooth-error-forget-device-step-3": [
     {
       "type": 0,
-      "value": "Nieuwe sessie-instellingen"
+      "value": "Tap ‘Forget This Device’"
     }
   ],
-  "newpage-continue-session-subtitle": [
+  "native-bluetooth-error-forget-device-step-4": [
     {
       "type": 0,
-      "value": "Gebruik een hex-bestand of data samples die je op je computer hebt opgeslagen om door te gaan met een sessie."
+      "value": "Return to this app to try again"
     }
   ],
-  "newpage-continue-session-title": [
+  "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "Doorgaan met opgeslagen sessie"
+      "value": "Could not connect to micro:bit"
     }
   ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Datum:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
+  "new-project-setup-title": [
     {
       "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
+      "value": "New project setup"
     }
   ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Naam:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
+  "newpage-new-project-title": [
     {
       "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "Geen sessie gevonden"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "Laatste sessie openen"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Verbind je micro:bit en verzamel bewegingsgegevens om een machine learning model te bouwen."
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "Nieuwe sessie"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "Ga verder waar u was gebleven"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "Begin iets nieuws"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "Nieuwe sessie"
+      "value": "New project"
     }
   ],
   "next-action": [
@@ -2149,10 +2521,10 @@
       "value": "Volgende"
     }
   ],
-  "no-data-samples": [
+  "no-projects": [
     {
       "type": 0,
-      "value": "Geen data samples"
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2183,12 +2555,6 @@
       "value": "Pagina niet gevonden"
     }
   ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "Open…"
-    }
-  ],
   "open-file-dropped": [
     {
       "type": 0,
@@ -2201,24 +2567,10 @@
       "value": "Open project"
     }
   ],
-  "open-project-setup-description": [
+  "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2283,16 +2635,74 @@
       "value": "Privacybeleid"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Project"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "Project geladen"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "De projectnaam kan niet leeg zijn"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2341,6 +2751,12 @@
     {
       "type": 0,
       "value": "De verbinding van de micro:bit met je computer kon niet opnieuw tot stand worden gebracht."
+    }
+  ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -2403,6 +2819,90 @@
     {
       "type": 0,
       "value": "Klik om een data sample op te nemen of druk op knop B op jouw data collectie micro:bit."
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
     }
   ],
   "record-samples": [
@@ -2541,6 +3041,36 @@
       "value": "Herladen"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Rename project"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-subtitle": [
+    {
+      "type": 0,
+      "value": "Hold A+B and press RESET"
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2609,6 +3139,18 @@
       "value": "Je kunt het ook openen met Microsoft MakeCode als je de acties en data samples niet hoeft te wijzigen."
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your data samples have been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,
@@ -2625,6 +3167,12 @@
     {
       "type": 0,
       "value": "Je hex bestand is gedownload"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [
@@ -2661,6 +3209,22 @@
       "value": "\" pictogram"
     }
   ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
+    }
+  ],
   "settings": [
     {
       "type": 0,
@@ -2671,6 +3235,44 @@
     {
       "type": 0,
       "value": "Instellingen acties menu"
+    }
+  ],
+  "share-action": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "share-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Share project as a hex file"
+    }
+  ],
+  "share-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
+    }
+  ],
+  "sharing-description": [
+    {
+      "type": 0,
+      "value": "Your project will be ready to share soon."
+    }
+  ],
+  "sharing-title": [
+    {
+      "type": 0,
+      "value": "Sharing…"
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -2697,22 +3299,46 @@
       "value": "Software versies"
     }
   ],
-  "start-session-action": [
+  "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Start sessie"
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
       "value": "Start de training"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "diagram toont het iteratieve proces van het verzamelen van gegevens, trainen van een model, testen van het model en verbeteren van het model door de verzamelde gegevens te verbeteren voor het uiteindelijk coderen met het model."
     }
   ],
   "steps-code": [
@@ -2771,6 +3397,18 @@
       "value": " in te dienen."
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -2807,6 +3445,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [
@@ -3043,6 +3693,28 @@
       "value": "Model trainen"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3091,6 +3763,12 @@
     {
       "type": 0,
       "value": "Sleep het hex-bestand van je map Downloads naar het MICROBIT-station."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
     }
   ],
   "try-again-action": [
@@ -3181,6 +3859,12 @@
       "value": "Gebruikershandleiding"
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,
@@ -3209,6 +3893,12 @@
     {
       "type": 0,
       "value": "de USB-kabel ontkoppelen en opnieuw aansluiten"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "How CreateAI works"
     }
   ]
 }

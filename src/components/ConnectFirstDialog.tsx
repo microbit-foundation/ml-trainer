@@ -15,100 +15,39 @@ import {
 } from "@chakra-ui/react";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { ConnectionStatus } from "../connect-status-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { ConnectOptions } from "../store";
+import { useDataConnectionActions } from "../data-connection-flow";
+import {
+  DataConnectionStep,
+  isDataConnectionDialogOpen,
+} from "../data-connection-flow";
+import { useStore } from "../store";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 
 interface ConnectFirstDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
   explanationTextId: string;
   onChooseConnect?: () => void;
-  options?: ConnectOptions;
 }
 
 const ConnectFirstDialog = ({
   explanationTextId,
-  options,
   onClose,
   onChooseConnect,
   isOpen,
   ...rest
 }: ConnectFirstDialogProps) => {
-  const {
-    actions,
-    status: connStatus,
-    isDialogOpen: isConnectionDialogOpen,
-  } = useConnectionStage();
-  const [isWaiting, setIsWaiting] = useState<boolean>(false);
-
-  const handleOnClose = useCallback(() => {
-    setIsWaiting(false);
-    onClose();
-  }, [onClose]);
-
-  const handleConnect = useCallback(async () => {
-    onChooseConnect?.();
-    switch (connStatus) {
-      case ConnectionStatus.FailedToConnect:
-      case ConnectionStatus.FailedToReconnectTwice:
-      case ConnectionStatus.FailedToSelectBluetoothDevice:
-      case ConnectionStatus.NotConnected: {
-        // Start connection flow.
-        actions.startConnect(options);
-        return handleOnClose();
-      }
-      case ConnectionStatus.ConnectionLost:
-      case ConnectionStatus.FailedToReconnect:
-      case ConnectionStatus.Disconnected: {
-        // Reconnect.
-        await actions.reconnect();
-        return handleOnClose();
-      }
-      case ConnectionStatus.ReconnectingAutomatically: {
-        // Wait for reconnection to happen.
-        setIsWaiting(true);
-        return;
-      }
-      case ConnectionStatus.Connected: {
-        // Connected whilst dialog is up.
-        return handleOnClose();
-      }
-      case ConnectionStatus.ReconnectingExplicitly:
-      case ConnectionStatus.Connecting: {
-        // Impossible cases.
-        return handleOnClose();
-      }
-    }
-  }, [onChooseConnect, connStatus, actions, options, handleOnClose]);
-
-  useEffect(() => {
-    if (
-      isOpen &&
-      (isConnectionDialogOpen ||
-        (isWaiting && connStatus === ConnectionStatus.Connected))
-    ) {
-      // Close dialog if connection dialog is opened, or
-      // once connected after waiting.
-      handleOnClose();
-      return;
-    }
-  }, [
-    connStatus,
-    handleOnClose,
-    isConnectionDialogOpen,
+  const { handleClose, isConnecting, handleConnect } = useConnectFirst({
     isOpen,
-    isWaiting,
     onClose,
-  ]);
-
+    onConnect: onChooseConnect,
+  });
   return (
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
       size="md"
       isCentered
-      onClose={handleOnClose}
+      onClose={handleClose}
       isOpen={isOpen}
       {...rest}
     >
@@ -127,7 +66,7 @@ const ConnectFirstDialog = ({
             <ButtonWithLoading
               variant="primary"
               onClick={handleConnect}
-              isLoading={isWaiting}
+              isLoading={isConnecting}
             >
               <FormattedMessage id="connect-action" />
             </ButtonWithLoading>
@@ -136,6 +75,68 @@ const ConnectFirstDialog = ({
       </ModalOverlay>
     </Modal>
   );
+};
+
+export const useConnectFirst = ({
+  isOpen,
+  onClose,
+  onConnect,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConnect?: () => void;
+}) => {
+  const connActions = useDataConnectionActions();
+  const dataConnection = useStore((s) => s.dataConnection);
+  const isConnected = dataConnection.step === DataConnectionStep.Connected;
+  const isReconnecting = dataConnection.isReconnecting;
+  const isConnectionDialogOpen = isDataConnectionDialogOpen(
+    dataConnection.step
+  );
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
+
+  const handleClose = useCallback(() => {
+    setIsConnecting(false);
+    onClose();
+  }, [onClose]);
+
+  const handleConnect = useCallback(() => {
+    onConnect?.();
+
+    // Auto-reconnection in progress - show loading and wait for it
+    if (isReconnecting) {
+      setIsConnecting(true);
+      return;
+    }
+
+    // Already connected or connection dialog in progress - just close
+    if (isConnected || isConnectionDialogOpen) {
+      handleClose();
+      return;
+    }
+
+    // Initiate connection - state machine decides fresh vs reconnect
+    connActions.connect();
+    handleClose();
+  }, [
+    onConnect,
+    isReconnecting,
+    isConnected,
+    isConnectionDialogOpen,
+    connActions,
+    handleClose,
+  ]);
+
+  useEffect(() => {
+    if (isOpen && (isConnectionDialogOpen || (isConnecting && isConnected))) {
+      // Close dialog if connection dialog is opened, or
+      // once connected after waiting.
+      handleClose();
+      return;
+    }
+  }, [isConnected, handleClose, isConnectionDialogOpen, isOpen, isConnecting]);
+
+  return { handleConnect, isConnecting, handleClose };
 };
 
 export default ConnectFirstDialog;

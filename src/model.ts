@@ -4,11 +4,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
-import { MakeCodeIcon } from "./utils/icons";
+import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { SpotlightStyle } from "./pages/TourOverlay";
-import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
+import { MakeCodeIcon } from "./utils/icons";
 
 export interface XYZData {
   x: number[];
@@ -17,15 +16,28 @@ export interface XYZData {
 }
 
 export interface RecordingData {
-  ID: number;
+  id: string;
   data: XYZData;
+  createdAt: number;
 }
 
 export interface Action {
   name: string;
-  ID: number;
+  id: string;
   icon: MakeCodeIcon;
   requiredConfidence?: number;
+  createdAt: number;
+}
+
+export interface OldRecordingData {
+  ID: number;
+  data: XYZData;
+}
+
+export interface OldActionData
+  extends Omit<ActionData, "id" | "recordings" | "createdAt"> {
+  ID: number;
+  recordings: OldRecordingData[];
 }
 
 export interface ActionData extends Action {
@@ -52,7 +64,7 @@ export const isDatasetUserFileFormat = (
     }
     if (
       !("name" in item) ||
-      !("ID" in item) ||
+      !("ID" in item || "id" in item) ||
       !("recordings" in item) ||
       !Array.isArray(item.recordings)
     ) {
@@ -63,7 +75,11 @@ export const isDatasetUserFileFormat = (
       if (typeof rec !== "object" || rec === null) {
         return false;
       }
-      if (!("data" in rec) || !("ID" in rec) || Array.isArray(rec.data)) {
+      if (
+        !("data" in rec) ||
+        !("ID" in rec || "id" in rec) ||
+        Array.isArray(rec.data)
+      ) {
         return false;
       }
       const xyzData = rec.data as object;
@@ -110,41 +126,15 @@ export const enum TrainModelDialogStage {
   TrainingInProgress,
 }
 
-export enum DownloadStep {
-  None = "none",
-  Help = "introduction",
-  ChooseSameOrDifferentMicrobit = "choose same or different microbit",
-  ConnectCable = "connect cable",
-  ConnectRadioRemoteMicrobit = "connect radio remote microbit",
-  WebUsbFlashingTutorial = "web usb flashing tutorial",
-  WebUsbChooseMicrobit = "web usb choose microbit",
-  FlashingInProgress = "flashing in progress",
-  ManualFlashingTutorial = "manual flashing tutorial",
-  UnplugRadioBridgeMicrobit = "unplug radio bridge microbit",
-  IncompatibleDevice = "incompatible device",
-}
-
-export enum MicrobitToFlash {
-  // No micro:bit is connected.
-  Default = "default",
-  // Same as the connected micro:bit.
-  Same = "same",
-  // Different from the connected micro:bit.
-  Different = "different",
-}
-
-export interface DownloadState {
-  step: DownloadStep;
-  microbitToFlash: MicrobitToFlash;
-  hex?: HexData;
-  // The micro:bit used to flash the hex.  We remember your choice for easy code
-  // iteration for as long as the editor is open.
-  usbDevice?: MicrobitWebUSBConnection;
-}
-
 export interface SaveState {
   step: SaveStep;
   hex?: HexData;
+  type: SaveType;
+}
+
+export enum SaveType {
+  Download = "download",
+  Share = "share",
 }
 
 export enum SaveStep {
@@ -156,6 +146,10 @@ export enum SaveStep {
    * Otherwise we already have the project data in the state and save it directly.
    */
   SaveProgress = "progress",
+  /**
+   * Only used for the sharesheet on mobile devices
+   */
+  ChooseDestination = "choose destination",
 }
 
 export interface TourStep {
@@ -222,6 +216,18 @@ export enum DataSamplesView {
   DataFeatures = "data features",
   GraphAndDataFeatures = "graph and data features",
 }
+
+export type DataSamplesPageHint =
+  | null
+  | "move-microbit"
+  | "name-first-action"
+  | "record-first-action"
+  | "record-more-action"
+  | "add-action"
+  | "name-action"
+  | "record-action"
+  | "train"
+  | "name-action-with-samples";
 
 export enum PostImportDialogState {
   None = "none",

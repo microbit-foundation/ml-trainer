@@ -35,6 +35,12 @@
       "value": "crwdns364036:0crwdne364036:0"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -107,16 +113,120 @@
       "value": "crwdns362672:0crwdne362672:0"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Press ‘Add action’ button to add another action"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
       "value": "crwdns362674:0crwdne362674:0"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
       "value": "crwdns363518:0crwdne363518:0"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "Pause animation"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "Resume animation"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "Collect data"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "Use"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Training"
     }
   ],
   "back-action": [
@@ -135,6 +245,80 @@
     {
       "type": 0,
       "value": "crwdns368553:0crwdne368553:0"
+    }
+  ],
+  "bluetooth-disabled-body": [
+    {
+      "type": 0,
+      "value": "Please turn on Bluetooth and try again."
+    }
+  ],
+  "bluetooth-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth is turned off"
+    }
+  ],
+  "bluetooth-permission-denied-body-android": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "appNameShort"
+        },
+        {
+          "type": 0,
+          "value": " settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-body-ios": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "appNameShort"
+        },
+        {
+          "type": 0,
+          "value": " settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth permission required"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -165,6 +349,32 @@
     {
       "type": 0,
       "value": "crwdns362688:0crwdne362688:0"
+    }
+  ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
     }
   ],
   "certainty-label": [
@@ -205,6 +415,12 @@
     {
       "type": 0,
       "value": "crwdns362696:0crwdne362696:0"
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -255,6 +471,12 @@
       "value": "crwdns362712:0crwdne362712:0"
     }
   ],
+  "confirm-share-action": [
+    {
+      "type": 0,
+      "value": "Confirm and share"
+    }
+  ],
   "connect-action": [
     {
       "type": 0,
@@ -295,6 +517,12 @@
     {
       "type": 0,
       "value": "crwdns362726:0crwdne362726:0"
+    }
+  ],
+  "connect-bluetooth-enabled": [
+    {
+      "type": 0,
+      "value": "Bluetooth enabled"
     }
   ],
   "connect-bluetooth-heading": [
@@ -429,6 +657,36 @@
       "value": "crwdns362770:0crwdne362770:0"
     }
   ],
+  "connect-native-change-pattern": [
+    {
+      "type": 0,
+      "value": "My pattern is different"
+    }
+  ],
+  "connect-native-compare-pattern-heading": [
+    {
+      "type": 0,
+      "value": "Compare pattern"
+    }
+  ],
+  "connect-native-compare-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "Compare this pattern with the one displayed on your micro:bit."
+    }
+  ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "What you need to connect"
+    }
+  ],
+  "connect-native-start-requirements1": [
+    {
+      "type": 0,
+      "value": "micro:bit with battery pack"
+    }
+  ],
   "connect-or-import": [
     {
       "type": 0,
@@ -453,6 +711,52 @@
     {
       "type": 0,
       "value": "crwdne362776:0"
+    }
+  ],
+  "connect-pattern-label": [
+    {
+      "type": 0,
+      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol1"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol2"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol3"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol4"
+    },
+    {
+      "type": 0,
+      "value": ", and "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol5"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "connect-pattern-subtitle": [
@@ -617,6 +921,42 @@
       "value": "crwdns362830:0crwdne362830:0"
     }
   ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "Try another way"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode": [
+    {
+      "type": 0,
+      "value": "Unable to enter Bluetooth mode?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Unable to enter Bluetooth mode?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
+    {
+      "type": 0,
+      "value": "Try the following:"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
+    {
+      "type": 0,
+      "value": "Disconnect and then reconnect the micro:bit with the power source."
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
+    {
+      "type": 0,
+      "value": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
+    }
+  ],
   "connect-with-batteries": [
     {
       "type": 0,
@@ -657,6 +997,24 @@
     {
       "type": 0,
       "value": "crwdns362844:0crwdne362844:0"
+    }
+  ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Taster lessons"
     }
   ],
   "data-actions-menu": [
@@ -807,6 +1165,80 @@
     {
       "type": 0,
       "value": "crwdns362884:0crwdne362884:0"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projects"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
     }
   ],
   "delete-recording-aria": [
@@ -979,10 +1411,52 @@
       "value": "crwdns362930:0crwdne362930:0"
     }
   ],
-  "downloading-subtitle": [
+  "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "crwdns362932:0crwdne362932:0"
+      "value": "Choose ‘Pair’ if asked"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "Connecting to micro:bit…"
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "Finding micro:bit…"
+    }
+  ],
+  "downloading-stage-flashing": [
+    {
+      "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
+    }
+  ],
+  "downloading-stage-flashing-native": [
+    {
+      "type": 0,
+      "value": "Please do not interact with the micro:bit before the download is complete."
+    }
+  ],
+  "downloading-stage-resetting-device": [
+    {
+      "type": 0,
+      "value": "Waiting for micro:bit to reboot..."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicate project"
     }
   ],
   "edit-in-makecode-action": [
@@ -1191,10 +1665,10 @@
       "value": "crwdns362998:0crwdne362998:0"
     }
   ],
-  "get-started-action": [
+  "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "crwdns363002:0crwdne363002:0"
+      "value": "First lessons"
     }
   ],
   "go-action": [
@@ -1275,6 +1749,18 @@
       "value": "crwdns363014:0crwdne363014:0"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1299,148 +1785,24 @@
       "value": "crwdns363020:0crwdne363020:0"
     }
   ],
-  "homepage-alt": [
+  "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "crwdns363022:0crwdne363022:0"
+      "value": "New to "
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "?"
     }
   ],
-  "homepage-alt-graph": [
+  "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "crwdns363024:0crwdne363024:0"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "crwdns363026:0crwdne363026:0"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "crwdns368557:0crwdne368557:0"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "crwdns363028:0crwdne363028:0"
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "crwdns363030:0crwdne363030:0"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "crwdns363032:0crwdne363032:0"
-    }
-  ],
-  "homepage-media-description": [
-    {
-      "type": 0,
-      "value": "crwdns368559:0crwdne368559:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "crwdns368561:0crwdne368561:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "crwdns368563:0crwdne368563:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "crwdns368565:0crwdne368565:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "crwdns368567:0crwdne368567:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "crwdns368569:0crwdne368569:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "crwdns368571:0crwdne368571:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "crwdns368573:0crwdne368573:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "crwdns368575:0crwdne368575:0"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "crwdns368577:0crwdne368577:0"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "crwdns368579:0crwdne368579:0"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "crwdns368581:0crwdne368581:0"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "crwdns363034:0crwdne363034:0"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "crwdns363036:0crwdne363036:0"
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "crwdns363038:0crwdne363038:0"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "crwdns363040:0crwdne363040:0"
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "crwdns363042:0crwdne363042:0"
+      "value": "Machine learning with movement and the micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -1467,6 +1829,12 @@
     {
       "type": 0,
       "value": "crwdns363048:0crwdne363048:0"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1557,6 +1925,12 @@
     {
       "type": 0,
       "value": "crwdns363066:0crwdne363066:0"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Learn more"
     }
   ],
   "led-icon-option-angry": [
@@ -1835,6 +2209,32 @@
       "value": "crwdns363158:0crwdne363158:0"
     }
   ],
+  "location-disabled-body": [
+    {
+      "type": 0,
+      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " and try again."
+    }
+  ],
+  "location-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Location services required"
+    }
+  ],
   "main-menu": [
     {
       "type": 0,
@@ -1879,6 +2279,16 @@
       "value": "crwdns363174:0crwdne363174:0"
     }
   ],
+  "microbit-name-label": [
+    {
+      "type": 0,
+      "value": "micro:bit name: "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
   "microbit-not-connected": [
     {
       "type": 0,
@@ -1895,6 +2305,24 @@
     {
       "type": 0,
       "value": "crwdns363178:0crwdne363178:0"
+    }
+  ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Move the micro:bit to explore how different actions change the graph"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
     }
   ],
   "name-action-hint": [
@@ -1921,98 +2349,96 @@
       "value": "crwdns363186:0crwdne363186:0"
     }
   ],
-  "new-session-setup-description": [
+  "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "crwdns363188:0crwdne363188:0"
+      "value": "The connection to the micro:bit failed."
     }
   ],
-  "new-session-setup-title": [
+  "native-bluetooth-error-check": [
     {
       "type": 0,
-      "value": "crwdns363190:0crwdne363190:0"
+      "value": "Please check that:"
     }
   ],
-  "newpage-continue-session-subtitle": [
+  "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "crwdns363192:0crwdne363192:0"
+      "value": "the micro:bit is close to this device"
     }
   ],
-  "newpage-continue-session-title": [
+  "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "crwdns363194:0crwdne363194:0"
+      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
     }
   ],
-  "newpage-last-session-date": [
+  "native-bluetooth-error-check-pattern": [
     {
       "type": 0,
-      "value": "crwdns363196:0"
+      "value": "the pattern you entered is correct"
+    }
+  ],
+  "native-bluetooth-error-forget-device": [
+    {
+      "type": 0,
+      "value": "Please forget this device in your Bluetooth settings and try again."
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-1": [
+    {
+      "type": 0,
+      "value": "Go to Bluetooth in the Settings app"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-2": [
+    {
+      "type": 0,
+      "value": "Tap the "
     },
     {
-      "type": 1,
-      "value": "date"
+      "children": [
+        {
+          "type": 0,
+          "value": "information"
+        }
+      ],
+      "type": 8,
+      "value": "infoIcon"
     },
     {
       "type": 0,
-      "value": "crwdne363196:0"
+      "value": " icon next to the BBC micro:bit device"
     }
   ],
-  "newpage-last-session-name": [
+  "native-bluetooth-error-forget-device-step-3": [
     {
       "type": 0,
-      "value": "crwdns363198:0"
-    },
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": "crwdne363198:0"
+      "value": "Tap ‘Forget This Device’"
     }
   ],
-  "newpage-last-session-none": [
+  "native-bluetooth-error-forget-device-step-4": [
     {
       "type": 0,
-      "value": "crwdns363200:0crwdne363200:0"
+      "value": "Return to this app to try again"
     }
   ],
-  "newpage-last-session-title": [
+  "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "crwdns363202:0crwdne363202:0"
+      "value": "Could not connect to micro:bit"
     }
   ],
-  "newpage-new-session-subtitle": [
+  "new-project-setup-title": [
     {
       "type": 0,
-      "value": "crwdns363204:0crwdne363204:0"
+      "value": "New project setup"
     }
   ],
-  "newpage-new-session-title": [
+  "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "crwdns363206:0crwdne363206:0"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "crwdns363208:0crwdne363208:0"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "crwdns363210:0crwdne363210:0"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "crwdns363212:0crwdne363212:0"
+      "value": "New project"
     }
   ],
   "next-action": [
@@ -2021,10 +2447,10 @@
       "value": "crwdns363214:0crwdne363214:0"
     }
   ],
-  "no-data-samples": [
+  "no-projects": [
     {
       "type": 0,
-      "value": "crwdns363216:0crwdne363216:0"
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2059,12 +2485,6 @@
       "value": "crwdns363224:0crwdne363224:0"
     }
   ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "crwdns363226:0crwdne363226:0"
-    }
-  ],
   "open-file-dropped": [
     {
       "type": 0,
@@ -2077,10 +2497,10 @@
       "value": "crwdns368583:0crwdne368583:0"
     }
   ],
-  "open-project-setup-description": [
+  "open-shared-project-action": [
     {
       "type": 0,
-      "value": "crwdns368585:0crwdne368585:0"
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2145,16 +2565,74 @@
       "value": "crwdns363236:0crwdne363236:0"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Project"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "crwdns363238:0crwdne363238:0"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "crwdns363240:0crwdne363240:0"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2203,6 +2681,12 @@
     {
       "type": 0,
       "value": "crwdns363256:0crwdne363256:0"
+    }
+  ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "Failed to reconnect to data collection micro:bit"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -2265,6 +2749,90 @@
     {
       "type": 0,
       "value": "crwdns363274:0crwdne363274:0"
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
     }
   ],
   "record-samples": [
@@ -2403,6 +2971,36 @@
       "value": "crwdns363298:0crwdne363298:0"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Rename project"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-subtitle": [
+    {
+      "type": 0,
+      "value": "Hold A+B and press RESET"
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "Reset to Bluetooth mode"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "Press RESET three times"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2471,6 +3069,18 @@
       "value": "crwdns363318:0crwdne363318:0"
     }
   ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "Save to Files"
+    }
+  ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "Your data samples have been downloaded"
+    }
+  ],
   "saving-description": [
     {
       "type": 0,
@@ -2487,6 +3097,12 @@
     {
       "type": 0,
       "value": "crwdns363324:0crwdne363324:0"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
     }
   ],
   "select-icon-action-aria": [
@@ -2523,6 +3139,22 @@
       "value": "crwdne363330:0"
     }
   ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
+    }
+  ],
   "settings": [
     {
       "type": 0,
@@ -2533,6 +3165,44 @@
     {
       "type": 0,
       "value": "crwdns363334:0crwdne363334:0"
+    }
+  ],
+  "share-action": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "share-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Share project as a hex file"
+    }
+  ],
+  "share-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " to continue working."
+    }
+  ],
+  "sharing-description": [
+    {
+      "type": 0,
+      "value": "Your project will be ready to share soon."
+    }
+  ],
+  "sharing-title": [
+    {
+      "type": 0,
+      "value": "Sharing…"
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -2559,22 +3229,46 @@
       "value": "crwdns363342:0crwdne363342:0"
     }
   ],
-  "start-session-action": [
+  "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "crwdns363344:0crwdne363344:0"
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
       "value": "crwdns363346:0crwdne363346:0"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "crwdns363348:0crwdne363348:0"
     }
   ],
   "steps-code": [
@@ -2619,6 +3313,18 @@
       "value": "crwdns363362:0crwdne363362:0"
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -2641,6 +3347,18 @@
     {
       "type": 0,
       "value": "crwdns368597:0crwdne368597:0"
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [
@@ -2857,6 +3575,28 @@
       "value": "crwdns363434:0crwdne363434:0"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -2891,6 +3631,12 @@
     {
       "type": 0,
       "value": "crwdns363446:0crwdne363446:0"
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
     }
   ],
   "try-again-action": [
@@ -2953,6 +3699,12 @@
       "value": "crwdns363466:0crwdne363466:0"
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,
@@ -2981,6 +3733,12 @@
     {
       "type": 0,
       "value": "crwdns363476:0crwdne363476:0"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "How CreateAI works"
     }
   ]
 }

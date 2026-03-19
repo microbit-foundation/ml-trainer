@@ -1,0 +1,8 @@
+# iOS
+app_identifier "org.microbit.createai"
+apple_id ENV["APPLE_ID"] # Only needed for deliver/pilot, not for building
+team_id "Z2ZPB8NPHN"
+
+# Android
+# Authentication via Workload Identity Federation (google-github-actions/auth sets GOOGLE_APPLICATION_CREDENTIALS)
+package_name "org.microbit.createai"

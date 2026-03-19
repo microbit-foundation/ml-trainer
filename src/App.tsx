@@ -7,33 +7,39 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider, useToast } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
-import {
-  createRadioBridgeConnection,
-  createWebBluetoothConnection,
-  createWebUSBConnection,
-} from "@microbit/microbit-connection";
+import { createBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { createRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
+import { createUSBConnection } from "@microbit/microbit-connection/usb";
 import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
   createBrowserRouter,
+  Navigate,
   Outlet,
   RouterProvider,
   ScrollRestoration,
+  useLocation,
   useNavigate,
+  useRouteError,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
+import { useNativeBackButton } from "./back-button";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
-import { ConnectProvider } from "./connect-actions-hooks";
-import { ConnectStatusProvider } from "./connect-status-hooks";
-import { ConnectionStageProvider } from "./connection-stage-hooks";
+import { ConnectionsProvider } from "./connections-hooks";
+import { DataConnectionEventProvider } from "./data-connection-flow";
 import { deployment, useDeployment } from "./deployment";
-import { MockWebBluetoothConnection } from "./device/mockBluetooth";
+import { MockBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
-import { MockWebUSBConnection } from "./device/mockUsb";
+import { MockUSBConnection } from "./device/mockUsb";
 import { flags } from "./flags";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { LoggingProvider } from "./logging/logging-hooks";
@@ -42,21 +48,29 @@ import TranslationProvider from "./messages/TranslationProvider";
 import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
-import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
-import NewPage from "./pages/NewPage";
-import TestingModelPage from "./pages/TestingModelPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
-import { useStore } from "./store";
+import TestingModelPage from "./pages/TestingModelPage";
+import { projectSessionStorage } from "./session-storage";
+import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
+import { isNativePlatform } from "./platform";
+import {
+  getAllProjectsFromStorage,
+  loadProjectAndModelFromStorage,
+  loadSettingsFromStorage,
+  useStore,
+} from "./store";
 import {
   createCodePageUrl,
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
   createOpenSharedProjectPageUrl,
-  createNewPageUrl,
+  createProjectsPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
+import ProjectsPage from "./pages/ProjectsPage";
+import HomePage from "./pages/HomePage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -71,11 +85,14 @@ const isMockDeviceMode = () =>
 const logging = deployment.logging;
 
 const usb = isMockDeviceMode()
-  ? new MockWebUSBConnection()
-  : createWebUSBConnection({ logging });
+  ? new MockUSBConnection()
+  : createUSBConnection({ logging });
 const bluetooth = isMockDeviceMode()
-  ? new MockWebBluetoothConnection()
-  : createWebBluetoothConnection({ logging });
+  ? new MockBluetoothConnection()
+  : createBluetoothConnection({
+      logging,
+      deviceBondState: useStore.getState().deviceBondState,
+    });
 const radioBridge = isMockDeviceMode()
   ? new MockRadioBridgeConnection(usb)
   : createRadioBridgeConnection(usb, { logging });
@@ -89,15 +106,11 @@ const Providers = ({ children }: ProviderLayoutProps) => {
         <LoggingProvider value={logging}>
           <ConsentProvider>
             <TranslationProvider>
-              <ConnectStatusProvider>
-                <ConnectProvider {...{ usb, bluetooth, radioBridge }}>
-                  <BufferedDataProvider>
-                    <ConnectionStageProvider>
-                      {children}
-                    </ConnectionStageProvider>
-                  </BufferedDataProvider>
-                </ConnectProvider>
-              </ConnectStatusProvider>
+              <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
+                <DataConnectionEventProvider>
+                  <BufferedDataProvider>{children}</BufferedDataProvider>
+                </DataConnectionEventProvider>
+              </ConnectionsProvider>
             </TranslationProvider>
           </ConsentProvider>
         </LoggingProvider>
@@ -109,9 +122,21 @@ const Providers = ({ children }: ProviderLayoutProps) => {
 const Layout = () => {
   const driverRef = useRef<MakeCodeFrameDriver>(null);
   const setPostImportDialogState = useStore((s) => s.setPostImportDialogState);
+  const id = useStore((s) => s.id);
+  const updateProjectTimestamp = useStore((s) => s.updateProjectUpdatedAt);
+  const clearProjectState = useStore((s) => s.clearProjectState);
+  const removeModel = useStore((s) => s.removeModel);
+  const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
   const intl = useIntl();
+  const updateProjectTimestampUrls = useMemo(() => {
+    return [
+      createDataSamplesPageUrl(),
+      createTestingModelPageUrl(),
+      createCodePageUrl(),
+    ];
+  }, []);
 
   useEffect(() => {
     return useStore.subscribe(
@@ -137,6 +162,62 @@ const Layout = () => {
     );
   }, [intl, navigate, setPostImportDialogState, toast]);
 
+  useEffect(() => {
+    if (updateProjectTimestampUrls.includes(location.pathname) && id) {
+      void updateProjectTimestamp();
+    }
+  }, [id, location, updateProjectTimestamp, updateProjectTimestampUrls]);
+
+  useEffect(() => {
+    const listener = async (event: MessageEvent<BroadcastChannelData>) => {
+      const data = event.data;
+      // Only respond to broadcastChannel messages
+      // from projects with the same id to keep tabs / windows in sync.
+      if (id && data.projectIds.includes(id)) {
+        switch (data.messageType) {
+          case BroadcastChannelMessageType.RELOAD_PROJECT: {
+            await loadProjectAndModelFromStorage(id);
+            break;
+          }
+          case BroadcastChannelMessageType.DELETE_PROJECT: {
+            clearProjectState();
+            if (updateProjectTimestampUrls.includes(location.pathname)) {
+              navigate(createHomePageUrl());
+            }
+            break;
+          }
+          case BroadcastChannelMessageType.REMOVE_MODEL: {
+            removeModel();
+            break;
+          }
+        }
+      } else if (data.settings) {
+        await loadSettingsFromStorage();
+      }
+      // Update all project data on the home page and projects page.
+      if (
+        location.pathname === createHomePageUrl() ||
+        location.pathname === createProjectsPageUrl()
+      ) {
+        await getAllProjectsFromStorage();
+      }
+    };
+    broadcastChannel.addEventListener("message", listener);
+    return () => {
+      broadcastChannel.removeEventListener("message", listener);
+    };
+  }, [
+    clearProjectState,
+    id,
+    location.pathname,
+    navigate,
+    removeModel,
+    updateProjectTimestampUrls,
+  ]);
+
+  // Native back button / swipe-back handling (no-op on desktop).
+  useNativeBackButton();
+
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
@@ -149,37 +230,66 @@ const Layout = () => {
   );
 };
 
+// Guard ensures we only load from storage once per page lifecycle (on
+// refresh/deeplink). Subsequent in-app navigations populate the store
+// directly via loadProjectAndModelFromStorage calls in HomePage/ProjectsPage.
+let loaderFuncCalled = false;
+const commonLoaderFunction = async () => {
+  if (!loaderFuncCalled) {
+    loaderFuncCalled = true;
+    const projectId = projectSessionStorage.getProjectId();
+    if (projectId) {
+      await loadProjectAndModelFromStorage(projectId);
+    }
+  }
+  return null;
+};
+
+const RouteErrorView = () => {
+  const error = useRouteError();
+  return <ErrorHandlerErrorView error={error} />;
+};
+
 const createRouter = () => {
   return createBrowserRouter([
     {
       id: "root",
       path: "",
+      loader: async () => {
+        await loadSettingsFromStorage();
+        return null;
+      },
       element: <Layout />,
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
       // ErrorBoundary doesn't work properly in the loader case at least.
-      errorElement: <ErrorHandlerErrorView />,
+      errorElement: <RouteErrorView />,
       children: [
         {
           path: createHomePageUrl(),
           element: <HomePage />,
+          loader: () => getAllProjectsFromStorage(),
         },
         {
-          path: createNewPageUrl(),
-          element: <NewPage />,
+          path: createProjectsPageUrl(),
+          element: <ProjectsPage />,
+          loader: () => getAllProjectsFromStorage(),
         },
         { path: createImportPageUrl(), element: <ImportPage /> },
         {
           path: createDataSamplesPageUrl(),
           element: <DataSamplesPage />,
+          loader: () => commonLoaderFunction(),
         },
         {
           path: createTestingModelPageUrl(),
           element: <TestingModelPage />,
+          loader: commonLoaderFunction,
         },
         {
           path: createCodePageUrl(),
           element: <CodePage />,
+          loader: commonLoaderFunction,
         },
         {
           path: createOpenSharedProjectPageUrl(),
@@ -196,6 +306,10 @@ const createRouter = () => {
           errorElement: <NotFound />,
         },
         {
+          path: "/new",
+          element: <Navigate to={createHomePageUrl()} replace />,
+        },
+        {
           path: "*",
           element: <NotFound />,
         },
@@ -205,6 +319,19 @@ const createRouter = () => {
 };
 
 const App = () => {
+  // Detect safe area insets and set CSS variables for nav bar side only
+  useSafeAreaInsets();
+
+  // Set status bar style on native platforms (LIGHT = dark icons for light backgrounds)
+  useEffect(() => {
+    if (isNativePlatform()) {
+      void import("@capacitor-community/safe-area").then(
+        ({ SafeArea, SystemBarsStyle }) =>
+          SafeArea.setSystemBarsStyle({ style: SystemBarsStyle.Light })
+      );
+    }
+  }, []);
+
   useEffect(() => {
     if (navigator.bluetooth) {
       navigator.bluetooth
@@ -218,7 +345,7 @@ const App = () => {
           });
         })
         .catch((err) => {
-          logging.error(err);
+          logging.error("Error checking BT availability", err);
         });
     } else {
       logging.event({

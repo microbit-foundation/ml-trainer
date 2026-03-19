@@ -17,7 +17,7 @@ import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
 import { mlSettings } from "../mlConfig";
 import { getMakeCodeLang } from "../settings";
@@ -55,7 +55,7 @@ const TestingModelTable = () => {
   const actions = useStore((s) => s.actions);
   const setRequiredConfidence = useStore((s) => s.setRequiredConfidence);
   const { project, projectEdited } = useProject();
-  const { isConnected } = useConnectionStage();
+  const isConnected = useDataConnected();
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
   const scrollableAreaRef = useRef<HTMLDivElement>(null);
@@ -83,11 +83,11 @@ const TestingModelTable = () => {
             h="fit-content"
             alignSelf="start"
           >
-            {actions.map((action, idx) => {
+            {actions.map((action) => {
               const { requiredConfidence: threshold } = action;
               return (
                 <Box
-                  key={idx}
+                  key={action.id}
                   role="region"
                   aria-label={intl.formatMessage(
                     {
@@ -107,9 +107,9 @@ const TestingModelTable = () => {
                   <GridItem>
                     <ActionCertaintyCard
                       actionName={action.name}
-                      actionId={action.ID}
+                      actionId={action.id}
                       onThresholdChange={(val) =>
-                        setRequiredConfidence(action.ID, val)
+                        setRequiredConfidence(action.id, val)
                       }
                       requiredConfidence={
                         threshold ?? mlSettings.defaultRequiredConfidence

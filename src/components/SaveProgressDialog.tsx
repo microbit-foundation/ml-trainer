@@ -10,37 +10,42 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Progress,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import { useStore } from "../store";
+import { SaveType } from "../model";
+import LoadingAnimation from "./LoadingAnimation";
 
 export interface SavingDialogProps {
   isOpen: boolean;
 }
 
 const SaveProgressDialog = ({ isOpen }: SavingDialogProps) => {
+  const isShare = useStore((s) => s.save.type) === SaveType.Share;
+  const sharingOrSaving = isShare ? "sharing" : "saving";
+
   return (
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
       isOpen={isOpen}
       onClose={() => {}}
-      size="2xl"
+      size={{ base: "full", md: "3xl" }}
       isCentered
     >
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="saving-title" />
+            <FormattedMessage id={`${sharingOrSaving}-title`} />
           </ModalHeader>
           <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Text>
-                <FormattedMessage id="saving-description" />
+            <VStack width="100%" alignItems="center" gap={5}>
+              <Text textAlign="center">
+                <FormattedMessage id={`${sharingOrSaving}-description`} />
               </Text>
-              <Progress colorScheme="brand2" isIndeterminate rounded="md" />
+              <LoadingAnimation />
             </VStack>
           </ModalBody>
           <ModalFooter />

@@ -14,7 +14,7 @@ test.describe("import project (microbit.org case)", () => {
     await importPage.gotoSimpleAIExerciseTimer();
     await importPage.expectOnPage();
     await importPage.expectName("Simple AI exercise timer");
-    await importPage.startSession();
+    await importPage.openProject();
 
     await dataSamplesPage.expectOnPage();
     await dataSamplesPage.expectActions(["exercising", "not exercising"]);

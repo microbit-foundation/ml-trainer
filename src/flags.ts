@@ -25,9 +25,17 @@ export type Flag =
    */
   | "e2e"
   /**
+   * Flag to simulate Android native platform behavior in web for testing.
+   */
+  | "android"
+  /**
    * Flag to add a beta warning. Enabled for review and staging site stages.
    */
   | "preReleaseNotice"
+  /**
+   * Flag to skip automatic tours. Useful for e2e tests that don't test tours.
+   */
+  | "skipTours"
   /**
    * Enables in-context Crowdin translating.
    */
@@ -37,14 +45,14 @@ export type Flag =
    */
   | "translationPreview"
   /**
-   * Flag to show links to website content for the CreateAI release.
-   */
-  | "websiteContent"
-  /**
    * Example flags used for testing.
    */
   | "exampleOptInA"
-  | "exampleOptInB";
+  | "exampleOptInB"
+  /**
+   * Flag to simulate iOS native platform behavior in web for testing.
+   */
+  | "ios";
 
 interface FlagMetadata {
   defaultOnStages: Stage[];
@@ -53,21 +61,16 @@ interface FlagMetadata {
 
 const allFlags: FlagMetadata[] = [
   // Alphabetical order.
-  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
-  { name: "exampleOptInB", defaultOnStages: [] },
+  { name: "android", defaultOnStages: [] },
   { name: "devtools", defaultOnStages: ["local"] },
   { name: "e2e", defaultOnStages: [] },
-  {
-    name: "preReleaseNotice",
-    defaultOnStages: ["staging", "beta"],
-  },
+  { name: "exampleOptInA", defaultOnStages: ["review", "staging"] },
+  { name: "exampleOptInB", defaultOnStages: [] },
+  { name: "ios", defaultOnStages: [] },
+  { name: "preReleaseNotice", defaultOnStages: ["staging", "beta"] },
+  { name: "skipTours", defaultOnStages: [] },
   { name: "translate", defaultOnStages: [] },
   { name: "translationPreview", defaultOnStages: ["beta"] },
-  // We can probably remove this flag now it's enabled everywhere!
-  {
-    name: "websiteContent",
-    defaultOnStages: ["local", "review", "staging", "beta", "production"],
-  },
 ];
 
 type Flags = Record<Flag, boolean>;

@@ -7,11 +7,12 @@ import { extendTheme, withDefaultVariant } from "@chakra-ui/react";
 import colors from "./colors";
 import Alert from "./components/alert";
 import Button from "./components/button";
+import Modal from "./components/modal";
 import fonts from "./fonts";
 import radii from "./radii";
 import shadows from "./shadows";
 
-// See https://chakra-ui.com/docs/theming/customize-theme
+// See https://v2.chakra-ui.com/docs/styled-system/customize-theme
 const overrides = {
   fonts,
   radii,
@@ -20,6 +21,7 @@ const overrides = {
   components: {
     Alert,
     Button,
+    Modal,
   },
 };
 

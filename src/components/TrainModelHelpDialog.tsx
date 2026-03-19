@@ -18,6 +18,7 @@ import {
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
+import ModalFooterContent from "./ModalFooterContent";
 
 interface TrainModelHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -54,16 +55,21 @@ const TrainModelIntroDialog = ({
               />
             </Text>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <Checkbox
-              isChecked={skip}
-              onChange={(e) => setSkip(e.target.checked)}
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <Checkbox
+                  isChecked={skip}
+                  onChange={(e) => setSkip(e.target.checked)}
+                >
+                  <FormattedMessage id="dont-show-again" />
+                </Checkbox>
+              }
             >
-              <FormattedMessage id="dont-show-again" />
-            </Checkbox>
-            <Button onClick={handleNext} variant="primary">
-              <FormattedMessage id="start-training-action" />
-            </Button>
+              <Button onClick={handleNext} variant="primary">
+                <FormattedMessage id="start-training-action" />
+              </Button>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

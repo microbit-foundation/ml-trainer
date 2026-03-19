@@ -10,7 +10,7 @@ import { ActionName, actionNamesFromLabels } from "./utils";
 import { LayersModel } from "@tensorflow/tfjs";
 import { DatasetEditorJsonFormat, ActionData } from "../model";
 import { mlSettings } from "../mlConfig";
-import { DataWindow } from "../store";
+import { DataWindow } from "../project-utils";
 
 const createMlEvents = (actionNames: ActionName[]) => {
   let code = "";

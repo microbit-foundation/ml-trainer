@@ -1,0 +1,113 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build signed IPA for App Store/TestFlight"
+  lane :build do
+    setup_ci if ENV["CI"]
+
+    # Fetch certificates and profiles from Match repo
+    match(
+      type: "appstore",
+      readonly: ENV["CI"] == "true"
+    )
+
+    # Set build number from CI or default to 1
+    if ENV["BUILD_NUMBER"]
+      increment_build_number(
+        xcodeproj: "ios/App/App.xcodeproj",
+        build_number: ENV["BUILD_NUMBER"]
+      )
+    end
+
+    # Set marketing version from CI
+    if ENV["MARKETING_VERSION"]
+      increment_version_number(
+        xcodeproj: "ios/App/App.xcodeproj",
+        version_number: ENV["MARKETING_VERSION"]
+      )
+    end
+
+    build_app(
+      workspace: "ios/App/App.xcworkspace",
+      scheme: "App",
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "ios/App/build/output",
+      output_name: "App.ipa",
+      export_options: {
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "org.microbit.createai" => "match AppStore org.microbit.createai"
+        }
+      }
+    )
+  end
+
+  desc "Upload to TestFlight for internal testing"
+  lane :upload do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_KEY_CONTENT"],
+      is_key_content_base64: true
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: "ios/App/build/output/App.ipa",
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :release do
+    build
+    upload
+  end
+end
+
+platform :android do
+  desc "Build signed AAB and APK for Play Store"
+  lane :build do
+    # Set version code from CI or leave as-is for local builds
+    if ENV["BUILD_NUMBER"]
+      sh("sed -i'' -e 's/versionCode [0-9]*/versionCode #{ENV["BUILD_NUMBER"]}/' ../android/app/build.gradle")
+    end
+
+    # Set marketing version from CI
+    if ENV["MARKETING_VERSION"]
+      sh("sed -i'' -e 's/versionName \"[^\"]*\"/versionName \"#{ENV["MARKETING_VERSION"]}\"/' ../android/app/build.gradle")
+    end
+
+    gradle(
+      project_dir: "android",
+      tasks: ["assembleRelease", "bundleRelease"],
+      properties: {
+        "android.injected.signing.store.file" => ENV["SIGNING_STORE_FILE"],
+        "android.injected.signing.store.password" => ENV["SIGNING_STORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV.fetch("SIGNING_KEY_ALIAS", "upload"),
+        "android.injected.signing.key.password" => ENV["SIGNING_KEY_PASSWORD"]
+      }
+    )
+  end
+
+  desc "Upload to Google Play internal testing track"
+  lane :upload do
+    upload_to_play_store(
+      track: "internal",
+      release_status: "draft",
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      json_key: ENV["GOOGLE_APPLICATION_CREDENTIALS"],
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Build and upload to Google Play internal track"
+  lane :release do
+    build
+    upload
+  end
+end

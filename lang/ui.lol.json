@@ -23,6 +23,10 @@
     "defaultMessage": "crwdns364036:0crwdne364036:0",
     "description": "Menu item for link to accessibility site"
   },
+  "accessibility-resource-title": {
+    "defaultMessage": "Accessibility",
+    "description": "Accessibility resource card title"
+  },
   "action-label": {
     "defaultMessage": "crwdns362658:0crwdne362658:0",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -55,13 +59,65 @@
     "defaultMessage": "crwdns362672:0crwdne362672:0",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "add-action-hint": {
+    "defaultMessage": "Finished recording for {actionName}?<mark>Add another action</mark>",
+    "description": "Hint when you have recorded enough data samples for one action"
+  },
+  "add-action-hint-label": {
+    "defaultMessage": "Finished recording for {actionName}? Press ‘Add action’ button to add another action",
+    "description": "Hint when you have recorded enough data samples for one action aria label"
+  },
   "ai-activity-timer-resource-title": {
     "defaultMessage": "crwdns362674:0crwdne362674:0",
+    "description": "Home page resource card title"
+  },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI light switch",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI sports data logger",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "crwdns363518:0crwdne363518:0",
     "description": "Home page resource card title"
+  },
+  "animation-label": {
+    "defaultMessage": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected.",
+    "description": "Aria label for animation"
+  },
+  "animation-pause-action": {
+    "defaultMessage": "Pause animation",
+    "description": "Pause animation button text"
+  },
+  "animation-resume-action": {
+    "defaultMessage": "Resume animation",
+    "description": "Resume animation button text"
+  },
+  "animation-step-1": {
+    "defaultMessage": "Connect",
+    "description": "Step 1 of how it works animation"
+  },
+  "animation-step-2": {
+    "defaultMessage": "Collect data",
+    "description": "Step 2 of how it works animation"
+  },
+  "animation-step-3": {
+    "defaultMessage": "Test model",
+    "description": "Step 3 of how it works animation"
+  },
+  "animation-step-4": {
+    "defaultMessage": "Code",
+    "description": "Step 4 of how it works animation"
+  },
+  "animation-step-5": {
+    "defaultMessage": "Use",
+    "description": "Step 5 of how it works animation"
+  },
+  "animation-training": {
+    "defaultMessage": "Training",
+    "description": "Machine learning training on computer screen of how it works animation"
   },
   "back-action": {
     "defaultMessage": "crwdns362676:0crwdne362676:0",
@@ -74,6 +130,26 @@
   "blocks-preview-title": {
     "defaultMessage": "crwdns368553:0crwdne368553:0",
     "description": "Blocks preview heading text"
+  },
+  "bluetooth-disabled-body": {
+    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "description": "Body text for Bluetooth disabled error dialog"
+  },
+  "bluetooth-disabled-heading": {
+    "defaultMessage": "Bluetooth is turned off",
+    "description": "Heading for Bluetooth disabled error dialog"
+  },
+  "bluetooth-permission-denied-body-android": {
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
+    "description": "Body text for Bluetooth permission denied error dialog on Android"
+  },
+  "bluetooth-permission-denied-body-ios": {
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
+    "description": "Body text for Bluetooth permission denied error dialog on iOS"
+  },
+  "bluetooth-permission-denied-heading": {
+    "defaultMessage": "Bluetooth permission required",
+    "description": "Heading for Bluetooth permission denied error dialog"
   },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "crwdns362680:0crwdne362680:0",
@@ -95,6 +171,18 @@
     "defaultMessage": "crwdns362688:0crwdne362688:0",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} of {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "crwdns362690:0crwdne362690:0",
     "description": "Heading for certainty column"
@@ -110,6 +198,10 @@
   "certainty-tooltip": {
     "defaultMessage": "crwdns362696:0crwdne362696:0",
     "description": "Tooltip for certainty column"
+  },
+  "clear": {
+    "defaultMessage": "Clear",
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "crwdns362698:0crwdne362698:0",
@@ -143,6 +235,10 @@
     "defaultMessage": "crwdns362712:0crwdne362712:0",
     "description": "Confirm and save action label"
   },
+  "confirm-share-action": {
+    "defaultMessage": "Confirm and share",
+    "description": "Confirm and share action label"
+  },
   "connect-action": {
     "defaultMessage": "crwdns362714:0crwdne362714:0",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
@@ -170,6 +266,10 @@
   "connect-bluetooth-cancelled-connection": {
     "defaultMessage": "crwdns362726:0crwdne362726:0",
     "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+  },
+  "connect-bluetooth-enabled": {
+    "defaultMessage": "Bluetooth enabled",
+    "description": "Label indicating Bluetooth needs to be enabled"
   },
   "connect-bluetooth-heading": {
     "defaultMessage": "crwdns362728:0crwdne362728:0",
@@ -259,6 +359,26 @@
     "defaultMessage": "crwdns362770:0crwdne362770:0",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-change-pattern": {
+    "defaultMessage": "My pattern is different",
+    "description": "Change Bluetooth pattern link"
+  },
+  "connect-native-compare-pattern-heading": {
+    "defaultMessage": "Compare pattern",
+    "description": "Compare Bluetooth pattern dialog heading"
+  },
+  "connect-native-compare-pattern-subtitle": {
+    "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
+    "description": "Compare Bluetooth pattern dialog subtitle"
+  },
+  "connect-native-start-heading": {
+    "defaultMessage": "What you need to connect",
+    "description": "Connection dialog heading"
+  },
+  "connect-native-start-requirements1": {
+    "defaultMessage": "micro:bit with battery pack",
+    "description": "Label for image of a micro:bit and battery pack"
+  },
   "connect-or-import": {
     "defaultMessage": "crwdns362772:0crwdne362772:0",
     "description": "Empty data samples page text"
@@ -269,6 +389,10 @@
   },
   "connect-pattern-input-label": {
     "defaultMessage": "crwdns362776:0{colNum}crwdne362776:0",
+    "description": "Screen reader text for numeric pattern input"
+  },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
@@ -379,6 +503,30 @@
     "defaultMessage": "crwdns362830:0crwdne362830:0",
     "description": "Troubleshooting heading"
   },
+  "connect-try-another-way": {
+    "defaultMessage": "Try another way",
+    "description": "Link to alternative connection method"
+  },
+  "connect-unable-to-enter-bluetooth-mode": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Link to troubleshooting entering Bluetooth mode"
+  },
+  "connect-unable-to-enter-bluetooth-mode-heading": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Unable to enter Bluetooth mode dialog heading"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
+    "defaultMessage": "Try the following:",
+    "description": "Heading for list of things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
+    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
+    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
+  },
   "connect-with-batteries": {
     "defaultMessage": "crwdns362832:0crwdne362832:0",
     "description": "Under header 'Battery holder' this notes that batteries are required"
@@ -406,6 +554,18 @@
   "copy-action": {
     "defaultMessage": "crwdns362844:0crwdne362844:0",
     "description": "Copy button text"
+  },
+  "create-project": {
+    "defaultMessage": "Create project",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "Create a project",
+    "description": "Create project dialog heading"
+  },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "Taster lessons",
+    "description": "Home page resource card title"
   },
   "data-actions-menu": {
     "defaultMessage": "crwdns362846:0crwdne362846:0",
@@ -489,6 +649,26 @@
   },
   "delete-data-samples-confirm-text": {
     "defaultMessage": "crwdns362884:0crwdne362884:0",
+    "description": "Confirmation dialog text"
+  },
+  "delete-project-action": {
+    "defaultMessage": "{count, plural, one {Delete} other {Delete {count} projects}}",
+    "description": "Delete project button"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Confirm delete project",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "Confirm delete projects",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "Are you sure you want to delete {numProjects} projects?",
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
@@ -583,9 +763,37 @@
     "defaultMessage": "crwdns362930:0crwdne362930:0",
     "description": "Progress text"
   },
-  "downloading-subtitle": {
-    "defaultMessage": "crwdns362932:0crwdne362932:0",
-    "description": "Progress text"
+  "downloading-stage-checking-bond": {
+    "defaultMessage": "Choose ‘Pair’ if asked",
+    "description": "Progress text when ensuring device is paired before flashing"
+  },
+  "downloading-stage-connecting": {
+    "defaultMessage": "Connecting to micro:bit…",
+    "description": "Progress text during connection stage of flashing"
+  },
+  "downloading-stage-finding-device": {
+    "defaultMessage": "Finding micro:bit…",
+    "description": "Progress text during device discovery stage of flashing"
+  },
+  "downloading-stage-flashing": {
+    "defaultMessage": "Please wait. Downloading program to micro:bit.",
+    "description": "Progress text during actual flashing stage"
+  },
+  "downloading-stage-flashing-native": {
+    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
+    "description": "Progress text during native flashing stage"
+  },
+  "downloading-stage-resetting-device": {
+    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "description": "Progress text when rebooting micro:bit before flashing"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Duplicate",
+    "description": "Duplicate project action"
+  },
+  "duplicate-project-heading": {
+    "defaultMessage": "Duplicate project",
+    "description": "Heading for duplicate project dialog"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "crwdns362934:0crwdne362934:0",
@@ -719,9 +927,9 @@
     "defaultMessage": "crwdns362998:0crwdne362998:0",
     "description": "Connection error dialog"
   },
-  "get-started-action": {
-    "defaultMessage": "crwdns363002:0crwdne363002:0",
-    "description": "Get started action"
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "First lessons",
+    "description": "Home page resource card title"
   },
   "go-action": {
     "defaultMessage": "crwdns363004:0crwdne363004:0",
@@ -775,6 +983,14 @@
     "defaultMessage": "crwdns363014:0crwdne363014:0",
     "description": "Help icon aria label"
   },
+  "help-resources-row-carousel": {
+    "defaultMessage": "List of help resources",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "Help",
+    "description": "Title for home page row"
+  },
   "help-support": {
     "defaultMessage": "crwdns363016:0crwdne363016:0",
     "description": "Link or menu item link to support site"
@@ -791,101 +1007,13 @@
     "defaultMessage": "crwdns363020:0crwdne363020:0",
     "description": "Link to home page"
   },
-  "homepage-alt": {
-    "defaultMessage": "crwdns363022:0crwdne363022:0",
-    "description": "Alt text for image in homepage"
+  "homepage-banner-heading": {
+    "defaultMessage": "New to {appName}?",
+    "description": "Homepage banner heading"
   },
-  "homepage-alt-graph": {
-    "defaultMessage": "crwdns363024:0crwdne363024:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-hands": {
-    "defaultMessage": "crwdns363026:0crwdne363026:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-media": {
-    "defaultMessage": "crwdns368557:0crwdne368557:0",
-    "description": "Alt text for media in homepage"
-  },
-  "homepage-description": {
-    "defaultMessage": "crwdns363028:0crwdne363028:0",
-    "description": "Home page description"
-  },
-  "homepage-how-it-works": {
-    "defaultMessage": "crwdns363030:0crwdne363030:0",
-    "description": "Home page section heading"
-  },
-  "homepage-how-it-works-paragraph": {
-    "defaultMessage": "crwdns363032:0crwdne363032:0",
-    "description": "Home page content under the video"
-  },
-  "homepage-media-description": {
-    "defaultMessage": "crwdns368559:0crwdne368559:0",
-    "description": "Homepage media description"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "crwdns368561:0crwdne368561:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "crwdns368563:0crwdne368563:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "crwdns368565:0crwdne368565:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "crwdns368567:0crwdne368567:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "crwdns368569:0crwdne368569:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "crwdns368571:0crwdne368571:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "crwdns368573:0crwdne368573:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "crwdns368575:0crwdne368575:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "crwdns368577:0crwdne368577:0",
-    "description": "Homepage media descriptive transcript dialog heading"
-  },
-  "homepage-media-pause-action": {
-    "defaultMessage": "crwdns368579:0crwdne368579:0",
-    "description": "Homepage media pause video button text"
-  },
-  "homepage-media-play-action": {
-    "defaultMessage": "crwdns368581:0crwdne368581:0",
-    "description": "Homepage media play video button text"
-  },
-  "homepage-projects": {
-    "defaultMessage": "crwdns363034:0crwdne363034:0",
-    "description": "Home page section heading"
-  },
-  "homepage-projects-more": {
-    "defaultMessage": "crwdns363036:0crwdne363036:0",
-    "description": "Link back to AI landing page"
-  },
-  "homepage-step-by-step": {
-    "defaultMessage": "crwdns363038:0crwdne363038:0",
-    "description": "Home page section heading"
-  },
-  "homepage-subtitle": {
-    "defaultMessage": "crwdns363040:0crwdne363040:0",
-    "description": "Home page subtitle"
-  },
-  "homepage-video-alt": {
-    "defaultMessage": "crwdns363042:0crwdne363042:0",
-    "description": "Home page video alt text"
+  "homepage-banner-subtitle": {
+    "defaultMessage": "Machine learning with movement and the micro:bit",
+    "description": "Homepage banner subtitle"
   },
   "import-data-samples-action": {
     "defaultMessage": "crwdns363044:0crwdne363044:0",
@@ -898,6 +1026,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "crwdns363048:0crwdne363048:0",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Import",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "crwdns363050:0crwdne363050:0",
@@ -958,6 +1090,10 @@
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "crwdns363066:0crwdne363066:0",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "Learn more",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "crwdns363068:0crwdne363068:0",
@@ -1143,6 +1279,14 @@
     "defaultMessage": "crwdns363158:0crwdne363158:0",
     "description": "Aria label for loading spinner"
   },
+  "location-disabled-body": {
+    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
+    "description": "Body text for location disabled error dialog (Android only)"
+  },
+  "location-disabled-heading": {
+    "defaultMessage": "Location services required",
+    "description": "Heading for location disabled error dialog (Android only)"
+  },
   "main-menu": {
     "defaultMessage": "crwdns363160:0crwdne363160:0",
     "description": "Main menu label"
@@ -1167,6 +1311,10 @@
     "defaultMessage": "crwdns363174:0crwdne363174:0",
     "description": "Title of MakeCode load error dialog"
   },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
+  },
   "microbit-not-connected": {
     "defaultMessage": "crwdns363176:0crwdne363176:0",
     "description": "Live graph disconnected micro:bit status message"
@@ -1178,6 +1326,18 @@
   "more-edit-in-makecode-options": {
     "defaultMessage": "crwdns363178:0crwdne363178:0",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+  },
+  "move-hint": {
+    "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
+    "description": "Hint when you have just connected a micro:bit"
+  },
+  "my-projects-row-carousel": {
+    "defaultMessage": "List of my projects",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "My projects",
+    "description": "Title for home page row"
   },
   "name-action-hint": {
     "defaultMessage": "crwdns363180:0crwdne363180:0",
@@ -1195,65 +1355,65 @@
     "defaultMessage": "crwdns363186:0crwdne363186:0",
     "description": "Text under project name field"
   },
-  "new-session-setup-description": {
-    "defaultMessage": "crwdns363188:0crwdne363188:0",
-    "description": "New session setup description"
+  "native-bluetooth-error-body": {
+    "defaultMessage": "The connection to the micro:bit failed.",
+    "description": "Body text for native Bluetooth connection error dialog"
   },
-  "new-session-setup-title": {
-    "defaultMessage": "crwdns363190:0crwdne363190:0",
-    "description": "New session setup title"
+  "native-bluetooth-error-check": {
+    "defaultMessage": "Please check that:",
+    "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
-  "newpage-continue-session-subtitle": {
-    "defaultMessage": "crwdns363192:0crwdne363192:0",
-    "description": "Continue session subtitle"
+  "native-bluetooth-error-check-distance": {
+    "defaultMessage": "the micro:bit is close to this device",
+    "description": "List item in native Bluetooth error dialog"
   },
-  "newpage-continue-session-title": {
-    "defaultMessage": "crwdns363194:0crwdne363194:0",
-    "description": "Continue session title"
+  "native-bluetooth-error-check-mode": {
+    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "description": "List item in native Bluetooth error dialog"
   },
-  "newpage-last-session-date": {
-    "defaultMessage": "crwdns363196:0{date}crwdne363196:0",
-    "description": "Last session date label"
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
   },
-  "newpage-last-session-name": {
-    "defaultMessage": "crwdns363198:0{name}crwdne363198:0",
-    "description": "Last session name label"
+  "native-bluetooth-error-forget-device": {
+    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
-  "newpage-last-session-none": {
-    "defaultMessage": "crwdns363200:0crwdne363200:0",
-    "description": "Last session not found text"
+  "native-bluetooth-error-forget-device-step-1": {
+    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "description": "List item in native Bluetooth error dialog"
   },
-  "newpage-last-session-title": {
-    "defaultMessage": "crwdns363202:0crwdne363202:0",
-    "description": "Open last session title"
+  "native-bluetooth-error-forget-device-step-2": {
+    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
   },
-  "newpage-new-session-subtitle": {
-    "defaultMessage": "crwdns363204:0crwdne363204:0",
-    "description": "Start new session subtitle"
+  "native-bluetooth-error-forget-device-step-3": {
+    "defaultMessage": "Tap ‘Forget This Device’",
+    "description": "List item in native Bluetooth error dialog"
   },
-  "newpage-new-session-title": {
-    "defaultMessage": "crwdns363206:0crwdne363206:0",
-    "description": "Start new session title"
+  "native-bluetooth-error-forget-device-step-4": {
+    "defaultMessage": "Return to this app to try again",
+    "description": "List item in native Bluetooth error dialog"
   },
-  "newpage-section-one-title": {
-    "defaultMessage": "crwdns363208:0crwdne363208:0",
-    "description": "Homepage section one title"
+  "native-bluetooth-error-heading": {
+    "defaultMessage": "Could not connect to micro:bit",
+    "description": "Heading for native Bluetooth connection error dialog"
   },
-  "newpage-section-two-title": {
-    "defaultMessage": "crwdns363210:0crwdne363210:0",
-    "description": "Homepage section two title"
+  "new-project-setup-title": {
+    "defaultMessage": "New project setup",
+    "description": "New project setup title"
   },
-  "newpage-title": {
-    "defaultMessage": "crwdns363212:0crwdne363212:0",
-    "description": "New page title"
+  "newpage-new-project-title": {
+    "defaultMessage": "New project",
+    "description": "Start new project title"
   },
   "next-action": {
     "defaultMessage": "crwdns363214:0crwdne363214:0",
     "description": "Next button text for dialogs and similar"
   },
-  "no-data-samples": {
-    "defaultMessage": "crwdns363216:0crwdne363216:0",
-    "description": "Empty data samples page status text"
+  "no-projects": {
+    "defaultMessage": "No projects to display",
+    "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "crwdns363218:0crwdne363218:0",
@@ -1271,10 +1431,6 @@
     "defaultMessage": "crwdns363224:0crwdne363224:0",
     "description": "Page not found page title"
   },
-  "open-file-action": {
-    "defaultMessage": "crwdns363226:0crwdne363226:0",
-    "description": "Open file button text"
-  },
   "open-file-dropped": {
     "defaultMessage": "crwdns363228:0crwdne363228:0",
     "description": "Aria label for file drop target"
@@ -1283,9 +1439,9 @@
     "defaultMessage": "crwdns368583:0crwdne368583:0",
     "description": "Open project button text"
   },
-  "open-project-setup-description": {
-    "defaultMessage": "crwdns368585:0crwdne368585:0",
-    "description": "Open project setup description"
+  "open-shared-project-action": {
+    "defaultMessage": "Open project",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "crwdns368587:0crwdne368587:0",
@@ -1323,13 +1479,49 @@
     "defaultMessage": "crwdns363236:0crwdne363236:0",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "List of project ideas",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Project ideas",
+    "description": "Title for home page row"
+  },
+  "project-label": {
+    "defaultMessage": "Project",
+    "description": "Label for project input"
+  },
   "project-loaded": {
     "defaultMessage": "crwdns363238:0crwdne363238:0",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "{name} actions menu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "crwdns363240:0crwdne363240:0",
     "description": "Validation message for project name"
+  },
+  "project-name-text": {
+    "defaultMessage": "Project name",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "Click to edit project name",
+    "description": "Tooltip for the project name editable input"
+  },
+  "project-skip-to-toolbar": {
+    "defaultMessage": "Skip to toolbar",
+    "description": "Button to skip focus to the projects toolbar"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage.",
+    "description": "Tooltip for my projects row"
+  },
+  "projects-page-title": {
+    "defaultMessage": "Projects",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "crwdns363242:0crwdne363242:0",
@@ -1362,6 +1554,10 @@
   "reconnect-failed-bridge1": {
     "defaultMessage": "crwdns363256:0crwdne363256:0",
     "description": "Connection error dialog"
+  },
+  "reconnect-failed-native-heading": {
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "description": "Connection error dialog for native Bluetooth reconnection failure"
   },
   "reconnect-failed-radio-heading": {
     "defaultMessage": "crwdns363258:0crwdne363258:0",
@@ -1398,6 +1594,14 @@
   "record-hint-button-b": {
     "defaultMessage": "crwdns363274:0crwdne363274:0",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-more-hint": {
+    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}}",
+    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "record-more-hint-label": {
+    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}} for {actionName}",
+    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
     "defaultMessage": "crwdns363276:0{numSamples}crwdne363276:0",
@@ -1447,6 +1651,26 @@
     "defaultMessage": "crwdns363298:0crwdne363298:0",
     "description": "Reload button text"
   },
+  "rename-project-action": {
+    "defaultMessage": "Rename",
+    "description": "Rename project action"
+  },
+  "rename-project-heading": {
+    "defaultMessage": "Rename project",
+    "description": "Heading for rename project dialog"
+  },
+  "reset-to-bluetooth-mode-ab-subtitle": {
+    "defaultMessage": "Hold A+B and press RESET",
+    "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
+  },
+  "reset-to-bluetooth-mode-heading": {
+    "defaultMessage": "Reset to Bluetooth mode",
+    "description": "Title for dialog with instructures on using "
+  },
+  "reset-to-bluetooth-mode-subtitle": {
+    "defaultMessage": "Press RESET three times",
+    "description": "Instructions to press the physical reset button on the micro:bit"
+  },
   "reset-to-default-action": {
     "defaultMessage": "crwdns363300:0crwdne363300:0",
     "description": "Reset to default blocks button text"
@@ -1487,6 +1711,14 @@
     "defaultMessage": "crwdns363318:0crwdne363318:0",
     "description": "Text in the dialog shown when saving a hex file"
   },
+  "save-to-files-action": {
+    "defaultMessage": "Save to Files",
+    "description": "Label for action that saves the project to the device file system on Android"
+  },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your data samples have been downloaded",
+    "description": "Notification after a dataset has been downloaded"
+  },
   "saving-description": {
     "defaultMessage": "crwdns363320:0crwdne363320:0",
     "description": "Saving progress dialog text"
@@ -1498,6 +1730,10 @@
   "saving-toast-title": {
     "defaultMessage": "crwdns363324:0crwdne363324:0",
     "description": "Notification after a hex file has been downloaded"
+  },
+  "search": {
+    "defaultMessage": "Search",
+    "description": "Aria label for searching projects"
   },
   "select-icon-action-aria": {
     "defaultMessage": "crwdns363326:0{action}crwdne363326:0",
@@ -1511,6 +1747,14 @@
     "defaultMessage": "crwdns363330:0{iconName}crwdne363330:0",
     "description": "Aria label for icon option"
   },
+  "select-project-action": {
+    "defaultMessage": "Select {name}",
+    "description": "Label for project selection checkbox"
+  },
+  "selection-actions-group": {
+    "defaultMessage": "Selection actions",
+    "description": "Accessible label for the group of actions available when projects are selected"
+  },
   "settings": {
     "defaultMessage": "crwdns363332:0crwdne363332:0",
     "description": "Text for settings dialog header and menu item"
@@ -1518,6 +1762,26 @@
   "settings-menu-action": {
     "defaultMessage": "crwdns363334:0crwdne363334:0",
     "description": "Label for settings actions menu button"
+  },
+  "share-action": {
+    "defaultMessage": "Share",
+    "description": "Label for action that initiates sharing the project on mobile"
+  },
+  "share-hex-dialog-heading": {
+    "defaultMessage": "Share project as a hex file",
+    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+  },
+  "share-hex-dialog-message1": {
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "sharing-description": {
+    "defaultMessage": "Your project will be ready to share soon.",
+    "description": "Sharing progress dialog text for mobile"
+  },
+  "sharing-title": {
+    "defaultMessage": "Sharing…",
+    "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "crwdns363336:0crwdne363336:0",
@@ -1535,17 +1799,33 @@
     "defaultMessage": "crwdns363342:0crwdne363342:0",
     "description": "Software versions text"
   },
-  "start-session-action": {
-    "defaultMessage": "crwdns363344:0crwdne363344:0",
-    "description": "Start session button text"
+  "sort-option-last-modified": {
+    "defaultMessage": "Last modified",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Name",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevance",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Ascending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Descending order",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Sort projects",
+    "description": "Label for select element to sort projects"
   },
   "start-training-action": {
     "defaultMessage": "crwdns363346:0crwdne363346:0",
     "description": "Start training button text"
-  },
-  "steps-alt": {
-    "defaultMessage": "crwdns363348:0crwdne363348:0",
-    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "crwdns363350:0crwdne363350:0",
@@ -1575,6 +1855,14 @@
     "defaultMessage": "crwdns363362:0crwdne363362:0",
     "description": "Support request link text"
   },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "List of teacher resources",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "Teacher resources",
+    "description": "Title for home page row"
+  },
   "terms": {
     "defaultMessage": "crwdns363364:0crwdne363364:0",
     "description": "Link or menu item link to view terms of use"
@@ -1590,6 +1878,14 @@
   "third-party-content-description": {
     "defaultMessage": "crwdns368597:0crwdne368597:0",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "now",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "a few seconds ago",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "crwdns363370:0crwdne363370:0",
@@ -1723,6 +2019,14 @@
     "defaultMessage": "crwdns363434:0crwdne363434:0",
     "description": "Training dialog"
   },
+  "train-hint": {
+    "defaultMessage": "Finished recording?<mark>Train the model</mark>",
+    "description": "Hint when you have recorded enough data samples to train a model"
+  },
+  "train-hint-label": {
+    "defaultMessage": "Finished recording? Press ‘Train the model’ button to train the model",
+    "description": "Hint when you have recorded enough data samples to train a model aria label"
+  },
   "train-model": {
     "defaultMessage": "crwdns363436:0crwdne363436:0",
     "description": "Action to train a model"
@@ -1746,6 +2050,10 @@
   "transfer-hex-message": {
     "defaultMessage": "crwdns363446:0crwdne363446:0",
     "description": "Dialog shown when WebUSB fails"
+  },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "Troubleshooting",
+    "description": "Home page resource card title"
   },
   "try-again-action": {
     "defaultMessage": "crwdns363448:0crwdne363448:0",
@@ -1787,6 +2095,10 @@
     "defaultMessage": "crwdns363466:0crwdne363466:0",
     "description": "Used for link to user guide page on microbit.org"
   },
+  "view-all-projects": {
+    "defaultMessage": "View all",
+    "description": "View all projects button / card text"
+  },
   "webusb-retry-no-select": {
     "defaultMessage": "crwdns363468:0crwdne363468:0",
     "description": "Shown if the user fails to choose a micro:bit"
@@ -1806,5 +2118,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "crwdns363476:0crwdne363476:0",
     "description": "WebUSB error dialog"
+  },
+  "welcome-title": {
+    "defaultMessage": "How CreateAI works",
+    "description": "Welcome dialog"
   }
 }

@@ -4,42 +4,29 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Button,
-  Grid,
-  GridProps,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { ButtonEvent } from "@microbit/microbit-connection";
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
+import { ButtonData } from "@microbit/microbit-connection";
+import { useCallback, useEffect, useRef, useState } from "react";
+import useKeyboardHeight from "../hooks/use-keyboard-height";
+import { isIOS } from "../platform";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
-import { ActionData } from "../model";
+import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
+import { useDataConnected } from "../data-connection-flow";
+import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { ActionData, DataSamplesPageHint } from "../model";
 import { useStore } from "../store";
+import { recordButtonId } from "./ActionDataSamplesCard";
+import { actionNameInputId } from "./ActionNameCard";
+import { ConfirmDialog } from "./ConfirmDialog";
 import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
 import HeadingGrid, { GridColumnHeadingItemProps } from "./HeadingGrid";
-import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import RecordingDialog, {
   RecordingCompleteDetail,
   RecordingOptions,
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
-import { ConfirmDialog } from "./ConfirmDialog";
-import { actionNameInputId } from "./ActionNameCard";
-import { recordButtonId } from "./ActionDataSamplesCard";
-import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 1fr",
@@ -68,22 +55,49 @@ const headings: GridColumnHeadingItemProps[] = [
 interface DataSamplesTableProps {
   selectedActionIdx: number;
   setSelectedActionIdx: (idx: number) => void;
+  hint: DataSamplesPageHint;
 }
 
 const DataSamplesTable = ({
   selectedActionIdx: selectedActionIdx,
   setSelectedActionIdx: setSelectedActionIdx,
+  hint,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
+  const keyboardHeight = useKeyboardHeight();
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // Calculate how much of the grid is actually obscured by the keyboard.
+  // The keyboard covers bottomContent first, so the grid loses less than
+  // the full keyboard height. Extra padding ensures the last item isn't
+  // flush against the keyboard edge.
+  const extraPadding = isIOS() ? 32 : 16;
+  const [gridPadding, setGridPadding] = useState(0);
+  useEffect(() => {
+    if (keyboardHeight > 0 && gridRef.current) {
+      const gridBottom = gridRef.current.getBoundingClientRect().bottom;
+      const visibleBottom = window.innerHeight - keyboardHeight;
+      const obscured = gridBottom - visibleBottom;
+      setGridPadding(obscured > 0 ? obscured + extraPadding : 0);
+    } else {
+      setGridPadding(0);
+    }
+  }, [extraPadding, keyboardHeight]);
+
+  // Scroll the focused element into view after the padding has been applied,
+  // so the scroll container has enough room.
+  useEffect(() => {
+    if (gridPadding > 0 && document.activeElement instanceof HTMLElement) {
+      document.activeElement.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+      });
+    }
+  }, [gridPadding]);
+
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
-  const showHints = useMemo<boolean>(
-    () =>
-      actions.length === 0 ||
-      (actions.length === 1 && actions[0].recordings.length === 0),
-    [actions]
-  );
   const intl = useIntl();
   const isDeleteActionConfirmOpen = useStore((s) => s.isDeleteActionDialogOpen);
   const deleteActionConfirmOnOpen = useStore((s) => s.deleteActionDialogOnOpen);
@@ -98,31 +112,23 @@ const DataSamplesTable = ({
   );
   const closeDialog = useStore((s) => s.closeDialog);
 
-  const connection = useConnectActions();
-  const { actions: connActions } = useConnectionStage();
-  const { isConnected } = useConnectionStage();
-  const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
+  const isConnected = useDataConnected();
 
   // For adding flashing animation for new recording.
-  const [newRecordingId, setNewRecordingId] = useState<number | undefined>(
+  const [newRecordingId, setNewRecordingId] = useState<string | undefined>(
     undefined
   );
 
-  const handleConnect = useCallback(() => {
-    connActions.startConnect();
-  }, [connActions]);
-
-  useEffect(() => {
-    const listener = (e: ButtonEvent) => {
+  const buttonListener = useCallback(
+    (e: ButtonData) => {
       if (!isRecordingDialogOpen && e.state) {
         recordingDialogOnOpen();
       }
-    };
-    connection.addButtonListener("B", listener);
-    return () => {
-      connection.removeButtonListener("B", listener);
-    };
-  }, [connection, isRecordingDialogOpen, recordingDialogOnOpen]);
+    },
+    [isRecordingDialogOpen, recordingDialogOnOpen]
+  );
+
+  useMicrobitButtonListener("B", buttonListener);
 
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,
@@ -138,12 +144,20 @@ const DataSamplesTable = ({
 
   const tourStart = useStore((s) => s.tourStart);
   const handleRecordingComplete = useCallback(
-    ({ mostRecentRecordingId, recordingCount }: RecordingCompleteDetail) => {
+    async ({
+      mostRecentRecordingId,
+      recordingCount,
+    }: RecordingCompleteDetail) => {
       setNewRecordingId(mostRecentRecordingId);
-      tourStart({ name: "DataSamplesRecorded", recordingCount });
+      await tourStart({ name: "DataSamplesRecorded", recordingCount });
     },
     [tourStart]
   );
+
+  const handleConfirm = useCallback(async () => {
+    await deleteAction(selectedAction);
+    closeDialog();
+  }, [closeDialog, deleteAction, selectedAction]);
 
   const actionNameInputEl = useCallback(
     (idx: number) => document.getElementById(actionNameInputId(actions[idx])),
@@ -205,14 +219,11 @@ const DataSamplesTable = ({
                 />
               </Text>
             }
-            onConfirm={() => {
-              deleteAction(selectedAction.ID);
-              closeDialog();
-            }}
+            onConfirm={handleConfirm}
             onCancel={closeDialog}
           />
           <RecordingDialog
-            actionId={selectedAction.ID}
+            actionId={selectedAction.id}
             isOpen={isRecordingDialogOpen}
             onClose={closeDialog}
             actionName={selectedAction.name}
@@ -227,73 +238,33 @@ const DataSamplesTable = ({
         {...gridCommonProps}
         headings={headings}
       />
-      {actions.length === 0 ? (
-        <VStack
-          gap={5}
-          flexGrow={1}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
-          <Text fontSize="lg">
-            <FormattedMessage id="no-data-samples" />
-          </Text>
-          {!isConnected && (
-            <Text fontSize="lg" textAlign="center">
-              <FormattedMessage
-                id="connect-or-import"
-                values={{
-                  link1: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={handleConnect}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                  link2: (chunks: ReactNode) => (
-                    <Button
-                      fontSize="lg"
-                      color="brand.600"
-                      variant="link"
-                      onClick={() => loadProjectInputRef.current?.chooseFile()}
-                    >
-                      {chunks}
-                    </Button>
-                  ),
-                }}
-              />
-            </Text>
-          )}
-        </VStack>
-      ) : (
-        <Grid
-          {...gridCommonProps}
-          py={2}
-          alignItems="start"
-          autoRows="max-content"
-          overflow="auto"
-          flexGrow={1}
-          h={0}
-        >
-          {actions.map((action, idx) => (
-            <DataSamplesTableRow
-              key={action.ID}
-              action={action}
-              newRecordingId={newRecordingId}
-              clearNewRecordingId={() => setNewRecordingId(undefined)}
-              selected={selectedAction.ID === action.ID}
-              onSelectRow={() => setSelectedActionIdx(idx)}
-              onRecord={handleRecord}
-              showHints={showHints}
-              onDeleteAction={deleteActionConfirmOnOpen}
-              renameShortcutScopeRef={renameActionShortcutScopeRef}
-            />
-          ))}
-        </Grid>
-      )}
+      <Grid
+        ref={gridRef}
+        {...gridCommonProps}
+        py={2}
+        pb={gridPadding > 0 ? `${gridPadding}px` : 2}
+        alignItems="start"
+        autoRows="max-content"
+        overflow="auto"
+        flexGrow={1}
+        h={0}
+      >
+        {actions.map((action, idx) => (
+          <DataSamplesTableRow
+            key={action.id}
+            action={action}
+            newRecordingId={newRecordingId}
+            clearNewRecordingId={() => setNewRecordingId(undefined)}
+            selected={selectedAction.id === action.id}
+            onSelectRow={() => setSelectedActionIdx(idx)}
+            onRecord={handleRecord}
+            // Only show hint for the last row.
+            hint={idx === actions.length - 1 ? hint : null}
+            onDeleteAction={deleteActionConfirmOnOpen}
+            renameShortcutScopeRef={renameActionShortcutScopeRef}
+          />
+        ))}
+      </Grid>
     </>
   );
 };

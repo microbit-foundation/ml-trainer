@@ -1,0 +1,105 @@
+name: Android Build
+
+on:
+  release:
+    types: [created]
+  push:
+    branches:
+      - "**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/v') && 'release' || github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+
+jobs:
+  build-android:
+    # Only run for apps releases, not web releases
+    if: ${{ github.event_name != 'release' || contains(github.event.release.tag_name, '-apps') }}
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - uses: microbit-foundation/npm-package-versioner-action@v1
+
+      # Strip prerelease suffix - app stores require X.Y.Z format
+      - name: Set marketing version
+        run: echo "MARKETING_VERSION=$(jq -r .version package.json | sed 's/-.*//')" >> $GITHUB_ENV
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo "ML_THEME_VERSION=$(jq -r '.["theme-package-version"]' workflow-config.json)" >> $GITHUB_ENV
+
+      - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }}
+        if: github.repository_owner == 'microbit-foundation'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: npm run build:apps
+
+      - run: npx cap sync android
+
+      - name: Decode keystore
+        run: |
+          echo "SIGNING_STORE_FILE=$RUNNER_TEMP/keystore.jks" >> $GITHUB_ENV
+          printenv SIGNING_STORE_FILE_BASE64 | base64 -d > "$RUNNER_TEMP/keystore.jks"
+        env:
+          SIGNING_STORE_FILE_BASE64: ${{ secrets.ANDROID_SIGNING_STORE_FILE_BASE64 }}
+
+      - name: Build with Fastlane
+        run: bundle exec fastlane android build
+        env:
+          SIGNING_KEY_ALIAS: upload
+          SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
+          BUILD_NUMBER: ${{ github.run_number }}
+          MARKETING_VERSION: ${{ env.MARKETING_VERSION }}
+
+      - name: Clean up keystore
+        run: rm -f "$RUNNER_TEMP/keystore.jks"
+        if: always()
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apk-${{ github.sha }}
+          path: android/app/build/outputs/apk/release/*.apk
+          retention-days: 30
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-aab-${{ github.sha }}
+          path: android/app/build/outputs/bundle/release/*.aab
+          retention-days: 30
+
+      - name: Authenticate to Google Cloud
+        if: github.event_name == 'release'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/311821962964/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions
+          service_account: fastlane-supply@microbit-fastlane.iam.gserviceaccount.com
+
+      - name: Upload to Google Play
+        if: github.event_name == 'release'
+        run: bundle exec fastlane android upload

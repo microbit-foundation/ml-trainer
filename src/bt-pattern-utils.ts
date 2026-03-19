@@ -67,6 +67,8 @@ export const deviceIdToMicrobitName = (deviceId: number): string => {
   return name;
 };
 
+export const blank = " ";
+
 /**
  * Converts a pairing pattern to a name.
  * See guide on microbit names to understand how a pattern is turned into a name
@@ -75,7 +77,7 @@ export const deviceIdToMicrobitName = (deviceId: number): string => {
  * @returns {string} The name of the micro:bit.
  */
 export const microbitPatternToName = (pattern: boolean[]): string => {
-  const code: string[] = [" ", " ", " ", " ", " "];
+  const code: string[] = [blank, blank, blank, blank, blank];
 
   for (let col = 0; col < microbitNameLength; col++) {
     for (let row = 0; row < microbitNameLength; row++) {

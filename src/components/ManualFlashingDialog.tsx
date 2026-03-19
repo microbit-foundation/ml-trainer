@@ -15,7 +15,7 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import { HexData, HexUrl } from "../model";
-import { downloadHex } from "../utils/fs-util";
+import { downloadHexData, downloadUrl, isHexUrl } from "../utils/fs-util";
 
 interface ImageProps {
   src: string;
@@ -54,8 +54,12 @@ const ManualFlashingDialog = ({
 
   const imageProps = getImageProps(osName);
 
-  const handleDownload = useCallback(() => {
-    downloadHex(hex);
+  const handleDownload = useCallback(async () => {
+    if (isHexUrl(hex)) {
+      await downloadUrl(hex.url, `${hex.name}.hex`);
+    } else {
+      await downloadHexData(hex);
+    }
   }, [hex]);
 
   return (

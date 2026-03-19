@@ -10,13 +10,20 @@ import {
   FlashDataSource,
 } from "@microbit/microbit-connection";
 
-import hexV1 from "./firmware/ml-microbit-cpp-version-combined.hex";
-import hexV2 from "./firmware/MICROBIT.hex";
-import hexUniversal from "./firmware/universal-hex.hex";
+import hexV1NoPairing from "./firmware/microbit-data-collection-no-pairing-v1.hex";
+import hexV2NoPairing from "./firmware/microbit-data-collection-no-pairing-v2.hex";
+import hexUniversalNoPairing from "./firmware/microbit-data-collection-no-pairing-universal.hex";
+
+import hexV1JustWorks from "./firmware/microbit-data-collection-just-works-v1.hex";
+import hexV2JustWorks from "./firmware/microbit-data-collection-just-works-v2.hex";
+import hexUniversalJustWorks from "./firmware/microbit-data-collection-just-works-universal.hex";
+
 import hexRadioRemoteDev from "./firmware/radio-remote-v0.2.1-dev.hex";
 import hexRadioRemote from "./firmware/radio-remote-v0.2.1.hex";
 import hexRadioBridge from "./firmware/radio-bridge-v0.2.1.hex";
 import hexRadioLocal from "./firmware/local-sensors-v0.2.1.hex";
+import { isNativePlatform } from "../platform";
+import { HexUrl } from "../model";
 
 export enum HexType {
   RadioRemote = "radio-remote",
@@ -30,11 +37,19 @@ export const getHexFileUrl = (
   type: HexType
 ): string | undefined => {
   if (type === HexType.Bluetooth) {
-    return {
-      V1: hexV1,
-      V2: hexV2,
-      universal: hexUniversal,
-    }[version];
+    if (isNativePlatform()) {
+      return {
+        V1: hexV1JustWorks,
+        V2: hexV2JustWorks,
+        universal: hexUniversalJustWorks,
+      }[version];
+    } else {
+      return {
+        V1: hexV1NoPairing,
+        V2: hexV2NoPairing,
+        universal: hexUniversalNoPairing,
+      }[version];
+    }
   }
   if (version !== "V2") {
     return undefined;
@@ -45,6 +60,11 @@ export const getHexFileUrl = (
     "radio-bridge": hexRadioBridge,
     "radio-local": hexRadioLocal,
   }[type];
+};
+
+export const bluetoothUniversalHex: HexUrl = {
+  url: getHexFileUrl("universal", HexType.Bluetooth)!,
+  name: "data-collection-program",
 };
 
 export const getFlashDataSource = (hex: HexType): FlashDataSource => {

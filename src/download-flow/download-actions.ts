@@ -1,0 +1,338 @@
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+import {
+  ConnectionStatus,
+  DeviceError,
+  FlashOptions,
+  ProgressCallback,
+  ProgressStage,
+} from "@microbit/microbit-connection";
+import { createUniversalHexFlashDataSource } from "@microbit/microbit-connection/universal-hex";
+import { createUSBConnection } from "@microbit/microbit-connection/usb";
+import { Connections } from "../connections-hooks";
+import { DataConnectionState } from "../data-connection-flow";
+import {
+  DownloadAction,
+  DownloadEvent,
+  DownloadFlowContext,
+  downloadTransition,
+  getDownloadFlowType,
+} from "./download-machine";
+import { Logging } from "../logging/logging";
+import { Settings } from "../settings";
+import { useStore } from "../store";
+import { getTotalNumSamples } from "../utils/actions";
+import { DownloadState, SameOrDifferentChoice } from "./download-types";
+import { checkPermissions } from "../shared-steps";
+import { downloadHexData } from "../utils/fs-util";
+
+/**
+ * Dependencies needed for download actions.
+ * These are gathered by the hook and passed to the actions.
+ */
+export interface DownloadDependencies {
+  settings: Settings;
+  setSettings: (settings: Partial<Settings>) => void;
+  connections: Connections;
+  dataConnection: DataConnectionState;
+  flashingProgressCallback: ProgressCallback;
+  logging: Logging;
+  /**
+   * Sends disconnect event to the data connection state machine and waits for completion.
+   */
+  disconnect: () => Promise<void>;
+}
+
+/**
+ * Build the context needed for state machine guards.
+ */
+const buildContext = (
+  state: DownloadState,
+  deps: DownloadDependencies
+): DownloadFlowContext => {
+  const { usb } = deps.connections;
+  const isUsbConnected = usb.status === ConnectionStatus.Connected;
+  return {
+    hex: state.hex,
+    microbitChoice: state.microbitChoice,
+    bluetoothMicrobitName: deps.settings.bluetoothMicrobitName,
+    connection: state.connection,
+    showPreDownloadHelp: deps.settings.showPreDownloadHelp,
+    hadSuccessfulConnection: deps.dataConnection.hadSuccessfulConnection,
+    dataConnectionType: deps.dataConnection.type,
+    isUsbConnected,
+    connectedBoardVersion: isUsbConnected ? usb.getBoardVersion() : undefined,
+  };
+};
+
+/**
+ * Get fresh download state from the store.
+ * This ensures we always have the latest state, even mid-async-operation.
+ */
+const getDownloadState = () => useStore.getState().download;
+const setDownloadState = (state: DownloadState) =>
+  useStore.getState().setDownload(state);
+
+/**
+ * Execute a single action. Pure function that performs side effects.
+ */
+const executeAction = async (
+  action: DownloadAction,
+  event: DownloadEvent,
+  deps: DownloadDependencies
+): Promise<void> => {
+  const state = getDownloadState(); // Fresh state for each action
+
+  switch (action.type) {
+    case "initializeDownload": {
+      if (event.type !== "start") {
+        throw new Error("initializeDownload requires start event");
+      }
+      const name = deps.settings.bluetoothMicrobitName;
+      setDownloadState({
+        ...state,
+        hex: event.hex,
+        bluetoothMicrobitName: name,
+      });
+      break;
+    }
+
+    case "setMicrobitChoice":
+      setDownloadState({ ...state, microbitChoice: action.choice });
+      break;
+
+    case "saveHelpPreference": {
+      if (event.type === "next" && event.skipHelpNextTime !== undefined) {
+        deps.setSettings({ showPreDownloadHelp: !event.skipHelpNextTime });
+      }
+      break;
+    }
+
+    case "saveMicrobitName": {
+      const name = getDownloadState().bluetoothMicrobitName;
+      if (name) {
+        deps.setSettings({ bluetoothMicrobitName: name });
+      }
+      break;
+    }
+
+    case "resetMicrobitName": {
+      const name = deps.settings.bluetoothMicrobitName;
+      setDownloadState({ ...state, bluetoothMicrobitName: name });
+      break;
+    }
+
+    case "setMicrobitName": {
+      if (event.type === "setMicrobitName") {
+        setDownloadState({ ...state, bluetoothMicrobitName: event.name });
+      }
+      break;
+    }
+
+    case "clearMicrobitName": {
+      deps.setSettings({ bluetoothMicrobitName: undefined });
+      setDownloadState({ ...state, bluetoothMicrobitName: undefined });
+      break;
+    }
+
+    case "abortFindingDevice": {
+      const { connectionAbortController } = getDownloadState();
+      connectionAbortController?.abort();
+      setDownloadState({
+        ...getDownloadState(),
+        connectionAbortController: undefined,
+      });
+      break;
+    }
+
+    case "connectFlash":
+      await performConnectFlash(action.clearDevice ?? false, deps);
+      break;
+
+    case "flash":
+      await performFlash(deps);
+      break;
+
+    case "downloadHexFile": {
+      const currentState = getDownloadState();
+      if (currentState.hex) {
+        await downloadHexData(currentState.hex);
+      }
+      break;
+    }
+
+    case "disconnectDataConnection":
+      // Send event to data connection state machine and wait for it to transition
+      // to Idle and stop auto-reconnect attempts before proceeding
+      await deps.disconnect();
+      break;
+
+    case "checkPermissions":
+      await performCheckPermissions(deps);
+      break;
+
+    case "setCheckingPermissions":
+      setDownloadState({
+        ...getDownloadState(),
+        isCheckingPermissions: action.value,
+      });
+      break;
+
+    case "initializeFlashingProgress":
+      useStore
+        .getState()
+        .setDownloadFlashingProgress(ProgressStage.Initializing, undefined);
+      break;
+  }
+};
+
+/**
+ * Sync connection configuration from persisted settings.
+ * Called before each connection attempt so settings loaded asynchronously
+ * from IndexedDB or updated mid-flow are reflected on the connection.
+ */
+const syncConnectionSettings = (deps: DownloadDependencies) => {
+  const { bluetoothMicrobitName } = getDownloadState();
+  if (bluetoothMicrobitName) {
+    deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
+  }
+};
+
+/**
+ * Perform USB/Bluetooth connect operation for flashing.
+ */
+const performConnectFlash = async (
+  clearDevice: boolean,
+  deps: DownloadDependencies
+): Promise<void> => {
+  syncConnectionSettings(deps);
+  const state = getDownloadState();
+  const { microbitChoice } = state;
+  const actions = useStore.getState().actions;
+  deps.logging.event({
+    type: "hex-download",
+    detail: {
+      actions: actions.length,
+      samples: getTotalNumSamples(actions),
+    },
+  });
+
+  let connection = deps.connections.getDefaultFlashConnection();
+
+  // Use temporary connection for "different" microbit choice
+  if (microbitChoice === SameOrDifferentChoice.Different) {
+    connection = createUSBConnection();
+    const serialNumber = deps.connections.usb.getDevice()?.serialNumber;
+    if (serialNumber) {
+      connection.setRequestDeviceExclusionFilters([{ serialNumber }]);
+    }
+  }
+  const abortController = new AbortController();
+  setDownloadState({
+    ...getDownloadState(),
+    connectionAbortController: abortController,
+  });
+  try {
+    if (clearDevice) {
+      await connection.clearDevice();
+    }
+    await connection.connect({
+      progress: deps.flashingProgressCallback,
+      signal: abortController.signal,
+    });
+    const boardVersion = connection.getBoardVersion();
+    // Store connection for potential reuse
+    setDownloadState({ ...getDownloadState(), connection });
+    await sendEvent(
+      {
+        type: "connectFlashSuccess",
+        boardVersion: boardVersion ?? "V2",
+      },
+      deps
+    );
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFlashFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
+  }
+};
+
+const performCheckPermissions = async (
+  deps: DownloadDependencies
+): Promise<void> => {
+  const event = await checkPermissions(deps.connections.bluetooth);
+  await sendEvent(event, deps);
+};
+
+/**
+ * Perform flash operation.
+ */
+const performFlash = async (deps: DownloadDependencies): Promise<void> => {
+  const state = getDownloadState();
+  const { hex, connection } = state;
+
+  if (!hex || !connection) {
+    throw new Error("Hex and connection required for flashing");
+  }
+
+  try {
+    const options: FlashOptions = {
+      partial: true,
+      minimumProgressIncrement: 0.01,
+      progress: deps.flashingProgressCallback,
+    };
+    await connection.flash(createUniversalHexFlashDataSource(hex.hex), options);
+    await sendEvent({ type: "flashSuccess" }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "flashFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
+  }
+};
+
+/**
+ * Send an event to the state machine and execute resulting actions.
+ */
+const sendEvent = async (
+  event: DownloadEvent,
+  deps: DownloadDependencies
+): Promise<void> => {
+  const state = getDownloadState();
+  const flowType = getDownloadFlowType(deps.dataConnection.type);
+  const context = buildContext(state, deps);
+  const result = downloadTransition(flowType, state.step, event, context);
+
+  if (!result) {
+    return;
+  }
+
+  // Update step first
+  setDownloadState({ ...getDownloadState(), step: result.step });
+
+  // Execute actions
+  for (const action of result.actions) {
+    await executeAction(action, event, deps);
+  }
+};
+
+/**
+ * Check if a transition exists for the given event.
+ */
+export const canTransition = (
+  event: DownloadEvent,
+  deps: DownloadDependencies
+): boolean => {
+  const state = getDownloadState();
+  const flowType = getDownloadFlowType(deps.dataConnection.type);
+  const context = buildContext(state, deps);
+  return downloadTransition(flowType, state.step, event, context) !== null;
+};
+
+export { sendEvent, getDownloadState, setDownloadState };

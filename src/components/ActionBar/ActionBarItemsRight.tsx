@@ -3,30 +3,25 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, MenuDivider } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
-import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 import { keyboardShortcuts, useShortcut } from "../../keyboard-shortcut-hooks";
+import { useNativeTabletBreakpoint } from "../../native-breakpoint-hooks";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
 import HelpMenu from "../HelpMenu";
-import HelpMenuItems, { tourMap } from "../HelpMenuItems";
+import { tourMap } from "../HelpMenuItems";
 import { LanguageDialog } from "../LanguageDialog";
-import LanguageMenuItem from "../LanguageMenuItem";
 import { SettingsDialog } from "../SettingsDialog";
 import SettingsMenu from "../SettingsMenu";
-import SettingsMenuItem from "../SettingsMenuItem";
-import ToolbarMenu from "../ToolbarMenu";
 
 interface ItemsRightProps {
-  menuItems?: ReactNode;
   toolbarItems?: ReactNode;
 }
 
-const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
-  const intl = useIntl();
+const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
   const closeDialog = useStore((s) => s.closeDialog);
   const languageDialogOnOpen = useStore((s) => s.languageDialogOnOpen);
   const isLanguageDialogOpen = useStore((s) => s.isLanguageDialogOpen);
@@ -58,6 +53,7 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
     }
   }, [tourTriggerName]);
   useShortcut(keyboardShortcuts.settings, settingsDialogOnOpen);
+  const useTabletLayout = useNativeTabletBreakpoint();
   return (
     <>
       <LanguageDialog isOpen={isLanguageDialogOpen} onClose={closeDialog} />
@@ -67,10 +63,9 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         onClose={closeDialog}
         onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
         explanationTextId="connect-to-tour-body"
-        options={{ postConnectTourTrigger: tourTrigger }}
       />
       <AboutDialog isOpen={isAboutDialogOpen} onClose={closeDialog} />
-      <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
+      <HStack spacing={3} display={useTabletLayout ? "none" : "flex"}>
         {toolbarItems}
         <SettingsMenu
           onLanguageDialogOpen={languageDialogOnOpen}
@@ -78,38 +73,12 @@ const ItemsRight = ({ menuItems, toolbarItems }: ItemsRightProps) => {
         />
       </HStack>
       <HelpMenu
-        display={{ base: "none", md: "block", lg: "block" }}
+        display={useTabletLayout ? "none" : "block"}
         onAboutDialogOpen={aboutDialogOnOpen}
         onConnectFirstDialogOpen={connectFirstDialogOnOpen}
         onFeedbackOpen={feedbackOnOpen}
         tourTrigger={tourTrigger}
       />
-      <ToolbarMenu
-        display={{ base: "none", md: "block", lg: "none" }}
-        variant="plain"
-        label={intl.formatMessage({ id: "main-menu" })}
-      >
-        {menuItems}
-        <LanguageMenuItem onOpen={languageDialogOnOpen} />
-        <SettingsMenuItem onOpen={settingsDialogOnOpen} />
-      </ToolbarMenu>
-      {/* Toolbar items when sm window size. */}
-      <ToolbarMenu
-        display={{ base: "block", md: "none" }}
-        variant="plain"
-        label={intl.formatMessage({ id: "main-menu" })}
-      >
-        {menuItems}
-        <LanguageMenuItem onOpen={languageDialogOnOpen} />
-        <SettingsMenuItem onOpen={settingsDialogOnOpen} />
-        <MenuDivider />
-        <HelpMenuItems
-          onAboutDialogOpen={aboutDialogOnOpen}
-          onConnectFirstDialogOpen={connectFirstDialogOnOpen}
-          onFeedbackOpen={feedbackOnOpen}
-          tourTrigger={tourTrigger}
-        />
-      </ToolbarMenu>
     </>
   );
 };
