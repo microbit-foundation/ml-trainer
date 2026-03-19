@@ -35,6 +35,12 @@
       "value": "crwdns364036:0crwdne364036:0"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
