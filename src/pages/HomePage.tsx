@@ -100,11 +100,9 @@ const ProjectRow = () => {
   const allProjectData = useStore((s) => s.allProjectData);
 
   const handleOpenProject = useCallback(
-    async (id?: string) => {
-      if (id) {
-        await loadProjectAndModelFromStorage(id);
-        navigate(createDataSamplesPageUrl());
-      }
+    async (id: string) => {
+      await loadProjectAndModelFromStorage(id);
+      navigate(createDataSamplesPageUrl());
     },
     [navigate]
   );

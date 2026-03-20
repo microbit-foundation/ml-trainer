@@ -67,11 +67,11 @@ const ProjectsPage = () => {
   );
 
   const handleOpenProject = useCallback(
-    async (id?: string) => {
-      await loadProjectAndModelFromStorage(id ?? selectedProjectIds[0]);
+    async (id: string) => {
+      await loadProjectAndModelFromStorage(id);
       navigate(createDataSamplesPageUrl());
     },
-    [navigate, selectedProjectIds]
+    [navigate]
   );
 
   const {
