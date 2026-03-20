@@ -12,7 +12,10 @@ import { v4 as uuid } from "uuid";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { ActionData, RecordingData } from "./model";
 import { MakeCodeIcon } from "./utils/icons";
-import { untitledProjectName } from "./project-utils";
+import {
+  untitledProjectName,
+  renameProject as renameMakeCodeProject,
+} from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
 import {
   Database,
@@ -292,21 +295,16 @@ export class SqliteDatabase implements Database {
         }
       )
     );
-    const makeCodeResult = await db.query(
-      "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
-      [id]
-    );
-    const makeCodeRow = makeCodeResult.values?.[0] as
-      | EditorProjectRow
-      | undefined;
+
+    const makeCodeRow = await getMakeCodeProject(db, id);
     if (!makeCodeRow) {
       throw new StorageError("Failed to fetch expected data from storage");
     }
+
     return {
+      ...makeCodeRow,
       id,
       actions,
-      project: JSON.parse(makeCodeRow.project) as MakeCodeProject,
-      projectEdited: !!makeCodeRow.project_edited,
       timestamp: projectRow.timestamp,
     };
   }
@@ -781,18 +779,9 @@ export class SqliteDatabase implements Database {
   ): Promise<void> {
     return this.serialise(async (db) => {
       // Update project name and the MakeCode project header.
-      const makeCodeResult = await db.query(
-        "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
-        [id]
-      );
-      const makeCodeRow = makeCodeResult.values?.[0] as
-        | EditorProjectRow
-        | undefined;
+      const makeCodeRow = await getMakeCodeProject(db, id);
       if (makeCodeRow) {
-        const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
-        if (project.header) {
-          project.header.name = name;
-        }
+        const project = renameMakeCodeProject(makeCodeRow.project, name);
         await db.executeTransaction([
           {
             statement:
@@ -825,26 +814,17 @@ export class SqliteDatabase implements Database {
         "SELECT id, project_id, name, icon, required_confidence, created_at FROM actions WHERE project_id = ?",
         [existingProjectId]
       );
-      const makeCodeResult = await db.query(
-        "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
-        [existingProjectId]
-      );
+      const makeCodeRow = await getMakeCodeProject(db, existingProjectId);
       const projectResult = await db.query(
         "SELECT id, name, timestamp FROM projects WHERE id = ?",
         [existingProjectId]
       );
-      const makeCodeRow = makeCodeResult.values?.[0] as
-        | EditorProjectRow
-        | undefined;
       const projectRow = projectResult.values?.[0] as ProjectRow | undefined;
       if (!makeCodeRow || !projectRow) {
         throw new StorageError("Failed to fetch expected data from storage");
       }
       // Update MakeCode project header name.
-      const project = JSON.parse(makeCodeRow.project) as MakeCodeProject;
-      if (project.header) {
-        project.header.name = name;
-      }
+      const project = renameMakeCodeProject(makeCodeRow.project, name);
       const txn: { statement: string; values: unknown[] }[] = [
         {
           statement:
@@ -854,7 +834,7 @@ export class SqliteDatabase implements Database {
         {
           statement:
             "INSERT INTO editor_project (project_id, project, project_edited) VALUES (?, ?, ?)",
-          values: [id, JSON.stringify(project), makeCodeRow.project_edited],
+          values: [id, JSON.stringify(project), makeCodeRow.projectEdited],
         },
       ];
       for (const action of (actionsResult.values ?? []) as ActionRow[]) {
@@ -1015,6 +995,32 @@ export class SqliteDatabase implements Database {
       return tf.loadLayersModel(tf.io.fromMemory(artifacts));
     });
   }
+}
+
+interface MakeCodeRow {
+  project: MakeCodeProject;
+  projectEdited: boolean;
+}
+
+async function getMakeCodeProject(
+  db: SqliteConnection,
+  id: string
+): Promise<MakeCodeRow | undefined> {
+  const makeCodeResult = await db.query(
+    "SELECT project_id, project, project_edited FROM editor_project WHERE project_id = ?",
+    [id]
+  );
+
+  const makeCodeRow = makeCodeResult.values?.[0] as
+    | EditorProjectRow
+    | undefined;
+  if (!makeCodeRow || !makeCodeRow.project) {
+    return undefined;
+  }
+  return {
+    project: JSON.parse(makeCodeRow.project) as MakeCodeProject,
+    projectEdited: !!makeCodeRow.project_edited,
+  };
 }
 
 function arrayBufferToBase64(buffer: ArrayBuffer): string {

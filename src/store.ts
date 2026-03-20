@@ -65,6 +65,7 @@ import {
   DataWindow,
   legacyDataWindow,
   migrateLegacyActionDataAndAssignNewIds,
+  renameProject,
   untitledProjectName,
 } from "./project-utils";
 import { projectSessionStorage } from "./session-storage";
@@ -2069,29 +2070,6 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   return migrateLegacyActionDataAndAssignNewIds(
     dataset.data as OldActionData[] | ActionData[]
   );
-};
-
-const renameProject = (
-  project: MakeCodeProject,
-  name: string
-): MakeCodeProject => {
-  const pxtString = project.text?.[filenames.pxtJson];
-  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
-
-  return {
-    ...project,
-    header: {
-      ...project.header!,
-      name,
-    },
-    text: {
-      ...project.text,
-      [filenames.pxtJson]: JSON.stringify({
-        ...pxt,
-        name,
-      }),
-    },
-  };
 };
 
 const getHint = (

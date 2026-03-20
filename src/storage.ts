@@ -5,6 +5,7 @@ import { Action, ActionData, RecordingData } from "./model";
 import {
   migrateLegacyActionDataAndAssignNewIds,
   untitledProjectName,
+  renameProject as renameMakecodeProject,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
 import { prepActionForStorage } from "./storageUtils";
@@ -866,21 +867,11 @@ export class IdbDatabase implements Database {
     );
     const makeCodeStore = tx.objectStore(DatabaseStore.EDITOR_PROJECT);
     const makeCodeData = assertData(await makeCodeStore.get(id));
-    await makeCodeStore.put(
-      {
-        ...makeCodeData,
-        project: {
-          ...makeCodeData.project,
-          header: makeCodeData.project.header
-            ? {
-                ...makeCodeData.project.header,
-                name,
-              }
-            : undefined,
-        },
-      },
-      id
-    );
+    const renamedMakeCodeData = {
+      ...makeCodeData,
+      project: renameMakecodeProject(makeCodeData.project, name),
+    };
+    await makeCodeStore.put(renamedMakeCodeData, id);
     const projectDataStore = tx.objectStore(DatabaseStore.PROJECT_DATA);
     const projectData = assertData(await projectDataStore.get(id));
     await projectDataStore.put(
@@ -944,15 +935,7 @@ export class IdbDatabase implements Database {
     await makeCodeStore.add(
       {
         ...makeCodeData,
-        project: {
-          ...makeCodeData.project,
-          header: makeCodeData.project.header
-            ? {
-                ...makeCodeData.project.header,
-                name,
-              }
-            : undefined,
-        },
+        project: renameMakecodeProject(makeCodeData.project, name),
       },
       id
     );
