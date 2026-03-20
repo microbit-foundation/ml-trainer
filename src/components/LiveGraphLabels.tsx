@@ -84,8 +84,8 @@ const LiveGraphLabels = () => {
 
   return (
     <Box w={10} h={40} position="relative">
-      {labelConfig.map((config, idx) => (
-        <React.Fragment key={idx}>
+      {labelConfig.map((config) => (
+        <React.Fragment key={config.label}>
           <Box
             ref={config.arrowHeightRef}
             ml={-7}

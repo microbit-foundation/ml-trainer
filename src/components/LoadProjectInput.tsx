@@ -4,8 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { Input } from "@chakra-ui/react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
-import { useProject } from "../hooks/project-hooks";
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import { LoadAction, useProject } from "../hooks/project-hooks";
 
 export interface LoadProjectInputProps {
   /**
@@ -17,18 +23,20 @@ export interface LoadProjectInputProps {
 }
 
 export interface LoadProjectInputRef {
-  chooseFile(): void;
+  chooseFile(fileAction: LoadAction): void;
 }
 
 const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
   function LoadProjectInput({ accept }: LoadProjectInputProps, ref) {
     const { loadFile } = useProject();
     const inputRef = useRef<HTMLInputElement>(null);
+    const [action, setAction] = useState<LoadAction>("replaceProject");
     useImperativeHandle(
       ref,
       () => {
         return {
-          chooseFile() {
+          chooseFile(fileAction) {
+            setAction(fileAction);
             inputRef.current?.click();
           },
         };
@@ -39,10 +47,10 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
     const onOpen = useCallback(
       (files: File[]) => {
         if (files.length === 1) {
-          loadFile(files[0], "file-upload");
+          loadFile(files[0], "file-upload", action);
         }
       },
-      [loadFile]
+      [action, loadFile]
     );
 
     const handleOpenFile = useCallback(

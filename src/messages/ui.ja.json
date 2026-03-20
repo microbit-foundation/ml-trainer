@@ -45,6 +45,12 @@
       "value": "アクセシビリティ"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -113,16 +119,120 @@
       "value": "アクションを追加"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Add another action"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Press ‘Add action’ button to add another action"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
       "value": "AI活動タイマー"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI light switch"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sports data logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
       "value": "AIストーリーテリングの友達"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "Pause animation"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "Resume animation"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "Collect data"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "Use"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Training"
     }
   ],
   "back-action": [
@@ -173,6 +283,32 @@
       "value": "記録をキャンセル"
     }
   ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "certainty-label": [
     {
       "type": 0,
@@ -207,6 +343,12 @@
     {
       "type": 0,
       "value": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。"
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "click-to-reload-page-action": [
@@ -431,32 +573,6 @@
       "value": "マイクロUSBケーブル"
     }
   ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "データ収集用micro:bitを接続"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " または "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "データサンプルのインポート"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -677,6 +793,24 @@
       "value": "コピー"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Create project"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Create a project"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -821,6 +955,80 @@
     {
       "type": 0,
       "value": "すべてのデータサンプルを削除してもよろしいですか？"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Delete "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projects"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete project"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
     }
   ],
   "delete-recording-aria": [
@@ -997,6 +1205,18 @@
     {
       "type": 0,
       "value": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicate project"
     }
   ],
   "edit-in-makecode-action": [
@@ -1219,10 +1439,10 @@
       "value": "ファームウェアの更新が必要です"
     }
   ],
-  "get-started-action": [
+  "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "はじめよう"
+      "value": "First lessons"
     }
   ],
   "go-action": [
@@ -1303,6 +1523,18 @@
       "value": "ヘルプ"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1327,172 +1559,24 @@
       "value": "ホームページ"
     }
   ],
-  "homepage-alt": [
+  "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "micro:bitの加速度センサーデータを表すx, y, zのグラフ線を示すグラフに拍手している様子を重ね合わせたもの"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "micro:bitの加速度センサーデータを表すx, y, zのグラフ線を示すグラフ"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "拍手"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "自分の動作データで機械学習モデルをトレーニングし、micro:bitで実行します。"
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "動作の仕組み"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "ビデオを見て、始めましょう。 "
+      "value": "New to "
     },
     {
-      "children": [
-        {
-          "type": 0,
-          "value": "利用者ガイド"
-        }
-      ],
-      "type": 8,
-      "value": "link"
+      "type": 1,
+      "value": "appName"
     },
     {
       "type": 0,
-      "value": "で詳細をご覧ください。"
+      "value": "?"
     }
   ],
-  "homepage-media-description": [
+  "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "サンプルプロジェクト"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "micro:bitとAIに関するコンテンツとリソース"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "を探る。"
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "セットアップ手順"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "動作と機械学習を使ってBBC micro:bitでAIを作ります。"
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "紹介動画"
+      "value": "Machine learning with movement and the micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -1515,6 +1599,12 @@
     {
       "type": 0,
       "value": "対応していないファイル形式です"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Import"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1643,6 +1733,12 @@
     {
       "type": 0,
       "value": "ファイアウォール要件について調べる"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Learn more"
     }
   ],
   "led-icon-option-angry": [
@@ -1979,6 +2075,24 @@
       "value": "MakeCodeのオプションをさらに編集する"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Move the micro:bit to explore how different actions change the graph"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "My projects"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
@@ -2003,124 +2117,16 @@
       "value": "この名前は hex ファイルを保存するときに使用されます。"
     }
   ],
-  "new-session-setup-description": [
+  "new-project-setup-title": [
     {
       "type": 0,
-      "value": "新しいセッションを開始すると、既存のセッションを上書きすることになります。"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "既存のセッションを保存"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "することもできますよ。"
+      "value": "New project setup"
     }
   ],
-  "new-session-setup-title": [
+  "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "新しいセッションの設定"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "セッションを続行するには、コンピュータに保存したhexファイルまたはデータサンプルファイルを使います。"
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "保存したセッションを続ける"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "日付:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "名前:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "セッションが見つかりませんでした"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "最後のセッションを開く"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "micro:bitに接続し、動作データを収集して機械学習モデルを構築します。"
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "新規セッション"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "前に終了したところから再開する"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "新しく始める"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "新規セッション"
+      "value": "New project"
     }
   ],
   "next-action": [
@@ -2129,10 +2135,10 @@
       "value": "次"
     }
   ],
-  "no-data-samples": [
+  "no-projects": [
     {
       "type": 0,
-      "value": "データサンプルがありません"
+      "value": "No projects to display"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2163,12 +2169,6 @@
       "value": "ページが見つかりません"
     }
   ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "開く…"
-    }
-  ],
   "open-file-dropped": [
     {
       "type": 0,
@@ -2181,24 +2181,10 @@
       "value": "Open project"
     }
   ],
-  "open-project-setup-description": [
+  "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2263,16 +2249,74 @@
       "value": "プライバシーポリシー"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Project ideas"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Project"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "プロジェクトが読み込まれました"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actions menu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "プロジェクト名は空にできません"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Project name"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projects"
     }
   ],
   "radio-link-microbit": [
@@ -2383,6 +2427,90 @@
     {
       "type": 0,
       "value": "データサンプルを記録するには、データ収集用micro:bitのボタンBを押します。"
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
     }
   ],
   "record-samples": [
@@ -2509,6 +2637,18 @@
       "value": "再読み込み"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Rename project"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2595,6 +2735,12 @@
       "value": "hexファイルをダウンロードしました"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2627,6 +2773,22 @@
     {
       "type": 0,
       "value": "」アイコンを選択"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
     }
   ],
   "settings": [
@@ -2665,22 +2827,46 @@
       "value": "ソフトウェアのバージョン"
     }
   ],
-  "start-session-action": [
+  "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "セッションを開始"
+      "value": "Last modified"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevance"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ascending order"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Descending order"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Sort projects"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
       "value": "トレーニング開始"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "最終的にモデルを使ってコーディングする前に、データ収集、モデルのトレーニング、モデルのテスト、収集データを改善することでモデルを改善することを繰り返すプロセスを示す図。"
     }
   ],
   "steps-code": [
@@ -2735,6 +2921,18 @@
       "value": " を検討してください。"
     }
   ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Teacher resources"
+    }
+  ],
   "terms": [
     {
       "type": 0,
@@ -2771,6 +2969,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "now"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "a few seconds ago"
     }
   ],
   "tour-action": [
@@ -3007,6 +3217,28 @@
       "value": "モデルのトレーニング"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3055,6 +3287,12 @@
     {
       "type": 0,
       "value": "hex ファイルをダウンロードフォルダからMICROBITドライブへドラッグします。"
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Troubleshooting"
     }
   ],
   "try-again-action": [
@@ -3145,6 +3383,12 @@
       "value": "ユーザーガイド"
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,
@@ -3173,6 +3417,12 @@
     {
       "type": 0,
       "value": "USBケーブルを抜いて再接続"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "How CreateAI works"
     }
   ]
 }

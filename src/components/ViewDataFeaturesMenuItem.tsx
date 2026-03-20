@@ -15,16 +15,16 @@ const ViewDataFeaturesMenuItem = () => {
   const showGraphs = useStore((s) => s.settings.showGraphs);
   const setDataSamplesView = useStore((s) => s.setDataSamplesView);
 
-  const handleShowDataFeatures = useCallback(() => {
-    setDataSamplesView(
+  const handleShowDataFeatures = useCallback(async () => {
+    await setDataSamplesView(
       showGraphs
         ? DataSamplesView.GraphAndDataFeatures
         : DataSamplesView.DataFeatures
     );
   }, [setDataSamplesView, showGraphs]);
 
-  const handleHideDataFeatures = useCallback(() => {
-    setDataSamplesView(DataSamplesView.Graph);
+  const handleHideDataFeatures = useCallback(async () => {
+    await setDataSamplesView(DataSamplesView.Graph);
   }, [setDataSamplesView]);
 
   return (

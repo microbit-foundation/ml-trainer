@@ -18,7 +18,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
     const containerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
       if (isOpen) {
-        tourStart({ name: "MakeCode" });
+        void tourStart({ name: "MakeCode" });
         // MakeCode focuses its workspace after project import.
         // Reset focus to the container so tab order starts from the top.
         containerRef.current?.focus();

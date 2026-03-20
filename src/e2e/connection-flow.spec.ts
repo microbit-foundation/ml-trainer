@@ -7,11 +7,9 @@ import { dialogTitles as dialog } from "./app/connection-dialogs";
 import { test } from "./fixtures";
 
 test.describe("bluetooth connection", () => {
-  test.beforeEach(async ({ homePage, newPage }) => {
-    await homePage.setupContext();
+  test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
-    await homePage.getStarted();
-    await newPage.startNewSession();
+    await homePage.newProject();
   });
 
   test("happy flow", async ({ dataSamplesPage }) => {
@@ -65,11 +63,9 @@ test.describe("bluetooth connection", () => {
 });
 
 test.describe("radio connection", () => {
-  test.beforeEach(async ({ homePage, newPage }) => {
-    await homePage.setupContext();
+  test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
-    await homePage.getStarted();
-    await newPage.startNewSession();
+    await homePage.newProject();
   });
 
   test("happy flow", async ({ dataSamplesPage }) => {
