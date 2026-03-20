@@ -29,7 +29,7 @@ const helpConfig: HelpConfig[] = [
     imgSrc: helpImage2,
   },
   {
-    titleId: "Accessibility",
+    titleId: "accessibility-resource-title",
     url: accessibilityUrl(),
     imgSrc: helpImage3,
   },
