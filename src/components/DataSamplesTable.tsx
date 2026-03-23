@@ -90,6 +90,10 @@ const DataSamplesTable = ({
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
       if (!isRecordingDialogOpen && e.state) {
+        setRecordingOptions({
+          continuousRecording: false,
+          recordingsToCapture: 1,
+        });
         recordingDialogOnOpen();
       }
     };
