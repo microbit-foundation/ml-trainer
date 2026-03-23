@@ -78,6 +78,7 @@ const DataSamplesTable = ({
     (s) => s.connectToRecordDialogOnOpen
   );
   const closeDialog = useStore((s) => s.closeDialog);
+  const tourState = useStore((s) => s.tourState);
 
   const connection = useConnectActions();
   const { isConnected } = useConnectionStage();
@@ -89,7 +90,7 @@ const DataSamplesTable = ({
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!isRecordingDialogOpen && e.state) {
+      if (!isRecordingDialogOpen && e.state && tourState === undefined) {
         setRecordingOptions({
           continuousRecording: false,
           recordingsToCapture: 1,
@@ -101,7 +102,7 @@ const DataSamplesTable = ({
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, isRecordingDialogOpen, recordingDialogOnOpen]);
+  }, [connection, isRecordingDialogOpen, recordingDialogOnOpen, tourState]);
 
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,
