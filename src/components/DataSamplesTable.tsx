@@ -90,7 +90,14 @@ const DataSamplesTable = ({
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      if (!isRecordingDialogOpen && e.state && tourState === undefined) {
+      // Allow Button B recording when tour is not in progress and the
+      // record button for selected action is displayed.
+      if (
+        !isRecordingDialogOpen &&
+        e.state &&
+        tourState === undefined &&
+        (selectedAction.name.length > 0 || selectedAction.recordings.length > 0)
+      ) {
         setRecordingOptions({
           continuousRecording: false,
           recordingsToCapture: 1,
@@ -102,7 +109,13 @@ const DataSamplesTable = ({
     return () => {
       connection.removeButtonListener("B", listener);
     };
-  }, [connection, isRecordingDialogOpen, recordingDialogOnOpen, tourState]);
+  }, [
+    connection,
+    isRecordingDialogOpen,
+    recordingDialogOnOpen,
+    selectedAction,
+    tourState,
+  ]);
 
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,
