@@ -9,6 +9,7 @@ import {
   InputGroup,
   InputLeftElement,
   Tooltip,
+  useToken,
 } from "@chakra-ui/react";
 import {
   MutableRefObject,
@@ -28,27 +29,26 @@ interface EditableNameProps {
   onEditRef?: MutableRefObject<(() => void) | undefined>;
 }
 
-const variantStyles = {
-  toolbar: {
-    color: "white",
-    backgroundColor: "blackAlpha.300",
-    focusShadow: "outlineDark",
-    fontSize: 20,
-  },
-  drawer: {
-    color: "gray.800",
-    backgroundColor: "blackAlpha.100",
-    focusShadow: "outline",
-    fontSize: 16,
-  },
-};
-
 const EditableName = ({
   suffix,
   variant = "toolbar",
   onEditRef,
 }: EditableNameProps) => {
-  const styles = variantStyles[variant];
+  const outlineDark = useToken("shadows", "outlineDark");
+  const styles = {
+    toolbar: {
+      color: "white",
+      backgroundColor: "blackAlpha.300",
+      focusShadow: `inset ${outlineDark}`,
+      fontSize: 20,
+    },
+    drawer: {
+      color: "gray.800",
+      backgroundColor: "blackAlpha.100",
+      focusShadow: "outline",
+      fontSize: 16,
+    },
+  }[variant];
   const intl = useIntl();
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const renameProject = useStore((s) => s.setProjectName);
