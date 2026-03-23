@@ -122,7 +122,6 @@ export const RecordHint = () => {
       m={0}
       p={2}
       transform="translate(170px, -110px)"
-      w="calc(100% - 65px)"
       alignItems="flex-start"
     >
       <Box transform="rotate(-8deg)">
