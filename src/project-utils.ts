@@ -5,7 +5,7 @@
  */
 import { MakeCodeProject } from "@microbit/makecode-embed";
 import { v4 as uuid } from "uuid";
-import { generateProject } from "./makecode/utils";
+import { filenames, generateProject } from "./makecode/utils";
 import { ActionData, OldActionData } from "./model";
 
 export type ProjectNameDialogReason = "rename" | "duplicate";
@@ -99,4 +99,29 @@ export const migrateLegacyActionDataAndAssignNewIds = (
       })),
     } as ActionData;
   });
+};
+
+export const renameProject = (
+  project: MakeCodeProject,
+  name: string
+): MakeCodeProject => {
+  const pxtString = project.text?.[filenames.pxtJson];
+  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
+
+  return {
+    ...project,
+    header: project.header
+      ? {
+          ...project.header,
+          name,
+        }
+      : undefined,
+    text: {
+      ...project.text,
+      [filenames.pxtJson]: JSON.stringify({
+        ...pxt,
+        name,
+      }),
+    },
+  };
 };

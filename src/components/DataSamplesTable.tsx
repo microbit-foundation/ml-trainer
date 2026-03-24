@@ -111,6 +111,7 @@ const DataSamplesTable = ({
     (s) => s.connectToRecordDialogOnOpen
   );
   const closeDialog = useStore((s) => s.closeDialog);
+  const tourState = useStore((s) => s.tourState);
 
   const isConnected = useDataConnected();
 
@@ -119,21 +120,32 @@ const DataSamplesTable = ({
     undefined
   );
 
-  const buttonListener = useCallback(
-    (e: ButtonData) => {
-      if (!isRecordingDialogOpen && e.state) {
-        recordingDialogOnOpen();
-      }
-    },
-    [isRecordingDialogOpen, recordingDialogOnOpen]
-  );
-
-  useMicrobitButtonListener("B", buttonListener);
-
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,
     recordingsToCapture: 1,
   });
+
+  const buttonListener = useCallback(
+    (e: ButtonData) => {
+      // Allow Button B recording when tour is not in progress and the
+      // record button for selected action is displayed.
+      if (
+        !isRecordingDialogOpen &&
+        e.state &&
+        tourState === undefined &&
+        (selectedAction.name.length > 0 || selectedAction.recordings.length > 0)
+      ) {
+        setRecordingOptions({
+          continuousRecording: false,
+          recordingsToCapture: 1,
+        });
+        recordingDialogOnOpen();
+      }
+    },
+    [isRecordingDialogOpen, recordingDialogOnOpen, selectedAction, tourState]
+  );
+
+  useMicrobitButtonListener("B", buttonListener);
   const handleRecord = useCallback(
     (recordingOptions: RecordingOptions) => {
       setRecordingOptions(recordingOptions);
