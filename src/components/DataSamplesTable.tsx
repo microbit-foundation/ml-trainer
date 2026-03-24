@@ -174,11 +174,10 @@ const DataSamplesTable = ({
     },
     [actionNameInputEl, actions.length, recordButtonEl, setSelectedActionIdx]
   );
-  useShortcut(keyboardShortcuts.focusBelowAction, () =>
-    focusAction(selectedActionIdx + 1)
-  );
-  useShortcut(keyboardShortcuts.focusAboveAction, () =>
-    focusAction(selectedActionIdx - 1)
+  const arrowNavRef = useShortcut(
+    keyboardShortcuts.focusVerticalAction,
+    (_, hotkeyAction) =>
+      focusAction(selectedActionIdx + (hotkeyAction.hotkey === "down" ? 1 : -1))
   );
 
   return (
@@ -277,6 +276,7 @@ const DataSamplesTable = ({
           overflow="auto"
           flexGrow={1}
           h={0}
+          ref={arrowNavRef}
         >
           {actions.map((action, idx) => (
             <DataSamplesTableRow
