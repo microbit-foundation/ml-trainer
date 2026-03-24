@@ -87,10 +87,10 @@ const EditableName = ({
 
   return (
     <Editable
-      alignItems="center"
+      justifyContent="center"
       color={styles.color}
       display="flex"
-      w={variant === "drawer" ? "100%" : undefined}
+      w="100%"
       finalFocusRef={ref}
       isPreviewFocusable={false}
       onCancel={handleCancel}
