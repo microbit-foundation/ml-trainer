@@ -676,14 +676,29 @@ describe("Data connection flow: Radio", () => {
         DataConnectionStep.TryAgainReplugMicrobit,
         DataConnectionStep.TryAgainCloseTabs,
         DataConnectionStep.TryAgainWebUsbSelectMicrobit,
+      ];
+      const stepsAfterSuccessfulConnection = [
         DataConnectionStep.ConnectFailed,
         DataConnectionStep.ConnectionLost,
       ];
 
       stepsWithClose.forEach((step) => {
-        it(`${step} close -> None`, () => {
+        it(`${step} close -> None with reset`, () => {
           const result = transition(step, { type: "close" });
           expect(result?.step).toBe(DataConnectionStep.Idle);
+          expect(result?.actions).toContainEqual({ type: "reset" });
+        });
+      });
+
+      stepsAfterSuccessfulConnection.forEach((step) => {
+        it(`${step} close -> None`, () => {
+          const result = transition(
+            step,
+            { type: "close" },
+            { hadSuccessfulConnection: true }
+          );
+          expect(result?.step).toBe(DataConnectionStep.Idle);
+          expect(result?.actions.length).toBe(0);
         });
       });
     });

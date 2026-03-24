@@ -783,17 +783,24 @@ export const connectedState = {
 
 /**
  * Global handlers shared by all flows.
- * - close: returns to Idle and resets state
+ * - close: returns to Idle and resets state if not hadSuccessfulConnection (to preserve reconnect)
  * - disconnect: returns to Idle (preserves hadSuccessfulConnection for reconnect)
  * - reset: resets state in place (use after disconnect when micro:bit is being reused)
  */
 export const globalHandlers = {
   _global: {
     on: {
-      close: {
-        target: DataConnectionStep.Idle,
-        actions: actions.reset,
-      },
+      close: [
+        {
+          guard: guards.hadSuccessfulConnection,
+          target: DataConnectionStep.Idle,
+        },
+        {
+          guard: always,
+          target: DataConnectionStep.Idle,
+          actions: actions.reset,
+        },
+      ],
       disconnect: {
         target: DataConnectionStep.Idle,
         actions: [{ type: "disconnectData" }],
