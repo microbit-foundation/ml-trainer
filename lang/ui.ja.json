@@ -755,6 +755,10 @@
     "defaultMessage": "データ収集プログラムのダウンロード",
     "description": "Progress text"
   },
+  "downloading-data-collection-microbit-header": {
+    "defaultMessage": "Downloading data collection program to micro:bit",
+    "description": "Progress text"
+  },
   "downloading-header": {
     "defaultMessage": "micro:bitへのプログラムのダウンロード",
     "description": "Progress text"
