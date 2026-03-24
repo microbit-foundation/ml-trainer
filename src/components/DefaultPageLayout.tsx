@@ -148,12 +148,13 @@ const DefaultPageLayout = ({
             <ActionBar
               w="100%"
               px={{ base: 2, md: 5 }}
+              itemsCenterProps={{ overflow: "hidden" }}
               itemsCenter={
                 showProjectName || showPageTitle ? (
-                  <HStack h={10}>
+                  <HStack h={10} w="100%" justifyContent="center">
                     {/* Desktop/tablet: show project name + page title */}
                     {showProjectName && (
-                      <Box display={{ base: "none", md: "flex" }}>
+                      <Box display={{ base: "none", md: "block" }} w="100%">
                         <EditableName
                           suffix={
                             showPageTitle ? (
@@ -273,7 +274,6 @@ const DefaultPageLayout = ({
                   )}
                 </>
               }
-              itemsLeftProps={{ width: 0 }}
               itemsRight={
                 <>
                   <ItemsRight toolbarItems={toolbarItemsRight} />
