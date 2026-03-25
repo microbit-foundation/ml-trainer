@@ -48,7 +48,7 @@
   "accessibility-resource-title": [
     {
       "type": 0,
-      "value": "Accessibility"
+      "value": "Accessibilitat"
     }
   ],
   "action-label": [
@@ -126,21 +126,17 @@
   "add-action-hint": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "Gravació acabada per "
     },
     {
       "type": 1,
       "value": "actionName"
     },
     {
-      "type": 0,
-      "value": "?"
-    },
-    {
       "children": [
         {
           "type": 0,
-          "value": "Add another action"
+          "value": "Afegir una altra acció"
         }
       ],
       "type": 8,
@@ -150,7 +146,7 @@
   "add-action-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "S'ha acabat la gravació de "
     },
     {
       "type": 1,
@@ -158,7 +154,7 @@
     },
     {
       "type": 0,
-      "value": "? Press ‘Add action’ button to add another action"
+      "value": "? Prem el botó d' ‘Afegir acció’ per afegir una altra acció"
     }
   ],
   "ai-activity-timer-resource-title": [
@@ -170,13 +166,13 @@
   "ai-light-switch-resource-title": [
     {
       "type": 0,
-      "value": "AI light switch"
+      "value": "Interruptor d'IA lluminós"
     }
   ],
   "ai-sports-data-logger-resource-title": [
     {
       "type": 0,
-      "value": "AI sports data logger"
+      "value": "Enregistrador de dades d'esports IA"
     }
   ],
   "ai-storytelling-friend-resource-title": [
@@ -188,55 +184,55 @@
   "animation-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+      "value": "Animació que demostra els cinc passos del flux de treball del CreateAI: Connectar, Recollir dades, Provar el Model, Codificar i Ús. Connectar: Una micro:bit està connectada a l'ordinador, establint una comunicació entre els dos. Recollir Dades: una micro:bit està lligada al canell. Es recullen les dades de dos moviments: una onada (representat per la icona d'un cor) i sacseig (representat per la icona d'una creu). Es recullen diferents mostres i s'entrena un model de machine learning. L'ordinador, després intenta reconèixer els gestos de l'onada i el sacseig en temps real. L'usuari després pot retornar al pas de Recollir Dades i obtenir mostres adicionals i fer altre cop la prova del model. Codificar: l'usuari escriu un programa utilitzant els blocs de MakeCode que incorporen el model entrenat. El programa acabat es baixa a la micro:bit. Ús: La micro:bit respon als moviments físics de l'usuari, mostrant icones diferents a la pantalla de LEDs depenent de si es detecta un gest d'onada o de sacseig. "
     }
   ],
   "animation-pause-action": [
     {
       "type": 0,
-      "value": "Pause animation"
+      "value": "Pausar l'animació"
     }
   ],
   "animation-resume-action": [
     {
       "type": 0,
-      "value": "Resume animation"
+      "value": "Reprendre l'animació"
     }
   ],
   "animation-step-1": [
     {
       "type": 0,
-      "value": "Connect"
+      "value": "Connecta"
     }
   ],
   "animation-step-2": [
     {
       "type": 0,
-      "value": "Collect data"
+      "value": "Recollida de dades"
     }
   ],
   "animation-step-3": [
     {
       "type": 0,
-      "value": "Test model"
+      "value": "Provar el model"
     }
   ],
   "animation-step-4": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "Programa"
     }
   ],
   "animation-step-5": [
     {
       "type": 0,
-      "value": "Use"
+      "value": "Ús"
     }
   ],
   "animation-training": [
     {
       "type": 0,
-      "value": "Training"
+      "value": "Entrenament"
     }
   ],
   "back-action": [
@@ -254,7 +250,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "Previsualització de blocs"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -290,7 +286,7 @@
   "carousel-role": [
     {
       "type": 0,
-      "value": "carousel"
+      "value": "Carrusel"
     }
   ],
   "carousel-slide-label": [
@@ -300,7 +296,7 @@
     },
     {
       "type": 0,
-      "value": " of "
+      "value": "de"
     },
     {
       "type": 1,
@@ -310,7 +306,7 @@
   "carousel-slide-role": [
     {
       "type": 0,
-      "value": "slide"
+      "value": "so lliscant"
     }
   ],
   "certainty-label": [
@@ -356,7 +352,7 @@
   "clear": [
     {
       "type": 0,
-      "value": "Clear"
+      "value": "Esborra"
     }
   ],
   "click-to-reload-page-action": [
@@ -808,13 +804,13 @@
   "create-project": [
     {
       "type": 0,
-      "value": "Create project"
+      "value": "Crear un projecte"
     }
   ],
   "create-project-dialog-heading": [
     {
       "type": 0,
-      "value": "Create a project"
+      "value": "Crear un projecte"
     }
   ],
   "createai-taster-lessons-resource-title": [
@@ -862,7 +858,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "Previsualització de dades"
     }
   ],
   "data-samples-actions-region": [
@@ -1530,7 +1526,7 @@
   "help-resources-row-title": [
     {
       "type": 0,
-      "value": "Help"
+      "value": "Ajuda"
     }
   ],
   "help-support": [
@@ -1740,7 +1736,7 @@
   "learn-more-action": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "Aprèn-ne més"
     }
   ],
   "led-icon-option-angry": [
@@ -2098,7 +2094,7 @@
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Anomena una acció que vulguis que reconegui la micro:bit"
+      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
     }
   ],
   "name-project": [
@@ -2180,7 +2176,7 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "Obert"
     }
   ],
   "open-shared-project-action": [
@@ -2266,7 +2262,7 @@
   "project-label": [
     {
       "type": 0,
-      "value": "Project"
+      "value": "Projecte"
     }
   ],
   "project-loaded": [
@@ -2294,7 +2290,7 @@
   "project-name-text": [
     {
       "type": 0,
-      "value": "Project name"
+      "value": "Nom del projecte"
     }
   ],
   "project-name-tooltip": [
@@ -2318,7 +2314,7 @@
   "projects-page-title": [
     {
       "type": 0,
-      "value": "Projects"
+      "value": "Projectes"
     }
   ],
   "radio-link-microbit": [
@@ -2422,13 +2418,27 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Prem per gravar una mostra de dades."
+      "value": "Press record to collect a movement data sample."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Prem per gravar una mostra de dades o prem el botó B de la teva micro:bit de recollida de dades."
+      "value": "Press record "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "or"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " button B on the micro:bit to collect a movement data sample."
     }
   ],
   "record-more-hint": [
@@ -2752,7 +2762,7 @@
   "search": [
     {
       "type": 0,
-      "value": "Search"
+      "value": "Cerca"
     }
   ],
   "select-icon-action-aria": [
@@ -2948,7 +2958,7 @@
   "teacher-resources-row-title": [
     {
       "type": 0,
-      "value": "Teacher resources"
+      "value": "Recursos del professor"
     }
   ],
   "terms": [
@@ -3310,7 +3320,7 @@
   "troubleshooting-resource-title": [
     {
       "type": 0,
-      "value": "Troubleshooting"
+      "value": "Resolució de problemes"
     }
   ],
   "try-again-action": [
