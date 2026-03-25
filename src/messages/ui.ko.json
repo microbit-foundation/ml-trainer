@@ -1417,6 +1417,12 @@
       "value": "데이터 수집 프로그램 다운로드 중"
     }
   ],
+  "downloading-data-collection-microbit-header": [
+    {
+      "type": 0,
+      "value": "Downloading data collection program to micro:bit"
+    }
+  ],
   "downloading-header": [
     {
       "type": 0,

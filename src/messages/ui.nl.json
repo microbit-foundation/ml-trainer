@@ -1425,6 +1425,12 @@
       "value": "Het programma voor gegevensverzameling downloaden"
     }
   ],
+  "downloading-data-collection-microbit-header": [
+    {
+      "type": 0,
+      "value": "Downloading data collection program to micro:bit"
+    }
+  ],
   "downloading-header": [
     {
       "type": 0,

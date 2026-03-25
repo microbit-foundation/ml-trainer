@@ -755,6 +755,10 @@
     "defaultMessage": "Descargar el programa de recogida de datos",
     "description": "Progress text"
   },
+  "downloading-data-collection-microbit-header": {
+    "defaultMessage": "Downloading data collection program to micro:bit",
+    "description": "Progress text"
+  },
   "downloading-header": {
     "defaultMessage": "Descargando el programa al micro:bit",
     "description": "Progress text"

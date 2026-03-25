@@ -39,8 +39,9 @@ export const getHeadingId = (
 ): string => {
   switch (flowType) {
     case DataConnectionType.WebBluetooth:
-    case DataConnectionType.NativeBluetooth:
       return "downloading-data-collection-header";
+    case DataConnectionType.NativeBluetooth:
+      return "downloading-data-collection-microbit-header";
     case DataConnectionType.Radio:
       return radioFlowPhase === "bridge"
         ? "downloading-radio-link-header"

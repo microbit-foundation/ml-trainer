@@ -755,6 +755,10 @@
     "defaultMessage": "crwdns362926:0crwdne362926:0",
     "description": "Progress text"
   },
+  "downloading-data-collection-microbit-header": {
+    "defaultMessage": "Downloading data collection program to micro:bit",
+    "description": "Progress text"
+  },
   "downloading-header": {
     "defaultMessage": "crwdns362928:0crwdne362928:0",
     "description": "Progress text"
