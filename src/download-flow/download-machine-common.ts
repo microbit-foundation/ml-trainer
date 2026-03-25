@@ -22,7 +22,6 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "setMicrobitName"; name: string }
-  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
   | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }

@@ -31,7 +31,6 @@ export const DownloadStep = {
 
   // Bluetooth (native only for download)
   EnterBluetoothPattern: "EnterBluetoothPattern",
-  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
   NativeBluetoothPreConnectTroubleshooting:
     "NativeBluetoothPreConnectTroubleshooting",

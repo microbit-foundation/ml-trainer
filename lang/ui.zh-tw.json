@@ -363,13 +363,13 @@
     "defaultMessage": "My pattern is different",
     "description": "Change Bluetooth pattern link"
   },
-  "connect-native-compare-pattern-heading": {
-    "defaultMessage": "Compare pattern",
-    "description": "Compare Bluetooth pattern dialog heading"
+  "connect-native-pattern-heading": {
+    "defaultMessage": "Confirm this pattern matches your micro:bit",
+    "description": "Native Bluetooth pattern dialog heading"
   },
-  "connect-native-compare-pattern-subtitle": {
-    "defaultMessage": "Compare this pattern with the one displayed on your micro:bit.",
-    "description": "Compare Bluetooth pattern dialog subtitle"
+  "connect-native-pattern-subtitle": {
+    "defaultMessage": "If needed, change the pattern below to match.",
+    "description": "Native Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-heading": {
     "defaultMessage": "What you need to connect",

@@ -89,8 +89,14 @@ const sendEvent = async (
     return;
   }
 
-  // Update step first
-  setDataConnectionState({ ...getDataConnectionState(), step: result.step });
+  // Apply step change and assigns together so the UI sees consistent
+  // state on first render. Actions run after an await boundary so they
+  // arrive a frame late — assigns avoid that for synchronous state.
+  setDataConnectionState({
+    ...getDataConnectionState(),
+    ...result.assign,
+    step: result.step,
+  });
 
   // Execute actions sequentially, getting fresh state for each
   for (const action of result.actions) {
@@ -216,13 +222,11 @@ const executeAction = async (
     }
 
     case "clearMicrobitName": {
+      // The in-memory state is cleared via assign on the transition.
+      // This action persists the change to settings/IndexedDB.
       await useStore
         .getState()
         .setSettings({ bluetoothMicrobitName: undefined });
-      setDataConnectionState({
-        ...getDataConnectionState(),
-        bluetoothMicrobitName: undefined,
-      });
       break;
     }
 

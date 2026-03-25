@@ -123,10 +123,20 @@ describe("Data connection flow: Native Bluetooth", () => {
       );
     });
 
-    it("NativeBluetoothPreConnectTutorial -> BluetoothPattern", () => {
+    it("NativeBluetoothPreConnectTutorial next -> EnterBluetoothPattern (no stored name)", () => {
       const result = transition(
         DataConnectionStep.NativeBluetoothPreConnectTutorial,
         { type: "next" }
+      );
+
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
+    });
+
+    it("NativeBluetoothPreConnectTutorial next -> EnterBluetoothPattern (with stored name)", () => {
+      const result = transition(
+        DataConnectionStep.NativeBluetoothPreConnectTutorial,
+        { type: "next" },
+        { bluetoothMicrobitName: "zugat" }
       );
 
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);

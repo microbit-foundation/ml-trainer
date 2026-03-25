@@ -64,6 +64,7 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
       ],
       tryAgain: {
         target: DownloadStep.EnterBluetoothPattern,
+        assign: { bluetoothMicrobitName: undefined },
         actions: [
           { type: "clearMicrobitName" },
           { type: "abortFindingDevice" },
@@ -148,10 +149,6 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
           actions: [{ type: "connectFlash", clearDevice: true }],
         },
         {
-          guard: guards.hasMicrobitName,
-          target: DownloadStep.NativeCompareBluetoothPattern,
-        },
-        {
           guard: always,
           target: DownloadStep.EnterBluetoothPattern,
         },
@@ -180,20 +177,6 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {
         actions: [{ type: "setMicrobitName" }],
-      },
-    },
-  },
-
-  [DownloadStep.NativeCompareBluetoothPattern]: {
-    on: {
-      next: {
-        target: DownloadStep.FlashingInProgress,
-        actions: [{ type: "connectFlash" }],
-      },
-      back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
-      changeBluetoothPattern: {
-        target: DownloadStep.EnterBluetoothPattern,
-        actions: [{ type: "clearMicrobitName" }],
       },
     },
   },

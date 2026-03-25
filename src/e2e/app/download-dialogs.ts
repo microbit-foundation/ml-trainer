@@ -27,6 +27,7 @@ export const downloadDialogTitles: {
     help: "Download your machine learning MakeCode project",
     resetToBluetooth: "Reset to Bluetooth mode",
     copyPattern: "Copy pattern",
+    confirmPattern: "Confirm this pattern matches your micro:bit",
     manualFlashing: "Transfer saved hex file to micro:bit",
   },
   radio: {
