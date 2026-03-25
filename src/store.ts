@@ -1973,33 +1973,39 @@ const getHint = (
   // We don't let you have zero. If you have > 2 you've seen it all before.
   if (actions.length === 0 || actions.length > 2) {
     if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
-      return "train";
+      return { type: "train" };
     }
     return null;
   }
   const lastActionIdx = actions.length - 1;
   const action = actions[lastActionIdx];
-  const isFirstAction = lastActionIdx === 0;
+  const actionNum =
+    lastActionIdx === 0 ||
+    actions.every((a) => a.name.length !== 0 && a.recordings.length === 0)
+      ? 1
+      : 2;
 
   if (action.name.length === 0) {
-    if (action.recordings.length === 0) {
-      return isFirstAction ? "name-first-action" : "name-action";
-    } else {
-      return "name-action-with-samples";
-    }
+    return {
+      type:
+        action.recordings.length === 0
+          ? "name-action"
+          : "name-action-with-samples",
+      actionNum,
+    };
   }
 
   if (action.recordings.length === 0) {
-    return isFirstAction ? "record-first-action" : "record-action";
+    return { type: "record-action", actionNum };
   }
   if (action.recordings.length < 3) {
-    return "record-more-action";
+    return { type: "record-more-action" };
   }
-  if (isFirstAction && !suppressTrainAndAddActionHint) {
-    return "add-action";
+  if (actionNum === 1 && !suppressTrainAndAddActionHint) {
+    return { type: "add-action" };
   }
   if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
-    return "train";
+    return { type: "train" };
   }
   return null;
 };

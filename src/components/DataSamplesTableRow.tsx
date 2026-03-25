@@ -14,13 +14,14 @@ import {
   NameActionHint,
   NameActionWithSamplesHint,
   NameFirstActionHint,
-  RecordFirstActionHint,
   RecordHint,
   RecordMoreHint,
 } from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
+  actionNum: number;
+  isLastRow: boolean;
   preview?: boolean;
   action: ActionData;
   selected: boolean;
@@ -34,6 +35,8 @@ interface DataSamplesTableRowProps {
 }
 
 const DataSamplesTableRow = ({
+  actionNum,
+  isLastRow,
   action,
   selected,
   onSelectRow,
@@ -72,10 +75,10 @@ const DataSamplesTableRow = ({
           }
         />
       </GridItem>
-      {(hint === "name-first-action" || hint === "name-action") && (
+      {hint?.type === "name-action" && hint.actionNum === actionNum && (
         <GridItem h="120px">
-          {hint === "name-first-action" && <NameFirstActionHint />}
-          {hint === "name-action" && <NameActionHint />}
+          {hint?.actionNum === 1 && <NameFirstActionHint />}
+          {hint?.actionNum === 2 && <NameActionHint />}
         </GridItem>
       )}
       <GridItem position="relative">
@@ -90,27 +93,20 @@ const DataSamplesTableRow = ({
             clearNewRecordingId={clearNewRecordingId}
           />
         )}
-        {hint === "record-action" && <RecordHint />}
-        {hint === "record-more-action" && (
+        {hint?.type === "record-action" && hint.actionNum === actionNum && (
+          <RecordHint />
+        )}
+        {hint?.type === "record-more-action" && isLastRow && (
           <RecordMoreHint
             actionName={action.name}
             recorded={action.recordings.length}
           />
         )}
       </GridItem>
-      {hint === "name-action-with-samples" && (
+      {hint?.type === "name-action-with-samples" && isLastRow && (
         <GridItem h="120px">
           <NameActionWithSamplesHint />
         </GridItem>
-      )}
-      {hint === "record-first-action" && (
-        <>
-          {/* Skip first column to correctly place hint. */}
-          <GridItem />
-          <GridItem h="120px">
-            {hint === "record-first-action" && <RecordFirstActionHint />}
-          </GridItem>
-        </>
       )}
     </Box>
   );

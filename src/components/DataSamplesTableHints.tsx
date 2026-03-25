@@ -98,22 +98,6 @@ const RecordHintWithButtonB = () => {
   );
 };
 
-export const RecordFirstActionHint = () => {
-  const { isConnected } = useConnectionStage();
-  return (
-    <HStack m={0} p={2} transform="translateX(65px)" w="calc(100% - 65px)">
-      <UpCurveArrow w="60px" h="93px" color="brand.500" />
-      {isConnected ? (
-        <RecordHintWithButtonB />
-      ) : (
-        <Text textAlign="center" maxW={200}>
-          <FormattedMessage id="record-hint" />
-        </Text>
-      )}
-    </HStack>
-  );
-};
-
 export const RecordHint = () => {
   const { isConnected } = useConnectionStage();
   return (

@@ -123,11 +123,15 @@ const DataSamplesPage = () => {
     // Initialise hint on first load.
     setHint(true);
   }, [setHint]);
-  const dataSamplesHint: DataSamplesPageHint = isDialogOpen
-    ? null
-    : isConnected && !hasMoved
-    ? "move-microbit"
-    : hint;
+  const dataSamplesHint: DataSamplesPageHint = useMemo(
+    () =>
+      isDialogOpen
+        ? null
+        : isConnected && !hasMoved
+        ? { type: "move-microbit" }
+        : hint,
+    [hasMoved, hint, isConnected, isDialogOpen]
+  );
 
   const pageRef = useRef(null);
   const region = useLiveRegion(pageRef.current);
@@ -210,7 +214,7 @@ const DataSamplesPage = () => {
                 <FormattedMessage id="add-action-action" />
               </Button>
             </HStack>
-            {dataSamplesHint === "add-action" && (
+            {dataSamplesHint?.type === "add-action" && (
               <AddActionHint action={actions[0]} />
             )}
             <HStack>
@@ -241,8 +245,8 @@ const DataSamplesPage = () => {
                 </Button>
               )}
             </HStack>
-            {dataSamplesHint === "train" && <TrainHint />}
-            {dataSamplesHint === "move-microbit" && <MoveMicrobitHint />}
+            {dataSamplesHint?.type === "train" && <TrainHint />}
+            {dataSamplesHint?.type === "move-microbit" && <MoveMicrobitHint />}
           </HStack>
 
           <LiveGraphPanel
@@ -264,7 +268,7 @@ const getHintText = (
   if (!hint) {
     return "";
   }
-  switch (hint) {
+  switch (hint.type) {
     case "add-action": {
       return intl.formatMessage(
         { id: "add-action-hint-label" },
@@ -274,7 +278,6 @@ const getHintText = (
     case "move-microbit": {
       return intl.formatMessage({ id: "move-hint" });
     }
-    case "record-first-action":
     case "record-action": {
       return isConnected
         ? intl
@@ -285,7 +288,6 @@ const getHintText = (
             .toString()
         : intl.formatMessage({ id: "record-hint" });
     }
-    case "name-first-action":
     case "name-action-with-samples":
     case "name-action": {
       return intl.formatMessage({ id: "name-action-hint" });
