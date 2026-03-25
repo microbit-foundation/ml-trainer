@@ -24,7 +24,7 @@
     "description": "Menu item for link to accessibility site"
   },
   "accessibility-resource-title": {
-    "defaultMessage": "Accessibility",
+    "defaultMessage": "접근성",
     "description": "Accessibility resource card title"
   },
   "action-label": {
@@ -96,11 +96,11 @@
     "description": "Resume animation button text"
   },
   "animation-step-1": {
-    "defaultMessage": "Connect",
+    "defaultMessage": "연결하기",
     "description": "Step 1 of how it works animation"
   },
   "animation-step-2": {
-    "defaultMessage": "Collect data",
+    "defaultMessage": "데이터 수집",
     "description": "Step 2 of how it works animation"
   },
   "animation-step-3": {
@@ -108,7 +108,7 @@
     "description": "Step 3 of how it works animation"
   },
   "animation-step-4": {
-    "defaultMessage": "Code",
+    "defaultMessage": "코드",
     "description": "Step 4 of how it works animation"
   },
   "animation-step-5": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for certainty column"
   },
   "clear": {
-    "defaultMessage": "Clear",
+    "defaultMessage": "지우기",
     "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
@@ -888,7 +888,7 @@
     "description": "Label for home page row carousel"
   },
   "help-resources-row-title": {
-    "defaultMessage": "Help",
+    "defaultMessage": "도움 및 지원",
     "description": "Title for home page row"
   },
   "help-support": {
@@ -992,7 +992,7 @@
     "description": "Link to support article for firewall requirements"
   },
   "learn-more-action": {
-    "defaultMessage": "Learn more",
+    "defaultMessage": "더 살펴보기",
     "description": "Learn more button text"
   },
   "led-icon-option-angry": {
@@ -1228,7 +1228,7 @@
     "description": "Title for home page row"
   },
   "name-action-hint": {
-    "defaultMessage": "micro:bit가 인식할 행동의 이름 지정하기",
+    "defaultMessage": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1280,8 +1280,8 @@
     "description": "Aria label for file drop target"
   },
   "open-project-action": {
-    "defaultMessage": "Open project",
-    "description": "Open project button text"
+    "defaultMessage": "열기",
+    "description": "Open project action"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",
@@ -1332,7 +1332,7 @@
     "description": "Title for home page row"
   },
   "project-label": {
-    "defaultMessage": "Project",
+    "defaultMessage": "프로젝트",
     "description": "Label for project input"
   },
   "project-loaded": {
@@ -1348,7 +1348,7 @@
     "description": "Validation message for project name"
   },
   "project-name-text": {
-    "defaultMessage": "Project name",
+    "defaultMessage": "프로젝트 이름",
     "description": "Label for project name input"
   },
   "project-name-tooltip": {
@@ -1364,7 +1364,7 @@
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
-    "defaultMessage": "Projects",
+    "defaultMessage": "프로젝트",
     "description": "Projects page title"
   },
   "radio-link-microbit": {
@@ -1428,11 +1428,11 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "데이터 샘플을 기록하려면 누르세요.",
+    "defaultMessage": "Press record to collect a movement data sample.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
-    "defaultMessage": "눌러서 데이터 샘플을 기록하거나 데이터 수집 micro:bit의 B 버튼을 누르세요.",
+    "defaultMessage": "Press record <mark>or</mark> button B on the micro:bit to collect a movement data sample.",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
   },
   "record-more-hint": {
@@ -1552,7 +1552,7 @@
     "description": "Notification after a hex file has been downloaded"
   },
   "search": {
-    "defaultMessage": "Search",
+    "defaultMessage": "찾기",
     "description": "Aria label for searching projects"
   },
   "select-icon-action-aria": {
@@ -1660,7 +1660,7 @@
     "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
-    "defaultMessage": "Teacher resources",
+    "defaultMessage": "교사용 자료",
     "description": "Title for home page row"
   },
   "terms": {
@@ -1852,7 +1852,7 @@
     "description": "Dialog shown when WebUSB fails"
   },
   "troubleshooting-resource-title": {
-    "defaultMessage": "Troubleshooting",
+    "defaultMessage": "문제 해결",
     "description": "Home page resource card title"
   },
   "try-again-action": {

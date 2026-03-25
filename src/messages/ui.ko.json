@@ -48,7 +48,7 @@
   "accessibility-resource-title": [
     {
       "type": 0,
-      "value": "Accessibility"
+      "value": "접근성"
     }
   ],
   "action-label": [
@@ -202,13 +202,13 @@
   "animation-step-1": [
     {
       "type": 0,
-      "value": "Connect"
+      "value": "연결하기"
     }
   ],
   "animation-step-2": [
     {
       "type": 0,
-      "value": "Collect data"
+      "value": "데이터 수집"
     }
   ],
   "animation-step-3": [
@@ -220,7 +220,7 @@
   "animation-step-4": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "코드"
     }
   ],
   "animation-step-5": [
@@ -348,7 +348,7 @@
   "clear": [
     {
       "type": 0,
-      "value": "Clear"
+      "value": "지우기"
     }
   ],
   "click-to-reload-page-action": [
@@ -1532,7 +1532,7 @@
   "help-resources-row-title": [
     {
       "type": 0,
-      "value": "Help"
+      "value": "도움 및 지원"
     }
   ],
   "help-support": [
@@ -1738,7 +1738,7 @@
   "learn-more-action": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "더 살펴보기"
     }
   ],
   "led-icon-option-angry": [
@@ -2096,7 +2096,7 @@
   "name-action-hint": [
     {
       "type": 0,
-      "value": "micro:bit가 인식할 행동의 이름 지정하기"
+      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
     }
   ],
   "name-project": [
@@ -2178,7 +2178,7 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "열기"
     }
   ],
   "open-shared-project-action": [
@@ -2264,7 +2264,7 @@
   "project-label": [
     {
       "type": 0,
-      "value": "Project"
+      "value": "프로젝트"
     }
   ],
   "project-loaded": [
@@ -2292,7 +2292,7 @@
   "project-name-text": [
     {
       "type": 0,
-      "value": "Project name"
+      "value": "프로젝트 이름"
     }
   ],
   "project-name-tooltip": [
@@ -2316,7 +2316,7 @@
   "projects-page-title": [
     {
       "type": 0,
-      "value": "Projects"
+      "value": "프로젝트"
     }
   ],
   "radio-link-microbit": [
@@ -2420,13 +2420,27 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "데이터 샘플을 기록하려면 누르세요."
+      "value": "Press record to collect a movement data sample."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "눌러서 데이터 샘플을 기록하거나 데이터 수집 micro:bit의 B 버튼을 누르세요."
+      "value": "Press record "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "or"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " button B on the micro:bit to collect a movement data sample."
     }
   ],
   "record-more-hint": [
@@ -2746,7 +2760,7 @@
   "search": [
     {
       "type": 0,
-      "value": "Search"
+      "value": "찾기"
     }
   ],
   "select-icon-action-aria": [
@@ -2938,7 +2952,7 @@
   "teacher-resources-row-title": [
     {
       "type": 0,
-      "value": "Teacher resources"
+      "value": "교사용 자료"
     }
   ],
   "terms": [
@@ -3292,7 +3306,7 @@
   "troubleshooting-resource-title": [
     {
       "type": 0,
-      "value": "Troubleshooting"
+      "value": "문제 해결"
     }
   ],
   "try-again-action": [
