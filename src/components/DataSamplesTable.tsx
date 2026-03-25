@@ -65,7 +65,7 @@ const DataSamplesTable = ({
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
   const keyboardHeight = useKeyboardHeight();
-  const gridRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
 
   // Calculate how much of the grid is actually obscured by the keyboard.
   // The keyboard covers bottomContent first, so the grid loses less than
@@ -250,7 +250,6 @@ const DataSamplesTable = ({
         headings={headings}
       />
       <Grid
-        ref={gridRef}
         {...gridCommonProps}
         py={2}
         pb={gridPadding > 0 ? `${gridPadding}px` : 2}
@@ -259,7 +258,10 @@ const DataSamplesTable = ({
         overflow="auto"
         flexGrow={1}
         h={0}
-        ref={arrowNavRef}
+        ref={(node) => {
+          arrowNavRef(node);
+          gridRef.current = node;
+        }}
       >
         {actions.map((action, idx) => (
           <DataSamplesTableRow
