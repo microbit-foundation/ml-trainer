@@ -512,7 +512,7 @@
     "description": "Show data features button text"
   },
   "data-preview-title": {
-    "defaultMessage": "Visualização de dados",
+    "defaultMessage": "Pré-visualização de dados",
     "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
