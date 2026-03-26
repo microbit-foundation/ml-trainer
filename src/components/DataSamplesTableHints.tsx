@@ -8,6 +8,7 @@ import {
   Box,
   HStack,
   Image,
+  keyframes,
   Stack,
   Text,
   usePrefersReducedMotion,
@@ -249,6 +250,55 @@ export const AddActionHint = ({ action }: { action: Action }) => {
   );
 };
 
+// Timeout for move micro:bit hint before assuming user already knows and setting hasMoved to true.
+// 14s = 2s wobble animation + 5s wait + 2s wobble animation + 5s wait.
+export const moveMicrobitHintTimeoutInSec = 14; //s
+
+const moveMicrobitEmojiKeyframes = keyframes({
+  // Wobble for 2s.
+  "0%": {
+    transform: "rotate(0deg)",
+  },
+  "3.57%": {
+    transform: "rotate(22deg)",
+  },
+  "7.14%": {
+    transform: "rotate(-18deg)",
+  },
+  "10.71%": {
+    transform: "rotate(14deg)",
+  },
+  "14.28%": {
+    transform: "rotate(-10deg)",
+  },
+  "17.85%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds. Wobble again for another 2s.
+  "53.57%": {
+    transform: "rotate(0deg)",
+  },
+  "57.14%": {
+    transform: "rotate(22deg)",
+  },
+  "60.71%": {
+    transform: "rotate(-18deg)",
+  },
+  "64.28%": {
+    transform: "rotate(14deg)",
+  },
+  "67.85%": {
+    transform: "rotate(-10deg)",
+  },
+  "71.42%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds.
+  "100%": {
+    transform: "rotate(0deg)",
+  },
+});
+
 export const MoveMicrobitHint = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   return (
@@ -279,7 +329,11 @@ export const MoveMicrobitHint = () => {
         <AspectRatio
           ratio={30 / 25}
           w={36}
-          animation={prefersReducedMotion ? undefined : animations.wobble}
+          animation={
+            prefersReducedMotion
+              ? undefined
+              : `${moveMicrobitEmojiKeyframes} ${moveMicrobitHintTimeoutInSec}s`
+          }
         >
           <Image src={moveMicrobitImage} aria-hidden />
         </AspectRatio>

@@ -21,6 +21,7 @@ import DataSamplesTable from "../components/DataSamplesTable";
 import {
   AddActionHint,
   MoveMicrobitHint,
+  moveMicrobitHintTimeoutInSec,
   TrainHint,
 } from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
@@ -149,9 +150,13 @@ const DataSamplesPage = () => {
     [region]
   );
 
+  const setHasMoved = useStore((s) => s.setHasMoved);
   useEffect(() => {
     if (!dataSamplesHint) {
       return;
+    }
+    if (dataSamplesHint.type === "move-microbit") {
+      setTimeout(() => setHasMoved(true), moveMicrobitHintTimeoutInSec * 1000);
     }
     const actionWithHint = actions[actions.length - 1];
     const hintText = getHintText(
@@ -161,7 +166,15 @@ const DataSamplesPage = () => {
       actionWithHint
     );
     debouncedSpeakHint(hintText);
-  }, [actions, dataSamplesHint, debouncedSpeakHint, intl, isConnected, region]);
+  }, [
+    actions,
+    dataSamplesHint,
+    debouncedSpeakHint,
+    intl,
+    isConnected,
+    region,
+    setHasMoved,
+  ]);
 
   return (
     <>
