@@ -91,7 +91,8 @@ export const useHasMoved = (): boolean => {
     let lastSample: AccelerometerData | undefined;
     const threshold = 40_000;
     const minDelta = 100;
-    const skipSamples = 10;
+    // TODO: Clean up skipSamples and skipped logic if we are sure we don't want this.
+    const skipSamples = 0;
     let skipped = 0;
     const listener = (e: AccelerometerDataEvent) => {
       if (skipped < skipSamples) {
@@ -115,7 +116,7 @@ export const useHasMoved = (): boolean => {
         (delta.x > threshold ? 1 : 0) +
           (delta.y > threshold ? 1 : 0) +
           (delta.z > threshold ? 1 : 0) >
-        1
+        0
       ) {
         connection.removeAccelerometerListener(listener);
         if (!ignore) {
