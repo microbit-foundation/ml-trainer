@@ -1,10 +1,12 @@
 import UIKit
 import Capacitor
+import WebKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var windowControlsObserver: WindowControlsObserver?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -34,6 +36,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               let webView = vc.webView else { return }
         webView.setNeedsLayout()
         webView.layoutIfNeeded()
+
+        setupWindowControlsObserver(webView: webView)
+    }
+
+    /// Adds an invisible view that tracks the iPadOS 26 window-controls
+    /// corner adaptation margin and injects it as a CSS variable.
+    private func setupWindowControlsObserver(webView: WKWebView) {
+        guard windowControlsObserver == nil,
+              let parent = webView.superview else { return }
+        let observer = WindowControlsObserver()
+        observer.attach(to: webView)
+        observer.translatesAutoresizingMaskIntoConstraints = false
+        observer.isUserInteractionEnabled = false
+        observer.alpha = 0
+        observer.isAccessibilityElement = false
+        observer.accessibilityElementsHidden = true
+        parent.insertSubview(observer, belowSubview: webView)
+        NSLayoutConstraint.activate([
+            observer.topAnchor.constraint(equalTo: webView.topAnchor),
+            observer.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            observer.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            observer.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+        ])
+        windowControlsObserver = observer
+        parent.layoutIfNeeded()
+        observer.injectWindowControlsInset()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -53,4 +81,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
 
+}
+
+/// Invisible view that observes layout changes to detect the iPadOS 26
+/// window-controls region and inject its width as a CSS custom property
+/// (`--window-controls-left`) into the Capacitor web view.
+///
+/// On older iOS versions or when window controls are absent the value is 0.
+private class WindowControlsObserver: UIView {
+    weak var webView: WKWebView?
+    private var lastLeft: CGFloat = -1
+    private var loadingObservation: NSKeyValueObservation?
+
+    func attach(to webView: WKWebView) {
+        self.webView = webView
+        // Re-inject after page reload (document.documentElement is replaced).
+        loadingObservation = webView.observe(\.isLoading) { [weak self] wv, _ in
+            if !wv.isLoading {
+                self?.lastLeft = -1
+                self?.injectWindowControlsInset()
+            }
+        }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        injectWindowControlsInset()
+    }
+
+    func injectWindowControlsInset() {
+        var left: CGFloat = 0
+        if #available(iOS 26.0, *) {
+            let corner = edgeInsets(
+                for: .margins(cornerAdaptation: .horizontal)
+            )
+            let base = edgeInsets(for: .margins())
+            // Only non-zero when window controls are actually present.
+            // Use the full corner value so the variable represents the
+            // complete inset from the window edge.
+            if corner.left > base.left {
+                left = corner.left
+            }
+        }
+        guard left != lastLeft else { return }
+        lastLeft = left
+        let px = Int(left)
+        let js = "document.documentElement.style.setProperty('--window-controls-left','\(px)px')"
+        DispatchQueue.main.async { [weak self] in
+            self?.webView?.evaluateJavaScript(js, completionHandler: nil)
+        }
+    }
 }
