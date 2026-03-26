@@ -60,11 +60,11 @@
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
   "add-action-hint": {
-    "defaultMessage": "已完成 {actionName} 的錄製嗎？<mark>新增另一個動作</mark>",
+    "defaultMessage": "已完成 {actionName} 的錄製嗎？<mark>新增其他動作</mark>",
     "description": "Hint when you have recorded enough data samples for one action"
   },
   "add-action-hint-label": {
-    "defaultMessage": "已完成 {actionName} 的錄製嗎？按下「新增動作」按鍵來新增另一個動作",
+    "defaultMessage": "已完成 {actionName} 的錄製嗎？按下「新增動作」按鍵以新增其他動作",
     "description": "Hint when you have recorded enough data samples for one action aria label"
   },
   "ai-activity-timer-resource-title": {
@@ -72,7 +72,7 @@
     "description": "Home page resource card title"
   },
   "ai-light-switch-resource-title": {
-    "defaultMessage": "AI 電燈開關",
+    "defaultMessage": "AI 燈光開關",
     "description": "Home page resource card title"
   },
   "ai-sports-data-logger-resource-title": {
@@ -84,7 +84,7 @@
     "description": "Home page resource card title"
   },
   "animation-label": {
-    "defaultMessage": "動畫示範 CreateAI 工作流程的五個步驟：連線、收集資料、測試模型、程式碼，以及使用。連線：將 micro:bit 裝置連線到電腦，建立兩者之間的通訊。收集資料：將 micro:bit 綁在手腕上。記錄兩種手勢的移動資料：揮手（以愛心圖示表示）與搖動（以叉叉圖示表示）。每種手勢都會收集多筆範例來訓練模型。測試模型：收集到足夠範例後，便會訓練機器學習模型。接著，電腦會嘗試即時辨識揮手與搖動手勢。使用者可以返回「收集資料」步驟，收集更多範例並再次測試。程式碼：使用者利用 MakeCode 程式積木寫入整合已訓練模型的程式。完成的程式會下載到 micro:bit。使用：micro:bit 會回應使用者的實際移動，並依據偵測到的是揮手還是搖動手勢，在 LED 螢幕上顯示不同圖示。",
+    "defaultMessage": "動畫展示 CreateAI 工作流程的五個步驟：連線、收集資料、測試模型、程式碼，以及使用。連線：將 micro:bit 裝置連線到電腦，建立兩者之間的通訊。收集資料：將 micro:bit 綁在手腕上。記錄兩種手勢的移動資料：揮手（以愛心圖示表示）與搖動（以叉叉圖示表示）。每種手勢都會收集多筆範例來訓練模型。測試模型：收集到足夠範例後，便會訓練機器學習模型。接著，電腦會嘗試即時辨識揮手與搖動手勢。使用者可以返回「收集資料」步驟，收集更多範例並再次測試。程式碼：使用者利用 MakeCode 程式積木寫入整合已訓練模型的程式。完成的程式會下載到 micro:bit。使用：micro:bit 會回應使用者的實際移動，並依據偵測到的是揮手還是搖動手勢，在 LED 螢幕上顯示不同圖示。",
     "description": "Aria label for animation"
   },
   "animation-pause-action": {
@@ -964,27 +964,27 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "完全支援",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "部分支持",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Supported",
+    "defaultMessage": "支援",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "Unsupported",
+    "defaultMessage": "不支援",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
-    "defaultMessage": "Translations supported for:",
+    "defaultMessage": "支援的翻譯：",
     "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
   },
   "language-toast-title": {
-    "defaultMessage": "Language not fully supported",
+    "defaultMessage": "語言未完全支持",
     "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
@@ -1340,7 +1340,7 @@
     "description": "Toast when a new project is loaded"
   },
   "project-menu-action": {
-    "defaultMessage": "動作 {name} 選單",
+    "defaultMessage": " {name} 動作選單",
     "description": "Label for project actions menu button"
   },
   "project-name-not-empty": {
@@ -1360,7 +1360,7 @@
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "您的資料會儲存在此裝置上的這個瀏覽器中。清除瀏覽器的 Cookie 或網站資料將會刪除這些資料。如果您的裝置儲存空間不足，瀏覽器也可能會自動將其移除。",
+    "defaultMessage": "您的資料會儲存在此裝置上的瀏覽器中。清除瀏覽器的 Cookie 或網站資料將會刪除這些資料。若您的裝置儲存空間不足，瀏覽器也可能會自動將其移除。",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
@@ -1676,7 +1676,7 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "此專案由使用者提供，並未獲得 Microsoft 或 Micro:bit Educational Foundation 的認可。如果您認為內容不適當，請前往 <link>MakeCode 共用專案</link> 向 Microsoft MakeCode 檢舉不當內容。",
+    "defaultMessage": "此專案由使用者提供，未經 Microsoft 或 Micro:bit Educational Foundation 認可。若您認為內容不適當，請前往 <link>MakeCode 共用專案</link> 向 Microsoft MakeCode 檢舉不當內容。",
     "description": "Notify user of third party content"
   },
   "timestamp-now": {

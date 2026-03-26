@@ -121,22 +121,18 @@
   ],
   "add-action-hint": [
     {
-      "type": 0,
-      "value": "Finished recording for "
-    },
-    {
       "type": 1,
       "value": "actionName"
     },
     {
       "type": 0,
-      "value": "?"
+      "value": "에 대한 기록을 완료하셨나요?"
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Add another action"
+          "value": "다른 행동을 추가하세요"
         }
       ],
       "type": 8,
@@ -145,16 +141,12 @@
   ],
   "add-action-hint-label": [
     {
-      "type": 0,
-      "value": "Finished recording for "
-    },
-    {
       "type": 1,
       "value": "actionName"
     },
     {
       "type": 0,
-      "value": "? Press ‘Add action’ button to add another action"
+      "value": "에 대한 기록을 완료하셨나요? 다른 행동을 추가하려면 '행동 추가' 버튼을 누르세요."
     }
   ],
   "ai-activity-timer-resource-title": [
@@ -166,13 +158,13 @@
   "ai-light-switch-resource-title": [
     {
       "type": 0,
-      "value": "AI light switch"
+      "value": "AI 조명 스위치"
     }
   ],
   "ai-sports-data-logger-resource-title": [
     {
       "type": 0,
-      "value": "AI sports data logger"
+      "value": "AI 스포츠 데이터 로거"
     }
   ],
   "ai-storytelling-friend-resource-title": [
@@ -184,19 +176,19 @@
   "animation-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+      "value": "연결, 데이터 수집, 모델 테스트, 코드, 사용 등 CreateAI 워크플로 5단계를 보여주는 애니메이션. 연결: micro:bit 장치를 컴퓨터에 연결하여 두 기기의 통신을 설정합니다. 데이터 수집: micro:bit를 손목에 착용합니다. 손 젓기(하트 아이콘으로 표시)와 흔들기(X 아이콘으로 표시)라는 두 가지 제스처에 대한 움직임 데이터를 기록합니다. 모델을 학습시키기 위해 각 제스처에 대한 샘플을 여러 개 수집합니다. 모델 테스트: 샘플을 충분히 수집했다면 머신러닝 모델을 학습시킵니다. 그 후 컴퓨터는 실시간으로 손 젓기와 흔들기 제스처를 인식하려고 시도합니다. 사용자는 필요에 따라 다시 데이터 수집 단계로 돌아가 샘플을 더 수집하여 후속 테스트를 진행할 수 있습니다. 코드: 사용자는 학습된 모델이 포함된 MakeCode 블록을 사용해 프로그램을 작성합니다. 완성한 프로그램을 micro:bit에 다운로드합니다. 사용: micro:bit가 사용자의 신체 움직임에 반응합니다. 손 젓기 또는 흔들기 제스처가 감지되면 LED 스크린에 각 제스처에 해당하는 아이콘이 나타납니다."
     }
   ],
   "animation-pause-action": [
     {
       "type": 0,
-      "value": "Pause animation"
+      "value": "애니메이션 일시 정지"
     }
   ],
   "animation-resume-action": [
     {
       "type": 0,
-      "value": "Resume animation"
+      "value": "애니메이션 다시 시작"
     }
   ],
   "animation-step-1": [
@@ -214,7 +206,7 @@
   "animation-step-3": [
     {
       "type": 0,
-      "value": "Test model"
+      "value": "모델 테스트"
     }
   ],
   "animation-step-4": [
@@ -226,13 +218,13 @@
   "animation-step-5": [
     {
       "type": 0,
-      "value": "Use"
+      "value": "사용"
     }
   ],
   "animation-training": [
     {
       "type": 0,
-      "value": "Training"
+      "value": "학습 중"
     }
   ],
   "back-action": [
@@ -250,7 +242,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "블록 미리 보기"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -286,7 +278,7 @@
   "carousel-role": [
     {
       "type": 0,
-      "value": "carousel"
+      "value": "무한 재생"
     }
   ],
   "carousel-slide-label": [
@@ -296,7 +288,7 @@
     },
     {
       "type": 0,
-      "value": " of "
+      "value": "/"
     },
     {
       "type": 1,
@@ -796,19 +788,19 @@
   "create-project": [
     {
       "type": 0,
-      "value": "Create project"
+      "value": "프로젝트 생성"
     }
   ],
   "create-project-dialog-heading": [
     {
       "type": 0,
-      "value": "Create a project"
+      "value": "프로젝트 생성"
     }
   ],
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "Taster lessons"
+      "value": "맛보기 수업"
     }
   ],
   "data-actions-menu": [
@@ -850,7 +842,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "데이터 미리 보기"
     }
   ],
   "data-samples-actions-region": [
@@ -961,19 +953,11 @@
     {
       "offset": 0,
       "options": {
-        "one": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Delete"
-            }
-          ]
-        },
         "other": {
           "value": [
             {
               "type": 0,
-              "value": "Delete "
+              "value": "프로젝트 "
             },
             {
               "type": 1,
@@ -981,7 +965,7 @@
             },
             {
               "type": 0,
-              "value": " projects"
+              "value": "개 삭제"
             }
           ]
         }
@@ -994,33 +978,25 @@
   "delete-project-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete project"
+      "value": "프로젝트 삭제 확인"
     }
   ],
   "delete-project-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete the project \""
-    },
-    {
-      "type": 1,
-      "value": "project"
-    },
-    {
-      "type": 0,
-      "value": "\"?"
+      "value": "{project} 프로젝트를 정말 삭제할까요?"
     }
   ],
   "delete-projects-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete projects"
+      "value": "프로젝트 삭제 확인"
     }
   ],
   "delete-projects-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete "
+      "value": "프로젝트 "
     },
     {
       "type": 1,
@@ -1028,7 +1004,7 @@
     },
     {
       "type": 0,
-      "value": " projects?"
+      "value": "개를 정말 삭제할까요?"
     }
   ],
   "delete-recording-aria": [
@@ -1210,13 +1186,13 @@
   "duplicate-project-action": [
     {
       "type": 0,
-      "value": "Duplicate"
+      "value": "복제"
     }
   ],
   "duplicate-project-heading": [
     {
       "type": 0,
-      "value": "Duplicate project"
+      "value": "프로젝트 복제"
     }
   ],
   "edit-in-makecode-action": [
@@ -1442,7 +1418,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "First lessons"
+      "value": "첫 번째 수업"
     }
   ],
   "go-action": [
@@ -1526,7 +1502,7 @@
   "help-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of help resources"
+      "value": "도움말 자료 목록"
     }
   ],
   "help-resources-row-title": [
@@ -1561,22 +1537,18 @@
   ],
   "homepage-banner-heading": [
     {
-      "type": 0,
-      "value": "New to "
-    },
-    {
       "type": 1,
       "value": "appName"
     },
     {
       "type": 0,
-      "value": "?"
+      "value": " 사용이 처음이신가요?"
     }
   ],
   "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Machine learning with movement and the micro:bit"
+      "value": "움직임과 micro:bit를 활용한 기계 학습"
     }
   ],
   "import-data-samples-action": [
@@ -1604,7 +1576,7 @@
   "import-file-action": [
     {
       "type": 0,
-      "value": "Import"
+      "value": "가져오기"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1696,13 +1668,13 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "완벽 지원"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "일부 지원"
     }
   ],
   "language-support-checked": [
@@ -1720,13 +1692,13 @@
   "language-supported-for": [
     {
       "type": 0,
-      "value": "지원되는 번역:"
+      "value": "번역 지원 언어:"
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "언어가 완전히 지원되지 않습니다"
+      "value": "완전히 지원되지 않는 언어"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -2078,25 +2050,25 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Move the micro:bit to explore how different actions change the graph"
+      "value": "micro:bit를 움직여 행동에 따라 그래프가 어떻게 변하는지 살펴보세요."
     }
   ],
   "my-projects-row-carousel": [
     {
       "type": 0,
-      "value": "List of my projects"
+      "value": "내 프로젝트 목록"
     }
   ],
   "my-projects-row-title": [
     {
       "type": 0,
-      "value": "My projects"
+      "value": "내 프로젝트"
     }
   ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
+      "value": "'손 젓기' 또는 '점프하기' 등 CreateAI가 인식할 행동의 이름을 지정하세요."
     }
   ],
   "name-project": [
@@ -2120,13 +2092,13 @@
   "new-project-setup-title": [
     {
       "type": 0,
-      "value": "New project setup"
+      "value": "새 프로젝트 설정"
     }
   ],
   "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "New project"
+      "value": "새 프로젝트"
     }
   ],
   "next-action": [
@@ -2138,7 +2110,7 @@
   "no-projects": [
     {
       "type": 0,
-      "value": "No projects to display"
+      "value": "표시할 프로젝트 없음"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2184,37 +2156,37 @@
   "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "프로젝트 열기"
     }
   ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
+      "value": "이 프로젝트에 포함된 MakeCode 코드의 미리 보기입니다."
     }
   ],
   "open-shared-project-data-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the actions and data contained within this project."
+      "value": "이 프로젝트에 포함된 행동 및 데이터의 미리 보기입니다."
     }
   ],
   "open-shared-project-description": [
     {
       "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+      "value": "이 프로젝트는 CreateAI와 호환되는 Microsoft MakeCode 공유 프로젝트입니다."
     }
   ],
   "open-shared-project-error-description": [
     {
       "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+      "value": "다시 시도하기 전에 접속한 링크가 올바른지, 인터넷에 연결되어 있는지 확인하세요."
     }
   ],
   "open-shared-project-title": [
     {
       "type": 0,
-      "value": "Open shared CreateAI project"
+      "value": "공유 CreateAI 프로젝트 열기"
     }
   ],
   "other-tabs-body1": [
@@ -2252,13 +2224,13 @@
   "project-ideas-row-carousel": [
     {
       "type": 0,
-      "value": "List of project ideas"
+      "value": "프로젝트 아이디어 목록"
     }
   ],
   "project-ideas-row-title": [
     {
       "type": 0,
-      "value": "Project ideas"
+      "value": "프로젝트 아이디어"
     }
   ],
   "project-label": [
@@ -2280,7 +2252,7 @@
     },
     {
       "type": 0,
-      "value": " actions menu"
+      "value": " 행동 메뉴"
     }
   ],
   "project-name-not-empty": [
@@ -2298,19 +2270,19 @@
   "project-name-tooltip": [
     {
       "type": 0,
-      "value": "Click to edit project name"
+      "value": "클릭하여 프로젝트 이름 수정"
     }
   ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
-      "value": "Skip to toolbar"
+      "value": "도구 모음으로 건너뛰기"
     }
   ],
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+      "value": "사용자의 데이터는 이 기기의 이 브라우저에 저장됩니다. 브라우저의 쿠키나 사이트 데이터를 삭제하면 해당 데이터도 함께 삭제됩니다. 기기의 저장 공간이 부족할 경우 브라우저에서 데이터가 자동으로 삭제될 수도 있습니다."
     }
   ],
   "projects-page-title": [
@@ -2420,19 +2392,19 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Press record to collect a movement data sample."
+      "value": "움직임 데이터 샘플을 수집하려면 기록을 누르세요."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Press record "
+      "value": "움직임 데이터 샘플을 수집하려면 micro:bit에서 기록 "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "or"
+          "value": "또는"
         }
       ],
       "type": 8,
@@ -2440,29 +2412,17 @@
     },
     {
       "type": 0,
-      "value": " button B on the micro:bit to collect a movement data sample."
+      "value": " B 버튼을 누르세요."
     }
   ],
   "record-more-hint": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "최소 "
     },
     {
       "offset": 0,
       "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data sample"
-            }
-          ]
-        },
         "other": {
           "value": [
             {
@@ -2471,7 +2431,7 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": "개의 데이터 샘플을"
             }
           ]
         }
@@ -2479,28 +2439,24 @@
       "pluralType": "cardinal",
       "type": 6,
       "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " 더 기록하세요"
     }
   ],
   "record-more-hint-label": [
     {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
       "type": 0,
-      "value": "Record at least "
+      "value": " 행동에 대해 최소 "
     },
     {
       "offset": 0,
       "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data sample"
-            }
-          ]
-        },
         "other": {
           "value": [
             {
@@ -2509,7 +2465,7 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": "개의 데이터 샘플을"
             }
           ]
         }
@@ -2520,11 +2476,7 @@
     },
     {
       "type": 0,
-      "value": " for "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
+      "value": " 더 기록하세요"
     }
   ],
   "record-samples": [
@@ -2662,13 +2614,13 @@
   "rename-project-action": [
     {
       "type": 0,
-      "value": "Rename"
+      "value": "이름 변경"
     }
   ],
   "rename-project-heading": [
     {
       "type": 0,
-      "value": "Rename project"
+      "value": "프로젝트 이름 변경"
     }
   ],
   "reset-to-default-action": [
@@ -2799,18 +2751,18 @@
   ],
   "select-project-action": [
     {
-      "type": 0,
-      "value": "Select "
-    },
-    {
       "type": 1,
       "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " 선택"
     }
   ],
   "selection-actions-group": [
     {
       "type": 0,
-      "value": "Selection actions"
+      "value": "선택 항목 행동"
     }
   ],
   "settings": [
@@ -2852,37 +2804,37 @@
   "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Last modified"
+      "value": "최근 수정 날짜"
     }
   ],
   "sort-option-name": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "이름"
     }
   ],
   "sort-option-relevance": [
     {
       "type": 0,
-      "value": "Relevance"
+      "value": "연관성"
     }
   ],
   "sort-order-ascending-label": [
     {
       "type": 0,
-      "value": "Ascending order"
+      "value": "오름차순"
     }
   ],
   "sort-order-descending-label": [
     {
       "type": 0,
-      "value": "Descending order"
+      "value": "내림차순"
     }
   ],
   "sort-select-label": [
     {
       "type": 0,
-      "value": "Sort projects"
+      "value": "프로젝트 정렬"
     }
   ],
   "start-training-action": [
@@ -2946,7 +2898,7 @@
   "teacher-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of teacher resources"
+      "value": "교사용 자료 목록"
     }
   ],
   "teacher-resources-row-title": [
@@ -2976,13 +2928,13 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+      "value": "이 프로젝트는 Microsoft 또는 Micro:bit Educational Foundation의 승인을 받지 않은 사용자가 제공한 것으로 부적절하다고 판단되는 경우 "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "MakeCode shared project"
+          "value": "MakeCode 공유 프로젝트"
         }
       ],
       "type": 8,
@@ -2990,19 +2942,19 @@
     },
     {
       "type": 0,
-      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+      "value": "를 방문해 Microsoft MakeCode에 신고해 주세요."
     }
   ],
   "timestamp-now": [
     {
       "type": 0,
-      "value": "now"
+      "value": "지금"
     }
   ],
   "timestamp-seconds": [
     {
       "type": 0,
-      "value": "a few seconds ago"
+      "value": "몇 초 전"
     }
   ],
   "tour-action": [
@@ -3234,13 +3186,13 @@
   "train-hint": [
     {
       "type": 0,
-      "value": "Finished recording?"
+      "value": "기록을 완료하셨나요?"
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Train the model"
+          "value": "모델을 학습시키세요"
         }
       ],
       "type": 8,
@@ -3250,7 +3202,7 @@
   "train-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+      "value": "기록을 완료하셨나요? '모델 학습시키기' 버튼을 눌러 모델을 학습시키세요."
     }
   ],
   "train-model": [
@@ -3400,7 +3352,7 @@
   "view-all-projects": [
     {
       "type": 0,
-      "value": "View all"
+      "value": "전체 보기"
     }
   ],
   "webusb-retry-no-select": [
@@ -3436,7 +3388,7 @@
   "welcome-title": [
     {
       "type": 0,
-      "value": "How CreateAI works"
+      "value": "CreateAI 작동 방식"
     }
   ]
 }
