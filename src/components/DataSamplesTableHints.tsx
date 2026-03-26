@@ -57,6 +57,35 @@ export const NameActionHint = () => {
   );
 };
 
+export const NameActionShortHint = () => {
+  return (
+    <VStack
+      h="100%"
+      justifyContent="center"
+      p={2}
+      w="360px"
+      spacing={0}
+      transform="translate(-25px)"
+      position="absolute"
+    >
+      <HStack ml="15px" gap={1}>
+        <EmojiArrow
+          color="brand.500"
+          left={0}
+          transform="translate(0, -30px) rotate(-45deg)"
+          mr={-4}
+        />
+        <Box transform="rotate(-8deg)" color="brand.500">
+          <Emoji boxSize={16} />
+        </Box>
+        <Text textAlign="center">
+          <FormattedMessage id="name-action-hint" />
+        </Text>
+      </HStack>
+    </VStack>
+  );
+};
+
 export const NameActionWithSamplesHint = () => {
   return (
     <HStack
@@ -69,7 +98,7 @@ export const NameActionWithSamplesHint = () => {
       <HStack spacing={0} color="brand.500" ml={-8}>
         <UpCurveArrow w="60px" h="93px" color="brand.500" />
         <Box transform="rotate(-8deg)">
-          <Emoji ml="10px" boxSize={16} animation={animations.spin} />
+          <Emoji ml="10px" boxSize={16} />
         </Box>
       </HStack>
       <Text
@@ -101,26 +130,30 @@ const RecordHintWithButtonB = () => {
 export const RecordHint = () => {
   const { isConnected } = useConnectionStage();
   return (
-    <VStack
+    <HStack
       position="absolute"
-      m={0}
+      w="400px"
       p={2}
-      transform="translate(170px, -110px)"
-      alignItems="flex-start"
+      top={0}
+      height="100%"
+      transform="translate(131px, 0)"
+      alignItems="start"
     >
-      <Box transform="rotate(-8deg)">
-        <EmojiArrow color="brand.500" />
-      </Box>
-      <HStack transform="translateX(20px)">
-        {isConnected ? (
-          <RecordHintWithButtonB />
-        ) : (
-          <Text textAlign="center" maxW={200}>
-            <FormattedMessage id="record-hint" />
-          </Text>
-        )}
-      </HStack>
-    </VStack>
+      <EmojiArrow
+        color="brand.500"
+        top={0}
+        left={0}
+        transform="rotate(-35deg) translate(0,0)"
+        mr={1}
+      />
+      {!isConnected ? (
+        <RecordHintWithButtonB />
+      ) : (
+        <Text textAlign="center" maxW={200}>
+          <FormattedMessage id="record-hint" />
+        </Text>
+      )}
+    </HStack>
   );
 };
 

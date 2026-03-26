@@ -288,6 +288,7 @@ const getHintText = (
             .toString()
         : intl.formatMessage({ id: "record-hint" });
     }
+    case "name-action-short":
     case "name-action-with-samples":
     case "name-action": {
       return intl.formatMessage({ id: "name-action-hint" });

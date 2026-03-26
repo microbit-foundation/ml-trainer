@@ -12,6 +12,7 @@ import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import {
   NameActionHint,
+  NameActionShortHint,
   NameActionWithSamplesHint,
   NameFirstActionHint,
   RecordHint,
@@ -20,7 +21,7 @@ import {
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
-  actionNum: number;
+  actionIdx: number;
   isLastRow: boolean;
   preview?: boolean;
   action: ActionData;
@@ -35,7 +36,7 @@ interface DataSamplesTableRowProps {
 }
 
 const DataSamplesTableRow = ({
-  actionNum,
+  actionIdx,
   isLastRow,
   action,
   selected,
@@ -75,13 +76,16 @@ const DataSamplesTableRow = ({
           }
         />
       </GridItem>
-      {hint?.type === "name-action" && hint.actionNum === actionNum && (
+      {hint?.type === "name-action" && hint.actionIdx === actionIdx && (
         <GridItem h="120px">
-          {hint?.actionNum === 1 && <NameFirstActionHint />}
-          {hint?.actionNum === 2 && <NameActionHint />}
+          {hint?.actionIdx === 0 && <NameFirstActionHint />}
+          {hint?.actionIdx === 1 && <NameActionHint />}
         </GridItem>
       )}
-      <GridItem position="relative">
+      <GridItem position="relative" h="100%">
+        {hint?.type === "name-action-short" && hint.actionIdx === actionIdx && (
+          <NameActionShortHint />
+        )}
         {(action.name.length > 0 || action.recordings.length > 0) && (
           <ActionDataSamplesCard
             preview={preview}
@@ -93,16 +97,22 @@ const DataSamplesTableRow = ({
             clearNewRecordingId={clearNewRecordingId}
           />
         )}
-        {hint?.type === "record-action" && hint.actionNum === actionNum && (
+        {hint?.type === "record-action" && hint.actionIdx === actionIdx && (
           <RecordHint />
         )}
-        {hint?.type === "record-more-action" && isLastRow && (
-          <RecordMoreHint
-            actionName={action.name}
-            recorded={action.recordings.length}
-          />
-        )}
       </GridItem>
+      {hint?.type === "record-more-action" && isLastRow && (
+        <>
+          {/* Empty grid item to fill action column for positioning */}
+          <GridItem />
+          <GridItem>
+            <RecordMoreHint
+              actionName={action.name}
+              recorded={action.recordings.length}
+            />
+          </GridItem>
+        </>
+      )}
       {hint?.type === "name-action-with-samples" && isLastRow && (
         <GridItem h="120px">
           <NameActionWithSamplesHint />

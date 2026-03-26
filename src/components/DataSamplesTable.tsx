@@ -243,7 +243,7 @@ const DataSamplesTable = ({
             selected={selectedAction.id === action.id}
             onSelectRow={() => setSelectedActionIdx(idx)}
             onRecord={handleRecord}
-            actionNum={idx + 1}
+            actionIdx={idx}
             hint={hint}
             isLastRow={actions.length - 1 === idx}
             onDeleteAction={deleteActionConfirmOnOpen}

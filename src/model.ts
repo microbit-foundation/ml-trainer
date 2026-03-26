@@ -244,8 +244,12 @@ export type DataSamplesPageHint =
   | null
   | { type: "move-microbit" | "record-more-action" | "add-action" | "train" }
   | {
-      type: "name-action" | "record-action" | "name-action-with-samples";
-      actionNum: 1 | 2;
+      type:
+        | "name-action"
+        | "record-action"
+        | "name-action-with-samples"
+        | "name-action-short";
+      actionIdx: number;
     };
 
 export enum PostImportDialogState {

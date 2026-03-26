@@ -1978,30 +1978,36 @@ const getHint = (
     return null;
   }
   const lastActionIdx = actions.length - 1;
-  const action = actions[lastActionIdx];
-  const actionNum =
-    lastActionIdx === 0 ||
-    actions.every((a) => a.name.length !== 0 && a.recordings.length === 0)
-      ? 1
-      : 2;
+  const lastAction = actions[lastActionIdx];
 
-  if (action.name.length === 0) {
+  const firstUnnamedActionIdx = actions.findIndex(
+    (a) => a.name.length === 0 && a.recordings.length === 0
+  );
+  if (firstUnnamedActionIdx > -1 && firstUnnamedActionIdx !== lastActionIdx) {
+    return { type: "name-action-short", actionIdx: firstUnnamedActionIdx };
+  }
+  if (lastAction.name.length === 0) {
     return {
       type:
-        action.recordings.length === 0
+        lastAction.recordings.length === 0
           ? "name-action"
           : "name-action-with-samples",
-      actionNum,
+      actionIdx: lastActionIdx,
     };
   }
-
-  if (action.recordings.length === 0) {
-    return { type: "record-action", actionNum };
+  const firstNoRecordingsActionIdx = actions.findIndex(
+    (a) => a.recordings.length === 0
+  );
+  if (firstNoRecordingsActionIdx > -1) {
+    return {
+      type: "record-action",
+      actionIdx: firstNoRecordingsActionIdx,
+    };
   }
-  if (action.recordings.length < 3) {
+  if (lastAction.recordings.length < 3) {
     return { type: "record-more-action" };
   }
-  if (actionNum === 1 && !suppressTrainAndAddActionHint) {
+  if (lastActionIdx === 0 && !suppressTrainAndAddActionHint) {
     return { type: "add-action" };
   }
   if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
