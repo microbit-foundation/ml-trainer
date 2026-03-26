@@ -216,10 +216,12 @@ export const ProjectProvider = ({
         return WaitForEditorResult.TimedOut;
       }
       // Races the editor ready promise against failure conditions.
-      const raceEntries: Promise<WaitForEditorResult>[] = [];
-      if (promise) {
-        raceEntries.push(promise.then(() => WaitForEditorResult.Ready));
+      if (!promise) {
+        return WaitForEditorResult.Ready;
       }
+      const raceEntries: Promise<WaitForEditorResult>[] = [
+        promise.then(() => WaitForEditorResult.Ready),
+      ];
       if (remainingTimeout > 0) {
         raceEntries.push(
           new Promise((resolve) =>
