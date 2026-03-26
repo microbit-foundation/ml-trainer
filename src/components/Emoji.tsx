@@ -7,19 +7,45 @@ import {
 
 export const animations = {
   wobble: `${keyframes({
+    // Wobble for 2s.
     "0%": {
-      transform: "rotate(15deg)",
+      transform: "rotate(0deg)",
     },
-    "25%": {
-      transform: "rotate(-15deg)",
+    "5.55%": {
+      transform: "rotate(22deg)",
     },
-    "50%": {
-      transform: "rotate(15deg)",
+    "11.11%": {
+      transform: "rotate(-18deg)",
     },
-    "75%": {
-      transform: "rotate(-15deg)",
+    "16.66%": {
+      transform: "rotate(14deg)",
     },
-  })} 2s`,
+    "22.22%": {
+      transform: "rotate(-10deg)",
+    },
+    "27.77%": {
+      transform: "rotate(0deg)",
+    },
+    // Wait 5 seconds. Wobble again for another 2s.
+    "72.22%": {
+      transform: "rotate(0deg)",
+    },
+    "77.77%": {
+      transform: "rotate(22deg)",
+    },
+    "83.33%": {
+      transform: "rotate(-18deg)",
+    },
+    "88.88%": {
+      transform: "rotate(14deg)",
+    },
+    "94.44%": {
+      transform: "rotate(-10deg)",
+    },
+    "100%": {
+      transform: "rotate(0deg)",
+    },
+  })} 9s`,
   tada: `${keyframes({
     "0%": {
       transform: "scale(1) rotate(0deg)",
