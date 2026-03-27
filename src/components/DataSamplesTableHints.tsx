@@ -185,7 +185,7 @@ export const RecordMoreHint = ({
     <HStack
       m={0}
       p={2}
-      transform="translate(65px, 0)"
+      transform="translate(65px, -12px)"
       w="calc(100% - 65px)"
       alignItems="start"
     >
