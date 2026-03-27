@@ -11,6 +11,8 @@ if (!basepath.endsWith("/")) {
 
 export const createHomePageUrl = () => `${basepath}`;
 
+export const createLegacyNewPageUrl = () => `${basepath}new`;
+
 export const createProjectsPageUrl = () => `${basepath}projects`;
 
 export const createImportPageUrl = () => `${basepath}import`;

@@ -65,6 +65,7 @@ import {
   createDataSamplesPageUrl,
   createHomePageUrl,
   createImportPageUrl,
+  createLegacyNewPageUrl,
   createOpenSharedProjectPageUrl,
   createProjectsPageUrl,
   createTestingModelPageUrl,
@@ -304,7 +305,7 @@ const createRouter = () => {
           errorElement: <NotFound />,
         },
         {
-          path: "/new",
+          path: createLegacyNewPageUrl(),
           element: <Navigate to={createHomePageUrl()} replace />,
         },
         {
