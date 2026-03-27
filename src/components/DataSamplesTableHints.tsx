@@ -266,46 +266,84 @@ export const AddActionHint = ({ action }: { action: Action }) => {
 };
 
 // Timeout for move micro:bit hint before assuming user already knows and setting hasMoved to true.
-// 14s = 2s wobble animation + 5s wait + 2s wobble animation + 5s wait.
-export const moveMicrobitHintTimeoutInSec = 14; //s
+// 28s = 4 wobble cycles × 2s + 4 pause cycles × 5s
+export const moveMicrobitHintTimeoutInSec = 28; //s
 
 const moveMicrobitEmojiKeyframes = keyframes({
   // Wobble for 2s.
   "0%": {
     transform: "rotate(0deg)",
   },
-  "3.57%": {
+  "1.79%": {
     transform: "rotate(22deg)",
   },
-  "7.14%": {
+  "3.57%": {
     transform: "rotate(-18deg)",
   },
-  "10.71%": {
+  "5.36%": {
     transform: "rotate(14deg)",
   },
-  "14.28%": {
+  "7.14%": {
     transform: "rotate(-10deg)",
   },
-  "17.85%": {
+  "8.93%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds. Wobble again for another 2s.
+  "26.79%": {
+    transform: "rotate(0deg)",
+  },
+  "28.57%": {
+    transform: "rotate(22deg)",
+  },
+  "30.36%": {
+    transform: "rotate(-18deg)",
+  },
+  "32.14%": {
+    transform: "rotate(14deg)",
+  },
+  "33.93%": {
+    transform: "rotate(-10deg)",
+  },
+  "35.71%": {
     transform: "rotate(0deg)",
   },
   // Wait 5 seconds. Wobble again for another 2s.
   "53.57%": {
     transform: "rotate(0deg)",
   },
-  "57.14%": {
+  "55.36%": {
     transform: "rotate(22deg)",
   },
-  "60.71%": {
+  "57.14%": {
     transform: "rotate(-18deg)",
   },
-  "64.28%": {
+  "58.93%": {
     transform: "rotate(14deg)",
   },
-  "67.85%": {
+  "60.71%": {
     transform: "rotate(-10deg)",
   },
-  "71.42%": {
+  "62.5%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds. Wobble again for another 2s.
+  "80.36%": {
+    transform: "rotate(0deg)",
+  },
+  "82.14%": {
+    transform: "rotate(22deg)",
+  },
+  "83.93%": {
+    transform: "rotate(-18deg)",
+  },
+  "85.71%": {
+    transform: "rotate(14deg)",
+  },
+  "87.5%": {
+    transform: "rotate(-10deg)",
+  },
+  "89.29%": {
     transform: "rotate(0deg)",
   },
   // Wait 5 seconds.
