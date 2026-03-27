@@ -73,7 +73,7 @@ export const NameActionShortHint = () => {
         <EmojiArrow
           color="brand.500"
           left={0}
-          transform="translate(0, -30px) rotate(-45deg)"
+          transform="translate(0, -30px) rotate(-35deg)"
           mr={-4}
         />
         <Box transform="rotate(-8deg)" color="brand.500">
