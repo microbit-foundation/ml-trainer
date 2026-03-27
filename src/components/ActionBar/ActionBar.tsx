@@ -51,6 +51,7 @@ const ActionBar = ({
         gap={0}
         h="64px"
         w="100%"
+        sx={{ pl: "var(--window-controls-left, 0px)" }}
       >
         <HStack
           flex={itemsCenter ? { base: "0 1 max-content", xl: "1 0" } : "4 0"}

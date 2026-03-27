@@ -51,6 +51,7 @@ const full = definePartsStyle({
   },
   header: {
     flexShrink: 0,
+    pl: "calc(var(--window-controls-left, 0px) + var(--chakra-space-6))",
   },
   body: {
     flex: 1,
