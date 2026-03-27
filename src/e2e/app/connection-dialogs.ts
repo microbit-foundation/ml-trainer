@@ -31,6 +31,7 @@ export const dialogTitles: {
     whatYouNeed: "What you need to connect",
     resetToBluetooth: "Reset to Bluetooth mode",
     copyPattern: "Copy pattern",
+    confirmPattern: "Confirm this pattern matches your micro:bit",
     connectBluetooth: "Connect to micro:bit using Bluetooth",
     bluetoothDisabled: "Bluetooth is turned off",
     permissionDenied: "Bluetooth permission required",
@@ -217,6 +218,21 @@ export class ConnectionDialogs {
       const n = (i + 1).toString();
       await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
     }
+  }
+
+  /**
+   * Get the current values in the bluetooth pattern column inputs.
+   * Useful for verifying a stored pattern is pre-populated.
+   */
+  async getBluetoothPatternValues(): Promise<string[]> {
+    const values: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      const input = this.page.getByLabel(
+        `Column ${i + 1} - number of LEDs lit`
+      );
+      values.push(await input.inputValue());
+    }
+    return values;
   }
 
   /**

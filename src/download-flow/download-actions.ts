@@ -313,8 +313,13 @@ const sendEvent = async (
     return;
   }
 
-  // Update step first
-  setDownloadState({ ...getDownloadState(), step: result.step });
+  // Apply step change and assigns together so the UI sees consistent
+  // state on first render.
+  setDownloadState({
+    ...getDownloadState(),
+    ...result.assign,
+    step: result.step,
+  });
 
   // Execute actions
   for (const action of result.actions) {

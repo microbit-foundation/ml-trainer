@@ -71,7 +71,6 @@ export const DataConnectionStep = {
   ConnectCable: "ConnectCable",
   WebUsbFlashingTutorial: "WebUsbFlashingTutorial",
   ConnectBattery: "ConnectBattery",
-  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
   EnterBluetoothPattern: "EnterBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
   WebBluetoothPreConnectTutorial: "WebBluetoothPreConnectTutorial",

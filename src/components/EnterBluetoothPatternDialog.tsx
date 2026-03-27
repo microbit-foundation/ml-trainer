@@ -27,9 +27,14 @@ const EnterBluetoothPatternDialog = ({
   ...props
 }: EnterBluetoothPatternDialogProps) => {
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
-  const [value, setValue] = useState<string | undefined>(
-    isNativePlatform() ? undefined : microbitName
-  );
+  const [value, setValue] = useState<string | undefined>(microbitName);
+
+  // Native reconnection with a stored pattern uses "confirm" copy;
+  // all other cases (web bluetooth, first-time native) use "copy" copy.
+  const [headingId, subtitleId] =
+    isNativePlatform() && microbitName
+      ? ["connect-native-pattern-heading", "connect-native-pattern-subtitle"]
+      : ["connect-pattern-heading", "connect-pattern-subtitle"];
 
   const handleNextClick = useCallback(() => {
     if (!value || value.includes(blank)) {
@@ -54,12 +59,12 @@ const EnterBluetoothPatternDialog = ({
     <ConnectContainerDialog
       onNextClick={handleNextClick}
       onBackClick={handleBackClick}
-      headingId="connect-pattern-heading"
+      headingId={headingId}
       {...props}
     >
       <VStack gap={10}>
         <Text width="100%">
-          <FormattedMessage id="connect-pattern-subtitle" />
+          <FormattedMessage id={subtitleId} />
         </Text>
         <VStack>
           <BluetoothPatternInput

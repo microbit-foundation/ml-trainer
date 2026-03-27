@@ -41,7 +41,6 @@ export type DataConnectionEvent =
   | { type: "startBluetoothFlow" }
   | { type: "saveMicrobitName"; name: string }
   | { type: "setMicrobitName"; name: string }
-  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
       type: "connectFlashFailure";

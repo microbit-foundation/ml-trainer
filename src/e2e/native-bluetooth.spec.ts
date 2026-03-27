@@ -73,10 +73,12 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.clickTryAgainButton();
     await connectionDialogs.clickNext();
 
-    // 3. Copy pattern
+    // 3. Pattern entry (from scratch — no stored pattern, shows "Copy pattern")
     await connectionDialogs.waitForText(
       connectionDialogs.types.nativeBluetooth.copyPattern
     );
+    const initialValues = await connectionDialogs.getBluetoothPatternValues();
+    expect(initialValues).toEqual(["0", "0", "0", "0", "0"]);
     await captureDialog(page, "connection-03-copy-pattern");
 
     // After entering pattern and clicking Next, the flow goes to
@@ -114,6 +116,28 @@ test.describe("native bluetooth", () => {
     // Clear pause and wait for connection to complete
     await connectionDialogs.setBluetoothProgressPause(undefined, undefined);
     await dataSamplesPage.expectConnected();
+
+    // 5. Verify stored pattern: reload page for fresh state, then reconnect.
+    // IndexedDB retains the stored pattern (1,2,3,4,5) across reload.
+    await page.reload();
+
+    const connectionDialogs2 = await dataSamplesPage.connect();
+    await connectionDialogs2.waitForText(
+      connectionDialogs2.types.nativeBluetooth.whatYouNeed
+    );
+    await connectionDialogs2.clickNext();
+    await connectionDialogs2.waitForText(
+      connectionDialogs2.types.nativeBluetooth.resetToBluetooth
+    );
+    await connectionDialogs2.clickNext();
+
+    // Pattern dialog should show with stored values pre-populated
+    await connectionDialogs2.waitForText(
+      connectionDialogs2.types.nativeBluetooth.confirmPattern
+    );
+    const storedValues = await connectionDialogs2.getBluetoothPatternValues();
+    expect(storedValues).toEqual(["1", "2", "3", "4", "5"]);
+    await captureDialog(page, "connection-05-stored-pattern");
   });
 
   test("data connection - bluetooth disabled error", async ({
@@ -360,7 +384,7 @@ test.describe("native bluetooth", () => {
     await downloadDialogs.clickTryAgainButton();
     await downloadDialogs.clickNext();
 
-    // 3. Copy pattern
+    // 3. Copy pattern (from scratch — no stored pattern)
     await downloadDialogs.waitForText(
       downloadDialogs.titles.nativeBluetooth.copyPattern
     );
@@ -488,7 +512,7 @@ test.describe("native bluetooth", () => {
     // Paused at FindingDevice — click "My pattern is different"
     await downloadDialogs.clickMyPatternIsDifferent();
 
-    // Should be back at pattern entry
+    // Should be back at pattern entry (name was cleared)
     await downloadDialogs.waitForText(
       downloadDialogs.titles.nativeBluetooth.copyPattern
     );
