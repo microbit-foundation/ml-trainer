@@ -875,6 +875,10 @@
     "defaultMessage": "crwdns363514:0crwdne363514:0",
     "description": "Graph line weight option"
   },
+  "graph-paused-training": {
+    "defaultMessage": "Training…",
+    "description": "Shown in the live graph panel while the model is being trained"
+  },
   "graph-preview": {
     "defaultMessage": "crwdns363892:0crwdne363892:0",
     "description": "Label for preview of the graph shown in the settings dialog"

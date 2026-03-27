@@ -31,9 +31,10 @@ const TrainModelDialogs = ({ finalFocusRef }: TrainModelDialogsProps) => {
       const result = await trainModel();
       if (result) {
         navigate(createTestingModelPageUrl());
+        setTimeout(() => closeTrainModelDialogs(), 0); // Push it onto the event queue after the navigate call
       }
     },
-    [navigate, setSettings, trainModel]
+    [closeTrainModelDialogs, navigate, setSettings, trainModel]
   );
   return (
     <>

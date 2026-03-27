@@ -1531,6 +1531,12 @@
       "value": "厚實的"
     }
   ],
+  "graph-paused-training": [
+    {
+      "type": 0,
+      "value": "Training…"
+    }
+  ],
   "graph-preview": [
     {
       "type": 0,

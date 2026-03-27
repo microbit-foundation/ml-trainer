@@ -1531,6 +1531,12 @@
       "value": "Grosor"
     }
   ],
+  "graph-paused-training": [
+    {
+      "type": 0,
+      "value": "Training…"
+    }
+  ],
   "graph-preview": [
     {
       "type": 0,

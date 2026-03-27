@@ -875,6 +875,10 @@
     "defaultMessage": "Thick",
     "description": "Graph line weight option"
   },
+  "graph-paused-training": {
+    "defaultMessage": "Training…",
+    "description": "Shown in the live graph panel while the model is being trained"
+  },
   "graph-preview": {
     "defaultMessage": "Graph preview",
     "description": "Label for preview of the graph shown in the settings dialog"
