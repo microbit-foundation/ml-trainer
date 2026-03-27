@@ -140,19 +140,34 @@ export const RecordHint = () => {
       transform="translate(131px, 0)"
       alignItems="start"
     >
-      <EmojiArrow
-        color="brand.500"
-        top={0}
-        left={0}
-        transform="rotate(-35deg) translate(0,0)"
-        mr={1}
-      />
-      {!isConnected ? (
-        <RecordHintWithButtonB />
+      {isConnected ? (
+        <>
+          <EmojiArrow
+            color="brand.500"
+            top={0}
+            left={0}
+            transform="rotate(-35deg) translate(0,0)"
+            mr={1}
+          />
+          <RecordHintWithButtonB />
+        </>
       ) : (
-        <Text textAlign="center" maxW={200}>
-          <FormattedMessage id="record-hint" />
-        </Text>
+        <>
+          <EmojiArrow
+            color="brand.500"
+            top={0}
+            left={0}
+            transform="rotate(-20deg) translate(0,0)"
+            mr={1}
+          />
+          <Text
+            textAlign="center"
+            maxW={200}
+            transform="translate(-30px, 30px)"
+          >
+            <FormattedMessage id="record-hint" />
+          </Text>
+        </>
       )}
     </HStack>
   );
