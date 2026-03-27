@@ -40,7 +40,11 @@ import {
   PostImportDialogState,
 } from "../model";
 import { projectSessionStorage } from "../session-storage";
-import { useHasSufficientDataForTraining, useStore } from "../store";
+import {
+  useHasSufficientDataForTraining,
+  useSettings,
+  useStore,
+} from "../store";
 import { tourElClassname } from "../tours";
 import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
 
@@ -107,17 +111,19 @@ const DataSamplesPage = () => {
     dismissWelcomeDialog,
   ]);
   const hasMoved = useHasMoved();
-  const tourInProgress = useStore((s) => !!s.tourState);
+  const tourState = useStore((s) => s.tourState);
   const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
   const isPostImportDialogOpen = useStore(
     (s) => s.postImportDialogState !== PostImportDialogState.None
   );
+  const tourInProgress = !!tourState;
   const isDialogOpen =
     isWelcomeDialogOpen ||
     isConnectionDialogOpen ||
     tourInProgress ||
     isRecordingDialogOpen ||
     isPostImportDialogOpen;
+
   const hint = useStore((s) => s.hint);
   const setHint = useStore((s) => s.setHint);
   useEffect(() => {
@@ -151,11 +157,15 @@ const DataSamplesPage = () => {
   );
 
   const setHasMoved = useStore((s) => s.setHasMoved);
+  const [settings] = useSettings();
   useEffect(() => {
     if (!dataSamplesHint) {
       return;
     }
-    if (dataSamplesHint.type === "move-microbit") {
+    if (
+      dataSamplesHint.type === "move-microbit" &&
+      settings.toursCompleted.includes("Connect")
+    ) {
       setTimeout(() => setHasMoved(true), moveMicrobitHintTimeoutInSec * 1000);
     }
     const actionWithHint = actions[actions.length - 1];
@@ -174,6 +184,7 @@ const DataSamplesPage = () => {
     isConnected,
     region,
     setHasMoved,
+    settings.toursCompleted,
   ]);
 
   return (
