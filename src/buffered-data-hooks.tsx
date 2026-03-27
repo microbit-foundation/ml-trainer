@@ -88,13 +88,8 @@ export const useHasMoved = (): boolean => {
     let lastSample: AccelerometerData | undefined;
     const threshold = 40_000;
     const minDelta = 100;
-    // TODO: Clean up skipSamples and skipped logic if we are sure we don't want this.
-    const skipSamples = 0;
-    let skipped = 0;
     const listener = (e: AccelerometerDataEvent) => {
-      if (skipped < skipSamples) {
-        skipped++;
-      } else if (lastSample) {
+      if (lastSample) {
         const deltaX = Math.abs(lastSample.x - e.data.x);
         if (deltaX > minDelta) {
           delta.x += deltaX;
