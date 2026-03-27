@@ -737,6 +737,7 @@ const createMlStore = (logging: Logging) => {
             hint: getHint(newActions, false),
             dataWindow: newDataWindow,
             model: undefined,
+            hasMoved: true,
             timestamp,
             ...updatedProject,
           });
@@ -923,6 +924,7 @@ const createMlStore = (logging: Logging) => {
             hint: getHint(updatedActions, false),
             dataWindow: newDataWindow,
             model: undefined,
+            hasMoved: true,
             timestamp,
             ...updatedProject,
           });
@@ -956,6 +958,7 @@ const createMlStore = (logging: Logging) => {
             hint: getHint(actions, false),
             dataWindow: currentDataWindow,
             model: undefined,
+            hasMoved: true,
             ...updatedProject,
           });
           await storageWithErrHandling(() =>

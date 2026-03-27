@@ -83,9 +83,6 @@ export const useHasMoved = (): boolean => {
   const [connectStatus] = useConnectStatus();
   const connection = useConnectActions();
   useEffect(() => {
-    if (connectStatus !== ConnectionStatus.Connected) {
-      setHasMoved(false);
-    }
     let ignore = false;
     const delta: AccelerometerData = { x: 0, y: 0, z: 0 };
     let lastSample: AccelerometerData | undefined;

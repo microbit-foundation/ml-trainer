@@ -77,6 +77,7 @@ const TestingModelPage = () => {
   ]);
 
   const tourStart = useStore((s) => s.tourStart);
+  const setHasMoved = useStore((s) => s.setHasMoved);
   const { isConnected } = useConnectionStage();
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
@@ -85,8 +86,9 @@ const TestingModelPage = () => {
         { name: "TrainModel", delayedUntilConnection: wasConnected === false },
         false
       );
+      setHasMoved(true);
     }
-  }, [isConnected, tourStart, wasConnected]);
+  }, [isConnected, setHasMoved, tourStart, wasConnected]);
 
   const { openEditor, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
