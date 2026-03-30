@@ -7,9 +7,13 @@ import {
   DataConnectionStep,
   DataConnectionType,
   isDataConnectionDialogOpen,
+  useDataConnectionActions,
 } from "../data-connection-flow";
+import { DataConnectionState } from "../data-connection-flow/data-connection-types";
+import { bluetoothUniversalHex } from "../device/get-hex-file";
+import { isAndroid } from "../platform";
 import { useStore } from "../store";
-import { useDataConnectionActions } from "../data-connection-flow";
+import BluetoothConnectingDialog from "./BluetoothConnectingDialog";
 import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import BrokenFirmwareDialog from "./BrokenFirmwareDialog";
 import ConnectBatteryDialog from "./ConnectBatteryDialog";
@@ -25,8 +29,11 @@ import DownloadProgressDialog, {
 import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import LoadingDialog from "./LoadingDialog";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import NativeBluetoothConnectBatteryDialog from "./NativeBluetoothConnectBatteryDialog";
 import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
+import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
 import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
+import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
 import SelectMicrobitBluetoothDialog from "./SelectMicrobitBluetoothDialog";
 import SelectMicrobitUsbDialog, {
   getHeadingId as getSelectMicrobitUsbHeadingId,
@@ -35,12 +42,6 @@ import TryAgainDialog from "./TryAgainDialog";
 import UnsupportedMicrobitDialog from "./UnsupportedMicrobitDialog";
 import WebUsbBluetoothUnsupportedDialog from "./WebUsbBluetoothUnsupportedDialog";
 import WhatYouWillNeedDialog from "./WhatYouWillNeedDialog";
-import { bluetoothUniversalHex } from "../device/get-hex-file";
-import { isAndroid } from "../platform";
-import { DataConnectionState } from "../data-connection-flow/data-connection-types";
-import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
-import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
-import BluetoothConnectingDialog from "./BluetoothConnectingDialog";
 
 const getDeviceType = (state: DataConnectionState): ConnectionErrorDeviceType =>
   state.type === DataConnectionType.Radio
@@ -62,9 +63,18 @@ const DataConnectionDialogs = () => {
   switch (state.step) {
     case DataConnectionStep.StartOver:
     case DataConnectionStep.Start: {
+      if (state.type === DataConnectionType.NativeBluetooth) {
+        return (
+          <NativeBluetoothConnectBatteryDialog
+            {...dialogCommonProps}
+            onNextClick={actions.onNextClick}
+            reconnect={state.step === DataConnectionStep.StartOver}
+          />
+        );
+      }
       return (
         <WhatYouWillNeedDialog
-          type={state.type}
+          type={state.type === DataConnectionType.Radio ? "radio" : "bluetooth"}
           {...dialogCommonProps}
           onLinkClick={
             actions.canSwitchFlowType() ? actions.switchFlowType : undefined

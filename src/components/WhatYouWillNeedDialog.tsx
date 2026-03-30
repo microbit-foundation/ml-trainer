@@ -7,8 +7,6 @@ import { Button, Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
-import microbitWithBatteryPack from "../images/microbit-with-battery-pack.svg";
-import bluetoothSymbol from "../images/bluetooth-symbol.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import usbCableImage from "../images/stylised-usb-cable.svg";
 import computerImage from "../images/stylised_computer.svg";
@@ -18,20 +16,9 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
-import { DataConnectionType } from "../data-connection-flow";
 
-const itemsConfig: Record<
-  DataConnectionType,
-  Array<{
-    imgSrc: string;
-    titleId: string;
-    subtitleId?: string;
-    width?: string;
-    height?: string;
-    mobileMaxHeight?: string;
-  }>
-> = {
-  [DataConnectionType.Radio]: [
+const itemsConfig = {
+  radio: [
     {
       imgSrc: twoMicrobitsImage,
       titleId: "connect-radio-start-requirements1",
@@ -52,7 +39,7 @@ const itemsConfig: Record<
       subtitleId: "connect-with-batteries",
     },
   ],
-  [DataConnectionType.WebBluetooth]: [
+  bluetooth: [
     {
       imgSrc: microbitImage,
       titleId: "connect-bluetooth-start-requirements1",
@@ -72,21 +59,6 @@ const itemsConfig: Record<
       subtitleId: "connect-with-batteries",
     },
   ],
-  [DataConnectionType.NativeBluetooth]: [
-    {
-      imgSrc: microbitWithBatteryPack,
-      titleId: "connect-native-start-requirements1",
-      width: "250px",
-      height: "148px",
-    },
-    {
-      imgSrc: bluetoothSymbol,
-      titleId: "connect-bluetooth-enabled",
-      width: "148px",
-      height: "148px",
-      mobileMaxHeight: "50vw",
-    },
-  ],
 };
 
 export interface WhatYouWillNeedDialogProps
@@ -95,7 +67,7 @@ export interface WhatYouWillNeedDialogProps
     "children" | "onBack" | "headingId"
   > {
   reconnect: boolean;
-  type: DataConnectionType;
+  type: "radio" | "bluetooth";
   onLinkClick: (() => void) | undefined;
 }
 
@@ -106,26 +78,22 @@ const WhatYouWillNeedDialog = ({
   ...props
 }: WhatYouWillNeedDialogProps) => {
   const { supportLinks } = useDeployment();
-  const simpleType: string = {
-    [DataConnectionType.NativeBluetooth]: "native",
-    [DataConnectionType.Radio]: "radio",
-    [DataConnectionType.WebBluetooth]: "bluetooth",
-  }[type];
-  const otherSimpleType = simpleType === "radio" ? "bluetooth" : "radio";
   return (
     <ConnectContainerDialog
       {...props}
       headingId={
         reconnect
-          ? `reconnect-failed-${simpleType}-heading`
-          : `connect-${simpleType}-start-heading`
+          ? `reconnect-failed-${type}-heading`
+          : `connect-${type}-start-heading`
       }
       footerLeft={
         <VStack alignItems="start">
           {onLinkClick && (
             <Button onClick={onLinkClick} variant="link" size="lg">
               <FormattedMessage
-                id={`connect-${simpleType}-start-switch-${otherSimpleType}`}
+                id={`connect-${type}-start-switch-${
+                  type === "bluetooth" ? "radio" : "bluetooth"
+                }`}
               />
             </Button>
           )}
@@ -145,46 +113,34 @@ const WhatYouWillNeedDialog = ({
       )}
       <Grid
         width="100%"
-        templateColumns={{
-          base: itemsConfig[type].length > 2 ? "1fr 1fr" : "1fr",
-          md: `repeat(${itemsConfig[type].length}, 1fr)`,
-        }}
-        gap={{ base: 6, md: 16 }}
-        p={{ base: "15px", md: "30px" }}
+        templateColumns={`repeat(${itemsConfig[type].length}, 1fr)`}
+        gap={16}
+        p="30px"
       >
-        {itemsConfig[type].map(
-          ({ imgSrc, width, height, mobileMaxHeight, titleId, subtitleId }) => {
-            const defaultMobileMaxHeight =
-              itemsConfig[type].length > 2 ? "25vw" : undefined;
-            return (
-              <GridItem key={titleId}>
-                <VStack gap={{ base: 3, md: 5 }}>
-                  <Image
-                    src={imgSrc}
-                    alt=""
-                    objectFit="contain"
-                    width={{ base: "100%", md: width ?? "107px" }}
-                    height={{ base: "auto", md: height ?? "107px" }}
-                    maxHeight={{
-                      base: mobileMaxHeight ?? defaultMobileMaxHeight,
-                      md: "none",
-                    }}
-                  />
-                  <VStack textAlign="center">
-                    <Text fontWeight="bold">
-                      <FormattedMessage id={titleId} />
+        {itemsConfig[type].map(({ imgSrc, titleId, subtitleId }) => {
+          return (
+            <GridItem key={titleId}>
+              <VStack gap={5}>
+                <Image
+                  src={imgSrc}
+                  alt=""
+                  objectFit="contain"
+                  boxSize="107px"
+                />
+                <VStack textAlign="center">
+                  <Text fontWeight="bold">
+                    <FormattedMessage id={titleId} />
+                  </Text>
+                  {subtitleId && (
+                    <Text>
+                      <FormattedMessage id={subtitleId} />
                     </Text>
-                    {subtitleId && (
-                      <Text>
-                        <FormattedMessage id={subtitleId} />
-                      </Text>
-                    )}
-                  </VStack>
+                  )}
                 </VStack>
-              </GridItem>
-            );
-          }
-        )}
+              </VStack>
+            </GridItem>
+          );
+        })}
       </Grid>
     </ConnectContainerDialog>
   );

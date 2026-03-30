@@ -47,7 +47,7 @@ test.describe("native bluetooth", () => {
 
     // 1. What you need
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await captureDialog(page, "connection-01-what-you-need");
 
@@ -123,7 +123,7 @@ test.describe("native bluetooth", () => {
 
     const connectionDialogs2 = await dataSamplesPage.connect();
     await connectionDialogs2.waitForText(
-      connectionDialogs2.types.nativeBluetooth.whatYouNeed
+      connectionDialogs2.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs2.clickNext();
     await connectionDialogs2.waitForText(
@@ -154,7 +154,7 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.setBluetoothAvailability("disabled");
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
 
@@ -183,7 +183,7 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.setBluetoothAvailability("permission-denied");
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
 
@@ -209,7 +209,7 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.setBluetoothAvailability("disabled");
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.expectBluetoothDisabledDialog();
@@ -235,7 +235,7 @@ test.describe("native bluetooth", () => {
     ]);
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(
@@ -264,7 +264,7 @@ test.describe("native bluetooth", () => {
 
     // Complete the connection flow
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(
@@ -313,7 +313,7 @@ test.describe("native bluetooth", () => {
     ]);
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(

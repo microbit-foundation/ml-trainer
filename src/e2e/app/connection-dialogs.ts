@@ -28,7 +28,7 @@ export const dialogTitles: {
     connectBluetooth: "Connect to micro:bit using Web Bluetooth",
   },
   nativeBluetooth: {
-    whatYouNeed: "What you need to connect",
+    connectBattery: "Connect micro:bit battery pack",
     resetToBluetooth: "Reset to Bluetooth mode",
     copyPattern: "Copy pattern",
     confirmPattern: "Confirm this pattern matches your micro:bit",

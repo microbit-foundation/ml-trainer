@@ -675,16 +675,16 @@
       "value": "If needed, change the pattern below to match."
     }
   ],
+  "connect-native-start-battery-check": [
+    {
+      "type": 0,
+      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
+    }
+  ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "What you need to connect"
-    }
-  ],
-  "connect-native-start-requirements1": [
-    {
-      "type": 0,
-      "value": "micro:bit with battery pack"
+      "value": "Connect micro:bit battery pack"
     }
   ],
   "connect-or-import": [
