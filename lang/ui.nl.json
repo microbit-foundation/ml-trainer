@@ -371,13 +371,13 @@
     "defaultMessage": "If needed, change the pattern below to match.",
     "description": "Native Bluetooth pattern dialog subtitle"
   },
-  "connect-native-start-heading": {
-    "defaultMessage": "What you need to connect",
-    "description": "Connection dialog heading"
+  "connect-native-start-battery-check": {
+    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on.",
+    "description": "Instruction to check the micro:bit is powered on via the battery pack"
   },
-  "connect-native-start-requirements1": {
-    "defaultMessage": "micro:bit with battery pack",
-    "description": "Label for image of a micro:bit and battery pack"
+  "connect-native-start-heading": {
+    "defaultMessage": "Connect micro:bit battery pack",
+    "description": "Connection dialog heading"
   },
   "connect-or-import": {
     "defaultMessage": "<link1>Verbind een micro:bit die gegevens verzamelt</link1> of <link2>importeer data samples</link2>",
