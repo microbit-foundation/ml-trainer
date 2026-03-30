@@ -7,7 +7,7 @@ import { AspectRatio, Image, Link, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
 import abReset from "../images/bluetooth-mode-a+b+reset.gif";
-import tripleReset from "../images/bluetooth-mode-triple-reset.gif";
+import tripleReset from "../images/stylised-microbit-triple-tap-reset.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
@@ -61,13 +61,12 @@ const ResetToBluetoothModeDialog = ({
           <FormattedMessage id={subtitleId} />
         </Text>
         <AspectRatio
-          ratio={3 / 2}
-          bgColor="black"
-          width="22rem"
+          ratio={326 / 228}
+          width="20rem"
           rounded="md"
           pt={isTripleReset ? 0 : 12}
         >
-          <Image src={image} alt="" mt={-2.5} px={5} />
+          <Image src={image} alt="" />
         </AspectRatio>
       </VStack>
     </ConnectContainerDialog>
