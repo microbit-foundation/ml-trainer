@@ -1487,12 +1487,6 @@
       "value": "두꺼움"
     }
   ],
-  "graph-paused-training": [
-    {
-      "type": 0,
-      "value": "Training…"
-    }
-  ],
   "graph-preview": [
     {
       "type": 0,

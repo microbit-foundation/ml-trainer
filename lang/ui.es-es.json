@@ -875,10 +875,6 @@
     "defaultMessage": "Grosor",
     "description": "Graph line weight option"
   },
-  "graph-paused-training": {
-    "defaultMessage": "Training…",
-    "description": "Shown in the live graph panel while the model is being trained"
-  },
   "graph-preview": {
     "defaultMessage": "Vista previa del gráfico",
     "description": "Label for preview of the graph shown in the settings dialog"

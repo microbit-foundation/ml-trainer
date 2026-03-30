@@ -1489,12 +1489,6 @@
       "value": "crwdns363514:0crwdne363514:0"
     }
   ],
-  "graph-paused-training": [
-    {
-      "type": 0,
-      "value": "Training…"
-    }
-  ],
   "graph-preview": [
     {
       "type": 0,

@@ -1202,7 +1202,7 @@ const createMlStore = (logging: Logging) => {
             {
               model,
               trainModelDialogStage: model
-                ? TrainModelDialogStage.NavigatingToTesting
+                ? TrainModelDialogStage.TrainingInProgress
                 : TrainModelDialogStage.TrainingError,
               timestamp,
               ...updatedProject,
