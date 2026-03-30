@@ -162,7 +162,7 @@ export const RecordHint = () => {
           />
           <Text
             textAlign="center"
-            maxW={200}
+            maxW={250}
             transform="translate(-30px, 30px)"
           >
             <FormattedMessage id="record-hint" />
