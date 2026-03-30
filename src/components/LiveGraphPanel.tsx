@@ -16,22 +16,21 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useDataConnectionActions } from "../data-connection-flow";
 import {
   DataConnectionStep,
   isDataConnectionDialogOpen,
+  useDataConnectionActions,
 } from "../data-connection-flow";
-import { useStore } from "../store";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
+import { TrainModelDialogStage } from "../model";
+import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import AlertIcon from "./AlertIcon";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
 import PredictedAction from "./PredictedAction";
-import { TrainModelDialogStage } from "../model";
-import { useStore } from "../store";
 
 interface LiveGraphPanelProps {
   showPredictedAction?: boolean;
