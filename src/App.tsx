@@ -58,6 +58,7 @@ import {
   getAllProjectsFromStorage,
   loadProjectAndModelFromStorage,
   loadSettingsFromStorage,
+  StorageErrorEvent,
   useStore,
 } from "./store";
 import {
@@ -162,6 +163,40 @@ const Layout = () => {
       }
     );
   }, [intl, navigate, setPostImportDialogState, toast]);
+
+  const storageError: StorageErrorEvent | undefined = useStore(
+    (s) => s.storageError
+  );
+  useEffect(() => {
+    if (!storageError) {
+      return;
+    }
+    const messages =
+      storageError.type === "quota"
+        ? {
+            title: intl.formatMessage({ id: "storage-error-quota-title" }),
+            description: intl.formatMessage({
+              id: "storage-error-quota-description",
+            }),
+          }
+        : {
+            title: intl.formatMessage({ id: "storage-error-other" }),
+          };
+    const toastOptions = {
+      id: "storage-error",
+      position: "top" as const,
+      duration: null,
+      isClosable: true,
+      variant: "toast",
+      status: "error" as const,
+      ...messages,
+    };
+    if (toast.isActive("storage-error")) {
+      toast.update("storage-error", toastOptions);
+    } else {
+      toast(toastOptions);
+    }
+  }, [intl, storageError, toast]);
 
   useEffect(() => {
     if (updateProjectTimestampUrls.includes(location.pathname) && id) {
