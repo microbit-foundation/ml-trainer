@@ -24,7 +24,7 @@
     "description": "Menu item for link to accessibility site"
   },
   "accessibility-resource-title": {
-    "defaultMessage": "Accessibility",
+    "defaultMessage": "Accessibilitat",
     "description": "Accessibility resource card title"
   },
   "action-label": {
@@ -60,11 +60,11 @@
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
   "add-action-hint": {
-    "defaultMessage": "Finished recording for {actionName}?<mark>Add another action</mark>",
+    "defaultMessage": "Gravació acabada per {actionName}<mark>Afegir una altra acció</mark>",
     "description": "Hint when you have recorded enough data samples for one action"
   },
   "add-action-hint-label": {
-    "defaultMessage": "Finished recording for {actionName}? Press ‘Add action’ button to add another action",
+    "defaultMessage": "S'ha acabat la gravació de {actionName}? Prem el botó d' ‘Afegir acció’ per afegir una altra acció",
     "description": "Hint when you have recorded enough data samples for one action aria label"
   },
   "ai-activity-timer-resource-title": {
@@ -72,11 +72,11 @@
     "description": "Home page resource card title"
   },
   "ai-light-switch-resource-title": {
-    "defaultMessage": "AI light switch",
+    "defaultMessage": "Interruptor d'IA lluminós",
     "description": "Home page resource card title"
   },
   "ai-sports-data-logger-resource-title": {
-    "defaultMessage": "AI sports data logger",
+    "defaultMessage": "Enregistrador de dades d'esports IA",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
@@ -84,39 +84,39 @@
     "description": "Home page resource card title"
   },
   "animation-label": {
-    "defaultMessage": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected.",
+    "defaultMessage": "Animació que demostra els cinc passos del flux de treball del CreateAI: Connectar, Recollir dades, Provar el Model, Codificar i Ús. Connectar: Una micro:bit està connectada a l'ordinador, establint una comunicació entre els dos. Recollir Dades: una micro:bit està lligada al canell. Es recullen les dades de dos moviments: una onada (representat per la icona d'un cor) i sacseig (representat per la icona d'una creu). Es recullen diferents mostres i s'entrena un model de machine learning. L'ordinador, després intenta reconèixer els gestos de l'onada i el sacseig en temps real. L'usuari després pot retornar al pas de Recollir Dades i obtenir mostres adicionals i fer altre cop la prova del model. Codificar: l'usuari escriu un programa utilitzant els blocs de MakeCode que incorporen el model entrenat. El programa acabat es baixa a la micro:bit. Ús: La micro:bit respon als moviments físics de l'usuari, mostrant icones diferents a la pantalla de LEDs depenent de si es detecta un gest d'onada o de sacseig. ",
     "description": "Aria label for animation"
   },
   "animation-pause-action": {
-    "defaultMessage": "Pause animation",
+    "defaultMessage": "Pausar l'animació",
     "description": "Pause animation button text"
   },
   "animation-resume-action": {
-    "defaultMessage": "Resume animation",
+    "defaultMessage": "Reprendre l'animació",
     "description": "Resume animation button text"
   },
   "animation-step-1": {
-    "defaultMessage": "Connect",
+    "defaultMessage": "Connecta",
     "description": "Step 1 of how it works animation"
   },
   "animation-step-2": {
-    "defaultMessage": "Collect data",
+    "defaultMessage": "Recollida de dades",
     "description": "Step 2 of how it works animation"
   },
   "animation-step-3": {
-    "defaultMessage": "Test model",
+    "defaultMessage": "Provar el model",
     "description": "Step 3 of how it works animation"
   },
   "animation-step-4": {
-    "defaultMessage": "Code",
+    "defaultMessage": "Programa",
     "description": "Step 4 of how it works animation"
   },
   "animation-step-5": {
-    "defaultMessage": "Use",
+    "defaultMessage": "Ús",
     "description": "Step 5 of how it works animation"
   },
   "animation-training": {
-    "defaultMessage": "Training",
+    "defaultMessage": "Entrenament",
     "description": "Machine learning training on computer screen of how it works animation"
   },
   "back-action": {
@@ -128,7 +128,7 @@
     "description": "Back button text"
   },
   "blocks-preview-title": {
-    "defaultMessage": "Blocks preview",
+    "defaultMessage": "Previsualització de blocs",
     "description": "Blocks preview heading text"
   },
   "bluetooth-disabled-body": {
@@ -172,15 +172,15 @@
     "description": "Button label to cancel a movement data recording"
   },
   "carousel-role": {
-    "defaultMessage": "carousel",
+    "defaultMessage": "Carrusel",
     "description": "aria-roledescription for carousel"
   },
   "carousel-slide-label": {
-    "defaultMessage": "{slideNum} of {totalSlides}",
+    "defaultMessage": "{slideNum}de{totalSlides}",
     "description": "Label for carousel slide / item"
   },
   "carousel-slide-role": {
-    "defaultMessage": "slide",
+    "defaultMessage": "so lliscant",
     "description": "aria-roledescription for carousel slide / item"
   },
   "certainty-label": {
@@ -200,7 +200,7 @@
     "description": "Tooltip for certainty column"
   },
   "clear": {
-    "defaultMessage": "Clear",
+    "defaultMessage": "Esborra",
     "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
@@ -556,11 +556,11 @@
     "description": "Copy button text"
   },
   "create-project": {
-    "defaultMessage": "Create project",
+    "defaultMessage": "Crear un projecte",
     "description": "Create project button text"
   },
   "create-project-dialog-heading": {
-    "defaultMessage": "Create a project",
+    "defaultMessage": "Crear un projecte",
     "description": "Create project dialog heading"
   },
   "createai-taster-lessons-resource-title": {
@@ -592,7 +592,7 @@
     "description": "Show data features button text"
   },
   "data-preview-title": {
-    "defaultMessage": "Data preview",
+    "defaultMessage": "Previsualització de dades",
     "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
@@ -992,7 +992,7 @@
     "description": "Label for home page row carousel"
   },
   "help-resources-row-title": {
-    "defaultMessage": "Help",
+    "defaultMessage": "Ajuda",
     "description": "Title for home page row"
   },
   "help-support": {
@@ -1096,7 +1096,7 @@
     "description": "Link to support article for firewall requirements"
   },
   "learn-more-action": {
-    "defaultMessage": "Learn more",
+    "defaultMessage": "Aprèn-ne més",
     "description": "Learn more button text"
   },
   "led-icon-option-angry": {
@@ -1344,7 +1344,7 @@
     "description": "Title for home page row"
   },
   "name-action-hint": {
-    "defaultMessage": "Anomena una acció que vulguis que reconegui la micro:bit",
+    "defaultMessage": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1440,8 +1440,8 @@
     "description": "Aria label for file drop target"
   },
   "open-project-action": {
-    "defaultMessage": "Open project",
-    "description": "Open project button text"
+    "defaultMessage": "Obert",
+    "description": "Open project action"
   },
   "open-shared-project-action": {
     "defaultMessage": "Open project",
@@ -1492,7 +1492,7 @@
     "description": "Title for home page row"
   },
   "project-label": {
-    "defaultMessage": "Project",
+    "defaultMessage": "Projecte",
     "description": "Label for project input"
   },
   "project-loaded": {
@@ -1508,7 +1508,7 @@
     "description": "Validation message for project name"
   },
   "project-name-text": {
-    "defaultMessage": "Project name",
+    "defaultMessage": "Nom del projecte",
     "description": "Label for project name input"
   },
   "project-name-tooltip": {
@@ -1524,7 +1524,7 @@
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
-    "defaultMessage": "Projects",
+    "defaultMessage": "Projectes",
     "description": "Projects page title"
   },
   "radio-link-microbit": {
@@ -1592,11 +1592,11 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "Prem per gravar una mostra de dades.",
+    "defaultMessage": "Press record to collect a movement data sample.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
-    "defaultMessage": "Prem per gravar una mostra de dades o prem el botó B de la teva micro:bit de recollida de dades.",
+    "defaultMessage": "Press record <mark>or</mark> button B on the micro:bit to collect a movement data sample.",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
   },
   "record-more-hint": {
@@ -1736,7 +1736,7 @@
     "description": "Notification after a hex file has been downloaded"
   },
   "search": {
-    "defaultMessage": "Search",
+    "defaultMessage": "Cerca",
     "description": "Aria label for searching projects"
   },
   "select-icon-action-aria": {
@@ -1864,7 +1864,7 @@
     "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
-    "defaultMessage": "Teacher resources",
+    "defaultMessage": "Recursos del professor",
     "description": "Title for home page row"
   },
   "terms": {
@@ -2056,7 +2056,7 @@
     "description": "Dialog shown when WebUSB fails"
   },
   "troubleshooting-resource-title": {
-    "defaultMessage": "Troubleshooting",
+    "defaultMessage": "Resolució de problemes",
     "description": "Home page resource card title"
   },
   "try-again-action": {

@@ -23,7 +23,11 @@ export const smoothenDataPoint = (curr: number, next: number) => {
   return (next / 1000) * 0.25 + curr * 0.75;
 };
 
-const LiveGraph = () => {
+interface LiveGraphProps {
+  paused?: boolean;
+}
+
+const LiveGraph = ({ paused }: LiveGraphProps) => {
   const isConnected = useDataConnected();
   const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
     useSettings();
@@ -108,12 +112,12 @@ const LiveGraph = () => {
   ]);
 
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected && !paused) {
       chart?.start();
     } else {
       chart?.stop();
     }
-  }, [chart, isConnected]);
+  }, [chart, isConnected, paused]);
 
   // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);

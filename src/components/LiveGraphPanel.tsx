@@ -30,6 +30,8 @@ import AlertIcon from "./AlertIcon";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
 import PredictedAction from "./PredictedAction";
+import { TrainModelDialogStage } from "../model";
+import { useStore } from "../store";
 
 interface LiveGraphPanelProps {
   showPredictedAction?: boolean;
@@ -46,6 +48,11 @@ const LiveGraphPanel = ({
 }: LiveGraphPanelProps) => {
   const actions = useDataConnectionActions();
   const dataConnection = useStore((s) => s.dataConnection);
+  const isTraining = useStore(
+    (s) =>
+      s.trainModelDialogStage === TrainModelDialogStage.Help ||
+      s.trainModelDialogStage === TrainModelDialogStage.TrainingInProgress
+  );
   const isConnected = dataConnection.step === DataConnectionStep.Connected;
   const isReconnecting = dataConnection.isReconnecting;
   const parentPortalRef = useRef(null);
@@ -164,7 +171,7 @@ const LiveGraphPanel = ({
           </HStack>
         </Portal>
         <HStack position="absolute" width="100%" height="100%" spacing={0}>
-          <LiveGraph />
+          <LiveGraph paused={isTraining} />
           {showPredictedAction && <PredictedAction />}
         </HStack>
       </HStack>

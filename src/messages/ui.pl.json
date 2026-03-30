@@ -48,7 +48,7 @@
   "accessibility-resource-title": [
     {
       "type": 0,
-      "value": "Accessibility"
+      "value": "Dostępność"
     }
   ],
   "action-label": [
@@ -126,7 +126,7 @@
   "add-action-hint": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "Zakończono nagrywanie dla "
     },
     {
       "type": 1,
@@ -140,7 +140,7 @@
       "children": [
         {
           "type": 0,
-          "value": "Add another action"
+          "value": "Dodaj kolejną akcję"
         }
       ],
       "type": 8,
@@ -150,7 +150,7 @@
   "add-action-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "Zakończono nagrywanie dla "
     },
     {
       "type": 1,
@@ -158,7 +158,7 @@
     },
     {
       "type": 0,
-      "value": "? Press ‘Add action’ button to add another action"
+      "value": "? Naciśnij przycisk „Dodaj akcję”, aby dodać kolejną akcję"
     }
   ],
   "ai-activity-timer-resource-title": [
@@ -170,13 +170,13 @@
   "ai-light-switch-resource-title": [
     {
       "type": 0,
-      "value": "AI light switch"
+      "value": "Przełącznik światła AI"
     }
   ],
   "ai-sports-data-logger-resource-title": [
     {
       "type": 0,
-      "value": "AI sports data logger"
+      "value": "Rejestrator danych sportowych AI"
     }
   ],
   "ai-storytelling-friend-resource-title": [
@@ -188,55 +188,55 @@
   "animation-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+      "value": "Animacja pokazująca pięć kroków przebiegu działania CreateAI: Połącz, Zbierz Dane, Testuj model, Koduj i Użyj. Połącz: micro:bit jest podłączony do komputera, ustanawiajc komunikację między nimi. Zbierz dane: micro:bit jest przymocowany do nadgarstka. Dane są rejestrowane dla dwóch ruchów: machania (reprezentowanego przez ikonę serca) i potrząśnięcia (reprezentowanego przez ikonę krzyżyka). Wielokrotne próbki pobiera się dla każdego ruchu do trenowania modelu. Testuj model: Po zebraniu wystarczającej liczby próbek następuje trenowanie modelu uczenia maszynowego. Następnie komputer próbuje rozpoznać ruchy machania i potrząsanie w czasie rzeczywistym. Użytkownik może powrócić do etapu gromadzenia danych, aby zebrać dodatkowe próbki i wykonać kolejne badania. Koduj: Użytkownik pisze program złożony z bloków MakeCode, który zawiera wytrenowany model. Ukończony program jest pobierany do micro:bita. Użyj: micro:bit odpowiada fizycznym ruchom użytkownika, wyświetlając różne ikony na wyświatlaczu LED w zależności od tego, czy wykryte zostało machanie czy potrząsanie."
     }
   ],
   "animation-pause-action": [
     {
       "type": 0,
-      "value": "Pause animation"
+      "value": "Wstrzymaj animację"
     }
   ],
   "animation-resume-action": [
     {
       "type": 0,
-      "value": "Resume animation"
+      "value": "Wznów animację"
     }
   ],
   "animation-step-1": [
     {
       "type": 0,
-      "value": "Connect"
+      "value": "Podłącz"
     }
   ],
   "animation-step-2": [
     {
       "type": 0,
-      "value": "Collect data"
+      "value": "Zbierz dane"
     }
   ],
   "animation-step-3": [
     {
       "type": 0,
-      "value": "Test model"
+      "value": "Testuj model"
     }
   ],
   "animation-step-4": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "Koduj"
     }
   ],
   "animation-step-5": [
     {
       "type": 0,
-      "value": "Use"
+      "value": "Użyj"
     }
   ],
   "animation-training": [
     {
       "type": 0,
-      "value": "Training"
+      "value": "Trenowanie"
     }
   ],
   "back-action": [
@@ -254,7 +254,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "Przegląd bloków"
     }
   ],
   "bluetooth-disabled-body": [
@@ -364,7 +364,7 @@
   "carousel-role": [
     {
       "type": 0,
-      "value": "carousel"
+      "value": "karuzela"
     }
   ],
   "carousel-slide-label": [
@@ -374,7 +374,7 @@
     },
     {
       "type": 0,
-      "value": " of "
+      "value": " z "
     },
     {
       "type": 1,
@@ -430,7 +430,7 @@
   "clear": [
     {
       "type": 0,
-      "value": "Clear"
+      "value": "Wyczyść"
     }
   ],
   "click-to-reload-page-action": [
@@ -1032,19 +1032,19 @@
   "create-project": [
     {
       "type": 0,
-      "value": "Create project"
+      "value": "Utwórz projekt"
     }
   ],
   "create-project-dialog-heading": [
     {
       "type": 0,
-      "value": "Create a project"
+      "value": "Utwórz projekt"
     }
   ],
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "Taster lessons"
+      "value": "Lekcje Tastera"
     }
   ],
   "data-actions-menu": [
@@ -1086,7 +1086,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "Przegląd danych"
     }
   ],
   "data-samples-actions-region": [
@@ -1205,7 +1205,7 @@
           "value": [
             {
               "type": 0,
-              "value": "Delete"
+              "value": "Usuń"
             }
           ]
         },
@@ -1213,7 +1213,7 @@
           "value": [
             {
               "type": 0,
-              "value": "Delete "
+              "value": "Usuń "
             },
             {
               "type": 1,
@@ -1221,7 +1221,7 @@
             },
             {
               "type": 0,
-              "value": " projects"
+              "value": " projekty"
             }
           ]
         }
@@ -1234,13 +1234,13 @@
   "delete-project-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete project"
+      "value": "Potwierdź usunięcie projektu"
     }
   ],
   "delete-project-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete the project \""
+      "value": "Czy na pewno chcesz usunąć projekt \""
     },
     {
       "type": 1,
@@ -1254,13 +1254,13 @@
   "delete-projects-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete projects"
+      "value": "Potwierdź usunięcie projektu"
     }
   ],
   "delete-projects-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete "
+      "value": "Czy na pewno chcesz usunąć projekty "
     },
     {
       "type": 1,
@@ -1268,7 +1268,7 @@
     },
     {
       "type": 0,
-      "value": " projects?"
+      "value": "?"
     }
   ],
   "delete-recording-aria": [
@@ -1486,13 +1486,13 @@
   "duplicate-project-action": [
     {
       "type": 0,
-      "value": "Duplicate"
+      "value": "Duplikuj"
     }
   ],
   "duplicate-project-heading": [
     {
       "type": 0,
-      "value": "Duplicate project"
+      "value": "Duplikuj projekt"
     }
   ],
   "edit-in-makecode-action": [
@@ -1718,7 +1718,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "First lessons"
+      "value": "Pierwsze lekcje"
     }
   ],
   "go-action": [
@@ -1802,13 +1802,13 @@
   "help-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of help resources"
+      "value": "Lista zasobów pomocy"
     }
   ],
   "help-resources-row-title": [
     {
       "type": 0,
-      "value": "Help"
+      "value": "Pomoc"
     }
   ],
   "help-support": [
@@ -1838,7 +1838,7 @@
   "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "New to "
+      "value": "Nowy do "
     },
     {
       "type": 1,
@@ -1852,7 +1852,7 @@
   "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Machine learning with movement and the micro:bit"
+      "value": "Uczenie maszynowe z poruszaniem się i micro:bitem"
     }
   ],
   "import-data-samples-action": [
@@ -2018,7 +2018,7 @@
   "learn-more-action": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "Dowiedz się więcej"
     }
   ],
   "led-icon-option-angry": [
@@ -2394,25 +2394,25 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Move the micro:bit to explore how different actions change the graph"
+      "value": "Poruszaj micro:bitem, aby zobaczyć, jak różne akcje zmieniają wykres"
     }
   ],
   "my-projects-row-carousel": [
     {
       "type": 0,
-      "value": "List of my projects"
+      "value": "Lista moich projektów"
     }
   ],
   "my-projects-row-title": [
     {
       "type": 0,
-      "value": "My projects"
+      "value": "Moje projekty"
     }
   ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Nazwij akcję którą chcesz, aby micro:bit rozpoznał"
+      "value": "Nazwij akcję, którą chcesz, aby rozpoznawał CreateAI, taką jak „machanie” lub „skakanie”"
     }
   ],
   "name-project": [
@@ -2516,13 +2516,13 @@
   "new-project-setup-title": [
     {
       "type": 0,
-      "value": "New project setup"
+      "value": "Nowa konfiguracja projektu"
     }
   ],
   "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "New project"
+      "value": "Nowy projekt"
     }
   ],
   "next-action": [
@@ -2534,7 +2534,7 @@
   "no-projects": [
     {
       "type": 0,
-      "value": "No projects to display"
+      "value": "Brak projektów do wyświetlenia"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2574,43 +2574,43 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "Otwórz"
     }
   ],
   "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "Otwórz projekt"
     }
   ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
+      "value": "Podgląd kodu MakeCode zawartego w tym projekcie."
     }
   ],
   "open-shared-project-data-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the actions and data contained within this project."
+      "value": "Podgląd działań i danych zawartych w tym projekcie."
     }
   ],
   "open-shared-project-description": [
     {
       "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+      "value": "Jest to współdzielony projekt Microsoft MakeCode zgodny z CreateAI."
     }
   ],
   "open-shared-project-error-description": [
     {
       "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+      "value": "Sprawdź, czy poprawny jest link, którym podążasz i upewnij się, że jesteś połączony z Internetem przed ponowną próbą."
     }
   ],
   "open-shared-project-title": [
     {
       "type": 0,
-      "value": "Open shared CreateAI project"
+      "value": "Otwórz współdzielony projekt CreateAI"
     }
   ],
   "other-tabs-body1": [
@@ -2648,19 +2648,19 @@
   "project-ideas-row-carousel": [
     {
       "type": 0,
-      "value": "List of project ideas"
+      "value": "Lista pomysłów na projekt"
     }
   ],
   "project-ideas-row-title": [
     {
       "type": 0,
-      "value": "Project ideas"
+      "value": "Pomysły na projekt"
     }
   ],
   "project-label": [
     {
       "type": 0,
-      "value": "Project"
+      "value": "Projekt"
     }
   ],
   "project-loaded": [
@@ -2671,12 +2671,12 @@
   ],
   "project-menu-action": [
     {
-      "type": 1,
-      "value": "name"
+      "type": 0,
+      "value": "Menu akcji "
     },
     {
-      "type": 0,
-      "value": " actions menu"
+      "type": 1,
+      "value": "name"
     }
   ],
   "project-name-not-empty": [
@@ -2688,31 +2688,31 @@
   "project-name-text": [
     {
       "type": 0,
-      "value": "Project name"
+      "value": "Nazwa projektu"
     }
   ],
   "project-name-tooltip": [
     {
       "type": 0,
-      "value": "Click to edit project name"
+      "value": "Kliknij, aby edytować nazwę projektu"
     }
   ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
-      "value": "Skip to toolbar"
+      "value": "Przejdź do paska narzędzi"
     }
   ],
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+      "value": "Twoje dane są zapisane w tej przeglądarce na tym urządzeniu. Czyszczenie plików cookie przeglądarki lub danych witryny usunie je. Mogą również zostać automatycznie usunięte przez przeglądarkę, jeśli urządzenie ma mało pamięci."
     }
   ],
   "projects-page-title": [
     {
       "type": 0,
-      "value": "Projects"
+      "value": "Projekty"
     }
   ],
   "radio-link-microbit": [
@@ -2822,35 +2822,37 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Naciśnij, aby zapisać próbkę danych."
+      "value": "Naciśnij zapis, aby zebrać próbkę danych ruchu."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Naciśnij, aby nagrać próbkę danych lub naciśnij przycisk B na micro:bicie do zbierana danych."
+      "value": "Naciśnij nagraj "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "lub"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " przycisk B na micro:bicie, aby zebrać próbkę danych ruchu."
     }
   ],
   "record-more-hint": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "Nagraj co najmniej "
     },
     {
       "offset": 0,
       "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data sample"
-            }
-          ]
-        },
         "other": {
           "value": [
             {
@@ -2859,7 +2861,7 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": " więcej próbek danych"
             }
           ]
         }
@@ -2872,11 +2874,35 @@
   "record-more-hint-label": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "Nagraj co najmniej "
     },
     {
       "offset": 0,
       "options": {
+        "few": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " więcej próbek danych"
+            }
+          ]
+        },
+        "many": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " więcej próbek danych"
+            }
+          ]
+        },
         "one": {
           "value": [
             {
@@ -2885,7 +2911,7 @@
             },
             {
               "type": 0,
-              "value": " more data sample"
+              "value": " więcej próbek danych"
             }
           ]
         },
@@ -2897,7 +2923,7 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": " więcej próbek danych"
             }
           ]
         }
@@ -2908,7 +2934,7 @@
     },
     {
       "type": 0,
-      "value": " for "
+      "value": " dla "
     },
     {
       "type": 1,
@@ -3050,13 +3076,13 @@
   "rename-project-action": [
     {
       "type": 0,
-      "value": "Rename"
+      "value": "Zmień nazwę"
     }
   ],
   "rename-project-heading": [
     {
       "type": 0,
-      "value": "Rename project"
+      "value": "Zmień nazwę projektu"
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3178,7 +3204,7 @@
   "search": [
     {
       "type": 0,
-      "value": "Search"
+      "value": "Szukaj"
     }
   ],
   "select-icon-action-aria": [
@@ -3214,7 +3240,7 @@
   "select-project-action": [
     {
       "type": 0,
-      "value": "Select "
+      "value": "Wybierz "
     },
     {
       "type": 1,
@@ -3224,7 +3250,7 @@
   "selection-actions-group": [
     {
       "type": 0,
-      "value": "Selection actions"
+      "value": "Akcje wyboru"
     }
   ],
   "settings": [
@@ -3304,37 +3330,37 @@
   "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Last modified"
+      "value": "Ostatnia modyfikacja"
     }
   ],
   "sort-option-name": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "Nazwa"
     }
   ],
   "sort-option-relevance": [
     {
       "type": 0,
-      "value": "Relevance"
+      "value": "Znaczenie"
     }
   ],
   "sort-order-ascending-label": [
     {
       "type": 0,
-      "value": "Ascending order"
+      "value": "Rosnąco"
     }
   ],
   "sort-order-descending-label": [
     {
       "type": 0,
-      "value": "Descending order"
+      "value": "Malejąco"
     }
   ],
   "sort-select-label": [
     {
       "type": 0,
-      "value": "Sort projects"
+      "value": "Sortuj projekty"
     }
   ],
   "start-training-action": [
@@ -3402,13 +3428,13 @@
   "teacher-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of teacher resources"
+      "value": "Lista zasobów nauczyciela"
     }
   ],
   "teacher-resources-row-title": [
     {
       "type": 0,
-      "value": "Teacher resources"
+      "value": "Materiały dla nauczycieli"
     }
   ],
   "terms": [
@@ -3432,13 +3458,13 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+      "value": "Ten projekt jest dostarczany przez użytkownika i nie jest wspierany przez Microsoft ani Micro:bit Educational Foundation. Odwiedź "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "MakeCode shared project"
+          "value": "udostępniony projekt MakeCode"
         }
       ],
       "type": 8,
@@ -3446,19 +3472,19 @@
     },
     {
       "type": 0,
-      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+      "value": ", aby zgłosić nadużycia do Microsoft MakeCode, jeśli uważasz, że nie jest to właściwe."
     }
   ],
   "timestamp-now": [
     {
       "type": 0,
-      "value": "now"
+      "value": "teraz"
     }
   ],
   "timestamp-seconds": [
     {
       "type": 0,
-      "value": "a few seconds ago"
+      "value": "parę sekund temu"
     }
   ],
   "tour-action": [
@@ -3698,13 +3724,13 @@
   "train-hint": [
     {
       "type": 0,
-      "value": "Finished recording?"
+      "value": "Zakończono nagrywanie?"
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Train the model"
+          "value": " Trenuj model"
         }
       ],
       "type": 8,
@@ -3714,7 +3740,7 @@
   "train-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+      "value": "Zakończono nagrywanie? Naciśnij przycisk „Trenuj model”, aby go wytrenować"
     }
   ],
   "train-model": [
@@ -3770,7 +3796,7 @@
   "troubleshooting-resource-title": [
     {
       "type": 0,
-      "value": "Troubleshooting"
+      "value": "Rozwiązywanie problemów"
     }
   ],
   "try-again-action": [
@@ -3864,7 +3890,7 @@
   "view-all-projects": [
     {
       "type": 0,
-      "value": "View all"
+      "value": "Zobacz wszystkie"
     }
   ],
   "webusb-retry-no-select": [
@@ -3900,7 +3926,7 @@
   "welcome-title": [
     {
       "type": 0,
-      "value": "How CreateAI works"
+      "value": "Jak działa CreateAI"
     }
   ]
 }

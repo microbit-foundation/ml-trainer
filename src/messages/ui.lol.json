@@ -38,7 +38,7 @@
   "accessibility-resource-title": [
     {
       "type": 0,
-      "value": "Accessibility"
+      "value": "crwdns369427:0crwdne369427:0"
     }
   ],
   "action-label": [
@@ -116,7 +116,7 @@
   "add-action-hint": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "crwdns369273:0"
     },
     {
       "type": 1,
@@ -124,23 +124,13 @@
     },
     {
       "type": 0,
-      "value": "?"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Add another action"
-        }
-      ],
-      "type": 8,
-      "value": "mark"
+      "value": "crwdne369273:0"
     }
   ],
   "add-action-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "crwdns369275:0"
     },
     {
       "type": 1,
@@ -148,7 +138,7 @@
     },
     {
       "type": 0,
-      "value": "? Press ‘Add action’ button to add another action"
+      "value": "crwdne369275:0"
     }
   ],
   "ai-activity-timer-resource-title": [
@@ -160,13 +150,13 @@
   "ai-light-switch-resource-title": [
     {
       "type": 0,
-      "value": "AI light switch"
+      "value": "crwdns369277:0crwdne369277:0"
     }
   ],
   "ai-sports-data-logger-resource-title": [
     {
       "type": 0,
-      "value": "AI sports data logger"
+      "value": "crwdns369279:0crwdne369279:0"
     }
   ],
   "ai-storytelling-friend-resource-title": [
@@ -178,55 +168,55 @@
   "animation-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+      "value": "crwdns369281:0crwdne369281:0"
     }
   ],
   "animation-pause-action": [
     {
       "type": 0,
-      "value": "Pause animation"
+      "value": "crwdns369283:0crwdne369283:0"
     }
   ],
   "animation-resume-action": [
     {
       "type": 0,
-      "value": "Resume animation"
+      "value": "crwdns369285:0crwdne369285:0"
     }
   ],
   "animation-step-1": [
     {
       "type": 0,
-      "value": "Connect"
+      "value": "crwdns369287:0crwdne369287:0"
     }
   ],
   "animation-step-2": [
     {
       "type": 0,
-      "value": "Collect data"
+      "value": "crwdns369289:0crwdne369289:0"
     }
   ],
   "animation-step-3": [
     {
       "type": 0,
-      "value": "Test model"
+      "value": "crwdns369291:0crwdne369291:0"
     }
   ],
   "animation-step-4": [
     {
       "type": 0,
-      "value": "Code"
+      "value": "crwdns369293:0crwdne369293:0"
     }
   ],
   "animation-step-5": [
     {
       "type": 0,
-      "value": "Use"
+      "value": "crwdns369295:0crwdne369295:0"
     }
   ],
   "animation-training": [
     {
       "type": 0,
-      "value": "Training"
+      "value": "crwdns369297:0crwdne369297:0"
     }
   ],
   "back-action": [
@@ -354,27 +344,35 @@
   "carousel-role": [
     {
       "type": 0,
-      "value": "carousel"
+      "value": "crwdns369299:0crwdne369299:0"
     }
   ],
   "carousel-slide-label": [
+    {
+      "type": 0,
+      "value": "crwdns369301:0"
+    },
     {
       "type": 1,
       "value": "slideNum"
     },
     {
       "type": 0,
-      "value": " of "
+      "value": "crwdnd369301:0"
     },
     {
       "type": 1,
       "value": "totalSlides"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369301:0"
     }
   ],
   "carousel-slide-role": [
     {
       "type": 0,
-      "value": "slide"
+      "value": "crwdns369303:0crwdne369303:0"
     }
   ],
   "certainty-label": [
@@ -420,7 +418,7 @@
   "clear": [
     {
       "type": 0,
-      "value": "Clear"
+      "value": "crwdns369305:0crwdne369305:0"
     }
   ],
   "click-to-reload-page-action": [
@@ -1002,19 +1000,19 @@
   "create-project": [
     {
       "type": 0,
-      "value": "Create project"
+      "value": "crwdns369307:0crwdne369307:0"
     }
   ],
   "create-project-dialog-heading": [
     {
       "type": 0,
-      "value": "Create a project"
+      "value": "crwdns369309:0crwdne369309:0"
     }
   ],
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "Taster lessons"
+      "value": "crwdns369311:0crwdne369311:0"
     }
   ],
   "data-actions-menu": [
@@ -1169,48 +1167,36 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Delete"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 0,
-              "value": "Delete "
-            },
-            {
-              "type": 1,
-              "value": "count"
-            },
-            {
-              "type": 0,
-              "value": " projects"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
+      "type": 0,
+      "value": "crwdns369313:0count="
+    },
+    {
+      "type": 1,
       "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd369313:0count="
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369313:0"
     }
   ],
   "delete-project-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete project"
+      "value": "crwdns369315:0crwdne369315:0"
     }
   ],
   "delete-project-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete the project \""
+      "value": "crwdns369317:0"
     },
     {
       "type": 1,
@@ -1218,19 +1204,19 @@
     },
     {
       "type": 0,
-      "value": "\"?"
+      "value": "crwdne369317:0"
     }
   ],
   "delete-projects-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete projects"
+      "value": "crwdns369319:0crwdne369319:0"
     }
   ],
   "delete-projects-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete "
+      "value": "crwdns369321:0"
     },
     {
       "type": 1,
@@ -1238,7 +1224,7 @@
     },
     {
       "type": 0,
-      "value": " projects?"
+      "value": "crwdne369321:0"
     }
   ],
   "delete-recording-aria": [
@@ -1456,13 +1442,13 @@
   "duplicate-project-action": [
     {
       "type": 0,
-      "value": "Duplicate"
+      "value": "crwdns369323:0crwdne369323:0"
     }
   ],
   "duplicate-project-heading": [
     {
       "type": 0,
-      "value": "Duplicate project"
+      "value": "crwdns369325:0crwdne369325:0"
     }
   ],
   "edit-in-makecode-action": [
@@ -1674,7 +1660,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "First lessons"
+      "value": "crwdns369327:0crwdne369327:0"
     }
   ],
   "go-action": [
@@ -1758,13 +1744,13 @@
   "help-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of help resources"
+      "value": "crwdns369329:0crwdne369329:0"
     }
   ],
   "help-resources-row-title": [
     {
       "type": 0,
-      "value": "Help"
+      "value": "crwdns369331:0crwdne369331:0"
     }
   ],
   "help-support": [
@@ -1794,7 +1780,7 @@
   "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "New to "
+      "value": "crwdns369333:0"
     },
     {
       "type": 1,
@@ -1802,13 +1788,13 @@
     },
     {
       "type": 0,
-      "value": "?"
+      "value": "crwdne369333:0"
     }
   ],
   "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Machine learning with movement and the micro:bit"
+      "value": "crwdns369335:0crwdne369335:0"
     }
   ],
   "import-data-samples-action": [
@@ -1840,7 +1826,7 @@
   "import-file-action": [
     {
       "type": 0,
-      "value": "Import"
+      "value": "crwdns369337:0crwdne369337:0"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1936,7 +1922,7 @@
   "learn-more-action": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "crwdns369339:0crwdne369339:0"
     }
   ],
   "led-icon-option-angry": [
@@ -2316,25 +2302,25 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Move the micro:bit to explore how different actions change the graph"
+      "value": "crwdns369341:0crwdne369341:0"
     }
   ],
   "my-projects-row-carousel": [
     {
       "type": 0,
-      "value": "List of my projects"
+      "value": "crwdns369343:0crwdne369343:0"
     }
   ],
   "my-projects-row-title": [
     {
       "type": 0,
-      "value": "My projects"
+      "value": "crwdns369345:0crwdne369345:0"
     }
   ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "crwdns363180:0crwdne363180:0"
+      "value": "crwdns369347:0crwdne369347:0"
     }
   ],
   "name-project": [
@@ -2438,13 +2424,13 @@
   "new-project-setup-title": [
     {
       "type": 0,
-      "value": "New project setup"
+      "value": "crwdns369349:0crwdne369349:0"
     }
   ],
   "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "New project"
+      "value": "crwdns369351:0crwdne369351:0"
     }
   ],
   "next-action": [
@@ -2456,7 +2442,7 @@
   "no-projects": [
     {
       "type": 0,
-      "value": "No projects to display"
+      "value": "crwdns369353:0crwdne369353:0"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2500,13 +2486,13 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "crwdns368583:0crwdne368583:0"
+      "value": "crwdns369355:0crwdne369355:0"
     }
   ],
   "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "crwdns369357:0crwdne369357:0"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2574,19 +2560,19 @@
   "project-ideas-row-carousel": [
     {
       "type": 0,
-      "value": "List of project ideas"
+      "value": "crwdns369359:0crwdne369359:0"
     }
   ],
   "project-ideas-row-title": [
     {
       "type": 0,
-      "value": "Project ideas"
+      "value": "crwdns369361:0crwdne369361:0"
     }
   ],
   "project-label": [
     {
       "type": 0,
-      "value": "Project"
+      "value": "crwdns369363:0crwdne369363:0"
     }
   ],
   "project-loaded": [
@@ -2597,12 +2583,16 @@
   ],
   "project-menu-action": [
     {
+      "type": 0,
+      "value": "crwdns369365:0"
+    },
+    {
       "type": 1,
       "value": "name"
     },
     {
       "type": 0,
-      "value": " actions menu"
+      "value": "crwdne369365:0"
     }
   ],
   "project-name-not-empty": [
@@ -2614,31 +2604,31 @@
   "project-name-text": [
     {
       "type": 0,
-      "value": "Project name"
+      "value": "crwdns369367:0crwdne369367:0"
     }
   ],
   "project-name-tooltip": [
     {
       "type": 0,
-      "value": "Click to edit project name"
+      "value": "crwdns369369:0crwdne369369:0"
     }
   ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
-      "value": "Skip to toolbar"
+      "value": "crwdns369371:0crwdne369371:0"
     }
   ],
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+      "value": "crwdns369373:0crwdne369373:0"
     }
   ],
   "projects-page-title": [
     {
       "type": 0,
-      "value": "Projects"
+      "value": "crwdns369375:0crwdne369375:0"
     }
   ],
   "radio-link-microbit": [
@@ -2748,97 +2738,81 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "crwdns363272:0crwdne363272:0"
+      "value": "crwdns369377:0crwdne369377:0"
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "crwdns363274:0crwdne363274:0"
+      "value": "crwdns369379:0crwdne369379:0"
     }
   ],
   "record-more-hint": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "crwdns369381:0numSamples="
     },
     {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data sample"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data samples"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
+      "type": 1,
       "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd369381:0numSamples="
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd369381:0numSamples="
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369381:0"
     }
   ],
   "record-more-hint-label": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "crwdns369383:0numSamples="
     },
     {
-      "offset": 0,
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data sample"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " more data samples"
-            }
-          ]
-        }
-      },
-      "pluralType": "cardinal",
-      "type": 6,
+      "type": 1,
       "value": "numSamples"
     },
     {
       "type": 0,
-      "value": " for "
+      "value": "crwdnd369383:0numSamples="
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd369383:0numSamples="
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd369383:0actionName="
     },
     {
       "type": 1,
       "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369383:0"
     }
   ],
   "record-samples": [
@@ -2980,13 +2954,13 @@
   "rename-project-action": [
     {
       "type": 0,
-      "value": "Rename"
+      "value": "crwdns369385:0crwdne369385:0"
     }
   ],
   "rename-project-heading": [
     {
       "type": 0,
-      "value": "Rename project"
+      "value": "crwdns369387:0crwdne369387:0"
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3108,7 +3082,7 @@
   "search": [
     {
       "type": 0,
-      "value": "Search"
+      "value": "crwdns369389:0crwdne369389:0"
     }
   ],
   "select-icon-action-aria": [
@@ -3148,17 +3122,21 @@
   "select-project-action": [
     {
       "type": 0,
-      "value": "Select "
+      "value": "crwdns369391:0"
     },
     {
       "type": 1,
       "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369391:0"
     }
   ],
   "selection-actions-group": [
     {
       "type": 0,
-      "value": "Selection actions"
+      "value": "crwdns369393:0crwdne369393:0"
     }
   ],
   "settings": [
@@ -3238,37 +3216,37 @@
   "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Last modified"
+      "value": "crwdns369395:0crwdne369395:0"
     }
   ],
   "sort-option-name": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "crwdns369397:0crwdne369397:0"
     }
   ],
   "sort-option-relevance": [
     {
       "type": 0,
-      "value": "Relevance"
+      "value": "crwdns369399:0crwdne369399:0"
     }
   ],
   "sort-order-ascending-label": [
     {
       "type": 0,
-      "value": "Ascending order"
+      "value": "crwdns369401:0crwdne369401:0"
     }
   ],
   "sort-order-descending-label": [
     {
       "type": 0,
-      "value": "Descending order"
+      "value": "crwdns369403:0crwdne369403:0"
     }
   ],
   "sort-select-label": [
     {
       "type": 0,
-      "value": "Sort projects"
+      "value": "crwdns369405:0crwdne369405:0"
     }
   ],
   "start-training-action": [
@@ -3322,13 +3300,13 @@
   "teacher-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of teacher resources"
+      "value": "crwdns369407:0crwdne369407:0"
     }
   ],
   "teacher-resources-row-title": [
     {
       "type": 0,
-      "value": "Teacher resources"
+      "value": "crwdns369409:0crwdne369409:0"
     }
   ],
   "terms": [
@@ -3358,13 +3336,13 @@
   "timestamp-now": [
     {
       "type": 0,
-      "value": "now"
+      "value": "crwdns369411:0crwdne369411:0"
     }
   ],
   "timestamp-seconds": [
     {
       "type": 0,
-      "value": "a few seconds ago"
+      "value": "crwdns369413:0crwdne369413:0"
     }
   ],
   "tour-action": [
@@ -3584,23 +3562,13 @@
   "train-hint": [
     {
       "type": 0,
-      "value": "Finished recording?"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Train the model"
-        }
-      ],
-      "type": 8,
-      "value": "mark"
+      "value": "crwdns369415:0crwdne369415:0"
     }
   ],
   "train-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+      "value": "crwdns369417:0crwdne369417:0"
     }
   ],
   "train-model": [
@@ -3642,7 +3610,7 @@
   "troubleshooting-resource-title": [
     {
       "type": 0,
-      "value": "Troubleshooting"
+      "value": "crwdns369419:0crwdne369419:0"
     }
   ],
   "try-again-action": [
@@ -3708,7 +3676,7 @@
   "view-all-projects": [
     {
       "type": 0,
-      "value": "View all"
+      "value": "crwdns369421:0crwdne369421:0"
     }
   ],
   "webusb-retry-no-select": [
@@ -3744,7 +3712,7 @@
   "welcome-title": [
     {
       "type": 0,
-      "value": "How CreateAI works"
+      "value": "crwdns369423:0crwdne369423:0"
     }
   ]
 }

@@ -1243,6 +1243,13 @@ const createMlStore = (logging: Logging) => {
           } else {
             await trainModel();
             callback?.();
+            // Push the trainModelDialogStage change to the back of the event queue so it happens
+            // after navigation changes.
+            setTimeout(
+              () =>
+                set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
+              0
+            );
           }
         },
 
@@ -1282,7 +1289,7 @@ const createMlStore = (logging: Logging) => {
             {
               model,
               trainModelDialogStage: model
-                ? TrainModelDialogStage.Closed
+                ? TrainModelDialogStage.TrainingInProgress
                 : TrainModelDialogStage.TrainingError,
               timestamp,
               ...updatedProject,
