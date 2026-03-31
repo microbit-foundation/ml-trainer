@@ -133,14 +133,14 @@ const ResetPressedMicrobitBoard = forwardRef<
           await delayInSec(durations.press);
           setHandState("ready");
 
-          setCount(undefined)
+          setCount(undefined);
         },
 
         reset() {
           setShowButtonOutline(false);
           setShowGlowLines(false);
           setHandState("hidden");
-          setCount(undefined)
+          setCount(undefined);
         },
       };
     },

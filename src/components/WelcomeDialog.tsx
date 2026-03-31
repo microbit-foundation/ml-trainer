@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { ComponentProps } from "react";
 import { FormattedMessage } from "react-intl";

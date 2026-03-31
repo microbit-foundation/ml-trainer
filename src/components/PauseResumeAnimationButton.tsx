@@ -17,4 +17,4 @@ const PauseResumeButton = () => {
   );
 };
 
-export default PauseResumeButton
+export default PauseResumeButton;
