@@ -109,10 +109,10 @@ const textBoxFillUp = keyframes`
   100%   { background-size: 100% 100%; }
 `;
 
-const lineFillUp = keyframes`
-  0% { background-size: 100% 0%; }
-  75%   { background-size: 100% 100%; }
-  100%   { background-size: 100% 100%; }
+const lineScaleUp = keyframes`
+  0%   { transform: scaleY(0); }
+  75%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
 `;
 
 const buttonLabelFillDuration = 0.75; // sec
@@ -157,7 +157,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           px="3%"
           py="5%"
           textAlign="center"
-          background={inactiveColor}
+          backgroundColor={inactiveColor}
           borderRadius="0.5rem"
           fontWeight="bold"
           fontSize="lg"
@@ -172,8 +172,18 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           w="15%"
           h="190%"
           left="42.5%"
-          background={inactiveColor}
-          {...(playing ? buttonLabelAnimationProps(lineFillUp) : {})}
+          backgroundColor={inactiveColor}
+        />
+        <Box
+          position="absolute"
+          top="100%"
+          w="16%"
+          h="191%"
+          left="42.5%"
+          transformOrigin="bottom"
+          transform="scaleY(0)"
+          backgroundColor={activeColor}
+          {...(playing ? buttonLabelAnimationProps(lineScaleUp) : {})}
         />
       </Box>
     );
