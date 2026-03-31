@@ -23,6 +23,10 @@ interface PairingModeAnimationProps {
   pairingMethod: BluetoothPairingMethod;
 }
 
+const durations = {
+  pause: 0.1,
+};
+
 const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const intl = useIntl();
   const microbitABBoardFrontRef = useRef<ABLabelledMicrobitBoardRef>(null);
@@ -30,6 +34,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const microbitBoardBackRef = useRef<ResetPressedMicrobitBoardRef>(null);
 
   const { restartAbortController, delayInSec } = useAnimation();
+  const isTripleReset = pairingMethod === "triple-reset";
 
   useEffect(() => {
     const run = async () => {
@@ -38,8 +43,9 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         try {
           switch (pairingMethod) {
             case "a-b-reset": {
+              await delayInSec(durations.pause);
               await microbitABBoardFrontRef.current?.playHoldAB();
-              await delayInSec(0.2);
+              await delayInSec(durations.pause);
               await microbitBoardBackRef.current?.playPressed();
               await microbitABBoardFrontRef.current?.playBluetoothPattern();
               break;
@@ -70,6 +76,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
     restartAbortController();
     void run();
   }, [delayInSec, pairingMethod, restartAbortController]);
+
   return (
     <>
       <VisuallyHidden>
@@ -85,18 +92,19 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         direction={{ base: "column", md: "row" }}
         justifyContent="center"
         gap="1rem"
-        alignItems={{ base: "center", md: "end" }}
+        alignItems={isTripleReset ? "center" : { base: "center", md: "end" }}
+        minH={{ base: "auto", md: "180px" }}
       >
-        {pairingMethod === "a-b-reset" ? (
+        {isTripleReset ? (
+          <MicrobitBoardFront
+            boxSize={{ base: "50%", md: "25%" }}
+            ref={microbitBoardFrontRef}
+          />
+        ) : (
           <ABLabelledMicrobitBoard
             activeColor="brand2.500"
             ref={microbitABBoardFrontRef}
             w={{ base: "50%", md: "25%" }}
-          />
-        ) : (
-          <MicrobitBoardFront
-            boxSize={{ base: "50%", md: "25%" }}
-            ref={microbitBoardFrontRef}
           />
         )}
         <ResetPressedMicrobitBoard
