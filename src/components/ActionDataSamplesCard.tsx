@@ -62,6 +62,11 @@ const ActionDataSamplesCard = ({
   const intl = useIntl();
   const deleteActionRecording = useStore((s) => s.deleteActionRecording);
   const view = useStore((s) => s.settings.dataSamplesView);
+  const isNew = useCallback(
+    (recordingId: string) =>
+      newRecordingId !== undefined && newRecordingId === recordingId,
+    [newRecordingId]
+  );
   if (view === DataSamplesView.GraphAndDataFeatures) {
     // We split the cards in this case
     return (
@@ -113,7 +118,7 @@ const ActionDataSamplesCard = ({
               actionId={value.id}
               actionName={value.name}
               recordingIndex={idx}
-              isNew={newRecordingId === recording.id}
+              isNew={isNew(recording.id)}
               onNewAnimationEnd={clearNewRecordingId}
               onDelete={deleteActionRecording}
               view={view}
@@ -153,7 +158,7 @@ const ActionDataSamplesCard = ({
           hasClose={!preview}
           recording={recording}
           numRecordings={value.recordings.length}
-          isNew={newRecordingId === recording.id}
+          isNew={isNew(recording.id)}
           onDelete={deleteActionRecording}
           onNewAnimationEnd={clearNewRecordingId}
           view={view}
