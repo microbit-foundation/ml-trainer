@@ -379,10 +379,6 @@
     "defaultMessage": "Connect micro:bit battery pack",
     "description": "Connection dialog heading"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>Connecter un micro:bit de collecte de données</link1> ou <link2>importer des échantillons de données</link2>",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "Copier le motif",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1854,6 +1850,22 @@
   "stop-recording-action": {
     "defaultMessage": "Arrêter l'enregistrement",
     "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
+  },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
   },
   "support-request": {
     "defaultMessage": "Veuillez <link>formuler une demande de support</link>.",

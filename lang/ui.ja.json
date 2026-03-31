@@ -379,10 +379,6 @@
     "defaultMessage": "Connect micro:bit battery pack",
     "description": "Connection dialog heading"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>データ収集用micro:bitを接続</link1> または <link2>データサンプルのインポート</link2>",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "パターンをコピー",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1854,6 +1850,22 @@
   "stop-recording-action": {
     "defaultMessage": "記録の停止",
     "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
+  },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
   },
   "support-request": {
     "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。",

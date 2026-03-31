@@ -685,12 +685,6 @@
       "value": "Connect micro:bit battery pack"
     }
   ],
-  "connect-or-import": [
-    {
-      "type": 0,
-      "value": "crwdns362772:0crwdne362772:0"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -3289,6 +3283,30 @@
     {
       "type": 0,
       "value": "crwdns363360:0crwdne363360:0"
+    }
+  ],
+  "storage-error-device-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to device storage"
+    }
+  ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to browser storage"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "Your project edit may not be saved."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "Browser storage full"
     }
   ],
   "support-request": [

@@ -23,12 +23,12 @@ import {
   useRouteError,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
+import { useNativeBackButton } from "./back-button";
 import {
   broadcastChannel,
   BroadcastChannelData,
   BroadcastChannelMessageType,
 } from "./broadcast-channel";
-import { useNativeBackButton } from "./back-button";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -42,22 +42,25 @@ import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 import { MockUSBConnection } from "./device/mockUsb";
 import { flags } from "./flags";
 import { ProjectProvider } from "./hooks/project-hooks";
+import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
 import TranslationProvider from "./messages/TranslationProvider";
 import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
+import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
+import ProjectsPage from "./pages/ProjectsPage";
 import TestingModelPage from "./pages/TestingModelPage";
-import { projectSessionStorage } from "./session-storage";
-import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import { isNativePlatform } from "./platform";
+import { projectSessionStorage } from "./session-storage";
 import {
   getAllProjectsFromStorage,
   loadProjectAndModelFromStorage,
   loadSettingsFromStorage,
+  StorageErrorEvent,
   useStore,
 } from "./store";
 import {
@@ -70,8 +73,6 @@ import {
   createProjectsPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import ProjectsPage from "./pages/ProjectsPage";
-import HomePage from "./pages/HomePage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -162,6 +163,49 @@ const Layout = () => {
       }
     );
   }, [intl, navigate, setPostImportDialogState, toast]);
+
+  const storageError: StorageErrorEvent | undefined = useStore(
+    (s) => s.storageError
+  );
+  useEffect(() => {
+    if (!storageError) {
+      return;
+    }
+    const messages = (() => {
+      if (storageError.type === "quota") {
+        return {
+          title: intl.formatMessage({ id: "storage-error-quota-title" }),
+          description: intl.formatMessage({
+            id: "storage-error-quota-description",
+          }),
+        };
+      }
+      if (storageError.kind === "device") {
+        return {
+          title: intl.formatMessage({
+            id: "storage-error-device-other",
+          }),
+        };
+      }
+      return {
+        title: intl.formatMessage({ id: "storage-error-other" }),
+      };
+    })();
+    const toastOptions = {
+      id: "storage-error",
+      position: "top" as const,
+      duration: null,
+      isClosable: true,
+      variant: "toast",
+      status: "error" as const,
+      ...messages,
+    };
+    if (toast.isActive("storage-error")) {
+      toast.update("storage-error", toastOptions);
+    } else {
+      toast(toastOptions);
+    }
+  }, [intl, storageError, toast]);
 
   useEffect(() => {
     if (updateProjectTimestampUrls.includes(location.pathname) && id) {
