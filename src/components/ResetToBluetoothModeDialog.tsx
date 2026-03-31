@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AspectRatio, Image, Link, Text, VStack } from "@chakra-ui/react";
+import { Link, Text, VStack } from "@chakra-ui/react";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
-import tripleReset from "../images/stylised-microbit-triple-tap-reset.svg";
+import { AnimationProvider } from "./AnimationProvider";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { useCallback, useState } from "react";
-import ABResetAnimation from "./PairingModeAnimation/ABResetAnimation";
-import { AnimationProvider } from "./AnimationProvider";
+import PairingModeAnimation from "./PairingModeAnimation";
 import PauseResumeButton from "./PauseResumeAnimationButton";
 
 export interface ResetToBluetoothModeDialogProps
@@ -36,28 +35,29 @@ const ResetToBluetoothModeDialog = ({
   }, [isTripleReset]);
 
   return (
-    <AnimationProvider>
+    <AnimationProvider key={pairingMethod}>
       <ConnectContainerDialog
         {...props}
-        key={pairingMethod}
         headingId="reset-to-bluetooth-mode-heading"
         footerLeft={
           <>
-          <PauseResumeButton />
-          <Link
-            as="button"
-            color="brand.600"
-            onClick={isTripleReset ? onSwitchPairingMethod : onTroubleshooting}
-            display="flex"
-            flexDirection="row"
-            gap={1}
-          >
-            {isTripleReset ? (
-              <FormattedMessage id="connect-try-another-way" />
-            ) : (
-              <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
-            )}
-          </Link>
+            <PauseResumeButton />
+            <Link
+              as="button"
+              color="brand.600"
+              onClick={
+                isTripleReset ? onSwitchPairingMethod : onTroubleshooting
+              }
+              display="flex"
+              flexDirection="row"
+              gap={1}
+            >
+              {isTripleReset ? (
+                <FormattedMessage id="connect-try-another-way" />
+              ) : (
+                <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
+              )}
+            </Link>
           </>
         }
       >
@@ -65,18 +65,7 @@ const ResetToBluetoothModeDialog = ({
           <Text alignSelf="left" width="100%">
             <FormattedMessage id={subtitleId} />
           </Text>
-          {isTripleReset ? (
-            <AspectRatio
-              ratio={326 / 228}
-              width="20rem"
-              rounded="md"
-              pt={isTripleReset ? 0 : 12}
-            >
-              <Image src={tripleReset} alt="" />
-            </AspectRatio>
-          ) : (
-            <ABResetAnimation />
-          )}
+          <PairingModeAnimation pairingMethod={pairingMethod} />
         </VStack>
       </ConnectContainerDialog>
     </AnimationProvider>

@@ -1,22 +1,19 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import {
   Icon,
   IconProps,
   keyframes,
   StackProps,
   VStack,
+  Heading,
 } from "@chakra-ui/react";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 import { MicrobitBoardBack } from "./MicrobitBoardBack";
-
-export interface ResetPressedMicrobitBoardRef {
-  playPressed(): Promise<void>;
-  reset(): void;
-}
-
-interface ResetPressedMicrobitBoardProps extends StackProps {}
-
-const activeColor = "brand.500";
 
 const handPos = {
   // Start - hand is out of view.
@@ -32,7 +29,7 @@ const durations = {
   move: 0.5,
   ready: 0.25,
   press: 0.2,
-  pressing: 0.25,
+  pressing: 0.1,
 };
 
 type HandState = "hidden" | "moving" | "ready" | "pressDown" | "pressUp";
@@ -75,14 +72,23 @@ const handConfig: Record<HandState, HandConfig> = {
   },
 };
 
+export interface ResetPressedMicrobitBoardRef {
+  playPressed(count?: number): Promise<void>;
+  reset(): void;
+}
+interface ResetPressedMicrobitBoardProps extends StackProps {
+  activeColor: string;
+}
+
 const ResetPressedMicrobitBoard = forwardRef<
   ResetPressedMicrobitBoardRef,
   ResetPressedMicrobitBoardProps
->(function ResetHighlightedMicrobitBoard({ ...props }, ref) {
+>(function ResetHighlightedMicrobitBoard({ activeColor, ...props }, ref) {
   const { delayInSec, withPlayState } = useAnimation();
   const [showButtonOutline, setShowButtonOutline] = useState<boolean>(false);
   const [showGlowLines, setShowGlowLines] = useState<boolean>(false);
   const [handState, setHandState] = useState<HandState>("hidden");
+  const [count, setCount] = useState<number | undefined>(undefined);
 
   const getHandProps = useCallback(
     (state: HandState): IconProps => {
@@ -103,7 +109,7 @@ const ResetPressedMicrobitBoard = forwardRef<
     ref,
     () => {
       return {
-        async playPressed() {
+        async playPressed(countValue?) {
           if (handState === "hidden") {
             // Move hand to position.
             setShowButtonOutline(true);
@@ -117,6 +123,7 @@ const ResetPressedMicrobitBoard = forwardRef<
           await delayInSec(durations.press);
 
           // Pressing.
+          setCount(countValue);
           setShowGlowLines(true);
           await delayInSec(durations.pressing);
           setShowGlowLines(false);
@@ -125,12 +132,15 @@ const ResetPressedMicrobitBoard = forwardRef<
           setHandState("pressUp");
           await delayInSec(durations.press);
           setHandState("ready");
+
+          setCount(undefined)
         },
 
         reset() {
           setShowButtonOutline(false);
           setShowGlowLines(false);
           setHandState("hidden");
+          setCount(undefined)
         },
       };
     },
@@ -139,6 +149,19 @@ const ResetPressedMicrobitBoard = forwardRef<
 
   return (
     <VStack position="relative" {...props}>
+      {count && (
+        <Heading
+          variant="marketing"
+          position="absolute"
+          fontWeight="bold"
+          fontSize="xl"
+          color={activeColor}
+          right="0"
+          top="-30%"
+        >
+          {count}
+        </Heading>
+      )}
       <GlowLines
         position="absolute"
         boxSize="50%"

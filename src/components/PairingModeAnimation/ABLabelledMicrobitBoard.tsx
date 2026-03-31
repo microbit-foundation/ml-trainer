@@ -1,3 +1,8 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import {
   forwardRef,
   useCallback,
@@ -26,15 +31,16 @@ export interface ABLabelledMicrobitBoardRef {
   reset(): void;
 }
 
-interface ABLabelledMicrobitBoardProps extends StackProps {}
+interface ABLabelledMicrobitBoardProps extends StackProps {
+  activeColor: string;
+}
 
 const inactiveColor = "gray.500";
-const activeColor = "brand.500";
 
 const ABLabelledMicrobitBoard = forwardRef<
   ABLabelledMicrobitBoardRef,
   ABLabelledMicrobitBoardProps
->(function ABLabelledMicrobitBoard({ ...props }, ref) {
+>(function ABLabelledMicrobitBoard({ activeColor, ...props }, ref) {
   const microbitBoardFrontRef = useRef<MicrobitBoardFrontRef>(null);
   const buttonLabelARef = useRef<ButtonLabelRef>(null);
   const buttonLabelBRef = useRef<ButtonLabelRef>(null);
@@ -73,11 +79,11 @@ const ABLabelledMicrobitBoard = forwardRef<
   return (
     <VStack position="relative" {...props}>
       <HStack justifyContent="space-between" w="100%">
-        <ButtonLabel text="A" ref={buttonLabelARef} />
+        <ButtonLabel text="A" ref={buttonLabelARef} activeColor={activeColor} />
         <Text fontWeight="bold" fontSize="xl" color={plusTextColor}>
           +
         </Text>
-        <ButtonLabel text="B" ref={buttonLabelBRef} />
+        <ButtonLabel text="B" ref={buttonLabelBRef} activeColor={activeColor} />
       </HStack>
       <MicrobitBoardFront
         ref={microbitBoardFrontRef}
@@ -90,6 +96,7 @@ const ABLabelledMicrobitBoard = forwardRef<
 
 interface ButtonLabelProps {
   text: string;
+  activeColor: string;
 }
 
 interface ButtonLabelRef {
@@ -111,7 +118,7 @@ const lineFillUp = keyframes`
 const buttonLabelFillDuration = 0.75; // sec
 
 const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
-  function ButtonLabel({ text }, ref) {
+  function ButtonLabel({ activeColor, text }, ref) {
     const { delayInSec, withPlayState } = useAnimation();
     const [playing, setPlaying] = useState<boolean>(false);
 
@@ -155,9 +162,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           fontWeight="bold"
           fontSize="lg"
           textColor="white"
-          {...(playing
-            ? buttonLabelAnimationProps(textBoxFillUp)
-            : {})}
+          {...(playing ? buttonLabelAnimationProps(textBoxFillUp) : {})}
         >
           {text}
         </Text>
@@ -168,9 +173,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           h="190%"
           left="42.5%"
           background={inactiveColor}
-          {...(playing
-            ? buttonLabelAnimationProps(lineFillUp)
-            : {})}
+          {...(playing ? buttonLabelAnimationProps(lineFillUp) : {})}
         />
       </Box>
     );
