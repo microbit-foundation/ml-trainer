@@ -83,6 +83,10 @@
     "defaultMessage": "AI 說故事夥伴",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "動畫展示 CreateAI 工作流程的五個步驟：連線、收集資料、測試模型、程式碼，以及使用。連線：將 micro:bit 裝置連線到電腦，建立兩者之間的通訊。收集資料：將 micro:bit 綁在手腕上。記錄兩種手勢的移動資料：揮手（以愛心圖示表示）與搖動（以叉叉圖示表示）。每種手勢都會收集多筆範例來訓練模型。測試模型：收集到足夠範例後，便會訓練機器學習模型。接著，電腦會嘗試即時辨識揮手與搖動手勢。使用者可以返回「收集資料」步驟，收集更多範例並再次測試。程式碼：使用者利用 MakeCode 程式積木寫入整合已訓練模型的程式。完成的程式會下載到 micro:bit。使用：micro:bit 會回應使用者的實際移動，並依據偵測到的是揮手還是搖動手勢，在 LED 螢幕上顯示不同圖示。",
     "description": "Aria label for animation"
@@ -1664,7 +1668,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET",
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {

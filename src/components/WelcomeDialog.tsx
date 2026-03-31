@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Button,
-  Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,16 +12,15 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { ComponentProps } from "react";
-import { RiPlayFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { AnimationProvider, useAnimation } from "./AnimationProvider";
+import { AnimationProvider } from "./AnimationProvider";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/index";
-import PauseIcon from "./icons/PauseIcon";
+import PauseResumeButton from "./PauseResumeAnimationButton";
 
 type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
 
@@ -71,19 +68,6 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
         </ModalOverlay>
       </Modal>
     </AnimationProvider>
-  );
-};
-
-const PauseResumeButton = () => {
-  const { pause, isPaused, resume } = useAnimation();
-  return isPaused ? (
-    <Button variant="link" onClick={resume} leftIcon={<Icon as={RiPlayFill} />}>
-      <FormattedMessage id="animation-resume-action" />
-    </Button>
-  ) : (
-    <Button variant="link" onClick={pause} leftIcon={<PauseIcon />}>
-      <FormattedMessage id="animation-pause-action" />
-    </Button>
   );
 };
 

@@ -185,6 +185,12 @@
       "value": "Amigo contador de histórias de IA"
     }
   ],
+  "animation-bluetooth-mode-label": [
+    {
+      "type": 0,
+      "value": "Animation demonstrating how to reset to Bluetooth mode."
+    }
+  ],
   "animation-label": [
     {
       "type": 0,
@@ -3080,7 +3086,7 @@
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET"
+      "value": "Hold A+B and press RESET. Keep holding A+B until Bluetooth icon appears."
     }
   ],
   "reset-to-bluetooth-mode-heading": [

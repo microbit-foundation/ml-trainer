@@ -83,6 +83,10 @@
     "defaultMessage": "Przyjaciel opowiadający historyjki za pomocą AI",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "Animacja pokazująca pięć kroków przebiegu działania CreateAI: Połącz, Zbierz Dane, Testuj model, Koduj i Użyj. Połącz: micro:bit jest podłączony do komputera, ustanawiajc komunikację między nimi. Zbierz dane: micro:bit jest przymocowany do nadgarstka. Dane są rejestrowane dla dwóch ruchów: machania (reprezentowanego przez ikonę serca) i potrząśnięcia (reprezentowanego przez ikonę krzyżyka). Wielokrotne próbki pobiera się dla każdego ruchu do trenowania modelu. Testuj model: Po zebraniu wystarczającej liczby próbek następuje trenowanie modelu uczenia maszynowego. Następnie komputer próbuje rozpoznać ruchy machania i potrząsanie w czasie rzeczywistym. Użytkownik może powrócić do etapu gromadzenia danych, aby zebrać dodatkowe próbki i wykonać kolejne badania. Koduj: Użytkownik pisze program złożony z bloków MakeCode, który zawiera wytrenowany model. Ukończony program jest pobierany do micro:bita. Użyj: micro:bit odpowiada fizycznym ruchom użytkownika, wyświetlając różne ikony na wyświatlaczu LED w zależności od tego, czy wykryte zostało machanie czy potrząsanie.",
     "description": "Aria label for animation"
@@ -1664,7 +1668,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET",
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {

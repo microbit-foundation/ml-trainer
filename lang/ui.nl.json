@@ -83,6 +83,10 @@
     "defaultMessage": "AI verhalenvertellende vriend",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "Animatie om de vijf stappen van de CreateAI workflow te demonstreren: Verbind, Verzamel gegevens, Test model, Codeer en Gebruik. Verbind: Een micro:bit apparaat is verbonden met een computer, waardoor communicatie tussen de twee tot stand wordt gebracht. Verzamel gegevens: Een micro:bit is om een pols gebonden. Gegevens van beweging worden geregistreerd voor twee gebaren: een golf (vertegenwoordigd door een hartpictogram) en een schudding (vertegenwoordigd door een kruispictogram). Er worden meerdere opnames verzameld voor elk gebaar om het model te trainen. Test model: Zodra er genoeg opnames zijn verzameld, wordt er een machine learning-model getraind. De computer probeert vervolgens golf- en schudgebaren in real time te herkennen. De gebruiker kan terugkeren naar de Verzamel gegevens- stap om extra opnames te verzamelen en vervolgens te testen. Codeer: De gebruiker schrijft een programma met behulp van MakeCode blokken waarin het getrainde model is geïntegreerd. Het voltooide programma wordt gedownload naar de micro:bit. Gebruik: De micro:bit reageert op de fysieke bewegingen van de gebruiker, verschillende pictogrammen worden weergegeven op het LED-scherm, afhankelijk van of er een golf- of schudgebaar wordt gedetecteerd.",
     "description": "Aria label for animation"
@@ -1664,7 +1668,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET",
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
