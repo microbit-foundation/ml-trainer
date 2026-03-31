@@ -73,7 +73,7 @@ const ABLabelledMicrobitBoard = forwardRef<
         },
       };
     },
-    []
+    [activeColor]
   );
 
   return (
@@ -134,7 +134,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           ),
         };
       },
-      [withPlayState]
+      [activeColor, withPlayState]
     );
     useImperativeHandle(
       ref,
