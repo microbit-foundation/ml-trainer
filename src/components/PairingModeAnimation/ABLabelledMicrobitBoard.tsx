@@ -111,8 +111,8 @@ const textBoxFillUp = keyframes`
 
 const lineScaleUp = keyframes`
   0%   { transform: scaleY(0); }
-  75%  { transform: scaleY(1); }
-  100% { transform: scaleY(1); }
+  75%  { transform: scaleY(1.02); }
+  100% { transform: scaleY(1.02); }
 `;
 
 const buttonLabelFillDuration = 0.75; // sec
