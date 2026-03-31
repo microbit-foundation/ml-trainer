@@ -379,10 +379,6 @@
     "defaultMessage": "Connect micro:bit battery pack",
     "description": "Connection dialog heading"
   },
-  "connect-or-import": {
-    "defaultMessage": "crwdns362772:0crwdne362772:0",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "crwdns362774:0crwdne362774:0",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1854,6 +1850,10 @@
   "stop-recording-action": {
     "defaultMessage": "crwdns363360:0crwdne363360:0",
     "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
     "defaultMessage": "Failed to save your project to browser storage",

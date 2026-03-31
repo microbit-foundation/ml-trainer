@@ -697,32 +697,6 @@
       "value": "Connect micro:bit battery pack"
     }
   ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Verbind een micro:bit die gegevens verzamelt"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " of "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "importeer data samples"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
-    }
-  ],
   "connect-pattern-heading": [
     {
       "type": 0,
@@ -3403,6 +3377,12 @@
     {
       "type": 0,
       "value": "Stop met opnemen"
+    }
+  ],
+  "storage-error-device-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to device storage"
     }
   ],
   "storage-error-other": [

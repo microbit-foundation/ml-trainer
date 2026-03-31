@@ -379,10 +379,6 @@
     "defaultMessage": "Connect micro:bit battery pack",
     "description": "Connection dialog heading"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>데이터 수집 micro:bit에 연결하기</link1> 또는  <link2>데이터 샘플 가져오기</link2>를 하세요.",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "패턴 복사",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -1854,6 +1850,10 @@
   "stop-recording-action": {
     "defaultMessage": "기록 중단",
     "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
     "defaultMessage": "Failed to save your project to browser storage",

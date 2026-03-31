@@ -59,6 +59,7 @@ import {
   TourTriggerName,
   TrainModelDialogStage,
 } from "./model";
+import { isNativePlatform } from "./platform";
 import {
   createUntitledProject,
   currentDataWindow,
@@ -136,6 +137,7 @@ const updateProject = (
 
 export interface StorageErrorEvent {
   type: "quota" | "other";
+  kind: "browser" | "device";
 }
 
 export interface State {
@@ -2147,14 +2149,18 @@ const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
 
 let storageErrorReported = false;
 const setStorageError = (err: unknown) => {
-  const isQuotaError =
-    err instanceof DOMException && err.name === "QuotaExceededError";
   if (!storageErrorReported) {
     storageErrorReported = true;
-    deployment.logging.error(err);
+    deployment.logging.error("Storage error", err);
   }
   useStore.setState({
-    storageError: { type: isQuotaError ? "quota" : "other" },
+    storageError: {
+      type:
+        err instanceof DOMException && err.name === "QuotaExceededError"
+          ? "quota"
+          : "other",
+      kind: isNativePlatform() ? "device" : "browser",
+    },
   });
 };
 
