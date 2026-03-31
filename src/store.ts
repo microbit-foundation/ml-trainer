@@ -741,6 +741,7 @@ const createMlStore = (logging: Logging) => {
             hint: getHint(newActions, false),
             dataWindow: newDataWindow,
             model: undefined,
+            hasMoved: true,
             timestamp,
             ...updatedProject,
           });
@@ -927,6 +928,7 @@ const createMlStore = (logging: Logging) => {
             hint: getHint(updatedActions, false),
             dataWindow: newDataWindow,
             model: undefined,
+            hasMoved: true,
             timestamp,
             ...updatedProject,
           });
@@ -960,6 +962,7 @@ const createMlStore = (logging: Logging) => {
             hint: getHint(actions, false),
             dataWindow: currentDataWindow,
             model: undefined,
+            hasMoved: true,
             ...updatedProject,
           });
           await storageWriteWithErrHandling(() =>
@@ -1980,33 +1983,45 @@ const getHint = (
   // We don't let you have zero. If you have > 2 you've seen it all before.
   if (actions.length === 0 || actions.length > 2) {
     if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
-      return "train";
+      return { type: "train" };
     }
     return null;
   }
   const lastActionIdx = actions.length - 1;
-  const action = actions[lastActionIdx];
-  const isFirstAction = lastActionIdx === 0;
+  const lastAction = actions[lastActionIdx];
 
-  if (action.name.length === 0) {
-    if (action.recordings.length === 0) {
-      return isFirstAction ? "name-first-action" : "name-action";
-    } else {
-      return "name-action-with-samples";
-    }
+  const firstUnnamedActionIdx = actions.findIndex(
+    (a) => a.name.length === 0 && a.recordings.length === 0
+  );
+  if (firstUnnamedActionIdx > -1 && firstUnnamedActionIdx !== lastActionIdx) {
+    return { type: "name-action-short", actionIdx: firstUnnamedActionIdx };
   }
-
-  if (action.recordings.length === 0) {
-    return isFirstAction ? "record-first-action" : "record-action";
+  if (lastAction.name.length === 0) {
+    return {
+      type:
+        lastAction.recordings.length === 0
+          ? "name-action"
+          : "name-action-with-samples",
+      actionIdx: lastActionIdx,
+    };
   }
-  if (action.recordings.length < 3) {
-    return "record-more-action";
+  const firstNoRecordingsActionIdx = actions.findIndex(
+    (a) => a.recordings.length === 0
+  );
+  if (firstNoRecordingsActionIdx > -1) {
+    return {
+      type: "record-action",
+      actionIdx: firstNoRecordingsActionIdx,
+    };
   }
-  if (isFirstAction && !suppressTrainAndAddActionHint) {
-    return "add-action";
+  if (lastAction.recordings.length < 3) {
+    return { type: "record-more-action" };
+  }
+  if (lastActionIdx === 0 && !suppressTrainAndAddActionHint) {
+    return { type: "add-action" };
   }
   if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
-    return "train";
+    return { type: "train" };
   }
   return null;
 };

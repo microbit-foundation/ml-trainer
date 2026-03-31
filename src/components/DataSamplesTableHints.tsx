@@ -8,6 +8,7 @@ import {
   Box,
   HStack,
   Image,
+  keyframes,
   Stack,
   Text,
   usePrefersReducedMotion,
@@ -57,6 +58,35 @@ export const NameActionHint = () => {
   );
 };
 
+export const NameActionShortHint = () => {
+  return (
+    <VStack
+      h="100%"
+      justifyContent="center"
+      p={2}
+      w="360px"
+      spacing={0}
+      transform="translate(-25px)"
+      position="absolute"
+    >
+      <HStack ml="15px" gap={1}>
+        <EmojiArrow
+          color="brand.500"
+          left={0}
+          transform="translate(0, -30px) rotate(-35deg)"
+          mr={-4}
+        />
+        <Box transform="rotate(-8deg)" color="brand.500">
+          <Emoji boxSize={16} />
+        </Box>
+        <Text textAlign="center">
+          <FormattedMessage id="name-action-hint" />
+        </Text>
+      </HStack>
+    </VStack>
+  );
+};
+
 export const NameActionWithSamplesHint = () => {
   return (
     <HStack
@@ -69,7 +99,7 @@ export const NameActionWithSamplesHint = () => {
       <HStack spacing={0} color="brand.500" ml={-8}>
         <UpCurveArrow w="60px" h="93px" color="brand.500" />
         <Box transform="rotate(-8deg)">
-          <Emoji ml="10px" boxSize={16} animation={animations.spin} />
+          <Emoji ml="10px" boxSize={16} />
         </Box>
       </HStack>
       <Text
@@ -98,46 +128,48 @@ const RecordHintWithButtonB = () => {
   );
 };
 
-export const RecordFirstActionHint = () => {
-  const { isConnected } = useConnectionStage();
-  return (
-    <HStack m={0} p={2} transform="translateX(65px)" w="calc(100% - 65px)">
-      <UpCurveArrow w="60px" h="93px" color="brand.500" />
-      {isConnected ? (
-        <RecordHintWithButtonB />
-      ) : (
-        <Text textAlign="center" maxW={200}>
-          <FormattedMessage id="record-hint" />
-        </Text>
-      )}
-    </HStack>
-  );
-};
-
 export const RecordHint = () => {
   const { isConnected } = useConnectionStage();
   return (
-    <VStack
+    <HStack
       position="absolute"
-      m={0}
+      w="400px"
       p={2}
-      transform="translate(170px, -110px)"
-      w="calc(100% - 65px)"
-      alignItems="flex-start"
+      top={0}
+      height="100%"
+      transform="translate(131px, 0)"
+      alignItems="start"
     >
-      <Box transform="rotate(-8deg)">
-        <EmojiArrow color="brand.500" />
-      </Box>
-      <HStack transform="translateX(20px)">
-        {isConnected ? (
+      {isConnected ? (
+        <>
+          <EmojiArrow
+            color="brand.500"
+            top={0}
+            left={0}
+            transform="rotate(-35deg) translate(0,0)"
+            mr={1}
+          />
           <RecordHintWithButtonB />
-        ) : (
-          <Text textAlign="center" maxW={200}>
+        </>
+      ) : (
+        <>
+          <EmojiArrow
+            color="brand.500"
+            top={0}
+            left={0}
+            transform="rotate(-20deg) translate(0,0)"
+            mr={1}
+          />
+          <Text
+            textAlign="center"
+            maxW={250}
+            transform="translate(-30px, 30px)"
+          >
             <FormattedMessage id="record-hint" />
           </Text>
-        )}
-      </HStack>
-    </VStack>
+        </>
+      )}
+    </HStack>
   );
 };
 
@@ -153,7 +185,7 @@ export const RecordMoreHint = ({
     <HStack
       m={0}
       p={2}
-      transform="translate(65px, 0)"
+      transform="translate(65px, -12px)"
       w="calc(100% - 65px)"
       alignItems="start"
     >
@@ -233,6 +265,93 @@ export const AddActionHint = ({ action }: { action: Action }) => {
   );
 };
 
+// Timeout for move micro:bit hint before assuming user already knows and setting hasMoved to true.
+// 28s = 4 wobble cycles × 2s + 4 pause cycles × 5s
+export const moveMicrobitHintTimeoutInSec = 28; //s
+
+const moveMicrobitEmojiKeyframes = keyframes({
+  // Wobble for 2s.
+  "0%": {
+    transform: "rotate(0deg)",
+  },
+  "1.79%": {
+    transform: "rotate(22deg)",
+  },
+  "3.57%": {
+    transform: "rotate(-18deg)",
+  },
+  "5.36%": {
+    transform: "rotate(14deg)",
+  },
+  "7.14%": {
+    transform: "rotate(-10deg)",
+  },
+  "8.93%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds. Wobble again for another 2s.
+  "26.79%": {
+    transform: "rotate(0deg)",
+  },
+  "28.57%": {
+    transform: "rotate(22deg)",
+  },
+  "30.36%": {
+    transform: "rotate(-18deg)",
+  },
+  "32.14%": {
+    transform: "rotate(14deg)",
+  },
+  "33.93%": {
+    transform: "rotate(-10deg)",
+  },
+  "35.71%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds. Wobble again for another 2s.
+  "53.57%": {
+    transform: "rotate(0deg)",
+  },
+  "55.36%": {
+    transform: "rotate(22deg)",
+  },
+  "57.14%": {
+    transform: "rotate(-18deg)",
+  },
+  "58.93%": {
+    transform: "rotate(14deg)",
+  },
+  "60.71%": {
+    transform: "rotate(-10deg)",
+  },
+  "62.5%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds. Wobble again for another 2s.
+  "80.36%": {
+    transform: "rotate(0deg)",
+  },
+  "82.14%": {
+    transform: "rotate(22deg)",
+  },
+  "83.93%": {
+    transform: "rotate(-18deg)",
+  },
+  "85.71%": {
+    transform: "rotate(14deg)",
+  },
+  "87.5%": {
+    transform: "rotate(-10deg)",
+  },
+  "89.29%": {
+    transform: "rotate(0deg)",
+  },
+  // Wait 5 seconds.
+  "100%": {
+    transform: "rotate(0deg)",
+  },
+});
+
 export const MoveMicrobitHint = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   return (
@@ -263,7 +382,11 @@ export const MoveMicrobitHint = () => {
         <AspectRatio
           ratio={30 / 25}
           w={36}
-          animation={prefersReducedMotion ? undefined : animations.wobble}
+          animation={
+            prefersReducedMotion
+              ? undefined
+              : `${moveMicrobitEmojiKeyframes} ${moveMicrobitHintTimeoutInSec}s`
+          }
         >
           <Image src={moveMicrobitImage} aria-hidden />
         </AspectRatio>
