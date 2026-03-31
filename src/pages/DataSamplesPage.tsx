@@ -159,14 +159,21 @@ const DataSamplesPage = () => {
   const setHasMoved = useStore((s) => s.setHasMoved);
   const [settings] = useSettings();
   useEffect(() => {
-    if (!dataSamplesHint) {
-      return;
-    }
     if (
-      dataSamplesHint.type === "move-microbit" &&
+      dataSamplesHint?.type === "move-microbit" &&
       settings.toursCompleted.includes("Connect")
     ) {
-      setTimeout(() => setHasMoved(true), moveMicrobitHintTimeoutInSec * 1000);
+      const id = setTimeout(
+        () => setHasMoved(true),
+        moveMicrobitHintTimeoutInSec * 1000
+      );
+      return () => clearTimeout(id);
+    }
+  }, [dataSamplesHint?.type, setHasMoved, settings.toursCompleted]);
+
+  useEffect(() => {
+    if (!dataSamplesHint) {
+      return;
     }
     const actionWithHint = actions[actions.length - 1];
     const hintText = getHintText(
@@ -176,16 +183,7 @@ const DataSamplesPage = () => {
       actionWithHint
     );
     debouncedSpeakHint(hintText);
-  }, [
-    actions,
-    dataSamplesHint,
-    debouncedSpeakHint,
-    intl,
-    isConnected,
-    region,
-    setHasMoved,
-    settings.toursCompleted,
-  ]);
+  }, [actions, dataSamplesHint, debouncedSpeakHint, intl, isConnected]);
 
   return (
     <>
