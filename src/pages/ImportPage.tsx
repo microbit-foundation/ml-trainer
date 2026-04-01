@@ -23,6 +23,7 @@ import {
 } from "../model";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
+import { migrateLegacyActionDataAndAssignNewIds } from "../project-utils";
 
 const ImportPage = () => {
   const intl = useIntl();
@@ -59,13 +60,14 @@ const ImportPage = () => {
         );
         if (project.text?.["dataset.json"]) {
           // Do this first in case it errors on parse
-          setDataset(
+          const actionData = migrateLegacyActionDataAndAssignNewIds(
             (
               JSON.parse(
                 project.text["dataset.json"]
               ) as DatasetEditorJsonFormat
             ).data
           );
+          setDataset(actionData);
         }
         setProject(project);
       } catch (e) {
