@@ -82,6 +82,9 @@ const DataSamplesTable = ({
 
   const connection = useConnectActions();
   const { isConnected } = useConnectionStage();
+  const isNonConnectionDialogOpen = useStore(
+    (s) => s.isNonConnectionDialogOpen
+  );
 
   // For adding flashing animation for new recording.
   const [newRecordingId, setNewRecordingId] = useState<string | undefined>(
@@ -90,12 +93,11 @@ const DataSamplesTable = ({
 
   useEffect(() => {
     const listener = (e: ButtonEvent) => {
-      // Allow Button B recording when tour is not in progress and the
+      // Allow Button B recording when no dialogs are opened and the
       // record button for selected action is displayed.
       if (
-        !isRecordingDialogOpen &&
+        !isNonConnectionDialogOpen() &&
         e.state &&
-        tourState === undefined &&
         (selectedAction.name.length > 0 || selectedAction.recordings.length > 0)
       ) {
         setRecordingOptions({
@@ -111,7 +113,7 @@ const DataSamplesTable = ({
     };
   }, [
     connection,
-    isRecordingDialogOpen,
+    isNonConnectionDialogOpen,
     recordingDialogOnOpen,
     selectedAction,
     tourState,
