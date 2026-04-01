@@ -22,7 +22,7 @@ import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import {
   ConnectionStatus,
-  ConnectionStatusEvent,
+  ConnectionStatusChange,
 } from "@microbit/microbit-connection";
 import { DataConnectionType } from "./data-connection-types";
 
@@ -107,10 +107,10 @@ export const DataConnectionEventProvider = ({
   useEffect(() => {
     void initializeCapabilities(connections);
 
-    connections.setDataConnectionListener((event: ConnectionStatusEvent) => {
+    connections.setDataConnectionListener((event: ConnectionStatusChange) => {
       const { status, previousStatus } = event;
       const isUsbConnected =
-        connections.usb.status === ConnectionStatus.CONNECTED;
+        connections.usb.status === ConnectionStatus.Connected;
       const type = connections.getDataConnectionType();
       const mappedEvent = mapStatusToEvent(
         status,
@@ -170,28 +170,28 @@ const mapStatusToEvent = (
   let disconnectSource: "bridge" | "remote" | undefined;
   if (
     dataConnectionType === DataConnectionType.Radio &&
-    status === ConnectionStatus.DISCONNECTED
+    status === ConnectionStatus.Disconnected
   ) {
     disconnectSource = isUsbConnected ? "remote" : "bridge";
   }
 
   switch (status) {
-    case ConnectionStatus.CONNECTED:
+    case ConnectionStatus.Connected:
       return { type: "deviceConnected" };
-    case ConnectionStatus.DISCONNECTED:
-    case ConnectionStatus.NO_AUTHORIZED_DEVICE: {
+    case ConnectionStatus.Disconnected:
+    case ConnectionStatus.NoAuthorizedDevice: {
       // Both DISCONNECTED and NO_AUTHORIZED_DEVICE mean "not connected".
       // Ignore transitions between these disconnected states (e.g., during
       // clearDevice() which goes DISCONNECTED → NO_AUTHORIZED_DEVICE).
       if (
-        previousStatus === ConnectionStatus.DISCONNECTED ||
-        previousStatus === ConnectionStatus.NO_AUTHORIZED_DEVICE
+        previousStatus === ConnectionStatus.Disconnected ||
+        previousStatus === ConnectionStatus.NoAuthorizedDevice
       ) {
         return null;
       }
       return { type: "deviceDisconnected", source: disconnectSource };
     }
-    case ConnectionStatus.PAUSED:
+    case ConnectionStatus.Paused:
       // Connection paused due to tab visibility - will reconnect automatically.
       return { type: "devicePaused" };
     default:

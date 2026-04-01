@@ -8,7 +8,8 @@
  */
 import * as fs from "fs";
 import * as path from "path";
-import { ProgressStage } from "@microbit/microbit-connection";
+import { expect } from "@playwright/test";
+import { ConnectionStatus, ProgressStage } from "@microbit/microbit-connection";
 import { test } from "./fixtures";
 
 const screenshotDir = "screenshots/native-bt";
@@ -46,7 +47,7 @@ test.describe("native bluetooth", () => {
 
     // 1. What you need
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await captureDialog(page, "connection-01-what-you-need");
 
@@ -72,10 +73,12 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.clickTryAgainButton();
     await connectionDialogs.clickNext();
 
-    // 3. Copy pattern
+    // 3. Pattern entry (from scratch — no stored pattern, shows "Copy pattern")
     await connectionDialogs.waitForText(
       connectionDialogs.types.nativeBluetooth.copyPattern
     );
+    const initialValues = await connectionDialogs.getBluetoothPatternValues();
+    expect(initialValues).toEqual(["0", "0", "0", "0", "0"]);
     await captureDialog(page, "connection-03-copy-pattern");
 
     // After entering pattern and clicking Next, the flow goes to
@@ -113,6 +116,28 @@ test.describe("native bluetooth", () => {
     // Clear pause and wait for connection to complete
     await connectionDialogs.setBluetoothProgressPause(undefined, undefined);
     await dataSamplesPage.expectConnected();
+
+    // 5. Verify stored pattern: reload page for fresh state, then reconnect.
+    // IndexedDB retains the stored pattern (1,2,3,4,5) across reload.
+    await page.reload();
+
+    const connectionDialogs2 = await dataSamplesPage.connect();
+    await connectionDialogs2.waitForText(
+      connectionDialogs2.types.nativeBluetooth.connectBattery
+    );
+    await connectionDialogs2.clickNext();
+    await connectionDialogs2.waitForText(
+      connectionDialogs2.types.nativeBluetooth.resetToBluetooth
+    );
+    await connectionDialogs2.clickNext();
+
+    // Pattern dialog should show with stored values pre-populated
+    await connectionDialogs2.waitForText(
+      connectionDialogs2.types.nativeBluetooth.confirmPattern
+    );
+    const storedValues = await connectionDialogs2.getBluetoothPatternValues();
+    expect(storedValues).toEqual(["1", "2", "3", "4", "5"]);
+    await captureDialog(page, "connection-05-stored-pattern");
   });
 
   test("data connection - bluetooth disabled error", async ({
@@ -129,7 +154,7 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.setBluetoothAvailability("disabled");
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
 
@@ -158,7 +183,7 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.setBluetoothAvailability("permission-denied");
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
 
@@ -184,7 +209,7 @@ test.describe("native bluetooth", () => {
     await connectionDialogs.setBluetoothAvailability("disabled");
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.expectBluetoothDisabledDialog();
@@ -210,7 +235,7 @@ test.describe("native bluetooth", () => {
     ]);
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(
@@ -239,7 +264,7 @@ test.describe("native bluetooth", () => {
 
     // Complete the connection flow
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(
@@ -261,7 +286,7 @@ test.describe("native bluetooth", () => {
 
     // Configure mock to fail on reconnect attempt (the auto-reconnect after disconnect)
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "failure", status: "DISCONNECTED" as never },
+      { outcome: "failure", status: ConnectionStatus.Disconnected },
     ]);
 
     // Simulate disconnect - this triggers auto-reconnect which will fail
@@ -284,11 +309,11 @@ test.describe("native bluetooth", () => {
 
     // Configure to fail on connect
     await connectionDialogs.setBluetoothConnectBehaviors([
-      { outcome: "error", code: "reconnect-microbit" },
+      { outcome: "error", code: "connection-error" },
     ]);
 
     await connectionDialogs.waitForText(
-      connectionDialogs.types.nativeBluetooth.whatYouNeed
+      connectionDialogs.types.nativeBluetooth.connectBattery
     );
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(
@@ -359,7 +384,7 @@ test.describe("native bluetooth", () => {
     await downloadDialogs.clickTryAgainButton();
     await downloadDialogs.clickNext();
 
-    // 3. Copy pattern
+    // 3. Copy pattern (from scratch — no stored pattern)
     await downloadDialogs.waitForText(
       downloadDialogs.titles.nativeBluetooth.copyPattern
     );
@@ -419,7 +444,7 @@ test.describe("native bluetooth", () => {
 
     // Configure to fail on connect
     await downloadDialogs.setBluetoothConnectBehaviors([
-      { outcome: "error", code: "reconnect-microbit" },
+      { outcome: "error", code: "connection-error" },
     ]);
 
     await downloadDialogs.waitForText(
@@ -445,5 +470,69 @@ test.describe("native bluetooth", () => {
     await downloadDialogs.waitForText(
       downloadDialogs.titles.nativeBluetooth.resetToBluetooth
     );
+  });
+
+  test("download flow - change pattern during FindingDevice", async ({
+    homePage,
+    dataSamplesPage,
+    testModelPage,
+  }) => {
+    await homePage.goto(["android"]);
+    await homePage.importProject("test-data/dataset.json");
+    await dataSamplesPage.welcomeDialog.close();
+
+    const trainModelDialog = await dataSamplesPage.trainModel();
+    await trainModelDialog.train();
+
+    const makecodeEditor = await testModelPage.editInMakeCode();
+    await makecodeEditor.closeTourDialog();
+    const downloadDialogs = await makecodeEditor.clickDownload();
+
+    // Navigate to pattern entry
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.help
+    );
+    await downloadDialogs.clickNext();
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.resetToBluetooth
+    );
+    await downloadDialogs.clickNext();
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.copyPattern
+    );
+
+    // Enter first pattern (1,2,3,4,5) and start connecting
+    await downloadDialogs.enterBluetoothPatternValues([1, 2, 3, 4, 5]);
+    await downloadDialogs.setBluetoothProgressPause(
+      ProgressStage.FindingDevice,
+      undefined
+    );
+    await downloadDialogs.clickNext();
+
+    // Paused at FindingDevice — click "My pattern is different"
+    await downloadDialogs.clickMyPatternIsDifferent();
+
+    // Should be back at pattern entry (name was cleared)
+    await downloadDialogs.waitForText(
+      downloadDialogs.titles.nativeBluetooth.copyPattern
+    );
+
+    // Enter a different pattern (5,4,3,2,1) and start connecting again
+    await downloadDialogs.enterBluetoothPatternValues([5, 4, 3, 2, 1]);
+    await downloadDialogs.setBluetoothProgressPause(
+      ProgressStage.FindingDevice,
+      undefined
+    );
+    await downloadDialogs.clickNext();
+
+    // Verify the name filter was updated to match the new pattern.
+    // Pattern (5,4,3,2,1) corresponds to micro:bit name "tegoz".
+    const nameFilter = await downloadDialogs.getBluetoothNameFilter();
+    expect(nameFilter).toBe("tegoz");
+
+    // Resume and let the download complete
+    await downloadDialogs.resumeBluetoothProgress();
+    await downloadDialogs.setBluetoothProgressPause(undefined, undefined);
+    await downloadDialogs.expectDialogClosed();
   });
 });

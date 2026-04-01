@@ -16,7 +16,7 @@ import {
   DataConnectionStep,
   DataConnectionType,
 } from "./data-connection-types";
-import { transition } from "../state-machine";
+import { transition, TransitionResult } from "../state-machine";
 
 // Re-export types for external consumers
 export type {
@@ -36,10 +36,10 @@ const getFlow = (type: DataConnectionType): DataConnectionFlowDef => {
   }
 };
 
-export type DataConnectionTransitionResult = {
-  step: DataConnectionStep;
-  actions: DataConnectionAction[];
-};
+export type DataConnectionTransitionResult = TransitionResult<
+  DataConnectionStep,
+  DataConnectionAction
+>;
 
 export const dataConnectionTransition = (
   context: DataConnectionFlowContext,

@@ -1,21 +1,14 @@
-import { Button, Heading, VStack, HStack, Text } from "@chakra-ui/react";
-import bannerBackground from "theme-package/images/banner-background.svg";
-import { useNavigate } from "react-router";
-import { useCallback } from "react";
-import { createAboutPageUrl } from "../urls";
+import { Button, Heading, HStack, Link, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
+import bannerBackground from "theme-package/images/banner-background.svg";
 import { useDeployment } from "../deployment";
+import { learnMoreUrl } from "../utils/external-links";
 
 // For landscape mobile screen sizes.
-const shortScreenHeightBreakpoint = "@media (max-height: 500px)";
+const shortScreenHeightBreakpoint = "@media (max-height: 700px)";
 
 const HomepageBanner = () => {
-  const navigate = useNavigate();
   const { appNameShort } = useDeployment();
-
-  const handleLearnMore = useCallback(() => {
-    navigate(createAboutPageUrl());
-  }, [navigate]);
 
   return (
     <HStack w="100%">
@@ -25,7 +18,7 @@ const HomepageBanner = () => {
         mt={5}
         rounded={5}
         justifyContent="center"
-        backgroundColor="brand.600"
+        backgroundColor="brand.500"
         backgroundImage={bannerBackground}
         backgroundSize="cover"
         backgroundPosition="center"
@@ -65,10 +58,12 @@ const HomepageBanner = () => {
             </Text>
           </VStack>
           <Button
+            as={Link}
+            href={learnMoreUrl()}
             backgroundColor="white"
             border={0}
             textColor="brand.700"
-            onClick={handleLearnMore}
+            _hover={{ textDecoration: "none" }}
             _focusVisible={{
               boxShadow:
                 "0 0 0 2px var(--chakra-colors-brand-600), 0 0 0 6px rgba(255, 255, 255, 0.8)",

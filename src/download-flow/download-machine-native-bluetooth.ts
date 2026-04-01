@@ -6,6 +6,7 @@
 import { DownloadStep } from "./download-types";
 import { always } from "../state-machine";
 import {
+  DownloadAction,
   DownloadFlowDefinition,
   globalHandlers,
   guards,
@@ -41,6 +42,7 @@ const connectFlashFailureWithPermissionHandling = [
   {
     guard: always,
     target: DownloadStep.ConnectFailed,
+    actions: [{ type: "resetMicrobitName" }] as DownloadAction[],
   },
 ];
 
@@ -57,11 +59,12 @@ const flashingInProgressWithPermissionHandling: DownloadFlowDefinition = {
         {
           guard: always,
           target: DownloadStep.FlashingInProgress,
-          actions: [{ type: "flash" }],
+          actions: [{ type: "saveMicrobitName" }, { type: "flash" }],
         },
       ],
       tryAgain: {
         target: DownloadStep.EnterBluetoothPattern,
+        assign: { bluetoothMicrobitName: undefined },
         actions: [
           { type: "clearMicrobitName" },
           { type: "abortFindingDevice" },
@@ -139,8 +142,11 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
     on: {
       next: [
         {
-          guard: guards.hasMicrobitName,
-          target: DownloadStep.NativeCompareBluetoothPattern,
+          guard: (ctx, event) =>
+            guards.hasDownloadedBefore(ctx, event) &&
+            guards.hasMicrobitName(ctx, event),
+          target: DownloadStep.FlashingInProgress,
+          actions: [{ type: "connectFlash", clearDevice: true }],
         },
         {
           guard: always,
@@ -171,20 +177,6 @@ export const nativeBluetoothFlow: DownloadFlowDefinition = {
       back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
       setMicrobitName: {
         actions: [{ type: "setMicrobitName" }],
-      },
-    },
-  },
-
-  [DownloadStep.NativeCompareBluetoothPattern]: {
-    on: {
-      next: {
-        target: DownloadStep.FlashingInProgress,
-        actions: [{ type: "connectFlash" }],
-      },
-      back: { target: DownloadStep.NativeBluetoothPreConnectTutorial },
-      changeBluetoothPattern: {
-        target: DownloadStep.EnterBluetoothPattern,
-        actions: [{ type: "clearMicrobitName" }],
       },
     },
   },

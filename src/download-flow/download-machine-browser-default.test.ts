@@ -43,7 +43,7 @@ describe("Download flow: Browser Default", () => {
   describe("start transitions", () => {
     it("flashes immediately if there is an active USB connection to V2", () => {
       const mockConnection = {
-        status: DeviceConnectionStatus.CONNECTED,
+        status: DeviceConnectionStatus.Connected,
       } as DownloadFlowContext["connection"];
 
       const result = transition(
@@ -61,7 +61,7 @@ describe("Download flow: Browser Default", () => {
 
     it("does not reuse existing USB connection to V1", () => {
       const mockConnection = {
-        status: DeviceConnectionStatus.CONNECTED,
+        status: DeviceConnectionStatus.Connected,
       } as DownloadFlowContext["connection"];
 
       const result = transition(

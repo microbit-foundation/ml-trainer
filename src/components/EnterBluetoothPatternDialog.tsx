@@ -11,6 +11,7 @@ import BluetoothPatternInput from "./BluetoothPatternInput";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import { isNativePlatform } from "../platform";
 
 export interface EnterBluetoothPatternDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -26,44 +27,50 @@ const EnterBluetoothPatternDialog = ({
   ...props
 }: EnterBluetoothPatternDialogProps) => {
   const [showInvalid, setShowInvalid] = useState<boolean>(false);
+  const [value, setValue] = useState<string | undefined>(microbitName);
+
+  // Native reconnection with a stored pattern uses "confirm" copy;
+  // all other cases (web bluetooth, first-time native) use "copy" copy.
+  const [headingId, subtitleId] =
+    isNativePlatform() && microbitName
+      ? ["connect-native-pattern-heading", "connect-native-pattern-subtitle"]
+      : ["connect-pattern-heading", "connect-pattern-subtitle"];
 
   const handleNextClick = useCallback(() => {
-    if (!microbitName || microbitName.includes(blank)) {
+    if (!value || value.includes(blank)) {
       setShowInvalid(true);
       return;
     }
+    onChangeMicrobitName(value);
     onNextClick && onNextClick();
-  }, [microbitName, onNextClick]);
+  }, [onChangeMicrobitName, onNextClick, value]);
 
   const handleBackClick = useCallback(() => {
     setShowInvalid(false);
     onBackClick && onBackClick();
   }, [onBackClick]);
 
-  const handleNameChange = useCallback(
-    (name: string) => {
-      onChangeMicrobitName(name);
-      setShowInvalid(false);
-    },
-    [onChangeMicrobitName]
-  );
+  const handleNameChange = useCallback((name: string) => {
+    setValue(name);
+    setShowInvalid(false);
+  }, []);
 
   return (
     <ConnectContainerDialog
       onNextClick={handleNextClick}
       onBackClick={handleBackClick}
-      headingId="connect-pattern-heading"
+      headingId={headingId}
       {...props}
     >
       <VStack gap={10}>
         <Text width="100%">
-          <FormattedMessage id="connect-pattern-subtitle" />
+          <FormattedMessage id={subtitleId} />
         </Text>
         <VStack>
           <BluetoothPatternInput
             onChange={handleNameChange}
             invalid={showInvalid}
-            microbitName={microbitName}
+            microbitName={value}
           />
           <VStack>
             <Text

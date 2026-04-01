@@ -1,7 +1,5 @@
-import {
-  MicrobitWebBluetoothConnection,
-  MicrobitWebUSBConnection,
-} from "@microbit/microbit-connection";
+import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
 import { HexData } from "../model";
 import { PermissionStep } from "../shared-steps";
@@ -33,7 +31,6 @@ export const DownloadStep = {
 
   // Bluetooth (native only for download)
   EnterBluetoothPattern: "EnterBluetoothPattern",
-  NativeCompareBluetoothPattern: "NativeCompareBluetoothPattern",
   NativeBluetoothPreConnectTutorial: "NativeBluetoothPreConnectTutorial",
   NativeBluetoothPreConnectTroubleshooting:
     "NativeBluetoothPreConnectTroubleshooting",
@@ -71,7 +68,7 @@ export interface DownloadState {
    * The micro:bit used to flash the hex.
    * We remember your choice for easy repeated flashes for as long as the editor is open.
    */
-  connection?: MicrobitWebUSBConnection | MicrobitWebBluetoothConnection;
+  connection?: MicrobitUSBConnection | MicrobitBluetoothConnection;
   /**
    * Which pairing method variant to show in the Bluetooth tutorial dialog.
    */
@@ -87,4 +84,12 @@ export interface DownloadState {
    * If `undefined`, there is no process to abort.
    */
   connectionAbortController: AbortController | undefined;
+
+  /**
+   * Bluetooth micro:bit name that changes with user input.
+   * If connection succeeds with this name, it gets saved into settings.
+   * If connection fails with this name (not due to permissions or pairing
+   * information lost), it gets reset to the persisted name.
+   */
+  bluetoothMicrobitName: string | undefined;
 }

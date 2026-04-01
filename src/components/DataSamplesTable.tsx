@@ -5,8 +5,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
-import { ButtonEvent } from "@microbit/microbit-connection";
-import { useCallback, useState } from "react";
+import { ButtonData } from "@microbit/microbit-connection";
+import { useCallback, useEffect, useRef, useState } from "react";
+import useKeyboardHeight from "../hooks/use-keyboard-height";
+import { isIOS } from "../platform";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
 import { useDataConnected } from "../data-connection-flow";
@@ -62,6 +64,37 @@ const DataSamplesTable = ({
   hint,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
+  const keyboardHeight = useKeyboardHeight();
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  // Calculate how much of the grid is actually obscured by the keyboard.
+  // The keyboard covers bottomContent first, so the grid loses less than
+  // the full keyboard height. Extra padding ensures the last item isn't
+  // flush against the keyboard edge.
+  const extraPadding = isIOS() ? 32 : 16;
+  const [gridPadding, setGridPadding] = useState(0);
+  useEffect(() => {
+    if (keyboardHeight > 0 && gridRef.current) {
+      const gridBottom = gridRef.current.getBoundingClientRect().bottom;
+      const visibleBottom = window.innerHeight - keyboardHeight;
+      const obscured = gridBottom - visibleBottom;
+      setGridPadding(obscured > 0 ? obscured + extraPadding : 0);
+    } else {
+      setGridPadding(0);
+    }
+  }, [extraPadding, keyboardHeight]);
+
+  // Scroll the focused element into view after the padding has been applied,
+  // so the scroll container has enough room.
+  useEffect(() => {
+    if (gridPadding > 0 && document.activeElement instanceof HTMLElement) {
+      document.activeElement.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+      });
+    }
+  }, [gridPadding]);
+
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
@@ -78,6 +111,7 @@ const DataSamplesTable = ({
     (s) => s.connectToRecordDialogOnOpen
   );
   const closeDialog = useStore((s) => s.closeDialog);
+  const tourState = useStore((s) => s.tourState);
 
   const isConnected = useDataConnected();
 
@@ -86,21 +120,32 @@ const DataSamplesTable = ({
     undefined
   );
 
-  const buttonListener = useCallback(
-    (e: ButtonEvent) => {
-      if (!isRecordingDialogOpen && e.state) {
-        recordingDialogOnOpen();
-      }
-    },
-    [isRecordingDialogOpen, recordingDialogOnOpen]
-  );
-
-  useMicrobitButtonListener("B", buttonListener);
-
   const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
     continuousRecording: false,
     recordingsToCapture: 1,
   });
+
+  const buttonListener = useCallback(
+    (e: ButtonData) => {
+      // Allow Button B recording when tour is not in progress and the
+      // record button for selected action is displayed.
+      if (
+        !isRecordingDialogOpen &&
+        e.state &&
+        tourState === undefined &&
+        (selectedAction.name.length > 0 || selectedAction.recordings.length > 0)
+      ) {
+        setRecordingOptions({
+          continuousRecording: false,
+          recordingsToCapture: 1,
+        });
+        recordingDialogOnOpen();
+      }
+    },
+    [isRecordingDialogOpen, recordingDialogOnOpen, selectedAction, tourState]
+  );
+
+  useMicrobitButtonListener("B", buttonListener);
   const handleRecord = useCallback(
     (recordingOptions: RecordingOptions) => {
       setRecordingOptions(recordingOptions);
@@ -155,11 +200,10 @@ const DataSamplesTable = ({
     },
     [actionNameInputEl, actions.length, recordButtonEl, setSelectedActionIdx]
   );
-  useShortcut(keyboardShortcuts.focusBelowAction, () =>
-    focusAction(selectedActionIdx + 1)
-  );
-  useShortcut(keyboardShortcuts.focusAboveAction, () =>
-    focusAction(selectedActionIdx - 1)
+  const arrowNavRef = useShortcut(
+    keyboardShortcuts.focusVerticalAction,
+    (_, hotkeyAction) =>
+      focusAction(selectedActionIdx + (hotkeyAction.hotkey === "down" ? 1 : -1))
   );
 
   return (
@@ -208,11 +252,16 @@ const DataSamplesTable = ({
       <Grid
         {...gridCommonProps}
         py={2}
+        pb={gridPadding > 0 ? `${gridPadding}px` : 2}
         alignItems="start"
         autoRows="max-content"
         overflow="auto"
         flexGrow={1}
         h={0}
+        ref={(node) => {
+          arrowNavRef(node);
+          gridRef.current = node;
+        }}
       >
         {actions.map((action, idx) => (
           <DataSamplesTableRow

@@ -5,13 +5,13 @@
  */
 import {
   ConnectionStatus,
-  createUniversalHexFlashDataSource,
-  createWebUSBConnection,
   DeviceError,
   FlashOptions,
   ProgressCallback,
   ProgressStage,
 } from "@microbit/microbit-connection";
+import { createUniversalHexFlashDataSource } from "@microbit/microbit-connection/universal-hex";
+import { createUSBConnection } from "@microbit/microbit-connection/usb";
 import { Connections } from "../connections-hooks";
 import { DataConnectionState } from "../data-connection-flow";
 import {
@@ -54,7 +54,7 @@ const buildContext = (
   deps: DownloadDependencies
 ): DownloadFlowContext => {
   const { usb } = deps.connections;
-  const isUsbConnected = usb.status === ConnectionStatus.CONNECTED;
+  const isUsbConnected = usb.status === ConnectionStatus.Connected;
   return {
     hex: state.hex,
     microbitChoice: state.microbitChoice,
@@ -91,9 +91,11 @@ const executeAction = async (
       if (event.type !== "start") {
         throw new Error("initializeDownload requires start event");
       }
+      const name = deps.settings.bluetoothMicrobitName;
       setDownloadState({
         ...state,
         hex: event.hex,
+        bluetoothMicrobitName: name,
       });
       break;
     }
@@ -109,15 +111,30 @@ const executeAction = async (
       break;
     }
 
+    case "saveMicrobitName": {
+      const name = getDownloadState().bluetoothMicrobitName;
+      if (name) {
+        deps.setSettings({ bluetoothMicrobitName: name });
+      }
+      break;
+    }
+
+    case "resetMicrobitName": {
+      const name = deps.settings.bluetoothMicrobitName;
+      setDownloadState({ ...state, bluetoothMicrobitName: name });
+      break;
+    }
+
     case "setMicrobitName": {
       if (event.type === "setMicrobitName") {
-        deps.setSettings({ bluetoothMicrobitName: event.name });
+        setDownloadState({ ...state, bluetoothMicrobitName: event.name });
       }
       break;
     }
 
     case "clearMicrobitName": {
       deps.setSettings({ bluetoothMicrobitName: undefined });
+      setDownloadState({ ...state, bluetoothMicrobitName: undefined });
       break;
     }
 
@@ -178,7 +195,7 @@ const executeAction = async (
  * from IndexedDB or updated mid-flow are reflected on the connection.
  */
 const syncConnectionSettings = (deps: DownloadDependencies) => {
-  const { bluetoothMicrobitName } = useStore.getState().settings;
+  const { bluetoothMicrobitName } = getDownloadState();
   if (bluetoothMicrobitName) {
     deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
   }
@@ -207,7 +224,7 @@ const performConnectFlash = async (
 
   // Use temporary connection for "different" microbit choice
   if (microbitChoice === SameOrDifferentChoice.Different) {
-    connection = createWebUSBConnection();
+    connection = createUSBConnection();
     const serialNumber = deps.connections.usb.getDevice()?.serialNumber;
     if (serialNumber) {
       connection.setRequestDeviceExclusionFilters([{ serialNumber }]);
@@ -296,8 +313,13 @@ const sendEvent = async (
     return;
   }
 
-  // Update step first
-  setDownloadState({ ...getDownloadState(), step: result.step });
+  // Apply step change and assigns together so the UI sees consistent
+  // state on first render.
+  setDownloadState({
+    ...getDownloadState(),
+    ...result.assign,
+    step: result.step,
+  });
 
   // Execute actions
   for (const action of result.actions) {

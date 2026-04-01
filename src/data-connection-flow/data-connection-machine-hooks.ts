@@ -26,7 +26,6 @@ export interface DataConnectionActions {
   onSkip: () => void;
   onStartBluetoothFlow: () => void;
   onChangeMicrobitName: (name: string) => void;
-  changeBluetoothPattern: () => void;
   disconnect: () => void;
   /**
    * Opens app settings. Use when permissions have been declined.
@@ -78,8 +77,6 @@ export const useDataConnectionActions = (): DataConnectionActions => {
         dataConnectionMachine.fireEvent({ type: "startBluetoothFlow" }),
       onChangeMicrobitName: (name: string) =>
         dataConnectionMachine.fireEvent({ type: "setMicrobitName", name }),
-      changeBluetoothPattern: () =>
-        dataConnectionMachine.fireEvent({ type: "changeBluetoothPattern" }),
       disconnect: () => dataConnectionMachine.fireEvent({ type: "disconnect" }),
       openAppSettings,
       openLocationSettings: android ? openLocationSettings : undefined,

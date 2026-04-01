@@ -4,10 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  AccelerometerData,
-  AccelerometerDataEvent,
-} from "@microbit/microbit-connection";
+import { AccelerometerData } from "@microbit/microbit-connection";
 import {
   ReactNode,
   createContext,
@@ -57,8 +54,8 @@ const useBufferedDataInternal = (): BufferedData => {
   }, [dataWindow.minSamples]);
 
   const accelerometerListener = useCallback(
-    (e: AccelerometerDataEvent) => {
-      const { x, y, z } = e.data;
+    (e: AccelerometerData) => {
+      const { x, y, z } = e;
       const sample = {
         x: x / 1000,
         y: y / 1000,
@@ -90,24 +87,24 @@ export const useHasMoved = (): boolean => {
     const minDelta = 100;
     const skipSamples = 10;
     let skipped = 0;
-    const listener = (e: AccelerometerDataEvent) => {
+    const listener = (e: AccelerometerData) => {
       if (skipped < skipSamples) {
         skipped++;
       } else if (lastSample) {
-        const deltaX = Math.abs(lastSample.x - e.data.x);
+        const deltaX = Math.abs(lastSample.x - e.x);
         if (deltaX > minDelta) {
           delta.x += deltaX;
         }
-        const deltaY = Math.abs(lastSample.y - e.data.y);
+        const deltaY = Math.abs(lastSample.y - e.y);
         if (deltaY > minDelta) {
           delta.y += deltaY;
         }
-        const deltaZ = Math.abs(lastSample.z - e.data.z);
+        const deltaZ = Math.abs(lastSample.z - e.z);
         if (deltaZ > minDelta) {
           delta.z += deltaZ;
         }
       }
-      lastSample = e.data;
+      lastSample = e;
       if (
         (delta.x > threshold ? 1 : 0) +
           (delta.y > threshold ? 1 : 0) +

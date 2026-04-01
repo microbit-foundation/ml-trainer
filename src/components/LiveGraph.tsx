@@ -6,7 +6,7 @@
  */
 import { Box, useToken } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import { AccelerometerData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useRef } from "react";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
 import { useDataConnected } from "../data-connection-flow";
@@ -340,7 +340,11 @@ function render(
   return firstVisible;
 }
 
-const LiveGraph = () => {
+interface LiveGraphProps {
+  paused?: boolean;
+}
+
+const LiveGraph = ({ paused }: LiveGraphProps) => {
   const isConnected = useDataConnected();
   const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
     useSettings();
@@ -387,7 +391,7 @@ const LiveGraph = () => {
   // Accelerometer data listener — single path for both graph and labels.
   const smoothedRef = useRef({ x: 0, y: 0, z: 0 });
   const accelerometerListener = useCallback(
-    ({ data }: AccelerometerDataEvent) => {
+    (data: AccelerometerData) => {
       const s = smoothedRef.current;
       s.x = smoothenDataPoint(s.x, data.x);
       s.y = smoothenDataPoint(s.y, data.y);
@@ -401,7 +405,7 @@ const LiveGraph = () => {
   // Animation loop.
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !isConnected) return;
+    if (!canvas || !isConnected || paused) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -486,7 +490,7 @@ const LiveGraph = () => {
 
     frameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frameId);
-  }, [isConnected]);
+  }, [isConnected, paused]);
 
   return (
     <Box ref={containerRef} width="100%" height="100%" overflow="hidden">

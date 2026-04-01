@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
+import { AccelerometerData } from "@microbit/microbit-connection";
 import { useEffect } from "react";
 import { useDataConnection } from "../connections-hooks";
 
-type AccelerometerListener = (e: AccelerometerDataEvent) => void;
+type AccelerometerListener = (e: AccelerometerData) => void;
 
 /**
  * Subscribes to accelerometer data on the active data connection.

@@ -30,3 +30,10 @@ export const landingPageUrl = (language: string) =>
 
 export const supportSiteFolderUrl = () =>
   "https://support.microbit.org/support/solutions/folders/19000176257";
+
+export const accessibilityUrl = () => `${microbitOrgBaseUrl}accessibility/`;
+
+export const learnMoreUrl = () =>
+  isPublicFacingStage()
+    ? "https://microbit.org/ai"
+    : `${microbitOrgBaseUrl}createai`;

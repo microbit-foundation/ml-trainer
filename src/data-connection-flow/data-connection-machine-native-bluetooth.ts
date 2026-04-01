@@ -8,6 +8,7 @@ import {
   connectedState,
   connectFlashSuccessHandler,
   createInitialConnectHandlers,
+  DataConnectionAction,
   DataConnectionFlowDef,
   globalHandlers,
   guards,
@@ -54,6 +55,7 @@ const connectFlashFailureWithErrorHandling = [
   {
     guard: always,
     target: DataConnectionStep.ConnectFailed,
+    action: [{ type: "resetMicrobitName" }] as DataConnectionAction[],
   },
 ];
 
@@ -93,16 +95,9 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
 
   [DataConnectionStep.NativeBluetoothPreConnectTutorial]: {
     on: {
-      next: [
-        {
-          guard: guards.hasMicrobitName,
-          target: DataConnectionStep.NativeCompareBluetoothPattern,
-        },
-        {
-          guard: always,
-          target: DataConnectionStep.EnterBluetoothPattern,
-        },
-      ],
+      next: {
+        target: DataConnectionStep.EnterBluetoothPattern,
+      },
       back: backToStartTransition,
       troubleshootPairingMethod: {
         target: DataConnectionStep.NativeBluetoothPreConnectTroubleshooting,
@@ -130,21 +125,6 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
     },
   },
 
-  [DataConnectionStep.NativeCompareBluetoothPattern]: {
-    on: {
-      // Go directly to flashing - connectFlash() handles permission checks internally
-      next: {
-        target: DataConnectionStep.FlashingInProgress,
-        actions: [{ type: "connectFlash" }],
-      },
-      back: { target: DataConnectionStep.NativeBluetoothPreConnectTutorial },
-      changeBluetoothPattern: {
-        target: DataConnectionStep.EnterBluetoothPattern,
-        actions: [{ type: "clearMicrobitName" }],
-      },
-    },
-  },
-
   [DataConnectionStep.FlashingInProgress]: {
     on: {
       ...connectFlashSuccessHandler,
@@ -158,6 +138,7 @@ export const nativeBluetoothFlow: DataConnectionFlowDef = {
       },
       tryAgain: {
         target: DataConnectionStep.EnterBluetoothPattern,
+        assign: { bluetoothMicrobitName: undefined },
         actions: [
           { type: "clearMicrobitName" },
           { type: "abortFindingDevice" },

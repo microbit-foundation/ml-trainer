@@ -45,6 +45,12 @@
       "value": "Accessibility"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Accessibility"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -177,6 +183,60 @@
     {
       "type": 0,
       "value": "AI storytelling friend"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "Pause animation"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "Resume animation"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "Collect data"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "Use"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Training"
     }
   ],
   "back-action": [
@@ -613,54 +673,28 @@
       "value": "My pattern is different"
     }
   ],
-  "connect-native-compare-pattern-heading": [
+  "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Compare pattern"
+      "value": "Confirm this pattern matches your micro:bit"
     }
   ],
-  "connect-native-compare-pattern-subtitle": [
+  "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "Compare this pattern with the one displayed on your micro:bit."
+      "value": "If needed, change the pattern below to match."
+    }
+  ],
+  "connect-native-start-battery-check": [
+    {
+      "type": 0,
+      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
     }
   ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "What you need to connect"
-    }
-  ],
-  "connect-native-start-requirements1": [
-    {
-      "type": 0,
-      "value": "micro:bit with battery pack"
-    }
-  ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Connect a data collection micro:bit"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " or "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "import data samples"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
+      "value": "Connect micro:bit battery pack"
     }
   ],
   "connect-pattern-heading": [
@@ -1365,6 +1399,12 @@
       "value": "Downloading the data collection program"
     }
   ],
+  "downloading-data-collection-microbit-header": [
+    {
+      "type": 0,
+      "value": "Downloading data collection program to micro:bit"
+    }
+  ],
   "downloading-header": [
     {
       "type": 0,
@@ -1651,12 +1691,6 @@
       "value": "First lessons"
     }
   ],
-  "get-started-action": [
-    {
-      "type": 0,
-      "value": "Get started"
-    }
-  ],
   "go-action": [
     {
       "type": 0,
@@ -1771,30 +1805,6 @@
       "value": "Home page"
     }
   ],
-  "homepage-alt": [
-    {
-      "type": 0,
-      "value": "graph showing x, y, z graph lines representing micro:bit accelerometer data with clapping hands overlaid"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "graph showing x, y, z graph lines representing micro:bit accelerometer data"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "clapping hands"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
   "homepage-banner-heading": [
     {
       "type": 0,
@@ -1812,155 +1822,7 @@
   "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Discover in-depth tutorials and teaching resources"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "Train a machine learning model on your own movement data and run it on your micro:bit."
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "How it works"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "Watch the video to get started. Learn more in the "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "user guide"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-media-description": [
-    {
-      "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "Projects"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "Explore more "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "content and resources about micro:bit and AI"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "Step by step"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Create AI on your BBC micro:bit using movement and machine learning."
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "Introductory video"
+      "value": "Machine learning with movement and the micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -2627,116 +2489,10 @@
       "value": "New project setup"
     }
   ],
-  "new-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of new project actions"
-    }
-  ],
-  "new-projects-row-title": [
-    {
-      "type": 0,
-      "value": "New projects"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Use a hex file or data samples file you saved to your computer to continue a session."
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "Continue a saved session"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Date:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Name:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "No session found"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "Open last session"
-    }
-  ],
   "newpage-new-project-title": [
     {
       "type": 0,
       "value": "New project"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Connect your micro:bit and collect movement data to build a machine learning model."
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "New session"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "Pick up where you left off"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "Start something new"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "New session"
     }
   ],
   "next-action": [
@@ -2777,12 +2533,6 @@
     {
       "type": 0,
       "value": "Page not found"
-    }
-  ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "Open…"
     }
   ],
   "open-file-dropped": [
@@ -3579,22 +3329,10 @@
       "value": "Sort projects"
     }
   ],
-  "start-session-action": [
-    {
-      "type": 0,
-      "value": "Start session"
-    }
-  ],
   "start-training-action": [
     {
       "type": 0,
       "value": "Start training"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "diagram showing the iterative process of collecting data, training a model, testing the model, and improving the model by improving the data collected before finally coding using the model."
     }
   ],
   "steps-code": [
@@ -3631,6 +3369,30 @@
     {
       "type": 0,
       "value": "Stop recording"
+    }
+  ],
+  "storage-error-device-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to device storage"
+    }
+  ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to browser storage"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "Your project edit may not be saved."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "Browser storage full"
     }
   ],
   "support-request": [

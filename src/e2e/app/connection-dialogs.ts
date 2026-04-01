@@ -5,10 +5,10 @@
  */
 import { expect, Locator, type Page } from "@playwright/test";
 import { ProgressStage } from "@microbit/microbit-connection";
-import { MockWebUSBConnection } from "../../device/mockUsb";
+import { MockUSBConnection } from "../../device/mockUsb";
 import {
   ConnectBehavior,
-  MockWebBluetoothConnection,
+  MockBluetoothConnection,
 } from "../../device/mockBluetooth";
 import { MockRadioBridgeConnection } from "../../device/mockRadioBridge";
 
@@ -28,9 +28,10 @@ export const dialogTitles: {
     connectBluetooth: "Connect to micro:bit using Web Bluetooth",
   },
   nativeBluetooth: {
-    whatYouNeed: "What you need to connect",
+    connectBattery: "Connect micro:bit battery pack",
     resetToBluetooth: "Reset to Bluetooth mode",
     copyPattern: "Copy pattern",
+    confirmPattern: "Confirm this pattern matches your micro:bit",
     connectBluetooth: "Connect to micro:bit using Bluetooth",
     bluetoothDisabled: "Bluetooth is turned off",
     permissionDenied: "Bluetooth permission required",
@@ -104,7 +105,7 @@ export class ConnectionDialogs {
   async mockUsbDeviceNotSelected() {
     await this.page.evaluate(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-      const usb = (window as any).mockUsb as MockWebUSBConnection;
+      const usb = (window as any).mockUsb as MockUSBConnection;
       usb.mockDeviceId(undefined);
     });
   }
@@ -123,7 +124,7 @@ export class ConnectionDialogs {
    * @example
    * // First connect fails with disconnect, second succeeds
    * await dialogs.setBluetoothConnectBehaviors([
-   *   { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+   *   { outcome: 'failure', status: ConnectionStatus.Disconnected },
    *   { outcome: 'success' },
    * ]);
    */
@@ -131,7 +132,7 @@ export class ConnectionDialogs {
     await this.page.evaluate((b: ConnectBehavior[]) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.setConnectBehaviors(b);
     }, behaviors);
   }
@@ -144,7 +145,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.simulateDisconnect();
     });
   }
@@ -182,7 +183,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockUsb =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockUsb as MockWebUSBConnection;
+        (window as any).mockUsb as MockUSBConnection;
       mockUsb.simulateDisconnect();
     });
   }
@@ -194,7 +195,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockUsb =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockUsb as MockWebUSBConnection;
+        (window as any).mockUsb as MockUSBConnection;
       mockUsb.simulateReconnect();
     });
   }
@@ -217,6 +218,21 @@ export class ConnectionDialogs {
       const n = (i + 1).toString();
       await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
     }
+  }
+
+  /**
+   * Get the current values in the bluetooth pattern column inputs.
+   * Useful for verifying a stored pattern is pre-populated.
+   */
+  async getBluetoothPatternValues(): Promise<string[]> {
+    const values: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      const input = this.page.getByLabel(
+        `Column ${i + 1} - number of LEDs lit`
+      );
+      values.push(await input.inputValue());
+    }
+    return values;
   }
 
   /**
@@ -375,7 +391,7 @@ export class ConnectionDialogs {
     await this.page.evaluate((s: string) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.setAvailabilityStatus(
         s as
           | "available"
@@ -444,7 +460,7 @@ export class ConnectionDialogs {
       ({ stage, progress }) => {
         const mockBluetooth =
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-          (window as any).mockBluetooth as MockWebBluetoothConnection;
+          (window as any).mockBluetooth as MockBluetoothConnection;
         mockBluetooth.setProgressPauseAt(stage, progress);
       },
       { stage, progress }
@@ -458,7 +474,7 @@ export class ConnectionDialogs {
     await this.page.evaluate(() => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.resumeProgress();
     });
   }

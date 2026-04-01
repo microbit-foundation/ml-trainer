@@ -5,10 +5,10 @@
  */
 import { expect, Locator, type Page } from "@playwright/test";
 import { ProgressStage } from "@microbit/microbit-connection";
-import { MockWebUSBConnection } from "../../device/mockUsb";
+import { MockUSBConnection } from "../../device/mockUsb";
 import {
   ConnectBehavior,
-  MockWebBluetoothConnection,
+  MockBluetoothConnection,
 } from "../../device/mockBluetooth";
 
 export const downloadDialogTitles: {
@@ -27,6 +27,7 @@ export const downloadDialogTitles: {
     help: "Download your machine learning MakeCode project",
     resetToBluetooth: "Reset to Bluetooth mode",
     copyPattern: "Copy pattern",
+    confirmPattern: "Confirm this pattern matches your micro:bit",
     manualFlashing: "Transfer saved hex file to micro:bit",
   },
   radio: {
@@ -126,17 +127,36 @@ export class DownloadDialogs {
   async mockUsbDeviceNotSelected() {
     await this.page.evaluate(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-      const usb = (window as any).mockUsb as MockWebUSBConnection;
+      const usb = (window as any).mockUsb as MockUSBConnection;
       usb.mockDeviceId(undefined);
     });
   }
 
   async enterBluetoothPattern() {
-    const numCols = 5;
-    for (let i = 0; i < numCols; i++) {
-      const n = (i + 1).toString();
-      await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
+    await this.enterBluetoothPatternValues([1, 2, 3, 4, 5]);
+  }
+
+  async enterBluetoothPatternValues(values: number[]) {
+    for (let i = 0; i < values.length; i++) {
+      await this.page
+        .getByLabel(`Column ${i + 1} - number of LEDs lit`)
+        .fill(values[i].toString());
     }
+  }
+
+  async clickMyPatternIsDifferent() {
+    await this.page
+      .getByRole("button", { name: "My pattern is different" })
+      .click();
+  }
+
+  async getBluetoothNameFilter(): Promise<string | undefined> {
+    return this.page.evaluate(() => {
+      const mockBluetooth =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        (window as any).mockBluetooth as MockBluetoothConnection;
+      return mockBluetooth.nameFilter;
+    });
   }
 
   /**
@@ -147,7 +167,7 @@ export class DownloadDialogs {
     await this.page.evaluate((b: ConnectBehavior[]) => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.setConnectBehaviors(b);
     }, behaviors);
   }
@@ -183,7 +203,7 @@ export class DownloadDialogs {
       ({ stage, progress }) => {
         const mockBluetooth =
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-          (window as any).mockBluetooth as MockWebBluetoothConnection;
+          (window as any).mockBluetooth as MockBluetoothConnection;
         mockBluetooth.setProgressPauseAt(stage, progress);
       },
       { stage, progress }
@@ -197,7 +217,7 @@ export class DownloadDialogs {
     await this.page.evaluate(() => {
       const mockBluetooth =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        (window as any).mockBluetooth as MockWebBluetoothConnection;
+        (window as any).mockBluetooth as MockBluetoothConnection;
       mockBluetooth.resumeProgress();
     });
   }

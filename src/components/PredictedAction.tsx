@@ -18,11 +18,15 @@ import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
 import LedIcon from "./LedIcon";
 import { predictedActionDisplayWidth } from "./LiveGraphPanel";
+import { useShallow } from "zustand/react/shallow";
 
 const PredictedAction = () => {
   const intl = useIntl();
-  const predictionResult = useStore((s) => s.predictionResult);
-  const estimatedAction = predictionResult?.detected?.name;
+  const predictionDetected = useStore(
+    useShallow((s) => s.predictionResult?.detected)
+  );
+  const estimatedAction = predictionDetected?.name;
+  const estimatedIcon = predictionDetected?.icon ?? "off";
   const [liveRegionEstimatedAction, setLiveRegionEstimatedAction] = useState<
     string | undefined
   >(estimatedAction);
@@ -37,7 +41,7 @@ const PredictedAction = () => {
   const commonEstimatedActionProps: TextProps = {
     size: "md",
     fontWeight: "bold",
-    color: predictionResult?.detected ? "brand2.600" : "gray.600",
+    color: predictionDetected ? "brand2.600" : "gray.600",
     isTruncated: true,
     textAlign: "center",
     w: `${predictedActionDisplayWidth}px`,
@@ -72,11 +76,7 @@ const PredictedAction = () => {
         />
       </HStack>
       <VStack justifyContent="center" flexGrow={1} mb={0.5}>
-        <LedIcon
-          icon={predictionResult?.detected?.icon ?? "off"}
-          size="70px"
-          isTriggered
-        />
+        <LedIcon icon={estimatedIcon} size="70px" colorScheme="brand2" />
       </VStack>
       {/* Display workaround for in-context translation error caused by DOM change. */}
       <Text

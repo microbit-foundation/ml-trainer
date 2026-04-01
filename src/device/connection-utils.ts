@@ -1,28 +1,22 @@
-import {
-  MicrobitWebBluetoothConnection,
-  MicrobitWebUSBConnection,
-} from "@microbit/microbit-connection";
+import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { isNativePlatform } from "../platform";
 
-/**
- * DeviceConnection is a messy generic type.
- * This is more practical.
- */
 export type MicrobitConnection =
-  | MicrobitWebBluetoothConnection
-  | MicrobitWebUSBConnection;
+  | MicrobitBluetoothConnection
+  | MicrobitUSBConnection;
 
 export const isBluetoothConnection = (
   connection: MicrobitConnection
-): connection is MicrobitWebBluetoothConnection =>
-  "setNameFilter" in connection;
+): connection is MicrobitBluetoothConnection => connection.type === "bluetooth";
 
-export const isWebUSBConnection = (connection: MicrobitConnection) =>
-  "setRequestDeviceExclusionFilters" in connection;
+export const isWebUSBConnection = (
+  connection: MicrobitConnection
+): connection is MicrobitUSBConnection => connection.type === "usb";
 
 export const isNativeBluetoothConnection = (
   connection: MicrobitConnection
-): connection is MicrobitWebBluetoothConnection =>
+): connection is MicrobitBluetoothConnection =>
   isBluetoothConnection(connection) && isNativePlatform();
 
 /**
@@ -30,7 +24,7 @@ export const isNativeBluetoothConnection = (
  * On native platforms, we use native Bluetooth, not Web Bluetooth.
  */
 export const isWebBluetoothSupported = async (
-  bluetooth: MicrobitWebBluetoothConnection
+  bluetooth: MicrobitBluetoothConnection
 ): Promise<boolean> => {
   if (isNativePlatform()) {
     return false;
@@ -45,7 +39,7 @@ export const isWebBluetoothSupported = async (
  * Check if Web USB is supported.
  */
 export const isWebUsbSupported = async (
-  usb: MicrobitWebUSBConnection
+  usb: MicrobitUSBConnection
 ): Promise<boolean> => {
   const status = await usb.checkAvailability();
   return status !== "unsupported";

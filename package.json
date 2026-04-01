@@ -27,7 +27,8 @@
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --noEmit --watch",
     "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages",
-    "ml4f-output": "vitest ml4f-output --run"
+    "ml4f-output": "vitest ml4f-output --run",
+    "new-translations": "node bin/new-translations.js"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.4",
@@ -76,6 +77,7 @@
     "@capacitor/core": "^7.4.4",
     "@capacitor/filesystem": "^7.1.5",
     "@capacitor/ios": "^7.4.4",
+    "@capacitor/keyboard": "^7.0.5",
     "@capacitor/share": "^7.0.3",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
@@ -85,7 +87,7 @@
     "@microbit/capacitor-community-nordic-dfu": "^7.0.0-microbit.3",
     "@microbit/capacitor-sqlite-vanilla": "^0.1.0-alpha.5",
     "@microbit/makecode-embed": "^0.5.0",
-    "@microbit/microbit-connection": "^0.9.0-apps.alpha.15",
+    "@microbit/microbit-connection": "^0.9.0-apps.alpha.18",
     "@microbit/ml-header-generator": "^0.4.3",
     "@tensorflow/tfjs": "^4.20.0",
     "@types/w3c-web-serial": "^1.0.6",

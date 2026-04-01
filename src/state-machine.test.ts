@@ -76,6 +76,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setLoading" }],
+        assign: {},
       });
     });
 
@@ -90,6 +91,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "error",
         actions: [],
+        assign: {},
       });
     });
 
@@ -172,6 +174,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "error",
         actions: [{ type: "logError", message: "disabled" }],
+        assign: {},
       });
     });
 
@@ -186,6 +189,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "error",
         actions: [{ type: "logError", message: "too many retries" }],
+        assign: {},
       });
     });
 
@@ -200,6 +204,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setLoading" }],
+        assign: {},
       });
     });
 
@@ -214,6 +219,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "error",
         actions: [],
+        assign: {},
       });
     });
 
@@ -228,6 +234,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "idle",
         actions: [],
+        assign: {},
       });
     });
 
@@ -326,6 +333,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "idle",
         actions: [],
+        assign: {},
       });
     });
 
@@ -358,6 +366,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setLoading" }],
+        assign: {},
       });
     });
 
@@ -462,6 +471,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "idle",
         actions: [],
+        assign: {},
       });
     });
   });
@@ -497,6 +507,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setLoading" }],
+        assign: {},
       });
     });
 
@@ -528,6 +539,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "logError", message: "leaving idle" }],
+        assign: {},
       });
     });
 
@@ -567,6 +579,7 @@ describe("transition", () => {
           { type: "setData" },
           { type: "setLoading" },
         ],
+        assign: {},
       });
     });
 
@@ -598,6 +611,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "idle",
         actions: [{ type: "logError", message: "leaving loading" }],
+        assign: {},
       });
     });
 
@@ -632,6 +646,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "idle",
         actions: [{ type: "setData" }],
+        assign: {},
       });
     });
 
@@ -668,6 +683,7 @@ describe("transition", () => {
           { type: "setData" },
           { type: "setLoading" },
         ],
+        assign: {},
       });
     });
   });
@@ -701,6 +717,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setLoading" }],
+        assign: {},
       });
     });
 
@@ -733,6 +750,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setData" }],
+        assign: {},
       });
     });
 
@@ -765,6 +783,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setData" }],
+        assign: {},
       });
     });
 
@@ -802,6 +821,7 @@ describe("transition", () => {
           { type: "setData" },
           { type: "setLoading" },
         ],
+        assign: {},
       });
     });
   });
@@ -836,6 +856,7 @@ describe("transition", () => {
       expect(result).toEqual({
         step: "loading",
         actions: [{ type: "setLoading" }],
+        assign: {},
       });
     });
 
@@ -874,7 +895,90 @@ describe("transition", () => {
           { type: "setData" },
           { type: "logError", message: "started" },
         ],
+        assign: {},
       });
+    });
+  });
+
+  describe("assign", () => {
+    const defaultContext: TestContext = { isEnabled: true, retryCount: 0 };
+
+    it("includes assign from transition", () => {
+      const flow: FlowDefinition<TestStep, TestEvent, TestAction, TestContext> =
+        {
+          idle: {
+            on: {
+              start: {
+                target: "loading",
+                assign: { retryCount: 0 },
+                actions: [{ type: "setLoading" }],
+              },
+            },
+          },
+        };
+
+      const result = transition(
+        flow,
+        "idle",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [{ type: "setLoading" }],
+        assign: { retryCount: 0 },
+      });
+    });
+
+    it("includes assign from conditional transition", () => {
+      const flow: FlowDefinition<TestStep, TestEvent, TestAction, TestContext> =
+        {
+          idle: {
+            on: {
+              start: [
+                {
+                  guard: always,
+                  target: "loading",
+                  assign: { isEnabled: false },
+                },
+              ],
+            },
+          },
+        };
+
+      const result = transition(
+        flow,
+        "idle",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result).toEqual({
+        step: "loading",
+        actions: [],
+        assign: { isEnabled: false },
+      });
+    });
+
+    it("defaults to empty assign when not specified", () => {
+      const flow: FlowDefinition<TestStep, TestEvent, TestAction, TestContext> =
+        {
+          idle: {
+            on: {
+              start: { target: "loading" },
+            },
+          },
+        };
+
+      const result = transition(
+        flow,
+        "idle",
+        { type: "start" },
+        defaultContext
+      );
+
+      expect(result?.assign).toEqual({});
     });
   });
 });

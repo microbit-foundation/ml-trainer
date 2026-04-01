@@ -173,7 +173,7 @@ describe("Data connection flow: Radio", () => {
       it("connectFlashFailure with bad firmware -> BadFirmware", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
           type: "connectFlashFailure",
-          code: "update-req",
+          code: "firmware-update-required",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
@@ -193,7 +193,7 @@ describe("Data connection flow: Radio", () => {
       it("connectFlashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
           type: "connectFlashFailure",
-          code: "clear-connect",
+          code: "device-in-use",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -233,7 +233,7 @@ describe("Data connection flow: Radio", () => {
       it("flashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          code: "clear-connect",
+          code: "device-in-use",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -500,7 +500,7 @@ describe("Data connection flow: Radio", () => {
       it("connectFlashFailure with bad firmware -> BadFirmware", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
           type: "connectFlashFailure",
-          code: "update-req",
+          code: "firmware-update-required",
         });
 
         expect(result?.step).toBe(DataConnectionStep.BadFirmware);
@@ -520,7 +520,7 @@ describe("Data connection flow: Radio", () => {
       it("connectFlashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
           type: "connectFlashFailure",
-          code: "clear-connect",
+          code: "device-in-use",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -563,7 +563,7 @@ describe("Data connection flow: Radio", () => {
       it("flashFailure with unable to claim -> TryAgainCloseTabs", () => {
         const result = transition(DataConnectionStep.FlashingInProgress, {
           type: "flashFailure",
-          code: "clear-connect",
+          code: "device-in-use",
         });
 
         expect(result?.step).toBe(DataConnectionStep.TryAgainCloseTabs);
@@ -676,14 +676,29 @@ describe("Data connection flow: Radio", () => {
         DataConnectionStep.TryAgainReplugMicrobit,
         DataConnectionStep.TryAgainCloseTabs,
         DataConnectionStep.TryAgainWebUsbSelectMicrobit,
+      ];
+      const stepsAfterSuccessfulConnection = [
         DataConnectionStep.ConnectFailed,
         DataConnectionStep.ConnectionLost,
       ];
 
       stepsWithClose.forEach((step) => {
-        it(`${step} close -> None`, () => {
+        it(`${step} close -> None with reset`, () => {
           const result = transition(step, { type: "close" });
           expect(result?.step).toBe(DataConnectionStep.Idle);
+          expect(result?.actions).toContainEqual({ type: "reset" });
+        });
+      });
+
+      stepsAfterSuccessfulConnection.forEach((step) => {
+        it(`${step} close -> None`, () => {
+          const result = transition(
+            step,
+            { type: "close" },
+            { hadSuccessfulConnection: true }
+          );
+          expect(result?.step).toBe(DataConnectionStep.Idle);
+          expect(result?.actions.length).toBe(0);
         });
       });
     });

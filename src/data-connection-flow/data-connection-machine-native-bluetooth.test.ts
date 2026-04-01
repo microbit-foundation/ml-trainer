@@ -123,10 +123,20 @@ describe("Data connection flow: Native Bluetooth", () => {
       );
     });
 
-    it("NativeBluetoothPreConnectTutorial -> BluetoothPattern", () => {
+    it("NativeBluetoothPreConnectTutorial next -> EnterBluetoothPattern (no stored name)", () => {
       const result = transition(
         DataConnectionStep.NativeBluetoothPreConnectTutorial,
         { type: "next" }
+      );
+
+      expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
+    });
+
+    it("NativeBluetoothPreConnectTutorial next -> EnterBluetoothPattern (with stored name)", () => {
+      const result = transition(
+        DataConnectionStep.NativeBluetoothPreConnectTutorial,
+        { type: "next" },
+        { bluetoothMicrobitName: "zugat" }
       );
 
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
@@ -464,17 +474,32 @@ describe("Data connection flow: Native Bluetooth", () => {
       DataConnectionStep.StartOver,
       DataConnectionStep.NativeBluetoothPreConnectTutorial,
       DataConnectionStep.EnterBluetoothPattern,
-      DataConnectionStep.ConnectFailed,
-      DataConnectionStep.ConnectionLost,
       DataConnectionStep.BluetoothDisabled,
       DataConnectionStep.BluetoothPermissionDenied,
       DataConnectionStep.LocationDisabled,
     ];
+    const stepsAfterSuccessfulConnection = [
+      DataConnectionStep.ConnectFailed,
+      DataConnectionStep.ConnectionLost,
+    ];
 
     stepsWithClose.forEach((step) => {
-      it(`${step} close -> None`, () => {
+      it(`${step} close -> None with reset`, () => {
         const result = transition(step, { type: "close" });
         expect(result?.step).toBe(DataConnectionStep.Idle);
+        expect(result?.actions).toContainEqual({ type: "reset" });
+      });
+    });
+
+    stepsAfterSuccessfulConnection.forEach((step) => {
+      it(`${step} close -> None`, () => {
+        const result = transition(
+          step,
+          { type: "close" },
+          { hadSuccessfulConnection: true }
+        );
+        expect(result?.step).toBe(DataConnectionStep.Idle);
+        expect(result?.actions.length).toBe(0);
       });
     });
   });

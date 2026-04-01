@@ -39,6 +39,7 @@ import {
   createCodePageUrl,
   createDataSamplesPageUrl,
   createTestingModelPageUrl,
+  TestingModelPageHistoryState,
 } from "../urls";
 import { getTotalNumSamples } from "../utils/actions";
 import {
@@ -68,11 +69,15 @@ export type LoadAction = "replaceProject" | "replaceActions";
 
 interface ProjectContext {
   browserNavigationToEditor(): Promise<boolean>;
-  openEditor(): Promise<void>;
+  openEditor(focusVisible?: boolean): Promise<void>;
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
-  loadFile: (file: File, type: LoadType, loadAction: LoadAction) => void;
+  loadFile: (
+    file: File,
+    type: LoadType,
+    loadAction: LoadAction
+  ) => Promise<void>;
   /**
    * Called to request a save.
    *
@@ -289,28 +294,36 @@ export const ProjectProvider = ({
       editorTimedOut,
     ]
   );
-  const openEditor = useCallback(async () => {
-    logging.event({
-      type: "edit-in-makecode",
-    });
-    try {
-      setProjectEdited();
-      await doAfterEditorUpdate(() => {
-        navigate(createCodePageUrl());
-        return Promise.resolve();
+  // We can't tell whether back from MakeCode is triggered by mouse or
+  // keyboard when re-focusing "Edit in MakeCode" as it's in the iframe.
+  // So instead we track whether we opened it by mouse or keyboard.
+  const openedViaKeyboardRef = useRef(false);
+  const openEditor = useCallback(
+    async (focusVisible?: boolean) => {
+      openedViaKeyboardRef.current = focusVisible ?? false;
+      logging.event({
+        type: "edit-in-makecode",
       });
-    } catch (e) {
-      if (e instanceof CodeEditorError) {
-        openEditorTimedOutDialog();
+      try {
+        setProjectEdited();
+        await doAfterEditorUpdate(() => {
+          navigate(createCodePageUrl());
+          return Promise.resolve();
+        });
+      } catch (e) {
+        if (e instanceof CodeEditorError) {
+          openEditorTimedOutDialog();
+        }
       }
-    }
-  }, [
-    doAfterEditorUpdate,
-    logging,
-    navigate,
-    openEditorTimedOutDialog,
-    setProjectEdited,
-  ]);
+    },
+    [
+      doAfterEditorUpdate,
+      logging,
+      navigate,
+      openEditorTimedOutDialog,
+      setProjectEdited,
+    ]
+  );
   const browserNavigationToEditor = useCallback(async () => {
     try {
       setProjectEdited();
@@ -440,9 +453,10 @@ export const ProjectProvider = ({
             saveType,
           },
         });
+        // Dismiss the progress dialog now that the hex is ready.
+        setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
         if (saveType === SaveType.Share) {
           try {
-            setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
             await shareHex(hex);
           } catch (e) {
             if (!isShareCanceled(e)) {
@@ -454,7 +468,7 @@ export const ProjectProvider = ({
         }
         setSave({ step: SaveStep.None, type: SaveType.Download });
         if (saveType === SaveType.Download && !isIOS()) {
-          // iOS share sheet provides its own feedback
+          // iOS share sheet provides its own feedback.
           toast({
             id: "save-complete",
             position: "top",
@@ -497,7 +511,11 @@ export const ProjectProvider = ({
   );
 
   const onBack = useCallback(() => {
-    navigate(createTestingModelPageUrl());
+    const state: TestingModelPageHistoryState = {
+      fromEditor: true,
+      focusVisible: openedViaKeyboardRef.current,
+    };
+    navigate(createTestingModelPageUrl(), { state });
   }, [navigate]);
   const onSave = useCallback(
     (hex: HexData) => saveHex(SaveType.Download, hex),
@@ -517,6 +535,7 @@ export const ProjectProvider = ({
     [downloadActions, saveHex]
   );
 
+  const isEditorReady = useStore((s) => s.isEditorReady);
   // Native app URL open handler (e.g. opening a .hex file).
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -544,11 +563,25 @@ export const ProjectProvider = ({
         }
       );
 
+      const resumeListener = CapacitorApp.addListener("resume", () => {
+        if (!isEditorReady) {
+          logging.log("Editor not ready when resuming app, reloading...");
+          window.location.reload();
+        }
+      });
+
       return () => {
         void appUrlListener.then((l) => l.remove());
+        void resumeListener.then((l) => l.remove());
       };
     }
-  }, [importProjectFromHexText]);
+  }, [
+    driverRef,
+    editorReady,
+    importProjectFromHexText,
+    isEditorReady,
+    logging,
+  ]);
 
   const value = useMemo(
     () => ({

@@ -3,18 +3,19 @@ import {
   ConnectOptions,
   ConnectionAvailabilityStatus,
   ConnectionStatus,
-  ConnectionStatusEvent,
-  DeviceConnectionEventMap,
   DeviceError,
   DeviceErrorCode,
   FlashDataSource,
   FlashOptions,
   LedMatrix,
-  MicrobitWebBluetoothConnection,
   ProgressStage,
-  ServiceConnectionEventMap,
-  TypedEventTarget,
 } from "@microbit/microbit-connection";
+import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MockEventTarget } from "./mockEventTarget";
+
+const notConnected = (): never => {
+  throw new DeviceError({ code: "not-connected", message: "Not connected" });
+};
 
 /**
  * Describes the outcome of a connect() call.
@@ -39,7 +40,7 @@ export type ConnectBehavior =
  * // Configure what happens on subsequent connect() calls
  * await page.evaluate(() => {
  *   window.mockBluetooth.setConnectBehaviors([
- *     { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+ *     { outcome: 'failure', status: ConnectionStatus.Disconnected },
  *     { outcome: 'success' },
  *   ]);
  * });
@@ -48,11 +49,19 @@ export type ConnectBehavior =
  * await page.evaluate(() => window.mockBluetooth.simulateDisconnect());
  * ```
  */
-export class MockWebBluetoothConnection
-  extends TypedEventTarget<DeviceConnectionEventMap & ServiceConnectionEventMap>
-  implements MicrobitWebBluetoothConnection
+export class MockBluetoothConnection
+  extends MockEventTarget
+  implements MicrobitBluetoothConnection
 {
-  status: ConnectionStatus = ConnectionStatus.NO_AUTHORIZED_DEVICE;
+  readonly type = "bluetooth" as const;
+  status: ConnectionStatus = ConnectionStatus.NoAuthorizedDevice;
+
+  /**
+   * Whether a successful connection has occurred.
+   * Mirrors the real implementation where getBoardVersion() caches
+   * the board version after the first successful connection.
+   */
+  private hasConnected = false;
 
   /**
    * Queue of behaviors for subsequent connect() calls.
@@ -94,10 +103,10 @@ export class MockWebBluetoothConnection
   private setStatus(newStatus: ConnectionStatus) {
     const previousStatus = this.status;
     this.status = newStatus;
-    this.dispatchTypedEvent(
-      "status",
-      new ConnectionStatusEvent(newStatus, previousStatus)
-    );
+    this.dispatchEvent("status", {
+      status: newStatus,
+      previousStatus,
+    });
   }
 
   private delay(ms: number = this.statusDelay): Promise<void> {
@@ -112,7 +121,7 @@ export class MockWebBluetoothConnection
    * ```typescript
    * // First connect fails, second succeeds
    * mock.setConnectBehaviors([
-   *   { outcome: 'failure', status: ConnectionStatus.DISCONNECTED },
+   *   { outcome: 'failure', status: ConnectionStatus.Disconnected },
    *   { outcome: 'success' },
    * ]);
    * ```
@@ -141,7 +150,7 @@ export class MockWebBluetoothConnection
    * will pick up and potentially trigger reconnection logic.
    */
   simulateDisconnect() {
-    this.setStatus(ConnectionStatus.DISCONNECTED);
+    this.setStatus(ConnectionStatus.Disconnected);
   }
 
   /**
@@ -183,7 +192,7 @@ export class MockWebBluetoothConnection
   }
 
   async initialize(): Promise<void> {
-    this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
+    this.setStatus(ConnectionStatus.NoAuthorizedDevice);
     await this.delay(100);
   }
 
@@ -204,9 +213,10 @@ export class MockWebBluetoothConnection
           ProgressStage.FindingDevice,
           undefined
         );
-        this.setStatus(ConnectionStatus.CONNECTING);
+        this.setStatus(ConnectionStatus.Connecting);
         await this.progressStage(progress, ProgressStage.Connecting, undefined);
-        this.setStatus(ConnectionStatus.CONNECTED);
+        this.setStatus(ConnectionStatus.Connected);
+        this.hasConnected = true;
         await this.delay();
         break;
 
@@ -216,14 +226,14 @@ export class MockWebBluetoothConnection
           ProgressStage.FindingDevice,
           undefined
         );
-        this.setStatus(ConnectionStatus.CONNECTING);
+        this.setStatus(ConnectionStatus.Connecting);
         await this.progressStage(progress, ProgressStage.Connecting, undefined);
         this.setStatus(behavior.status);
         await this.delay();
         break;
 
       case "noDevice":
-        this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
+        this.setStatus(ConnectionStatus.NoAuthorizedDevice);
         throw new DeviceError({
           code: "no-device-selected",
           message: "No device selected",
@@ -237,13 +247,24 @@ export class MockWebBluetoothConnection
     }
   }
 
-  getBoardVersion(): BoardVersion | undefined {
+  getBoardVersion(): BoardVersion {
+    if (!this.hasConnected) {
+      return notConnected();
+    }
     return "V2";
   }
 
   async disconnect(): Promise<void> {}
   async serialWrite(_data: string): Promise<void> {}
-  setNameFilter(_name: string): void {}
+  /**
+   * The most recent name filter set via setNameFilter().
+   * Exposed for e2e test assertions.
+   */
+  nameFilter: string | undefined;
+
+  setNameFilter(name: string): void {
+    this.nameFilter = name;
+  }
 
   private async progressStage(
     progressCallback: FlashOptions["progress"],
@@ -282,30 +303,30 @@ export class MockWebBluetoothConnection
     );
 
     // Real Bluetooth flash disconnects after completion
-    this.setStatus(ConnectionStatus.DISCONNECTED);
+    this.setStatus(ConnectionStatus.Disconnected);
   }
 
   async clearDevice(): Promise<void> {
     // Real implementation calls disconnect() which fires DISCONNECTED,
     // then fires NO_AUTHORIZED_DEVICE
-    this.setStatus(ConnectionStatus.DISCONNECTED);
+    this.setStatus(ConnectionStatus.Disconnected);
     await this.delay();
-    this.setStatus(ConnectionStatus.NO_AUTHORIZED_DEVICE);
+    this.setStatus(ConnectionStatus.NoAuthorizedDevice);
+    this.hasConnected = false;
   }
 
-  async getAccelerometerData(): Promise<undefined> {}
-  async getAccelerometerPeriod(): Promise<undefined> {}
+  getAccelerometerData = notConnected;
+  getAccelerometerPeriod = notConnected;
   async setAccelerometerPeriod(_value: number): Promise<void> {}
   async setLedText(_text: string): Promise<void> {}
-  async getLedScrollingDelay(): Promise<undefined> {}
+  getLedScrollingDelay = notConnected;
   async setLedScrollingDelay(_delayInMillis: number): Promise<void> {}
-  async getLedMatrix(): Promise<undefined> {}
+  getLedMatrix = notConnected;
   async setLedMatrix(_matrix: LedMatrix): Promise<void> {}
-  async getMagnetometerData(): Promise<undefined> {}
-  async getMagnetometerBearing(): Promise<undefined> {}
-  async getMagnetometerPeriod(): Promise<undefined> {}
+  getMagnetometerData = notConnected;
+  getMagnetometerBearing = notConnected;
+  getMagnetometerPeriod = notConnected;
   async setMagnetometerPeriod(_value: number): Promise<void> {}
   async triggerMagnetometerCalibration(): Promise<void> {}
   async uartWrite(_data: Uint8Array): Promise<void> {}
-  async abortDeviceScan(): Promise<void> {}
 }

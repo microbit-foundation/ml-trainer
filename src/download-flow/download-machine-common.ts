@@ -6,9 +6,9 @@
 import {
   BoardVersion,
   ConnectionStatus as DeviceConnectionStatus,
-  MicrobitWebBluetoothConnection,
-  MicrobitWebUSBConnection,
 } from "@microbit/microbit-connection";
+import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { DataConnectionType } from "../data-connection-flow";
 import { DownloadStep, SameOrDifferentChoice } from "./download-types";
 import { always, FlowDefinition } from "../state-machine";
@@ -22,7 +22,6 @@ export type DownloadEvent =
   | { type: "choseSame" }
   | { type: "choseDifferent" }
   | { type: "setMicrobitName"; name: string }
-  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion: "V1" | "V2" }
   | { type: "connectFlashFailure"; code?: string }
   | { type: "flashSuccess" }
@@ -47,9 +46,17 @@ export type DownloadAction =
    */
   | { type: "saveHelpPreference" }
   /**
+   * Saves micro:bit name to storage so that it is persisted.
+   */
+  | { type: "saveMicrobitName" }
+  /**
    * Sets micro:bit name from setMicrobitName event (user input).
    */
   | { type: "setMicrobitName" }
+  /**
+   * Resets micro:bit name to what is stored.
+   */
+  | { type: "resetMicrobitName" }
   | { type: "clearMicrobitName" }
   | { type: "connectFlash"; clearDevice?: boolean }
   | { type: "flash" }
@@ -79,7 +86,7 @@ export interface DownloadFlowContext {
   hex?: HexData;
   microbitChoice: SameOrDifferentChoice;
   bluetoothMicrobitName?: string;
-  connection?: MicrobitWebUSBConnection | MicrobitWebBluetoothConnection;
+  connection?: MicrobitUSBConnection | MicrobitBluetoothConnection;
 
   // Injected from external state.
   showPreDownloadHelp: boolean;
@@ -107,7 +114,7 @@ export const guards = {
     _event: DownloadEvent
   ) =>
     ctx.connection !== undefined &&
-    ctx.connection.status === DeviceConnectionStatus.CONNECTED &&
+    ctx.connection.status === DeviceConnectionStatus.Connected &&
     ctx.connectedBoardVersion !== "V1",
 
   shouldShowHelp: (ctx: DownloadFlowContext, _event: DownloadEvent) =>

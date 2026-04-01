@@ -6,11 +6,12 @@
  */
 import { Capacitor } from "@capacitor/core";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
-import { DeviceBondState, ProgressStage } from "@microbit/microbit-connection";
+import { ProgressStage } from "@microbit/microbit-connection";
+import { DeviceBondState } from "@microbit/microbit-connection/bluetooth";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import {
   broadcastChannel,
@@ -58,23 +59,20 @@ import {
   TourTriggerName,
   TrainModelDialogStage,
 } from "./model";
+import { isNativePlatform } from "./platform";
 import {
   createUntitledProject,
   currentDataWindow,
   DataWindow,
   legacyDataWindow,
   migrateLegacyActionDataAndAssignNewIds,
+  renameProject,
   untitledProjectName,
 } from "./project-utils";
 import { projectSessionStorage } from "./session-storage";
 import { defaultSettings, Settings } from "./settings";
 import { SqliteDatabase } from "./sqlite-storage";
-import {
-  Database,
-  IdbDatabase,
-  ProjectDataWithActions,
-  StorageError,
-} from "./storage";
+import { Database, IdbDatabase, ProjectDataWithActions } from "./storage";
 import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { downloadDataString } from "./utils/fs-util";
@@ -137,7 +135,13 @@ const updateProject = (
   };
 };
 
+export interface StorageErrorEvent {
+  type: "quota" | "other";
+  kind: "browser" | "device";
+}
+
 export interface State {
+  storageError: StorageErrorEvent | undefined;
   id: string | undefined;
   actions: ActionData[];
   dataWindow: DataWindow;
@@ -230,6 +234,8 @@ export interface State {
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
   isWelcomeDialogOpen: boolean;
+
+  welcomeDialogDismissedForProject: string | undefined;
 
   allProjectData: ProjectDataWithActions[];
 }
@@ -334,9 +340,10 @@ export interface Actions {
   incompatibleEditorDeviceDialogOnOpen(): void;
   recordingDialogOnOpen(): void;
   connectToRecordDialogOnOpen(): void;
+  dismissWelcomeDialog(): void;
+  resetWelcomeDialog(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
-  welcomeDialogOnOpen(): void;
 }
 
 type Store = State & Actions;
@@ -373,7 +380,8 @@ export const isCloseableDialogOpen = (state: State): boolean =>
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
     devtools(
-      (set, get) => ({
+      subscribeWithSelector((set, get) => ({
+        storageError: undefined,
         id: undefined,
         timestamp: 0,
         actions: [createFirstAction()],
@@ -389,6 +397,8 @@ const createMlStore = (logging: Logging) => {
           pairingMethod: "triple-reset",
           isCheckingPermissions: false,
           connectionAbortController: undefined,
+          // This value will be replaced by persisted name before it is used.
+          bluetoothMicrobitName: undefined,
         },
         downloadFlashingProgress: { stage: undefined, value: undefined },
         dataConnection: getInitialDataConnectionState(),
@@ -455,6 +465,8 @@ const createMlStore = (logging: Logging) => {
         isIncompatibleEditorDeviceDialogOpen: false,
         isWelcomeDialogOpen: false,
 
+        welcomeDialogDismissedForProject: undefined,
+
         allProjectData: [],
 
         async setSettings(update: Partial<Settings>) {
@@ -465,7 +477,7 @@ const createMlStore = (logging: Logging) => {
           };
           const timestamp = Date.now();
           set({ settings: updatedSettings, timestamp }, false, "setSettings");
-          await storageWithErrHandling(
+          await storageWriteWithErrHandling(
             () => storage.updateSettings(updatedSettings),
             "settings"
           );
@@ -499,7 +511,7 @@ const createMlStore = (logging: Logging) => {
             false,
             "setLanguage"
           );
-          await storageWithErrHandling(
+          await storageWriteWithErrHandling(
             () => storage.updateSettings(updatedSettings),
             "settings"
           );
@@ -530,7 +542,7 @@ const createMlStore = (logging: Logging) => {
             "newSession"
           );
           projectSessionStorage.setProjectId(id);
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.newSession(
               actions,
               {
@@ -605,7 +617,7 @@ const createMlStore = (logging: Logging) => {
 
         async updateProjectUpdatedAt() {
           const { id } = get();
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateProjectTimestamp(id, Date.now())
           );
         },
@@ -622,7 +634,7 @@ const createMlStore = (logging: Logging) => {
                 { ...duplicatedProject, name, id: newProjectId, timestamp },
               ],
             });
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.duplicateProject(id, {
                 id: newProjectId,
                 name,
@@ -656,7 +668,10 @@ const createMlStore = (logging: Logging) => {
           if (id === currentProjectId) {
             projectSessionStorage.clearProjectId();
           }
-          await storageWithErrHandling(() => storage.deleteProject(id), false);
+          await storageWriteWithErrHandling(
+            () => storage.deleteProject(id),
+            false
+          );
           const message: BroadcastChannelData = {
             messageType: BroadcastChannelMessageType.DELETE_PROJECT,
             projectIds: [id],
@@ -688,7 +703,7 @@ const createMlStore = (logging: Logging) => {
           if (currentProjectId && ids.includes(currentProjectId)) {
             projectSessionStorage.clearProjectId();
           }
-          await storageWithErrHandling(
+          await storageWriteWithErrHandling(
             () => storage.deleteProjects(ids),
             false
           );
@@ -742,7 +757,7 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.addAction(
               id,
               newAction,
@@ -784,7 +799,7 @@ const createMlStore = (logging: Logging) => {
 
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.addRecording(
               id,
               recording,
@@ -823,7 +838,7 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.deleteAction(
               id,
               action,
@@ -873,7 +888,7 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateAction(
               id,
               updatedAction,
@@ -922,7 +937,7 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateActions(
               id,
               updatedActions,
@@ -959,7 +974,7 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateAction(
               id,
               updatedAction,
@@ -1009,7 +1024,7 @@ const createMlStore = (logging: Logging) => {
             timestamp,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.deleteRecording(
               id,
               recordingId.toString(),
@@ -1041,7 +1056,7 @@ const createMlStore = (logging: Logging) => {
             model: undefined,
             ...updatedProject,
           });
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.deleteAllActions(
               id,
               actions,
@@ -1108,7 +1123,7 @@ const createMlStore = (logging: Logging) => {
               hint: getHint(newActionsWithIcons, true),
               ...updatedProject,
             });
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.replaceActions(
                 newActionsWithIcons,
                 {
@@ -1121,7 +1136,7 @@ const createMlStore = (logging: Logging) => {
                 }
               )
             );
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.updateSettings(updatedSettings)
             );
           } else if (loadAction === "replaceProject") {
@@ -1137,7 +1152,7 @@ const createMlStore = (logging: Logging) => {
               ...updatedProject,
             });
             projectSessionStorage.setProjectId(newId);
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.importProject(
                 newActionsWithIcons,
                 {
@@ -1150,7 +1165,7 @@ const createMlStore = (logging: Logging) => {
                 }
               )
             );
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.updateSettings(updatedSettings)
             );
           }
@@ -1199,14 +1214,14 @@ const createMlStore = (logging: Logging) => {
             };
           });
           projectSessionStorage.setProjectId(id);
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.importProject(
               newActions,
               { project, projectEdited },
               { timestamp, id }
             )
           );
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateSettings(updatedSettings)
           );
         },
@@ -1234,6 +1249,13 @@ const createMlStore = (logging: Logging) => {
           } else {
             await trainModel();
             callback?.();
+            // Push the trainModelDialogStage change to the back of the event queue so it happens
+            // after navigation changes.
+            setTimeout(
+              () =>
+                set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
+              0
+            );
           }
         },
 
@@ -1273,7 +1295,7 @@ const createMlStore = (logging: Logging) => {
             {
               model,
               trainModelDialogStage: model
-                ? TrainModelDialogStage.Closed
+                ? TrainModelDialogStage.TrainingInProgress
                 : TrainModelDialogStage.TrainingError,
               timestamp,
               ...updatedProject,
@@ -1281,7 +1303,7 @@ const createMlStore = (logging: Logging) => {
             false,
             actionName
           );
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateMakeCodeProject(
               id,
               {
@@ -1332,7 +1354,7 @@ const createMlStore = (logging: Logging) => {
             false,
             "resetProject"
           );
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.updateMakeCodeProject(
               id,
               {
@@ -1372,7 +1394,7 @@ const createMlStore = (logging: Logging) => {
             false,
             "setProjectName"
           );
-          await storageWithErrHandling(() =>
+          await storageWriteWithErrHandling(() =>
             storage.renameProject(id, name, timestamp)
           );
         },
@@ -1558,7 +1580,7 @@ const createMlStore = (logging: Logging) => {
           );
           if (importProject) {
             projectSessionStorage.setProjectId(newProjectId);
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.importProject(
                 newActions as ActionData[],
                 {
@@ -1568,11 +1590,11 @@ const createMlStore = (logging: Logging) => {
                 { timestamp: updatedTimestamp, id: newProjectId }
               )
             );
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.updateSettings(updatedSettings)
             );
           } else if (updateMakeCodeProject) {
-            await storageWithErrHandling(() =>
+            await storageWriteWithErrHandling(() =>
               storage.updateMakeCodeProject(
                 id,
                 {
@@ -1704,7 +1726,7 @@ const createMlStore = (logging: Logging) => {
               timestamp,
             };
             set(updatedState);
-            await storageWithErrHandling(
+            await storageWriteWithErrHandling(
               () => storage.updateSettings(updatedSettings),
               "settings"
             );
@@ -1744,7 +1766,7 @@ const createMlStore = (logging: Logging) => {
             settings: updatedSettings,
             timestamp,
           });
-          await storageWithErrHandling(
+          await storageWriteWithErrHandling(
             () => storage.updateSettings(updatedSettings),
             "settings"
           );
@@ -1761,7 +1783,7 @@ const createMlStore = (logging: Logging) => {
             settings: updatedSettings,
             timestamp,
           });
-          await storageWithErrHandling(
+          await storageWriteWithErrHandling(
             () => storage.updateSettings(updatedSettings),
             "settings"
           );
@@ -1775,7 +1797,7 @@ const createMlStore = (logging: Logging) => {
           set({
             settings: updatedSettings,
           });
-          await storageWithErrHandling(
+          await storageWriteWithErrHandling(
             () => storage.updateSettings(updatedSettings),
             "settings"
           );
@@ -1866,9 +1888,21 @@ const createMlStore = (logging: Logging) => {
         incompatibleEditorDeviceDialogOnOpen() {
           set({ isIncompatibleEditorDeviceDialogOpen: true });
         },
-        welcomeDialogOnOpen() {
-          set({ isWelcomeDialogOpen: true });
+        dismissWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: get().id },
+            false,
+            "dismissWelcomeDialog"
+          );
         },
+        resetWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: undefined },
+            false,
+            "resetWelcomeDialog"
+          );
+        },
+
         closeDialog() {
           set({
             isLanguageDialogOpen: false,
@@ -1932,7 +1966,7 @@ const createMlStore = (logging: Logging) => {
             isWelcomeDialogOpen
           );
         },
-      }),
+      })),
       { enabled: flags.devtools }
     )
   );
@@ -1960,14 +1994,17 @@ useStore.subscribe(async (state, prevState) => {
   const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
     if (!newModel && newId && newId === prevId) {
-      await storageWithErrHandling(() => storage.removeModel(newId), false);
+      await storageWriteWithErrHandling(
+        () => storage.removeModel(newId),
+        false
+      );
       const message: BroadcastChannelData = {
         messageType: BroadcastChannelMessageType.REMOVE_MODEL,
         projectIds: [newId],
       };
       broadcastChannel.postMessage(message);
     } else if (newModel) {
-      await storageWithErrHandling(
+      await storageWriteWithErrHandling(
         () => storage.saveModel(newId, newModel),
         false
       );
@@ -2051,29 +2088,6 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   );
 };
 
-const renameProject = (
-  project: MakeCodeProject,
-  name: string
-): MakeCodeProject => {
-  const pxtString = project.text?.[filenames.pxtJson];
-  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
-
-  return {
-    ...project,
-    header: {
-      ...project.header!,
-      name,
-    },
-    text: {
-      ...project.text,
-      [filenames.pxtJson]: JSON.stringify({
-        ...pxt,
-        name,
-      }),
-    },
-  };
-};
-
 const getHint = (
   actions: ActionData[],
   suppressTrainAndAddActionHint: boolean
@@ -2133,36 +2147,63 @@ const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
   return projectEdited;
 };
 
+let storageErrorReported = false;
+const setStorageError = (err: unknown) => {
+  if (!storageErrorReported) {
+    storageErrorReported = true;
+    deployment.logging.error("Storage error", err);
+  }
+  useStore.setState({
+    storageError: {
+      type:
+        err instanceof DOMException && err.name === "QuotaExceededError"
+          ? "quota"
+          : "other",
+      kind: isNativePlatform() ? "device" : "browser",
+    },
+  });
+};
+
+/**
+ * Wraps a storage operation with error handling.
+ *
+ * Write operations show a toast and swallow the error so that
+ * optimistic UI updates are not disrupted by an error boundary.
+ * Read operations re-throw so that React Router loaders / error
+ * boundaries can handle them.
+ */
 const storageWithErrHandling = async <T>(
   callback: () => Promise<T>,
   broadcastEvent: boolean | "settings" = true
 ) => {
+  const value = await callback();
+  const projectId = useStore.getState().id;
+  const settings = broadcastEvent === "settings";
+  if (broadcastEvent && (projectId || settings)) {
+    const message: BroadcastChannelData = {
+      messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
+      projectIds: projectId ? [projectId] : [],
+      ...(settings && { settings: true }),
+    };
+    broadcastChannel.postMessage(message);
+  }
+  return value;
+};
+
+/**
+ * Like {@link storageWithErrHandling} but sets a storage error in the
+ * store (triggering a toast) and swallows the error. Use for
+ * fire-and-forget writes where the in-memory state has already been
+ * optimistically updated.
+ */
+const storageWriteWithErrHandling = async (
+  callback: () => Promise<void>,
+  broadcastEvent: boolean | "settings" = true
+) => {
   try {
-    const value = await callback();
-    const projectId = useStore.getState().id;
-    const settings = broadcastEvent === "settings";
-    if (broadcastEvent && (projectId || settings)) {
-      const message: BroadcastChannelData = {
-        messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
-        projectIds: projectId ? [projectId] : [],
-        ...(settings && { settings: true }),
-      };
-      broadcastChannel.postMessage(message);
-    }
-    return value;
+    await storageWithErrHandling(callback, broadcastEvent);
   } catch (err) {
-    // TODO: Add sensible error handling.
-    if (err instanceof DOMException && err.name === "QuotaExceededError") {
-      console.error("Storage quota exceeded!", err);
-    } else if (err instanceof StorageError) {
-      // We have failed to load an expected value from storage.
-      console.error(err);
-    } else {
-      console.error(err);
-    }
-    // Throw for now to improve typing.
-    throw err;
-    // We can in theory set error state here with useStore.setState.
+    setStorageError(err);
   }
 };
 

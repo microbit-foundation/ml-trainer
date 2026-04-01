@@ -39,8 +39,8 @@ export type DataConnectionEvent =
    * From MicrobitUnsupported dialog.
    */
   | { type: "startBluetoothFlow" }
+  | { type: "saveMicrobitName"; name: string }
   | { type: "setMicrobitName"; name: string }
-  | { type: "changeBluetoothPattern" }
   | { type: "connectFlashSuccess"; boardVersion?: BoardVersion }
   | {
       type: "connectFlashFailure";
@@ -83,9 +83,17 @@ export type DataConnectionEvent =
 export type DataConnectionAction =
   | { type: "setConnectionType"; connectionType: DataConnectionType }
   /**
-   * Sets micro:bit name from setMicrobitName event (user input) or flashSuccess event (from flashing).
+   * Saves micro:bit name to storage so that it is persisted.
    */
-  | { type: "setMicrobitName" }
+  | { type: "saveMicrobitName" }
+  /**
+   * Sets micro:bit name from setMicrobitName event (user input) or from flashSuccess event (USB flashing).
+   */
+  | { type: "setMicrobitName"; name?: string }
+  /**
+   * Resets micro:bit name to what is stored.
+   */
+  | { type: "resetMicrobitName" }
   | { type: "clearMicrobitName" }
   | { type: "setRadioRemoteDeviceId"; deviceId?: number }
   | { type: "setRadioBridgeDeviceId"; deviceId?: number }
@@ -137,12 +145,7 @@ export type DataConnectionAction =
  * Context for the data connection flow.
  * Built fresh for each transition from state + external sources (settings).
  */
-export interface DataConnectionFlowContext extends DataConnectionState {
-  /**
-   * Micro:bit name from settings. Used for native Bluetooth pattern matching.
-   */
-  bluetoothMicrobitName?: string;
-}
+export interface DataConnectionFlowContext extends DataConnectionState {}
 
 export type DataConnectionFlowDef = FlowDefinition<
   DataConnectionStep,
@@ -234,7 +237,9 @@ export const guards = {
   isBadFirmwareError: (
     _ctx: DataConnectionFlowContext,
     event: DataConnectionEvent
-  ) => event.type === "connectFlashFailure" && event.code === "update-req",
+  ) =>
+    event.type === "connectFlashFailure" &&
+    event.code === "firmware-update-required",
 
   // Native Bluetooth permission errors - can occur in both flash and data connection contexts.
   // In native Bluetooth, both connectFlash and connectData use Bluetooth, so permission errors
@@ -287,7 +292,7 @@ export const guards = {
       event.type === "connectDataFailure" ||
       event.type === "flashFailure"
     ) {
-      return event.code === "clear-connect";
+      return event.code === "device-in-use";
     }
     return false;
   },
@@ -636,7 +641,7 @@ export const nativeBluetoothRecoveryStates = createRecoveryStates(
 
 /**
  * Handler for setMicrobitName event - stores the micro:bit name from user input.
- * Used by WebBluetooth and NativeBluetooth flows in BluetoothPattern step.
+ * Used by WebBluetooth and NativeBluetooth flows when connect flash succeeds.
  */
 export const setMicrobitNameHandler = {
   setMicrobitName: {
@@ -645,12 +650,15 @@ export const setMicrobitNameHandler = {
 };
 
 /**
- * Handler for connectFlashSuccess that triggers flash.
+ * Handler for connectFlashSuccess that triggers flash and saves micro:bit name.
  * Used by WebBluetooth and NativeBluetooth flows in FlashingInProgress step.
  */
 export const connectFlashSuccessHandler = {
   connectFlashSuccess: {
-    actions: [{ type: "flash" }] as DataConnectionAction[],
+    actions: [
+      { type: "saveMicrobitName" },
+      { type: "flash" },
+    ] as DataConnectionAction[],
   },
 };
 
@@ -774,17 +782,24 @@ export const connectedState = {
 
 /**
  * Global handlers shared by all flows.
- * - close: returns to Idle and resets state
+ * - close: returns to Idle and resets state if not hadSuccessfulConnection (to preserve reconnect)
  * - disconnect: returns to Idle (preserves hadSuccessfulConnection for reconnect)
  * - reset: resets state in place (use after disconnect when micro:bit is being reused)
  */
 export const globalHandlers = {
   _global: {
     on: {
-      close: {
-        target: DataConnectionStep.Idle,
-        actions: actions.reset,
-      },
+      close: [
+        {
+          guard: guards.hadSuccessfulConnection,
+          target: DataConnectionStep.Idle,
+        },
+        {
+          guard: always,
+          target: DataConnectionStep.Idle,
+          actions: actions.reset,
+        },
+      ],
       disconnect: {
         target: DataConnectionStep.Idle,
         actions: [{ type: "disconnectData" }],

@@ -147,7 +147,9 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.EnterBluetoothPattern);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
+      expect(result?.actions).toContainEqual({
+        type: "setMicrobitName",
+      });
     });
   });
 
@@ -219,13 +221,16 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.FlashingInProgress);
-      expect(result?.actions).toContainEqual({ type: "flash" });
+      expect(result?.actions).toEqual([
+        { type: "saveMicrobitName" },
+        { type: "flash" },
+      ]);
     });
 
     it("connectFlashFailure with bad firmware -> BadFirmware", () => {
       const result = transition(DataConnectionStep.FlashingInProgress, {
         type: "connectFlashFailure",
-        code: "update-req",
+        code: "firmware-update-required",
       });
 
       expect(result?.step).toBe(DataConnectionStep.BadFirmware);
@@ -247,7 +252,6 @@ describe("Data connection flow: Web Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DataConnectionStep.ConnectBattery);
-      expect(result?.actions).toContainEqual({ type: "setMicrobitName" });
     });
 
     it("flashFailure -> ManualFlashingTutorial with downloadHexFile", () => {
@@ -417,15 +421,30 @@ describe("Data connection flow: Web Bluetooth", () => {
       DataConnectionStep.WebBluetoothPreConnectTutorial,
       DataConnectionStep.BadFirmware,
       DataConnectionStep.TryAgainBluetoothSelectMicrobit,
+      DataConnectionStep.WebUsbBluetoothUnsupported,
+    ];
+    const stepsAfterSuccessfulConnection = [
       DataConnectionStep.ConnectFailed,
       DataConnectionStep.ConnectionLost,
-      DataConnectionStep.WebUsbBluetoothUnsupported,
     ];
 
     stepsWithClose.forEach((step) => {
-      it(`${step} close -> None`, () => {
+      it(`${step} close -> None with reset`, () => {
         const result = transition(step, { type: "close" });
         expect(result?.step).toBe(DataConnectionStep.Idle);
+        expect(result?.actions).toContainEqual({ type: "reset" });
+      });
+    });
+
+    stepsAfterSuccessfulConnection.forEach((step) => {
+      it(`${step} close -> None`, () => {
+        const result = transition(
+          step,
+          { type: "close" },
+          { hadSuccessfulConnection: true }
+        );
+        expect(result?.step).toBe(DataConnectionStep.Idle);
+        expect(result?.actions.length).toBe(0);
       });
     });
   });

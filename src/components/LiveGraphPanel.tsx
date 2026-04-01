@@ -16,15 +16,16 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useDataConnectionActions } from "../data-connection-flow";
 import {
   DataConnectionStep,
   isDataConnectionDialogOpen,
+  useDataConnectionActions,
 } from "../data-connection-flow";
-import { useStore } from "../store";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
+import { TrainModelDialogStage } from "../model";
+import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import AlertIcon from "./AlertIcon";
 import InfoToolTip from "./InfoToolTip";
@@ -46,6 +47,11 @@ const LiveGraphPanel = ({
 }: LiveGraphPanelProps) => {
   const actions = useDataConnectionActions();
   const dataConnection = useStore((s) => s.dataConnection);
+  const isTraining = useStore(
+    (s) =>
+      s.trainModelDialogStage === TrainModelDialogStage.Help ||
+      s.trainModelDialogStage === TrainModelDialogStage.TrainingInProgress
+  );
   const isConnected = dataConnection.step === DataConnectionStep.Connected;
   const isReconnecting = dataConnection.isReconnecting;
   const parentPortalRef = useRef(null);
@@ -164,7 +170,7 @@ const LiveGraphPanel = ({
           </HStack>
         </Portal>
         <HStack position="absolute" width="100%" height="100%" spacing={0}>
-          <LiveGraph />
+          <LiveGraph paused={isTraining} />
           {showPredictedAction && <PredictedAction />}
         </HStack>
       </HStack>

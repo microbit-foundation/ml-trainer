@@ -10,11 +10,19 @@ import { Logging } from "./logging/logging";
  */
 
 /**
+ * Synchronous state updates applied atomically with the step change.
+ * Modelled after xstate's assign — these are context mutations, not
+ * side-effects, so they land in the same render as the new step.
+ */
+export type Assign = Record<string, unknown>;
+
+/**
  * External transition - has target, runs exit/entry actions.
  */
 export interface Transition<TStep, TAction> {
   target: TStep;
   actions?: TAction[];
+  assign?: Assign;
 }
 
 /**
@@ -22,6 +30,7 @@ export interface Transition<TStep, TAction> {
  */
 export interface InternalTransition<TAction> {
   actions?: TAction[];
+  assign?: Assign;
 }
 
 export interface ConditionalTransition<
@@ -36,6 +45,7 @@ export interface ConditionalTransition<
    */
   target?: TStep;
   actions?: TAction[];
+  assign?: Assign;
 }
 
 type TransitionConfig<TStep, TAction, TContext, TEvent> =
@@ -101,11 +111,13 @@ export type FlowDefinition<
 export interface TransitionResult<TStep, TAction> {
   step: TStep;
   actions: TAction[];
+  assign: Assign;
 }
 
 interface InternalTransitionResult<TAction> {
   step: undefined;
   actions: TAction[];
+  assign: Assign;
 }
 
 type ResolvedTransition<TStep, TAction> =
@@ -135,11 +147,13 @@ function resolveTransition<TStep, TAction, TContext, TEvent>(
           return {
             step: undefined,
             actions: cond.actions ?? [],
+            assign: cond.assign ?? {},
           };
         }
         return {
           step: cond.target,
           actions: cond.actions ?? [],
+          assign: cond.assign ?? {},
         };
       }
     }
@@ -151,6 +165,7 @@ function resolveTransition<TStep, TAction, TContext, TEvent>(
     return {
       step: transitionConfig.target,
       actions: transitionConfig.actions ?? [],
+      assign: transitionConfig.assign ?? {},
     };
   }
 
@@ -158,6 +173,7 @@ function resolveTransition<TStep, TAction, TContext, TEvent>(
   return {
     step: undefined,
     actions: transitionConfig.actions ?? [],
+    assign: transitionConfig.assign ?? {},
   };
 }
 
@@ -200,6 +216,7 @@ export function transition<
     return {
       step: currentStep,
       actions: resolved.actions,
+      assign: resolved.assign,
     };
   }
 
@@ -210,6 +227,7 @@ export function transition<
   return {
     step: resolved.step,
     actions: [...exitActions, ...resolved.actions, ...entryActions],
+    assign: resolved.assign,
   };
 }
 

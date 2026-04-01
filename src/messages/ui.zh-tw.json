@@ -49,6 +49,12 @@
       "value": "無障礙設定"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "無障礙設定"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -124,7 +130,7 @@
   "add-action-hint": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "已完成 "
     },
     {
       "type": 1,
@@ -132,13 +138,13 @@
     },
     {
       "type": 0,
-      "value": "?"
+      "value": " 的錄製嗎？"
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Add another action"
+          "value": "新增其他動作"
         }
       ],
       "type": 8,
@@ -148,7 +154,7 @@
   "add-action-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording for "
+      "value": "已完成 "
     },
     {
       "type": 1,
@@ -156,7 +162,7 @@
     },
     {
       "type": 0,
-      "value": "? Press ‘Add action’ button to add another action"
+      "value": " 的錄製嗎？按下「新增動作」按鍵以新增其他動作"
     }
   ],
   "ai-activity-timer-resource-title": [
@@ -168,19 +174,73 @@
   "ai-light-switch-resource-title": [
     {
       "type": 0,
-      "value": "AI light switch"
+      "value": "AI 燈光開關"
     }
   ],
   "ai-sports-data-logger-resource-title": [
     {
       "type": 0,
-      "value": "AI sports data logger"
+      "value": "AI 運動資料記錄器"
     }
   ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
       "value": "AI 說故事夥伴"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "動畫展示 CreateAI 工作流程的五個步驟：連線、收集資料、測試模型、程式碼，以及使用。連線：將 micro:bit 裝置連線到電腦，建立兩者之間的通訊。收集資料：將 micro:bit 綁在手腕上。記錄兩種手勢的移動資料：揮手（以愛心圖示表示）與搖動（以叉叉圖示表示）。每種手勢都會收集多筆範例來訓練模型。測試模型：收集到足夠範例後，便會訓練機器學習模型。接著，電腦會嘗試即時辨識揮手與搖動手勢。使用者可以返回「收集資料」步驟，收集更多範例並再次測試。程式碼：使用者利用 MakeCode 程式積木寫入整合已訓練模型的程式。完成的程式會下載到 micro:bit。使用：micro:bit 會回應使用者的實際移動，並依據偵測到的是揮手還是搖動手勢，在 LED 螢幕上顯示不同圖示。"
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "暫停動畫"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "繼續動畫"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "連線"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "收集數據"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "測試模型"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "編程"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "使用"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "訓練"
     }
   ],
   "back-action": [
@@ -198,7 +258,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "程式積木預覽"
     }
   ],
   "bluetooth-disabled-body": [
@@ -308,21 +368,29 @@
   "carousel-role": [
     {
       "type": 0,
-      "value": "carousel"
+      "value": "順序播放"
     }
   ],
   "carousel-slide-label": [
+    {
+      "type": 0,
+      "value": "第 "
+    },
     {
       "type": 1,
       "value": "slideNum"
     },
     {
       "type": 0,
-      "value": " of "
+      "value": " 張，共 "
     },
     {
       "type": 1,
       "value": "totalSlides"
+    },
+    {
+      "type": 0,
+      "value": " 張"
     }
   ],
   "carousel-slide-role": [
@@ -370,7 +438,7 @@
   "clear": [
     {
       "type": 0,
-      "value": "Clear"
+      "value": "清除"
     }
   ],
   "click-to-reload-page-action": [
@@ -613,54 +681,28 @@
       "value": "My pattern is different"
     }
   ],
-  "connect-native-compare-pattern-heading": [
+  "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Compare pattern"
+      "value": "Confirm this pattern matches your micro:bit"
     }
   ],
-  "connect-native-compare-pattern-subtitle": [
+  "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "Compare this pattern with the one displayed on your micro:bit."
+      "value": "If needed, change the pattern below to match."
+    }
+  ],
+  "connect-native-start-battery-check": [
+    {
+      "type": 0,
+      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
     }
   ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "What you need to connect"
-    }
-  ],
-  "connect-native-start-requirements1": [
-    {
-      "type": 0,
-      "value": "micro:bit with battery pack"
-    }
-  ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "連線數據收集用的 micro:bit"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " 或"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "匯入數據樣本"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
+      "value": "Connect micro:bit battery pack"
     }
   ],
   "connect-pattern-heading": [
@@ -972,19 +1014,19 @@
   "create-project": [
     {
       "type": 0,
-      "value": "Create project"
+      "value": "建立專案"
     }
   ],
   "create-project-dialog-heading": [
     {
       "type": 0,
-      "value": "Create a project"
+      "value": "建立一個專案"
     }
   ],
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "Taster lessons"
+      "value": "體驗課程"
     }
   ],
   "data-actions-menu": [
@@ -1026,7 +1068,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "資料預覽"
     }
   ],
   "data-samples-actions-region": [
@@ -1145,7 +1187,7 @@
           "value": [
             {
               "type": 0,
-              "value": "Delete"
+              "value": "刪除"
             }
           ]
         },
@@ -1153,7 +1195,7 @@
           "value": [
             {
               "type": 0,
-              "value": "Delete "
+              "value": "刪除 "
             },
             {
               "type": 1,
@@ -1161,7 +1203,7 @@
             },
             {
               "type": 0,
-              "value": " projects"
+              "value": " 個專案"
             }
           ]
         }
@@ -1174,13 +1216,13 @@
   "delete-project-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete project"
+      "value": "確認刪除專案"
     }
   ],
   "delete-project-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete the project \""
+      "value": "您確定您要刪除專案「"
     },
     {
       "type": 1,
@@ -1188,19 +1230,19 @@
     },
     {
       "type": 0,
-      "value": "\"?"
+      "value": "」嗎？"
     }
   ],
   "delete-projects-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete projects"
+      "value": "確認刪除專案"
     }
   ],
   "delete-projects-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete "
+      "value": "您確定要刪除 "
     },
     {
       "type": 1,
@@ -1208,7 +1250,7 @@
     },
     {
       "type": 0,
-      "value": " projects?"
+      "value": " 個專案嗎？"
     }
   ],
   "delete-recording-aria": [
@@ -1365,6 +1407,12 @@
       "value": "下載數據收集程式"
     }
   ],
+  "downloading-data-collection-microbit-header": [
+    {
+      "type": 0,
+      "value": "Downloading data collection program to micro:bit"
+    }
+  ],
   "downloading-header": [
     {
       "type": 0,
@@ -1416,13 +1464,13 @@
   "duplicate-project-action": [
     {
       "type": 0,
-      "value": "Duplicate"
+      "value": "複製"
     }
   ],
   "duplicate-project-heading": [
     {
       "type": 0,
-      "value": "Duplicate project"
+      "value": "複製專案"
     }
   ],
   "edit-in-makecode-action": [
@@ -1648,13 +1696,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "First lessons"
-    }
-  ],
-  "get-started-action": [
-    {
-      "type": 0,
-      "value": "入門指南"
+      "value": "入門課程"
     }
   ],
   "go-action": [
@@ -1738,13 +1780,13 @@
   "help-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of help resources"
+      "value": "協助資源列表"
     }
   ],
   "help-resources-row-title": [
     {
       "type": 0,
-      "value": "Help"
+      "value": "幫助"
     }
   ],
   "help-support": [
@@ -1771,34 +1813,10 @@
       "value": "首頁"
     }
   ],
-  "homepage-alt": [
-    {
-      "type": 0,
-      "value": "顯示代表 micro:bit 加速計數據的 x、y、z 圖線的圖表，並重疊拍手圖示"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "顯示代表 micro:bit 加速計數據的 x、y、z 圖線的圖表"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "拍手"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
   "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "New to "
+      "value": "剛開始使用 "
     },
     {
       "type": 1,
@@ -1806,161 +1824,13 @@
     },
     {
       "type": 0,
-      "value": "?"
+      "value": " 嗎？"
     }
   ],
   "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Discover in-depth tutorials and teaching resources"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "以您自己的移動數據來訓練機器學習模型並且在您的 micro:bit 上運行它。"
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "運作方式"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "觀看影片即可開始。請參閱"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "使用者指南"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "以瞭解更多資訊。"
-    }
-  ],
-  "homepage-media-description": [
-    {
-      "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "專案"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "探索更多"
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "有關於 micro:bit 和 AI 的內容及資源"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "。"
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "一步一步的"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "利用移動和機器學習在您的 BBC micro:bit 上建立 AI。"
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "介紹視訊"
+      "value": "結合移動與 micro:bit 的機器學習"
     }
   ],
   "import-data-samples-action": [
@@ -1988,7 +1858,7 @@
   "import-file-action": [
     {
       "type": 0,
-      "value": "Import"
+      "value": "匯入"
     }
   ],
   "incompatible-device-body-alt": [
@@ -2080,37 +1950,37 @@
   "language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Fully supported"
+      "value": "完全支援"
     }
   ],
   "language-partially-supported-heading": [
     {
       "type": 0,
-      "value": "Partially supported"
+      "value": "部分支持"
     }
   ],
   "language-support-checked": [
     {
       "type": 0,
-      "value": "Supported"
+      "value": "支援"
     }
   ],
   "language-support-unchecked": [
     {
       "type": 0,
-      "value": "Unsupported"
+      "value": "不支援"
     }
   ],
   "language-supported-for": [
     {
       "type": 0,
-      "value": "Translations supported for:"
+      "value": "支援的翻譯："
     }
   ],
   "language-toast-title": [
     {
       "type": 0,
-      "value": "Language not fully supported"
+      "value": "語言未完全支持"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -2122,7 +1992,7 @@
   "learn-more-action": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "瞭解詳情"
     }
   ],
   "led-icon-option-angry": [
@@ -2498,25 +2368,25 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Move the micro:bit to explore how different actions change the graph"
+      "value": "移動 micro:bit，探索不同動作如何變更圖表"
     }
   ],
   "my-projects-row-carousel": [
     {
       "type": 0,
-      "value": "List of my projects"
+      "value": "我的專案列表"
     }
   ],
   "my-projects-row-title": [
     {
       "type": 0,
-      "value": "My projects"
+      "value": "我的專案"
     }
   ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "命名您希望 micro:bit 辨識的動作"
+      "value": "為您希望 CreateAI 識別的動作命名，例如「揮手」或「跳躍」"
     }
   ],
   "name-project": [
@@ -2620,119 +2490,13 @@
   "new-project-setup-title": [
     {
       "type": 0,
-      "value": "New project setup"
-    }
-  ],
-  "new-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of new project actions"
-    }
-  ],
-  "new-projects-row-title": [
-    {
-      "type": 0,
-      "value": "New projects"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "利用您儲存到您電腦的十六進位檔案或數據樣本檔案以繼續會話。"
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "繼續一個已儲存會話"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "日期："
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "名稱："
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "未找到會話"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "開啟上一個會話"
+      "value": "新專案設定"
     }
   ],
   "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "New project"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "連線您的 micro:bit 並收集移動數據以建立機器學習模型。"
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "新會話"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "從您上次離開的地方繼續"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "開始新專案"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "新會話"
+      "value": "新專案"
     }
   ],
   "next-action": [
@@ -2744,7 +2508,7 @@
   "no-projects": [
     {
       "type": 0,
-      "value": "No projects to display"
+      "value": "沒有可顯示的專案"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2775,12 +2539,6 @@
       "value": "找不到頁面"
     }
   ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "開啟..."
-    }
-  ],
   "open-file-dropped": [
     {
       "type": 0,
@@ -2790,43 +2548,43 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "開啟"
     }
   ],
   "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "開啟專案"
     }
   ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
+      "value": "預覽此專案中包含的 MakeCode 程式碼。"
     }
   ],
   "open-shared-project-data-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the actions and data contained within this project."
+      "value": "預覽此專案中包含的動作與資料。"
     }
   ],
   "open-shared-project-description": [
     {
       "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+      "value": "這是一個與 CreateAI 相容的 Microsoft MakeCode 共用專案。"
     }
   ],
   "open-shared-project-error-description": [
     {
       "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+      "value": "檢查您開啟的連結正確無誤，並在重試前確認已連線網際網路。"
     }
   ],
   "open-shared-project-title": [
     {
       "type": 0,
-      "value": "Open shared CreateAI project"
+      "value": "開啟共用的 CreateAI 專案"
     }
   ],
   "other-tabs-body1": [
@@ -2864,19 +2622,19 @@
   "project-ideas-row-carousel": [
     {
       "type": 0,
-      "value": "List of project ideas"
+      "value": "專案構想列表"
     }
   ],
   "project-ideas-row-title": [
     {
       "type": 0,
-      "value": "Project ideas"
+      "value": "專案構想"
     }
   ],
   "project-label": [
     {
       "type": 0,
-      "value": "Project"
+      "value": "專案"
     }
   ],
   "project-loaded": [
@@ -2887,12 +2645,16 @@
   ],
   "project-menu-action": [
     {
+      "type": 0,
+      "value": " "
+    },
+    {
       "type": 1,
       "value": "name"
     },
     {
       "type": 0,
-      "value": " actions menu"
+      "value": " 動作選單"
     }
   ],
   "project-name-not-empty": [
@@ -2904,31 +2666,31 @@
   "project-name-text": [
     {
       "type": 0,
-      "value": "Project name"
+      "value": "專案名稱"
     }
   ],
   "project-name-tooltip": [
     {
       "type": 0,
-      "value": "Click to edit project name"
+      "value": "點擊以編輯專案名稱"
     }
   ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
-      "value": "Skip to toolbar"
+      "value": "跳至工具列"
     }
   ],
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+      "value": "您的資料會儲存在此裝置上的瀏覽器中。清除瀏覽器的 Cookie 或網站資料將會刪除這些資料。若您的裝置儲存空間不足，瀏覽器也可能會自動將其移除。"
     }
   ],
   "projects-page-title": [
     {
       "type": 0,
-      "value": "Projects"
+      "value": "專案"
     }
   ],
   "radio-link-microbit": [
@@ -3038,19 +2800,33 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "按下以記錄數據樣本。"
+      "value": "按下錄製以收集一筆移動資料範例。"
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "按下以記錄數據樣本或是按下您的數據收集用的 micro:bit 上的按鍵 B。"
+      "value": "按下錄製 "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "或"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " micro:bit 上的 B 按鍵，以收集一筆移動資料範例。"
     }
   ],
   "record-more-hint": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "至少再錄製 "
     },
     {
       "offset": 0,
@@ -3063,7 +2839,7 @@
             },
             {
               "type": 0,
-              "value": " more data sample"
+              "value": " 筆資料範例"
             }
           ]
         },
@@ -3075,7 +2851,7 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": " 筆資料範例"
             }
           ]
         }
@@ -3088,7 +2864,15 @@
   "record-more-hint-label": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "至少再為 "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " 錄製 "
     },
     {
       "offset": 0,
@@ -3101,7 +2885,7 @@
             },
             {
               "type": 0,
-              "value": " more data sample"
+              "value": " 筆資料範例"
             }
           ]
         },
@@ -3113,7 +2897,7 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": " 筆資料範例"
             }
           ]
         }
@@ -3121,14 +2905,6 @@
       "pluralType": "cardinal",
       "type": 6,
       "value": "numSamples"
-    },
-    {
-      "type": 0,
-      "value": " for "
-    },
-    {
-      "type": 1,
-      "value": "actionName"
     }
   ],
   "record-samples": [
@@ -3266,13 +3042,13 @@
   "rename-project-action": [
     {
       "type": 0,
-      "value": "Rename"
+      "value": "重新命名"
     }
   ],
   "rename-project-heading": [
     {
       "type": 0,
-      "value": "Rename project"
+      "value": "重新命名專案"
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3394,7 +3170,7 @@
   "search": [
     {
       "type": 0,
-      "value": "Search"
+      "value": "搜尋"
     }
   ],
   "select-icon-action-aria": [
@@ -3434,7 +3210,7 @@
   "select-project-action": [
     {
       "type": 0,
-      "value": "Select "
+      "value": "選擇 "
     },
     {
       "type": 1,
@@ -3444,7 +3220,7 @@
   "selection-actions-group": [
     {
       "type": 0,
-      "value": "Selection actions"
+      "value": "選擇動作"
     }
   ],
   "settings": [
@@ -3524,55 +3300,43 @@
   "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Last modified"
+      "value": "上次修改"
     }
   ],
   "sort-option-name": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "名稱"
     }
   ],
   "sort-option-relevance": [
     {
       "type": 0,
-      "value": "Relevance"
+      "value": "相關性"
     }
   ],
   "sort-order-ascending-label": [
     {
       "type": 0,
-      "value": "Ascending order"
+      "value": "升序排序"
     }
   ],
   "sort-order-descending-label": [
     {
       "type": 0,
-      "value": "Descending order"
+      "value": "降序排序"
     }
   ],
   "sort-select-label": [
     {
       "type": 0,
-      "value": "Sort projects"
-    }
-  ],
-  "start-session-action": [
-    {
-      "type": 0,
-      "value": "開始會話"
+      "value": "排序專案"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
       "value": "開始訓練"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "圖表顯示收集數據、訓練模型、測試模型、改進數據以優化模型的迭代程序，然後最終利用模型進行編碼。"
     }
   ],
   "steps-code": [
@@ -3611,6 +3375,30 @@
       "value": "停止錄製"
     }
   ],
+  "storage-error-device-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to device storage"
+    }
+  ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to browser storage"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "Your project edit may not be saved."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "Browser storage full"
+    }
+  ],
   "support-request": [
     {
       "type": 0,
@@ -3634,13 +3422,13 @@
   "teacher-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of teacher resources"
+      "value": "教師資源列表"
     }
   ],
   "teacher-resources-row-title": [
     {
       "type": 0,
-      "value": "Teacher resources"
+      "value": "教師資源"
     }
   ],
   "terms": [
@@ -3664,13 +3452,13 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+      "value": "此專案由使用者提供，未經 Microsoft 或 Micro:bit Educational Foundation 認可。若您認為內容不適當，請前往 "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "MakeCode shared project"
+          "value": "MakeCode 共用專案"
         }
       ],
       "type": 8,
@@ -3678,19 +3466,19 @@
     },
     {
       "type": 0,
-      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+      "value": " 向 Microsoft MakeCode 檢舉不當內容。"
     }
   ],
   "timestamp-now": [
     {
       "type": 0,
-      "value": "now"
+      "value": "現在"
     }
   ],
   "timestamp-seconds": [
     {
       "type": 0,
-      "value": "a few seconds ago"
+      "value": "幾秒前"
     }
   ],
   "tour-action": [
@@ -3930,13 +3718,13 @@
   "train-hint": [
     {
       "type": 0,
-      "value": "Finished recording?"
+      "value": "錄製完成了嗎？"
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Train the model"
+          "value": "訓練模型"
         }
       ],
       "type": 8,
@@ -3946,7 +3734,7 @@
   "train-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+      "value": "錄製完成了嗎？按下「訓練模型」按鍵來訓練模型"
     }
   ],
   "train-model": [
@@ -4002,7 +3790,7 @@
   "troubleshooting-resource-title": [
     {
       "type": 0,
-      "value": "Troubleshooting"
+      "value": "疑難排解"
     }
   ],
   "try-again-action": [
@@ -4096,7 +3884,7 @@
   "view-all-projects": [
     {
       "type": 0,
-      "value": "View all"
+      "value": "檢視全部"
     }
   ],
   "webusb-retry-no-select": [
@@ -4132,7 +3920,7 @@
   "welcome-title": [
     {
       "type": 0,
-      "value": "How CreateAI works"
+      "value": "CreateAI 的運作方式"
     }
   ]
 }
