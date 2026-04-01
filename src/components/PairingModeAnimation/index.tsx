@@ -89,12 +89,16 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         />
       </VisuallyHidden>
       <Stack
+        py={3.5}
         aria-hidden
-        direction={{ base: "column", md: "row" }}
+        direction={{
+          base: isTripleReset ? "column-reverse" : "column",
+          md: "row",
+        }}
         justifyContent="center"
-        gap="1rem"
+        gap={{ base: 10, md: "1rem" }}
         alignItems={isTripleReset ? "center" : { base: "center", md: "end" }}
-        minH={{ base: "auto", md: "180px" }}
+        minH={{ base: "auto", md: "200px" }}
       >
         {isTripleReset ? (
           <MicrobitBoardFront
