@@ -24,6 +24,7 @@ interface PairingModeAnimationProps {
 }
 
 const durations = {
+  startPause: 1,
   pause: 0.1,
 };
 
@@ -38,12 +39,12 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
 
   useEffect(() => {
     const run = async () => {
+      await delayInSec(durations.startPause);
       // eslint-disable-next-line no-constant-condition
       while (true) {
         try {
           switch (pairingMethod) {
             case "a-b-reset": {
-              await delayInSec(durations.pause);
               await microbitABBoardFrontRef.current?.playHoldAB();
               await delayInSec(durations.pause);
               await microbitBoardBackRef.current?.playPressed();
@@ -62,7 +63,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
           microbitABBoardFrontRef.current?.reset();
           microbitBoardFrontRef.current?.reset();
           microbitBoardBackRef.current?.reset();
-          await delayInSec(0.1);
+          await delayInSec(durations.pause);
         } catch (e) {
           if (e instanceof DOMException && e.name === "AbortError") {
             // Abort running animation.
