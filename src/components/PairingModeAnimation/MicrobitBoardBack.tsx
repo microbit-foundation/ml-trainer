@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Icon, IconProps, useToken } from "@chakra-ui/react";
-import { forwardRef } from "react";
 
 export interface MicrobitBoardBackRef {}
 
@@ -12,13 +11,10 @@ interface MicrobitBoardBackProps extends IconProps {
   resetButtonStrokeColor?: string;
 }
 
-export const MicrobitBoardBack = forwardRef<
-  MicrobitBoardBackRef,
-  MicrobitBoardBackProps
->(function MicrobitBoardBack({
+export const MicrobitBoardBack = ({
   resetButtonStrokeColor = "transparent",
   ...props
-}) {
+}: MicrobitBoardBackProps) => {
   const [resetButtonStrokeFill] = useToken("colors", [resetButtonStrokeColor]);
   return (
     <Icon viewBox="0 0 194 157" fill="none" {...props}>
@@ -190,4 +186,4 @@ export const MicrobitBoardBack = forwardRef<
       />
     </Icon>
   );
-});
+};
