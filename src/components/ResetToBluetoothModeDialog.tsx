@@ -40,8 +40,7 @@ const ResetToBluetoothModeDialog = ({
         {...props}
         headingId="reset-to-bluetooth-mode-heading"
         footerLeft={
-          <>
-            <PauseResumeButton />
+          <VStack alignItems="flex-start">
             <Link
               as="button"
               color="brand.600"
@@ -58,7 +57,8 @@ const ResetToBluetoothModeDialog = ({
                 <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
               )}
             </Link>
-          </>
+            <PauseResumeButton />
+          </VStack>
         }
       >
         <VStack gap={5} width="100%">

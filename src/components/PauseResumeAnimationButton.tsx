@@ -7,11 +7,21 @@ import PauseIcon from "./icons/PauseIcon";
 const PauseResumeButton = () => {
   const { pause, isPaused, resume } = useAnimation();
   return isPaused ? (
-    <Button variant="link" onClick={resume} leftIcon={<Icon as={RiPlayFill} />}>
+    <Button
+      variant="link"
+      onClick={resume}
+      leftIcon={<Icon as={RiPlayFill} />}
+      borderRadius={0}
+    >
       <FormattedMessage id="animation-resume-action" />
     </Button>
   ) : (
-    <Button variant="link" onClick={pause} leftIcon={<PauseIcon />}>
+    <Button
+      variant="link"
+      onClick={pause}
+      leftIcon={<PauseIcon />}
+      borderRadius={0}
+    >
       <FormattedMessage id="animation-pause-action" />
     </Button>
   );
