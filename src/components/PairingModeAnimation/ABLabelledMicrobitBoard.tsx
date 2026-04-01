@@ -119,7 +119,7 @@ const buttonLabelFillDuration = 0.75; // sec
 
 const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
   function ButtonLabel({ activeColor, text }, ref) {
-    const { delayInSec, withPlayState } = useAnimation();
+    const { delayInSec, withPlayState, prefersReducedMotion } = useAnimation();
     const [playing, setPlaying] = useState<boolean>(false);
 
     const buttonLabelAnimationProps = useCallback(
@@ -157,7 +157,9 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           px="3%"
           py="5%"
           textAlign="center"
-          backgroundColor={inactiveColor}
+          backgroundColor={
+            prefersReducedMotion && playing ? activeColor : inactiveColor
+          }
           borderRadius="0.5rem"
           fontWeight="bold"
           fontSize="lg"
@@ -181,7 +183,9 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           h="191%"
           left="42.5%"
           transformOrigin="bottom"
-          transform="scaleY(0)"
+          transform={
+            prefersReducedMotion && playing ? "scaleY(1)" : "scaleY(0)"
+          }
           backgroundColor={activeColor}
           {...(playing ? buttonLabelAnimationProps(lineScaleUp) : {})}
         />

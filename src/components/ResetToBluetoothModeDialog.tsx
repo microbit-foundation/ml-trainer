@@ -35,7 +35,7 @@ const ResetToBluetoothModeDialog = ({
   }, [isTripleReset]);
 
   return (
-    <AnimationProvider key={pairingMethod}>
+    <AnimationProvider key={pairingMethod} removeAnimationIfReducedMotion>
       <ConnectContainerDialog
         {...props}
         headingId="reset-to-bluetooth-mode-heading"

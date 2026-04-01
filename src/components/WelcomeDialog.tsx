@@ -31,7 +31,7 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
   });
 
   return (
-    <AnimationProvider>
+    <AnimationProvider startPausedIfReducedMotion>
       <Modal
         closeOnOverlayClick={false}
         motionPreset="none"
