@@ -182,7 +182,7 @@ const LiveGraph = ({ paused }: LiveGraphProps) => {
         id="smoothie-chart"
         width={width - 30}
       />
-      {isConnected && <LiveGraphLabels />}
+      {isConnected && <LiveGraphLabels paused={paused} />}
     </HStack>
   );
 };

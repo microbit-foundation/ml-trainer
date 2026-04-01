@@ -14,7 +14,11 @@ import { getLabelHeights } from "../live-graph-label-config";
 import { smoothenDataPoint } from "./LiveGraph";
 import { useSettings } from "../store";
 
-const LiveGraphLabels = () => {
+interface LiveGraphLabelsProps {
+  paused?: boolean;
+}
+
+const LiveGraphLabels = ({ paused }: LiveGraphLabelsProps) => {
   const [{ graphColorScheme }] = useSettings();
   const colors = useGraphColors(graphColorScheme);
   const connectActions = useConnectActions();
@@ -76,11 +80,14 @@ const LiveGraphLabels = () => {
         }
       });
     };
+    if (paused) {
+      return;
+    }
     connectActions.addAccelerometerListener(listener);
     return () => {
       connectActions.removeAccelerometerListener(listener);
     };
-  }, [connectActions, labelConfig]);
+  }, [connectActions, labelConfig, paused]);
 
   return (
     <Box w={10} h={40} position="relative">
