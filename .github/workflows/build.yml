@@ -47,7 +47,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: node ./bin/print-ci-env.cjs >> $GITHUB_ENV
+      - run: node ./bin/print-web-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
       - name: Run Playwright tests
         if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA'
