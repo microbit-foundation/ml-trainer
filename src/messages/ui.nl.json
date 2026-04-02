@@ -45,6 +45,12 @@
       "value": "Toegankelijkheid"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Toegankelijkheid"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -117,16 +123,120 @@
       "value": "Voeg actie toe"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Klaar met opnemen voor "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Een andere actie toevoegen"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "Klaar met opnemen voor "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Klik op 'Actie toevoegen' om een andere actie toe te voegen"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
       "value": "AI activiteiten timer"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "AI-lichtschakelaar"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "AI sportgegevens logger"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
       "value": "AI verhalenvertellende vriend"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "Animatie om de vijf stappen van de CreateAI workflow te demonstreren: Verbind, Verzamel gegevens, Test model, Codeer en Gebruik. Verbind: Een micro:bit apparaat is verbonden met een computer, waardoor communicatie tussen de twee tot stand wordt gebracht. Verzamel gegevens: Een micro:bit is om een pols gebonden. Gegevens van beweging worden geregistreerd voor twee gebaren: een golf (vertegenwoordigd door een hartpictogram) en een schudding (vertegenwoordigd door een kruispictogram). Er worden meerdere opnames verzameld voor elk gebaar om het model te trainen. Test model: Zodra er genoeg opnames zijn verzameld, wordt er een machine learning-model getraind. De computer probeert vervolgens golf- en schudgebaren in real time te herkennen. De gebruiker kan terugkeren naar de Verzamel gegevens- stap om extra opnames te verzamelen en vervolgens te testen. Codeer: De gebruiker schrijft een programma met behulp van MakeCode blokken waarin het getrainde model is geïntegreerd. Het voltooide programma wordt gedownload naar de micro:bit. Gebruik: De micro:bit reageert op de fysieke bewegingen van de gebruiker, verschillende pictogrammen worden weergegeven op het LED-scherm, afhankelijk van of er een golf- of schudgebaar wordt gedetecteerd."
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "Animatie pauzeren"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "Animatie hervatten"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "Verbinden "
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "Gegevens verzamelen"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "Test model"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "Codeer"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "Gebruik"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Training"
     }
   ],
   "back-action": [
@@ -144,7 +254,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "Blokken voorbeeld"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -175,6 +285,32 @@
     {
       "type": 0,
       "value": "Opname annuleren"
+    }
+  ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "carrousel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " van "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "Veeg"
     }
   ],
   "certainty-label": [
@@ -215,6 +351,12 @@
     {
       "type": 0,
       "value": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert."
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Verwijderen"
     }
   ],
   "click-to-reload-page-action": [
@@ -437,32 +579,6 @@
     {
       "type": 0,
       "value": "Micro USB-kabel"
-    }
-  ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Verbind een micro:bit die gegevens verzamelt"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " of "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "importeer data samples"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
     }
   ],
   "connect-pattern-heading": [
@@ -689,6 +805,24 @@
       "value": "Kopiëer"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Project aanmaken"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Maak een project aan"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Voorproefje lessen"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -728,7 +862,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "Gegevens voorbeeld"
     }
   ],
   "data-samples-actions-region": [
@@ -833,6 +967,80 @@
     {
       "type": 0,
       "value": "Weet je zeker dat je alle data samples wil verwijderen?"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verwijder"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Verwijder "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projecten"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Verwijderen van project bevestigen"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Weet je zeker dat je project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\" wilt verwijderen?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Verwijderen van projecten bevestigen"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Weet je zeker dat je "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projecten wilt verwijderen?"
     }
   ],
   "delete-recording-aria": [
@@ -1009,6 +1217,18 @@
     {
       "type": 0,
       "value": "Even geduld. Programma is aan het downloaden naar de micro:bit."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Kopiëren"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Kopieer project"
     }
   ],
   "edit-in-makecode-action": [
@@ -1231,10 +1451,10 @@
       "value": "Firmware update vereist"
     }
   ],
-  "get-started-action": [
+  "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "Hoe te beginnen"
+      "value": "Eerste lessen"
     }
   ],
   "go-action": [
@@ -1315,6 +1535,18 @@
       "value": "Help"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "Lijst van hulpbronnen"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Help"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1339,176 +1571,24 @@
       "value": "Startpagina"
     }
   ],
-  "homepage-alt": [
+  "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "grafiek met de x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven met klappende handen er overheen getekend"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "grafiek toont x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "klappende handen"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "Train een machine learning model op je eigen bewegingsgegevens en voer het uit op je micro:bit."
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "Zo werkt het"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "Bekijk de video om te beginnen. Lees meer in de "
+      "value": "Nieuw bij "
     },
     {
-      "children": [
-        {
-          "type": 0,
-          "value": "gebruikershandleiding"
-        }
-      ],
-      "type": 8,
-      "value": "link"
+      "type": 1,
+      "value": "appName"
     },
     {
       "type": 0,
-      "value": "."
+      "value": "?"
     }
   ],
-  "homepage-media-description": [
+  "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "Projecten"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "Ontdek meer "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "inhoud en bronnen over micro:bit en AI"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "Stap voor stap"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Maak AI aan op je BBC micro:bit met behulp van beweging en machine learning."
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "Introductievideo"
+      "value": "Machine learning met beweging en de micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -1535,6 +1615,12 @@
     {
       "type": 0,
       "value": "Niet-ondersteund bestandstype"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Importeren"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1663,6 +1749,12 @@
     {
       "type": 0,
       "value": "Meer informatie over firewall vereisten"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Meer informatie"
     }
   ],
   "led-icon-option-angry": [
@@ -1999,10 +2091,28 @@
       "value": "Meer opties voor bewerken in MakeCode"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Beweeg de micro:bit om te ontdekken hoe verschillende acties de grafiek veranderen"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "Lijst van mijn projecten"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "Mijn projecten"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Geef een naam aan een actie die je wilt dat de micro:bit herkent"
+      "value": "Noem een actie die je wilt aanmaken om door CreateAI te laten herkennen, zoals ‘zwaaien’ of ‘springen’"
     }
   ],
   "name-project": [
@@ -2023,124 +2133,16 @@
       "value": "De naam wordt gebruikt wanneer je een hex-bestand opslaat."
     }
   ],
-  "new-session-setup-description": [
+  "new-project-setup-title": [
     {
       "type": 0,
-      "value": "Een nieuwe sessie starten overschrijft je bestaande sessie. Mogelijk wil je eerst "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "je bestaande sessie opslaan"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
+      "value": "Nieuw project instellen"
     }
   ],
-  "new-session-setup-title": [
+  "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "Nieuwe sessie-instellingen"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Gebruik een hex-bestand of data samples die je op je computer hebt opgeslagen om door te gaan met een sessie."
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "Doorgaan met opgeslagen sessie"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Datum:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Naam:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "Geen sessie gevonden"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "Laatste sessie openen"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Verbind je micro:bit en verzamel bewegingsgegevens om een machine learning model te bouwen."
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "Nieuwe sessie"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "Ga verder waar u was gebleven"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "Begin iets nieuws"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "Nieuwe sessie"
+      "value": "Nieuw project"
     }
   ],
   "next-action": [
@@ -2149,10 +2151,10 @@
       "value": "Volgende"
     }
   ],
-  "no-data-samples": [
+  "no-projects": [
     {
       "type": 0,
-      "value": "Geen data samples"
+      "value": "Geen projecten om te tonen"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2183,12 +2185,6 @@
       "value": "Pagina niet gevonden"
     }
   ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "Open…"
-    }
-  ],
   "open-file-dropped": [
     {
       "type": 0,
@@ -2198,57 +2194,43 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "Open"
     }
   ],
-  "open-project-setup-description": [
+  "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
+      "value": "Open project"
     }
   ],
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
+      "value": "Voorbeeld van de MakeCode code in dit project."
     }
   ],
   "open-shared-project-data-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the actions and data contained within this project."
+      "value": "Voorbeeld van de acties en gegevens in dit project."
     }
   ],
   "open-shared-project-description": [
     {
       "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+      "value": "Dit is een Microsoft MakeCode gedeeld project dat compatibel is met CreateAI."
     }
   ],
   "open-shared-project-error-description": [
     {
       "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+      "value": "Controleer of de link die je gevolgd hebt juist is en zorg ervoor dat je verbonden bent met het internet voordat je het opnieuw probeert."
     }
   ],
   "open-shared-project-title": [
     {
       "type": 0,
-      "value": "Open shared CreateAI project"
+      "value": "Open gedeeld CreateAI-project"
     }
   ],
   "other-tabs-body1": [
@@ -2283,16 +2265,74 @@
       "value": "Privacybeleid"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "Lijst van projectideeën"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Projectideeën"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Project"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "Project geladen"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actiesmenu"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "De projectnaam kan niet leeg zijn"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Projectnaam"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Klik om de projectnaam te bewerken"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Ga naar werkbalk"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Jouw gegevens worden opgeslagen in deze browser op dit apparaat. Het wissen van je browsercookies of sitegegevens zal deze verwijderen. Het kan ook automatisch worden verwijderd door je browser als jouw apparaat weinig opslagruimte heeft."
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projecten"
     }
   ],
   "radio-link-microbit": [
@@ -2396,13 +2436,119 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Klik om een data sample op te nemen."
+      "value": "Druk op opnemen om een beweginggegevens-sample te verzamelen."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Klik om een data sample op te nemen of druk op knop B op jouw data collectie micro:bit."
+      "value": "Druk op opnemen "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "of"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " knop B op de micro:bit om een beweginggegevens-sample te verzamelen."
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Neem te minste "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " extra gegevens-sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " extra gegevens-samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " op"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Neem ten minste "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " extra gegevens-sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " extra gegevens-sample"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " voor "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " op"
     }
   ],
   "record-samples": [
@@ -2541,6 +2687,18 @@
       "value": "Herladen"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Hernoemen"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Hernoem project"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2627,6 +2785,12 @@
       "value": "Je hex bestand is gedownload"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Zoeken"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2659,6 +2823,22 @@
     {
       "type": 0,
       "value": "\" pictogram"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Selecteer "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selectie-acties"
     }
   ],
   "settings": [
@@ -2697,22 +2877,46 @@
       "value": "Software versies"
     }
   ],
-  "start-session-action": [
+  "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Start sessie"
+      "value": "Laatst gewijzigd"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Naam"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Relevantie"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Oplopende volgorde"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Aflopende volgorde"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Projecten sorteren"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
       "value": "Start de training"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "diagram toont het iteratieve proces van het verzamelen van gegevens, trainen van een model, testen van het model en verbeteren van het model door de verzamelde gegevens te verbeteren voor het uiteindelijk coderen met het model."
     }
   ],
   "steps-code": [
@@ -2751,6 +2955,24 @@
       "value": "Stop met opnemen"
     }
   ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to browser storage"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "Your project edit may not be saved."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "Browser storage full"
+    }
+  ],
   "support-request": [
     {
       "type": 0,
@@ -2769,6 +2991,18 @@
     {
       "type": 0,
       "value": " in te dienen."
+    }
+  ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "Lijst van hulpbronnen voor leraren"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Middelen voor onderwijzers"
     }
   ],
   "terms": [
@@ -2792,13 +3026,13 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+      "value": "Dit project wordt aangeboden door een gebruiker, en wordt niet ondersteund door Microsoft of de Micro:bit Educational Foundation. Bezoek het "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "MakeCode shared project"
+          "value": "gedeelde MakeCode project"
         }
       ],
       "type": 8,
@@ -2806,7 +3040,19 @@
     },
     {
       "type": 0,
-      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+      "value": " om misbruik aan Microsoft MakeCode te melden als je denkt dat het niet gepast is."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "nu"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "een paar seconden geleden"
     }
   ],
   "tour-action": [
@@ -3043,6 +3289,28 @@
       "value": "Model trainen"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Opname voltooid?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train het model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Opname voltooid? Druk op 'Train het model' om het model te trainen"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3091,6 +3359,12 @@
     {
       "type": 0,
       "value": "Sleep het hex-bestand van je map Downloads naar het MICROBIT-station."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Probleemoplossing"
     }
   ],
   "try-again-action": [
@@ -3181,6 +3455,12 @@
       "value": "Gebruikershandleiding"
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "Alles weergeven"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,
@@ -3209,6 +3489,12 @@
     {
       "type": 0,
       "value": "de USB-kabel ontkoppelen en opnieuw aansluiten"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "Hoe CreateAI werkt"
     }
   ]
 }

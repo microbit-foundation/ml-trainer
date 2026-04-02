@@ -6,11 +6,14 @@
  */
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
+import { v4 as uuid } from "uuid";
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import { BufferedData } from "./buffered-data";
 import { deployment } from "./deployment";
 import { flags } from "./flags";
+import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
 import {
   filenames,
@@ -18,101 +21,64 @@ import {
   generateProject,
 } from "./makecode/utils";
 import { Confidences, predict, trainModel } from "./ml";
+import { mlSettings } from "./mlConfig";
 import {
+  Action,
+  ActionData,
   DataSamplesView,
   DownloadState,
   DownloadStep,
-  Action,
-  ActionData,
+  EditorStartUp,
   MicrobitToFlash,
+  OldActionData,
   PostImportDialogState,
   RecordingData,
   SaveState,
   SaveStep,
-  TourTrigger,
-  TourState,
-  TrainModelDialogStage,
-  EditorStartUp,
-  TourTriggerName,
   tourSequence,
+  DataSamplesPageHint,
+  TourState,
+  TourTrigger,
+  TourTriggerName,
+  TrainModelDialogStage,
 } from "./model";
+import {
+  createUntitledProject,
+  currentDataWindow,
+  DataWindow,
+  legacyDataWindow,
+  migrateLegacyActionDataAndAssignNewIds,
+  renameProject,
+  untitledProjectName,
+} from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
+import { Database, IdbDatabase, ProjectDataWithActions } from "./storage";
+import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
-import { untitledProjectName } from "./project-name";
-import { mlSettings } from "./mlConfig";
-import { BufferedData } from "./buffered-data";
 import { getDetectedAction } from "./utils/prediction";
-import { getTour as getTourSpec } from "./tours";
-import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
+import { LoadAction } from "./hooks/project-hooks";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
+import { projectSessionStorage } from "./session-storage";
 
-export const modelUrl = "indexeddb://micro:bit-ai-creator-model";
+const storage: Database = new IdbDatabase();
 
-const createFirstAction = () => ({
+const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],
-  ID: Date.now(),
+  id: uuid(),
   name: "",
   recordings: [],
+  createdAt: Date.now(),
 });
-
-export interface DataWindow {
-  duration: number; // Duration of recording
-  minSamples: number; // minimum number of samples for reliable detection (when detecting actions)
-  deviceSamplesPeriod: number;
-  deviceSamplesLength: number;
-}
-
-const legacyDataWindow: DataWindow = {
-  duration: 1800,
-  minSamples: 80,
-  deviceSamplesPeriod: 25,
-  deviceSamplesLength: 80,
-};
-
-// Exported for testing.
-export const currentDataWindow: DataWindow = {
-  duration: 990,
-  minSamples: 44,
-  deviceSamplesPeriod: 20, // Default value for accelerometer period.
-  deviceSamplesLength: 50, // Number of samples required at 20 ms intervals for 1 second of data.
-};
 
 interface PredictionResult {
   confidences: Confidences;
   detected: Action | undefined;
 }
-
-const createUntitledProject = (): MakeCodeProject => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  header: {
-    target: "microbit",
-    targetVersion: "7.1.2",
-    name: untitledProjectName,
-    meta: {},
-    editor: "blocksprj",
-    pubId: "",
-    pubCurrent: false,
-    _rev: null,
-    id: "45a3216b-e997-456c-bd4b-6550ddb81c4e",
-    recentUse: 1726493314,
-    modificationTime: 1726493314,
-    cloudUserId: null,
-    cloudCurrent: false,
-    cloudVersion: null,
-    cloudLastSyncTime: 0,
-    isDeleted: false,
-    githubCurrent: false,
-    saveId: null,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any,
-  ...generateProject(
-    untitledProjectName,
-    { data: [] },
-    undefined,
-    currentDataWindow,
-    false
-  ),
-});
 
 const updateProject = (
   project: MakeCodeProject,
@@ -120,7 +86,7 @@ const updateProject = (
   actions: ActionData[],
   model: tf.LayersModel | undefined,
   dataWindow: DataWindow
-): Partial<Store> => {
+): Pick<Store, "project" | "projectEdited" | "appEditNeedsFlushToEditor"> => {
   const actionsData = { data: actions };
   const updatedProject = {
     ...project,
@@ -150,13 +116,28 @@ const updateProject = (
   };
 };
 
+export interface StorageErrorEvent {
+  type: "quota" | "other";
+}
+
 export interface State {
+  storageError: StorageErrorEvent | undefined;
+  id: string | undefined;
   actions: ActionData[];
   dataWindow: DataWindow;
   model: tf.LayersModel | undefined;
 
-  timestamp: number | undefined;
+  timestamp: number;
 
+  /**
+   * Hint to trigger depending on actions.
+   */
+  hint: DataSamplesPageHint;
+  /**
+   * Set to true if user has moved the micro:bit.
+   * This is used to decide whether to show the move hint.
+   */
+  hasMoved: boolean;
   isRecording: boolean;
 
   project: MakeCodeProject;
@@ -223,6 +204,10 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
+
+  welcomeDialogDismissedForProject: string | undefined;
+
+  allProjectData: ProjectDataWithActions[];
 }
 
 export interface ConnectOptions {
@@ -230,41 +215,51 @@ export interface ConnectOptions {
 }
 
 export interface Actions {
-  addNewAction(): void;
-  addActionRecordings(id: ActionData["ID"], recs: RecordingData[]): void;
-  deleteAction(id: ActionData["ID"]): void;
-  setActionName(id: ActionData["ID"], name: string): void;
-  setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon): void;
-  setRequiredConfidence(id: ActionData["ID"], value: number): void;
-  deleteActionRecording(id: ActionData["ID"], recordingIdx: number): void;
-  deleteAllActions(): void;
+  getAllProjectData(): Promise<void>;
+  loadProjectFromStorage(id: string): Promise<void>;
+  updateProjectUpdatedAt(): Promise<void>;
+  duplicateProject(id: string, name: string): Promise<void>;
+  deleteProject(id: string): Promise<void>;
+  deleteProjects(ids: string[]): Promise<void>;
+  clearProjectState(): void;
+  addNewAction(): Promise<void>;
+  addActionRecording(id: string, recording: RecordingData): Promise<void>;
+  deleteAction(action: ActionData): Promise<void>;
+  setActionName(id: string, name: string): Promise<void>;
+  setActionIcon(id: string, icon: MakeCodeIcon): Promise<void>;
+  setRequiredConfidence(id: string, value: number): Promise<void>;
+  deleteActionRecording(id: string, recordingId: string): Promise<void>;
+  deleteAllActions(): Promise<void>;
   downloadDataset(): void;
 
   dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
 
-  loadDataset(actions: ActionData[]): void;
-  loadProject(project: MakeCodeProject, name: string): void;
+  loadDataset(actions: ActionData[], loadAction: LoadAction): Promise<void>;
+  loadProject(project: MakeCodeProject, name: string): Promise<void>;
   setEditorOpen(open: boolean): void;
+  setHint(suppressTrainAndAddActionHint?: boolean): void;
+  setHasMoved(hasMoved: boolean): void;
   recordingStarted(): void;
   recordingStopped(): void;
-  newSession(projectName?: string): void;
+  newSession(projectName?: string): Promise<void>;
   trainModelFlowStart: (callback?: () => void) => Promise<void>;
   closeTrainModelDialogs: () => void;
   trainModel(): Promise<boolean>;
-  setSettings(update: Partial<Settings>): void;
-  setLanguage(languageId: string): void;
+  removeModel(): void;
+  setSettings(update: Partial<Settings>): Promise<void>;
+  setLanguage(languageId: string): Promise<void>;
 
   /**
    * Resets the project.
    */
-  resetProject(): void;
+  resetProject(): Promise<void>;
   /**
    * Sets the project name.
+   * Unless projectId is specified, the opened project id will be used.
    */
-  setProjectName(name: string): void;
+  setProjectName(name: string, projectId?: string): Promise<void>;
   setProjectEdited(): void;
-
   /**
    * When interacting outside of React to sync with MakeCode it's important to have
    * the current project after state changes.
@@ -273,7 +268,7 @@ export interface Actions {
   checkIfProjectNeedsFlush(): boolean;
   checkIfLangChanged(): boolean;
   langChangeFlushedToEditor(): void;
-  editorChange(project: MakeCodeProject): void;
+  editorChange(project: MakeCodeProject): Promise<void>;
   editorReady(): void;
   editorTimedOut(): void;
   getEditorStartUp(): EditorStartUp;
@@ -283,19 +278,18 @@ export interface Actions {
   projectFlushedToEditor(): void;
 
   setDownload(state: DownloadState): void;
-  // TODO: does the persistence slow this down? we could move it to another store
   setDownloadFlashingProgress(value: number): void;
   setSave(state: SaveState): void;
 
-  tourStart(trigger: TourTrigger, manual?: boolean): void;
+  tourStart(trigger: TourTrigger, manual?: boolean): Promise<void>;
   tourNext(): void;
   tourBack(): void;
-  tourComplete(markCompleted: TourTriggerName[]): void;
+  tourComplete(markCompleted: TourTriggerName[]): Promise<void>;
 
   setPostConnectTourTrigger(trigger: TourTrigger | undefined): void;
 
-  setDataSamplesView(view: DataSamplesView): void;
-  setShowGraphs(show: boolean): void;
+  setDataSamplesView(view: DataSamplesView): Promise<void>;
+  setShowGraphs(show: boolean): Promise<void>;
 
   setPostImportDialogState(state: PostImportDialogState): void;
   startPredicting(buffer: BufferedData): void;
@@ -312,6 +306,8 @@ export interface Actions {
   incompatibleEditorDeviceDialogOnOpen(): void;
   recordingDialogOnOpen(): void;
   connectToRecordDialogOnOpen(): void;
+  dismissWelcomeDialog(): void;
+  resetWelcomeDialog(): void;
   closeDialog(): void;
   isNonConnectionDialogOpen(): boolean;
 }
@@ -321,476 +317,1016 @@ type Store = State & Actions;
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
     devtools(
-      persist(
-        (set, get) => ({
-          timestamp: undefined,
-          actions: [],
-          dataWindow: currentDataWindow,
-          isRecording: false,
-          project: createUntitledProject(),
-          projectLoadTimestamp: 0,
-          download: {
-            step: DownloadStep.None,
-            microbitToFlash: MicrobitToFlash.Default,
-          },
-          downloadFlashingProgress: 0,
-          save: {
-            step: SaveStep.None,
-          },
-          projectEdited: false,
-          settings: defaultSettings,
-          model: undefined,
-          isEditorOpen: false,
-          isEditorReady: false,
-          isEditorLoadingFile: false,
-          isEditorImportingState: false,
-          editorStartUp: "in-progress",
-          editorStartUpTimestamp: Date.now(),
-          editorPromises: {
-            editorReadyPromise: createPromise<void>(),
-            editorContentLoadedPromise: createPromise<void>(),
-          },
-          isEditorTimedOutDialogOpen: false,
-          langChanged: false,
-          appEditNeedsFlushToEditor: true,
-          // This dialog flow spans two pages
-          trainModelDialogStage: TrainModelDialogStage.Closed,
-          trainModelProgress: 0,
-          dataSamplesView: DataSamplesView.Graph,
-          postImportDialogState: PostImportDialogState.None,
-          predictionInterval: undefined,
-          predictionResult: undefined,
-          isLanguageDialogOpen: false,
-          isSettingsDialogOpen: false,
-          isConnectFirstDialogOpen: false,
-          isAboutDialogOpen: false,
-          isFeedbackFormOpen: false,
-          isDeleteAllActionsDialogOpen: false,
-          isNameProjectDialogOpen: false,
-          isRecordingDialogOpen: false,
-          isConnectToRecordDialogOpen: false,
-          isDeleteActionDialogOpen: false,
-          isIncompatibleEditorDeviceDialogOpen: false,
+      (set, get) => ({
+        storageError: undefined,
+        id: undefined,
+        timestamp: 0,
+        actions: [createFirstAction()],
+        dataWindow: currentDataWindow,
+        hint: null,
+        hasMoved: false,
+        isRecording: false,
+        project: createUntitledProject(),
+        projectLoadTimestamp: 0,
+        download: {
+          step: DownloadStep.None,
+          microbitToFlash: MicrobitToFlash.Default,
+        },
+        downloadFlashingProgress: 0,
+        save: {
+          step: SaveStep.None,
+        },
+        projectEdited: false,
+        settings: defaultSettings,
+        model: undefined,
+        isEditorOpen: false,
+        isEditorReady: false,
+        isEditorLoadingFile: false,
+        isEditorImportingState: false,
+        editorStartUp: "in-progress",
+        editorStartUpTimestamp: Date.now(),
+        editorPromises: {
+          editorReadyPromise: createPromise<void>(),
+          editorContentLoadedPromise: createPromise<void>(),
+        },
+        isEditorTimedOutDialogOpen: false,
+        langChanged: false,
+        appEditNeedsFlushToEditor: true,
+        // This dialog flow spans two pages
+        trainModelDialogStage: TrainModelDialogStage.Closed,
+        trainModelProgress: 0,
+        dataSamplesView: DataSamplesView.Graph,
+        postImportDialogState: PostImportDialogState.None,
+        predictionInterval: undefined,
+        predictionResult: undefined,
+        isLanguageDialogOpen: false,
+        isSettingsDialogOpen: false,
+        isConnectFirstDialogOpen: false,
+        isAboutDialogOpen: false,
+        isFeedbackFormOpen: false,
+        isDeleteAllActionsDialogOpen: false,
+        isNameProjectDialogOpen: false,
+        isRecordingDialogOpen: false,
+        isConnectToRecordDialogOpen: false,
+        isDeleteActionDialogOpen: false,
+        isIncompatibleEditorDeviceDialogOpen: false,
 
-          setSettings(update: Partial<Settings>) {
-            set(
-              ({ settings }) => ({
-                settings: {
-                  ...settings,
-                  ...update,
-                },
-              }),
-              false,
-              "setSettings"
-            );
-          },
+        welcomeDialogDismissedForProject: undefined,
 
-          setLanguage(languageId: string) {
-            const currLanguageId = get().settings.languageId;
-            if (languageId === currLanguageId) {
-              // No need to update language if language is the same.
-              // MakeCode does not reload.
-              return;
-            }
-            set(
-              ({ settings }) => ({
-                settings: {
-                  ...settings,
-                  languageId,
-                },
-                editorPromises: {
-                  editorReadyPromise: createPromise<void>(),
-                  editorContentLoadedPromise: createPromise<void>(),
-                },
-                isEditorReady: false,
-                editorStartUp: "in-progress",
-                editorStartUpTimestamp: Date.now(),
-                langChanged: true,
-              }),
-              false,
-              "setLanguage"
-            );
-          },
+        allProjectData: [],
 
-          newSession(projectName?: string) {
-            const untitledProject = createUntitledProject();
-            set(
-              {
-                actions: [],
-                dataWindow: currentDataWindow,
-                model: undefined,
-                project: projectName
-                  ? renameProject(untitledProject, projectName)
-                  : untitledProject,
-                projectEdited: false,
-                appEditNeedsFlushToEditor: true,
-                timestamp: Date.now(),
+        async setSettings(update: Partial<Settings>) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            ...update,
+          };
+          const timestamp = Date.now();
+          set({ settings: updatedSettings, timestamp }, false, "setSettings");
+          await storageWriteWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
+          );
+        },
+
+        async setLanguage(languageId: string) {
+          const { settings } = get();
+          if (languageId === settings.languageId) {
+            // No need to update language if language is the same.
+            // MakeCode does not reload.
+            return;
+          }
+          const updatedSettings = {
+            ...settings,
+            languageId,
+          };
+          const timestamp = Date.now();
+          set(
+            {
+              settings: updatedSettings,
+              editorPromises: {
+                editorReadyPromise: createPromise<void>(),
+                editorContentLoadedPromise: createPromise<void>(),
               },
-              false,
-              "newSession"
-            );
-          },
+              isEditorReady: false,
+              editorStartUp: "in-progress",
+              editorStartUpTimestamp: Date.now(),
+              langChanged: true,
+              timestamp,
+            },
+            false,
+            "setLanguage"
+          );
+          await storageWriteWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
+          );
+        },
 
-          setEditorOpen(open: boolean) {
-            set(
-              ({ download }) => ({
-                isEditorOpen: open,
-                download: {
-                  ...download,
-                  usbDevice: undefined,
-                },
-              }),
-              false,
-              "setEditorOpen"
-            );
-          },
-
-          recordingStarted() {
-            set({ isRecording: true }, false, "recordingStarted");
-          },
-          recordingStopped() {
-            set({ isRecording: false }, false, "recordingStopped");
-          },
-
-          addNewAction() {
-            return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = [
-                ...actions,
-                {
-                  icon: actionIcon({
-                    isFirstAction: actions.length === 0,
-                    existingActions: actions,
-                  }),
-                  ID: Date.now(),
-                  name: "",
-                  recordings: [],
-                },
-              ];
-              return {
-                actions: newActions,
-                model: undefined,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  undefined,
-                  dataWindow
-                ),
-              };
-            });
-          },
-
-          addActionRecordings(id: ActionData["ID"], recs: RecordingData[]) {
-            return set(({ actions, dataWindow, project, projectEdited }) => {
-              const updatedActions = actions.map((action) => {
-                if (action.ID === id) {
-                  return {
-                    ...action,
-                    recordings: [...recs, ...action.recordings],
-                  };
-                }
-                return action;
-              });
-              return {
-                actions: updatedActions,
-                model: undefined,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  updatedActions,
-                  undefined,
-                  dataWindow
-                ),
-              };
-            });
-          },
-
-          deleteAction(id: ActionData["ID"]) {
-            return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = actions.filter((a) => a.ID !== id);
-              const newDataWindow =
-                newActions.length === 0 ? currentDataWindow : dataWindow;
-              return {
-                actions:
-                  newActions.length === 0 ? [createFirstAction()] : newActions,
-                dataWindow: newDataWindow,
-                model: undefined,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  undefined,
-                  newDataWindow
-                ),
-              };
-            });
-          },
-
-          setActionName(id: ActionData["ID"], name: string) {
-            return set(
-              ({ project, projectEdited, actions, model, dataWindow }) => {
-                const newActions = actions.map((action) =>
-                  id !== action.ID ? action : { ...action, name }
-                );
-                return {
-                  actions: newActions,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    model,
-                    dataWindow
-                  ),
-                };
-              }
-            );
-          },
-
-          setActionIcon(id: ActionData["ID"], icon: MakeCodeIcon) {
-            return set(
-              ({ project, projectEdited, actions, model, dataWindow }) => {
-                // If we're changing the action to use an icon that's already in use
-                // then we update the action that's using the icon to use the action's current icon
-                const currentIcon = actions.find((a) => a.ID === id)?.icon;
-                const newActions = actions.map((action) => {
-                  if (action.ID === id) {
-                    return { ...action, icon };
-                  } else if (
-                    action.ID !== id &&
-                    action.icon === icon &&
-                    currentIcon
-                  ) {
-                    return { ...action, icon: currentIcon };
-                  }
-                  return action;
-                });
-                return {
-                  actions: newActions,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    model,
-                    dataWindow
-                  ),
-                };
-              }
-            );
-          },
-
-          setRequiredConfidence(id: ActionData["ID"], value: number) {
-            return set(
-              ({ project, projectEdited, actions, model, dataWindow }) => {
-                const newActions = actions.map((a) =>
-                  id !== a.ID ? a : { ...a, requiredConfidence: value }
-                );
-                return {
-                  actions: newActions,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    newActions,
-                    model,
-                    dataWindow
-                  ),
-                };
-              }
-            );
-          },
-
-          deleteActionRecording(id: ActionData["ID"], recordingIdx: number) {
-            return set(({ project, projectEdited, actions, dataWindow }) => {
-              const newActions = actions.map((action) => {
-                if (id !== action.ID) {
-                  return action;
-                }
-                const recordings = action.recordings.filter(
-                  (_r, i) => i !== recordingIdx
-                );
-                return { ...action, recordings };
-              });
-              const numRecordings = newActions.reduce(
-                (acc, curr) => acc + curr.recordings.length,
-                0
-              );
-              const newDataWindow =
-                numRecordings === 0 ? currentDataWindow : dataWindow;
-              return {
-                actions: newActions,
-                dataWindow: newDataWindow,
-                model: undefined,
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  undefined,
-                  newDataWindow
-                ),
-              };
-            });
-          },
-
-          deleteAllActions() {
-            return set(({ project, projectEdited }) => ({
-              actions: [createFirstAction()],
+        async newSession(projectName?: string) {
+          const untitledProject = createUntitledProject();
+          const timestamp = Date.now();
+          const projectEdited = false;
+          const newProject = projectName
+            ? renameProject(untitledProject, projectName)
+            : untitledProject;
+          const id = uuid();
+          const actions = [createFirstAction()];
+          set(
+            {
+              id,
+              actions,
               dataWindow: currentDataWindow,
               model: undefined,
-              ...updateProject(
-                project,
-                projectEdited,
-                [],
-                undefined,
-                currentDataWindow
-              ),
-            }));
-          },
-
-          downloadDataset() {
-            const { actions, project } = get();
-            const a = document.createElement("a");
-            a.setAttribute(
-              "href",
-              "data:application/json;charset=utf-8," +
-                encodeURIComponent(JSON.stringify(actions, null, 2))
-            );
-            a.setAttribute(
-              "download",
-              `${project.header?.name ?? untitledProjectName}-data-samples.json`
-            );
-            a.style.display = "none";
-            a.click();
-          },
-
-          loadDataset(newActions: ActionData[]) {
-            set(({ project, projectEdited, settings }) => {
-              const dataWindow = getDataWindowFromActions(newActions);
-              return {
-                settings: {
-                  ...settings,
-                  toursCompleted: Array.from(
-                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
-                  ),
-                },
-                actions: (() => {
-                  const copy = newActions.map((a) => ({ ...a }));
-                  for (const a of copy) {
-                    if (!a.icon) {
-                      a.icon = actionIcon({
-                        isFirstAction: false,
-                        existingActions: copy,
-                      });
-                    }
-                  }
-                  return copy;
-                })(),
-                dataWindow,
-                model: undefined,
-                timestamp: Date.now(),
-                ...updateProject(
-                  project,
-                  projectEdited,
-                  newActions,
-                  undefined,
-                  dataWindow
-                ),
-              };
-            });
-          },
-
-          /**
-           * Generally project loads go via MakeCode as it reads the hex but when we open projects
-           * from microbit.org we have the JSON already and use this route.
-           */
-          loadProject(project: MakeCodeProject, name: string) {
-            const newActions = getActionsFromProject(project);
-            set(({ settings, project: prevProject }) => {
-              project = renameProject(project, name);
-              project = {
-                ...project,
-                header: {
-                  ...project.header!,
-                  // .org projects have a partial header with no id which causes MakeCode sadness
-                  id: project.header?.id ?? prevProject.header!.id,
-                },
-              };
-              const timestamp = Date.now();
-              return {
-                settings: {
-                  ...settings,
-                  toursCompleted: Array.from(
-                    new Set([...settings.toursCompleted, "DataSamplesRecorded"])
-                  ),
-                },
-                actions: newActions,
-                dataWindow: getDataWindowFromActions(newActions),
-                model: undefined,
-                project,
-                projectEdited: true,
-                appEditNeedsFlushToEditor: true,
-                timestamp,
-                // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
-              };
-            });
-          },
-
-          closeTrainModelDialogs() {
-            set({
-              trainModelDialogStage: TrainModelDialogStage.Closed,
-            });
-          },
-
-          async trainModelFlowStart(callback?: () => void) {
-            const {
-              settings: { showPreTrainHelp },
+              project: newProject,
+              projectEdited,
+              appEditNeedsFlushToEditor: true,
+              timestamp,
+              hint: getHint(actions, false),
+            },
+            false,
+            "newSession"
+          );
+          projectSessionStorage.setProjectId(id);
+          await storageWriteWithErrHandling(() =>
+            storage.newSession(
               actions,
-              trainModel,
-            } = get();
-            if (!hasSufficientDataForTraining(actions)) {
-              set({
-                trainModelDialogStage: TrainModelDialogStage.InsufficientData,
-              });
-            } else if (showPreTrainHelp) {
-              set({
-                trainModelDialogStage: TrainModelDialogStage.Help,
-              });
-            } else {
-              await trainModel();
-              callback?.();
-            }
-          },
-
-          async trainModel() {
-            const { actions, dataWindow } = get();
-            logging.event({
-              type: "model-train",
-              detail: {
-                actions: actions.length,
-                samples: getTotalNumSamples(actions),
+              {
+                project: newProject,
+                projectEdited,
               },
-            });
-            const actionName = "trainModel";
+              { timestamp, name: projectName ?? untitledProjectName, id }
+            )
+          );
+        },
+
+        setEditorOpen(open: boolean) {
+          set(
+            ({ download }) => ({
+              isEditorOpen: open,
+              download: {
+                ...download,
+                usbDevice: undefined,
+              },
+            }),
+            false,
+            "setEditorOpen"
+          );
+        },
+
+        setHint(suppressTrainAndAddActionHint = false) {
+          set(
+            ({ actions }) => {
+              const hint = getHint(actions, suppressTrainAndAddActionHint);
+              return { hint };
+            },
+            false,
+            "setHint"
+          );
+        },
+
+        setHasMoved(hasMoved) {
+          set({ hasMoved }, false, "setHasMoved");
+        },
+
+        recordingStarted() {
+          set({ isRecording: true }, false, "recordingStarted");
+        },
+        recordingStopped() {
+          set({ isRecording: false }, false, "recordingStopped");
+        },
+
+        async loadProjectFromStorage(id: string) {
+          const persistedData = await storageWithErrHandling(
+            () => storage.getProject(id),
+            false
+          );
+          projectSessionStorage.setProjectId(id);
+          set({
+            // Get data window from actions on app load.
+            dataWindow: getDataWindowFromActions(persistedData.actions),
+            appEditNeedsFlushToEditor: true,
+            isEditorOpen: false,
+            ...persistedData,
+          });
+        },
+
+        async getAllProjectData(): Promise<void> {
+          const allProjectData = await storageWithErrHandling(
+            () => storage.getAllProjectData(),
+            false
+          );
+          set({
+            allProjectData,
+          });
+        },
+
+        async updateProjectUpdatedAt() {
+          const { id } = get();
+          await storageWriteWithErrHandling(() =>
+            storage.updateProjectTimestamp(id, Date.now())
+          );
+        },
+
+        async duplicateProject(id: string, name: string) {
+          const { allProjectData } = get();
+          const duplicatedProject = allProjectData.find((p) => p.id === id);
+          const newProjectId = uuid();
+          const timestamp = Date.now();
+          if (duplicatedProject) {
             set({
-              trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
-              trainModelProgress: 0,
+              allProjectData: [
+                ...allProjectData,
+                { ...duplicatedProject, name, id: newProjectId, timestamp },
+              ],
             });
-            // Delay so we get UI change before training starts. The initial part of training
-            // can block the UI. 50 ms is not sufficient, so use 100 for now.
-            await new Promise((res) => setTimeout(res, 100));
-            const trainingResult = await trainModel(
+            await storageWriteWithErrHandling(() =>
+              storage.duplicateProject(id, {
+                id: newProjectId,
+                name,
+                timestamp,
+              })
+            );
+          }
+        },
+
+        async deleteProject(id: string) {
+          const { id: currentProjectId, allProjectData } = get();
+          set({
+            ...(() => {
+              if (id === currentProjectId) {
+                // You have deleted the currently open project.
+                return {
+                  id: undefined,
+                  actions: [],
+                  dataWindow: currentDataWindow,
+                  model: undefined,
+                  project: createUntitledProject(),
+                  projectEdited: false,
+                  appEditNeedsFlushToEditor: true,
+                  timestamp: undefined,
+                };
+              }
+              return {};
+            })(),
+            allProjectData: allProjectData.filter((p) => p.id !== id),
+          });
+          if (id === currentProjectId) {
+            projectSessionStorage.clearProjectId();
+          }
+          await storageWriteWithErrHandling(
+            () => storage.deleteProject(id),
+            false
+          );
+          const message: BroadcastChannelData = {
+            messageType: BroadcastChannelMessageType.DELETE_PROJECT,
+            projectIds: [id],
+          };
+          broadcastChannel.postMessage(message);
+        },
+
+        async deleteProjects(ids: string[]) {
+          const { id: currentProjectId, allProjectData } = get();
+          set({
+            ...(() => {
+              if (currentProjectId && ids.includes(currentProjectId)) {
+                // You have deleted the currently open project.
+                return {
+                  id: undefined,
+                  actions: [],
+                  dataWindow: currentDataWindow,
+                  model: undefined,
+                  project: createUntitledProject(),
+                  projectEdited: false,
+                  appEditNeedsFlushToEditor: true,
+                  timestamp: undefined,
+                };
+              }
+              return {};
+            })(),
+            allProjectData: allProjectData.filter((p) => !ids.includes(p.id)),
+          });
+          if (currentProjectId && ids.includes(currentProjectId)) {
+            projectSessionStorage.clearProjectId();
+          }
+          await storageWriteWithErrHandling(
+            () => storage.deleteProjects(ids),
+            false
+          );
+          const message: BroadcastChannelData = {
+            messageType: BroadcastChannelMessageType.DELETE_PROJECT,
+            projectIds: ids,
+          };
+          broadcastChannel.postMessage(message);
+        },
+
+        clearProjectState() {
+          const untitledProject = createUntitledProject();
+          set({
+            id: undefined,
+            actions: [],
+            dataWindow: currentDataWindow,
+            model: undefined,
+            project: untitledProject,
+            projectEdited: false,
+            appEditNeedsFlushToEditor: true,
+            timestamp: undefined,
+          });
+          projectSessionStorage.clearProjectId();
+        },
+
+        async addNewAction() {
+          const { actions, dataWindow, id, project, projectEdited } = get();
+          const newAction: ActionData = {
+            icon: actionIcon({
+              isFirstAction: actions.length === 0,
+              existingActions: actions,
+            }),
+            id: uuid(),
+            name: "",
+            recordings: [],
+            createdAt: Date.now(),
+          };
+          const updatedActions = [...actions, newAction];
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            updatedActions,
+            undefined,
+            dataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions: updatedActions,
+            hint: getHint(updatedActions, false),
+            model: undefined,
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.addAction(
+              id,
+              newAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async addActionRecording(actionId: string, recording: RecordingData) {
+          const { actions, dataWindow, id, project, projectEdited } = get();
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = {
+            ...action,
+            recordings: [recording, ...action.recordings],
+          };
+          const updatedActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            updatedActions,
+            undefined,
+            dataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions: updatedActions,
+            hint: getHint(updatedActions, false),
+            model: undefined,
+            timestamp,
+
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.addRecording(
+              id,
+              recording,
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async deleteAction(action: ActionData) {
+          const { actions, dataWindow, id, project, projectEdited } = get();
+          const remainingActions = actions.filter((a) => a.id !== action.id);
+          const newActions =
+            remainingActions.length === 0
+              ? [createFirstAction()]
+              : remainingActions;
+          const newDataWindow =
+            remainingActions.length === 0 ? currentDataWindow : dataWindow;
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            undefined,
+            newDataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions: newActions,
+            hint: getHint(newActions, false),
+            dataWindow: newDataWindow,
+            model: undefined,
+            hasMoved: true,
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.deleteAction(
+              id,
+              action,
+              remainingActions.length === 0 ? newActions : [],
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async setActionName(actionId: string, name: string) {
+          const {
+            actions,
+            dataWindow,
+            hint,
+            id,
+            project,
+            projectEdited,
+            model,
+          } = get();
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = { ...action, name };
+          const newActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            model,
+            dataWindow
+          );
+          const timestamp = Date.now();
+          const newHint = getHint(newActions, false);
+          set({
+            actions: newActions,
+            // Hint is set separately in DataSamplesPage.tsx and debounced
+            // to avoid aria-live interruptions. Hint is set to null when
+            // the hint will change to avoid showing incorrect hint.
+            ...(hint === newHint ? {} : { hint: null }),
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.updateAction(
+              id,
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async setActionIcon(actionId: string, icon: MakeCodeIcon) {
+          const { actions, dataWindow, id, project, projectEdited, model } =
+            get();
+          const updatedActions: ActionData[] = [];
+          // If we're changing the action to use an icon that's already in use
+          // then we update the action that's using the icon to use the action's current icon
+          const currentIcon = actions.find((a) => a.id === actionId)?.icon;
+          const newActions = actions.map((action) => {
+            if (action.id === actionId) {
+              const updatedAction = { ...action, icon };
+              updatedActions.push(updatedAction);
+              return updatedAction;
+            } else if (
+              action.id !== actionId &&
+              action.icon === icon &&
+              currentIcon
+            ) {
+              const updatedAction = { ...action, icon: currentIcon };
+              updatedActions.push(updatedAction);
+              return updatedAction;
+            }
+            return action;
+          });
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            model,
+            dataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions: newActions,
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.updateActions(
+              id,
+              updatedActions,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async setRequiredConfidence(actionId: string, value: number) {
+          const { actions, dataWindow, id, project, projectEdited, model } =
+            get();
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = { ...action, requiredConfidence: value };
+          const newActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActions,
+            model,
+            dataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions: newActions,
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.updateAction(
+              id,
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async deleteActionRecording(actionId: string, recordingId: string) {
+          const { actions, dataWindow, id, project, projectEdited } = get();
+          const action = actions.find((a) => a.id === actionId);
+          if (!action) {
+            return;
+          }
+          const updatedAction = {
+            ...action,
+            recordings: action.recordings.filter(
+              (recording) => recording.id !== recordingId
+            ),
+          };
+          const updatedActions = actions.map((a) =>
+            a.id === actionId ? updatedAction : a
+          );
+          const numRecordings = updatedActions.reduce(
+            (acc, curr) => acc + curr.recordings.length,
+            0
+          );
+          const newDataWindow =
+            numRecordings === 0 ? currentDataWindow : dataWindow;
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            updatedActions,
+            undefined,
+            newDataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions: updatedActions,
+            hint: getHint(updatedActions, false),
+            dataWindow: newDataWindow,
+            model: undefined,
+            hasMoved: true,
+            timestamp,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.deleteRecording(
+              id,
+              recordingId.toString(),
+              updatedAction,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async deleteAllActions() {
+          const { id, project, projectEdited } = get();
+          const actions = [createFirstAction()];
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            actions,
+            undefined,
+            currentDataWindow
+          );
+          const timestamp = Date.now();
+          set({
+            actions,
+            hint: getHint(actions, false),
+            dataWindow: currentDataWindow,
+            model: undefined,
+            hasMoved: true,
+            ...updatedProject,
+          });
+          await storageWriteWithErrHandling(() =>
+            storage.deleteAllActions(
+              id,
+              actions,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+        },
+
+        downloadDataset() {
+          const { actions, project } = get();
+          const a = document.createElement("a");
+          a.setAttribute(
+            "href",
+            "data:application/json;charset=utf-8," +
+              encodeURIComponent(JSON.stringify(actions, null, 2))
+          );
+          a.setAttribute(
+            "download",
+            `${project.header?.name ?? untitledProjectName}-data-samples.json`
+          );
+          a.style.display = "none";
+          a.click();
+        },
+
+        async loadDataset(
+          datasetActions: ActionData[],
+          loadAction: LoadAction
+        ) {
+          const { id, settings, project, projectEdited } = get();
+          const updatedSettings: Settings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, "DataSamplesRecorded"])
+            ),
+          };
+          const newActionsWithIcons =
+            datasetActions.length > 0
+              ? migrateLegacyActionDataAndAssignNewIds(datasetActions)
+              : [createFirstAction()];
+          // Older datasets did not have icons. Add icons to actions where these are missing.
+          newActionsWithIcons.forEach((a) => {
+            if (!a.icon) {
+              a.icon = actionIcon({
+                isFirstAction: false,
+                existingActions: newActionsWithIcons,
+              });
+            }
+          });
+          const timestamp = Date.now();
+          const dataWindow = getDataWindowFromActions(newActionsWithIcons);
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            newActionsWithIcons,
+            undefined,
+            dataWindow
+          );
+          if (loadAction === "replaceActions") {
+            set({
+              settings: updatedSettings,
+              actions: newActionsWithIcons,
+              dataWindow,
+              model: undefined,
+              timestamp,
+              hint: getHint(newActionsWithIcons, true),
+              ...updatedProject,
+            });
+            await storageWriteWithErrHandling(() =>
+              storage.replaceActions(
+                newActionsWithIcons,
+                {
+                  project: updatedProject.project,
+                  projectEdited: updatedProject.projectEdited,
+                },
+                {
+                  timestamp,
+                  id,
+                }
+              )
+            );
+            await storageWriteWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
+            );
+          } else if (loadAction === "replaceProject") {
+            const newId = uuid();
+            set({
+              id: newId,
+              settings: updatedSettings,
+              actions: newActionsWithIcons,
+              dataWindow,
+              model: undefined,
+              timestamp,
+              hint: getHint(newActionsWithIcons, true),
+              ...updatedProject,
+            });
+            projectSessionStorage.setProjectId(newId);
+            await storageWriteWithErrHandling(() =>
+              storage.importProject(
+                newActionsWithIcons,
+                {
+                  project: updatedProject.project,
+                  projectEdited: updatedProject.projectEdited,
+                },
+                {
+                  timestamp,
+                  id: newId,
+                }
+              )
+            );
+            await storageWriteWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
+            );
+          }
+        },
+
+        /**
+         * Generally project loads go via MakeCode as it reads the hex but when we open projects
+         * from microbit.org we have the JSON already and use this route.
+         */
+        async loadProject(project: MakeCodeProject, name: string) {
+          const { settings } = get();
+          const updatedSettings: Settings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, "DataSamplesRecorded"])
+            ),
+          };
+          const projectActions = getActionsFromProject(project);
+          const newActions =
+            projectActions.length > 0 ? projectActions : [createFirstAction()];
+          const id = uuid();
+          const timestamp = Date.now();
+          const projectEdited = true;
+          set(({ project: prevProject }) => {
+            project = renameProject(project, name);
+            project = {
+              ...project,
+              header: {
+                ...project.header!,
+                // .org projects have a partial header with no id which causes MakeCode sadness
+                id: project.header?.id ?? prevProject.header!.id,
+              },
+            };
+            return {
+              id,
+              settings: updatedSettings,
+              actions: newActions,
+              dataWindow: getDataWindowFromActions(newActions),
+              hint: getHint(newActions, true),
+              model: undefined,
+              project,
+              projectEdited,
+              appEditNeedsFlushToEditor: true,
+              timestamp,
+              // We don't update projectLoadTimestamp here as we don't want a toast notification for .org import
+            };
+          });
+          projectSessionStorage.setProjectId(id);
+          await storageWriteWithErrHandling(() =>
+            storage.importProject(
+              newActions,
+              { project, projectEdited },
+              { timestamp, id }
+            )
+          );
+          await storageWriteWithErrHandling(() =>
+            storage.updateSettings(updatedSettings)
+          );
+        },
+
+        closeTrainModelDialogs() {
+          set({
+            trainModelDialogStage: TrainModelDialogStage.Closed,
+          });
+        },
+
+        async trainModelFlowStart(callback?: () => void) {
+          const {
+            settings: { showPreTrainHelp },
+            actions,
+            trainModel,
+          } = get();
+          if (!hasSufficientDataForTraining(actions)) {
+            set({
+              trainModelDialogStage: TrainModelDialogStage.InsufficientData,
+            });
+          } else if (showPreTrainHelp) {
+            set({
+              trainModelDialogStage: TrainModelDialogStage.Help,
+            });
+          } else {
+            await trainModel();
+            callback?.();
+            // Push the trainModelDialogStage change to the back of the event queue so it happens
+            // after navigation changes.
+            setTimeout(
+              () =>
+                set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
+              0
+            );
+          }
+        },
+
+        async trainModel() {
+          const { actions, dataWindow, id, project, projectEdited } = get();
+          logging.event({
+            type: "model-train",
+            detail: {
+              actions: actions.length,
+              samples: getTotalNumSamples(actions),
+            },
+          });
+          const actionName = "trainModel";
+          set({
+            trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
+            trainModelProgress: 0,
+          });
+          // Delay so we get UI change before training starts. The initial part of training
+          // can block the UI. 50 ms is not sufficient, so use 100 for now.
+          await new Promise((res) => setTimeout(res, 100));
+          const trainingResult = await trainModel(
+            actions,
+            dataWindow,
+            (trainModelProgress) =>
+              set({ trainModelProgress }, false, "trainModelProgress")
+          );
+          const model = trainingResult.error ? undefined : trainingResult.model;
+          const updatedProject = updateProject(
+            project,
+            projectEdited,
+            actions,
+            model,
+            dataWindow
+          );
+          const timestamp = Date.now();
+          set(
+            {
+              model,
+              trainModelDialogStage: model
+                ? TrainModelDialogStage.TrainingInProgress
+                : TrainModelDialogStage.TrainingError,
+              timestamp,
+              ...updatedProject,
+            },
+            false,
+            actionName
+          );
+          await storageWriteWithErrHandling(() =>
+            storage.updateMakeCodeProject(
+              id,
+              {
+                project: updatedProject.project,
+                projectEdited: updatedProject.projectEdited,
+              },
+              timestamp
+            )
+          );
+          return !trainingResult.error;
+        },
+
+        removeModel(): void {
+          set({
+            model: undefined,
+          });
+        },
+
+        async resetProject(): Promise<void> {
+          const {
+            project: previousProject,
+            actions,
+            id,
+            model,
+            dataWindow,
+          } = get();
+          const newProject = {
+            ...previousProject,
+            text: {
+              ...previousProject.text,
+              ...generateProject(
+                previousProject.header?.name ?? untitledProjectName,
+                { data: actions },
+                model,
+                dataWindow,
+                false
+              ).text,
+            },
+          };
+          const timestamp = Date.now();
+          set(
+            {
+              project: newProject,
+              projectEdited: false,
+              appEditNeedsFlushToEditor: true,
+              timestamp,
+            },
+            false,
+            "resetProject"
+          );
+          await storageWriteWithErrHandling(() =>
+            storage.updateMakeCodeProject(
+              id,
+              {
+                project: newProject,
+                projectEdited: false,
+              },
+              timestamp
+            )
+          );
+        },
+
+        async setProjectName(name: string, projectId?: string): Promise<void> {
+          const {
+            id: openedProjectId,
+            project: openedProject,
+            allProjectData,
+          } = get();
+          const id = projectId ?? openedProjectId;
+          if (id === undefined) {
+            throw new Error("No project id");
+          }
+          const timestamp = Date.now();
+          set(
+            {
+              allProjectData: allProjectData.map((p) =>
+                p.id === id ? { ...p, name, timestamp } : p
+              ),
+              // Rename currently opened project.
+              ...(openedProjectId === id
+                ? {
+                    appEditNeedsFlushToEditor: true,
+                    project: renameProject(openedProject, name),
+                    timestamp,
+                  }
+                : {}),
+            },
+            false,
+            "setProjectName"
+          );
+          await storageWriteWithErrHandling(() =>
+            storage.renameProject(id, name, timestamp)
+          );
+        },
+
+        setProjectEdited() {
+          return set(
+            ({
               actions,
               dataWindow,
-              (trainModelProgress) =>
-                set({ trainModelProgress }, false, "trainModelProgress")
-            );
-            const model = trainingResult.error
-              ? undefined
-              : trainingResult.model;
-            set(
-              ({ project, projectEdited }) => ({
-                model,
-                trainModelDialogStage: model
-                  ? TrainModelDialogStage.Closed
-                  : TrainModelDialogStage.TrainingError,
+              model,
+              project,
+              projectEdited: prevProjectEdited,
+            }) => {
+              if (prevProjectEdited) {
+                return {};
+              }
+              const projectEdited = true;
+              return {
                 ...updateProject(
                   project,
                   projectEdited,
@@ -798,569 +1334,525 @@ const createMlStore = (logging: Logging) => {
                   model,
                   dataWindow
                 ),
-              }),
-              false,
-              actionName
-            );
-            return !trainingResult.error;
-          },
+                projectEdited,
+              };
+            },
+            false,
+            "setProjectEdited"
+          );
+        },
 
-          resetProject(): void {
-            const {
-              project: previousProject,
-              actions,
-              model,
-              dataWindow,
-            } = get();
-            const newProject = {
-              ...previousProject,
-              text: {
-                ...previousProject.text,
-                ...generateProject(
-                  previousProject.header?.name ?? untitledProjectName,
-                  { data: actions },
-                  model,
-                  dataWindow,
-                  false
-                ).text,
-              },
-            };
-            set(
-              {
-                project: newProject,
-                projectEdited: false,
-                appEditNeedsFlushToEditor: true,
-              },
-              false,
-              "resetProject"
-            );
-          },
+        checkIfProjectNeedsFlush() {
+          return get().appEditNeedsFlushToEditor;
+        },
 
-          setProjectName(name: string): void {
-            return set(
-              ({ project }) => {
-                return {
-                  appEditNeedsFlushToEditor: true,
-                  project: renameProject(project, name),
-                };
-              },
-              false,
-              "setProjectName"
-            );
-          },
+        checkIfLangChanged() {
+          return get().langChanged;
+        },
 
-          setProjectEdited() {
-            return set(
-              ({
-                actions,
-                dataWindow,
-                model,
-                project,
-                projectEdited: prevProjectEdited,
-              }) => {
-                if (prevProjectEdited) {
-                  return {};
-                }
-                const projectEdited = true;
-                return {
-                  appEditNeedsFlushToEditor: true,
-                  ...updateProject(
-                    project,
-                    projectEdited,
-                    actions,
-                    model,
-                    dataWindow
-                  ),
-                  projectEdited,
-                };
-              },
-              false,
-              "setProjectEdited"
-            );
-          },
+        getCurrentProject() {
+          return get().project;
+        },
 
-          checkIfProjectNeedsFlush() {
-            return get().appEditNeedsFlushToEditor;
-          },
+        editorReady() {
+          set(
+            { isEditorReady: true, editorStartUp: "done" },
+            false,
+            "editorReady"
+          );
+        },
 
-          checkIfLangChanged() {
-            return get().langChanged;
-          },
+        editorTimedOut() {
+          set({ editorStartUp: "timed out" }, false, "editorTimedOut");
+        },
 
-          getCurrentProject() {
-            return get().project;
-          },
+        getEditorStartUp() {
+          return get().editorStartUp;
+        },
 
-          editorReady() {
-            set(
-              { isEditorReady: true, editorStartUp: "done" },
-              false,
-              "editorReady"
-            );
-          },
+        setIsEditorTimedOutDialogOpen(isOpen: boolean) {
+          set(
+            { isEditorTimedOutDialogOpen: isOpen },
+            false,
+            "setIsEditorTimedOutDialogOpen"
+          );
+        },
 
-          editorTimedOut() {
-            set({ editorStartUp: "timed out" }, false, "editorTimedOut");
-          },
+        async editorChange(newProject: MakeCodeProject) {
+          // Notes on past issues with the MakeCode integration:
+          //
+          // We update MakeCode only as needed. However, it loads in the
+          // background because we need it to be ready. This means it will
+          // have the initial project from the state open. So we must be sure
+          // to update MakeCode before "Edit in MakeCode" and "Save" actions.
+          //
+          // MakeCode has a visibility listener that will cause it to re-run
+          // its initialization when its tab becomes hidden/visible. We aim to
+          // ignore this when MakeCode is closed. When MakeCode is open we'll
+          // have up-to-date state to reinit MakeCode with. In the past this
+          // has caused us to update app state with old data from MakeCode.
+          //
+          // It's too slow/async from a UI perspective to rely on only
+          // understanding project contents via editorChange as they're
+          // delayed by MakeCode load and then the async nature of loading a
+          // project.
+          //
+          // We have no choice but to write to MakeCode and wait for the
+          // project data in editorChange when loading a hex file.
 
-          getEditorStartUp() {
-            return get().editorStartUp;
-          },
-
-          setIsEditorTimedOutDialogOpen(isOpen: boolean) {
-            set(
-              { isEditorTimedOutDialogOpen: isOpen },
-              false,
-              "setIsEditorTimedOutDialogOpen"
-            );
-          },
-
-          editorChange(newProject: MakeCodeProject) {
-            // Notes on past issues with the MakeCode integration:
-            //
-            // We update MakeCode only as needed. However, it loads in the
-            // background because we need it to be ready. This means it will
-            // have the initial project from the state open. So we must be sure
-            // to update MakeCode before "Edit in MakeCode" and "Save" actions.
-            //
-            // MakeCode has a visibility listener that will cause it to re-run
-            // its initialization when its tab becomes hidden/visible. We aim to
-            // ignore this when MakeCode is closed. When MakeCode is open we'll
-            // have up-to-date state to reinit MakeCode with. In the past this
-            // has caused us to update app state with old data from MakeCode.
-            //
-            // It's too slow/async from a UI perspective to rely on only
-            // understanding project contents via editorChange as they're
-            // delayed by MakeCode load and then the async nature of loading a
-            // project.
-            //
-            // We have no choice but to write to MakeCode and wait for the
-            // project data in editorChange when loading a hex file.
-
-            const actionName = "editorChange";
-            set(
-              (state) => {
-                const {
-                  project: prevProject,
-                  isEditorOpen,
-                  isEditorImportingState,
-                  isEditorLoadingFile,
-                  settings,
-                } = state;
-                const newProjectHeader = newProject.header!.id;
-                const previousProjectHeader = prevProject.header!.id;
-                if (
-                  (isEditorLoadingFile ||
-                    isEditorOpen ||
-                    isEditorImportingState) &&
-                  newProjectHeader !== previousProjectHeader
-                ) {
-                  if (isEditorImportingState) {
-                    // It's a change but we originated it so state is in sync.
-                    logging.log(
-                      `[MakeCode] Ignored header change due to us syncing state. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
-                    );
-                    return {
-                      isEditorImportingState: false,
-                      // Still need to update this for the new header id.
-                      project: newProject,
-                    };
-                  } else {
-                    // It's a change that originated in MakeCode, e.g. a hex load, so update our state.
-                    logging.log(
-                      `[MakeCode] Updating state from MakeCode header change. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
-                    );
-                    const timestamp = Date.now();
-                    const newActions = getActionsFromProject(newProject);
-                    const projectEdited = projectInHexIsEdited(newProject);
-                    return {
-                      settings: {
-                        ...settings,
-                        toursCompleted: Array.from(
-                          new Set([
-                            ...settings.toursCompleted,
-                            "DataSamplesRecorded",
-                          ])
-                        ),
-                      },
-                      project: newProject,
-                      projectLoadTimestamp: timestamp,
-                      timestamp,
-                      projectEdited,
-                      actions: newActions,
-                      dataWindow: getDataWindowFromActions(newActions),
-                      model: undefined,
-                      isEditorOpen: false,
-                      isEditorLoadingFile: false,
-                    };
-                  }
-                } else if (isEditorOpen) {
+          const actionName = "editorChange";
+          const { id, settings, timestamp, projectEdited } = get();
+          const updatedSettings: Settings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, "DataSamplesRecorded"])
+            ),
+          };
+          let updatedTimestamp = timestamp;
+          let updatedProjectEdited = projectEdited;
+          let newActions: ActionData[] | undefined;
+          let importProject = false;
+          let updateMakeCodeProject = false;
+          const newProjectId = uuid();
+          set(
+            (state) => {
+              const {
+                project: prevProject,
+                isEditorOpen,
+                isEditorImportingState,
+                isEditorLoadingFile,
+              } = state;
+              const newProjectHeader = newProject.header!.id;
+              const previousProjectHeader = prevProject.header!.id;
+              if (
+                (isEditorLoadingFile ||
+                  isEditorOpen ||
+                  isEditorImportingState) &&
+                newProjectHeader !== previousProjectHeader
+              ) {
+                if (isEditorImportingState) {
+                  // It's a change but we originated it so state is in sync.
                   logging.log(
-                    `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
+                    `[MakeCode] Ignored header change due to us syncing state. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                   );
+                  updateMakeCodeProject = true;
                   return {
+                    isEditorImportingState: false,
+                    // Still need to update this for the new header id.
                     project: newProject,
-                    // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
-                    projectEdited: true,
                   };
                 } else {
-                  // This lets us skip more pointless init-time edits.
+                  // It's a change that originated in MakeCode, e.g. a hex load, so update our state.
                   logging.log(
-                    `[MakeCode] Edit ignored when closed. ID ${newProject.header?.id}`
+                    `[MakeCode] Updating state from MakeCode header change. ID change: ${prevProject.header?.id} -> ${newProject.header?.id}`
                   );
+                  const projectActions = getActionsFromProject(newProject);
+                  newActions =
+                    projectActions.length > 0
+                      ? projectActions
+                      : [createFirstAction()];
+                  updatedTimestamp = Date.now();
+                  updatedProjectEdited = projectInHexIsEdited(newProject);
+                  importProject = true;
+                  return {
+                    id: newProjectId,
+                    settings: updatedSettings,
+                    project: newProject,
+                    projectLoadTimestamp: updatedTimestamp,
+                    timestamp: updatedTimestamp,
+                    // New project loaded externally so we can't know whether its edited.
+                    projectEdited: updatedProjectEdited,
+                    actions: newActions,
+                    dataWindow: getDataWindowFromActions(newActions),
+                    hint: getHint(newActions, true),
+                    model: undefined,
+                    isEditorOpen: false,
+                    isEditorLoadingFile: false,
+                  };
                 }
-                return state;
-              },
-              false,
-              actionName
-            );
-          },
-          setDownload(download: DownloadState) {
-            set(
-              { download, downloadFlashingProgress: 0 },
-              false,
-              "setDownload"
-            );
-          },
-          setDownloadFlashingProgress(value) {
-            set({ downloadFlashingProgress: value });
-          },
-          setSave(save: SaveState) {
-            set({ save }, false, "setSave");
-          },
-          setEditorLoadingFile() {
-            set({ isEditorLoadingFile: true }, false, "setEditorLoadingFile");
-          },
-          setEditorImportingState() {
-            set(
-              { isEditorImportingState: true },
-              false,
-              "setEditorImportingState"
-            );
-          },
-          langChangeFlushedToEditor() {
-            set(
-              {
-                langChanged: false,
-              },
-              false,
-              "langChangeFlushedToEditor"
-            );
-          },
-          projectFlushedToEditor() {
-            set(
-              {
-                appEditNeedsFlushToEditor: false,
-              },
-              false,
-              "projectFlushedToEditor"
-            );
-          },
-          setPostConnectTourTrigger(trigger: TourTrigger | undefined) {
-            set(
-              { postConnectTourTrigger: trigger },
-              false,
-              "setPostConnectTourId"
-            );
-          },
-          dataCollectionMicrobitConnectionStart(options) {
-            set(
-              { postConnectTourTrigger: options?.postConnectTourTrigger },
-              false,
-              "dataCollectionMicrobitConnectionStart"
-            );
-          },
-          dataCollectionMicrobitConnected() {
-            set(
-              ({ actions, tourState, postConnectTourTrigger }) => {
+              } else if (isEditorOpen) {
+                logging.log(
+                  `[MakeCode] Edit copied to project. ID ${newProject.header?.id}`
+                );
+                updatedProjectEdited = true;
+                updateMakeCodeProject = true;
                 return {
-                  actions:
-                    actions.length === 0 ? [createFirstAction()] : actions,
-
-                  // If a tour has been explicitly requested, do that.
-                  // Other tours are triggered by callbacks or effects on the relevant page so they run only on the correct screen.
-                  tourState: postConnectTourTrigger
-                    ? {
-                        index: 0,
-                        ...getTourSpec(postConnectTourTrigger, actions),
-                      }
-                    : tourState,
-                  postConnectTourTrigger: undefined,
+                  project: newProject,
+                  // We just assume its been edited as spurious changes from MakeCode happen that we can't identify
+                  projectEdited: updatedProjectEdited,
                 };
-              },
-              false,
-              "dataCollectionMicrobitConnected"
-            );
-          },
-
-          tourStart(trigger: TourTrigger, manual: boolean = false) {
-            set((state) => {
-              if (
-                manual ||
-                (!state.tourState &&
-                  !state.settings.toursCompleted.includes(trigger.name))
-              ) {
-                const tourSpec = getTourSpec(trigger, state.actions);
-                const result = {
-                  tourState: {
-                    ...tourSpec,
-                    index: 0,
-                  },
-                  // If manually triggered, filter out subsequent tours as they should run again too when reached
-                  settings: manual
-                    ? {
-                        ...state.settings,
-                        toursCompleted: state.settings.toursCompleted.filter(
-                          (t) =>
-                            tourSequence.indexOf(t) <=
-                            tourSequence.indexOf(trigger.name)
-                        ),
-                      }
-                    : state.settings,
-                };
-                return result;
+              } else {
+                // This lets us skip more pointless init-time edits.
+                logging.log(
+                  `[MakeCode] Edit ignored when closed. ID ${newProject.header?.id}`
+                );
               }
               return state;
-            });
-          },
-          tourNext() {
-            set(({ tourState }) => {
-              if (!tourState) {
-                throw new Error("No tour");
-              }
-              return {
-                tourState: { ...tourState, index: tourState.index + 1 },
-              };
-            });
-          },
-          tourBack() {
-            set(({ tourState }) => {
-              if (!tourState) {
-                throw new Error("No tour");
-              }
-              return {
-                tourState: { ...tourState, index: tourState.index - 1 },
-              };
-            });
-          },
-          tourComplete(triggers: TourTriggerName[]) {
-            set(({ settings }) => ({
-              tourState: undefined,
-              settings: {
-                ...settings,
-                toursCompleted: Array.from(
-                  new Set([...settings.toursCompleted, ...triggers])
-                ),
-              },
-            }));
-          },
-
-          setDataSamplesView(view: DataSamplesView) {
-            set(({ settings }) => ({
-              settings: {
-                ...settings,
-                dataSamplesView: view,
-              },
-            }));
-          },
-          setShowGraphs(show: boolean) {
-            set(({ settings }) => ({
-              settings: {
-                ...settings,
-                showGraphs: show,
-              },
-            }));
-          },
-
-          setPostImportDialogState(state: PostImportDialogState) {
-            set({ postImportDialogState: state });
-          },
-
-          startPredicting(buffer: BufferedData) {
-            const { actions, model, predictionInterval, dataWindow } = get();
-            if (!model || predictionInterval) {
-              return;
-            }
-            const newPredictionInterval = setInterval(() => {
-              const startTime = Date.now() - dataWindow.duration;
-              const input = {
-                model,
-                data: buffer.getSamples(startTime),
-                classificationIds: actions.map((a) => a.ID),
-              };
-              if (input.data.x.length > dataWindow.minSamples) {
-                const result = predict(input, dataWindow);
-                if (result.error) {
-                  logging.error(result.detail);
-                } else {
-                  const { confidences } = result;
-                  const detected = getDetectedAction(
-                    // Get latest actions from store so that changes to
-                    // recognition point are realised.
-                    get().actions,
-                    result.confidences
-                  );
-                  set({
-                    predictionResult: {
-                      detected,
-                      confidences,
-                    },
-                  });
-                }
-              }
-            }, 1000 / mlSettings.updatesPrSecond);
-            set({ predictionInterval: newPredictionInterval });
-          },
-
-          getPrediction() {
-            return get().predictionResult;
-          },
-
-          stopPredicting() {
-            const { predictionInterval } = get();
-            if (predictionInterval) {
-              clearInterval(predictionInterval);
-              set({ predictionInterval: undefined });
-            }
-          },
-
-          languageDialogOnOpen() {
-            set({ isLanguageDialogOpen: true });
-          },
-          settingsDialogOnOpen() {
-            set({ isSettingsDialogOpen: true });
-          },
-          connectFirstDialogOnOpen() {
-            set({ isConnectFirstDialogOpen: true });
-          },
-          aboutDialogOnOpen() {
-            set({ isAboutDialogOpen: true });
-          },
-          feedbackFormOnOpen() {
-            set({ isFeedbackFormOpen: true });
-          },
-          deleteAllActionsDialogOnOpen() {
-            set({ isDeleteAllActionsDialogOpen: true });
-          },
-          nameProjectDialogOnOpen() {
-            set({ isNameProjectDialogOpen: true });
-          },
-          recordingDialogOnOpen() {
-            set({ isRecordingDialogOpen: true });
-          },
-          connectToRecordDialogOnOpen() {
-            set({ isConnectToRecordDialogOpen: true });
-          },
-          deleteActionDialogOnOpen() {
-            set({ isDeleteActionDialogOpen: true });
-          },
-          incompatibleEditorDeviceDialogOnOpen() {
-            set({ isIncompatibleEditorDeviceDialogOpen: true });
-          },
-          closeDialog() {
-            set({
-              isLanguageDialogOpen: false,
-              isSettingsDialogOpen: false,
-              isConnectFirstDialogOpen: false,
-              isAboutDialogOpen: false,
-              isFeedbackFormOpen: false,
-              isDeleteAllActionsDialogOpen: false,
-              isNameProjectDialogOpen: false,
-              isRecordingDialogOpen: false,
-              isConnectToRecordDialogOpen: false,
-              isDeleteActionDialogOpen: false,
-              isIncompatibleEditorDeviceDialogOpen: false,
-            });
-          },
-
-          isNonConnectionDialogOpen() {
-            const {
-              isAboutDialogOpen,
-              isSettingsDialogOpen,
-              isConnectFirstDialogOpen,
-              isLanguageDialogOpen,
-              isFeedbackFormOpen,
-              postImportDialogState,
-              isEditorOpen,
-              tourState,
-              trainModelDialogStage,
-              isEditorTimedOutDialogOpen,
-              isDeleteAllActionsDialogOpen,
-              isRecordingDialogOpen,
-              isConnectToRecordDialogOpen,
-              isDeleteActionDialogOpen,
-              isIncompatibleEditorDeviceDialogOpen,
-              save,
-            } = get();
-            return (
-              isAboutDialogOpen ||
-              isSettingsDialogOpen ||
-              isConnectFirstDialogOpen ||
-              isLanguageDialogOpen ||
-              isFeedbackFormOpen ||
-              isDeleteAllActionsDialogOpen ||
-              isRecordingDialogOpen ||
-              isConnectToRecordDialogOpen ||
-              isDeleteActionDialogOpen ||
-              isIncompatibleEditorDeviceDialogOpen ||
-              postImportDialogState !== PostImportDialogState.None ||
-              isEditorOpen ||
-              tourState !== undefined ||
-              trainModelDialogStage !== TrainModelDialogStage.Closed ||
-              isEditorTimedOutDialogOpen ||
-              save.step !== SaveStep.None
+            },
+            false,
+            actionName
+          );
+          if (importProject) {
+            projectSessionStorage.setProjectId(newProjectId);
+            await storageWriteWithErrHandling(() =>
+              storage.importProject(
+                newActions as ActionData[],
+                {
+                  project: newProject,
+                  projectEdited: updatedProjectEdited,
+                },
+                { timestamp: updatedTimestamp, id: newProjectId }
+              )
             );
-          },
-        }),
+            await storageWriteWithErrHandling(() =>
+              storage.updateSettings(updatedSettings)
+            );
+          } else if (updateMakeCodeProject) {
+            await storageWriteWithErrHandling(() =>
+              storage.updateMakeCodeProject(
+                id,
+                {
+                  project: newProject,
+                  projectEdited: updatedProjectEdited,
+                },
+                updatedTimestamp
+              )
+            );
+          }
+        },
+        setDownload(download: DownloadState) {
+          set({ download, downloadFlashingProgress: 0 }, false, "setDownload");
+        },
+        setDownloadFlashingProgress(value) {
+          set({ downloadFlashingProgress: value });
+        },
+        setSave(save: SaveState) {
+          set({ save }, false, "setSave");
+        },
+        setEditorLoadingFile() {
+          set({ isEditorLoadingFile: true }, false, "setEditorLoadingFile");
+        },
+        setEditorImportingState() {
+          set(
+            { isEditorImportingState: true },
+            false,
+            "setEditorImportingState"
+          );
+        },
+        langChangeFlushedToEditor() {
+          set(
+            {
+              langChanged: false,
+            },
+            false,
+            "langChangeFlushedToEditor"
+          );
+        },
+        projectFlushedToEditor() {
+          set(
+            {
+              appEditNeedsFlushToEditor: false,
+            },
+            false,
+            "projectFlushedToEditor"
+          );
+        },
+        setPostConnectTourTrigger(trigger: TourTrigger | undefined) {
+          set(
+            { postConnectTourTrigger: trigger },
+            false,
+            "setPostConnectTourId"
+          );
+        },
+        dataCollectionMicrobitConnectionStart(options) {
+          set(
+            { postConnectTourTrigger: options?.postConnectTourTrigger },
+            false,
+            "dataCollectionMicrobitConnectionStart"
+          );
+        },
+        dataCollectionMicrobitConnected() {
+          set(
+            ({ actions, tourState, postConnectTourTrigger }) => {
+              return {
+                actions: actions.length === 0 ? [createFirstAction()] : actions,
 
-        {
-          version: 1,
-          name: "ml",
-          partialize: ({
-            actions,
-            project,
-            projectEdited,
-            settings,
-            timestamp,
-          }) => ({
-            actions,
-            project,
-            projectEdited,
-            settings,
-            timestamp,
-            // The model itself is in IndexDB
-          }),
-          migrate(persistedStateUnknown, version) {
-            switch (version) {
-              case 0: {
-                // We need to rename the "gestures" field to "actions"
-                interface StateV0 extends Omit<State, "actions"> {
-                  gestures?: ActionData[];
+                // If a tour has been explicitly requested, do that.
+                // Other tours are triggered by callbacks or effects on the relevant page so they run only on the correct screen.
+                tourState: postConnectTourTrigger
+                  ? {
+                      index: 0,
+                      ...getTourSpec(postConnectTourTrigger, actions),
+                    }
+                  : tourState,
+                postConnectTourTrigger: undefined,
+              };
+            },
+            false,
+            "dataCollectionMicrobitConnected"
+          );
+        },
+
+        async tourStart(trigger: TourTrigger, manual: boolean = false) {
+          const { actions, settings, tourState } = get();
+          if (
+            manual ||
+            (!tourState && !settings.toursCompleted.includes(trigger.name))
+          ) {
+            const tourSpec = getTourSpec(trigger, actions);
+            // If manually triggered, filter out subsequent tours as they should run again too when reached
+            const updatedSettings = manual
+              ? {
+                  ...settings,
+                  toursCompleted: settings.toursCompleted.filter(
+                    (t) =>
+                      tourSequence.indexOf(t) <=
+                      tourSequence.indexOf(trigger.name)
+                  ),
                 }
-                const stateV0 = persistedStateUnknown as StateV0;
-                const { gestures, ...rest } = stateV0;
-                return { actions: gestures, ...rest } as State;
-              }
-              default:
-                return persistedStateUnknown;
-            }
-          },
-          merge(persistedStateUnknown, currentState) {
-            // The zustand default merge does no validation either.
-            const persistedState = persistedStateUnknown as State;
-            return {
-              ...currentState,
-              ...persistedState,
-              settings: {
-                // Make sure we have any new settings defaulted
-                ...defaultSettings,
-                ...currentState.settings,
-                ...persistedState.settings,
+              : settings;
+            const timestamp = Date.now();
+            const updatedState = {
+              tourState: {
+                ...tourSpec,
+                index: 0,
               },
+              settings: updatedSettings,
+              timestamp,
             };
-          },
-        }
-      ),
+            set(updatedState);
+            await storageWriteWithErrHandling(
+              () => storage.updateSettings(updatedSettings),
+              "settings"
+            );
+          }
+        },
+        tourNext() {
+          set(({ tourState }) => {
+            if (!tourState) {
+              throw new Error("No tour");
+            }
+            return {
+              tourState: { ...tourState, index: tourState.index + 1 },
+            };
+          });
+        },
+        tourBack() {
+          set(({ tourState }) => {
+            if (!tourState) {
+              throw new Error("No tour");
+            }
+            return {
+              tourState: { ...tourState, index: tourState.index - 1 },
+            };
+          });
+        },
+        async tourComplete(triggers: TourTriggerName[]) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            toursCompleted: Array.from(
+              new Set([...settings.toursCompleted, ...triggers])
+            ),
+          };
+          const timestamp = Date.now();
+          set({
+            tourState: undefined,
+            settings: updatedSettings,
+            timestamp,
+          });
+          await storageWriteWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
+          );
+        },
+
+        async setDataSamplesView(view: DataSamplesView) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            dataSamplesView: view,
+          };
+          const timestamp = Date.now();
+          set({
+            settings: updatedSettings,
+            timestamp,
+          });
+          await storageWriteWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
+          );
+        },
+        async setShowGraphs(show: boolean) {
+          const { settings } = get();
+          const updatedSettings = {
+            ...settings,
+            showGraphs: show,
+          };
+          set({
+            settings: updatedSettings,
+          });
+          await storageWriteWithErrHandling(
+            () => storage.updateSettings(updatedSettings),
+            "settings"
+          );
+        },
+
+        setPostImportDialogState(state: PostImportDialogState) {
+          set({ postImportDialogState: state });
+        },
+
+        startPredicting(buffer: BufferedData) {
+          const { actions, model, predictionInterval, dataWindow } = get();
+          if (!model || predictionInterval) {
+            return;
+          }
+          const newPredictionInterval = setInterval(() => {
+            const startTime = Date.now() - dataWindow.duration;
+            const input = {
+              model,
+              data: buffer.getSamples(startTime),
+              classificationIds: actions.map((a) => a.id),
+            };
+            if (input.data.x.length > dataWindow.minSamples) {
+              const result = predict(input, dataWindow);
+              if (result.error) {
+                logging.error(result.detail);
+              } else {
+                const { confidences } = result;
+                const detected = getDetectedAction(
+                  // Get latest actions from store so that changes to
+                  // recognition point are realised.
+                  get().actions,
+                  result.confidences
+                );
+                set({
+                  predictionResult: {
+                    detected,
+                    confidences,
+                  },
+                });
+              }
+            }
+          }, 1000 / mlSettings.updatesPrSecond);
+          set({ predictionInterval: newPredictionInterval });
+        },
+
+        getPrediction() {
+          return get().predictionResult;
+        },
+
+        stopPredicting() {
+          const { predictionInterval } = get();
+          if (predictionInterval) {
+            clearInterval(predictionInterval);
+            set({ predictionInterval: undefined });
+          }
+        },
+
+        languageDialogOnOpen() {
+          set({ isLanguageDialogOpen: true });
+        },
+        settingsDialogOnOpen() {
+          set({ isSettingsDialogOpen: true });
+        },
+        connectFirstDialogOnOpen() {
+          set({ isConnectFirstDialogOpen: true });
+        },
+        aboutDialogOnOpen() {
+          set({ isAboutDialogOpen: true });
+        },
+        feedbackFormOnOpen() {
+          set({ isFeedbackFormOpen: true });
+        },
+        deleteAllActionsDialogOnOpen() {
+          set({ isDeleteAllActionsDialogOpen: true });
+        },
+        nameProjectDialogOnOpen() {
+          set({ isNameProjectDialogOpen: true });
+        },
+        recordingDialogOnOpen() {
+          set({ isRecordingDialogOpen: true });
+        },
+        connectToRecordDialogOnOpen() {
+          set({ isConnectToRecordDialogOpen: true });
+        },
+        deleteActionDialogOnOpen() {
+          set({ isDeleteActionDialogOpen: true });
+        },
+        incompatibleEditorDeviceDialogOnOpen() {
+          set({ isIncompatibleEditorDeviceDialogOpen: true });
+        },
+        dismissWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: get().id },
+            false,
+            "dismissWelcomeDialog"
+          );
+        },
+        resetWelcomeDialog() {
+          set(
+            { welcomeDialogDismissedForProject: undefined },
+            false,
+            "resetWelcomeDialog"
+          );
+        },
+
+        closeDialog() {
+          set({
+            isLanguageDialogOpen: false,
+            isSettingsDialogOpen: false,
+            isConnectFirstDialogOpen: false,
+            isAboutDialogOpen: false,
+            isFeedbackFormOpen: false,
+            isDeleteAllActionsDialogOpen: false,
+            isNameProjectDialogOpen: false,
+            isRecordingDialogOpen: false,
+            isConnectToRecordDialogOpen: false,
+            isDeleteActionDialogOpen: false,
+            isIncompatibleEditorDeviceDialogOpen: false,
+          });
+        },
+
+        isNonConnectionDialogOpen() {
+          const {
+            isAboutDialogOpen,
+            isSettingsDialogOpen,
+            isConnectFirstDialogOpen,
+            isLanguageDialogOpen,
+            isFeedbackFormOpen,
+            postImportDialogState,
+            isEditorOpen,
+            tourState,
+            trainModelDialogStage,
+            isEditorTimedOutDialogOpen,
+            isDeleteAllActionsDialogOpen,
+            isRecordingDialogOpen,
+            isConnectToRecordDialogOpen,
+            isDeleteActionDialogOpen,
+            isIncompatibleEditorDeviceDialogOpen,
+            save,
+          } = get();
+          return (
+            isAboutDialogOpen ||
+            isSettingsDialogOpen ||
+            isConnectFirstDialogOpen ||
+            isLanguageDialogOpen ||
+            isFeedbackFormOpen ||
+            isDeleteAllActionsDialogOpen ||
+            isRecordingDialogOpen ||
+            isConnectToRecordDialogOpen ||
+            isDeleteActionDialogOpen ||
+            isIncompatibleEditorDeviceDialogOpen ||
+            postImportDialogState !== PostImportDialogState.None ||
+            isEditorOpen ||
+            tourState !== undefined ||
+            trainModelDialogStage !== TrainModelDialogStage.Closed ||
+            isEditorTimedOutDialogOpen ||
+            save.step !== SaveStep.None
+          );
+        },
+      }),
       { enabled: flags.devtools }
     )
   );
@@ -1375,36 +1867,33 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
     : currentDataWindow;
 };
 
-// Get data window from actions on app load.
-const { actions } = useStore.getState();
-useStore.setState(
-  { dataWindow: getDataWindowFromActions(actions) },
-  false,
-  "setDataWindow"
-);
+const loadModelFromStorage = async (id: string) => {
+  const model = await storageWithErrHandling(
+    () => storage.loadModel(id),
+    false
+  );
+  useStore.setState({ model }, false, "loadModel");
+};
 
-tf.loadLayersModel(modelUrl)
-  .then((model) => {
-    if (model) {
-      useStore.setState({ model }, false, "loadModel");
-    }
-  })
-  .catch(() => {
-    // This happens if there's no model.
-  });
-
-useStore.subscribe((state, prevState) => {
-  const { model: newModel } = state;
-  const { model: previousModel } = prevState;
+useStore.subscribe(async (state, prevState) => {
+  const { model: newModel, id: newId } = state;
+  const { model: previousModel, id: prevId } = prevState;
   if (newModel !== previousModel) {
-    if (!newModel) {
-      tf.io.removeModel(modelUrl).catch(() => {
-        // No IndexedDB/no model.
-      });
-    } else {
-      newModel.save(modelUrl).catch(() => {
-        // IndexedDB not available?
-      });
+    if (!newModel && newId && newId === prevId) {
+      await storageWriteWithErrHandling(
+        () => storage.removeModel(newId),
+        false
+      );
+      const message: BroadcastChannelData = {
+        messageType: BroadcastChannelMessageType.REMOVE_MODEL,
+        projectIds: [newId],
+      };
+      broadcastChannel.postMessage(message);
+    } else if (newModel) {
+      await storageWriteWithErrHandling(
+        () => storage.saveModel(newId, newModel),
+        false
+      );
     }
   }
 });
@@ -1480,30 +1969,61 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   if (typeof dataset !== "object" || !("data" in dataset)) {
     return [];
   }
-  return dataset.data as ActionData[];
+  return migrateLegacyActionDataAndAssignNewIds(
+    dataset.data as OldActionData[] | ActionData[]
+  );
 };
 
-const renameProject = (
-  project: MakeCodeProject,
-  name: string
-): MakeCodeProject => {
-  const pxtString = project.text?.[filenames.pxtJson];
-  const pxt = JSON.parse(pxtString ?? "{}") as Record<string, unknown>;
+const getHint = (
+  actions: ActionData[],
+  suppressTrainAndAddActionHint: boolean
+): DataSamplesPageHint => {
+  const sufficientDataForTraining = hasSufficientDataForTraining(actions);
 
-  return {
-    ...project,
-    header: {
-      ...project.header!,
-      name,
-    },
-    text: {
-      ...project.text,
-      [filenames.pxtJson]: JSON.stringify({
-        ...pxt,
-        name,
-      }),
-    },
-  };
+  // We don't let you have zero. If you have > 2 you've seen it all before.
+  if (actions.length === 0 || actions.length > 2) {
+    if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
+      return { type: "train" };
+    }
+    return null;
+  }
+  const lastActionIdx = actions.length - 1;
+  const lastAction = actions[lastActionIdx];
+
+  const firstUnnamedActionIdx = actions.findIndex(
+    (a) => a.name.length === 0 && a.recordings.length === 0
+  );
+  if (firstUnnamedActionIdx > -1 && firstUnnamedActionIdx !== lastActionIdx) {
+    return { type: "name-action-short", actionIdx: firstUnnamedActionIdx };
+  }
+  if (lastAction.name.length === 0) {
+    return {
+      type:
+        lastAction.recordings.length === 0
+          ? "name-action"
+          : "name-action-with-samples",
+      actionIdx: lastActionIdx,
+    };
+  }
+  const firstNoRecordingsActionIdx = actions.findIndex(
+    (a) => a.recordings.length === 0
+  );
+  if (firstNoRecordingsActionIdx > -1) {
+    return {
+      type: "record-action",
+      actionIdx: firstNoRecordingsActionIdx,
+    };
+  }
+  if (lastAction.recordings.length < 3) {
+    return { type: "record-more-action" };
+  }
+  if (lastActionIdx === 0 && !suppressTrainAndAddActionHint) {
+    return { type: "add-action" };
+  }
+  if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
+    return { type: "train" };
+  }
+  return null;
 };
 
 const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
@@ -1523,4 +2043,76 @@ const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
     projectEdited = false;
   }
   return projectEdited;
+};
+
+let storageErrorReported = false;
+const setStorageError = (err: unknown) => {
+  const isQuotaError =
+    err instanceof DOMException && err.name === "QuotaExceededError";
+  if (!storageErrorReported) {
+    storageErrorReported = true;
+    deployment.logging.error(err);
+  }
+  useStore.setState({
+    storageError: { type: isQuotaError ? "quota" : "other" },
+  });
+};
+
+/**
+ * Wraps a storage operation with error handling.
+ *
+ * Write operations show a toast and swallow the error so that
+ * optimistic UI updates are not disrupted by an error boundary.
+ * Read operations re-throw so that React Router loaders / error
+ * boundaries can handle them.
+ */
+const storageWithErrHandling = async <T>(
+  callback: () => Promise<T>,
+  broadcastEvent: boolean | "settings" = true
+) => {
+  const value = await callback();
+  const projectId = useStore.getState().id;
+  const settings = broadcastEvent === "settings";
+  if (broadcastEvent && (projectId || settings)) {
+    const message: BroadcastChannelData = {
+      messageType: BroadcastChannelMessageType.RELOAD_PROJECT,
+      projectIds: projectId ? [projectId] : [],
+      ...(settings && { settings: true }),
+    };
+    broadcastChannel.postMessage(message);
+  }
+  return value;
+};
+
+/**
+ * Like {@link storageWithErrHandling} but sets a storage error in the
+ * store (triggering a toast) and swallows the error. Use for
+ * fire-and-forget writes where the in-memory state has already been
+ * optimistically updated.
+ */
+const storageWriteWithErrHandling = async (
+  callback: () => Promise<void>,
+  broadcastEvent: boolean | "settings" = true
+) => {
+  try {
+    await storageWithErrHandling(callback, broadcastEvent);
+  } catch (err) {
+    setStorageError(err);
+  }
+};
+
+export const loadProjectAndModelFromStorage = async (id: string) => {
+  await useStore.getState().loadProjectFromStorage(id);
+  await loadModelFromStorage(id);
+  return true;
+};
+
+export const getAllProjectsFromStorage = async (): Promise<boolean> => {
+  await useStore.getState().getAllProjectData();
+  return true;
+};
+
+export const loadSettingsFromStorage = async () => {
+  const settings = await storage.getSettings();
+  useStore.setState({ settings });
 };

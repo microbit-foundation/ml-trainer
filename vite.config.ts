@@ -6,7 +6,9 @@
  * SPDX-License-Identifier: MIT
  */
 import react from "@vitejs/plugin-react";
+import browserslist from "browserslist";
 import ejs from "ejs";
+import { browserslistToTargets } from "lightningcss";
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -67,8 +69,15 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         process.env.npm_package_version
       ),
     },
+    css: {
+      transformer: "lightningcss",
+      lightningcss: {
+        targets: browserslistToTargets(browserslist()),
+      },
+    },
     build: {
       target: "es2017",
+      cssMinify: "lightningcss",
       rollupOptions: {
         input: "index.html",
       },
@@ -78,6 +87,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       globals: true,
       environment: "jsdom",
       exclude: [...configDefaults.exclude, "**/e2e/**"],
+      setupFiles: ["fake-indexeddb/auto"],
     },
     resolve: {
       alias: {

@@ -11,6 +11,7 @@ export interface ActionBarProps extends BoxProps {
   itemsCenter?: ReactNode;
   itemsRight?: ReactNode;
   itemsLeftProps?: StackProps;
+  itemsCenterProps?: StackProps;
 }
 
 const ActionBar = ({
@@ -18,6 +19,7 @@ const ActionBar = ({
   itemsCenter,
   itemsRight,
   itemsLeftProps,
+  itemsCenterProps,
   ...rest
 }: ActionBarProps) => {
   return (
@@ -32,14 +34,21 @@ const ActionBar = ({
       {...rest}
     >
       <HStack
-        flex={`${itemsCenter ? 1 : 4} 0`}
+        flex={itemsCenter ? { base: "0 1 max-content", xl: "1 0" } : "4 0"}
         justifyContent="flex-start"
         {...itemsLeftProps}
       >
         {itemsLeft}
       </HStack>
-      {itemsCenter && <HStack justifyContent="center">{itemsCenter}</HStack>}
-      <HStack flex="1 0" justifyContent="flex-end">
+      {itemsCenter && (
+        <HStack flex="2 1" justifyContent="center" px={3} {...itemsCenterProps}>
+          {itemsCenter}
+        </HStack>
+      )}
+      <HStack
+        flex={{ base: "0 1 max-content", xl: "1 0" }}
+        justifyContent="flex-end"
+      >
         {itemsRight}
       </HStack>
     </HStack>

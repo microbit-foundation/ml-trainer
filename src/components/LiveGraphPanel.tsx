@@ -26,9 +26,12 @@ import AlertIcon from "./AlertIcon";
 import InfoToolTip from "./InfoToolTip";
 import LiveGraph from "./LiveGraph";
 import PredictedAction from "./PredictedAction";
+import { TrainModelDialogStage } from "../model";
+import { useStore } from "../store";
 
 interface LiveGraphPanelProps {
   showPredictedAction?: boolean;
+  showDisconnectedOverlay?: boolean;
   disconnectedTextId: string;
 }
 
@@ -37,8 +40,14 @@ export const predictedActionDisplayWidth = 180;
 const LiveGraphPanel = ({
   showPredictedAction,
   disconnectedTextId,
+  showDisconnectedOverlay = true,
 }: LiveGraphPanelProps) => {
   const { actions, status, isConnected } = useConnectionStage();
+  const isTraining = useStore(
+    (s) =>
+      s.trainModelDialogStage === TrainModelDialogStage.Help ||
+      s.trainModelDialogStage === TrainModelDialogStage.TrainingInProgress
+  );
   const parentPortalRef = useRef(null);
   const logging = useLogging();
   const isReconnecting =
@@ -87,7 +96,7 @@ const LiveGraphPanel = ({
       bgColor="white"
       className={tourElClassname.liveGraph}
     >
-      {isDisconnected && (
+      {isDisconnected && showDisconnectedOverlay && (
         <HStack
           position="absolute"
           w="100%"
@@ -163,7 +172,7 @@ const LiveGraphPanel = ({
           </HStack>
         </Portal>
         <HStack position="absolute" width="100%" height="100%" spacing={0}>
-          <LiveGraph />
+          <LiveGraph paused={isTraining} />
           {showPredictedAction && <PredictedAction />}
         </HStack>
       </HStack>

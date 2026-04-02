@@ -35,80 +35,19 @@ const ConnectFirstDialog = ({
   isOpen,
   ...rest
 }: ConnectFirstDialogProps) => {
-  const {
-    actions,
-    status: connStatus,
-    isDialogOpen: isConnectionDialogOpen,
-  } = useConnectionStage();
-  const [isWaiting, setIsWaiting] = useState<boolean>(false);
-
-  const handleOnClose = useCallback(() => {
-    setIsWaiting(false);
-    onClose();
-  }, [onClose]);
-
-  const handleConnect = useCallback(async () => {
-    onChooseConnect?.();
-    switch (connStatus) {
-      case ConnectionStatus.FailedToConnect:
-      case ConnectionStatus.FailedToReconnectTwice:
-      case ConnectionStatus.FailedToSelectBluetoothDevice:
-      case ConnectionStatus.NotConnected: {
-        // Start connection flow.
-        actions.startConnect(options);
-        return handleOnClose();
-      }
-      case ConnectionStatus.ConnectionLost:
-      case ConnectionStatus.FailedToReconnect:
-      case ConnectionStatus.Disconnected: {
-        // Reconnect.
-        await actions.reconnect();
-        return handleOnClose();
-      }
-      case ConnectionStatus.ReconnectingAutomatically: {
-        // Wait for reconnection to happen.
-        setIsWaiting(true);
-        return;
-      }
-      case ConnectionStatus.Connected: {
-        // Connected whilst dialog is up.
-        return handleOnClose();
-      }
-      case ConnectionStatus.ReconnectingExplicitly:
-      case ConnectionStatus.Connecting: {
-        // Impossible cases.
-        return handleOnClose();
-      }
-    }
-  }, [onChooseConnect, connStatus, actions, options, handleOnClose]);
-
-  useEffect(() => {
-    if (
-      isOpen &&
-      (isConnectionDialogOpen ||
-        (isWaiting && connStatus === ConnectionStatus.Connected))
-    ) {
-      // Close dialog if connection dialog is opened, or
-      // once connected after waiting.
-      handleOnClose();
-      return;
-    }
-  }, [
-    connStatus,
-    handleOnClose,
-    isConnectionDialogOpen,
+  const { handleClose, isConnecting, handleConnect } = useConnectFirst({
     isOpen,
-    isWaiting,
     onClose,
-  ]);
-
+    onConnect: onChooseConnect,
+    connectOptions: options,
+  });
   return (
     <Modal
       closeOnOverlayClick={false}
       motionPreset="none"
       size="md"
       isCentered
-      onClose={handleOnClose}
+      onClose={handleClose}
       isOpen={isOpen}
       {...rest}
     >
@@ -127,7 +66,7 @@ const ConnectFirstDialog = ({
             <ButtonWithLoading
               variant="primary"
               onClick={handleConnect}
-              isLoading={isWaiting}
+              isLoading={isConnecting}
             >
               <FormattedMessage id="connect-action" />
             </ButtonWithLoading>
@@ -136,6 +75,87 @@ const ConnectFirstDialog = ({
       </ModalOverlay>
     </Modal>
   );
+};
+
+export const useConnectFirst = ({
+  isOpen,
+  onClose,
+  onConnect,
+  connectOptions,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConnect?: () => void;
+  connectOptions?: ConnectOptions;
+}) => {
+  const {
+    actions,
+    status: connStatus,
+    isDialogOpen: isConnectionDialogOpen,
+  } = useConnectionStage();
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
+
+  const handleClose = useCallback(() => {
+    setIsConnecting(false);
+    onClose();
+  }, [onClose]);
+
+  const handleConnect = useCallback(async () => {
+    onConnect?.();
+    switch (connStatus) {
+      case ConnectionStatus.FailedToConnect:
+      case ConnectionStatus.FailedToReconnectTwice:
+      case ConnectionStatus.FailedToSelectBluetoothDevice:
+      case ConnectionStatus.NotConnected: {
+        // Start connection flow.
+        actions.startConnect(connectOptions);
+        return handleClose();
+      }
+      case ConnectionStatus.ConnectionLost:
+      case ConnectionStatus.FailedToReconnect:
+      case ConnectionStatus.Disconnected: {
+        // Reconnect.
+        await actions.reconnect();
+        return handleClose();
+      }
+      case ConnectionStatus.ReconnectingAutomatically: {
+        // Wait for reconnection to happen.
+        setIsConnecting(true);
+        return;
+      }
+      case ConnectionStatus.Connected: {
+        // Connected whilst dialog is up.
+        return handleClose();
+      }
+      case ConnectionStatus.ReconnectingExplicitly:
+      case ConnectionStatus.Connecting: {
+        // Impossible cases.
+        return handleClose();
+      }
+    }
+  }, [onConnect, connStatus, actions, connectOptions, handleClose]);
+
+  useEffect(() => {
+    if (
+      isOpen &&
+      (isConnectionDialogOpen ||
+        (isConnecting && connStatus === ConnectionStatus.Connected))
+    ) {
+      // Close dialog if connection dialog is opened, or
+      // once connected after waiting.
+      handleClose();
+      return;
+    }
+  }, [
+    connStatus,
+    handleClose,
+    isConnectionDialogOpen,
+    isOpen,
+    isConnecting,
+    onClose,
+  ]);
+
+  return { handleConnect, isConnecting, handleClose };
 };
 
 export default ConnectFirstDialog;

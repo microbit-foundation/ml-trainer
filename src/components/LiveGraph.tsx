@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, usePrevious } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { AccelerometerDataEvent } from "@microbit/microbit-connection";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -24,7 +24,11 @@ export const smoothenDataPoint = (curr: number, next: number) => {
   return (next / 1000) * 0.25 + curr * 0.75;
 };
 
-const LiveGraph = () => {
+interface LiveGraphProps {
+  paused?: boolean;
+}
+
+const LiveGraph = ({ paused }: LiveGraphProps) => {
   const { isConnected, status } = useConnectionStage();
   const connectActions = useConnectActions();
   const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
@@ -110,29 +114,34 @@ const LiveGraph = () => {
   ]);
 
   useEffect(() => {
-    if (isConnected || status === ConnectionStatus.ReconnectingAutomatically) {
+    if (
+      (isConnected || status === ConnectionStatus.ReconnectingAutomatically) &&
+      !paused
+    ) {
       chart?.start();
     } else {
       chart?.stop();
     }
-  }, [chart, isConnected, status]);
+  }, [chart, isConnected, paused, status]);
 
   // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
-  const prevIsRecording = usePrevious(isRecording);
+  const wasRecordingRef = useRef(false);
   useEffect(() => {
-    if (isRecording) {
+    const wasRecording = wasRecordingRef.current;
+    wasRecordingRef.current = isRecording;
+    if (isRecording && !wasRecording) {
       // Set the start recording line
       const now = new Date().getTime();
       recordLines.append(now - 1, -maxAccelerationScaleForGraphs, false);
       recordLines.append(now, maxAccelerationScaleForGraphs, false);
-    } else if (prevIsRecording) {
+    } else if (!isRecording && wasRecording) {
       // Set the end recording line
       const now = new Date().getTime();
       recordLines.append(now - 1, maxAccelerationScaleForGraphs, false);
       recordLines.append(now, -maxAccelerationScaleForGraphs, false);
     }
-  }, [isRecording, prevIsRecording, recordLines]);
+  }, [isRecording, recordLines]);
 
   const dataRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,
@@ -173,7 +182,7 @@ const LiveGraph = () => {
         id="smoothie-chart"
         width={width - 30}
       />
-      {isConnected && <LiveGraphLabels />}
+      {isConnected && <LiveGraphLabels paused={paused} />}
     </HStack>
   );
 };

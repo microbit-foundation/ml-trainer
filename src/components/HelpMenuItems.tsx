@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { MenuDivider, MenuItem } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { MdOutlineCookie } from "react-icons/md";
 import {
   RiExternalLinkLine,
@@ -14,11 +15,10 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useDeployment } from "../deployment";
-import { flags } from "../flags";
 import { TourTrigger } from "../model";
 import { useStore } from "../store";
-import { userGuideUrl } from "../utils/external-links";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
+import { userGuideUrl } from "../utils/external-links";
 
 interface HelpMenuItemsProps {
   onAboutDialogOpen: () => void;
@@ -35,17 +35,15 @@ const HelpMenuItems = ({
   const deployment = useDeployment();
   return (
     <>
-      {flags.websiteContent && (
-        <MenuItem
-          as="a"
-          href={userGuideUrl()}
-          target="_blank"
-          rel="noopener"
-          icon={<RiExternalLinkLine />}
-        >
-          <FormattedMessage id="user-guide" />
-        </MenuItem>
-      )}
+      <MenuItem
+        as="a"
+        href={userGuideUrl()}
+        target="_blank"
+        rel="noopener"
+        icon={<RiExternalLinkLine />}
+      >
+        <FormattedMessage id="user-guide" />
+      </MenuItem>
       <TourMenuItem
         onConnectFirstDialogOpen={onConnectFirstDialogOpen}
         tourTrigger={tourTrigger}
@@ -130,18 +128,16 @@ const TourMenuItem = ({
 }: TourMenuItemProps) => {
   const tourStart = useStore((s) => s.tourStart);
   const { isConnected } = useConnectionStage();
+  const handleClick = useCallback(async () => {
+    if (!isConnected) {
+      onConnectFirstDialogOpen();
+    } else {
+      await tourStart(tourTrigger!, true);
+    }
+  }, [isConnected, onConnectFirstDialogOpen, tourStart, tourTrigger]);
   if (tourTrigger) {
     return (
-      <MenuItem
-        onClick={() => {
-          if (!isConnected) {
-            onConnectFirstDialogOpen();
-          } else {
-            tourStart(tourTrigger, true);
-          }
-        }}
-        icon={<RiFlag2Line />}
-      >
+      <MenuItem onClick={handleClick} icon={<RiFlag2Line />}>
         <FormattedMessage id="tour-action" />
       </MenuItem>
     );

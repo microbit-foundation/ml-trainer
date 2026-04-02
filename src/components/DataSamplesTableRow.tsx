@@ -5,87 +5,120 @@
  * SPDX-License-Identifier: MIT
  */
 import { Box, GridItem } from "@chakra-ui/react";
+import { RefType } from "react-hotkeys-hook/dist/types";
 import { useIntl } from "react-intl";
-import { ActionData } from "../model";
+import { ActionData, DataSamplesPageHint } from "../model";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
-import DataSamplesTableHints from "./DataSamplesTableHints";
+import {
+  NameActionHint,
+  NameActionShortHint,
+  NameActionWithSamplesHint,
+  NameFirstActionHint,
+  RecordHint,
+  RecordMoreHint,
+} from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
-import { RefType } from "react-hotkeys-hook/dist/types";
 
 interface DataSamplesTableRowProps {
+  actionIdx: number;
+  isLastRow: boolean;
   preview?: boolean;
   action: ActionData;
   selected: boolean;
   onSelectRow?: () => void;
   onRecord?: (recordingOptions: RecordingOptions) => void;
-  showHints: boolean;
-  newRecordingId?: number;
+  hint: DataSamplesPageHint;
+  newRecordingId?: string;
   clearNewRecordingId?: () => void;
   onDeleteAction?: () => void;
   renameShortcutScopeRef?: (instance: RefType<HTMLElement>) => void;
 }
 
 const DataSamplesTableRow = ({
+  actionIdx,
+  isLastRow,
   action,
   selected,
   onSelectRow,
   onRecord,
   preview,
-  showHints,
+  hint,
   newRecordingId,
   clearNewRecordingId,
   onDeleteAction,
   renameShortcutScopeRef,
 }: DataSamplesTableRowProps) => {
   const intl = useIntl();
-
   return (
-    <>
-      <Box
-        ref={selected ? renameShortcutScopeRef : undefined}
-        role="region"
-        aria-label={intl.formatMessage(
-          {
-            id: "action-region",
-          },
-          { action: action.name }
-        )}
-        display="contents"
-        onFocusCapture={onSelectRow}
-      >
-        <GridItem>
-          <ActionNameCard
-            value={action}
-            onDeleteAction={onDeleteAction}
-            onSelectRow={onSelectRow}
-            selected={selected}
-            viewMode={
-              preview
-                ? ActionCardNameViewMode.Preview
-                : ActionCardNameViewMode.Editable
-            }
-          />
+    <Box
+      ref={selected ? renameShortcutScopeRef : undefined}
+      role="region"
+      aria-label={intl.formatMessage(
+        {
+          id: "action-region",
+        },
+        { action: action.name }
+      )}
+      display="contents"
+      onFocusCapture={onSelectRow}
+    >
+      <GridItem>
+        <ActionNameCard
+          value={action}
+          onDeleteAction={onDeleteAction}
+          onSelectRow={onSelectRow}
+          selected={selected}
+          viewMode={
+            preview
+              ? ActionCardNameViewMode.Preview
+              : ActionCardNameViewMode.Editable
+          }
+        />
+      </GridItem>
+      {hint?.type === "name-action" && hint.actionIdx === actionIdx && (
+        <GridItem h="120px">
+          {hint?.actionIdx === 0 && <NameFirstActionHint />}
+          {hint?.actionIdx === 1 && <NameActionHint />}
         </GridItem>
-        {showHints ? (
-          <DataSamplesTableHints action={action} onRecord={onRecord} />
-        ) : (
-          <GridItem>
-            {(action.name.length > 0 || action.recordings.length > 0) && (
-              <ActionDataSamplesCard
-                preview={preview}
-                newRecordingId={newRecordingId}
-                value={action}
-                selected={selected}
-                onSelectRow={onSelectRow}
-                onRecord={onRecord}
-                clearNewRecordingId={clearNewRecordingId}
-              />
-            )}
-          </GridItem>
+      )}
+      <GridItem position="relative" h="100%">
+        {hint?.type === "name-action-short" && hint.actionIdx === actionIdx && (
+          <NameActionShortHint />
         )}
-      </Box>
-    </>
+        {(action.name.length > 0 || action.recordings.length > 0) && (
+          <ActionDataSamplesCard
+            preview={preview}
+            newRecordingId={newRecordingId}
+            value={action}
+            selected={selected}
+            onSelectRow={onSelectRow}
+            onRecord={onRecord}
+            clearNewRecordingId={clearNewRecordingId}
+          />
+        )}
+        {hint?.type === "record-action" && hint.actionIdx === actionIdx && (
+          <RecordHint />
+        )}
+      </GridItem>
+      {hint?.type === "record-more-action" && isLastRow && (
+        <>
+          {/* Empty grid item to fill action column for positioning */}
+          <GridItem />
+          <GridItem>
+            <RecordMoreHint
+              actionName={action.name}
+              recorded={action.recordings.length}
+            />
+          </GridItem>
+        </>
+      )}
+      {hint?.type === "name-action-with-samples" && isLastRow && (
+        <GridItem h="120px">
+          <NameActionWithSamplesHint />
+        </GridItem>
+      )}
+    </Box>
   );
 };
 

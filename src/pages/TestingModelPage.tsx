@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Button,
   ButtonGroup,
   Flex,
   HStack,
@@ -21,9 +20,8 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation, useNavigate } from "react-router";
 import { useBufferedData } from "../buffered-data-hooks";
-import BackArrow from "../components/BackArrow";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import DefaultPageLayout, {
-  ProjectMenuItems,
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
@@ -34,13 +32,14 @@ import { useConnectActions } from "../connect-actions-hooks";
 import { useConnectionStage } from "../connection-stage-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { projectSessionStorage } from "../session-storage";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import {
   createDataSamplesPageUrl,
+  createHomePageUrl,
   TestingModelPageHistoryState,
 } from "../urls";
-import { ButtonWithLoading } from "../components/ButtonWithLoading";
 
 const TestingModelPage = () => {
   const navigate = useNavigate();
@@ -57,6 +56,9 @@ const TestingModelPage = () => {
   }, [navigate]);
 
   useEffect(() => {
+    if (!projectSessionStorage.getProjectId()) {
+      return navigate(createHomePageUrl());
+    }
     if (!model) {
       return navigateToDataSamples();
     }
@@ -68,22 +70,25 @@ const TestingModelPage = () => {
   }, [
     bufferedData,
     model,
+    navigate,
     navigateToDataSamples,
     startPredicting,
     stopPredicting,
   ]);
 
   const tourStart = useStore((s) => s.tourStart);
+  const setHasMoved = useStore((s) => s.setHasMoved);
   const { isConnected } = useConnectionStage();
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
     if (isConnected) {
-      tourStart(
+      void tourStart(
         { name: "TrainModel", delayedUntilConnection: wasConnected === false },
         false
       );
+      setHasMoved(true);
     }
-  }, [isConnected, tourStart, wasConnected]);
+  }, [isConnected, setHasMoved, tourStart, wasConnected]);
 
   const { openEditor, resetProject, projectEdited } = useProject();
   const { getDataCollectionBoardVersion } = useConnectActions();
@@ -132,17 +137,10 @@ const TestingModelPage = () => {
     <DefaultPageLayout
       titleId="testing-model-title"
       showPageTitle
-      menuItems={<ProjectMenuItems />}
       toolbarItemsRight={<ProjectToolbarItems />}
-      toolbarItemsLeft={
-        <Button
-          leftIcon={<BackArrow />}
-          variant="toolbar"
-          onClick={navigateToDataSamples}
-        >
-          <FormattedMessage id="back-to-data-samples-action" />
-        </Button>
-      }
+      showProjectName
+      backUrl={createDataSamplesPageUrl()}
+      backLabelId="back-to-data-samples-action"
     >
       <IncompatibleEditorDevice
         isOpen={isIncompatibleEditorDeviceDialogOpen}

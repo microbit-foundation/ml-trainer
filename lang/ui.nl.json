@@ -23,6 +23,10 @@
     "defaultMessage": "Toegankelijkheid",
     "description": "Menu item for link to accessibility site"
   },
+  "accessibility-resource-title": {
+    "defaultMessage": "Toegankelijkheid",
+    "description": "Accessibility resource card title"
+  },
   "action-label": {
     "defaultMessage": "Actie",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -55,13 +59,65 @@
     "defaultMessage": "Voeg actie toe",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "add-action-hint": {
+    "defaultMessage": "Klaar met opnemen voor {actionName}?<mark>Een andere actie toevoegen</mark>",
+    "description": "Hint when you have recorded enough data samples for one action"
+  },
+  "add-action-hint-label": {
+    "defaultMessage": "Klaar met opnemen voor {actionName}? Klik op 'Actie toevoegen' om een andere actie toe te voegen",
+    "description": "Hint when you have recorded enough data samples for one action aria label"
+  },
   "ai-activity-timer-resource-title": {
     "defaultMessage": "AI activiteiten timer",
+    "description": "Home page resource card title"
+  },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI-lichtschakelaar",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI sportgegevens logger",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "AI verhalenvertellende vriend",
     "description": "Home page resource card title"
+  },
+  "animation-label": {
+    "defaultMessage": "Animatie om de vijf stappen van de CreateAI workflow te demonstreren: Verbind, Verzamel gegevens, Test model, Codeer en Gebruik. Verbind: Een micro:bit apparaat is verbonden met een computer, waardoor communicatie tussen de twee tot stand wordt gebracht. Verzamel gegevens: Een micro:bit is om een pols gebonden. Gegevens van beweging worden geregistreerd voor twee gebaren: een golf (vertegenwoordigd door een hartpictogram) en een schudding (vertegenwoordigd door een kruispictogram). Er worden meerdere opnames verzameld voor elk gebaar om het model te trainen. Test model: Zodra er genoeg opnames zijn verzameld, wordt er een machine learning-model getraind. De computer probeert vervolgens golf- en schudgebaren in real time te herkennen. De gebruiker kan terugkeren naar de Verzamel gegevens- stap om extra opnames te verzamelen en vervolgens te testen. Codeer: De gebruiker schrijft een programma met behulp van MakeCode blokken waarin het getrainde model is geïntegreerd. Het voltooide programma wordt gedownload naar de micro:bit. Gebruik: De micro:bit reageert op de fysieke bewegingen van de gebruiker, verschillende pictogrammen worden weergegeven op het LED-scherm, afhankelijk van of er een golf- of schudgebaar wordt gedetecteerd.",
+    "description": "Aria label for animation"
+  },
+  "animation-pause-action": {
+    "defaultMessage": "Animatie pauzeren",
+    "description": "Pause animation button text"
+  },
+  "animation-resume-action": {
+    "defaultMessage": "Animatie hervatten",
+    "description": "Resume animation button text"
+  },
+  "animation-step-1": {
+    "defaultMessage": "Verbinden ",
+    "description": "Step 1 of how it works animation"
+  },
+  "animation-step-2": {
+    "defaultMessage": "Gegevens verzamelen",
+    "description": "Step 2 of how it works animation"
+  },
+  "animation-step-3": {
+    "defaultMessage": "Test model",
+    "description": "Step 3 of how it works animation"
+  },
+  "animation-step-4": {
+    "defaultMessage": "Codeer",
+    "description": "Step 4 of how it works animation"
+  },
+  "animation-step-5": {
+    "defaultMessage": "Gebruik",
+    "description": "Step 5 of how it works animation"
+  },
+  "animation-training": {
+    "defaultMessage": "Training",
+    "description": "Machine learning training on computer screen of how it works animation"
   },
   "back-action": {
     "defaultMessage": "Terug",
@@ -72,7 +128,7 @@
     "description": "Back button text"
   },
   "blocks-preview-title": {
-    "defaultMessage": "Blocks preview",
+    "defaultMessage": "Blokken voorbeeld",
     "description": "Blocks preview heading text"
   },
   "bluetooth-unsupported-advice": {
@@ -95,6 +151,18 @@
     "defaultMessage": "Opname annuleren",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "carrousel",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "{slideNum} van {totalSlides}",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "Veeg",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "Zekerheid",
     "description": "Heading for certainty column"
@@ -110,6 +178,10 @@
   "certainty-tooltip": {
     "defaultMessage": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert.",
     "description": "Tooltip for certainty column"
+  },
+  "clear": {
+    "defaultMessage": "Verwijderen",
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "Klik om de pagina te herladen",
@@ -259,10 +331,6 @@
     "defaultMessage": "Micro USB-kabel",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>Verbind een micro:bit die gegevens verzamelt</link1> of <link2>importeer data samples</link2>",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "Kopieer patroon",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -407,6 +475,18 @@
     "defaultMessage": "Kopiëer",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "Project aanmaken",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "Maak een project aan",
+    "description": "Create project dialog heading"
+  },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "Voorproefje lessen",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "Data acties",
     "description": "Aria label for menu"
@@ -432,7 +512,7 @@
     "description": "Show data features button text"
   },
   "data-preview-title": {
-    "defaultMessage": "Data preview",
+    "defaultMessage": "Gegevens voorbeeld",
     "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
@@ -489,6 +569,26 @@
   },
   "delete-data-samples-confirm-text": {
     "defaultMessage": "Weet je zeker dat je alle data samples wil verwijderen?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-project-action": {
+    "defaultMessage": "{count, plural, one {Verwijder} other {Verwijder {count} projecten}}",
+    "description": "Delete project button"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "Verwijderen van project bevestigen",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "Weet je zeker dat je project \"{project}\" wilt verwijderen?",
+    "description": "Confirmation dialog text"
+  },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "Verwijderen van projecten bevestigen",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "Weet je zeker dat je {numProjects} projecten wilt verwijderen?",
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
@@ -586,6 +686,14 @@
   "downloading-subtitle": {
     "defaultMessage": "Even geduld. Programma is aan het downloaden naar de micro:bit.",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "Kopiëren",
+    "description": "Duplicate project action"
+  },
+  "duplicate-project-heading": {
+    "defaultMessage": "Kopieer project",
+    "description": "Heading for duplicate project dialog"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Bewerken in MakeCode",
@@ -719,9 +827,9 @@
     "defaultMessage": "Firmware update vereist",
     "description": "Connection error dialog"
   },
-  "get-started-action": {
-    "defaultMessage": "Hoe te beginnen",
-    "description": "Get started action"
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "Eerste lessen",
+    "description": "Home page resource card title"
   },
   "go-action": {
     "defaultMessage": "Gaan",
@@ -775,6 +883,14 @@
     "defaultMessage": "Help",
     "description": "Help icon aria label"
   },
+  "help-resources-row-carousel": {
+    "defaultMessage": "Lijst van hulpbronnen",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "Help",
+    "description": "Title for home page row"
+  },
   "help-support": {
     "defaultMessage": "Hulp & Ondersteuning",
     "description": "Link or menu item link to support site"
@@ -791,101 +907,13 @@
     "defaultMessage": "Startpagina",
     "description": "Link to home page"
   },
-  "homepage-alt": {
-    "defaultMessage": "grafiek met de x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven met klappende handen er overheen getekend",
-    "description": "Alt text for image in homepage"
+  "homepage-banner-heading": {
+    "defaultMessage": "Nieuw bij {appName}?",
+    "description": "Homepage banner heading"
   },
-  "homepage-alt-graph": {
-    "defaultMessage": "grafiek toont x, y, z grafieklijnen die de micro:bit versnellingsmetergegevens weergeven",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-hands": {
-    "defaultMessage": "klappende handen",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-media": {
-    "defaultMessage": "video showing CreateAI detecting different movements",
-    "description": "Alt text for media in homepage"
-  },
-  "homepage-description": {
-    "defaultMessage": "Train een machine learning model op je eigen bewegingsgegevens en voer het uit op je micro:bit.",
-    "description": "Home page description"
-  },
-  "homepage-how-it-works": {
-    "defaultMessage": "Zo werkt het",
-    "description": "Home page section heading"
-  },
-  "homepage-how-it-works-paragraph": {
-    "defaultMessage": "Bekijk de video om te beginnen. Lees meer in de <link>gebruikershandleiding</link>.",
-    "description": "Home page content under the video"
-  },
-  "homepage-media-description": {
-    "defaultMessage": "Video descriptive transcript",
-    "description": "Homepage media description"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "There is no sound in this video.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "This video plays on a continuous loop.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "Descriptive transcript",
-    "description": "Homepage media descriptive transcript dialog heading"
-  },
-  "homepage-media-pause-action": {
-    "defaultMessage": "Pause video",
-    "description": "Homepage media pause video button text"
-  },
-  "homepage-media-play-action": {
-    "defaultMessage": "Play video",
-    "description": "Homepage media play video button text"
-  },
-  "homepage-projects": {
-    "defaultMessage": "Projecten",
-    "description": "Home page section heading"
-  },
-  "homepage-projects-more": {
-    "defaultMessage": "Ontdek meer <link>inhoud en bronnen over micro:bit en AI</link>.",
-    "description": "Link back to AI landing page"
-  },
-  "homepage-step-by-step": {
-    "defaultMessage": "Stap voor stap",
-    "description": "Home page section heading"
-  },
-  "homepage-subtitle": {
-    "defaultMessage": "Maak AI aan op je BBC micro:bit met behulp van beweging en machine learning.",
-    "description": "Home page subtitle"
-  },
-  "homepage-video-alt": {
-    "defaultMessage": "Introductievideo",
-    "description": "Home page video alt text"
+  "homepage-banner-subtitle": {
+    "defaultMessage": "Machine learning met beweging en de micro:bit",
+    "description": "Homepage banner subtitle"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importeer data samples",
@@ -898,6 +926,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "Niet-ondersteund bestandstype",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "Importeren",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "Ga terug naar een andere micro:bit, of <link>sla de project-hex</link> op die later kan worden gedownload naar een micro:bit V2",
@@ -958,6 +990,10 @@
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Meer informatie over firewall vereisten",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "Meer informatie",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "Kwaad",
@@ -1179,8 +1215,20 @@
     "defaultMessage": "Meer opties voor bewerken in MakeCode",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
+  "move-hint": {
+    "defaultMessage": "Beweeg de micro:bit om te ontdekken hoe verschillende acties de grafiek veranderen",
+    "description": "Hint when you have just connected a micro:bit"
+  },
+  "my-projects-row-carousel": {
+    "defaultMessage": "Lijst van mijn projecten",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "Mijn projecten",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
-    "defaultMessage": "Geef een naam aan een actie die je wilt dat de micro:bit herkent",
+    "defaultMessage": "Noem een actie die je wilt aanmaken om door CreateAI te laten herkennen, zoals ‘zwaaien’ of ‘springen’",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1195,65 +1243,21 @@
     "defaultMessage": "De naam wordt gebruikt wanneer je een hex-bestand opslaat.",
     "description": "Text under project name field"
   },
-  "new-session-setup-description": {
-    "defaultMessage": "Een nieuwe sessie starten overschrijft je bestaande sessie. Mogelijk wil je eerst <link>je bestaande sessie opslaan</link>.",
-    "description": "New session setup description"
+  "new-project-setup-title": {
+    "defaultMessage": "Nieuw project instellen",
+    "description": "New project setup title"
   },
-  "new-session-setup-title": {
-    "defaultMessage": "Nieuwe sessie-instellingen",
-    "description": "New session setup title"
-  },
-  "newpage-continue-session-subtitle": {
-    "defaultMessage": "Gebruik een hex-bestand of data samples die je op je computer hebt opgeslagen om door te gaan met een sessie.",
-    "description": "Continue session subtitle"
-  },
-  "newpage-continue-session-title": {
-    "defaultMessage": "Doorgaan met opgeslagen sessie",
-    "description": "Continue session title"
-  },
-  "newpage-last-session-date": {
-    "defaultMessage": "<strong>Datum:</strong> {date}",
-    "description": "Last session date label"
-  },
-  "newpage-last-session-name": {
-    "defaultMessage": "<strong>Naam:</strong> {name}",
-    "description": "Last session name label"
-  },
-  "newpage-last-session-none": {
-    "defaultMessage": "Geen sessie gevonden",
-    "description": "Last session not found text"
-  },
-  "newpage-last-session-title": {
-    "defaultMessage": "Laatste sessie openen",
-    "description": "Open last session title"
-  },
-  "newpage-new-session-subtitle": {
-    "defaultMessage": "Verbind je micro:bit en verzamel bewegingsgegevens om een machine learning model te bouwen.",
-    "description": "Start new session subtitle"
-  },
-  "newpage-new-session-title": {
-    "defaultMessage": "Nieuwe sessie",
-    "description": "Start new session title"
-  },
-  "newpage-section-one-title": {
-    "defaultMessage": "Ga verder waar u was gebleven",
-    "description": "Homepage section one title"
-  },
-  "newpage-section-two-title": {
-    "defaultMessage": "Begin iets nieuws",
-    "description": "Homepage section two title"
-  },
-  "newpage-title": {
-    "defaultMessage": "Nieuwe sessie",
-    "description": "New page title"
+  "newpage-new-project-title": {
+    "defaultMessage": "Nieuw project",
+    "description": "Start new project title"
   },
   "next-action": {
     "defaultMessage": "Volgende",
     "description": "Next button text for dialogs and similar"
   },
-  "no-data-samples": {
-    "defaultMessage": "Geen data samples",
-    "description": "Empty data samples page status text"
+  "no-projects": {
+    "defaultMessage": "Geen projecten om te tonen",
+    "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "Dit project bevatte geen data samples, dus alleen de code is geopend. Je moet een model trainen voordat je de code kunt gebruiken.",
@@ -1271,40 +1275,36 @@
     "defaultMessage": "Pagina niet gevonden",
     "description": "Page not found page title"
   },
-  "open-file-action": {
-    "defaultMessage": "Open…",
-    "description": "Open file button text"
-  },
   "open-file-dropped": {
     "defaultMessage": "Open bestand wanneer gedropt",
     "description": "Aria label for file drop target"
   },
   "open-project-action": {
+    "defaultMessage": "Open",
+    "description": "Open project action"
+  },
+  "open-shared-project-action": {
     "defaultMessage": "Open project",
     "description": "Open project button text"
   },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
-  },
   "open-shared-project-blocks-preview-description": {
-    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "defaultMessage": "Voorbeeld van de MakeCode code in dit project.",
     "description": "Blocks preview description text"
   },
   "open-shared-project-data-preview-description": {
-    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "defaultMessage": "Voorbeeld van de acties en gegevens in dit project.",
     "description": "Data preview description text"
   },
   "open-shared-project-description": {
-    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "defaultMessage": "Dit is een Microsoft MakeCode gedeeld project dat compatibel is met CreateAI.",
     "description": "Import shared CreateAI project description"
   },
   "open-shared-project-error-description": {
-    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "defaultMessage": "Controleer of de link die je gevolgd hebt juist is en zorg ervoor dat je verbonden bent met het internet voordat je het opnieuw probeert.",
     "description": "Import shared CreateAI error description"
   },
   "open-shared-project-title": {
-    "defaultMessage": "Open shared CreateAI project",
+    "defaultMessage": "Open gedeeld CreateAI-project",
     "description": "Import shared CreateAI project title"
   },
   "other-tabs-body1": {
@@ -1323,13 +1323,49 @@
     "defaultMessage": "Privacybeleid",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "Lijst van projectideeën",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "Projectideeën",
+    "description": "Title for home page row"
+  },
+  "project-label": {
+    "defaultMessage": "Project",
+    "description": "Label for project input"
+  },
   "project-loaded": {
     "defaultMessage": "Project geladen",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "{name} actiesmenu",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "De projectnaam kan niet leeg zijn",
     "description": "Validation message for project name"
+  },
+  "project-name-text": {
+    "defaultMessage": "Projectnaam",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "Klik om de projectnaam te bewerken",
+    "description": "Tooltip for the project name editable input"
+  },
+  "project-skip-to-toolbar": {
+    "defaultMessage": "Ga naar werkbalk",
+    "description": "Button to skip focus to the projects toolbar"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "Jouw gegevens worden opgeslagen in deze browser op dit apparaat. Het wissen van je browsercookies of sitegegevens zal deze verwijderen. Het kan ook automatisch worden verwijderd door je browser als jouw apparaat weinig opslagruimte heeft.",
+    "description": "Tooltip for my projects row"
+  },
+  "projects-page-title": {
+    "defaultMessage": "Projecten",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "Radio link micro:bit",
@@ -1392,12 +1428,20 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "Klik om een data sample op te nemen.",
+    "defaultMessage": "Druk op opnemen om een beweginggegevens-sample te verzamelen.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
-    "defaultMessage": "Klik om een data sample op te nemen of druk op knop B op jouw data collectie micro:bit.",
+    "defaultMessage": "Druk op opnemen <mark>of</mark> knop B op de micro:bit om een beweginggegevens-sample te verzamelen.",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-more-hint": {
+    "defaultMessage": "Neem te minste {numSamples, plural, one {{numSamples} extra gegevens-sample} other {{numSamples} extra gegevens-samples}} op",
+    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "record-more-hint-label": {
+    "defaultMessage": "Neem ten minste {numSamples, plural, one {{numSamples} extra gegevens-sample} other {{numSamples} extra gegevens-sample}} voor {actionName} op",
+    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
     "defaultMessage": "Neem {numSamples} samples op",
@@ -1446,6 +1490,14 @@
   "reload-action": {
     "defaultMessage": "Herladen",
     "description": "Reload button text"
+  },
+  "rename-project-action": {
+    "defaultMessage": "Hernoemen",
+    "description": "Rename project action"
+  },
+  "rename-project-heading": {
+    "defaultMessage": "Hernoem project",
+    "description": "Heading for rename project dialog"
   },
   "reset-to-default-action": {
     "defaultMessage": "Herstel naar standaardblokken",
@@ -1499,6 +1551,10 @@
     "defaultMessage": "Je hex bestand is gedownload",
     "description": "Notification after a hex file has been downloaded"
   },
+  "search": {
+    "defaultMessage": "Zoeken",
+    "description": "Aria label for searching projects"
+  },
   "select-icon-action-aria": {
     "defaultMessage": "Kies pictogram voor actie \"{action}\"",
     "description": "Aria label for pick icon button"
@@ -1510,6 +1566,14 @@
   "select-icon-option-action-aria": {
     "defaultMessage": "Selecteer \"{iconName}\" pictogram",
     "description": "Aria label for icon option"
+  },
+  "select-project-action": {
+    "defaultMessage": "Selecteer {name}",
+    "description": "Label for project selection checkbox"
+  },
+  "selection-actions-group": {
+    "defaultMessage": "Selectie-acties",
+    "description": "Accessible label for the group of actions available when projects are selected"
   },
   "settings": {
     "defaultMessage": "Instellingen",
@@ -1535,17 +1599,33 @@
     "defaultMessage": "Software versies",
     "description": "Software versions text"
   },
-  "start-session-action": {
-    "defaultMessage": "Start sessie",
-    "description": "Start session button text"
+  "sort-option-last-modified": {
+    "defaultMessage": "Laatst gewijzigd",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "Naam",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "Relevantie",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "Oplopende volgorde",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "Aflopende volgorde",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "Projecten sorteren",
+    "description": "Label for select element to sort projects"
   },
   "start-training-action": {
     "defaultMessage": "Start de training",
     "description": "Start training button text"
-  },
-  "steps-alt": {
-    "defaultMessage": "diagram toont het iteratieve proces van het verzamelen van gegevens, trainen van een model, testen van het model en verbeteren van het model door de verzamelde gegevens te verbeteren voor het uiteindelijk coderen met het model.",
-    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "Codeer",
@@ -1571,9 +1651,29 @@
     "defaultMessage": "Stop met opnemen",
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
+  },
   "support-request": {
     "defaultMessage": "Overweeg <link>een ondersteuningsverzoek</link> in te dienen.",
     "description": "Support request link text"
+  },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "Lijst van hulpbronnen voor leraren",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "Middelen voor onderwijzers",
+    "description": "Title for home page row"
   },
   "terms": {
     "defaultMessage": "Gebruiksvoorwaarden",
@@ -1588,8 +1688,16 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
+    "defaultMessage": "Dit project wordt aangeboden door een gebruiker, en wordt niet ondersteund door Microsoft of de Micro:bit Educational Foundation. Bezoek het <link>gedeelde MakeCode project</link> om misbruik aan Microsoft MakeCode te melden als je denkt dat het niet gepast is.",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "nu",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "een paar seconden geleden",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "Rondleiding",
@@ -1723,6 +1831,14 @@
     "defaultMessage": "Model trainen",
     "description": "Training dialog"
   },
+  "train-hint": {
+    "defaultMessage": "Opname voltooid?<mark>Train het model</mark>",
+    "description": "Hint when you have recorded enough data samples to train a model"
+  },
+  "train-hint-label": {
+    "defaultMessage": "Opname voltooid? Druk op 'Train het model' om het model te trainen",
+    "description": "Hint when you have recorded enough data samples to train a model aria label"
+  },
   "train-model": {
     "defaultMessage": "Train model",
     "description": "Action to train a model"
@@ -1746,6 +1862,10 @@
   "transfer-hex-message": {
     "defaultMessage": "Sleep het hex-bestand van je map Downloads naar het MICROBIT-station.",
     "description": "Dialog shown when WebUSB fails"
+  },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "Probleemoplossing",
+    "description": "Home page resource card title"
   },
   "try-again-action": {
     "defaultMessage": "Probeer het opnieuw",
@@ -1787,6 +1907,10 @@
     "defaultMessage": "Gebruikershandleiding",
     "description": "Used for link to user guide page on microbit.org"
   },
+  "view-all-projects": {
+    "defaultMessage": "Alles weergeven",
+    "description": "View all projects button / card text"
+  },
   "webusb-retry-no-select": {
     "defaultMessage": "Je hebt geen micro:bit gekozen. Wil je het opnieuw proberen?",
     "description": "Shown if the user fails to choose a micro:bit"
@@ -1806,5 +1930,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "de USB-kabel ontkoppelen en opnieuw aansluiten",
     "description": "WebUSB error dialog"
+  },
+  "welcome-title": {
+    "defaultMessage": "Hoe CreateAI werkt",
+    "description": "Welcome dialog"
   }
 }

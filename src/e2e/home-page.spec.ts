@@ -3,15 +3,30 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { expect } from "@playwright/test";
 import { test } from "./fixtures";
 
 test.describe("home page", () => {
   test.beforeEach(async ({ homePage }) => {
-    await homePage.setupContext();
     await homePage.goto();
   });
 
-  test("stub", ({ homePage }) => {
-    homePage.expectOnHomePage();
+  test("my projects section", async ({ homePage }) => {
+    await homePage.expectOnHomePage();
+    await expect(
+      homePage.page.getByRole("heading", { name: "My projects" })
+    ).toBeVisible();
+    await expect(
+      homePage.page.getByRole("button", { name: "New project" })
+    ).toBeVisible();
+    await expect(
+      homePage.page.getByRole("button", { name: "Import" })
+    ).toBeVisible();
+  });
+
+  test("shows project ideas section", async ({ homePage }) => {
+    await expect(
+      homePage.page.getByRole("heading", { name: "Project ideas" })
+    ).toBeVisible();
   });
 });

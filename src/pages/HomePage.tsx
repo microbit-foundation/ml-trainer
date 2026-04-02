@@ -1,228 +1,380 @@
 /**
- * (c) 2024, Micro:bit Educational Foundation and contributors
+ * (c) 2023, Center for Computational Thinking and Design at Aarhus University and contributors
+ * Modifications (c) 2024, Micro:bit Educational Foundation and contributors
  *
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
   Button,
-  Container,
+  Card,
+  CardBody,
   Heading,
   HStack,
-  Image,
-  Link,
+  Icon,
+  IconButton,
+  LinkBox,
+  LinkOverlay,
   Text,
+  useBreakpointValue,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import orderBy from "lodash.orderby";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { IconType } from "react-icons/lib";
+import {
+  RiAddLine,
+  RiFolderOpenLine,
+  RiInformationLine,
+  RiUpload2Line,
+} from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import DefaultPageLayout from "../components/DefaultPageLayout";
-import ResourceCard from "../components/ResourceCard";
-import YoutubeVideoEmbed from "../components/YoutubeVideoEmbed";
-import { useDeployment } from "../deployment";
-import { flags } from "../flags";
-import clap from "../images/clap-hands.png";
-import xyzGraph from "../images/xyz-graph.png";
-import { createNewPageUrl } from "../urls";
-
-import projectImage3 from "theme-package/images/ai-activity-timer.png";
-import projectImage2 from "theme-package/images/simple-ai-exercise-timer.png";
-import projectImage1 from "theme-package/images/ai-storytelling-friend.png";
-import homepageVideo from "theme-package/images/homepage-short-clip.mp4";
-import HomepageBannerVideo from "../components/HomepageBannerVideo";
-import StepByStepIllustration from "../components/StepByStepIllustration";
+import CarouselRow from "../components/Carousel/CarouselRow";
+import ClickableTooltip from "../components/ClickableTooltip";
+import { ConfirmDialog } from "../components/ConfirmDialog";
+import DefaultPageLayout, {
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
+import { createHelpCards } from "../components/HelpCards";
+import HomepageBanner from "../components/HomepageBanner";
+import { createLessonCards } from "../components/LessonCards";
+import Link from "../components/Link";
+import LoadProjectInput, {
+  LoadProjectInputRef,
+} from "../components/LoadProjectInput";
+import { NameProjectDialog } from "../components/NameProjectDialog";
+import ProjectCard from "../components/ProjectCard";
+import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
+import { useProjectCardActions } from "../hooks/use-project-card-actions";
+import { useLogging } from "../logging/logging-hooks";
+import { untitledProjectName } from "../project-utils";
+import { shortScreenHeightBreakpoint } from "../responsive";
 import {
-  landingPageUrl,
-  projectUrl,
-  userGuideUrl,
-} from "../utils/external-links";
-import { useSettings } from "../store";
-import { useSearchParams } from "react-router-dom";
-import { setEditorVersionOverride } from "../editor-version";
+  loadProjectAndModelFromStorage,
+  useSettings,
+  useStore,
+} from "../store";
+import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 
 const HomePage = () => {
-  const [params] = useSearchParams();
-  setEditorVersionOverride(params.get("editorVersion") || undefined);
-  const navigate = useNavigate();
-  const handleGetStarted = useCallback(() => {
-    navigate(createNewPageUrl());
-  }, [navigate]);
   const intl = useIntl();
   const [{ languageId }] = useSettings();
-  const { appNameFull, hasCustomHomepageVideo } = useDeployment();
+  const resetWelcomeDialog = useStore((s) => s.resetWelcomeDialog);
+  useEffect(() => {
+    resetWelcomeDialog();
+  }, [resetWelcomeDialog]);
 
   return (
-    <DefaultPageLayout
-      toolbarItemsRight={
-        <Button variant="toolbar" onClick={handleGetStarted}>
-          <FormattedMessage id="get-started-action" />
-        </Button>
-      }
-    >
-      <Container
-        as="main"
-        centerContent
-        gap={20}
-        p={8}
-        pb={20}
-        maxW="container.lg"
-      >
-        <HStack
-          gap={5}
-          flexDir={{ base: "column-reverse", lg: "row" }}
-          w="100%"
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          <VStack
-            flex="1"
-            alignItems="flex-start"
-            gap={5}
-            w={{ base: "100%", lg: "50%" }}
-          >
-            <Heading
-              as="h1"
-              fontSize="5xl"
-              fontWeight="bold"
-              variant="marketing"
-            >
-              {appNameFull}
-            </Heading>
-            <Text fontSize="md" fontWeight="bold">
-              <FormattedMessage id="homepage-subtitle" />
-            </Text>
-            <Text fontSize="md">
-              <FormattedMessage id="homepage-description" />
-            </Text>
-            <Button
-              size="lg"
-              variant="primary"
-              onClick={handleGetStarted}
-              mt={5}
-            >
-              <FormattedMessage id="get-started-action" />
-            </Button>
-          </VStack>
-          {hasCustomHomepageVideo ? (
-            <HomepageBannerVideo src={homepageVideo} />
-          ) : (
-            <Box
-              flex="1"
-              position="relative"
-              role="img"
-              aria-label={intl.formatMessage({ id: "homepage-alt" })}
-            >
-              <Image
-                src={xyzGraph}
-                borderRadius="lg"
-                bgColor="white"
-                pr={1}
-                alt={intl.formatMessage({ id: "homepage-alt-graph" })}
-              />
-              <Image
-                height="100%"
-                position="absolute"
-                bottom={0}
-                left={0}
-                src={clap}
-                borderRadius="md"
-                pr={1}
-                alt={intl.formatMessage({ id: "homepage-alt-hands" })}
-              />
-            </Box>
-          )}
-        </HStack>
-        <VStack spacing={10} w="100%" maxW="container.md">
-          <Heading as="h2" textAlign="center" variant="marketing">
-            <FormattedMessage id="homepage-how-it-works" />
-          </Heading>
-          <Box w="100%" position="relative">
-            <YoutubeVideoEmbed
-              youtubeId="yWl3WxDE6QI"
-              alt={intl.formatMessage({ id: "homepage-video-alt" })}
-            />
-          </Box>
-          {flags.websiteContent && (
-            <Text fontSize="md">
-              <FormattedMessage
-                id="homepage-how-it-works-paragraph"
-                values={{
-                  appNameFull,
-                  link: (children) => (
-                    <Link
-                      color="brand.600"
-                      textDecoration="underline"
-                      href={userGuideUrl()}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                }}
-              />
-            </Text>
-          )}
-        </VStack>
-        <VStack gap={10}>
-          <Heading as="h2" textAlign="center" variant="marketing">
-            <FormattedMessage id="homepage-step-by-step" />
-          </Heading>
-          <VStack
-            position="relative"
-            role="img"
-            aria-label={intl.formatMessage({ id: "steps-alt" })}
-          >
-            <StepByStepIllustration />
-          </VStack>
-        </VStack>
-        {flags.websiteContent && (
-          <VStack gap={10}>
-            <Heading as="h2" textAlign="center" variant="marketing">
-              <FormattedMessage id="homepage-projects" />
-            </Heading>
-            <HStack gap={5} flexDir={{ base: "column", lg: "row" }}>
-              <ResourceCard
-                title={intl.formatMessage({
-                  id: "ai-storytelling-friend-resource-title",
-                })}
-                url={projectUrl("ai-storytelling-friend", languageId)}
-                imgSrc={projectImage1}
-              />
-              <ResourceCard
-                title={intl.formatMessage({
-                  id: "simple-ai-exercise-timer-resource-title",
-                })}
-                url={projectUrl("simple-ai-exercise-timer", languageId)}
-                imgSrc={projectImage2}
-              />
-              <ResourceCard
-                title={intl.formatMessage({
-                  id: "ai-activity-timer-resource-title",
-                })}
-                url={projectUrl("ai-activity-timer", languageId)}
-                imgSrc={projectImage3}
-              />
-            </HStack>
-            <Text fontSize="md">
-              <FormattedMessage
-                id="homepage-projects-more"
-                values={{
-                  link: (children) => (
-                    <Link
-                      color="brand.600"
-                      textDecoration="underline"
-                      href={landingPageUrl(languageId)}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                }}
-              />
-            </Text>
-          </VStack>
-        )}
-      </Container>
+    <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
+      <HomepageBanner />
+      <ProjectRow />
+      <CarouselRow
+        containerMessageId="project-ideas-row-carousel"
+        carouselItems={createProjectIdeaCards(intl, languageId)}
+        titleId="project-ideas-row-title"
+      />
+      <CarouselRow
+        containerMessageId="teacher-resources-row-carousel"
+        carouselItems={createLessonCards(intl)}
+        titleId="teacher-resources-row-title"
+      />
+      <CarouselRow
+        containerMessageId="help-resources-row-carousel"
+        carouselItems={createHelpCards(intl)}
+        titleId="help-resources-row-title"
+      />
     </DefaultPageLayout>
+  );
+};
+
+const ProjectRow = () => {
+  const numCardsDisplayed = 10;
+  const tooltipPlacement = useBreakpointValue<"bottom" | "right">({
+    base: "bottom",
+    sm: "right",
+  });
+  const navigate = useNavigate();
+  const intl = useIntl();
+  const allProjectData = useStore((s) => s.allProjectData);
+
+  const handleOpenProject = useCallback(
+    async (id?: string) => {
+      if (id) {
+        await loadProjectAndModelFromStorage(id);
+        navigate(createDataSamplesPageUrl());
+      }
+    },
+    [navigate]
+  );
+
+  const {
+    projectName,
+    projectNameReason,
+    nameDialogIsOpen,
+    confirmDialogIsOpen,
+    finalFocusRef,
+    setFinalFocusRef,
+    clearFinalFocusRef,
+    handleOpenNameProjectDialog,
+    handleNameProjectDialogClose,
+    handleNameProjectSave,
+    handleOpenConfirmDialog,
+    handleCloseConfirmDialog,
+    handleDeleteProject,
+  } = useProjectCardActions();
+
+  return (
+    <>
+      <NameProjectDialog
+        projectName={projectName}
+        isOpen={nameDialogIsOpen}
+        onClose={handleNameProjectDialogClose}
+        onCloseComplete={clearFinalFocusRef}
+        onSave={handleNameProjectSave}
+        finalFocusRef={finalFocusRef}
+        heading={
+          <FormattedMessage
+            id={
+              projectNameReason === "rename"
+                ? "rename-project-heading"
+                : "duplicate-project-heading"
+            }
+          />
+        }
+        helperText={null}
+        confirmText={
+          <FormattedMessage
+            id={
+              projectNameReason === "rename"
+                ? "rename-project-action"
+                : "duplicate-project-action"
+            }
+          />
+        }
+      />
+      <ConfirmDialog
+        isOpen={confirmDialogIsOpen}
+        heading={intl.formatMessage({
+          id: "delete-project-confirm-heading",
+        })}
+        body={
+          <Text>
+            <FormattedMessage
+              id="delete-project-confirm-text"
+              values={{ project: projectName }}
+            />
+          </Text>
+        }
+        onConfirm={() => handleDeleteProject()}
+        onCancel={handleCloseConfirmDialog}
+        onCloseComplete={clearFinalFocusRef}
+        finalFocusRef={finalFocusRef}
+      />
+      <CarouselRow
+        actions={[
+          <ImportProjectButton key="importProject" />,
+          <ViewAllProjectsLink key="viewAll" />,
+        ]}
+        carouselItems={
+          [
+            <NewProjectCard key="new-project" />,
+            ...orderBy(allProjectData, "timestamp", "desc")
+              .map((projectData) => (
+                <ProjectCard
+                  key={projectData.id}
+                  short
+                  projectData={projectData}
+                  onDeleteProject={handleOpenConfirmDialog}
+                  onRenameDuplicateProject={handleOpenNameProjectDialog}
+                  onOpenProject={handleOpenProject}
+                  setFinalFocusRef={setFinalFocusRef}
+                />
+              ))
+              .slice(0, numCardsDisplayed),
+            allProjectData.length > numCardsDisplayed ? (
+              <ViewAllProjectsCard key="view-all" />
+            ) : undefined,
+          ].filter(Boolean) as JSX.Element[]
+        }
+        containerMessageId="my-projects-row-carousel"
+        titleElement={
+          <HStack spacing={3}>
+            <Heading as="h2" size="lg">
+              <FormattedMessage id="my-projects-row-title" />
+            </Heading>
+            <ClickableTooltip
+              isFocusable
+              hasArrow
+              placement={tooltipPlacement}
+              label={
+                <VStack
+                  textAlign="left"
+                  alignContent="left"
+                  alignItems="left"
+                  m={3}
+                >
+                  <Text>
+                    <FormattedMessage id="project-storage-tooltip" />
+                  </Text>
+                </VStack>
+              }
+            >
+              <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+            </ClickableTooltip>
+          </HStack>
+        }
+      />
+    </>
+  );
+};
+
+const ViewAllProjectsLink = () => {
+  return (
+    <Link
+      href={createProjectsPageUrl()}
+      color="brand.700"
+      fontWeight="semibold"
+      borderRadius="md"
+      px={2}
+      py={1}
+      _focusVisible={{ boxShadow: "outline", outline: "none" }}
+    >
+      <FormattedMessage id="view-all-projects" />
+    </Link>
+  );
+};
+
+interface ActionCardProps {
+  onClick: () => void;
+  icon: IconType;
+  textId: string;
+}
+
+const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
+  return (
+    <LinkBox h="100%" display="flex">
+      <Card
+        flexGrow={1}
+        overflow="hidden"
+        minH="233px"
+        sx={{ [shortScreenHeightBreakpoint]: { minH: "160px" } }}
+      >
+        <CardBody
+          display="flex"
+          backgroundColor="brand.500"
+          color="white"
+          sx={{ [shortScreenHeightBreakpoint]: { p: 3 } }}
+        >
+          <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
+            <VStack>
+              <Icon
+                as={icon}
+                h={20}
+                w={20}
+                sx={{ [shortScreenHeightBreakpoint]: { h: 10, w: 10 } }}
+              />
+            </VStack>
+            <LinkOverlay
+              as={Button}
+              h={8}
+              fontSize="xl"
+              onClick={onClick}
+              variant="unstyled"
+              _focusVisible={{ boxShadow: "outlineLight", outline: "none" }}
+            >
+              <FormattedMessage id={textId} />
+            </LinkOverlay>
+          </VStack>
+        </CardBody>
+      </Card>
+    </LinkBox>
+  );
+};
+
+const NewProjectCard = () => {
+  const newSession = useStore((s) => s.newSession);
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const logging = useLogging();
+
+  const handleNameProjectSave = useCallback(
+    async (projectName: string) => {
+      setIsOpen(false);
+      logging.event({
+        type: "session-open-new",
+      });
+      await newSession(projectName);
+      navigate(createDataSamplesPageUrl());
+    },
+    [logging, newSession, navigate]
+  );
+
+  const handleOpenNameDialog = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const handleCloseNameDialog = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  return (
+    <>
+      <NameProjectDialog
+        projectName={untitledProjectName}
+        isOpen={isOpen}
+        onClose={handleCloseNameDialog}
+        onSave={handleNameProjectSave}
+        helperText={null}
+        heading={<FormattedMessage id="create-project-dialog-heading" />}
+        confirmText={<FormattedMessage id="create-project" />}
+      />
+      <ActionCard
+        onClick={handleOpenNameDialog}
+        icon={RiAddLine}
+        textId="newpage-new-project-title"
+      />
+    </>
+  );
+};
+
+const ImportProjectButton = () => {
+  const intl = useIntl();
+  const loadProjectRef = useRef<LoadProjectInputRef>(null);
+  const handleContinueSessionFromFile = useCallback(() => {
+    loadProjectRef.current?.chooseFile("replaceProject");
+  }, []);
+  return (
+    <>
+      <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
+      <IconButton
+        icon={<RiUpload2Line />}
+        onClick={handleContinueSessionFromFile}
+        aria-label={intl.formatMessage({ id: "import-file-action" })}
+        variant="ghost"
+        display={{ base: "inline-flex", sm: "none" }}
+      />
+      <Button
+        leftIcon={<RiUpload2Line />}
+        onClick={handleContinueSessionFromFile}
+        display={{ base: "none", sm: "inline-flex" }}
+      >
+        <FormattedMessage id="import-file-action" />
+      </Button>
+    </>
+  );
+};
+
+const ViewAllProjectsCard = () => {
+  const navigate = useNavigate();
+  const handleClick = useCallback(() => {
+    navigate(createProjectsPageUrl());
+  }, [navigate]);
+  return (
+    <ActionCard
+      onClick={handleClick}
+      icon={RiFolderOpenLine}
+      textId="view-all-projects"
+    />
   );
 };
 

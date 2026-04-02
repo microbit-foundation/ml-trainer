@@ -24,6 +24,8 @@ export interface ConfirmDialogProps {
   onCancel: () => void;
   confirmText?: string;
   cancelText?: string;
+  finalFocusRef?: React.RefObject<HTMLElement>;
+  onCloseComplete?: () => void;
 }
 
 export const ConfirmDialog = ({
@@ -32,8 +34,10 @@ export const ConfirmDialog = ({
   body,
   onConfirm,
   onCancel,
+  onCloseComplete,
   confirmText,
   cancelText,
+  finalFocusRef,
 }: ConfirmDialogProps) => {
   const intl = useIntl();
   confirmText = confirmText ?? intl.formatMessage({ id: "confirm-action" });
@@ -44,6 +48,8 @@ export const ConfirmDialog = ({
       isOpen={isOpen}
       leastDestructiveRef={leastDestructiveRef}
       onClose={onCancel}
+      finalFocusRef={finalFocusRef}
+      onCloseComplete={onCloseComplete}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>

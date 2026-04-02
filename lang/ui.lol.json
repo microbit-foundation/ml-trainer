@@ -23,6 +23,10 @@
     "defaultMessage": "crwdns364036:0crwdne364036:0",
     "description": "Menu item for link to accessibility site"
   },
+  "accessibility-resource-title": {
+    "defaultMessage": "crwdns369427:0crwdne369427:0",
+    "description": "Accessibility resource card title"
+  },
   "action-label": {
     "defaultMessage": "crwdns362658:0crwdne362658:0",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -55,13 +59,65 @@
     "defaultMessage": "crwdns362672:0crwdne362672:0",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "add-action-hint": {
+    "defaultMessage": "crwdns369273:0{actionName}crwdne369273:0",
+    "description": "Hint when you have recorded enough data samples for one action"
+  },
+  "add-action-hint-label": {
+    "defaultMessage": "crwdns369275:0{actionName}crwdne369275:0",
+    "description": "Hint when you have recorded enough data samples for one action aria label"
+  },
   "ai-activity-timer-resource-title": {
     "defaultMessage": "crwdns362674:0crwdne362674:0",
+    "description": "Home page resource card title"
+  },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "crwdns369277:0crwdne369277:0",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "crwdns369279:0crwdne369279:0",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "crwdns363518:0crwdne363518:0",
     "description": "Home page resource card title"
+  },
+  "animation-label": {
+    "defaultMessage": "crwdns369281:0crwdne369281:0",
+    "description": "Aria label for animation"
+  },
+  "animation-pause-action": {
+    "defaultMessage": "crwdns369283:0crwdne369283:0",
+    "description": "Pause animation button text"
+  },
+  "animation-resume-action": {
+    "defaultMessage": "crwdns369285:0crwdne369285:0",
+    "description": "Resume animation button text"
+  },
+  "animation-step-1": {
+    "defaultMessage": "crwdns369287:0crwdne369287:0",
+    "description": "Step 1 of how it works animation"
+  },
+  "animation-step-2": {
+    "defaultMessage": "crwdns369289:0crwdne369289:0",
+    "description": "Step 2 of how it works animation"
+  },
+  "animation-step-3": {
+    "defaultMessage": "crwdns369291:0crwdne369291:0",
+    "description": "Step 3 of how it works animation"
+  },
+  "animation-step-4": {
+    "defaultMessage": "crwdns369293:0crwdne369293:0",
+    "description": "Step 4 of how it works animation"
+  },
+  "animation-step-5": {
+    "defaultMessage": "crwdns369295:0crwdne369295:0",
+    "description": "Step 5 of how it works animation"
+  },
+  "animation-training": {
+    "defaultMessage": "crwdns369297:0crwdne369297:0",
+    "description": "Machine learning training on computer screen of how it works animation"
   },
   "back-action": {
     "defaultMessage": "crwdns362676:0crwdne362676:0",
@@ -95,6 +151,18 @@
     "defaultMessage": "crwdns362688:0crwdne362688:0",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "crwdns369299:0crwdne369299:0",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "crwdns369301:0{slideNum}crwdnd369301:0{totalSlides}crwdne369301:0",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "crwdns369303:0crwdne369303:0",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "crwdns362690:0crwdne362690:0",
     "description": "Heading for certainty column"
@@ -110,6 +178,10 @@
   "certainty-tooltip": {
     "defaultMessage": "crwdns362696:0crwdne362696:0",
     "description": "Tooltip for certainty column"
+  },
+  "clear": {
+    "defaultMessage": "crwdns369305:0crwdne369305:0",
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "crwdns362698:0crwdne362698:0",
@@ -259,10 +331,6 @@
     "defaultMessage": "crwdns362770:0crwdne362770:0",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "crwdns362772:0crwdne362772:0",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "crwdns362774:0crwdne362774:0",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -407,6 +475,18 @@
     "defaultMessage": "crwdns362844:0crwdne362844:0",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "crwdns369307:0crwdne369307:0",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "crwdns369309:0crwdne369309:0",
+    "description": "Create project dialog heading"
+  },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "crwdns369311:0crwdne369311:0",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "crwdns362846:0crwdne362846:0",
     "description": "Aria label for menu"
@@ -489,6 +569,26 @@
   },
   "delete-data-samples-confirm-text": {
     "defaultMessage": "crwdns362884:0crwdne362884:0",
+    "description": "Confirmation dialog text"
+  },
+  "delete-project-action": {
+    "defaultMessage": "crwdns369313:0count={count}crwdnd369313:0count={count}crwdne369313:0",
+    "description": "Delete project button"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "crwdns369315:0crwdne369315:0",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "crwdns369317:0{project}crwdne369317:0",
+    "description": "Confirmation dialog text"
+  },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "crwdns369319:0crwdne369319:0",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "crwdns369321:0{numProjects}crwdne369321:0",
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
@@ -586,6 +686,14 @@
   "downloading-subtitle": {
     "defaultMessage": "crwdns362932:0crwdne362932:0",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "crwdns369323:0crwdne369323:0",
+    "description": "Duplicate project action"
+  },
+  "duplicate-project-heading": {
+    "defaultMessage": "crwdns369325:0crwdne369325:0",
+    "description": "Heading for duplicate project dialog"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "crwdns362934:0crwdne362934:0",
@@ -719,9 +827,9 @@
     "defaultMessage": "crwdns362998:0crwdne362998:0",
     "description": "Connection error dialog"
   },
-  "get-started-action": {
-    "defaultMessage": "crwdns363002:0crwdne363002:0",
-    "description": "Get started action"
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "crwdns369327:0crwdne369327:0",
+    "description": "Home page resource card title"
   },
   "go-action": {
     "defaultMessage": "crwdns363004:0crwdne363004:0",
@@ -775,6 +883,14 @@
     "defaultMessage": "crwdns363014:0crwdne363014:0",
     "description": "Help icon aria label"
   },
+  "help-resources-row-carousel": {
+    "defaultMessage": "crwdns369329:0crwdne369329:0",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "crwdns369331:0crwdne369331:0",
+    "description": "Title for home page row"
+  },
   "help-support": {
     "defaultMessage": "crwdns363016:0crwdne363016:0",
     "description": "Link or menu item link to support site"
@@ -791,101 +907,13 @@
     "defaultMessage": "crwdns363020:0crwdne363020:0",
     "description": "Link to home page"
   },
-  "homepage-alt": {
-    "defaultMessage": "crwdns363022:0crwdne363022:0",
-    "description": "Alt text for image in homepage"
+  "homepage-banner-heading": {
+    "defaultMessage": "crwdns369333:0{appName}crwdne369333:0",
+    "description": "Homepage banner heading"
   },
-  "homepage-alt-graph": {
-    "defaultMessage": "crwdns363024:0crwdne363024:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-hands": {
-    "defaultMessage": "crwdns363026:0crwdne363026:0",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-media": {
-    "defaultMessage": "crwdns368557:0crwdne368557:0",
-    "description": "Alt text for media in homepage"
-  },
-  "homepage-description": {
-    "defaultMessage": "crwdns363028:0crwdne363028:0",
-    "description": "Home page description"
-  },
-  "homepage-how-it-works": {
-    "defaultMessage": "crwdns363030:0crwdne363030:0",
-    "description": "Home page section heading"
-  },
-  "homepage-how-it-works-paragraph": {
-    "defaultMessage": "crwdns363032:0crwdne363032:0",
-    "description": "Home page content under the video"
-  },
-  "homepage-media-description": {
-    "defaultMessage": "crwdns368559:0crwdne368559:0",
-    "description": "Homepage media description"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "crwdns368561:0crwdne368561:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "crwdns368563:0crwdne368563:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "crwdns368565:0crwdne368565:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "crwdns368567:0crwdne368567:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "crwdns368569:0crwdne368569:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "crwdns368571:0crwdne368571:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "crwdns368573:0crwdne368573:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "crwdns368575:0crwdne368575:0",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "crwdns368577:0crwdne368577:0",
-    "description": "Homepage media descriptive transcript dialog heading"
-  },
-  "homepage-media-pause-action": {
-    "defaultMessage": "crwdns368579:0crwdne368579:0",
-    "description": "Homepage media pause video button text"
-  },
-  "homepage-media-play-action": {
-    "defaultMessage": "crwdns368581:0crwdne368581:0",
-    "description": "Homepage media play video button text"
-  },
-  "homepage-projects": {
-    "defaultMessage": "crwdns363034:0crwdne363034:0",
-    "description": "Home page section heading"
-  },
-  "homepage-projects-more": {
-    "defaultMessage": "crwdns363036:0crwdne363036:0",
-    "description": "Link back to AI landing page"
-  },
-  "homepage-step-by-step": {
-    "defaultMessage": "crwdns363038:0crwdne363038:0",
-    "description": "Home page section heading"
-  },
-  "homepage-subtitle": {
-    "defaultMessage": "crwdns363040:0crwdne363040:0",
-    "description": "Home page subtitle"
-  },
-  "homepage-video-alt": {
-    "defaultMessage": "crwdns363042:0crwdne363042:0",
-    "description": "Home page video alt text"
+  "homepage-banner-subtitle": {
+    "defaultMessage": "crwdns369335:0crwdne369335:0",
+    "description": "Homepage banner subtitle"
   },
   "import-data-samples-action": {
     "defaultMessage": "crwdns363044:0crwdne363044:0",
@@ -898,6 +926,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "crwdns363048:0crwdne363048:0",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "crwdns369337:0crwdne369337:0",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "crwdns363050:0crwdne363050:0",
@@ -958,6 +990,10 @@
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "crwdns363066:0crwdne363066:0",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "crwdns369339:0crwdne369339:0",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "crwdns363068:0crwdne363068:0",
@@ -1179,8 +1215,20 @@
     "defaultMessage": "crwdns363178:0crwdne363178:0",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
+  "move-hint": {
+    "defaultMessage": "crwdns369341:0crwdne369341:0",
+    "description": "Hint when you have just connected a micro:bit"
+  },
+  "my-projects-row-carousel": {
+    "defaultMessage": "crwdns369343:0crwdne369343:0",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "crwdns369345:0crwdne369345:0",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
-    "defaultMessage": "crwdns363180:0crwdne363180:0",
+    "defaultMessage": "crwdns369347:0crwdne369347:0",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1195,65 +1243,21 @@
     "defaultMessage": "crwdns363186:0crwdne363186:0",
     "description": "Text under project name field"
   },
-  "new-session-setup-description": {
-    "defaultMessage": "crwdns363188:0crwdne363188:0",
-    "description": "New session setup description"
+  "new-project-setup-title": {
+    "defaultMessage": "crwdns369349:0crwdne369349:0",
+    "description": "New project setup title"
   },
-  "new-session-setup-title": {
-    "defaultMessage": "crwdns363190:0crwdne363190:0",
-    "description": "New session setup title"
-  },
-  "newpage-continue-session-subtitle": {
-    "defaultMessage": "crwdns363192:0crwdne363192:0",
-    "description": "Continue session subtitle"
-  },
-  "newpage-continue-session-title": {
-    "defaultMessage": "crwdns363194:0crwdne363194:0",
-    "description": "Continue session title"
-  },
-  "newpage-last-session-date": {
-    "defaultMessage": "crwdns363196:0{date}crwdne363196:0",
-    "description": "Last session date label"
-  },
-  "newpage-last-session-name": {
-    "defaultMessage": "crwdns363198:0{name}crwdne363198:0",
-    "description": "Last session name label"
-  },
-  "newpage-last-session-none": {
-    "defaultMessage": "crwdns363200:0crwdne363200:0",
-    "description": "Last session not found text"
-  },
-  "newpage-last-session-title": {
-    "defaultMessage": "crwdns363202:0crwdne363202:0",
-    "description": "Open last session title"
-  },
-  "newpage-new-session-subtitle": {
-    "defaultMessage": "crwdns363204:0crwdne363204:0",
-    "description": "Start new session subtitle"
-  },
-  "newpage-new-session-title": {
-    "defaultMessage": "crwdns363206:0crwdne363206:0",
-    "description": "Start new session title"
-  },
-  "newpage-section-one-title": {
-    "defaultMessage": "crwdns363208:0crwdne363208:0",
-    "description": "Homepage section one title"
-  },
-  "newpage-section-two-title": {
-    "defaultMessage": "crwdns363210:0crwdne363210:0",
-    "description": "Homepage section two title"
-  },
-  "newpage-title": {
-    "defaultMessage": "crwdns363212:0crwdne363212:0",
-    "description": "New page title"
+  "newpage-new-project-title": {
+    "defaultMessage": "crwdns369351:0crwdne369351:0",
+    "description": "Start new project title"
   },
   "next-action": {
     "defaultMessage": "crwdns363214:0crwdne363214:0",
     "description": "Next button text for dialogs and similar"
   },
-  "no-data-samples": {
-    "defaultMessage": "crwdns363216:0crwdne363216:0",
-    "description": "Empty data samples page status text"
+  "no-projects": {
+    "defaultMessage": "crwdns369353:0crwdne369353:0",
+    "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "crwdns363218:0crwdne363218:0",
@@ -1271,21 +1275,17 @@
     "defaultMessage": "crwdns363224:0crwdne363224:0",
     "description": "Page not found page title"
   },
-  "open-file-action": {
-    "defaultMessage": "crwdns363226:0crwdne363226:0",
-    "description": "Open file button text"
-  },
   "open-file-dropped": {
     "defaultMessage": "crwdns363228:0crwdne363228:0",
     "description": "Aria label for file drop target"
   },
   "open-project-action": {
-    "defaultMessage": "crwdns368583:0crwdne368583:0",
-    "description": "Open project button text"
+    "defaultMessage": "crwdns369355:0crwdne369355:0",
+    "description": "Open project action"
   },
-  "open-project-setup-description": {
-    "defaultMessage": "crwdns368585:0crwdne368585:0",
-    "description": "Open project setup description"
+  "open-shared-project-action": {
+    "defaultMessage": "crwdns369357:0crwdne369357:0",
+    "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
     "defaultMessage": "crwdns368587:0crwdne368587:0",
@@ -1323,13 +1323,49 @@
     "defaultMessage": "crwdns363236:0crwdne363236:0",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "crwdns369359:0crwdne369359:0",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "crwdns369361:0crwdne369361:0",
+    "description": "Title for home page row"
+  },
+  "project-label": {
+    "defaultMessage": "crwdns369363:0crwdne369363:0",
+    "description": "Label for project input"
+  },
   "project-loaded": {
     "defaultMessage": "crwdns363238:0crwdne363238:0",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": "crwdns369365:0{name}crwdne369365:0",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "crwdns363240:0crwdne363240:0",
     "description": "Validation message for project name"
+  },
+  "project-name-text": {
+    "defaultMessage": "crwdns369367:0crwdne369367:0",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "crwdns369369:0crwdne369369:0",
+    "description": "Tooltip for the project name editable input"
+  },
+  "project-skip-to-toolbar": {
+    "defaultMessage": "crwdns369371:0crwdne369371:0",
+    "description": "Button to skip focus to the projects toolbar"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "crwdns369373:0crwdne369373:0",
+    "description": "Tooltip for my projects row"
+  },
+  "projects-page-title": {
+    "defaultMessage": "crwdns369375:0crwdne369375:0",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "crwdns363242:0crwdne363242:0",
@@ -1392,12 +1428,20 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "crwdns363272:0crwdne363272:0",
+    "defaultMessage": "crwdns369377:0crwdne369377:0",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
-    "defaultMessage": "crwdns363274:0crwdne363274:0",
+    "defaultMessage": "crwdns369379:0crwdne369379:0",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-more-hint": {
+    "defaultMessage": "crwdns369381:0numSamples={numSamples}crwdnd369381:0numSamples={numSamples}crwdnd369381:0numSamples={numSamples}crwdne369381:0",
+    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "record-more-hint-label": {
+    "defaultMessage": "crwdns369383:0numSamples={numSamples}crwdnd369383:0numSamples={numSamples}crwdnd369383:0numSamples={numSamples}crwdnd369383:0actionName={actionName}crwdne369383:0",
+    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
     "defaultMessage": "crwdns363276:0{numSamples}crwdne363276:0",
@@ -1446,6 +1490,14 @@
   "reload-action": {
     "defaultMessage": "crwdns363298:0crwdne363298:0",
     "description": "Reload button text"
+  },
+  "rename-project-action": {
+    "defaultMessage": "crwdns369385:0crwdne369385:0",
+    "description": "Rename project action"
+  },
+  "rename-project-heading": {
+    "defaultMessage": "crwdns369387:0crwdne369387:0",
+    "description": "Heading for rename project dialog"
   },
   "reset-to-default-action": {
     "defaultMessage": "crwdns363300:0crwdne363300:0",
@@ -1499,6 +1551,10 @@
     "defaultMessage": "crwdns363324:0crwdne363324:0",
     "description": "Notification after a hex file has been downloaded"
   },
+  "search": {
+    "defaultMessage": "crwdns369389:0crwdne369389:0",
+    "description": "Aria label for searching projects"
+  },
   "select-icon-action-aria": {
     "defaultMessage": "crwdns363326:0{action}crwdne363326:0",
     "description": "Aria label for pick icon button"
@@ -1510,6 +1566,14 @@
   "select-icon-option-action-aria": {
     "defaultMessage": "crwdns363330:0{iconName}crwdne363330:0",
     "description": "Aria label for icon option"
+  },
+  "select-project-action": {
+    "defaultMessage": "crwdns369391:0{name}crwdne369391:0",
+    "description": "Label for project selection checkbox"
+  },
+  "selection-actions-group": {
+    "defaultMessage": "crwdns369393:0crwdne369393:0",
+    "description": "Accessible label for the group of actions available when projects are selected"
   },
   "settings": {
     "defaultMessage": "crwdns363332:0crwdne363332:0",
@@ -1535,17 +1599,33 @@
     "defaultMessage": "crwdns363342:0crwdne363342:0",
     "description": "Software versions text"
   },
-  "start-session-action": {
-    "defaultMessage": "crwdns363344:0crwdne363344:0",
-    "description": "Start session button text"
+  "sort-option-last-modified": {
+    "defaultMessage": "crwdns369395:0crwdne369395:0",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "crwdns369397:0crwdne369397:0",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "crwdns369399:0crwdne369399:0",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "crwdns369401:0crwdne369401:0",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "crwdns369403:0crwdne369403:0",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "crwdns369405:0crwdne369405:0",
+    "description": "Label for select element to sort projects"
   },
   "start-training-action": {
     "defaultMessage": "crwdns363346:0crwdne363346:0",
     "description": "Start training button text"
-  },
-  "steps-alt": {
-    "defaultMessage": "crwdns363348:0crwdne363348:0",
-    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "crwdns363350:0crwdne363350:0",
@@ -1571,9 +1651,29 @@
     "defaultMessage": "crwdns363360:0crwdne363360:0",
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
+  },
   "support-request": {
     "defaultMessage": "crwdns363362:0crwdne363362:0",
     "description": "Support request link text"
+  },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "crwdns369407:0crwdne369407:0",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "crwdns369409:0crwdne369409:0",
+    "description": "Title for home page row"
   },
   "terms": {
     "defaultMessage": "crwdns363364:0crwdne363364:0",
@@ -1590,6 +1690,14 @@
   "third-party-content-description": {
     "defaultMessage": "crwdns368597:0crwdne368597:0",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "crwdns369411:0crwdne369411:0",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "crwdns369413:0crwdne369413:0",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "crwdns363370:0crwdne363370:0",
@@ -1723,6 +1831,14 @@
     "defaultMessage": "crwdns363434:0crwdne363434:0",
     "description": "Training dialog"
   },
+  "train-hint": {
+    "defaultMessage": "crwdns369415:0crwdne369415:0",
+    "description": "Hint when you have recorded enough data samples to train a model"
+  },
+  "train-hint-label": {
+    "defaultMessage": "crwdns369417:0crwdne369417:0",
+    "description": "Hint when you have recorded enough data samples to train a model aria label"
+  },
   "train-model": {
     "defaultMessage": "crwdns363436:0crwdne363436:0",
     "description": "Action to train a model"
@@ -1746,6 +1862,10 @@
   "transfer-hex-message": {
     "defaultMessage": "crwdns363446:0crwdne363446:0",
     "description": "Dialog shown when WebUSB fails"
+  },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "crwdns369419:0crwdne369419:0",
+    "description": "Home page resource card title"
   },
   "try-again-action": {
     "defaultMessage": "crwdns363448:0crwdne363448:0",
@@ -1787,6 +1907,10 @@
     "defaultMessage": "crwdns363466:0crwdne363466:0",
     "description": "Used for link to user guide page on microbit.org"
   },
+  "view-all-projects": {
+    "defaultMessage": "crwdns369421:0crwdne369421:0",
+    "description": "View all projects button / card text"
+  },
   "webusb-retry-no-select": {
     "defaultMessage": "crwdns363468:0crwdne363468:0",
     "description": "Shown if the user fails to choose a micro:bit"
@@ -1806,5 +1930,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "crwdns363476:0crwdne363476:0",
     "description": "WebUSB error dialog"
+  },
+  "welcome-title": {
+    "defaultMessage": "crwdns369423:0crwdne369423:0",
+    "description": "Welcome dialog"
   }
 }

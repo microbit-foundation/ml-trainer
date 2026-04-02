@@ -45,6 +45,12 @@
       "value": "Accessibilitat"
     }
   ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "Accessibilitat"
+    }
+  ],
   "action-label": [
     {
       "type": 0,
@@ -117,16 +123,116 @@
       "value": "Afegir una acció"
     }
   ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "Gravació acabada per "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Afegir una altra acció"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "S'ha acabat la gravació de "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": "? Prem el botó d' ‘Afegir acció’ per afegir una altra acció"
+    }
+  ],
   "ai-activity-timer-resource-title": [
     {
       "type": 0,
       "value": "Temporitzador d'activitat d'IA"
     }
   ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "Interruptor d'IA lluminós"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "Enregistrador de dades d'esports IA"
+    }
+  ],
   "ai-storytelling-friend-resource-title": [
     {
       "type": 0,
       "value": "Amic que narra contes amb IA"
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "Animació que demostra els cinc passos del flux de treball del CreateAI: Connectar, Recollir dades, Provar el Model, Codificar i Ús. Connectar: Una micro:bit està connectada a l'ordinador, establint una comunicació entre els dos. Recollir Dades: una micro:bit està lligada al canell. Es recullen les dades de dos moviments: una onada (representat per la icona d'un cor) i sacseig (representat per la icona d'una creu). Es recullen diferents mostres i s'entrena un model de machine learning. L'ordinador, després intenta reconèixer els gestos de l'onada i el sacseig en temps real. L'usuari després pot retornar al pas de Recollir Dades i obtenir mostres adicionals i fer altre cop la prova del model. Codificar: l'usuari escriu un programa utilitzant els blocs de MakeCode que incorporen el model entrenat. El programa acabat es baixa a la micro:bit. Ús: La micro:bit respon als moviments físics de l'usuari, mostrant icones diferents a la pantalla de LEDs depenent de si es detecta un gest d'onada o de sacseig. "
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "Pausar l'animació"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "Reprendre l'animació"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "Connecta"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "Recollida de dades"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "Provar el model"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "Programa"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "Ús"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "Entrenament"
     }
   ],
   "back-action": [
@@ -144,7 +250,7 @@
   "blocks-preview-title": [
     {
       "type": 0,
-      "value": "Blocks preview"
+      "value": "Previsualització de blocs"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -175,6 +281,32 @@
     {
       "type": 0,
       "value": "Cancel·la l'enregistrament"
+    }
+  ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "Carrusel"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": "de"
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "so lliscant"
     }
   ],
   "certainty-label": [
@@ -215,6 +347,12 @@
     {
       "type": 0,
       "value": "Quina confiança té el model que actualment esteu fent cada acció."
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "Esborra"
     }
   ],
   "click-to-reload-page-action": [
@@ -437,32 +575,6 @@
     {
       "type": 0,
       "value": "Cable micro USB"
-    }
-  ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Connecta una micro:bit de recollida de dades"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " o "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "importa mostres de dades"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
     }
   ],
   "connect-pattern-heading": [
@@ -689,6 +801,24 @@
       "value": "Copia"
     }
   ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "Crear un projecte"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "Crear un projecte"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "Taster lessons"
+    }
+  ],
   "data-actions-menu": [
     {
       "type": 0,
@@ -728,7 +858,7 @@
   "data-preview-title": [
     {
       "type": 0,
-      "value": "Data preview"
+      "value": "Previsualització de dades"
     }
   ],
   "data-samples-actions-region": [
@@ -833,6 +963,80 @@
     {
       "type": 0,
       "value": "Estàs segur que vols suprimir totes les mostres de dades?"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Esborra"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Esborra "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " projectes"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirma l'eliminació del projecte"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete the project \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "Confirm delete projects"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "Are you sure you want to delete "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " projects?"
     }
   ],
   "delete-recording-aria": [
@@ -1009,6 +1213,18 @@
     {
       "type": 0,
       "value": "Si us plau, espera. Transferint el programa a la micro:bit."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "Duplica"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "Duplicar el projecte"
     }
   ],
   "edit-in-makecode-action": [
@@ -1217,10 +1433,10 @@
       "value": "Cal actualitzar el firmware"
     }
   ],
-  "get-started-action": [
+  "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "Comencem"
+      "value": "Primera lliçó"
     }
   ],
   "go-action": [
@@ -1301,6 +1517,18 @@
       "value": "Ajuda"
     }
   ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of help resources"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Ajuda"
+    }
+  ],
   "help-support": [
     {
       "type": 0,
@@ -1325,176 +1553,24 @@
       "value": "Pàgina d'inici"
     }
   ],
-  "homepage-alt": [
+  "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "gràfic que mostra les línies del gràfic x, y, z que representen dades de l'acceleròmetre de la micro:bit amb les mans aplaudides superposades"
-    }
-  ],
-  "homepage-alt-graph": [
-    {
-      "type": 0,
-      "value": "gràfic que mostra les línies del gràfic x, y, z que representen dades de l'acceleròmetre de la micro:bit"
-    }
-  ],
-  "homepage-alt-hands": [
-    {
-      "type": 0,
-      "value": "picant de mans"
-    }
-  ],
-  "homepage-alt-media": [
-    {
-      "type": 0,
-      "value": "video showing CreateAI detecting different movements"
-    }
-  ],
-  "homepage-description": [
-    {
-      "type": 0,
-      "value": "Entrena un model d'aprenentatge automàtic amb les teves dades de moviment i executa'l a la teva micro:bit."
-    }
-  ],
-  "homepage-how-it-works": [
-    {
-      "type": 0,
-      "value": "Com funciona"
-    }
-  ],
-  "homepage-how-it-works-paragraph": [
-    {
-      "type": 0,
-      "value": "Mira el vídeo per començar. Més informació a la "
+      "value": "New to "
     },
     {
-      "children": [
-        {
-          "type": 0,
-          "value": "guia de l'usuari"
-        }
-      ],
-      "type": 8,
-      "value": "link"
+      "type": 1,
+      "value": "appName"
     },
     {
       "type": 0,
-      "value": "."
+      "value": "?"
     }
   ],
-  "homepage-media-description": [
+  "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Video descriptive transcript"
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-1": [
-    {
-      "type": 0,
-      "value": "There is no sound in this video."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-2": [
-    {
-      "type": 0,
-      "value": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-3": [
-    {
-      "type": 0,
-      "value": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-4": [
-    {
-      "type": 0,
-      "value": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-5": [
-    {
-      "type": 0,
-      "value": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-6": [
-    {
-      "type": 0,
-      "value": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-7": [
-    {
-      "type": 0,
-      "value": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-content-8": [
-    {
-      "type": 0,
-      "value": "This video plays on a continuous loop."
-    }
-  ],
-  "homepage-media-descriptive-transcript-dialog-heading": [
-    {
-      "type": 0,
-      "value": "Descriptive transcript"
-    }
-  ],
-  "homepage-media-pause-action": [
-    {
-      "type": 0,
-      "value": "Pause video"
-    }
-  ],
-  "homepage-media-play-action": [
-    {
-      "type": 0,
-      "value": "Play video"
-    }
-  ],
-  "homepage-projects": [
-    {
-      "type": 0,
-      "value": "Projectes"
-    }
-  ],
-  "homepage-projects-more": [
-    {
-      "type": 0,
-      "value": "Explora més "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "contingut i recursos sobre la micro:bit i AI"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": "."
-    }
-  ],
-  "homepage-step-by-step": [
-    {
-      "type": 0,
-      "value": "Pas a pas"
-    }
-  ],
-  "homepage-subtitle": [
-    {
-      "type": 0,
-      "value": "Crea IA a la teva micro:bit de la BBC utilitzant el moviment i l'aprenentatge automàtic."
-    }
-  ],
-  "homepage-video-alt": [
-    {
-      "type": 0,
-      "value": "Vídeo de presentació"
+      "value": "Machine learning with movement and the micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -1521,6 +1597,12 @@
     {
       "type": 0,
       "value": "Tipus d'arxiu no permés"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "Importa"
     }
   ],
   "incompatible-device-body-alt": [
@@ -1649,6 +1731,12 @@
     {
       "type": 0,
       "value": "Més informació sobre els requisits del tallafoc"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "Aprèn-ne més"
     }
   ],
   "led-icon-option-angry": [
@@ -1985,10 +2073,28 @@
       "value": "Més edició a les opcions de MakeCode"
     }
   ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "Move the micro:bit to explore how different actions change the graph"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of my projects"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "Els meus projectes"
+    }
+  ],
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Anomena una acció que vulguis que reconegui la micro:bit"
+      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
     }
   ],
   "name-project": [
@@ -2009,124 +2115,16 @@
       "value": "El nom s'utilitza quan deses un fitxer hexadecimal."
     }
   ],
-  "new-session-setup-description": [
+  "new-project-setup-title": [
     {
       "type": 0,
-      "value": "Iniciar una sessió nova sobreescriurà la sessió existent. És possible que vulguis "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "desar la teva sessió existent"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " primer."
+      "value": "New project setup"
     }
   ],
-  "new-session-setup-title": [
+  "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "Nova configuració de sessió"
-    }
-  ],
-  "newpage-continue-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Fes servir un fitxer hexadecimal o un fitxer de mostres de dades que has desat a l'ordinador per continuar una sessió."
-    }
-  ],
-  "newpage-continue-session-title": [
-    {
-      "type": 0,
-      "value": "Continuar una sessió desada"
-    }
-  ],
-  "newpage-last-session-date": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Data:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "newpage-last-session-name": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Nom:"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 1,
-      "value": "name"
-    }
-  ],
-  "newpage-last-session-none": [
-    {
-      "type": 0,
-      "value": "Sense sessions trobades!"
-    }
-  ],
-  "newpage-last-session-title": [
-    {
-      "type": 0,
-      "value": "Obre l'última sessió"
-    }
-  ],
-  "newpage-new-session-subtitle": [
-    {
-      "type": 0,
-      "value": "Connecta la teva micro:bit i recull dades de moviment per crear un model d'aprenentatge automàtic."
-    }
-  ],
-  "newpage-new-session-title": [
-    {
-      "type": 0,
-      "value": "Nova sessió"
-    }
-  ],
-  "newpage-section-one-title": [
-    {
-      "type": 0,
-      "value": "Reprèn on ho vas deixar"
-    }
-  ],
-  "newpage-section-two-title": [
-    {
-      "type": 0,
-      "value": "Comença alguna cosa nova"
-    }
-  ],
-  "newpage-title": [
-    {
-      "type": 0,
-      "value": "Nova sessió"
+      "value": "Projecte nou"
     }
   ],
   "next-action": [
@@ -2135,10 +2133,10 @@
       "value": "Següent"
     }
   ],
-  "no-data-samples": [
+  "no-projects": [
     {
       "type": 0,
-      "value": "No hi ha mostres de dades"
+      "value": "No hi ha cap projecte per mostrar"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2169,12 +2167,6 @@
       "value": "No s'ha trobat la pàgina"
     }
   ],
-  "open-file-action": [
-    {
-      "type": 0,
-      "value": "Obert"
-    }
-  ],
   "open-file-dropped": [
     {
       "type": 0,
@@ -2184,27 +2176,13 @@
   "open-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "Obert"
     }
   ],
-  "open-project-setup-description": [
+  "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Opening this project will overwrite any existing session. You may want to "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "save your existing session"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " first."
+      "value": "Obre un projecte"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2269,16 +2247,74 @@
       "value": "Política de privadesa"
     }
   ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of project ideas"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "Idees de projectes"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "Projecte"
+    }
+  ],
   "project-loaded": [
     {
       "type": 0,
       "value": "Projecte desat"
     }
   ],
+  "project-menu-action": [
+    {
+      "type": 0,
+      "value": "Menú d'accions "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
   "project-name-not-empty": [
     {
       "type": 0,
       "value": "El nom del projecte no pot estar buit"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "Nom del projecte"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "Click to edit project name"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "Skip to toolbar"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "Projectes"
     }
   ],
   "radio-link-microbit": [
@@ -2382,13 +2418,111 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Prem per gravar una mostra de dades."
+      "value": "Press record to collect a movement data sample."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Prem per gravar una mostra de dades o prem el botó B de la teva micro:bit de recollida de dades."
+      "value": "Press record "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "or"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " button B on the micro:bit to collect a movement data sample."
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "Record at least "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data sample"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " more data samples"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " for "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
     }
   ],
   "record-samples": [
@@ -2527,6 +2661,18 @@
       "value": "Torna a carregar"
     }
   ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "Canvia el nom"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "Reanomena el projecte"
+    }
+  ],
   "reset-to-default-action": [
     {
       "type": 0,
@@ -2613,6 +2759,12 @@
       "value": "S'ha transferit el teu fitxer hexadecimal"
     }
   ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Cerca"
+    }
+  ],
   "select-icon-action-aria": [
     {
       "type": 0,
@@ -2645,6 +2797,22 @@
     {
       "type": 0,
       "value": "\"."
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "Select "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "Selection actions"
     }
   ],
   "settings": [
@@ -2683,22 +2851,46 @@
       "value": "Versions de programari"
     }
   ],
-  "start-session-action": [
+  "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Inicia sessió"
+      "value": "Darrer modificat"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "Nom"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "Rellevància"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "Ordre ascendent"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "Ordre descendent"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "Ordena els projectes"
     }
   ],
   "start-training-action": [
     {
       "type": 0,
       "value": "Comença l'entrenament"
-    }
-  ],
-  "steps-alt": [
-    {
-      "type": 0,
-      "value": "diagrama que mostra el procés iteratiu de recollida de dades, formació d'un model, prova del model i millora del model millorant les dades recollides abans de programar finalment amb el model."
     }
   ],
   "steps-code": [
@@ -2737,6 +2929,24 @@
       "value": "Atura l'enregistrament"
     }
   ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to browser storage"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "Your project edit may not be saved."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "Browser storage full"
+    }
+  ],
   "support-request": [
     {
       "type": 0,
@@ -2755,6 +2965,18 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "List of teacher resources"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "Recursos del professor"
     }
   ],
   "terms": [
@@ -2793,6 +3015,18 @@
     {
       "type": 0,
       "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "ara"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "fa uns segons"
     }
   ],
   "tour-action": [
@@ -3029,6 +3263,28 @@
       "value": "Entrenant un model"
     }
   ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "Finished recording?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Train the model"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+    }
+  ],
   "train-model": [
     {
       "type": 0,
@@ -3077,6 +3333,12 @@
     {
       "type": 0,
       "value": "Arrossega el fitxer hexadecimal de la teva carpeta de descàrregues a la unitat MICROBIT."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "Resolució de problemes"
     }
   ],
   "try-again-action": [
@@ -3167,6 +3429,12 @@
       "value": "Guia de l'usuari"
     }
   ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "View all"
+    }
+  ],
   "webusb-retry-no-select": [
     {
       "type": 0,
@@ -3195,6 +3463,12 @@
     {
       "type": 0,
       "value": "desconnecta i torna a connectar el cable USB"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "How CreateAI works"
     }
   ]
 }

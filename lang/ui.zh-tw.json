@@ -23,6 +23,10 @@
     "defaultMessage": "無障礙設定",
     "description": "Menu item for link to accessibility site"
   },
+  "accessibility-resource-title": {
+    "defaultMessage": "無障礙設定",
+    "description": "Accessibility resource card title"
+  },
   "action-label": {
     "defaultMessage": "動作",
     "description": "Label for a movement-related action, e.g. clapping"
@@ -55,13 +59,65 @@
     "defaultMessage": "新增動作",
     "description": "Button to add an action (movement related, e.g. clapping)"
   },
+  "add-action-hint": {
+    "defaultMessage": "已完成 {actionName} 的錄製嗎？<mark>新增其他動作</mark>",
+    "description": "Hint when you have recorded enough data samples for one action"
+  },
+  "add-action-hint-label": {
+    "defaultMessage": "已完成 {actionName} 的錄製嗎？按下「新增動作」按鍵以新增其他動作",
+    "description": "Hint when you have recorded enough data samples for one action aria label"
+  },
   "ai-activity-timer-resource-title": {
     "defaultMessage": "AI 活動計時器",
+    "description": "Home page resource card title"
+  },
+  "ai-light-switch-resource-title": {
+    "defaultMessage": "AI 燈光開關",
+    "description": "Home page resource card title"
+  },
+  "ai-sports-data-logger-resource-title": {
+    "defaultMessage": "AI 運動資料記錄器",
     "description": "Home page resource card title"
   },
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "AI 說故事夥伴",
     "description": "Home page resource card title"
+  },
+  "animation-label": {
+    "defaultMessage": "動畫展示 CreateAI 工作流程的五個步驟：連線、收集資料、測試模型、程式碼，以及使用。連線：將 micro:bit 裝置連線到電腦，建立兩者之間的通訊。收集資料：將 micro:bit 綁在手腕上。記錄兩種手勢的移動資料：揮手（以愛心圖示表示）與搖動（以叉叉圖示表示）。每種手勢都會收集多筆範例來訓練模型。測試模型：收集到足夠範例後，便會訓練機器學習模型。接著，電腦會嘗試即時辨識揮手與搖動手勢。使用者可以返回「收集資料」步驟，收集更多範例並再次測試。程式碼：使用者利用 MakeCode 程式積木寫入整合已訓練模型的程式。完成的程式會下載到 micro:bit。使用：micro:bit 會回應使用者的實際移動，並依據偵測到的是揮手還是搖動手勢，在 LED 螢幕上顯示不同圖示。",
+    "description": "Aria label for animation"
+  },
+  "animation-pause-action": {
+    "defaultMessage": "暫停動畫",
+    "description": "Pause animation button text"
+  },
+  "animation-resume-action": {
+    "defaultMessage": "繼續動畫",
+    "description": "Resume animation button text"
+  },
+  "animation-step-1": {
+    "defaultMessage": "連線",
+    "description": "Step 1 of how it works animation"
+  },
+  "animation-step-2": {
+    "defaultMessage": "收集數據",
+    "description": "Step 2 of how it works animation"
+  },
+  "animation-step-3": {
+    "defaultMessage": "測試模型",
+    "description": "Step 3 of how it works animation"
+  },
+  "animation-step-4": {
+    "defaultMessage": "編程",
+    "description": "Step 4 of how it works animation"
+  },
+  "animation-step-5": {
+    "defaultMessage": "使用",
+    "description": "Step 5 of how it works animation"
+  },
+  "animation-training": {
+    "defaultMessage": "訓練",
+    "description": "Machine learning training on computer screen of how it works animation"
   },
   "back-action": {
     "defaultMessage": "返回",
@@ -72,7 +128,7 @@
     "description": "Back button text"
   },
   "blocks-preview-title": {
-    "defaultMessage": "Blocks preview",
+    "defaultMessage": "程式積木預覽",
     "description": "Blocks preview heading text"
   },
   "bluetooth-unsupported-advice": {
@@ -95,6 +151,18 @@
     "defaultMessage": "取消錄製",
     "description": "Button label to cancel a movement data recording"
   },
+  "carousel-role": {
+    "defaultMessage": "順序播放",
+    "description": "aria-roledescription for carousel"
+  },
+  "carousel-slide-label": {
+    "defaultMessage": "第 {slideNum} 張，共 {totalSlides} 張",
+    "description": "Label for carousel slide / item"
+  },
+  "carousel-slide-role": {
+    "defaultMessage": "slide",
+    "description": "aria-roledescription for carousel slide / item"
+  },
   "certainty-label": {
     "defaultMessage": "確定性",
     "description": "Heading for certainty column"
@@ -110,6 +178,10 @@
   "certainty-tooltip": {
     "defaultMessage": "模型對您目前正在執行的各個動作的信心程度。",
     "description": "Tooltip for certainty column"
+  },
+  "clear": {
+    "defaultMessage": "清除",
+    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "點擊重新載入頁面",
@@ -259,10 +331,6 @@
     "defaultMessage": "微型 USB 纜線",
     "description": "Label for cable icon in list of requirements"
   },
-  "connect-or-import": {
-    "defaultMessage": "<link1>連線數據收集用的 micro:bit</link1> 或<link2>匯入數據樣本</link2>",
-    "description": "Empty data samples page text"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "複製圖案",
     "description": "Heading for Bluetooth pattern connection dialog"
@@ -407,6 +475,18 @@
     "defaultMessage": "複製",
     "description": "Copy button text"
   },
+  "create-project": {
+    "defaultMessage": "建立專案",
+    "description": "Create project button text"
+  },
+  "create-project-dialog-heading": {
+    "defaultMessage": "建立一個專案",
+    "description": "Create project dialog heading"
+  },
+  "createai-taster-lessons-resource-title": {
+    "defaultMessage": "體驗課程",
+    "description": "Home page resource card title"
+  },
   "data-actions-menu": {
     "defaultMessage": "數據動作",
     "description": "Aria label for menu"
@@ -432,7 +512,7 @@
     "description": "Show data features button text"
   },
   "data-preview-title": {
-    "defaultMessage": "Data preview",
+    "defaultMessage": "資料預覽",
     "description": "Data preview heading text"
   },
   "data-samples-actions-region": {
@@ -489,6 +569,26 @@
   },
   "delete-data-samples-confirm-text": {
     "defaultMessage": "您確定您要刪除所有的數據樣本嗎？",
+    "description": "Confirmation dialog text"
+  },
+  "delete-project-action": {
+    "defaultMessage": "{count, plural, one {刪除} other {刪除 {count} 個專案}}",
+    "description": "Delete project button"
+  },
+  "delete-project-confirm-heading": {
+    "defaultMessage": "確認刪除專案",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-project-confirm-text": {
+    "defaultMessage": "您確定您要刪除專案「{project}」嗎？",
+    "description": "Confirmation dialog text"
+  },
+  "delete-projects-confirm-heading": {
+    "defaultMessage": "確認刪除專案",
+    "description": "Confirmation dialog heading"
+  },
+  "delete-projects-confirm-text": {
+    "defaultMessage": "您確定要刪除 {numProjects} 個專案嗎？",
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
@@ -586,6 +686,14 @@
   "downloading-subtitle": {
     "defaultMessage": "請稍等。正在將程式下載至 micro:bit。",
     "description": "Progress text"
+  },
+  "duplicate-project-action": {
+    "defaultMessage": "複製",
+    "description": "Duplicate project action"
+  },
+  "duplicate-project-heading": {
+    "defaultMessage": "複製專案",
+    "description": "Heading for duplicate project dialog"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "在 MakeCode 內編輯",
@@ -719,9 +827,9 @@
     "defaultMessage": "韌體需要更新",
     "description": "Connection error dialog"
   },
-  "get-started-action": {
-    "defaultMessage": "入門指南",
-    "description": "Get started action"
+  "first-lessons-with-microbit-createai-resource-title": {
+    "defaultMessage": "入門課程",
+    "description": "Home page resource card title"
   },
   "go-action": {
     "defaultMessage": "進行",
@@ -775,6 +883,14 @@
     "defaultMessage": "幫助",
     "description": "Help icon aria label"
   },
+  "help-resources-row-carousel": {
+    "defaultMessage": "協助資源列表",
+    "description": "Label for home page row carousel"
+  },
+  "help-resources-row-title": {
+    "defaultMessage": "幫助",
+    "description": "Title for home page row"
+  },
   "help-support": {
     "defaultMessage": "說明與支援",
     "description": "Link or menu item link to support site"
@@ -791,101 +907,13 @@
     "defaultMessage": "首頁",
     "description": "Link to home page"
   },
-  "homepage-alt": {
-    "defaultMessage": "顯示代表 micro:bit 加速計數據的 x、y、z 圖線的圖表，並重疊拍手圖示",
-    "description": "Alt text for image in homepage"
+  "homepage-banner-heading": {
+    "defaultMessage": "剛開始使用 {appName} 嗎？",
+    "description": "Homepage banner heading"
   },
-  "homepage-alt-graph": {
-    "defaultMessage": "顯示代表 micro:bit 加速計數據的 x、y、z 圖線的圖表",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-hands": {
-    "defaultMessage": "拍手",
-    "description": "Alt text for image in homepage"
-  },
-  "homepage-alt-media": {
-    "defaultMessage": "video showing CreateAI detecting different movements",
-    "description": "Alt text for media in homepage"
-  },
-  "homepage-description": {
-    "defaultMessage": "以您自己的移動數據來訓練機器學習模型並且在您的 micro:bit 上運行它。",
-    "description": "Home page description"
-  },
-  "homepage-how-it-works": {
-    "defaultMessage": "運作方式",
-    "description": "Home page section heading"
-  },
-  "homepage-how-it-works-paragraph": {
-    "defaultMessage": "觀看影片即可開始。請參閱<link>使用者指南</link>以瞭解更多資訊。",
-    "description": "Home page content under the video"
-  },
-  "homepage-media-description": {
-    "defaultMessage": "Video descriptive transcript",
-    "description": "Homepage media description"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-1": {
-    "defaultMessage": "There is no sound in this video.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-2": {
-    "defaultMessage": "A girl waves her hand while holding a micro:bit. A meter at the bottom of the video shows the machine learning model detecting ‘Waving’ rather than ‘Clapping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-3": {
-    "defaultMessage": "The scene transitions to another girl clapping her hands. She has a micro:bit strapped to her wrist. As she claps, the meter updates to show the model detecting ‘Clapping’ rather than ‘Waving’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-4": {
-    "defaultMessage": "The meter now displays ‘Bouncing’ versus ‘Running’. The scene changes to a girl bouncing a tennis ball with a racket. A micro:bit is strapped to the racket. The model detects ‘Bouncing’ rather than ‘Running’ as she bounces the ball.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-5": {
-    "defaultMessage": "The scene shifts to a boy running across a field. As he runs, the model detects ‘Running’ rather than ‘Bouncing’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-6": {
-    "defaultMessage": "The meter changes to show ‘Jumping’ versus ‘Walking’. Six children stand in a field preparing to jump with their arms raised. Initially, the model detects ‘Walking’ rather than ‘Jumping’. As the children leap into the air, the detection switches to ‘Jumping’ rather than ‘Walking’. The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-7": {
-    "defaultMessage": "The children land and walk across the field. The detection returns to ‘Walking’ rather than ‘Jumping’.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-content-8": {
-    "defaultMessage": "This video plays on a continuous loop.",
-    "description": "Homepage media descriptive transcript dialog content"
-  },
-  "homepage-media-descriptive-transcript-dialog-heading": {
-    "defaultMessage": "Descriptive transcript",
-    "description": "Homepage media descriptive transcript dialog heading"
-  },
-  "homepage-media-pause-action": {
-    "defaultMessage": "Pause video",
-    "description": "Homepage media pause video button text"
-  },
-  "homepage-media-play-action": {
-    "defaultMessage": "Play video",
-    "description": "Homepage media play video button text"
-  },
-  "homepage-projects": {
-    "defaultMessage": "專案",
-    "description": "Home page section heading"
-  },
-  "homepage-projects-more": {
-    "defaultMessage": "探索更多<link>有關於 micro:bit 和 AI 的內容及資源</link>。",
-    "description": "Link back to AI landing page"
-  },
-  "homepage-step-by-step": {
-    "defaultMessage": "一步一步的",
-    "description": "Home page section heading"
-  },
-  "homepage-subtitle": {
-    "defaultMessage": "利用移動和機器學習在您的 BBC micro:bit 上建立 AI。",
-    "description": "Home page subtitle"
-  },
-  "homepage-video-alt": {
-    "defaultMessage": "介紹視訊",
-    "description": "Home page video alt text"
+  "homepage-banner-subtitle": {
+    "defaultMessage": "結合移動與 micro:bit 的機器學習",
+    "description": "Homepage banner subtitle"
   },
   "import-data-samples-action": {
     "defaultMessage": "匯入數據樣本",
@@ -898,6 +926,10 @@
   "import-error-dialog-title": {
     "defaultMessage": "不支援的檔案類型",
     "description": "Title of import error dialog"
+  },
+  "import-file-action": {
+    "defaultMessage": "匯入",
+    "description": "Import file action"
   },
   "incompatible-device-body-alt": {
     "defaultMessage": "返回選擇不同的 micro:bit，或<link>儲存專案十六進位檔案</link>，稍後可以將其下載到 micro:bit V2 上。",
@@ -932,32 +964,36 @@
     "description": "Language option text"
   },
   "language-fully-supported-heading": {
-    "defaultMessage": "Fully supported",
+    "defaultMessage": "完全支援",
     "description": "Fully supported languages heading text"
   },
   "language-partially-supported-heading": {
-    "defaultMessage": "Partially supported",
+    "defaultMessage": "部分支持",
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Supported",
+    "defaultMessage": "支援",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "Unsupported",
+    "defaultMessage": "不支援",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
-    "defaultMessage": "Translations supported for:",
+    "defaultMessage": "支援的翻譯：",
     "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
   },
   "language-toast-title": {
-    "defaultMessage": "Language not fully supported",
+    "defaultMessage": "語言未完全支持",
     "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "瞭解防火牆要求",
     "description": "Link to support article for firewall requirements"
+  },
+  "learn-more-action": {
+    "defaultMessage": "瞭解詳情",
+    "description": "Learn more button text"
   },
   "led-icon-option-angry": {
     "defaultMessage": "憤怒",
@@ -1179,8 +1215,20 @@
     "defaultMessage": "在 MakeCode 選項中進行更多編輯",
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
+  "move-hint": {
+    "defaultMessage": "移動 micro:bit，探索不同動作如何變更圖表",
+    "description": "Hint when you have just connected a micro:bit"
+  },
+  "my-projects-row-carousel": {
+    "defaultMessage": "我的專案列表",
+    "description": "Label for home page row carousel"
+  },
+  "my-projects-row-title": {
+    "defaultMessage": "我的專案",
+    "description": "Title for home page row"
+  },
   "name-action-hint": {
-    "defaultMessage": "命名您希望 micro:bit 辨識的動作",
+    "defaultMessage": "為您希望 CreateAI 識別的動作命名，例如「揮手」或「跳躍」",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1195,65 +1243,21 @@
     "defaultMessage": "儲存 HEX 檔案時，使用該名稱。",
     "description": "Text under project name field"
   },
-  "new-session-setup-description": {
-    "defaultMessage": "啟動新會話將覆蓋您現有的會話。您可能需要先<link>儲存您的現有會話</link>。",
-    "description": "New session setup description"
+  "new-project-setup-title": {
+    "defaultMessage": "新專案設定",
+    "description": "New project setup title"
   },
-  "new-session-setup-title": {
-    "defaultMessage": "新會話設定",
-    "description": "New session setup title"
-  },
-  "newpage-continue-session-subtitle": {
-    "defaultMessage": "利用您儲存到您電腦的十六進位檔案或數據樣本檔案以繼續會話。",
-    "description": "Continue session subtitle"
-  },
-  "newpage-continue-session-title": {
-    "defaultMessage": "繼續一個已儲存會話",
-    "description": "Continue session title"
-  },
-  "newpage-last-session-date": {
-    "defaultMessage": "<strong>日期：</strong> {date}",
-    "description": "Last session date label"
-  },
-  "newpage-last-session-name": {
-    "defaultMessage": "<strong>名稱：</strong> {name}",
-    "description": "Last session name label"
-  },
-  "newpage-last-session-none": {
-    "defaultMessage": "未找到會話",
-    "description": "Last session not found text"
-  },
-  "newpage-last-session-title": {
-    "defaultMessage": "開啟上一個會話",
-    "description": "Open last session title"
-  },
-  "newpage-new-session-subtitle": {
-    "defaultMessage": "連線您的 micro:bit 並收集移動數據以建立機器學習模型。",
-    "description": "Start new session subtitle"
-  },
-  "newpage-new-session-title": {
-    "defaultMessage": "新會話",
-    "description": "Start new session title"
-  },
-  "newpage-section-one-title": {
-    "defaultMessage": "從您上次離開的地方繼續",
-    "description": "Homepage section one title"
-  },
-  "newpage-section-two-title": {
-    "defaultMessage": "開始新專案",
-    "description": "Homepage section two title"
-  },
-  "newpage-title": {
-    "defaultMessage": "新會話",
-    "description": "New page title"
+  "newpage-new-project-title": {
+    "defaultMessage": "新專案",
+    "description": "Start new project title"
   },
   "next-action": {
     "defaultMessage": "下一個",
     "description": "Next button text for dialogs and similar"
   },
-  "no-data-samples": {
-    "defaultMessage": "沒有數據樣本",
-    "description": "Empty data samples page status text"
+  "no-projects": {
+    "defaultMessage": "沒有可顯示的專案",
+    "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
     "defaultMessage": "這項專案不包含任何數據樣本，因此僅開啟程式碼。您需要先訓練模型，然後才能使用程式碼。",
@@ -1271,40 +1275,36 @@
     "defaultMessage": "找不到頁面",
     "description": "Page not found page title"
   },
-  "open-file-action": {
-    "defaultMessage": "開啟...",
-    "description": "Open file button text"
-  },
   "open-file-dropped": {
     "defaultMessage": "放置時開啟檔案",
     "description": "Aria label for file drop target"
   },
   "open-project-action": {
-    "defaultMessage": "Open project",
+    "defaultMessage": "開啟",
+    "description": "Open project action"
+  },
+  "open-shared-project-action": {
+    "defaultMessage": "開啟專案",
     "description": "Open project button text"
   },
-  "open-project-setup-description": {
-    "defaultMessage": "Opening this project will overwrite any existing session. You may want to <link>save your existing session</link> first.",
-    "description": "Open project setup description"
-  },
   "open-shared-project-blocks-preview-description": {
-    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "defaultMessage": "預覽此專案中包含的 MakeCode 程式碼。",
     "description": "Blocks preview description text"
   },
   "open-shared-project-data-preview-description": {
-    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "defaultMessage": "預覽此專案中包含的動作與資料。",
     "description": "Data preview description text"
   },
   "open-shared-project-description": {
-    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "defaultMessage": "這是一個與 CreateAI 相容的 Microsoft MakeCode 共用專案。",
     "description": "Import shared CreateAI project description"
   },
   "open-shared-project-error-description": {
-    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "defaultMessage": "檢查您開啟的連結正確無誤，並在重試前確認已連線網際網路。",
     "description": "Import shared CreateAI error description"
   },
   "open-shared-project-title": {
-    "defaultMessage": "Open shared CreateAI project",
+    "defaultMessage": "開啟共用的 CreateAI 專案",
     "description": "Import shared CreateAI project title"
   },
   "other-tabs-body1": {
@@ -1323,13 +1323,49 @@
     "defaultMessage": "隱私權政策",
     "description": "Link to view privacy policy"
   },
+  "project-ideas-row-carousel": {
+    "defaultMessage": "專案構想列表",
+    "description": "Label for home page row carousel"
+  },
+  "project-ideas-row-title": {
+    "defaultMessage": "專案構想",
+    "description": "Title for home page row"
+  },
+  "project-label": {
+    "defaultMessage": "專案",
+    "description": "Label for project input"
+  },
   "project-loaded": {
     "defaultMessage": "專案已載入",
     "description": "Toast when a new project is loaded"
   },
+  "project-menu-action": {
+    "defaultMessage": " {name} 動作選單",
+    "description": "Label for project actions menu button"
+  },
   "project-name-not-empty": {
     "defaultMessage": "專案名稱不可為空白",
     "description": "Validation message for project name"
+  },
+  "project-name-text": {
+    "defaultMessage": "專案名稱",
+    "description": "Label for project name input"
+  },
+  "project-name-tooltip": {
+    "defaultMessage": "點擊以編輯專案名稱",
+    "description": "Tooltip for the project name editable input"
+  },
+  "project-skip-to-toolbar": {
+    "defaultMessage": "跳至工具列",
+    "description": "Button to skip focus to the projects toolbar"
+  },
+  "project-storage-tooltip": {
+    "defaultMessage": "您的資料會儲存在此裝置上的瀏覽器中。清除瀏覽器的 Cookie 或網站資料將會刪除這些資料。若您的裝置儲存空間不足，瀏覽器也可能會自動將其移除。",
+    "description": "Tooltip for my projects row"
+  },
+  "projects-page-title": {
+    "defaultMessage": "專案",
+    "description": "Projects page title"
   },
   "radio-link-microbit": {
     "defaultMessage": "無線電連結 micro:bit",
@@ -1392,12 +1428,20 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "按下以記錄數據樣本。",
+    "defaultMessage": "按下錄製以收集一筆移動資料範例。",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
-    "defaultMessage": "按下以記錄數據樣本或是按下您的數據收集用的 micro:bit 上的按鍵 B。",
+    "defaultMessage": "按下錄製 <mark>或</mark> micro:bit 上的 B 按鍵，以收集一筆移動資料範例。",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+  },
+  "record-more-hint": {
+    "defaultMessage": "至少再錄製 {numSamples, plural, one {{numSamples} 筆資料範例} other {{numSamples} 筆資料範例}}",
+    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+  },
+  "record-more-hint-label": {
+    "defaultMessage": "至少再為 {actionName} 錄製 {numSamples, plural, one {{numSamples} 筆資料範例} other {{numSamples} 筆資料範例}}",
+    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
     "defaultMessage": "記錄 {numSamples} 個樣本",
@@ -1446,6 +1490,14 @@
   "reload-action": {
     "defaultMessage": "重新載入",
     "description": "Reload button text"
+  },
+  "rename-project-action": {
+    "defaultMessage": "重新命名",
+    "description": "Rename project action"
+  },
+  "rename-project-heading": {
+    "defaultMessage": "重新命名專案",
+    "description": "Heading for rename project dialog"
   },
   "reset-to-default-action": {
     "defaultMessage": "重設為預設區塊",
@@ -1499,6 +1551,10 @@
     "defaultMessage": "您的十六進位檔案已下載",
     "description": "Notification after a hex file has been downloaded"
   },
+  "search": {
+    "defaultMessage": "搜尋",
+    "description": "Aria label for searching projects"
+  },
   "select-icon-action-aria": {
     "defaultMessage": "挑選動作「{action}」的圖標",
     "description": "Aria label for pick icon button"
@@ -1510,6 +1566,14 @@
   "select-icon-option-action-aria": {
     "defaultMessage": "選擇「{iconName}」圖標",
     "description": "Aria label for icon option"
+  },
+  "select-project-action": {
+    "defaultMessage": "選擇 {name}",
+    "description": "Label for project selection checkbox"
+  },
+  "selection-actions-group": {
+    "defaultMessage": "選擇動作",
+    "description": "Accessible label for the group of actions available when projects are selected"
   },
   "settings": {
     "defaultMessage": "設置",
@@ -1535,17 +1599,33 @@
     "defaultMessage": "軟體版本",
     "description": "Software versions text"
   },
-  "start-session-action": {
-    "defaultMessage": "開始會話",
-    "description": "Start session button text"
+  "sort-option-last-modified": {
+    "defaultMessage": "上次修改",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-name": {
+    "defaultMessage": "名稱",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-option-relevance": {
+    "defaultMessage": "相關性",
+    "description": "Option for project sort select element / dropdown"
+  },
+  "sort-order-ascending-label": {
+    "defaultMessage": "升序排序",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-order-descending-label": {
+    "defaultMessage": "降序排序",
+    "description": "Label for sort order toggle button"
+  },
+  "sort-select-label": {
+    "defaultMessage": "排序專案",
+    "description": "Label for select element to sort projects"
   },
   "start-training-action": {
     "defaultMessage": "開始訓練",
     "description": "Start training button text"
-  },
-  "steps-alt": {
-    "defaultMessage": "圖表顯示收集數據、訓練模型、測試模型、改進數據以優化模型的迭代程序，然後最終利用模型進行編碼。",
-    "description": "Alt text for the step-by-step home page diagram"
   },
   "steps-code": {
     "defaultMessage": "編程",
@@ -1571,9 +1651,29 @@
     "defaultMessage": "停止錄製",
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
+  },
   "support-request": {
     "defaultMessage": "請考慮<link>提出支援請求</link>。",
     "description": "Support request link text"
+  },
+  "teacher-resources-row-carousel": {
+    "defaultMessage": "教師資源列表",
+    "description": "Label for home page row carousel"
+  },
+  "teacher-resources-row-title": {
+    "defaultMessage": "教師資源",
+    "description": "Title for home page row"
   },
   "terms": {
     "defaultMessage": "網站使用條款",
@@ -1588,8 +1688,16 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
+    "defaultMessage": "此專案由使用者提供，未經 Microsoft 或 Micro:bit Educational Foundation 認可。若您認為內容不適當，請前往 <link>MakeCode 共用專案</link> 向 Microsoft MakeCode 檢舉不當內容。",
     "description": "Notify user of third party content"
+  },
+  "timestamp-now": {
+    "defaultMessage": "現在",
+    "description": "The last edit time of a project"
+  },
+  "timestamp-seconds": {
+    "defaultMessage": "幾秒前",
+    "description": "The last edit time of a project"
   },
   "tour-action": {
     "defaultMessage": "導覽",
@@ -1723,6 +1831,14 @@
     "defaultMessage": "訓練模型",
     "description": "Training dialog"
   },
+  "train-hint": {
+    "defaultMessage": "錄製完成了嗎？<mark>訓練模型</mark>",
+    "description": "Hint when you have recorded enough data samples to train a model"
+  },
+  "train-hint-label": {
+    "defaultMessage": "錄製完成了嗎？按下「訓練模型」按鍵來訓練模型",
+    "description": "Hint when you have recorded enough data samples to train a model aria label"
+  },
   "train-model": {
     "defaultMessage": "訓練模型",
     "description": "Action to train a model"
@@ -1746,6 +1862,10 @@
   "transfer-hex-message": {
     "defaultMessage": "將十六進位檔案從您的下載資料夾拖曳至 MICROBIT 磁碟。",
     "description": "Dialog shown when WebUSB fails"
+  },
+  "troubleshooting-resource-title": {
+    "defaultMessage": "疑難排解",
+    "description": "Home page resource card title"
   },
   "try-again-action": {
     "defaultMessage": "重試一次",
@@ -1787,6 +1907,10 @@
     "defaultMessage": "用戶指南 ",
     "description": "Used for link to user guide page on microbit.org"
   },
+  "view-all-projects": {
+    "defaultMessage": "檢視全部",
+    "description": "View all projects button / card text"
+  },
   "webusb-retry-no-select": {
     "defaultMessage": "您沒有選擇 micro:bit。您想再試一次嗎？",
     "description": "Shown if the user fails to choose a micro:bit"
@@ -1806,5 +1930,9 @@
   "webusb-retry-replug4": {
     "defaultMessage": "拔下並重新插入 USB 纜線",
     "description": "WebUSB error dialog"
+  },
+  "welcome-title": {
+    "defaultMessage": "CreateAI 的運作方式",
+    "description": "Welcome dialog"
   }
 }
