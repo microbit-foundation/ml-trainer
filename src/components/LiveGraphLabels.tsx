@@ -11,10 +11,14 @@ import { RiArrowDropLeftFill } from "react-icons/ri";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { getLabelHeights } from "../live-graph-label-config";
-import { smoothenDataPoint } from "./LiveGraph";
 import { useSettings } from "../store";
+import { smoothenDataPoint } from "./LiveGraph";
 
-const LiveGraphLabels = () => {
+interface LiveGraphLabelsProps {
+  paused?: boolean;
+}
+
+const LiveGraphLabels = ({ paused }: LiveGraphLabelsProps) => {
   const [{ graphColorScheme }] = useSettings();
   const colors = useGraphColors(graphColorScheme);
 
@@ -57,6 +61,9 @@ const LiveGraphLabels = () => {
 
   const accelerometerListener = useCallback(
     (data: AccelerometerData) => {
+      if (paused) {
+        return;
+      }
       dataRef.current = {
         x: smoothenDataPoint(dataRef.current.x, data.x),
         y: smoothenDataPoint(dataRef.current.y, data.y),
@@ -75,7 +82,7 @@ const LiveGraphLabels = () => {
         }
       });
     },
-    [labelConfig]
+    [paused, labelConfig]
   );
 
   useAccelerometerListener(accelerometerListener);

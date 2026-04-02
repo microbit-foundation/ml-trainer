@@ -77,20 +77,13 @@ export const useHasMoved = (): boolean => {
   const isConnected = useDataConnected();
   const connection = useDataConnection();
   useEffect(() => {
-    if (!isConnected) {
-      setHasMoved(false);
-    }
     let ignore = false;
     const delta: AccelerometerData = { x: 0, y: 0, z: 0 };
     let lastSample: AccelerometerData | undefined;
     const threshold = 40_000;
     const minDelta = 100;
-    const skipSamples = 10;
-    let skipped = 0;
     const listener = (e: AccelerometerData) => {
-      if (skipped < skipSamples) {
-        skipped++;
-      } else if (lastSample) {
+      if (lastSample) {
         const deltaX = Math.abs(lastSample.x - e.x);
         if (deltaX > minDelta) {
           delta.x += deltaX;
@@ -109,7 +102,7 @@ export const useHasMoved = (): boolean => {
         (delta.x > threshold ? 1 : 0) +
           (delta.y > threshold ? 1 : 0) +
           (delta.z > threshold ? 1 : 0) >
-        1
+        0
       ) {
         connection.removeEventListener("accelerometerdatachanged", listener);
         if (!ignore) {
