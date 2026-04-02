@@ -99,6 +99,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         gap={{ base: 10, md: "1rem" }}
         alignItems={isTripleReset ? "center" : { base: "center", md: "end" }}
         minH={{ base: "auto", md: "200px" }}
+        userSelect="none"
       >
         {isTripleReset ? (
           <MicrobitBoardFront
