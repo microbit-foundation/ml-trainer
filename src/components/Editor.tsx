@@ -28,6 +28,7 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
   return (
     <MakeCodeFrame
       ref={ref}
+      baseUrl="https://makecode.microbit.org/beta"
       queryParams={{ hidelanguage: "1", keyboardcontrols: "1" }}
       controllerId={controllerId}
       controller={2}
