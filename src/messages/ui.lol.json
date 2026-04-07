@@ -589,6 +589,12 @@
       "value": "crwdns362748:0crwdne362748:0"
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern."
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

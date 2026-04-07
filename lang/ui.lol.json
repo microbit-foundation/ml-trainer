@@ -315,6 +315,10 @@
     "defaultMessage": "crwdns362748:0crwdne362748:0",
     "description": "Project download instructions"
   },
+  "connect-cannot-see-pattern": {
+    "defaultMessage": "I do not see a pattern.",
+    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+  },
   "connect-computer": {
     "defaultMessage": "crwdns362750:0crwdne362750:0",
     "description": "Label for computer icon in connection dialog"

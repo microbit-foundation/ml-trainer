@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Text, VStack } from "@chakra-ui/react";
+import { Button, Text, VStack } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { blank } from "../bt-pattern-utils";
@@ -60,6 +60,13 @@ const EnterBluetoothPatternDialog = ({
       onNextClick={handleNextClick}
       onBackClick={handleBackClick}
       headingId={headingId}
+      footerLeft={
+        isNativePlatform() ? (
+          <Button onClick={handleBackClick} variant="link" size="lg">
+            <FormattedMessage id="connect-cannot-see-pattern" />
+          </Button>
+        ) : undefined
+      }
       {...props}
     >
       <VStack gap={10}>

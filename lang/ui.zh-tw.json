@@ -315,6 +315,10 @@
     "defaultMessage": "使用 USB 纜線將 micro:bit 連線到這台電腦，以便將數據收集程式下載到其中。",
     "description": "Project download instructions"
   },
+  "connect-cannot-see-pattern": {
+    "defaultMessage": "I do not see a pattern.",
+    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+  },
   "connect-computer": {
     "defaultMessage": "電腦",
     "description": "Label for computer icon in connection dialog"

@@ -609,6 +609,12 @@
       "value": "使用 USB 纜線將 micro:bit 連線到這台電腦，以便將數據收集程式下載到其中。"
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern."
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

@@ -585,6 +585,12 @@
       "value": "데이터 수집 프로그램을 micro:bit에 다운로드할 수 있도록 USB 케이블로 micro:bit를 이 컴퓨터에 연결합니다."
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern."
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,
