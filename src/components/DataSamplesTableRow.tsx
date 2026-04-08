@@ -12,15 +12,17 @@ import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import {
   NameActionHint,
+  NameActionShortHint,
   NameActionWithSamplesHint,
   NameFirstActionHint,
-  RecordFirstActionHint,
   RecordHint,
   RecordMoreHint,
 } from "./DataSamplesTableHints";
 import { RecordingOptions } from "./RecordingDialog";
 
 interface DataSamplesTableRowProps {
+  actionIdx: number;
+  isLastRow: boolean;
   preview?: boolean;
   action: ActionData;
   selected: boolean;
@@ -34,6 +36,8 @@ interface DataSamplesTableRowProps {
 }
 
 const DataSamplesTableRow = ({
+  actionIdx,
+  isLastRow,
   action,
   selected,
   onSelectRow,
@@ -72,13 +76,16 @@ const DataSamplesTableRow = ({
           }
         />
       </GridItem>
-      {(hint === "name-first-action" || hint === "name-action") && (
+      {hint?.type === "name-action" && hint.actionIdx === actionIdx && (
         <GridItem h="120px">
-          {hint === "name-first-action" && <NameFirstActionHint />}
-          {hint === "name-action" && <NameActionHint />}
+          {hint?.actionIdx === 0 && <NameFirstActionHint />}
+          {hint?.actionIdx === 1 && <NameActionHint />}
         </GridItem>
       )}
-      <GridItem position="relative">
+      <GridItem position="relative" h="100%">
+        {hint?.type === "name-action-short" && hint.actionIdx === actionIdx && (
+          <NameActionShortHint />
+        )}
         {(action.name.length > 0 || action.recordings.length > 0) && (
           <ActionDataSamplesCard
             preview={preview}
@@ -90,27 +97,26 @@ const DataSamplesTableRow = ({
             clearNewRecordingId={clearNewRecordingId}
           />
         )}
-        {hint === "record-action" && <RecordHint />}
-        {hint === "record-more-action" && (
-          <RecordMoreHint
-            actionName={action.name}
-            recorded={action.recordings.length}
-          />
+        {hint?.type === "record-action" && hint.actionIdx === actionIdx && (
+          <RecordHint />
         )}
       </GridItem>
-      {hint === "name-action-with-samples" && (
+      {hint?.type === "record-more-action" && isLastRow && (
+        <>
+          {/* Empty grid item to fill action column for positioning */}
+          <GridItem />
+          <GridItem>
+            <RecordMoreHint
+              actionName={action.name}
+              recorded={action.recordings.length}
+            />
+          </GridItem>
+        </>
+      )}
+      {hint?.type === "name-action-with-samples" && isLastRow && (
         <GridItem h="120px">
           <NameActionWithSamplesHint />
         </GridItem>
-      )}
-      {hint === "record-first-action" && (
-        <>
-          {/* Skip first column to correctly place hint. */}
-          <GridItem />
-          <GridItem h="120px">
-            {hint === "record-first-action" && <RecordFirstActionHint />}
-          </GridItem>
-        </>
       )}
     </Box>
   );

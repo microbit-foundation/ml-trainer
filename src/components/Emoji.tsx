@@ -6,20 +6,6 @@ import {
 } from "@chakra-ui/react";
 
 export const animations = {
-  wobble: `${keyframes({
-    "0%": {
-      transform: "rotate(15deg)",
-    },
-    "25%": {
-      transform: "rotate(-15deg)",
-    },
-    "50%": {
-      transform: "rotate(15deg)",
-    },
-    "75%": {
-      transform: "rotate(-15deg)",
-    },
-  })} 2s`,
   tada: `${keyframes({
     "0%": {
       transform: "scale(1) rotate(0deg)",

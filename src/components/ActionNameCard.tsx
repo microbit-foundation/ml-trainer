@@ -100,6 +100,7 @@ const ActionNameCard = ({
     [setHint]
   );
 
+  const setHasMoved = useStore((s) => s.setHasMoved);
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     async (e) => {
       const name = e.target.value;
@@ -119,10 +120,11 @@ const ActionNameCard = ({
         return;
       }
       setLocalName(name);
+      setHasMoved(true);
       await debouncedSetActionName(id, name);
       debouncedSetHint();
     },
-    [debouncedSetActionName, debouncedSetHint, id, intl, toast]
+    [debouncedSetActionName, debouncedSetHint, id, intl, setHasMoved, toast]
   );
 
   const handleIconSelected = useCallback(

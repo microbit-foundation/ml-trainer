@@ -33,7 +33,7 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
       controller={2}
       lang={getMakeCodeLang(languageId)}
       loading="eager"
-      version={getEditorVersionOverride()}
+      version={getEditorVersionOverride() ?? "beta"}
       {...editorCallbacks}
       {...props}
     />

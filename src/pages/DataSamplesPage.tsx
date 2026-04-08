@@ -21,6 +21,7 @@ import DataSamplesTable from "../components/DataSamplesTable";
 import {
   AddActionHint,
   MoveMicrobitHint,
+  moveMicrobitHintTimeoutInSec,
   TrainHint,
 } from "../components/DataSamplesTableHints";
 import DefaultPageLayout, {
@@ -42,7 +43,11 @@ import {
   PostImportDialogState,
 } from "../model";
 import { projectSessionStorage } from "../session-storage";
-import { useHasSufficientDataForTraining, useStore } from "../store";
+import {
+  useHasSufficientDataForTraining,
+  useSettings,
+  useStore,
+} from "../store";
 import { tourElClassname } from "../tours";
 import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
 
@@ -120,28 +125,34 @@ const DataSamplesPage = () => {
     dismissWelcomeDialog,
   ]);
   const hasMoved = useHasMoved();
-  const tourInProgress = useStore((s) => !!s.tourState);
+  const tourState = useStore((s) => s.tourState);
   const isRecordingDialogOpen = useStore((s) => !!s.isRecordingDialogOpen);
   const isPostImportDialogOpen = useStore(
     (s) => s.postImportDialogState !== PostImportDialogState.None
   );
+  const tourInProgress = !!tourState;
   const isDialogOpen =
     isWelcomeDialogOpen ||
     isConnectionDialogOpen ||
     tourInProgress ||
     isRecordingDialogOpen ||
     isPostImportDialogOpen;
+
   const hint = useStore((s) => s.hint);
   const setHint = useStore((s) => s.setHint);
   useEffect(() => {
     // Initialise hint on first load.
     setHint(true);
   }, [setHint]);
-  const dataSamplesHint: DataSamplesPageHint = isDialogOpen
-    ? null
-    : isConnected && !hasMoved
-    ? "move-microbit"
-    : hint;
+  const dataSamplesHint: DataSamplesPageHint = useMemo(
+    () =>
+      isDialogOpen
+        ? null
+        : isConnected && !hasMoved
+        ? { type: "move-microbit" }
+        : hint,
+    [hasMoved, hint, isConnected, isDialogOpen]
+  );
 
   const pageRef = useRef(null);
   const region = useLiveRegion(pageRef.current);
@@ -159,6 +170,21 @@ const DataSamplesPage = () => {
     [region]
   );
 
+  const setHasMoved = useStore((s) => s.setHasMoved);
+  const [settings] = useSettings();
+  useEffect(() => {
+    if (
+      dataSamplesHint?.type === "move-microbit" &&
+      settings.toursCompleted.includes("Connect")
+    ) {
+      const id = setTimeout(
+        () => setHasMoved(true),
+        moveMicrobitHintTimeoutInSec * 1000
+      );
+      return () => clearTimeout(id);
+    }
+  }, [dataSamplesHint?.type, setHasMoved, settings.toursCompleted]);
+
   useEffect(() => {
     if (!dataSamplesHint) {
       return;
@@ -171,7 +197,7 @@ const DataSamplesPage = () => {
       actionWithHint
     );
     debouncedSpeakHint(hintText);
-  }, [actions, dataSamplesHint, debouncedSpeakHint, intl, isConnected, region]);
+  }, [actions, dataSamplesHint, debouncedSpeakHint, intl, isConnected]);
 
   return (
     <>
@@ -216,7 +242,7 @@ const DataSamplesPage = () => {
                   <FormattedMessage id="add-action-action" />
                 </Button>
               </HStack>
-              {dataSamplesHint === "add-action" && (
+              {dataSamplesHint?.type === "add-action" && (
                 <AddActionHint action={actions[0]} />
               )}
               <HStack>
@@ -249,8 +275,10 @@ const DataSamplesPage = () => {
                   </Button>
                 )}
               </HStack>
-              {dataSamplesHint === "train" && <TrainHint />}
-              {dataSamplesHint === "move-microbit" && <MoveMicrobitHint />}
+              {dataSamplesHint?.type === "train" && <TrainHint />}
+              {dataSamplesHint?.type === "move-microbit" && (
+                <MoveMicrobitHint />
+              )}
             </HStack>
             <LiveGraphPanel
               disconnectedTextId="connect-to-record"
@@ -281,7 +309,7 @@ const getHintText = (
   if (!hint) {
     return "";
   }
-  switch (hint) {
+  switch (hint.type) {
     case "add-action": {
       return intl.formatMessage(
         { id: "add-action-hint-label" },
@@ -291,7 +319,6 @@ const getHintText = (
     case "move-microbit": {
       return intl.formatMessage({ id: "move-hint" });
     }
-    case "record-first-action":
     case "record-action": {
       return isConnected
         ? intl
@@ -302,7 +329,7 @@ const getHintText = (
             .toString()
         : intl.formatMessage({ id: "record-hint" });
     }
-    case "name-first-action":
+    case "name-action-short":
     case "name-action-with-samples":
     case "name-action": {
       return intl.formatMessage({ id: "name-action-hint" });

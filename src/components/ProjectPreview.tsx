@@ -192,13 +192,15 @@ const DataPreview = ({ dataset }: DataPreviewProps) => {
       <Box {...previewFrameOuter}>
         <Box {...previewFrame}>
           <Grid gap={3} gridTemplateColumns="290px 1fr">
-            {dataset.map((action) => (
+            {dataset.map((action, idx) => (
               <DataSamplesTableRow
                 preview={true}
                 key={action.id}
                 action={action}
                 selected={false}
                 hint={null}
+                isLastRow={false}
+                actionIdx={idx}
               />
             ))}
           </Grid>

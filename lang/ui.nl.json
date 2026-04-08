@@ -319,6 +319,10 @@
     "defaultMessage": "Sluit de micro:bit aan op deze computer met een USB-kabel zodat het programma voor gegevensverzameling kan worden gedownload.",
     "description": "Project download instructions"
   },
+  "connect-cannot-see-pattern": {
+    "defaultMessage": "I do not see a pattern",
+    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+  },
   "connect-computer": {
     "defaultMessage": "Computer",
     "description": "Label for computer icon in connection dialog"
@@ -382,10 +386,6 @@
   "connect-native-start-heading": {
     "defaultMessage": "Connect micro:bit battery pack",
     "description": "Connection dialog heading"
-  },
-  "connect-or-import": {
-    "defaultMessage": "<link1>Verbind een micro:bit die gegevens verzamelt</link1> of <link2>importeer data samples</link2>",
-    "description": "Empty data samples page text"
   },
   "connect-pattern-heading": {
     "defaultMessage": "Kopieer patroon",
@@ -1858,6 +1858,22 @@
   "stop-recording-action": {
     "defaultMessage": "Stop met opnemen",
     "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
+  },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
   },
   "support-request": {
     "defaultMessage": "Overweeg <link>een ondersteuningsverzoek</link> in te dienen.",

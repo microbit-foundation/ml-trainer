@@ -1,16 +1,6 @@
 #!/usr/bin/env node
 
-const ref = process.env.GITHUB_REF;
-let stage;
-if (ref === "refs/heads/beta") {
-  stage = "BETA";
-} else if (ref === "refs/heads/main") {
-  stage = "STAGING";
-} else if (ref.startsWith("refs/tags/v")) {
-  stage = "PRODUCTION";
-} else {
-  stage = "REVIEW";
-}
+const { stage } = require("./ci-stage.cjs");
 
 process.env.STAGE = stage;
 // STAGE must be defined before this is imported

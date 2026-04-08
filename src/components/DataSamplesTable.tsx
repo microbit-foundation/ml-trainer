@@ -7,13 +7,13 @@
 import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
 import { ButtonData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useRef, useState } from "react";
-import useKeyboardHeight from "../hooks/use-keyboard-height";
-import { isIOS } from "../platform";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
 import { useDataConnected } from "../data-connection-flow";
+import useKeyboardHeight from "../hooks/use-keyboard-height";
+import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { ActionData, DataSamplesPageHint } from "../model";
+import { isIOS } from "../platform";
 import { useStore } from "../store";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { actionNameInputId } from "./ActionNameCard";
@@ -111,9 +111,11 @@ const DataSamplesTable = ({
     (s) => s.connectToRecordDialogOnOpen
   );
   const closeDialog = useStore((s) => s.closeDialog);
-  const tourState = useStore((s) => s.tourState);
 
   const isConnected = useDataConnected();
+  const isNonConnectionDialogOpen = useStore(
+    (s) => s.isNonConnectionDialogOpen
+  );
 
   // For adding flashing animation for new recording.
   const [newRecordingId, setNewRecordingId] = useState<string | undefined>(
@@ -127,12 +129,11 @@ const DataSamplesTable = ({
 
   const buttonListener = useCallback(
     (e: ButtonData) => {
-      // Allow Button B recording when tour is not in progress and the
+      // Allow Button B recording when no dialogs are opened and the
       // record button for selected action is displayed.
       if (
-        !isRecordingDialogOpen &&
+        !isNonConnectionDialogOpen() &&
         e.state &&
-        tourState === undefined &&
         (selectedAction.name.length > 0 || selectedAction.recordings.length > 0)
       ) {
         setRecordingOptions({
@@ -142,7 +143,7 @@ const DataSamplesTable = ({
         recordingDialogOnOpen();
       }
     },
-    [isRecordingDialogOpen, recordingDialogOnOpen, selectedAction, tourState]
+    [isNonConnectionDialogOpen, recordingDialogOnOpen, selectedAction]
   );
 
   useMicrobitButtonListener("B", buttonListener);
@@ -272,8 +273,9 @@ const DataSamplesTable = ({
             selected={selectedAction.id === action.id}
             onSelectRow={() => setSelectedActionIdx(idx)}
             onRecord={handleRecord}
-            // Only show hint for the last row.
-            hint={idx === actions.length - 1 ? hint : null}
+            actionIdx={idx}
+            hint={hint}
+            isLastRow={actions.length - 1 === idx}
             onDeleteAction={deleteActionConfirmOnOpen}
             renameShortcutScopeRef={renameActionShortcutScopeRef}
           />

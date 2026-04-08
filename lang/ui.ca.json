@@ -319,6 +319,10 @@
     "defaultMessage": "Connecta la micro:bit a aquest ordinador amb un cable USB perquè el programa de recollida de dades es pugui descarregar.",
     "description": "Project download instructions"
   },
+  "connect-cannot-see-pattern": {
+    "defaultMessage": "I do not see a pattern",
+    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+  },
   "connect-computer": {
     "defaultMessage": "Ordinador",
     "description": "Label for computer icon in connection dialog"
@@ -382,10 +386,6 @@
   "connect-native-start-heading": {
     "defaultMessage": "Connect micro:bit battery pack",
     "description": "Connection dialog heading"
-  },
-  "connect-or-import": {
-    "defaultMessage": "<link1>Connecta una micro:bit de recollida de dades</link1> o <link2>importa mostres de dades</link2>",
-    "description": "Empty data samples page text"
   },
   "connect-pattern-heading": {
     "defaultMessage": "Copia el patró",
@@ -656,11 +656,11 @@
     "description": "Confirmation dialog text"
   },
   "delete-project-action": {
-    "defaultMessage": "{count, plural, one {Delete} other {Delete {count} projects}}",
+    "defaultMessage": "{count, plural, one {Esborra} other {Esborra {count} projectes}}",
     "description": "Delete project button"
   },
   "delete-project-confirm-heading": {
-    "defaultMessage": "Confirm delete project",
+    "defaultMessage": "Confirma l'eliminació del projecte",
     "description": "Confirmation dialog heading"
   },
   "delete-project-confirm-text": {
@@ -796,11 +796,11 @@
     "description": "Progress text when rebooting micro:bit before flashing"
   },
   "duplicate-project-action": {
-    "defaultMessage": "Duplicate",
+    "defaultMessage": "Duplica",
     "description": "Duplicate project action"
   },
   "duplicate-project-heading": {
-    "defaultMessage": "Duplicate project",
+    "defaultMessage": "Duplicar el projecte",
     "description": "Heading for duplicate project dialog"
   },
   "edit-in-makecode-action": {
@@ -936,7 +936,7 @@
     "description": "Connection error dialog"
   },
   "first-lessons-with-microbit-createai-resource-title": {
-    "defaultMessage": "First lessons",
+    "defaultMessage": "Primera lliçó",
     "description": "Home page resource card title"
   },
   "go-action": {
@@ -1036,7 +1036,7 @@
     "description": "Title of import error dialog"
   },
   "import-file-action": {
-    "defaultMessage": "Import",
+    "defaultMessage": "Importa",
     "description": "Import file action"
   },
   "incompatible-device-body-alt": {
@@ -1344,7 +1344,7 @@
     "description": "Label for home page row carousel"
   },
   "my-projects-row-title": {
-    "defaultMessage": "My projects",
+    "defaultMessage": "Els meus projectes",
     "description": "Title for home page row"
   },
   "name-action-hint": {
@@ -1412,7 +1412,7 @@
     "description": "New project setup title"
   },
   "newpage-new-project-title": {
-    "defaultMessage": "New project",
+    "defaultMessage": "Projecte nou",
     "description": "Start new project title"
   },
   "next-action": {
@@ -1420,7 +1420,7 @@
     "description": "Next button text for dialogs and similar"
   },
   "no-projects": {
-    "defaultMessage": "No projects to display",
+    "defaultMessage": "No hi ha cap projecte per mostrar",
     "description": "Shown on all projects page when the user has no projects"
   },
   "not-create-ai-hex-import-dialog-content": {
@@ -1448,7 +1448,7 @@
     "description": "Open project action"
   },
   "open-shared-project-action": {
-    "defaultMessage": "Open project",
+    "defaultMessage": "Obre un projecte",
     "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
@@ -1492,7 +1492,7 @@
     "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
-    "defaultMessage": "Project ideas",
+    "defaultMessage": "Idees de projectes",
     "description": "Title for home page row"
   },
   "project-label": {
@@ -1504,7 +1504,7 @@
     "description": "Toast when a new project is loaded"
   },
   "project-menu-action": {
-    "defaultMessage": "{name} actions menu",
+    "defaultMessage": "Menú d'accions {name}",
     "description": "Label for project actions menu button"
   },
   "project-name-not-empty": {
@@ -1660,11 +1660,11 @@
     "description": "Reload button text"
   },
   "rename-project-action": {
-    "defaultMessage": "Rename",
+    "defaultMessage": "Canvia el nom",
     "description": "Rename project action"
   },
   "rename-project-heading": {
-    "defaultMessage": "Rename project",
+    "defaultMessage": "Reanomena el projecte",
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
@@ -1808,27 +1808,27 @@
     "description": "Software versions text"
   },
   "sort-option-last-modified": {
-    "defaultMessage": "Last modified",
+    "defaultMessage": "Darrer modificat",
     "description": "Option for project sort select element / dropdown"
   },
   "sort-option-name": {
-    "defaultMessage": "Name",
+    "defaultMessage": "Nom",
     "description": "Option for project sort select element / dropdown"
   },
   "sort-option-relevance": {
-    "defaultMessage": "Relevance",
+    "defaultMessage": "Rellevància",
     "description": "Option for project sort select element / dropdown"
   },
   "sort-order-ascending-label": {
-    "defaultMessage": "Ascending order",
+    "defaultMessage": "Ordre ascendent",
     "description": "Label for sort order toggle button"
   },
   "sort-order-descending-label": {
-    "defaultMessage": "Descending order",
+    "defaultMessage": "Ordre descendent",
     "description": "Label for sort order toggle button"
   },
   "sort-select-label": {
-    "defaultMessage": "Sort projects",
+    "defaultMessage": "Ordena els projectes",
     "description": "Label for select element to sort projects"
   },
   "start-training-action": {
@@ -1859,6 +1859,22 @@
     "defaultMessage": "Atura l'enregistrament",
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
+  },
+  "storage-error-other": {
+    "defaultMessage": "Failed to save your project to browser storage",
+    "description": "Toast shown when a storage write fails for an unknown reason"
+  },
+  "storage-error-quota-description": {
+    "defaultMessage": "Your project edit may not be saved.",
+    "description": "Toast description when browser storage quota is exceeded"
+  },
+  "storage-error-quota-title": {
+    "defaultMessage": "Browser storage full",
+    "description": "Toast title when browser storage quota is exceeded"
+  },
   "support-request": {
     "defaultMessage": "Si us plau, considera<link>fer una sol·licitud d'assistència</link>.",
     "description": "Support request link text"
@@ -1888,11 +1904,11 @@
     "description": "Notify user of third party content"
   },
   "timestamp-now": {
-    "defaultMessage": "now",
+    "defaultMessage": "ara",
     "description": "The last edit time of a project"
   },
   "timestamp-seconds": {
-    "defaultMessage": "a few seconds ago",
+    "defaultMessage": "fa uns segons",
     "description": "The last edit time of a project"
   },
   "tour-action": {

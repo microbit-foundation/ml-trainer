@@ -603,6 +603,12 @@
       "value": "Connecta la micro:bit a aquest ordinador amb un cable USB perquè el programa de recollida de dades es pugui descarregar."
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern"
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,
@@ -697,32 +703,6 @@
     {
       "type": 0,
       "value": "Connect micro:bit battery pack"
-    }
-  ],
-  "connect-or-import": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Connecta una micro:bit de recollida de dades"
-        }
-      ],
-      "type": 8,
-      "value": "link1"
-    },
-    {
-      "type": 0,
-      "value": " o "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "importa mostres de dades"
-        }
-      ],
-      "type": 8,
-      "value": "link2"
     }
   ],
   "connect-pattern-heading": [
@@ -1203,7 +1183,7 @@
           "value": [
             {
               "type": 0,
-              "value": "Delete"
+              "value": "Esborra"
             }
           ]
         },
@@ -1211,7 +1191,7 @@
           "value": [
             {
               "type": 0,
-              "value": "Delete "
+              "value": "Esborra "
             },
             {
               "type": 1,
@@ -1219,7 +1199,7 @@
             },
             {
               "type": 0,
-              "value": " projects"
+              "value": " projectes"
             }
           ]
         }
@@ -1232,7 +1212,7 @@
   "delete-project-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete project"
+      "value": "Confirma l'eliminació del projecte"
     }
   ],
   "delete-project-confirm-text": [
@@ -1484,13 +1464,13 @@
   "duplicate-project-action": [
     {
       "type": 0,
-      "value": "Duplicate"
+      "value": "Duplica"
     }
   ],
   "duplicate-project-heading": [
     {
       "type": 0,
-      "value": "Duplicate project"
+      "value": "Duplicar el projecte"
     }
   ],
   "edit-in-makecode-action": [
@@ -1702,7 +1682,7 @@
   "first-lessons-with-microbit-createai-resource-title": [
     {
       "type": 0,
-      "value": "First lessons"
+      "value": "Primera lliçó"
     }
   ],
   "go-action": [
@@ -1868,7 +1848,7 @@
   "import-file-action": [
     {
       "type": 0,
-      "value": "Import"
+      "value": "Importa"
     }
   ],
   "incompatible-device-body-alt": [
@@ -2390,7 +2370,7 @@
   "my-projects-row-title": [
     {
       "type": 0,
-      "value": "My projects"
+      "value": "Els meus projectes"
     }
   ],
   "name-action-hint": [
@@ -2506,7 +2486,7 @@
   "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "New project"
+      "value": "Projecte nou"
     }
   ],
   "next-action": [
@@ -2518,7 +2498,7 @@
   "no-projects": [
     {
       "type": 0,
-      "value": "No projects to display"
+      "value": "No hi ha cap projecte per mostrar"
     }
   ],
   "not-create-ai-hex-import-dialog-content": [
@@ -2564,7 +2544,7 @@
   "open-shared-project-action": [
     {
       "type": 0,
-      "value": "Open project"
+      "value": "Obre un projecte"
     }
   ],
   "open-shared-project-blocks-preview-description": [
@@ -2638,7 +2618,7 @@
   "project-ideas-row-title": [
     {
       "type": 0,
-      "value": "Project ideas"
+      "value": "Idees de projectes"
     }
   ],
   "project-label": [
@@ -2655,12 +2635,12 @@
   ],
   "project-menu-action": [
     {
-      "type": 1,
-      "value": "name"
+      "type": 0,
+      "value": "Menú d'accions "
     },
     {
-      "type": 0,
-      "value": " actions menu"
+      "type": 1,
+      "value": "name"
     }
   ],
   "project-name-not-empty": [
@@ -3052,13 +3032,13 @@
   "rename-project-action": [
     {
       "type": 0,
-      "value": "Rename"
+      "value": "Canvia el nom"
     }
   ],
   "rename-project-heading": [
     {
       "type": 0,
-      "value": "Rename project"
+      "value": "Reanomena el projecte"
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3310,37 +3290,37 @@
   "sort-option-last-modified": [
     {
       "type": 0,
-      "value": "Last modified"
+      "value": "Darrer modificat"
     }
   ],
   "sort-option-name": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "Nom"
     }
   ],
   "sort-option-relevance": [
     {
       "type": 0,
-      "value": "Relevance"
+      "value": "Rellevància"
     }
   ],
   "sort-order-ascending-label": [
     {
       "type": 0,
-      "value": "Ascending order"
+      "value": "Ordre ascendent"
     }
   ],
   "sort-order-descending-label": [
     {
       "type": 0,
-      "value": "Descending order"
+      "value": "Ordre descendent"
     }
   ],
   "sort-select-label": [
     {
       "type": 0,
-      "value": "Sort projects"
+      "value": "Ordena els projectes"
     }
   ],
   "start-training-action": [
@@ -3383,6 +3363,30 @@
     {
       "type": 0,
       "value": "Atura l'enregistrament"
+    }
+  ],
+  "storage-error-device-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to device storage"
+    }
+  ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "Failed to save your project to browser storage"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "Your project edit may not be saved."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "Browser storage full"
     }
   ],
   "support-request": [
@@ -3458,13 +3462,13 @@
   "timestamp-now": [
     {
       "type": 0,
-      "value": "now"
+      "value": "ara"
     }
   ],
   "timestamp-seconds": [
     {
       "type": 0,
-      "value": "a few seconds ago"
+      "value": "fa uns segons"
     }
   ],
   "tour-action": [

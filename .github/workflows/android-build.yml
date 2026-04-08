@@ -57,6 +57,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: node ./bin/print-apps-ci-env.cjs >> $GITHUB_ENV
       - run: npm run build:apps
 
       - run: npx cap sync android

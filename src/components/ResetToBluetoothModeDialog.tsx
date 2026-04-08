@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Link, Text, VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
@@ -11,8 +11,9 @@ import { AnimationProvider } from "./AnimationProvider";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import DialogFooterLink from "./DialogFooterLink";
 import PairingModeAnimation from "./PairingModeAnimation";
-import PauseResumeButton from "./PauseResumeAnimationButton";
+import PauseResumeLink from "./PauseResumeAnimationButton";
 
 export interface ResetToBluetoothModeDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -41,23 +42,18 @@ const ResetToBluetoothModeDialog = ({
         headingId="reset-to-bluetooth-mode-heading"
         footerLeft={
           <VStack alignItems="flex-start">
-            <Link
-              as="button"
-              color="brand.600"
+            <DialogFooterLink
               onClick={
                 isTripleReset ? onSwitchPairingMethod : onTroubleshooting
               }
-              display="flex"
-              flexDirection="row"
-              gap={1}
             >
               {isTripleReset ? (
                 <FormattedMessage id="connect-try-another-way" />
               ) : (
                 <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
               )}
-            </Link>
-            <PauseResumeButton />
+            </DialogFooterLink>
+            <PauseResumeLink />
           </VStack>
         }
       >
