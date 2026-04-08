@@ -83,6 +83,10 @@
     "defaultMessage": "Amic que narra contes amb IA",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "Animació que demostra els cinc passos del flux de treball del CreateAI: Connectar, Recollir dades, Provar el Model, Codificar i Ús. Connectar: Una micro:bit està connectada a l'ordinador, establint una comunicació entre els dos. Recollir Dades: una micro:bit està lligada al canell. Es recullen les dades de dos moviments: una onada (representat per la icona d'un cor) i sacseig (representat per la icona d'una creu). Es recullen diferents mostres i s'entrena un model de machine learning. L'ordinador, després intenta reconèixer els gestos de l'onada i el sacseig en temps real. L'usuari després pot retornar al pas de Recollir Dades i obtenir mostres adicionals i fer altre cop la prova del model. Codificar: l'usuari escriu un programa utilitzant els blocs de MakeCode que incorporen el model entrenat. El programa acabat es baixa a la micro:bit. Ús: La micro:bit respon als moviments físics de l'usuari, mostrant icones diferents a la pantalla de LEDs depenent de si es detecta un gest d'onada o de sacseig. ",
     "description": "Aria label for animation"
@@ -1664,7 +1668,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET",
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
@@ -1672,7 +1676,7 @@
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times",
+    "defaultMessage": "Press RESET three times.",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {

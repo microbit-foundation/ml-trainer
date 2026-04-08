@@ -83,6 +83,10 @@
     "defaultMessage": "AIストーリーテリングの友達",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "「CreateAI」のワークフローの5つのステップ（「Connect」「Collect Data」「Test Model」「Code」「Use」）を示すアニメーションです。\nConnect： micro:bit デバイスをコンピューターに接続し、両者のコミュニケーションを確立します。\nCollect Data： micro:bit を手首に装着し、2種類のジェスチャー（ハートのアイコンで表すウェーブと、十字のアイコンで表すシェイク）の動作を記録します。モデルを学習させるために、各ジェスチャーのデータを複数回収集します。\nTest Model： 十分なデータが集まると、機械学習モデルがトレーニングされます。コンピューターはリアルタイムでウェーブとシェイクのジェスチャーを認識しようとします。必要に応じて「Collect Data」にリターンし、追加データを収集して再テストを行うことができます。\nCode： ユーザーは MakeCode ブロックを使って、学習済みモデルを組み込んだプログラムを作成します。完成したプログラムを micro:bit にダウンロードします。\nUse： micro:bit はユーザーの動作に反応し、ウェーブまたはシェイクのどちらが検知されたかに応じて、LED 画面に異なるアイコンを表示します。",
     "description": "Aria label for animation"
@@ -1664,7 +1668,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET",
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
@@ -1672,7 +1676,7 @@
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times",
+    "defaultMessage": "Press RESET three times.",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {

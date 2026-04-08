@@ -83,6 +83,10 @@
     "defaultMessage": "Amigo contador de histórias de IA",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "Animação demonstrando as cinco etapas do fluxo de trabalho do CreateAI: Conectar, Coletar dados, Testar modelo, Programar e Usar. Conectar: ​​Um dispositivo micro:bit é conectado a um computador, estabelecendo comunicação entre os dois. Coletar dados: Um micro:bit é preso a um pulso. Dados de movimentos são registrados para dois gestos: um aceno (representado por um ícone de coração) e um movimento de sacudir (representado por um ícone de cruz). Várias amostras são coletadas para cada gesto para treinar o modelo. Testar modelo: Assim que amostras suficientes forem coletadas, um modelo de aprendizagem de máquina é treinado. O computador então tenta reconhecer os gestos de aceno e movimento de sacudir em tempo real. O usuário pode retornar à etapa Coletar dados para coletar amostras adicionais e realizar testes subsequentes. Programar: O usuário escreve um programa usando blocos MakeCode que incorpora o modelo treinado. O programa finalizado é baixado para o micro:bit. Usar: O micro:bit responde aos movimentos físicos do usuário, exibindo ícones diferentes em sua tela de LED dependendo se um gesto de aceno ou movimento de sacudir é detectado.",
     "description": "Aria label for animation"
@@ -1664,7 +1668,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET",
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
@@ -1672,7 +1676,7 @@
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times",
+    "defaultMessage": "Press RESET three times.",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {

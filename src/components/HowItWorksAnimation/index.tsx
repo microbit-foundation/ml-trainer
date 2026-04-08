@@ -332,10 +332,7 @@ const HowItWorksAnimation = () => {
   return (
     <>
       <VisuallyHidden>
-        <Box
-          as="img"
-          aria-label={intl.formatMessage({ id: "animation-label" })}
-        />
+        <Box as="img" alt={intl.formatMessage({ id: "animation-label" })} />
       </VisuallyHidden>
       <VStack
         aria-hidden
@@ -345,6 +342,7 @@ const HowItWorksAnimation = () => {
         height={{ base: "28em", sm: "30em", md: "23em" }}
         position="relative"
         overflow="hidden"
+        userSelect="none"
       >
         <HStack justifyContent="center" width="100%" gap={5}>
           <StepFlow ref={stepFlowRef} />

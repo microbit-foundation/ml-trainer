@@ -21,6 +21,7 @@ interface AnimationContextValue {
   resume: () => void;
   isPaused: boolean;
   withPlayState: (animationCss: string) => string;
+  prefersReducedMotion: boolean;
 }
 
 export const AnimationContext = createContext<AnimationContextValue | null>(
@@ -34,12 +35,25 @@ export const useAnimation = () => {
   return ctx;
 };
 
-const isInitiallyPaused =
+const prefersReducedMotion =
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export const AnimationProvider = ({ children }: { children: ReactNode }) => {
+interface AnimationProviderProps {
+  children: ReactNode;
+  removeAnimationIfReducedMotion?: boolean;
+  startPausedIfReducedMotion?: boolean;
+}
+
+export const AnimationProvider = ({
+  children,
+  removeAnimationIfReducedMotion,
+  startPausedIfReducedMotion,
+}: AnimationProviderProps) => {
   const controllerRef = useRef<AbortController>(new AbortController());
+  const isInitiallyPaused = startPausedIfReducedMotion
+    ? prefersReducedMotion
+    : false;
   const [isPaused, setIsPaused] = useState(isInitiallyPaused);
 
   const resumeRef = useRef<(() => void) | null>(null);
@@ -135,8 +149,11 @@ export const AnimationProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const withPlayState = useCallback(
-    (s: string) => `${s} ${isPaused ? "paused" : "running"}`,
-    [isPaused]
+    (s: string) =>
+      prefersReducedMotion && removeAnimationIfReducedMotion
+        ? "none"
+        : `${s} ${isPaused ? "paused" : "running"}`,
+    [isPaused, removeAnimationIfReducedMotion]
   );
 
   return (
@@ -148,6 +165,7 @@ export const AnimationProvider = ({ children }: { children: ReactNode }) => {
         isPaused,
         restartAbortController,
         withPlayState,
+        prefersReducedMotion,
       }}
     >
       <Box>{children}</Box>

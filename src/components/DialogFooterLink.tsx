@@ -6,7 +6,7 @@
 import { Button, ButtonProps } from "@chakra-ui/react";
 
 const DialogFooterLink = ({ ...props }: ButtonProps) => {
-  return <Button variant="link" size="lg" {...props} />;
+  return <Button variant="link" size="lg" borderRadius={0} {...props} />;
 };
 
 export default DialogFooterLink;

@@ -165,6 +165,12 @@
       "value": "crwdns363518:0crwdne363518:0"
     }
   ],
+  "animation-bluetooth-mode-label": [
+    {
+      "type": 0,
+      "value": "Animation demonstrating how to reset to Bluetooth mode."
+    }
+  ],
   "animation-label": [
     {
       "type": 0,
@@ -2966,7 +2972,7 @@
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET"
+      "value": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears."
     }
   ],
   "reset-to-bluetooth-mode-heading": [
@@ -2978,7 +2984,7 @@
   "reset-to-bluetooth-mode-subtitle": [
     {
       "type": 0,
-      "value": "Press RESET three times"
+      "value": "Press RESET three times."
     }
   ],
   "reset-to-default-action": [
