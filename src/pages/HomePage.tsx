@@ -29,6 +29,7 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
@@ -47,6 +48,7 @@ import ProjectCard from "../components/ProjectCard";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
+import { isNativePlatform } from "../platform";
 import { untitledProjectName } from "../project-utils";
 import { shortScreenHeightBreakpoint } from "../responsive";
 import {
@@ -202,25 +204,27 @@ const ProjectRow = () => {
             <Heading as="h2" size="lg">
               <FormattedMessage id="my-projects-row-title" />
             </Heading>
-            <ClickableTooltip
-              isFocusable
-              hasArrow
-              placement={tooltipPlacement}
-              label={
-                <VStack
-                  textAlign="left"
-                  alignContent="left"
-                  alignItems="left"
-                  m={3}
-                >
-                  <Text>
-                    <FormattedMessage id="project-storage-tooltip" />
-                  </Text>
-                </VStack>
-              }
-            >
-              <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
-            </ClickableTooltip>
+            {!isNativePlatform() && (
+              <ClickableTooltip
+                isFocusable
+                hasArrow
+                placement={tooltipPlacement}
+                label={
+                  <VStack
+                    textAlign="left"
+                    alignContent="left"
+                    alignItems="left"
+                    m={3}
+                  >
+                    <Text>
+                      <FormattedMessage id="project-storage-tooltip" />
+                    </Text>
+                  </VStack>
+                }
+              >
+                <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+              </ClickableTooltip>
+            )}
           </HStack>
         }
       />
@@ -343,9 +347,27 @@ const ImportProjectButton = () => {
   const handleContinueSessionFromFile = useCallback(() => {
     loadProjectRef.current?.chooseFile("replaceProject");
   }, []);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const loadingTimeoutRef = useRef<NodeJS.Timeout>();
+  const handleSetLoading = useCallback((loading: boolean) => {
+    if (loading && loadingTimeoutRef.current === undefined) {
+      loadingTimeoutRef.current = setTimeout(() => {
+        setLoading(loading);
+      }, 500); // Only show loading state if it takes > 500 ms.
+    }
+    if (!loading) {
+      setLoading(loading);
+      clearTimeout(loadingTimeoutRef.current);
+      loadingTimeoutRef.current = undefined;
+    }
+  }, []);
   return (
     <>
-      <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
+      <LoadProjectInput
+        ref={loadProjectRef}
+        accept=".json,.hex"
+        setLoading={handleSetLoading}
+      />
       <IconButton
         icon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
@@ -353,13 +375,14 @@ const ImportProjectButton = () => {
         variant="ghost"
         display={{ base: "inline-flex", sm: "none" }}
       />
-      <Button
+      <ButtonWithLoading
         leftIcon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
         display={{ base: "none", sm: "inline-flex" }}
+        isLoading={isLoading}
       >
         <FormattedMessage id="import-file-action" />
-      </Button>
+      </ButtonWithLoading>
     </>
   );
 };

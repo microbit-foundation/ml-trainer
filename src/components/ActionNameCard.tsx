@@ -9,18 +9,20 @@ import {
   CloseButton,
   HStack,
   Input,
+  useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { Action } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
 import LedIconSvg from "./icons/LedIconSvg";
-import LedIcon from "./LedIcon";
+import LedIcon, { LedIconHandle } from "./LedIcon";
 import LedIconPicker from "./LedIconPicker";
 import debounce from "lodash.debounce";
+import { isNativePlatform } from "../platform";
 
 export enum ActionCardNameViewMode {
   Editable = "Editable", // Interaction, color, depth
@@ -62,11 +64,18 @@ const ActionNameCard = ({
     // Occurs when the name is updated in another tab.
     setLocalName(value.name);
   }, [value.name]);
-  const predictionResult = useStore((s) => s.predictionResult);
-  const isTriggered =
-    viewMode === ActionCardNameViewMode.ReadOnly
-      ? predictionResult?.detected?.id === value.id
-      : undefined;
+  const ledIconRef = useRef<LedIconHandle>(null);
+  useEffect(() => {
+    if (viewMode !== ActionCardNameViewMode.ReadOnly) return;
+    return useStore.subscribe(
+      (s) => s.predictionResult?.detected?.id === value.id,
+      (v) => ledIconRef.current?.setLedsOn(v)
+    );
+  }, [value.id, viewMode]);
+
+  // Avoid autofocus on mobile/native as it triggers the keyboard
+  const allowAutoFocus =
+    useBreakpointValue({ base: false, md: true }) && !isNativePlatform();
 
   const debouncedSetActionName = useMemo(
     () =>
@@ -158,7 +167,12 @@ const ActionNameCard = ({
         <HStack>
           <HStack>
             {viewMode === ActionCardNameViewMode.ReadOnly ? (
-              <LedIcon icon={icon} isTriggered={isTriggered} />
+              <LedIcon
+                ref={ledIconRef}
+                icon={icon}
+                colorScheme="brand2"
+                initiallyOn={false}
+              />
             ) : (
               <LedIconSvg icon={icon} />
             )}
@@ -171,7 +185,7 @@ const ActionNameCard = ({
           </HStack>
           <Input
             id={actionNameInputId(value)}
-            autoFocus={localName.length === 0}
+            autoFocus={allowAutoFocus && localName.length === 0}
             isTruncated
             readOnly={viewMode !== ActionCardNameViewMode.Editable}
             value={localName}

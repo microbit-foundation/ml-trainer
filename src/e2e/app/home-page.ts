@@ -40,12 +40,16 @@ export class HomePage {
     ]);
   }
 
-  async goto(flags: string[] = ["open"]) {
-    const response = await this.page.goto(this.url);
+  async goto(flags: string[] = []) {
+    // Navigate first to establish the origin for localStorage
+    await this.page.goto(this.url);
+    // Set flags in localStorage
     await this.page.evaluate(
       (flags) => localStorage.setItem("flags", flags.join(",")),
       flags
     );
+    // Reload so the app reads the flags on startup
+    const response = await this.page.reload();
     return response;
   }
 

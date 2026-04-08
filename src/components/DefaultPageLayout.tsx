@@ -11,20 +11,30 @@ import {
   HStack,
   Icon,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useEffect, useMemo } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { RiDownload2Line, RiHome2Line, RiMenuLine } from "react-icons/ri";
+import {
+  RiDownload2Line,
+  RiHome2Line,
+  RiMenuLine,
+  RiShareLine,
+} from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation, useNavigate } from "react-router";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { isDataConnectionDialogOpen } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
+import { useNativeTabletBreakpoint } from "../native-breakpoint-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
-import { PostImportDialogState } from "../model";
+import { PostImportDialogState, SaveType } from "../model";
 import Tour from "../pages/Tour";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
@@ -32,7 +42,7 @@ import ActionBar from "./ActionBar/ActionBar";
 import ItemsRight from "./ActionBar/ActionBarItemsRight";
 import AppLogo from "./AppLogo";
 import BackArrow from "./BackArrow";
-import ConnectionDialogs from "./ConnectionFlowDialogs";
+import DataConnectionDialogs from "./DataConnectionDialogs";
 import EditableName from "./EditableName";
 import FeedbackForm from "./FeedbackForm";
 import { tourMap } from "./HelpMenuItems";
@@ -44,13 +54,18 @@ import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
+import { isIOS, isNativePlatform } from "../platform";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
   children: ReactNode;
 
   toolbarItemsRight?: ReactNode;
-
+  /**
+   * Content to render at the bottom of the page with safe area padding.
+   * Use this for fixed bottom bars with action buttons, live graphs, etc.
+   */
+  bottomContent?: ReactNode;
   showPageTitle?: boolean;
   showProjectName?: boolean;
   backUrl?: string;
@@ -68,15 +83,19 @@ const DefaultPageLayout = ({
   showProjectName,
   backUrl,
   backLabelId,
+  bottomContent,
 }: DefaultPageLayoutProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { isDialogOpen: isConnectionDialogOpen } = useConnectionStage();
+  const isConnectionDialogOpen = useStore((s) =>
+    isDataConnectionDialogOpen(s.dataConnection.step)
+  );
   const isNonConnectionDialogOpen = useStore((s) =>
     s.isNonConnectionDialogOpen()
   );
   const { appNameFull } = useDeployment();
   const drawer = useDisclosure();
+  const useTabletLayout = useNativeTabletBreakpoint();
 
   useEffect(() => {
     document.title = titleId
@@ -114,7 +133,7 @@ const DefaultPageLayout = ({
   return (
     <>
       {/* Suppress dialogs to prevent overlapping dialogs */}
-      {!isNonConnectionDialogOpen && <ConnectionDialogs />}
+      {!isNonConnectionDialogOpen && <DataConnectionDialogs />}
       <Tour />
       <SaveDialogs />
       <NotCreateAiHexImportDialog
@@ -138,11 +157,19 @@ const DefaultPageLayout = ({
         isEnabled={!isNonConnectionDialogOpen && !isConnectionDialogOpen}
       >
         <VStack
-          minH="100vh"
+          h="100vh"
           w="100%"
           alignItems="stretch"
           spacing={0}
           bgColor="whitesmoke"
+          overflow="hidden"
+          sx={{
+            // Handle landscape orientation where nav bar moves to side.
+            // Uses heuristic: larger inset is nav bar, smaller is camera cutout.
+            paddingLeft: "var(--safe-area-nav-left, 0px)",
+            paddingRight: "var(--safe-area-nav-right, 0px)",
+            paddingBottom: "env(safe-area-inset-bottom)",
+          }}
         >
           <VStack zIndex={999} position="sticky" top={0} gap={0}>
             <ActionBar
@@ -197,7 +224,7 @@ const DefaultPageLayout = ({
                   </HStack>
                 ) : (
                   /* Mobile/tablet: centered app logo when no page title */
-                  <Box display={{ base: "flex", lg: "none" }}>
+                  <Box display={useTabletLayout ? "flex" : "none"}>
                     <AppLogo transform="scale(0.8)" transformOrigin="center" />
                   </Box>
                 )
@@ -228,7 +255,7 @@ const DefaultPageLayout = ({
                     />
                   ) : (
                     <IconButton
-                      display={{ base: "inline-flex", lg: "none" }}
+                      display={useTabletLayout ? "inline-flex" : "none"}
                       aria-label={intl.formatMessage({ id: "main-menu" })}
                       icon={<RiMenuLine size={24} />}
                       color="white"
@@ -261,7 +288,7 @@ const DefaultPageLayout = ({
                   {!backUrl && (
                     <Link
                       href={createHomePageUrl()}
-                      display={{ base: "none", lg: "inline-flex" }}
+                      display={useTabletLayout ? "none" : "inline-flex"}
                       _focusVisible={{
                         boxShadow: "outlineDark",
                         borderRadius: "md",
@@ -280,7 +307,7 @@ const DefaultPageLayout = ({
                   {/* Mobile/tablet: right-side hamburger when back arrow is on the left */}
                   {backUrl && (
                     <IconButton
-                      display={{ base: "inline-flex", lg: "none" }}
+                      display={useTabletLayout ? "inline-flex" : "none"}
                       aria-label={intl.formatMessage({ id: "main-menu" })}
                       icon={<RiMenuLine size={24} />}
                       color="white"
@@ -298,9 +325,14 @@ const DefaultPageLayout = ({
             />
             {flags.preReleaseNotice && <PreReleaseNotice />}
           </VStack>
-          <Flex flexGrow={1} flexDir="column">
+          <Flex flexGrow={1} flexDir="column" overflow="auto">
             {children}
           </Flex>
+          {bottomContent && (
+            <VStack w="full" flexShrink={0} gap={0} bg="gray.25">
+              {bottomContent}
+            </VStack>
+          )}
         </VStack>
       </ProjectDropTarget>
     </>
@@ -310,19 +342,56 @@ const DefaultPageLayout = ({
 export const ProjectToolbarItems = () => {
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
-    void saveHex();
+    void saveHex(SaveType.Download);
+  }, [saveHex]);
+  const handleShare = useCallback(() => {
+    void saveHex(SaveType.Share);
   }, [saveHex]);
   useShortcut(keyboardShortcuts.saveSession, handleSave);
 
+  const canShare = isNativePlatform();
+  const shareOnly = isIOS();
+
   return (
     <>
-      <Button
-        variant="toolbar"
-        leftIcon={<RiDownload2Line />}
-        onClick={handleSave}
-      >
-        <FormattedMessage id="save-action" />
-      </Button>
+      {shareOnly ? (
+        <Button
+          variant="toolbar"
+          leftIcon={<RiShareLine />}
+          onClick={handleShare}
+        >
+          <FormattedMessage id="share-action" />
+        </Button>
+      ) : canShare ? (
+        <Menu>
+          <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
+            <FormattedMessage id="share-action" />
+          </MenuButton>
+
+          <MenuList zIndex={2}>
+            <MenuItem
+              onClick={handleSave}
+              icon={<Icon h={5} w={5} as={RiDownload2Line} />}
+            >
+              <FormattedMessage id="save-to-files-action" />
+            </MenuItem>
+            <MenuItem
+              onClick={handleShare}
+              icon={<Icon h={5} w={5} as={RiShareLine} />}
+            >
+              <FormattedMessage id="share-action" />
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        <Button
+          variant="toolbar"
+          leftIcon={<RiDownload2Line />}
+          onClick={handleSave}
+        >
+          <FormattedMessage id="save-action" />
+        </Button>
+      )}
       <HomeToolbarItem />
     </>
   );

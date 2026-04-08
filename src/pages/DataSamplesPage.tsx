@@ -9,7 +9,6 @@ import {
   Flex,
   HStack,
   usePrefersReducedMotion,
-  VStack,
 } from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -17,6 +16,7 @@ import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
 import { FormattedMessage, IntlFormatters, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useHasMoved } from "../buffered-data-hooks";
+import { actionNameInputId } from "../components/ActionNameCard";
 import DataSamplesTable from "../components/DataSamplesTable";
 import {
   AddActionHint,
@@ -31,7 +31,10 @@ import { animations } from "../components/Emoji";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
-import { useConnectionStage } from "../connection-stage-hooks";
+import {
+  isDataConnectionDialogOpen,
+  useDataConnected,
+} from "../data-connection-flow";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLiveRegion } from "../live-region-hook";
 import {
@@ -65,8 +68,10 @@ const DataSamplesPage = () => {
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
   const tourStart = useStore((s) => s.tourStart);
-  const { isConnected, isDialogOpen: isConnectionDialogOpen } =
-    useConnectionStage();
+  const isConnected = useDataConnected();
+  const isConnectionDialogOpen = useStore((s) =>
+    isDataConnectionDialogOpen(s.dataConnection.step)
+  );
   useEffect(() => {
     // If a user first connects on "Testing model" this can result in the tour when they return to the "Data samples" page.
     if (isConnected) {
@@ -85,6 +90,15 @@ const DataSamplesPage = () => {
   const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
     await addNewAction();
+    requestAnimationFrame(() => {
+      const updatedActions = useStore.getState().actions;
+      const newAction = updatedActions[updatedActions.length - 1];
+      if (newAction) {
+        document
+          .getElementById(actionNameInputId(newAction))
+          ?.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+    });
   }, [addNewAction, actions]);
   useShortcut(keyboardShortcuts.addAction, handleAddNewAction, {
     enabled: !isAddNewActionDisabled,
@@ -195,10 +209,82 @@ const DataSamplesPage = () => {
       <TrainModelDialogs finalFocusRef={trainButtonRef} />
       <DefaultPageLayout
         titleId="data-samples-title"
+        showProjectName
         showPageTitle
         toolbarItemsRight={<ProjectToolbarItems />}
-        showProjectName
         backUrl={createHomePageUrl()}
+        bottomContent={
+          <>
+            <HStack
+              role="region"
+              aria-label={intl.formatMessage({
+                id: "data-samples-actions-region",
+              })}
+              justifyContent="space-between"
+              px={5}
+              py={2}
+              w="full"
+              borderBottomWidth={3}
+              borderTopWidth={3}
+              borderColor="gray.200"
+              alignItems="center"
+              position="relative"
+            >
+              <HStack gap={2} alignItems="center">
+                <Button
+                  className={tourElClassname.addActionButton}
+                  variant={hasSufficientData ? "secondary" : "primary"}
+                  leftIcon={<RiAddLine />}
+                  onClick={handleAddNewAction}
+                  isDisabled={isAddNewActionDisabled}
+                >
+                  <FormattedMessage id="add-action-action" />
+                </Button>
+              </HStack>
+              {dataSamplesHint?.type === "add-action" && (
+                <AddActionHint action={actions[0]} />
+              )}
+              <HStack>
+                {model ? (
+                  <Button
+                    onClick={handleNavigateToModel}
+                    className={tourElClassname.trainModelButton}
+                    variant="primary"
+                    rightIcon={<RiArrowRightLine />}
+                  >
+                    <FormattedMessage id="testing-model-title" />
+                  </Button>
+                ) : (
+                  <Button
+                    ref={trainButtonRef}
+                    className={tourElClassname.trainModelButton}
+                    onClick={() => trainModelFlowStart(handleNavigateToModel)}
+                    variant={
+                      hasSufficientData ? "primary" : "secondary-disabled"
+                    }
+                    animation={
+                      hasSufficientData &&
+                      !isRecordingDialogOpen &&
+                      !prefersReducedMotion
+                        ? animations.tada
+                        : undefined
+                    }
+                  >
+                    <FormattedMessage id="train-model" />
+                  </Button>
+                )}
+              </HStack>
+              {dataSamplesHint?.type === "train" && <TrainHint />}
+              {dataSamplesHint?.type === "move-microbit" && (
+                <MoveMicrobitHint />
+              )}
+            </HStack>
+            <LiveGraphPanel
+              disconnectedTextId="connect-to-record"
+              showDisconnectedOverlay={!isDialogOpen}
+            />
+          </>
+        }
         backLabelId="home-action"
       >
         <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
@@ -208,73 +294,6 @@ const DataSamplesPage = () => {
             hint={dataSamplesHint}
           />
         </Flex>
-        <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
-          <HStack
-            role="region"
-            aria-label={intl.formatMessage({
-              id: "data-samples-actions-region",
-            })}
-            justifyContent="space-between"
-            px={5}
-            py={2}
-            w="full"
-            borderBottomWidth={3}
-            borderTopWidth={3}
-            borderColor="gray.200"
-            alignItems="center"
-            position="relative"
-          >
-            <HStack gap={2} alignItems="center">
-              <Button
-                className={tourElClassname.addActionButton}
-                variant={hasSufficientData ? "secondary" : "primary"}
-                leftIcon={<RiAddLine />}
-                onClick={handleAddNewAction}
-                isDisabled={isAddNewActionDisabled}
-              >
-                <FormattedMessage id="add-action-action" />
-              </Button>
-            </HStack>
-            {dataSamplesHint?.type === "add-action" && (
-              <AddActionHint action={actions[0]} />
-            )}
-            <HStack>
-              {model ? (
-                <Button
-                  onClick={handleNavigateToModel}
-                  className={tourElClassname.trainModelButton}
-                  variant="primary"
-                  rightIcon={<RiArrowRightLine />}
-                >
-                  <FormattedMessage id="testing-model-title" />
-                </Button>
-              ) : (
-                <Button
-                  ref={trainButtonRef}
-                  className={tourElClassname.trainModelButton}
-                  onClick={() => trainModelFlowStart(handleNavigateToModel)}
-                  variant={hasSufficientData ? "primary" : "secondary-disabled"}
-                  animation={
-                    hasSufficientData &&
-                    !isRecordingDialogOpen &&
-                    !prefersReducedMotion
-                      ? animations.tada
-                      : undefined
-                  }
-                >
-                  <FormattedMessage id="train-model" />
-                </Button>
-              )}
-            </HStack>
-            {dataSamplesHint?.type === "train" && <TrainHint />}
-            {dataSamplesHint?.type === "move-microbit" && <MoveMicrobitHint />}
-          </HStack>
-
-          <LiveGraphPanel
-            disconnectedTextId="connect-to-record"
-            showDisconnectedOverlay={!isDialogOpen}
-          />
-        </VStack>
       </DefaultPageLayout>
     </>
   );

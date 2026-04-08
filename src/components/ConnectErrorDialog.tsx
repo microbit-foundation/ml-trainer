@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   ListItem,
   Modal,
   ModalBody,
@@ -19,94 +18,85 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import {
-  ConnectionFlowStep,
-  ConnectionFlowType,
-} from "../connection-stage-hooks";
-import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
+import ExternalLink from "./ExternalLink";
+import ModalFooterContent from "./ModalFooterContent";
+
+export type ConnectionErrorVariant =
+  | "connectionLost"
+  | "connectFailed"
+  | "reconnectFailed";
+
+export type ConnectionErrorDeviceType = "bluetooth" | "bridge" | "remote";
 
 interface ConnectErrorDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConnect: () => void;
-  flowType: ConnectionFlowType;
-  errorStep:
-    | ConnectionFlowStep.ConnectFailed
-    | ConnectionFlowStep.ReconnectFailed
-    | ConnectionFlowStep.ConnectionLost;
+  onRetry: () => void;
+  variant: ConnectionErrorVariant;
+  deviceType: ConnectionErrorDeviceType;
 }
 
-const contentConfig = {
-  [ConnectionFlowType.ConnectBluetooth]: {
+const variantToTextPrefix: Record<ConnectionErrorVariant, string> = {
+  connectionLost: "disconnected-warning",
+  connectFailed: "connect-failed",
+  reconnectFailed: "reconnect-failed",
+};
+
+const getRecoveryStepsConfig = (deviceType: ConnectionErrorDeviceType) => {
+  // USB (bridge) disconnect shows USB replug steps
+  if (deviceType === "bridge") {
+    return {
+      listHeading: "webusb-retry-replug2",
+      bullets: ["webusb-retry-replug3", "webusb-retry-replug4"],
+    };
+  }
+  // Bluetooth and remote disconnects show bluetooth recovery steps
+  return {
     listHeading: "disconnected-warning-bluetooth2",
     bullets: [
       "disconnected-warning-bluetooth3",
       "disconnected-warning-bluetooth4",
     ],
-  },
-  [ConnectionFlowType.ConnectRadioBridge]: {
-    listHeading: "webusb-retry-replug2",
-    bullets: ["webusb-retry-replug3", "webusb-retry-replug4"],
-  },
-  [ConnectionFlowType.ConnectRadioRemote]: {
-    listHeading: "disconnected-warning-bluetooth2",
-    bullets: [
-      "disconnected-warning-bluetooth3",
-      "disconnected-warning-bluetooth4",
-    ],
-  },
+  };
 };
 
-const errorTextIdPrefixConfig = {
-  [ConnectionFlowStep.ConnectionLost]: "disconnected-warning",
-  [ConnectionFlowStep.ReconnectFailed]: "reconnect-failed",
-  [ConnectionFlowStep.ConnectFailed]: "connect-failed",
-};
-
-const ReconnectErrorDialog = ({
+const ConnectErrorDialog = ({
   isOpen,
   onClose,
-  onConnect,
-  flowType,
-  errorStep,
+  onRetry,
+  variant,
+  deviceType,
 }: ConnectErrorDialogProps) => {
   const { supportLinks } = useDeployment();
-  const errorTextIdPrefix = errorTextIdPrefixConfig[errorStep];
-  const flowTypeText = {
-    [ConnectionFlowType.ConnectBluetooth]: "bluetooth",
-    [ConnectionFlowType.ConnectRadioBridge]: "bridge",
-    [ConnectionFlowType.ConnectRadioRemote]: "remote",
-  }[flowType];
+  const textPrefix = variantToTextPrefix[variant];
+  const recoverySteps = getRecoveryStepsConfig(deviceType);
+
   return (
     <Modal
       motionPreset="none"
       isOpen={isOpen}
       onClose={onClose}
-      size="2xl"
+      size={{ base: "full", md: "2xl" }}
       isCentered
     >
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage
-              id={`${errorTextIdPrefix}-${flowTypeText}-heading`}
-            />
+            <FormattedMessage id={`${textPrefix}-${deviceType}-heading`} />
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack width="100%" alignItems="left" gap={5}>
               <VStack gap={3} textAlign="left" w="100%">
                 <Text w="100%">
-                  <FormattedMessage
-                    id={`${errorTextIdPrefix}-${flowTypeText}1`}
-                  />
+                  <FormattedMessage id={`${textPrefix}-${deviceType}1`} />
                 </Text>
                 <Text w="100%">
-                  <FormattedMessage id={contentConfig[flowType].listHeading} />
+                  <FormattedMessage id={recoverySteps.listHeading} />
                 </Text>
-                <UnorderedList textAlign="left" w="100%" ml={20}>
-                  {contentConfig[flowType].bullets.map((textId) => (
+                <UnorderedList textAlign="left" ps={8}>
+                  {recoverySteps.bullets.map((textId) => (
                     <ListItem key={textId}>
                       <Text>
                         <FormattedMessage id={textId} />
@@ -117,25 +107,22 @@ const ReconnectErrorDialog = ({
               </VStack>
             </VStack>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <ExternalLink
-              textId="connect-troubleshooting"
-              href={supportLinks.troubleshooting}
-            />
-            <HStack gap={5}>
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <ExternalLink
+                  textId="connect-troubleshooting"
+                  href={supportLinks.troubleshooting}
+                />
+              }
+            >
               <Button onClick={onClose} variant="secondary" size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
-              <Button onClick={onConnect} variant="primary" size="lg">
-                <FormattedMessage
-                  id={
-                    errorStep === ConnectionFlowStep.ConnectFailed
-                      ? "connect-action"
-                      : "reconnect-action"
-                  }
-                />
+              <Button onClick={onRetry} variant="primary" size="lg">
+                <FormattedMessage id="try-again-action" />
               </Button>
-            </HStack>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
@@ -143,4 +130,4 @@ const ReconnectErrorDialog = ({
   );
 };
 
-export default ReconnectErrorDialog;
+export default ConnectErrorDialog;

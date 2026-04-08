@@ -83,6 +83,10 @@
     "defaultMessage": "AI 스토리텔링 친구",
     "description": "Home page resource card title"
   },
+  "animation-bluetooth-mode-label": {
+    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "description": "Aria label for animation"
+  },
   "animation-label": {
     "defaultMessage": "연결, 데이터 수집, 모델 테스트, 코드, 사용 등 CreateAI 워크플로 5단계를 보여주는 애니메이션. 연결: micro:bit 장치를 컴퓨터에 연결하여 두 기기의 통신을 설정합니다. 데이터 수집: micro:bit를 손목에 착용합니다. 손 젓기(하트 아이콘으로 표시)와 흔들기(X 아이콘으로 표시)라는 두 가지 제스처에 대한 움직임 데이터를 기록합니다. 모델을 학습시키기 위해 각 제스처에 대한 샘플을 여러 개 수집합니다. 모델 테스트: 샘플을 충분히 수집했다면 머신러닝 모델을 학습시킵니다. 그 후 컴퓨터는 실시간으로 손 젓기와 흔들기 제스처를 인식하려고 시도합니다. 사용자는 필요에 따라 다시 데이터 수집 단계로 돌아가 샘플을 더 수집하여 후속 테스트를 진행할 수 있습니다. 코드: 사용자는 학습된 모델이 포함된 MakeCode 블록을 사용해 프로그램을 작성합니다. 완성한 프로그램을 micro:bit에 다운로드합니다. 사용: micro:bit가 사용자의 신체 움직임에 반응합니다. 손 젓기 또는 흔들기 제스처가 감지되면 LED 스크린에 각 제스처에 해당하는 아이콘이 나타납니다.",
     "description": "Aria label for animation"
@@ -130,6 +134,26 @@
   "blocks-preview-title": {
     "defaultMessage": "블록 미리 보기",
     "description": "Blocks preview heading text"
+  },
+  "bluetooth-disabled-body": {
+    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "description": "Body text for Bluetooth disabled error dialog"
+  },
+  "bluetooth-disabled-heading": {
+    "defaultMessage": "Bluetooth is turned off",
+    "description": "Heading for Bluetooth disabled error dialog"
+  },
+  "bluetooth-permission-denied-body-android": {
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
+    "description": "Body text for Bluetooth permission denied error dialog on Android"
+  },
+  "bluetooth-permission-denied-body-ios": {
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
+    "description": "Body text for Bluetooth permission denied error dialog on iOS"
+  },
+  "bluetooth-permission-denied-heading": {
+    "defaultMessage": "Bluetooth permission required",
+    "description": "Heading for Bluetooth permission denied error dialog"
   },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "micro:bit에 바로 연결하려면 Google Chrome 또는 Microsoft Edge를 사용하는 것이 좋습니다.",
@@ -215,6 +239,10 @@
     "defaultMessage": "확인 및 저장",
     "description": "Confirm and save action label"
   },
+  "confirm-share-action": {
+    "defaultMessage": "Confirm and share",
+    "description": "Confirm and share action label"
+  },
   "connect-action": {
     "defaultMessage": "연결하기",
     "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
@@ -242,6 +270,10 @@
   "connect-bluetooth-cancelled-connection": {
     "defaultMessage": "micro:bit를 선택하지 않으셨습니다. 다시 시도하시겠습니까? ",
     "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+  },
+  "connect-bluetooth-enabled": {
+    "defaultMessage": "Bluetooth enabled",
+    "description": "Label indicating Bluetooth needs to be enabled"
   },
   "connect-bluetooth-heading": {
     "defaultMessage": "Web Bluetooth를 사용하여 연결",
@@ -287,6 +319,10 @@
     "defaultMessage": "데이터 수집 프로그램을 micro:bit에 다운로드할 수 있도록 USB 케이블로 micro:bit를 이 컴퓨터에 연결합니다.",
     "description": "Project download instructions"
   },
+  "connect-cannot-see-pattern": {
+    "defaultMessage": "I do not see a pattern",
+    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+  },
   "connect-computer": {
     "defaultMessage": "컴퓨터",
     "description": "Label for computer icon in connection dialog"
@@ -331,12 +367,36 @@
     "defaultMessage": "마이크로 USB 케이블",
     "description": "Label for cable icon in list of requirements"
   },
+  "connect-native-change-pattern": {
+    "defaultMessage": "My pattern is different",
+    "description": "Change Bluetooth pattern link"
+  },
+  "connect-native-pattern-heading": {
+    "defaultMessage": "Confirm this pattern matches your micro:bit",
+    "description": "Native Bluetooth pattern dialog heading"
+  },
+  "connect-native-pattern-subtitle": {
+    "defaultMessage": "If needed, change the pattern below to match.",
+    "description": "Native Bluetooth pattern dialog subtitle"
+  },
+  "connect-native-start-battery-check": {
+    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on.",
+    "description": "Instruction to check the micro:bit is powered on via the battery pack"
+  },
+  "connect-native-start-heading": {
+    "defaultMessage": "Connect micro:bit battery pack",
+    "description": "Connection dialog heading"
+  },
   "connect-pattern-heading": {
     "defaultMessage": "패턴 복사",
     "description": "Heading for Bluetooth pattern connection dialog"
   },
   "connect-pattern-input-label": {
     "defaultMessage": "{colNum}열 - micro:bit 디스플레이에 켜진 LED 개수",
+    "description": "Screen reader text for numeric pattern input"
+  },
+  "connect-pattern-label": {
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
@@ -446,6 +506,30 @@
   "connect-troubleshooting": {
     "defaultMessage": "문제 해결",
     "description": "Troubleshooting heading"
+  },
+  "connect-try-another-way": {
+    "defaultMessage": "Try another way",
+    "description": "Link to alternative connection method"
+  },
+  "connect-unable-to-enter-bluetooth-mode": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Link to troubleshooting entering Bluetooth mode"
+  },
+  "connect-unable-to-enter-bluetooth-mode-heading": {
+    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "description": "Unable to enter Bluetooth mode dialog heading"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
+    "defaultMessage": "Try the following:",
+    "description": "Heading for list of things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
+    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
+  },
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
+    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
     "defaultMessage": "배터리",
@@ -675,6 +759,10 @@
     "defaultMessage": "데이터 수집 프로그램 다운로드 중",
     "description": "Progress text"
   },
+  "downloading-data-collection-microbit-header": {
+    "defaultMessage": "Downloading data collection program to micro:bit",
+    "description": "Progress text"
+  },
   "downloading-header": {
     "defaultMessage": "micro:bit에 프로그램 다운로드 중",
     "description": "Progress text"
@@ -683,9 +771,29 @@
     "defaultMessage": "라디오 링크 프로그램 다운로드 중",
     "description": "Progress text"
   },
-  "downloading-subtitle": {
-    "defaultMessage": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다.",
-    "description": "Progress text"
+  "downloading-stage-checking-bond": {
+    "defaultMessage": "Choose ‘Pair’ if asked",
+    "description": "Progress text when ensuring device is paired before flashing"
+  },
+  "downloading-stage-connecting": {
+    "defaultMessage": "Connecting to micro:bit…",
+    "description": "Progress text during connection stage of flashing"
+  },
+  "downloading-stage-finding-device": {
+    "defaultMessage": "Finding micro:bit…",
+    "description": "Progress text during device discovery stage of flashing"
+  },
+  "downloading-stage-flashing": {
+    "defaultMessage": "Please wait. Downloading program to micro:bit.",
+    "description": "Progress text during actual flashing stage"
+  },
+  "downloading-stage-flashing-native": {
+    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
+    "description": "Progress text during native flashing stage"
+  },
+  "downloading-stage-resetting-device": {
+    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "description": "Progress text when rebooting micro:bit before flashing"
   },
   "duplicate-project-action": {
     "defaultMessage": "복제",
@@ -1179,6 +1287,14 @@
     "defaultMessage": "불러오는 중...",
     "description": "Aria label for loading spinner"
   },
+  "location-disabled-body": {
+    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
+    "description": "Body text for location disabled error dialog (Android only)"
+  },
+  "location-disabled-heading": {
+    "defaultMessage": "Location services required",
+    "description": "Heading for location disabled error dialog (Android only)"
+  },
   "main-menu": {
     "defaultMessage": "메인 메뉴",
     "description": "Main menu label"
@@ -1202,6 +1318,10 @@
   "makecode-load-error-dialog-title": {
     "defaultMessage": "Microsoft MakeCode를 불러올 수 없습니다.",
     "description": "Title of MakeCode load error dialog"
+  },
+  "microbit-name-label": {
+    "defaultMessage": "micro:bit name: {name}",
+    "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
     "defaultMessage": "micro:bit가 연결되지 않았습니다.",
@@ -1242,6 +1362,50 @@
   "name-used-when": {
     "defaultMessage": "hex 파일을 저장할 때 해당 이름을 사용합니다.",
     "description": "Text under project name field"
+  },
+  "native-bluetooth-error-body": {
+    "defaultMessage": "The connection to the micro:bit failed.",
+    "description": "Body text for native Bluetooth connection error dialog"
+  },
+  "native-bluetooth-error-check": {
+    "defaultMessage": "Please check that:",
+    "description": "Heading for list of things to check in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-distance": {
+    "defaultMessage": "the micro:bit is close to this device",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-mode": {
+    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "the pattern you entered is correct",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device": {
+    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-1": {
+    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-2": {
+    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
+  },
+  "native-bluetooth-error-forget-device-step-3": {
+    "defaultMessage": "Tap ‘Forget This Device’",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-forget-device-step-4": {
+    "defaultMessage": "Return to this app to try again",
+    "description": "List item in native Bluetooth error dialog"
+  },
+  "native-bluetooth-error-heading": {
+    "defaultMessage": "Could not connect to micro:bit",
+    "description": "Heading for native Bluetooth connection error dialog"
   },
   "new-project-setup-title": {
     "defaultMessage": "새 프로젝트 설정",
@@ -1399,6 +1563,10 @@
     "defaultMessage": "컴퓨터에 연결된 micro:bit에 대한 연결을 다시 설정할 수 없습니다.",
     "description": "Connection error dialog"
   },
+  "reconnect-failed-native-heading": {
+    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "description": "Connection error dialog for native Bluetooth reconnection failure"
+  },
   "reconnect-failed-radio-heading": {
     "defaultMessage": "micro:bit에 다시 연결할 수 없습니다.",
     "description": "Connection error dialog"
@@ -1499,6 +1667,18 @@
     "defaultMessage": "프로젝트 이름 변경",
     "description": "Heading for rename project dialog"
   },
+  "reset-to-bluetooth-mode-ab-subtitle": {
+    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
+    "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
+  },
+  "reset-to-bluetooth-mode-heading": {
+    "defaultMessage": "Reset to Bluetooth mode",
+    "description": "Title for dialog with instructures on using "
+  },
+  "reset-to-bluetooth-mode-subtitle": {
+    "defaultMessage": "Press RESET three times.",
+    "description": "Instructions to press the physical reset button on the micro:bit"
+  },
   "reset-to-default-action": {
     "defaultMessage": "기본 블록으로 초기화",
     "description": "Reset to default blocks button text"
@@ -1538,6 +1718,14 @@
   "save-hex-dialog-message2": {
     "defaultMessage": "행동과 데이터 샘플을 변경할 필요가 없는 경우 Microsoft MakeCode로도 열 수 있습니다.",
     "description": "Text in the dialog shown when saving a hex file"
+  },
+  "save-to-files-action": {
+    "defaultMessage": "Save to Files",
+    "description": "Label for action that saves the project to the device file system on Android"
+  },
+  "saving-dataset-toast-title": {
+    "defaultMessage": "Your data samples have been downloaded",
+    "description": "Notification after a dataset has been downloaded"
   },
   "saving-description": {
     "defaultMessage": "다운로드 파일이 곧 준비됩니다.",
@@ -1582,6 +1770,26 @@
   "settings-menu-action": {
     "defaultMessage": "설정 행동 메뉴",
     "description": "Label for settings actions menu button"
+  },
+  "share-action": {
+    "defaultMessage": "Share",
+    "description": "Label for action that initiates sharing the project on mobile"
+  },
+  "share-hex-dialog-heading": {
+    "defaultMessage": "Share project as a hex file",
+    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+  },
+  "share-hex-dialog-message1": {
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "sharing-description": {
+    "defaultMessage": "Your project will be ready to share soon.",
+    "description": "Sharing progress dialog text for mobile"
+  },
+  "sharing-title": {
+    "defaultMessage": "Sharing…",
+    "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "그래프 표시",
@@ -1650,6 +1858,10 @@
   "stop-recording-action": {
     "defaultMessage": "기록 중단",
     "description": "Button label to stop recording movement data while recording multiple samples"
+  },
+  "storage-error-device-other": {
+    "defaultMessage": "Failed to save your project to device storage",
+    "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
     "defaultMessage": "Failed to save your project to browser storage",

@@ -1,0 +1,9 @@
+git_url "git@github.com:microbit-foundation/ios-certificates.git"
+
+storage_mode "git"
+
+type "appstore"
+
+app_identifier "org.microbit.createai"
+
+team_id "Z2ZPB8NPHN"

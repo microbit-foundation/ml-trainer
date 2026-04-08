@@ -4,15 +4,34 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
+import { ProgressStage } from "@microbit/microbit-connection";
+import { DeviceBondState } from "@microbit/microbit-connection/bluetooth";
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
+import {
+  broadcastChannel,
+  BroadcastChannelData,
+  BroadcastChannelMessageType,
+} from "./broadcast-channel";
 import { BufferedData } from "./buffered-data";
+import {
+  DataConnectionState,
+  DataConnectionType,
+  getInitialDataConnectionState,
+} from "./data-connection-flow";
 import { deployment } from "./deployment";
+import {
+  DownloadState,
+  DownloadStep,
+  SameOrDifferentChoice,
+} from "./download-flow/download-types";
 import { flags } from "./flags";
+import { LoadAction } from "./hooks/project-hooks";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
 import {
@@ -25,23 +44,22 @@ import { mlSettings } from "./mlConfig";
 import {
   Action,
   ActionData,
+  DataSamplesPageHint,
   DataSamplesView,
-  DownloadState,
-  DownloadStep,
   EditorStartUp,
-  MicrobitToFlash,
   OldActionData,
   PostImportDialogState,
   RecordingData,
   SaveState,
   SaveStep,
+  SaveType,
   tourSequence,
-  DataSamplesPageHint,
   TourState,
   TourTrigger,
   TourTriggerName,
   TrainModelDialogStage,
 } from "./model";
+import { isNativePlatform } from "./platform";
 import {
   createUntitledProject,
   currentDataWindow,
@@ -51,21 +69,22 @@ import {
   renameProject,
   untitledProjectName,
 } from "./project-utils";
+import { projectSessionStorage } from "./session-storage";
 import { defaultSettings, Settings } from "./settings";
+import { SqliteDatabase } from "./sqlite-storage";
 import { Database, IdbDatabase, ProjectDataWithActions } from "./storage";
 import { getTour as getTourSpec } from "./tours";
 import { getTotalNumSamples } from "./utils/actions";
+import { downloadDataString } from "./utils/fs-util";
 import { defaultIcons, MakeCodeIcon } from "./utils/icons";
 import { getDetectedAction } from "./utils/prediction";
-import { LoadAction } from "./hooks/project-hooks";
-import {
-  broadcastChannel,
-  BroadcastChannelData,
-  BroadcastChannelMessageType,
-} from "./broadcast-channel";
-import { projectSessionStorage } from "./session-storage";
 
-const storage: Database = new IdbDatabase();
+// Use Capacitor.isNativePlatform() directly rather than the isNativePlatform()
+// helper (which also respects the ios/android flags) because the Capacitor
+// SQLite plugin is only available on actual native platforms.
+const storage: Database = Capacitor.isNativePlatform()
+  ? new SqliteDatabase()
+  : new IdbDatabase();
 
 const createFirstAction = (): ActionData => ({
   icon: defaultIcons[0],
@@ -118,6 +137,7 @@ const updateProject = (
 
 export interface StorageErrorEvent {
   type: "quota" | "other";
+  kind: "browser" | "device";
 }
 
 export interface State {
@@ -178,7 +198,16 @@ export interface State {
   langChanged: boolean;
 
   download: DownloadState;
-  downloadFlashingProgress: number;
+  downloadFlashingProgress: {
+    stage: ProgressStage | undefined;
+    value: number | undefined;
+  };
+  dataConnection: DataConnectionState;
+  deviceBondState: DeviceBondState;
+  dataConnectionFlashingProgress: {
+    stage: ProgressStage | undefined;
+    value: number | undefined;
+  };
   save: SaveState;
 
   settings: Settings;
@@ -204,14 +233,11 @@ export interface State {
   isNameProjectDialogOpen: boolean;
   isRecordingDialogOpen: boolean;
   isConnectToRecordDialogOpen: boolean;
+  isWelcomeDialogOpen: boolean;
 
   welcomeDialogDismissedForProject: string | undefined;
 
   allProjectData: ProjectDataWithActions[];
-}
-
-export interface ConnectOptions {
-  postConnectTourTrigger?: TourTrigger;
 }
 
 export interface Actions {
@@ -230,9 +256,8 @@ export interface Actions {
   setRequiredConfidence(id: string, value: number): Promise<void>;
   deleteActionRecording(id: string, recordingId: string): Promise<void>;
   deleteAllActions(): Promise<void>;
-  downloadDataset(): void;
+  downloadDataset(): Promise<void>;
 
-  dataCollectionMicrobitConnectionStart(options?: ConnectOptions): void;
   dataCollectionMicrobitConnected(): void;
 
   loadDataset(actions: ActionData[], loadAction: LoadAction): Promise<void>;
@@ -278,7 +303,16 @@ export interface Actions {
   projectFlushedToEditor(): void;
 
   setDownload(state: DownloadState): void;
-  setDownloadFlashingProgress(value: number): void;
+  setDownloadFlashingProgress(
+    stage: ProgressStage,
+    value: number | undefined
+  ): void;
+  setDataConnection(state: DataConnectionState): void;
+  setDataConnectionType(type: DataConnectionType): void;
+  setDataConnectionFlashingProgress(
+    stage: ProgressStage,
+    value: number | undefined
+  ): void;
   setSave(state: SaveState): void;
 
   tourStart(trigger: TourTrigger, manual?: boolean): Promise<void>;
@@ -314,10 +348,39 @@ export interface Actions {
 
 type Store = State & Actions;
 
+/**
+ * Whether a closeable (simple, non-flow) dialog is currently open.
+ *
+ * Used by the Android back button handler to decide whether to dismiss a
+ * dialog via {@link closeDialog}. Must stay in sync with {@link closeDialog}.
+ *
+ * Excludes non-closeable operations (recording, training, saving) which
+ * swallow back navigation, and connection/download flows which have their
+ * own back/close logic.
+ */
+export const isCloseableDialogOpen = (state: State): boolean =>
+  state.isAboutDialogOpen ||
+  state.isSettingsDialogOpen ||
+  state.isConnectFirstDialogOpen ||
+  state.isLanguageDialogOpen ||
+  state.isFeedbackFormOpen ||
+  state.isDeleteAllActionsDialogOpen ||
+  state.isNameProjectDialogOpen ||
+  state.isConnectToRecordDialogOpen ||
+  state.isDeleteActionDialogOpen ||
+  state.isIncompatibleEditorDeviceDialogOpen ||
+  state.isWelcomeDialogOpen ||
+  state.isEditorTimedOutDialogOpen ||
+  state.postImportDialogState !== PostImportDialogState.None ||
+  (state.trainModelDialogStage !== TrainModelDialogStage.Closed &&
+    state.trainModelDialogStage !== TrainModelDialogStage.TrainingInProgress) ||
+  (state.save.step !== SaveStep.None &&
+    state.save.step !== SaveStep.SaveProgress);
+
 const createMlStore = (logging: Logging) => {
   return create<Store>()(
     devtools(
-      (set, get) => ({
+      subscribeWithSelector((set, get) => ({
         storageError: undefined,
         id: undefined,
         timestamp: 0,
@@ -330,11 +393,41 @@ const createMlStore = (logging: Logging) => {
         projectLoadTimestamp: 0,
         download: {
           step: DownloadStep.None,
-          microbitToFlash: MicrobitToFlash.Default,
+          microbitChoice: SameOrDifferentChoice.Default,
+          pairingMethod: "triple-reset",
+          isCheckingPermissions: false,
+          connectionAbortController: undefined,
+          // This value will be replaced by persisted name before it is used.
+          bluetoothMicrobitName: undefined,
         },
-        downloadFlashingProgress: 0,
+        downloadFlashingProgress: { stage: undefined, value: undefined },
+        dataConnection: getInitialDataConnectionState(),
+        deviceBondState: {
+          setBonded(id: string, isBonded: boolean) {
+            const { settings } = get();
+            const current = settings.bondedDevices ?? [];
+            const bondedDevices = isBonded
+              ? current.includes(id)
+                ? current
+                : [...current, id]
+              : current.filter((d) => d !== id);
+            set({
+              settings: { ...settings, bondedDevices },
+            });
+            // Persist to IndexedDB via setSettings (fire-and-forget).
+            void get().setSettings({ bondedDevices });
+          },
+          isBonded(id: string) {
+            return get().settings.bondedDevices?.includes(id) ?? false;
+          },
+        },
+        dataConnectionFlashingProgress: {
+          stage: undefined,
+          value: undefined,
+        },
         save: {
           step: SaveStep.None,
+          type: SaveType.Download,
         },
         projectEdited: false,
         settings: defaultSettings,
@@ -370,6 +463,7 @@ const createMlStore = (logging: Logging) => {
         isConnectToRecordDialogOpen: false,
         isDeleteActionDialogOpen: false,
         isIncompatibleEditorDeviceDialogOpen: false,
+        isWelcomeDialogOpen: false,
 
         welcomeDialogDismissedForProject: undefined,
 
@@ -466,7 +560,7 @@ const createMlStore = (logging: Logging) => {
               isEditorOpen: open,
               download: {
                 ...download,
-                usbDevice: undefined,
+                connection: undefined,
               },
             }),
             false,
@@ -978,20 +1072,15 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
-        downloadDataset() {
+        async downloadDataset() {
           const { actions, project } = get();
-          const a = document.createElement("a");
-          a.setAttribute(
-            "href",
-            "data:application/json;charset=utf-8," +
-              encodeURIComponent(JSON.stringify(actions, null, 2))
+          const name = project.header?.name ?? untitledProjectName;
+          await downloadDataString(
+            JSON.stringify(actions, null, 2),
+            `${name}-data-samples.json`,
+            "application/json",
+            `Share ${name} data samples`
           );
-          a.setAttribute(
-            "download",
-            `${project.header?.name ?? untitledProjectName}-data-samples.json`
-          );
-          a.style.display = "none";
-          a.click();
         },
 
         async loadDataset(
@@ -1521,10 +1610,33 @@ const createMlStore = (logging: Logging) => {
           }
         },
         setDownload(download: DownloadState) {
-          set({ download, downloadFlashingProgress: 0 }, false, "setDownload");
+          set({ download }, false, "setDownload");
         },
-        setDownloadFlashingProgress(value) {
-          set({ downloadFlashingProgress: value });
+        setDownloadFlashingProgress(stage, value) {
+          set(
+            { downloadFlashingProgress: { stage, value } },
+            false,
+            "setDownloadFlashingProgress"
+          );
+        },
+        setDataConnection(dataConnection: DataConnectionState) {
+          set({ dataConnection }, false, "setDataConnection");
+        },
+        setDataConnectionType(dataConnectionType: DataConnectionType) {
+          set(
+            ({ dataConnection }) => ({
+              dataConnection: { ...dataConnection, type: dataConnectionType },
+            }),
+            false,
+            "setDataConnectionType"
+          );
+        },
+        setDataConnectionFlashingProgress(stage, value) {
+          set(
+            { dataConnectionFlashingProgress: { stage, value } },
+            false,
+            "setDataConnectionFlashingProgress"
+          );
         },
         setSave(save: SaveState) {
           set({ save }, false, "setSave");
@@ -1564,13 +1676,6 @@ const createMlStore = (logging: Logging) => {
             "setPostConnectTourId"
           );
         },
-        dataCollectionMicrobitConnectionStart(options) {
-          set(
-            { postConnectTourTrigger: options?.postConnectTourTrigger },
-            false,
-            "dataCollectionMicrobitConnectionStart"
-          );
-        },
         dataCollectionMicrobitConnected() {
           set(
             ({ actions, tourState, postConnectTourTrigger }) => {
@@ -1594,6 +1699,9 @@ const createMlStore = (logging: Logging) => {
         },
 
         async tourStart(trigger: TourTrigger, manual: boolean = false) {
+          if (flags.skipTours && !manual) {
+            return;
+          }
           const { actions, settings, tourState } = get();
           if (
             manual ||
@@ -1717,7 +1825,7 @@ const createMlStore = (logging: Logging) => {
             if (input.data.x.length > dataWindow.minSamples) {
               const result = predict(input, dataWindow);
               if (result.error) {
-                logging.error(result.detail);
+                logging.error("Prediction error", result.detail);
               } else {
                 const { confidences } = result;
                 const detected = getDetectedAction(
@@ -1811,6 +1919,11 @@ const createMlStore = (logging: Logging) => {
             isConnectToRecordDialogOpen: false,
             isDeleteActionDialogOpen: false,
             isIncompatibleEditorDeviceDialogOpen: false,
+            isWelcomeDialogOpen: false,
+            isEditorTimedOutDialogOpen: false,
+            trainModelDialogStage: TrainModelDialogStage.Closed,
+            postImportDialogState: PostImportDialogState.None,
+            save: { step: SaveStep.None, type: SaveType.Download },
           });
         },
 
@@ -1827,10 +1940,12 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage,
             isEditorTimedOutDialogOpen,
             isDeleteAllActionsDialogOpen,
+            isNameProjectDialogOpen,
             isRecordingDialogOpen,
             isConnectToRecordDialogOpen,
             isDeleteActionDialogOpen,
             isIncompatibleEditorDeviceDialogOpen,
+            isWelcomeDialogOpen,
             save,
           } = get();
           return (
@@ -1840,6 +1955,7 @@ const createMlStore = (logging: Logging) => {
             isLanguageDialogOpen ||
             isFeedbackFormOpen ||
             isDeleteAllActionsDialogOpen ||
+            isNameProjectDialogOpen ||
             isRecordingDialogOpen ||
             isConnectToRecordDialogOpen ||
             isDeleteActionDialogOpen ||
@@ -1849,10 +1965,11 @@ const createMlStore = (logging: Logging) => {
             tourState !== undefined ||
             trainModelDialogStage !== TrainModelDialogStage.Closed ||
             isEditorTimedOutDialogOpen ||
-            save.step !== SaveStep.None
+            save.step !== SaveStep.None ||
+            isWelcomeDialogOpen
           );
         },
-      }),
+      })),
       { enabled: flags.devtools }
     )
   );
@@ -2047,14 +2164,18 @@ const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
 
 let storageErrorReported = false;
 const setStorageError = (err: unknown) => {
-  const isQuotaError =
-    err instanceof DOMException && err.name === "QuotaExceededError";
   if (!storageErrorReported) {
     storageErrorReported = true;
-    deployment.logging.error(err);
+    deployment.logging.error("Storage error", err);
   }
   useStore.setState({
-    storageError: { type: isQuotaError ? "quota" : "other" },
+    storageError: {
+      type:
+        err instanceof DOMException && err.name === "QuotaExceededError"
+          ? "quota"
+          : "other",
+      kind: isNativePlatform() ? "device" : "browser",
+    },
   });
 };
 

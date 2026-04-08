@@ -16,7 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnected } from "../data-connection-flow";
 import microbitButtonB from "../images/microbit-button-b.svg";
 import moveMicrobitImage from "../images/move-microbit.svg";
 import { Action } from "../model";
@@ -129,7 +129,7 @@ const RecordHintWithButtonB = () => {
 };
 
 export const RecordHint = () => {
-  const { isConnected } = useConnectionStage();
+  const isConnected = useDataConnected();
   return (
     <HStack
       position="absolute"

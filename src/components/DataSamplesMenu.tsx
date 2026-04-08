@@ -3,16 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { isAndroid } from "../platform";
 import {
   Icon,
   IconButton,
-  Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
   Portal,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { MdMoreVert } from "react-icons/md";
@@ -22,14 +23,15 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useProjectIsUntitled } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
 import { ConfirmDialog } from "./ConfirmDialog";
 import LoadProjectMenuItem from "./LoadProjectMenuItem";
+import Menu from "./Menu";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
-import { useProjectIsUntitled } from "../hooks/project-hooks";
 
 const DataSamplesMenu = () => {
   const intl = useIntl();
@@ -47,8 +49,9 @@ const DataSamplesMenu = () => {
   const nameProjectDialogOnOpen = useStore((s) => s.nameProjectDialogOnOpen);
   const isUntitled = useProjectIsUntitled();
   const setProjectName = useStore((s) => s.setProjectName);
+  const toast = useToast();
 
-  const download = useCallback(() => {
+  const download = useCallback(async () => {
     logging.event({
       type: "dataset-save",
       detail: {
@@ -56,8 +59,19 @@ const DataSamplesMenu = () => {
         samples: getTotalNumSamples(actions),
       },
     });
-    downloadDataset();
-  }, [downloadDataset, actions, logging]);
+    await downloadDataset();
+    if (isAndroid()) {
+      // Android saves to Downloads with no browser feedback;
+      // iOS share sheet provides its own; web has the browser download bar.
+      toast({
+        id: "save-complete",
+        position: "top",
+        duration: 5_000,
+        title: intl.formatMessage({ id: "saving-dataset-toast-title" }),
+        status: "info",
+      });
+    }
+  }, [actions, downloadDataset, intl, logging, toast]);
   const deleteAllActions = useStore((s) => s.deleteAllActions);
   const handleDeleteAllActions = useCallback(async () => {
     logging.event({
@@ -67,22 +81,23 @@ const DataSamplesMenu = () => {
     closeDialog();
   }, [closeDialog, deleteAllActions, logging]);
 
+  // called if nameProjectDialog was launched from handleDownloadDataset
   const handleSave = useCallback(
     async (newName?: string) => {
       if (newName) {
         await setProjectName(newName);
       }
-      download();
+      await download();
       closeDialog();
     },
     [closeDialog, download, setProjectName]
   );
 
-  const handleDownloadDataset = useCallback(() => {
+  const handleDownloadDataset = useCallback(async () => {
     if (isUntitled) {
       nameProjectDialogOnOpen();
     } else {
-      download();
+      await download();
     }
   }, [download, isUntitled, nameProjectDialogOnOpen]);
 

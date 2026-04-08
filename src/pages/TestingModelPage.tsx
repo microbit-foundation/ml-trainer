@@ -8,12 +8,10 @@ import {
   ButtonGroup,
   Flex,
   HStack,
-  Menu,
   MenuItem,
   MenuList,
   Portal,
   usePrevious,
-  VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
@@ -26,11 +24,12 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
 import LiveGraphPanel from "../components/LiveGraphPanel";
+import Menu from "../components/Menu";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
-import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
+import { useBoardVersion } from "../hooks/use-board-version";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { projectSessionStorage } from "../session-storage";
 import { useStore } from "../store";
@@ -78,7 +77,7 @@ const TestingModelPage = () => {
 
   const tourStart = useStore((s) => s.tourStart);
   const setHasMoved = useStore((s) => s.setHasMoved);
-  const { isConnected } = useConnectionStage();
+  const isConnected = useDataConnected();
   const wasConnected = usePrevious(isConnected);
   useEffect(() => {
     if (isConnected) {
@@ -91,7 +90,7 @@ const TestingModelPage = () => {
   }, [isConnected, setHasMoved, tourStart, wasConnected]);
 
   const { openEditor, resetProject, projectEdited } = useProject();
-  const { getDataCollectionBoardVersion } = useConnectActions();
+  const boardVersion = useBoardVersion();
   const incompatibleEditorDeviceDialogOnOpen = useStore(
     (s) => s.incompatibleEditorDeviceDialogOnOpen
   );
@@ -101,7 +100,7 @@ const TestingModelPage = () => {
   const closeDialog = useStore((s) => s.closeDialog);
   const maybeOpenEditor = useCallback(async () => {
     // Open editor if device is not a V1, otherwise show warning dialog.
-    if (getDataCollectionBoardVersion() === "V1") {
+    if (boardVersion === "V1") {
       return incompatibleEditorDeviceDialogOnOpen();
     }
     const focusVisible =
@@ -109,11 +108,7 @@ const TestingModelPage = () => {
     setEditorLoading(true);
     await openEditor(focusVisible);
     setEditorLoading(false);
-  }, [
-    getDataCollectionBoardVersion,
-    incompatibleEditorDeviceDialogOnOpen,
-    openEditor,
-  ]);
+  }, [boardVersion, incompatibleEditorDeviceDialogOnOpen, openEditor]);
   const [editorLoading, setEditorLoading] = useState(false);
   const continueToEditor = useCallback(async () => {
     setEditorLoading(true);
@@ -137,10 +132,65 @@ const TestingModelPage = () => {
     <DefaultPageLayout
       titleId="testing-model-title"
       showPageTitle
-      toolbarItemsRight={<ProjectToolbarItems />}
       showProjectName
+      toolbarItemsRight={<ProjectToolbarItems />}
       backUrl={createDataSamplesPageUrl()}
       backLabelId="back-to-data-samples-action"
+      bottomContent={
+        <>
+          <HStack
+            role="region"
+            aria-label={intl.formatMessage({
+              id: "testing-model-actions-region",
+            })}
+            justifyContent="right"
+            px={5}
+            py={2}
+            w="full"
+            borderBottomWidth={3}
+            borderTopWidth={3}
+            borderColor="gray.200"
+            alignItems="center"
+          >
+            <Menu>
+              <ButtonGroup isAttached>
+                <ButtonWithLoading
+                  ref={editButtonRef}
+                  variant="primary"
+                  onClick={maybeOpenEditor}
+                  className={tourElClassname.editInMakeCodeButton}
+                  isLoading={
+                    editorLoading && !isIncompatibleEditorDeviceDialogOpen
+                  }
+                >
+                  <FormattedMessage id="edit-in-makecode-action" />
+                </ButtonWithLoading>
+                <MoreMenuButton
+                  variant="primary"
+                  aria-label={intl.formatMessage({
+                    id: "more-edit-in-makecode-options",
+                  })}
+                />
+                <Portal>
+                  <MenuList>
+                    <MenuItem
+                      icon={<RiDeleteBin2Line />}
+                      onClick={resetProject}
+                      isDisabled={!projectEdited}
+                    >
+                      <FormattedMessage id="reset-to-default-action" />
+                    </MenuItem>
+                  </MenuList>
+                </Portal>
+              </ButtonGroup>
+            </Menu>
+          </HStack>
+          <LiveGraphPanel
+            showPredictedAction
+            disconnectedTextId="connect-to-test-model"
+          />
+        </>
+      }
     >
       <IncompatibleEditorDevice
         isOpen={isIncompatibleEditorDeviceDialogOpen}
@@ -152,59 +202,6 @@ const TestingModelPage = () => {
       <Flex as="main" flexGrow={1} flexDir="column">
         <TestingModelTable />
       </Flex>
-      <VStack w="full" flexShrink={0} bottom={0} gap={0} bg="gray.25">
-        <HStack
-          role="region"
-          aria-label={intl.formatMessage({
-            id: "testing-model-actions-region",
-          })}
-          justifyContent="right"
-          px={5}
-          py={2}
-          w="full"
-          borderBottomWidth={3}
-          borderTopWidth={3}
-          borderColor="gray.200"
-          alignItems="center"
-        >
-          <Menu>
-            <ButtonGroup isAttached>
-              <ButtonWithLoading
-                ref={editButtonRef}
-                variant="primary"
-                onClick={maybeOpenEditor}
-                className={tourElClassname.editInMakeCodeButton}
-                isLoading={
-                  editorLoading && !isIncompatibleEditorDeviceDialogOpen
-                }
-              >
-                <FormattedMessage id="edit-in-makecode-action" />
-              </ButtonWithLoading>
-              <MoreMenuButton
-                variant="primary"
-                aria-label={intl.formatMessage({
-                  id: "more-edit-in-makecode-options",
-                })}
-              />
-              <Portal>
-                <MenuList>
-                  <MenuItem
-                    icon={<RiDeleteBin2Line />}
-                    onClick={resetProject}
-                    isDisabled={!projectEdited}
-                  >
-                    <FormattedMessage id="reset-to-default-action" />
-                  </MenuItem>
-                </MenuList>
-              </Portal>
-            </ButtonGroup>
-          </Menu>
-        </HStack>
-        <LiveGraphPanel
-          showPredictedAction
-          disconnectedTextId="connect-to-test-model"
-        />
-      </VStack>
     </DefaultPageLayout>
   ) : (
     <></>

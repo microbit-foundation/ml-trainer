@@ -4,11 +4,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { MicrobitWebUSBConnection } from "@microbit/microbit-connection";
-import { MakeCodeIcon } from "./utils/icons";
+import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { SpotlightStyle } from "./pages/TourOverlay";
-import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
+import { MakeCodeIcon } from "./utils/icons";
 
 export interface XYZData {
   x: number[];
@@ -127,41 +126,15 @@ export const enum TrainModelDialogStage {
   TrainingInProgress,
 }
 
-export enum DownloadStep {
-  None = "none",
-  Help = "introduction",
-  ChooseSameOrDifferentMicrobit = "choose same or different microbit",
-  ConnectCable = "connect cable",
-  ConnectRadioRemoteMicrobit = "connect radio remote microbit",
-  WebUsbFlashingTutorial = "web usb flashing tutorial",
-  WebUsbChooseMicrobit = "web usb choose microbit",
-  FlashingInProgress = "flashing in progress",
-  ManualFlashingTutorial = "manual flashing tutorial",
-  UnplugRadioBridgeMicrobit = "unplug radio bridge microbit",
-  IncompatibleDevice = "incompatible device",
-}
-
-export enum MicrobitToFlash {
-  // No micro:bit is connected.
-  Default = "default",
-  // Same as the connected micro:bit.
-  Same = "same",
-  // Different from the connected micro:bit.
-  Different = "different",
-}
-
-export interface DownloadState {
-  step: DownloadStep;
-  microbitToFlash: MicrobitToFlash;
-  hex?: HexData;
-  // The micro:bit used to flash the hex.  We remember your choice for easy code
-  // iteration for as long as the editor is open.
-  usbDevice?: MicrobitWebUSBConnection;
-}
-
 export interface SaveState {
   step: SaveStep;
   hex?: HexData;
+  type: SaveType;
+}
+
+export enum SaveType {
+  Download = "download",
+  Share = "share",
 }
 
 export enum SaveStep {
@@ -173,6 +146,10 @@ export enum SaveStep {
    * Otherwise we already have the project data in the state and save it directly.
    */
   SaveProgress = "progress",
+  /**
+   * Only used for the sharesheet on mobile devices
+   */
+  ChooseDestination = "choose destination",
 }
 
 export interface TourStep {

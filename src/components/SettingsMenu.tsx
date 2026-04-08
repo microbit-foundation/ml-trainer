@@ -6,7 +6,6 @@
 import {
   Box,
   IconButton,
-  Menu,
   MenuButton,
   MenuList,
   Portal,
@@ -15,6 +14,7 @@ import { useRef } from "react";
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import LanguageMenuItem from "./LanguageMenuItem";
+import Menu from "./Menu";
 import SettingsMenuItem from "./SettingsMenuItem";
 
 interface SettingsMenuProps {

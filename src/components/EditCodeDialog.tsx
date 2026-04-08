@@ -51,11 +51,18 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         tabIndex={-1}
         w="100%"
         h="100%"
-        bgColor="white"
+        bgColor="#3454D1" // Matches MakeCode behind status bar, for edge-to-edge appearance
         left={isOpen ? undefined : "-150vw"}
         top={isOpen ? undefined : "-150vh"}
         visibility={isOpen ? "visible" : "hidden"}
         position={isOpen ? undefined : "absolute"}
+        sx={{
+          paddingTop: "env(safe-area-inset-top)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingLeft:
+            "max(var(--window-controls-left, 0px), var(--safe-area-nav-left, 0px))",
+          paddingRight: "var(--safe-area-nav-right, 0px)",
+        }}
       >
         <Editor ref={ref} style={{ flexGrow: 1 }} />
       </Flex>

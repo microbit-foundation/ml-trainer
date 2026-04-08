@@ -50,9 +50,12 @@ export const Off = "0000000000000000000000000";
 
 export type MakeCodeIcon = keyof typeof makecodeIcons;
 
+const Bluetooth = "0011010101011101010100110";
+
 export const icons = {
   ...makecodeIcons,
   off: Off,
+  bluetooth: Bluetooth,
 };
 
 export type LedIconType = keyof typeof icons;

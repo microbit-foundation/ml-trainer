@@ -1,0 +1,525 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+import {
+  DeviceError,
+  FlashOptions,
+  ProgressStage,
+} from "@microbit/microbit-connection";
+import { deviceIdToMicrobitName } from "../bt-pattern-utils";
+import { Connections } from "../connections-hooks";
+import {
+  DataConnectionAction,
+  DataConnectionEvent,
+  dataConnectionTransition,
+} from "./data-connection-machine";
+import {
+  DataConnectionType,
+  DataConnectionState,
+  getInitialDataConnectionType,
+} from "./data-connection-types";
+import { Logging } from "../logging/logging";
+import {
+  isWebUSBConnection,
+  isWebBluetoothSupported,
+  isWebUsbSupported,
+} from "../device/connection-utils";
+import {
+  bluetoothUniversalHex,
+  getFlashDataSource,
+  HexType,
+} from "../device/get-hex-file";
+import { useStore } from "../store";
+import { downloadUrl } from "../utils/fs-util";
+import { checkPermissions } from "../shared-steps";
+
+/**
+ * Dependencies needed for state machine action execution.
+ */
+export interface DataConnectionDeps {
+  connections: Connections;
+  dataCollectionMicrobitConnected: () => void;
+  logging: Logging;
+}
+
+// =============================================================================
+// State management helpers
+// =============================================================================
+
+const getDataConnectionState = () => useStore.getState().dataConnection;
+
+const setDataConnectionState = (state: DataConnectionState) => {
+  useStore.getState().setDataConnection(state);
+};
+
+/**
+ * Progress callback that updates the store directly.
+ */
+const progressCallback = (stage: ProgressStage, value: number | undefined) => {
+  useStore.getState().setDataConnectionFlashingProgress(stage, value);
+};
+
+/**
+ * Build the flow context from state and settings.
+ * Context is rebuilt fresh for each transition.
+ */
+const buildContext = (state: DataConnectionState) => ({
+  ...state,
+  bluetoothMicrobitName: useStore.getState().settings.bluetoothMicrobitName,
+});
+
+// =============================================================================
+// State machine event handling
+// =============================================================================
+
+/**
+ * Send an event to the state machine and execute resulting actions.
+ */
+const sendEvent = async (
+  event: DataConnectionEvent,
+  deps: DataConnectionDeps
+): Promise<void> => {
+  const state = getDataConnectionState();
+  const context = buildContext(state);
+  const result = dataConnectionTransition(context, event);
+
+  if (!result) {
+    return;
+  }
+
+  // Apply step change and assigns together so the UI sees consistent
+  // state on first render. Actions run after an await boundary so they
+  // arrive a frame late — assigns avoid that for synchronous state.
+  setDataConnectionState({
+    ...getDataConnectionState(),
+    ...result.assign,
+    step: result.step,
+  });
+
+  // Execute actions sequentially, getting fresh state for each
+  for (const action of result.actions) {
+    await executeAction(action, event, deps);
+  }
+};
+
+/**
+ * Create a function that fires events into the state machine.
+ * The returned function captures deps in closure, so callers don't need to pass them.
+ */
+export const createFireDataConnectionEvent = (
+  deps: DataConnectionDeps
+): ((event: DataConnectionEvent) => void) => {
+  return (event: DataConnectionEvent) => {
+    sendEvent(event, deps).catch((error) => {
+      deps.logging.error(`Connection flow error [${event.type}]`, error);
+    });
+  };
+};
+
+/**
+ * Create an async function that sends events to the state machine and waits for completion.
+ * Use this when you need to await the event processing (e.g., disconnecting before connecting).
+ */
+export const createSendDataConnectionEvent = (
+  deps: DataConnectionDeps
+): ((event: DataConnectionEvent) => Promise<void>) => {
+  return (event: DataConnectionEvent) => sendEvent(event, deps);
+};
+
+/**
+ * Check if a transition exists for the given event from the current state.
+ * Used by UI to conditionally show controls based on state machine capabilities.
+ */
+export const canTransition = (
+  event: DataConnectionEvent,
+  state: DataConnectionState
+): boolean => {
+  return dataConnectionTransition(state, event) !== null;
+};
+
+// =============================================================================
+// State machine action execution
+// =============================================================================
+
+/**
+ * Execute a single action from the state machine.
+ */
+const executeAction = async (
+  action: DataConnectionAction,
+  event: DataConnectionEvent,
+  deps: DataConnectionDeps
+): Promise<void> => {
+  switch (action.type) {
+    case "reset": {
+      // Reset flow state and set connection type for fresh connection
+      const currentState = getDataConnectionState();
+      const connectionType = currentState.hasSwitchedConnectionType
+        ? currentState.type
+        : getInitialDataConnectionType(currentState.isWebBluetoothSupported);
+      const name = useStore.getState().settings.bluetoothMicrobitName;
+      setDataConnectionState({
+        ...currentState,
+        type: connectionType,
+        isReconnecting: false,
+        hasFailedOnce: false,
+        isStartingOver: false,
+        hadSuccessfulConnection: false,
+        pairingMethod: "triple-reset",
+        bluetoothMicrobitName: name,
+      });
+      break;
+    }
+
+    case "setConnectionType": {
+      deps.connections.setDataConnectionType(action.connectionType);
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        hasSwitchedConnectionType: true,
+      });
+      break;
+    }
+
+    case "saveMicrobitName": {
+      const name = getDataConnectionState().bluetoothMicrobitName;
+      if (name) {
+        await useStore.getState().setSettings({ bluetoothMicrobitName: name });
+      }
+      break;
+    }
+
+    case "resetMicrobitName": {
+      const name = useStore.getState().settings.bluetoothMicrobitName;
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        bluetoothMicrobitName: name,
+      });
+      break;
+    }
+
+    case "setMicrobitName": {
+      // Extract name from setMicrobitName event (user input)
+      if (event.type === "setMicrobitName") {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          bluetoothMicrobitName: event.name,
+        });
+      }
+      // Extract name from flashSuccess event (from USB flashing)
+      if (event.type === "flashSuccess") {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          bluetoothMicrobitName: event.bluetoothMicrobitName,
+        });
+        // We are sure it is a valid pattern and can persist the name
+        // since it has flashed successfully.
+        await useStore
+          .getState()
+          .setSettings({ bluetoothMicrobitName: event.bluetoothMicrobitName });
+      }
+      break;
+    }
+
+    case "clearMicrobitName": {
+      // The in-memory state is cleared via assign on the transition.
+      // This action persists the change to settings/IndexedDB.
+      await useStore
+        .getState()
+        .setSettings({ bluetoothMicrobitName: undefined });
+      break;
+    }
+
+    case "setRadioRemoteDeviceId":
+      if (event.type === "flashSuccess" && event.deviceId !== undefined) {
+        deps.connections.radioBridge.setRemoteDeviceId(event.deviceId);
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          radioRemoteDeviceId: event.deviceId,
+        });
+      }
+      break;
+
+    case "setRadioBridgeDeviceId":
+      if (event.type === "flashSuccess" && event.deviceId !== undefined) {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          radioBridgeDeviceId: event.deviceId,
+        });
+      }
+      break;
+
+    case "abortFindingDevice": {
+      const { connectionAbortController } = getDataConnectionState();
+      connectionAbortController?.abort();
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        connectionAbortController: undefined,
+      });
+      break;
+    }
+
+    case "connectFlash":
+      await performConnectFlash(action.clearDevice ?? false, deps);
+      break;
+
+    case "flash":
+      await performFlash(deps);
+      break;
+
+    case "connectData":
+      await performConnectData(action.clearDevice ?? false, deps);
+      break;
+
+    case "downloadHexFile":
+      await downloadUrl(bluetoothUniversalHex.url, bluetoothUniversalHex.name);
+      break;
+
+    case "notifyConnected":
+      deps.dataCollectionMicrobitConnected();
+      break;
+
+    // Reconnect tracking actions
+    case "setHasFailedOnce":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        hasFailedOnce: action.value,
+      });
+      break;
+
+    case "setIsStartingOver":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isStartingOver: action.value,
+      });
+      break;
+
+    // Connection state actions
+    case "setReconnecting":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isReconnecting: action.value,
+      });
+      break;
+
+    case "setRadioFlowPhase":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        radioFlowPhase: action.phase,
+      });
+      break;
+
+    case "setConnected":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        hadSuccessfulConnection: true,
+        isReconnecting: false,
+      });
+      break;
+
+    case "disconnectData":
+      await performDisconnectData(deps);
+      break;
+
+    case "setDisconnectSource":
+      if (event.type === "deviceDisconnected" && event.source) {
+        setDataConnectionState({
+          ...getDataConnectionState(),
+          lastDisconnectSource: event.source,
+        });
+      }
+      break;
+
+    case "checkPermissions":
+      await performCheckPermissions(deps);
+      break;
+
+    case "setCheckingPermissions":
+      setDataConnectionState({
+        ...getDataConnectionState(),
+        isCheckingPermissions: action.value,
+      });
+      break;
+  }
+};
+
+// =============================================================================
+// State machine action implementations
+// =============================================================================
+
+/**
+ * Sync connection configuration.
+ * Use pending micro:bit name if it exists, otherwise use persisted settings.
+ * Called before each connection attempt so settings loaded asynchronously
+ * from IndexedDB or updated mid-flow are reflected on the connection.
+ */
+const syncConnectionSettings = (deps: DataConnectionDeps) => {
+  const { bluetoothMicrobitName } = useStore.getState().dataConnection;
+  if (bluetoothMicrobitName) {
+    deps.connections.bluetooth.setNameFilter(bluetoothMicrobitName);
+  }
+};
+
+/**
+ * Connect to the flash connection (USB or Native Bluetooth) in order to flash.
+ */
+const performConnectFlash = async (
+  clearDevice: boolean,
+  deps: DataConnectionDeps
+): Promise<void> => {
+  syncConnectionSettings(deps);
+  const state = getDataConnectionState();
+  const connection = deps.connections.getDefaultFlashConnection();
+  const abortController = new AbortController();
+  setDataConnectionState({
+    ...state,
+    connectionAbortController: abortController,
+  });
+  try {
+    if (clearDevice) {
+      await connection.clearDevice();
+    }
+    await connection.connect({
+      progress: progressCallback,
+      signal: abortController.signal,
+    });
+    const boardVersion = connection.getBoardVersion();
+    await sendEvent({ type: "connectFlashSuccess", boardVersion }, deps);
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectFlashFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
+  }
+};
+
+/**
+ * Perform flash operation.
+ */
+const performFlash = async (deps: DataConnectionDeps): Promise<void> => {
+  const state = getDataConnectionState();
+  const connection = deps.connections.getDefaultFlashConnection();
+  const hex = getHexType(state);
+
+  try {
+    const options: FlashOptions = {
+      partial: true,
+      minimumProgressIncrement: 0.01,
+      progress: progressCallback,
+    };
+    await connection.flash(getFlashDataSource(hex), options);
+
+    const deviceId = isWebUSBConnection(connection)
+      ? connection.getDeviceId()
+      : undefined;
+    const bluetoothMicrobitName = deviceId
+      ? deviceIdToMicrobitName(deviceId)
+      : undefined;
+    const boardVersion = connection.getBoardVersion();
+
+    await sendEvent(
+      {
+        type: "flashSuccess",
+        boardVersion,
+        deviceId,
+        bluetoothMicrobitName,
+      },
+      deps
+    );
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "flashFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
+  }
+};
+
+/**
+ * Connect to the data connection micro:bit (bluetooth or radio bridge).
+ * If clearDevice is true, clears any existing device first (for fresh connections).
+ *
+ * Success is handled via the status listener (deviceConnected event) because
+ * that route also handles internal reconnections.
+ */
+const performConnectData = async (
+  clearDevice: boolean,
+  deps: DataConnectionDeps
+): Promise<void> => {
+  syncConnectionSettings(deps);
+  const state = getDataConnectionState();
+  // Only log for user-initiated connections, not reconnects.
+  if (!state.isReconnecting) {
+    const logMessage =
+      state.type === DataConnectionType.Radio ? "radio-bridge" : "bluetooth";
+    deps.logging.event({ type: "connect-user", message: logMessage });
+  }
+  try {
+    const connection = deps.connections.getDataConnection();
+    if (clearDevice) {
+      await connection.clearDevice();
+    }
+    await connection.connect({ progress: progressCallback });
+    // Success event (deviceConnected) is sent by the status listener.
+  } catch (e) {
+    if (e instanceof DeviceError) {
+      await sendEvent({ type: "connectDataFailure", code: e.code }, deps);
+    } else {
+      throw e;
+    }
+  }
+};
+
+/**
+ * Get hex type for the current flow.
+ */
+const getHexType = (state: DataConnectionState): HexType => {
+  switch (state.type) {
+    case DataConnectionType.NativeBluetooth:
+    case DataConnectionType.WebBluetooth:
+      return HexType.Bluetooth;
+    case DataConnectionType.Radio:
+      // Use radioFlowPhase to determine which hex to flash
+      return state.radioFlowPhase === "bridge"
+        ? HexType.RadioBridge
+        : HexType.RadioRemote;
+  }
+};
+
+/**
+ * Disconnect from the data connection.
+ */
+const performDisconnectData = async (
+  deps: DataConnectionDeps
+): Promise<void> => {
+  setDataConnectionState({
+    ...getDataConnectionState(),
+    isReconnecting: false,
+  });
+  await deps.connections.getDataConnection().disconnect();
+};
+
+const performCheckPermissions = async (
+  deps: DataConnectionDeps
+): Promise<void> => {
+  const event = await checkPermissions(deps.connections.bluetooth);
+  await sendEvent(event, deps);
+};
+
+/**
+ * Initialize capabilities in state from connections.
+ * Should be called once when the provider mounts.
+ */
+export const initializeCapabilities = async (connections: Connections) => {
+  const [webBluetoothSupported, webUsbSupported] = await Promise.all([
+    isWebBluetoothSupported(connections.bluetooth),
+    isWebUsbSupported(connections.usb),
+  ]);
+  const store = useStore.getState();
+  store.setDataConnection({
+    ...store.dataConnection,
+    isWebBluetoothSupported: webBluetoothSupported,
+    isWebUsbSupported: webUsbSupported,
+  });
+};

@@ -3,29 +3,33 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useDownloadActions } from "../hooks/download-hooks";
-import { useLogging } from "../logging/logging-hooks";
-import { DownloadStep } from "../model";
-import { useStore } from "../store";
-import { getTotalNumSamples } from "../utils/actions";
+import { useDownloadActions } from "../download-flow/download-hooks";
+import { DownloadStep } from "../download-flow/download-types";
+import { isAndroid } from "../platform";
+import { useSettings, useStore } from "../store";
+import PermissionErrorDialog from "./BluetoothPermissionErrorDialog";
 import ConnectCableDialog from "./ConnectCableDialog";
 import ConnectRadioDataCollectionMicrobitDialog from "./ConnectRadioDataCollectionMicrobitDialog";
 import DownloadChooseMicrobitDialog from "./DownloadChooseMicrobitDialog";
 import DownloadHelpDialog from "./DownloadHelpDialog";
 import DownloadProgressDialog from "./DownloadProgressDialog";
+import EnterBluetoothPatternDialog from "./EnterBluetoothPatternDialog";
 import IncompatibleEditorDevice from "./IncompatibleEditorDevice";
 import ManualFlashingDialog from "./ManualFlashingDialog";
+import NativeBluetoothErrorDialog from "./NativeBluetoothErrorDialog";
+import NativeBluetoothPairingLostDialog from "./NativeBluetoothPairingLostDialog";
+import ResetToBluetoothModeDialog from "./ResetToBluetoothModeDialog";
+import ResetToBluetoothModeTroubleshootDialog from "./ResetToBluetoothModeTroubleshootDialog";
 import SelectMicrobitUsbDialog from "./SelectMicrobitUsbDialog";
 import UnplugRadioLinkMicrobitDialog from "./UnplugRadioLinkMicrobitDialog";
 
 const DownloadDialogs = () => {
   const downloadActions = useDownloadActions();
-  const stage = useStore((s) => s.download);
+  const state = useStore((s) => s.download);
   const flashingProgress = useStore((s) => s.downloadFlashingProgress);
-  const actions = useStore((s) => s.actions);
-  const logging = useLogging();
+  const [settings] = useSettings();
 
-  switch (stage.step) {
+  switch (state.step) {
     case DownloadStep.Help:
       return (
         <DownloadHelpDialog
@@ -42,9 +46,29 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onDifferentMicrobitClick={downloadActions.onChosenDifferentMicrobit}
           onSameMicrobitClick={downloadActions.onChosenSameMicrobit}
-          stage={stage}
+          stage={state}
         />
       );
+    case DownloadStep.NativeBluetoothPreConnectTutorial: {
+      return (
+        <ResetToBluetoothModeDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
+          onTroubleshooting={downloadActions.troubleshootPairingMethod}
+        />
+      );
+    }
+    case DownloadStep.NativeBluetoothPreConnectTroubleshooting: {
+      return (
+        <ResetToBluetoothModeTroubleshootDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+        />
+      );
+    }
     case DownloadStep.ConnectCable:
       return (
         <ConnectCableDialog
@@ -76,44 +100,64 @@ const DownloadDialogs = () => {
           onNextClick={downloadActions.getOnNext()}
         />
       );
-    case DownloadStep.WebUsbFlashingTutorial: {
-      const handleDownloadProject = async () => {
-        logging.event({
-          type: "hex-download",
-          detail: {
-            actions: actions.length,
-            samples: getTotalNumSamples(actions),
-          },
-        });
-        await downloadActions.connectAndFlashMicrobit(stage);
-      };
-
+    case DownloadStep.WebUsbFlashingTutorial:
       return (
         <SelectMicrobitUsbDialog
           isOpen
           headingId="connect-popup"
           onClose={downloadActions.close}
           onBackClick={downloadActions.getOnBack()}
-          onNextClick={handleDownloadProject}
+          onNextClick={downloadActions.getOnNext()}
         />
       );
-    }
+    case DownloadStep.EnterBluetoothPattern:
+      return (
+        <EnterBluetoothPatternDialog
+          isOpen
+          onClose={downloadActions.close}
+          onBackClick={downloadActions.getOnBack()}
+          onNextClick={downloadActions.getOnNext()}
+          microbitName={settings.bluetoothMicrobitName}
+          onChangeMicrobitName={(name: string) => {
+            downloadActions.onChangeMicrobitName(name);
+          }}
+        />
+      );
     case DownloadStep.FlashingInProgress:
       return (
         <DownloadProgressDialog
           isOpen
           headingId="downloading-header"
-          progress={flashingProgress * 100}
+          stage={flashingProgress.stage}
+          progress={flashingProgress.value}
+          tryAgain={downloadActions.onTryAgain}
+          microbitName={state.bluetoothMicrobitName}
+        />
+      );
+    case DownloadStep.ConnectFailed:
+      return (
+        <NativeBluetoothErrorDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+        />
+      );
+    case DownloadStep.PairingLost:
+      return (
+        <NativeBluetoothPairingLostDialog
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
         />
       );
     case DownloadStep.ManualFlashingTutorial:
-      if (!stage.hex) {
+      if (!state.hex) {
         throw new Error("Project expected");
       }
       return (
         <ManualFlashingDialog
           isOpen
-          hex={stage.hex}
+          hex={state.hex}
           onClose={downloadActions.close}
           closeIsPrimaryAction={true}
         />
@@ -125,6 +169,45 @@ const DownloadDialogs = () => {
           onClose={downloadActions.close}
           onBack={downloadActions.getOnBack()}
           stage="flashDevice"
+        />
+      );
+    case DownloadStep.BluetoothDisabled:
+      return (
+        <PermissionErrorDialog
+          headingId="bluetooth-disabled-heading"
+          bodyId="bluetooth-disabled-body"
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          isCheckingPermissions={state.isCheckingPermissions}
+        />
+      );
+    case DownloadStep.BluetoothPermissionDenied:
+      return (
+        <PermissionErrorDialog
+          headingId="bluetooth-permission-denied-heading"
+          bodyId={
+            isAndroid()
+              ? "bluetooth-permission-denied-body-android"
+              : "bluetooth-permission-denied-body-ios"
+          }
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          onOpenSettings={downloadActions.openAppSettings}
+          isCheckingPermissions={state.isCheckingPermissions}
+        />
+      );
+    case DownloadStep.LocationDisabled:
+      return (
+        <PermissionErrorDialog
+          headingId="location-disabled-heading"
+          bodyId="location-disabled-body"
+          isOpen
+          onClose={downloadActions.close}
+          onTryAgain={downloadActions.onTryAgain}
+          onOpenSettings={downloadActions.openLocationSettings}
+          isCheckingPermissions={state.isCheckingPermissions}
         />
       );
   }

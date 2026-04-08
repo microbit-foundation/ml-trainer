@@ -16,6 +16,7 @@ import {
   RefObject,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -27,8 +28,12 @@ import {
   isDatasetUserFileFormat,
   PostImportDialogState,
   SaveStep,
+  SaveType,
 } from "../model";
-import { untitledProjectName as untitled } from "../project-utils";
+import {
+  untitledProjectName as untitled,
+  untitledProjectName,
+} from "../project-utils";
 import { useStore } from "../store";
 import {
   createCodePageUrl,
@@ -38,11 +43,16 @@ import {
 } from "../urls";
 import { getTotalNumSamples } from "../utils/actions";
 import {
-  downloadHex,
+  downloadHexData,
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { useDownloadActions } from "./download-hooks";
+import { useDownloadActions } from "../download-flow/download-hooks";
+import { Capacitor } from "@capacitor/core";
+import { App as CapacitorApp } from "@capacitor/app";
+import { Encoding, Filesystem } from "@capacitor/filesystem";
+import { isIOS } from "../platform";
+import { isShareCanceled, shareHex } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
 
@@ -63,7 +73,11 @@ interface ProjectContext {
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
-  loadFile: (file: File, type: LoadType, loadAction: LoadAction) => void;
+  loadFile: (
+    file: File,
+    type: LoadType,
+    loadAction: LoadAction
+  ) => Promise<void>;
   /**
    * Called to request a save.
    *
@@ -74,7 +88,7 @@ interface ProjectContext {
    * on MakeCode or a dialog flow. The progress will be reflected in the `save`
    * state field.
    */
-  saveHex: (hex?: HexData) => Promise<void>;
+  saveHex: (saveType: SaveType, hex?: HexData) => Promise<void>;
 
   editorCallbacks: Pick<
     MakeCodeFrameProps,
@@ -134,8 +148,8 @@ export const ProjectProvider = ({
   const getEditorStartUp = useStore((s) => s.getEditorStartUp);
   const editorReady = useStore((s) => s.editorReady);
   const editorTimedOut = useStore((s) => s.editorTimedOut);
-  const openEditorTimedOutDialog = useStore(
-    (s) => () => s.setIsEditorTimedOutDialogOpen(true)
+  const setIsEditorTimedOutDialogOpen = useStore(
+    (s) => s.setIsEditorTimedOutDialogOpen
   );
   const setProjectEdited = useStore((s) => s.setProjectEdited);
   const setEditorLoadingFile = useStore((s) => s.setEditorLoadingFile);
@@ -153,6 +167,10 @@ export const ProjectProvider = ({
   );
   const checkIfLangChanged = useStore((s) => s.checkIfLangChanged);
   const navigate = useNavigate();
+
+  const openEditorTimedOutDialog = useCallback(() => {
+    setIsEditorTimedOutDialogOpen(true);
+  }, [setIsEditorTimedOutDialogOpen]);
 
   const project = useStore((s) => s.project);
   const initialProjects = useCallback(() => {
@@ -320,12 +338,43 @@ export const ProjectProvider = ({
         return false;
       }
       // Unexpected error, can't handle better than the redirect.
-      logging.error(e);
+      logging.error("Error", e);
       return false;
     }
   }, [doAfterEditorUpdate, logging, setProjectEdited]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
+  const importProjectFromHexText = useCallback(
+    async (hex: string, fileName: string) => {
+      const makeCodeMagicMark = "41140E2FB82FA2BB";
+      // Check if is a MakeCode hex, otherwise show error dialog.
+      if (!hex.includes(makeCodeMagicMark)) {
+        setPostImportDialogState(PostImportDialogState.Error);
+        return;
+      }
+      const hasTimedOut = await checkIfEditorStartUpTimedOut(
+        editorReadyPromise.promise
+      );
+      if (hasTimedOut) {
+        openEditorTimedOutDialog();
+        return;
+      }
+      // This triggers the code in editorChanged to update actions etc.
+      setEditorLoadingFile();
+      driverRef.current!.importFile({
+        filename: fileName,
+        parts: [hex],
+      });
+    },
+    [
+      checkIfEditorStartUpTimedOut,
+      driverRef,
+      editorReadyPromise.promise,
+      openEditorTimedOutDialog,
+      setEditorLoadingFile,
+      setPostImportDialogState,
+    ]
+  );
   const loadFile = useCallback(
     async (
       file: File,
@@ -350,39 +399,17 @@ export const ProjectProvider = ({
         }
       } else if (fileExtension === "hex") {
         const hex = await readFileAsText(file);
-        const makeCodeMagicMark = "41140E2FB82FA2BB";
-        // Check if is a MakeCode hex, otherwise show error dialog.
-        if (hex.includes(makeCodeMagicMark)) {
-          const hasTimedOut = await checkIfEditorStartUpTimedOut(
-            editorReadyPromise.promise
-          );
-          if (hasTimedOut) {
-            openEditorTimedOutDialog();
-            return;
-          }
-          // This triggers the code in editorChanged to update actions etc.
-          setEditorLoadingFile();
-          driverRef.current!.importFile({
-            filename: file.name,
-            parts: [hex],
-          });
-        } else {
-          setPostImportDialogState(PostImportDialogState.Error);
-        }
+        await importProjectFromHexText(hex, file.name);
       } else {
         setPostImportDialogState(PostImportDialogState.Error);
       }
     },
     [
-      checkIfEditorStartUpTimedOut,
-      driverRef,
-      editorReadyPromise.promise,
+      importProjectFromHexText,
       loadDataset,
       logging,
       navigate,
-      openEditorTimedOutDialog,
       setPostImportDialogState,
-      setEditorLoadingFile,
     ]
   );
 
@@ -390,30 +417,30 @@ export const ProjectProvider = ({
   const save = useStore((s) => s.save);
   const settings = useStore((s) => s.settings);
   const actions = useStore((s) => s.actions);
-  const saveNextDownloadRef = useRef(false);
+  const saveNextDownloadRef = useRef<SaveType | null>(null);
   const translatedUntitled = useDefaultProjectName();
   const saveHex = useCallback(
-    async (hex?: HexData): Promise<void> => {
+    async (saveType: SaveType, hex?: HexData): Promise<void> => {
       const { step } = save;
       const projectName = getCurrentProject().header?.name;
       if (settings.showPreSaveHelp && step === SaveStep.None) {
-        setSave({ hex, step: SaveStep.PreSaveHelp });
+        setSave({ hex, step: SaveStep.PreSaveHelp, type: saveType });
       } else if (
         (projectName === untitled || projectName === translatedUntitled) &&
         step === SaveStep.None
       ) {
-        setSave({ hex, step: SaveStep.ProjectName });
+        setSave({ hex, step: SaveStep.ProjectName, type: saveType });
       } else if (!hex) {
-        setSave({ hex, step: SaveStep.SaveProgress });
+        setSave({ hex, step: SaveStep.SaveProgress, type: saveType });
         // This will result in a future call to saveHex with a hex.
         try {
           await doAfterEditorUpdate(async () => {
-            saveNextDownloadRef.current = true;
+            saveNextDownloadRef.current = saveType;
             await driverRef.current!.compile();
           });
         } catch (e) {
           if (e instanceof CodeEditorError) {
-            setSave({ step: SaveStep.None });
+            setSave({ step: SaveStep.None, type: SaveType.Download });
             openEditorTimedOutDialog();
           }
         }
@@ -423,17 +450,33 @@ export const ProjectProvider = ({
           detail: {
             actions: actions.length,
             samples: getTotalNumSamples(actions),
+            saveType,
           },
         });
-        downloadHex(hex);
-        setSave({ step: SaveStep.None });
-        toast({
-          id: "save-complete",
-          position: "top",
-          duration: 5_000,
-          title: intl.formatMessage({ id: "saving-toast-title" }),
-          status: "info",
-        });
+        // Dismiss the progress dialog now that the hex is ready.
+        setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
+        if (saveType === SaveType.Share) {
+          try {
+            await shareHex(hex);
+          } catch (e) {
+            if (!isShareCanceled(e)) {
+              logging.error("Sharing failed", e);
+            }
+          }
+        } else {
+          await downloadHexData(hex);
+        }
+        setSave({ step: SaveStep.None, type: SaveType.Download });
+        if (saveType === SaveType.Download && !isIOS()) {
+          // iOS share sheet provides its own feedback.
+          toast({
+            id: "save-complete",
+            position: "top",
+            duration: 5_000,
+            title: intl.formatMessage({ id: "saving-toast-title" }),
+            status: "info",
+          });
+        }
       }
     },
     [
@@ -474,19 +517,71 @@ export const ProjectProvider = ({
     };
     navigate(createTestingModelPageUrl(), { state });
   }, [navigate]);
-  const onSave = saveHex;
+  const onSave = useCallback(
+    (hex: HexData) => saveHex(SaveType.Download, hex),
+    [saveHex]
+  );
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
     (download: HexData) => {
       if (saveNextDownloadRef.current) {
-        saveNextDownloadRef.current = false;
-        void saveHex(download);
+        const saveType = saveNextDownloadRef.current;
+        saveNextDownloadRef.current = null;
+        void saveHex(saveType, download);
       } else {
         void downloadActions.start(download);
       }
     },
     [downloadActions, saveHex]
   );
+
+  const isEditorReady = useStore((s) => s.isEditorReady);
+  // Native app URL open handler (e.g. opening a .hex file).
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      const appUrlListener = CapacitorApp.addListener(
+        "appUrlOpen",
+        async (evt) => {
+          const contents = await Filesystem.readFile({
+            path: evt.url,
+            encoding: Encoding.UTF8,
+          });
+          let filename = decodeURIComponent(
+            evt.url.substring(evt.url.lastIndexOf("/") + 1)
+          );
+          // Forgivingly shim broken filenames to hex files,
+          // we can't rely on android to maintain file data.
+          // Even Android's Files app often passes us a broken
+          // filename. MakeCode is resilient to bad files.
+          if (filename.length === 0) {
+            filename = `${untitledProjectName}.hex`;
+          }
+          if (!filename.includes(".")) {
+            filename += ".hex";
+          }
+          await importProjectFromHexText(contents.data as string, filename);
+        }
+      );
+
+      const resumeListener = CapacitorApp.addListener("resume", () => {
+        if (!isEditorReady) {
+          logging.log("Editor not ready when resuming app, reloading...");
+          window.location.reload();
+        }
+      });
+
+      return () => {
+        void appUrlListener.then((l) => l.remove());
+        void resumeListener.then((l) => l.remove());
+      };
+    }
+  }, [
+    driverRef,
+    editorReady,
+    importProjectFromHexText,
+    isEditorReady,
+    logging,
+  ]);
 
   const value = useMemo(
     () => ({
