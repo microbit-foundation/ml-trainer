@@ -29,6 +29,7 @@ import {
   PostImportDialogState,
   SaveStep,
   SaveType,
+  WaitForEditorResult,
 } from "../model";
 import {
   untitledProjectName as untitled,
@@ -202,29 +203,56 @@ export const ProjectProvider = ({
     editorContentLoadedPromise.resolve();
   }, [editorContentLoadedPromise, logging]);
 
-  const checkIfEditorStartUpTimedOut = useCallback(
-    async (promise: Promise<void> | undefined) => {
+  const waitForEditor = useCallback(
+    async (
+      promise: Promise<void> | undefined
+    ): Promise<WaitForEditorResult> => {
       const elapsedTimeSinceStartup = Date.now() - startUpTimestamp;
       const remainingTimeout = startUpTimeout - elapsedTimeSinceStartup;
       if (
-        // Editor has already timed out.
         (editorStartUp === "in-progress" && remainingTimeout <= 0) ||
         editorStartUp === "timed out"
       ) {
-        return true;
+        return WaitForEditorResult.TimedOut;
       }
-      return await Promise.race([
-        promise,
-        ...(remainingTimeout > 0
-          ? [
-              new Promise<true>((resolve) =>
-                setTimeout(() => {
-                  resolve(true);
-                }, remainingTimeout)
-              ),
-            ]
-          : []),
-      ]);
+      // Races the editor ready promise against failure conditions.
+      if (!promise) {
+        return WaitForEditorResult.Ready;
+      }
+      const raceEntries: Promise<WaitForEditorResult>[] = [
+        promise.then(() => WaitForEditorResult.Ready),
+      ];
+      if (remainingTimeout > 0) {
+        raceEntries.push(
+          new Promise((resolve) =>
+            setTimeout(
+              () => resolve(WaitForEditorResult.TimedOut),
+              remainingTimeout
+            )
+          )
+        );
+      }
+      // MakeCode requires a network connection to load so there's no point
+      // waiting if we're offline.
+      const offlineAbort = new AbortController();
+      raceEntries.push(
+        new Promise((resolve) => {
+          if (!navigator.onLine) {
+            resolve(WaitForEditorResult.Offline);
+          } else {
+            window.addEventListener(
+              "offline",
+              () => resolve(WaitForEditorResult.Offline),
+              { once: true, signal: offlineAbort.signal }
+            );
+          }
+        })
+      );
+      try {
+        return await Promise.race(raceEntries);
+      } finally {
+        offlineAbort.abort();
+      }
     },
     [editorStartUp, startUpTimestamp]
   );
@@ -264,12 +292,10 @@ export const ProjectProvider = ({
       }
 
       try {
-        const hasTimedOut = await checkIfEditorStartUpTimedOut(
-          doAfterEditorUpdatePromise.current
-        );
-        if (hasTimedOut) {
+        const result = await waitForEditor(doAfterEditorUpdatePromise.current);
+        if (result !== WaitForEditorResult.Ready) {
           editorTimedOut();
-          logging.log("[MakeCode] Load timed out");
+          logging.log(`[MakeCode] Load failed: ${result}`);
           logging.event({
             type: "makecode-load-failed",
           });
@@ -290,7 +316,7 @@ export const ProjectProvider = ({
       setEditorImportingState,
       projectFlushedToEditor,
       langChangeFlushedToEditor,
-      checkIfEditorStartUpTimedOut,
+      waitForEditor,
       editorTimedOut,
     ]
   );
@@ -352,10 +378,8 @@ export const ProjectProvider = ({
         setPostImportDialogState(PostImportDialogState.Error);
         return;
       }
-      const hasTimedOut = await checkIfEditorStartUpTimedOut(
-        editorReadyPromise.promise
-      );
-      if (hasTimedOut) {
+      const result = await waitForEditor(editorReadyPromise.promise);
+      if (result !== WaitForEditorResult.Ready) {
         openEditorTimedOutDialog();
         return;
       }
@@ -367,7 +391,7 @@ export const ProjectProvider = ({
       });
     },
     [
-      checkIfEditorStartUpTimedOut,
+      waitForEditor,
       driverRef,
       editorReadyPromise.promise,
       openEditorTimedOutDialog,
