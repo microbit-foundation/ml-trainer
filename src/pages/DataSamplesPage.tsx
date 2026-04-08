@@ -53,14 +53,15 @@ const DataSamplesPage = () => {
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
   const newSession = useStore((s) => s.newSession);
+  const id = useStore((s) => s.id);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!projectSessionStorage.getProjectId()) {
+    if (!projectSessionStorage.getProjectId() || !id) {
       return navigate(createHomePageUrl());
     }
-  }, [navigate, newSession]);
+  }, [id, navigate, newSession]);
 
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
