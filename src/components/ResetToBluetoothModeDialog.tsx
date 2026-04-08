@@ -13,7 +13,7 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import DialogFooterLink from "./DialogFooterLink";
 import PairingModeAnimation from "./PairingModeAnimation";
-import PauseResumeLink from "./PauseResumeAnimationButton";
+import PauseResumeLink from "./PauseResumeAnimationLink";
 
 export interface ResetToBluetoothModeDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {

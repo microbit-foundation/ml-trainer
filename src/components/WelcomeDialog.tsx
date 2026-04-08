@@ -20,7 +20,7 @@ import { AnimationProvider } from "./AnimationProvider";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/index";
-import PauseResumeButton from "./PauseResumeAnimationButton";
+import PauseResumeLink from "./PauseResumeAnimationLink";
 
 type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
 
@@ -54,7 +54,7 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
             </ModalBody>
             <ModalFooter justifyContent="space-between">
               <VStack alignItems="start">
-                <PauseResumeButton />
+                <PauseResumeLink />
               </VStack>
               <ButtonWithLoading
                 variant="primary"
