@@ -601,6 +601,12 @@
       "value": "Conecte o micro:bit a este computador com um cabo USB para que o programa de coleta de dados possa ser baixado para ele."
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern"
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

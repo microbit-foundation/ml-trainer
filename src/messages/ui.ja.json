@@ -589,6 +589,12 @@
       "value": "データ収集プログラムをダウンロードできるように、micro:bitをUSBケーブルでこのコンピュータに繋げます。"
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern"
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

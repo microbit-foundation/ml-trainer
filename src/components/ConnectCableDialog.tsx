@@ -3,13 +3,14 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Image, Text, VStack } from "@chakra-ui/react";
+import { Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
 import connectCableImage from "../images/connect-cable.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import DialogFooterLink from "./DialogFooterLink";
 
 type LinkType = "switch" | "skip" | "none";
 interface Config {
@@ -80,13 +81,9 @@ const ConnectCableDialog = ({
         linkType &&
         onSkip &&
         onSwitch && (
-          <Button
-            onClick={linkType === "skip" ? onSkip : onSwitch}
-            variant="link"
-            size="lg"
-          >
+          <DialogFooterLink onClick={linkType === "skip" ? onSkip : onSwitch}>
             <FormattedMessage id={linkTextId} />
-          </Button>
+          </DialogFooterLink>
         )
       }
     >

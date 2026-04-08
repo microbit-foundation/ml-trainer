@@ -12,6 +12,7 @@ import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import { isNativePlatform } from "../platform";
+import DialogFooterLink from "./DialogFooterLink";
 
 export interface EnterBluetoothPatternDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -60,6 +61,13 @@ const EnterBluetoothPatternDialog = ({
       onNextClick={handleNextClick}
       onBackClick={handleBackClick}
       headingId={headingId}
+      footerLeft={
+        isNativePlatform() ? (
+          <DialogFooterLink onClick={handleBackClick}>
+            <FormattedMessage id="connect-cannot-see-pattern" />
+          </DialogFooterLink>
+        ) : undefined
+      }
       {...props}
     >
       <VStack gap={10}>

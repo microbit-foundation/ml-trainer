@@ -597,6 +597,12 @@
       "value": "Connecta la micro:bit a aquest ordinador amb un cable USB perquè el programa de recollida de dades es pugui descarregar."
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern"
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

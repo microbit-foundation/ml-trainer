@@ -315,6 +315,10 @@
     "defaultMessage": "Połącz micro:bit z tym komputerem za pomocą kabla USB, aby program zbierania danych mógł być do niego pobrany.",
     "description": "Project download instructions"
   },
+  "connect-cannot-see-pattern": {
+    "defaultMessage": "I do not see a pattern",
+    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+  },
   "connect-computer": {
     "defaultMessage": "Komputer",
     "description": "Label for computer icon in connection dialog"

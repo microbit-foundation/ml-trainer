@@ -601,6 +601,12 @@
       "value": "Połącz micro:bit z tym komputerem za pomocą kabla USB, aby program zbierania danych mógł być do niego pobrany."
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern"
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

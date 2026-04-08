@@ -601,6 +601,12 @@
       "value": "Connect the micro:bit to this computer with a USB cable so that the data collection program can be downloaded to it."
     }
   ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "I do not see a pattern"
+    }
+  ],
   "connect-computer": [
     {
       "type": 0,

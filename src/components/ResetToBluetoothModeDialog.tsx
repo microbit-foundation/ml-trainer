@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AspectRatio, Image, Link, Text, VStack } from "@chakra-ui/react";
+import { AspectRatio, Image, Text, VStack } from "@chakra-ui/react";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
 import abReset from "../images/bluetooth-mode-a+b+reset.gif";
@@ -11,7 +12,7 @@ import tripleReset from "../images/bluetooth-mode-triple-reset.gif";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { useCallback, useState } from "react";
+import DialogFooterLink from "./DialogFooterLink";
 
 export interface ResetToBluetoothModeDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -40,20 +41,15 @@ const ResetToBluetoothModeDialog = ({
       key={pairingMethod}
       headingId="reset-to-bluetooth-mode-heading"
       footerLeft={
-        <Link
-          as="button"
-          color="brand.600"
+        <DialogFooterLink
           onClick={isTripleReset ? onSwitchPairingMethod : onTroubleshooting}
-          display="flex"
-          flexDirection="row"
-          gap={1}
         >
           {isTripleReset ? (
             <FormattedMessage id="connect-try-another-way" />
           ) : (
             <FormattedMessage id="connect-unable-to-enter-bluetooth-mode" />
           )}
-        </Link>
+        </DialogFooterLink>
       }
     >
       <VStack gap={5} width="100%">
