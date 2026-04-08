@@ -52,16 +52,15 @@ const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
   const addNewAction = useStore((s) => s.addNewAction);
   const model = useStore((s) => s.model);
-  const newSession = useStore((s) => s.newSession);
-  const id = useStore((s) => s.id);
+  const projectId = useStore((s) => s.id);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!projectSessionStorage.getProjectId() || !id) {
+    if (!projectSessionStorage.getProjectId() || !projectId) {
       return navigate(createHomePageUrl());
     }
-  }, [id, navigate, newSession]);
+  }, [navigate, projectId]);
 
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
@@ -95,7 +94,6 @@ const DataSamplesPage = () => {
   const welcomeDialogDismissedForProject = useStore(
     (s) => s.welcomeDialogDismissedForProject
   );
-  const projectId = useStore((s) => s.id);
   const dismissWelcomeDialog = useStore((s) => s.dismissWelcomeDialog);
   const isWelcomeDialogOpen =
     !isConnected && welcomeDialogDismissedForProject !== projectId;
