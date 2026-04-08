@@ -83,9 +83,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
       <VisuallyHidden>
         <Box
           as="img"
-          aria-label={intl.formatMessage({
-            id: "animation-bluetooth-mode-label",
-          })}
+          alt={intl.formatMessage({ id: "animation-bluetooth-mode-label" })}
         />
       </VisuallyHidden>
       <Stack

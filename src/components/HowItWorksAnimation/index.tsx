@@ -332,10 +332,7 @@ const HowItWorksAnimation = () => {
   return (
     <>
       <VisuallyHidden>
-        <Box
-          as="img"
-          aria-label={intl.formatMessage({ id: "animation-label" })}
-        />
+        <Box as="img" alt={intl.formatMessage({ id: "animation-label" })} />
       </VisuallyHidden>
       <VStack
         aria-hidden
