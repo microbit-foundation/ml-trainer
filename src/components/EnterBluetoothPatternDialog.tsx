@@ -63,7 +63,7 @@ const EnterBluetoothPatternDialog = ({
       headingId={headingId}
       footerLeft={
         isNativePlatform() ? (
-          <DialogFooterLink>
+          <DialogFooterLink onClick={handleBackClick}>
             <FormattedMessage id="connect-cannot-see-pattern" />
           </DialogFooterLink>
         ) : undefined

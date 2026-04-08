@@ -592,7 +592,7 @@
   "connect-cannot-see-pattern": [
     {
       "type": 0,
-      "value": "I do not see a pattern."
+      "value": "I do not see a pattern"
     }
   ],
   "connect-computer": [
