@@ -81,9 +81,7 @@ const ConnectCableDialog = ({
         linkType &&
         onSkip &&
         onSwitch && (
-          <DialogFooterLink
-            onClick={linkType === "skip" ? onSkip : onSwitch}
-          >
+          <DialogFooterLink onClick={linkType === "skip" ? onSkip : onSwitch}>
             <FormattedMessage id={linkTextId} />
           </DialogFooterLink>
         )
