@@ -62,9 +62,6 @@ describe("Download flow: Native Bluetooth", () => {
       );
 
       expect(result?.step).toBe(DownloadStep.NativeBluetoothPreConnectTutorial);
-      expect(result?.actions).toContainEqual({
-        type: "disconnectDataConnection",
-      });
     });
   });
 
@@ -73,9 +70,6 @@ describe("Download flow: Native Bluetooth", () => {
       const result = transition(DownloadStep.Help, { type: "next" });
 
       expect(result?.step).toBe(DownloadStep.NativeBluetoothPreConnectTutorial);
-      expect(result?.actions).toContainEqual({
-        type: "disconnectDataConnection",
-      });
     });
 
     it("NativeBluetoothPreConnectTutorial -> BluetoothPattern", () => {
@@ -93,6 +87,9 @@ describe("Download flow: Native Bluetooth", () => {
       });
 
       expect(result?.step).toBe(DownloadStep.FlashingInProgress);
+      expect(result?.actions).toContainEqual({
+        type: "disconnectDataConnection",
+      });
       expect(result?.actions).toContainEqual({
         type: "connectFlash",
         clearDevice: true,
