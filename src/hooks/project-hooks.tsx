@@ -16,6 +16,7 @@ import {
   RefObject,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -306,12 +307,40 @@ export const ProjectProvider = ({
       setProjectEdited,
     ]
   );
+
+  const hideSimulatorPromiseRef = useRef<Promise<void> | null>(null);
+
+  const hideSimulator = useCallback(async () => {
+    hideSimulatorPromiseRef.current =
+      driverRef.current?.hideSimulator() ?? null;
+    await hideSimulatorPromiseRef.current;
+  }, [driverRef]);
+
+  const initAsyncCalled = useRef(false);
+  useEffect(() => {
+    const initAsync = async () => {
+      // Hide simulator when not on code page to avoid it from making noise
+      // when editor is not visible. Hiding it prevents it from loading.
+      if (window.location.pathname !== createCodePageUrl()) {
+        initAsyncCalled.current = true;
+        await doAfterEditorUpdate(() => Promise.resolve());
+        await hideSimulator();
+      }
+    };
+    if (!initAsyncCalled.current) {
+      void initAsync();
+    }
+    return;
+  }, [doAfterEditorUpdate, driverRef, hideSimulator]);
+
   const browserNavigationToEditor = useCallback(async () => {
     try {
       setProjectEdited();
-      await doAfterEditorUpdate(() => {
-        return Promise.resolve();
-      });
+      await doAfterEditorUpdate(() => Promise.resolve());
+      
+      // Wait for simulator to finish hiding before showing simulator.
+      await hideSimulatorPromiseRef.current;
+      await driverRef.current?.showSimulator();
       return true;
     } catch (e) {
       if (e instanceof CodeEditorError) {
@@ -323,7 +352,7 @@ export const ProjectProvider = ({
       logging.error(e);
       return false;
     }
-  }, [doAfterEditorUpdate, logging, setProjectEdited]);
+  }, [doAfterEditorUpdate, driverRef, logging, setProjectEdited]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const loadFile = useCallback(
@@ -473,7 +502,8 @@ export const ProjectProvider = ({
       focusVisible: openedViaKeyboardRef.current,
     };
     navigate(createTestingModelPageUrl(), { state });
-  }, [navigate]);
+    void hideSimulator();
+  }, [hideSimulator, navigate]);
   const onSave = saveHex;
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
