@@ -60,6 +60,7 @@ export type LoadAction = "replaceProject" | "replaceActions";
 interface ProjectContext {
   browserNavigationToEditor(): Promise<boolean>;
   openEditor(focusVisible?: boolean): Promise<void>;
+  hideSimulator(): Promise<void>;
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
@@ -306,12 +307,24 @@ export const ProjectProvider = ({
       setProjectEdited,
     ]
   );
+
+  const hideSimulatorPromiseRef = useRef<Promise<void> | null>(null);
+
+  const hideSimulator = useCallback(async () => {
+    await doAfterEditorUpdate(() => Promise.resolve());
+    hideSimulatorPromiseRef.current =
+      driverRef.current?.hideSimulator() ?? null;
+    await hideSimulatorPromiseRef.current;
+  }, [doAfterEditorUpdate, driverRef]);
+
   const browserNavigationToEditor = useCallback(async () => {
     try {
       setProjectEdited();
-      await doAfterEditorUpdate(() => {
-        return Promise.resolve();
-      });
+      await doAfterEditorUpdate(() => Promise.resolve());
+
+      // Wait for simulator to finish hiding before showing simulator.
+      await hideSimulatorPromiseRef.current;
+      await driverRef.current?.showSimulator();
       return true;
     } catch (e) {
       if (e instanceof CodeEditorError) {
@@ -323,7 +336,7 @@ export const ProjectProvider = ({
       logging.error(e);
       return false;
     }
-  }, [doAfterEditorUpdate, logging, setProjectEdited]);
+  }, [doAfterEditorUpdate, driverRef, logging, setProjectEdited]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
   const loadFile = useCallback(
@@ -493,6 +506,7 @@ export const ProjectProvider = ({
       loadFile,
       openEditor,
       browserNavigationToEditor,
+      hideSimulator,
       project,
       projectEdited,
       resetProject,
@@ -511,6 +525,7 @@ export const ProjectProvider = ({
       loadFile,
       openEditor,
       browserNavigationToEditor,
+      hideSimulator,
       project,
       projectEdited,
       resetProject,

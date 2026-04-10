@@ -47,6 +47,7 @@ import {
 } from "../store";
 import { tourElClassname } from "../tours";
 import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
+import { useProject } from "../hooks/project-hooks";
 
 const DataSamplesPage = () => {
   const actions = useStore((s) => s.actions);
@@ -55,12 +56,20 @@ const DataSamplesPage = () => {
   const projectId = useStore((s) => s.id);
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
   const navigate = useNavigate();
-
+  const { hideSimulator } = useProject();
+  const initAsyncCalled = useRef(false);
   useEffect(() => {
     if (!projectSessionStorage.getProjectId() || !projectId) {
       return navigate(createHomePageUrl());
     }
-  }, [navigate, projectId]);
+    // Hide simulator to avoid it from making noise. Editing data samples can
+    // cause the model to get invalidated and for the simulator to restart.
+    // Hiding it prevents it from loading and restarting.
+    if (!initAsyncCalled.current) {
+      initAsyncCalled.current = true;
+      void hideSimulator();
+    }
+  }, [navigate, projectId, hideSimulator]);
 
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
 
