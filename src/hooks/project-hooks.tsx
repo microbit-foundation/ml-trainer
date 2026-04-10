@@ -319,9 +319,12 @@ export const ProjectProvider = ({
   const initAsyncCalled = useRef(false);
   useEffect(() => {
     const initAsync = async () => {
-      // Hide simulator when not on code page to avoid it from making noise
-      // when editor is not visible. Hiding it prevents it from loading.
-      if (window.location.pathname !== createCodePageUrl()) {
+      // Hide simulator to avoid it from making noise when editor is not visible. 
+      // Hiding it prevents it from loading.
+      if (
+        window.location.pathname === createDataSamplesPageUrl() ||
+        window.location.pathname === createTestingModelPageUrl()
+      ) {
         initAsyncCalled.current = true;
         await doAfterEditorUpdate(() => Promise.resolve());
         await hideSimulator();
