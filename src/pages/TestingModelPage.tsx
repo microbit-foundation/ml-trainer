@@ -56,6 +56,7 @@ const TestingModelPage = () => {
   }, [navigate]);
 
   const { hideSimulator } = useProject();
+  const initAsyncCalled = useRef(false);
   useEffect(() => {
     if (!projectSessionStorage.getProjectId()) {
       return navigate(createHomePageUrl());
@@ -63,8 +64,11 @@ const TestingModelPage = () => {
     if (!model) {
       return navigateToDataSamples();
     }
-    // Hide simulator to avoid it from making noise.
-    void hideSimulator();
+    if (!initAsyncCalled.current) {
+      initAsyncCalled.current = true;
+      // Hide simulator to avoid it from making noise.
+      void hideSimulator();
+    }
     startPredicting(bufferedData);
 
     return () => {

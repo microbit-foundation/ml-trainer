@@ -57,7 +57,7 @@ const DataSamplesPage = () => {
   const [selectedActionIdx, setSelectedActionIdx] = useState<number>(0);
   const navigate = useNavigate();
   const { hideSimulator } = useProject();
-
+  const initAsyncCalled = useRef(false);
   useEffect(() => {
     if (!projectSessionStorage.getProjectId() || !projectId) {
       return navigate(createHomePageUrl());
@@ -65,7 +65,10 @@ const DataSamplesPage = () => {
     // Hide simulator to avoid it from making noise. Editing data samples can
     // cause the model to get invalidated and for the simulator to restart.
     // Hiding it prevents it from loading and restarting.
-    void hideSimulator();
+    if (!initAsyncCalled.current) {
+      initAsyncCalled.current = true;
+      void hideSimulator();
+    }
   }, [navigate, projectId, hideSimulator]);
 
   const trainModelFlowStart = useStore((s) => s.trainModelFlowStart);
