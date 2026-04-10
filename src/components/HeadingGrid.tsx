@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 
 interface HeadingGridProps extends GridProps {
   headings: GridColumnHeadingItemProps[];
-  rightItems: ReactNode;
+  rightItems?: ReactNode;
 }
 export const headingGridCommonProps: GridProps = {
   height: "3.25rem",
@@ -37,15 +37,17 @@ const HeadingGrid = ({ headings, rightItems, ...props }: HeadingGridProps) => {
           <GridColumnHeadingItem {...props} key={idx} />
         ))}
       </Grid>
-      <HStack
-        position="absolute"
-        right={0}
-        pl={2}
-        backgroundColor="whitesmoke"
-        {...headingGridCommonProps}
-      >
-        {rightItems}
-      </HStack>
+      {rightItems && (
+        <HStack
+          position="absolute"
+          right={0}
+          pl={2}
+          backgroundColor="whitesmoke"
+          {...headingGridCommonProps}
+        >
+          {rightItems}
+        </HStack>
+      )}
     </>
   );
 };
