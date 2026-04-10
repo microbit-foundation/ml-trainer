@@ -16,7 +16,6 @@ import {
   RefObject,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -61,6 +60,7 @@ export type LoadAction = "replaceProject" | "replaceActions";
 interface ProjectContext {
   browserNavigationToEditor(): Promise<boolean>;
   openEditor(focusVisible?: boolean): Promise<void>;
+  hideSimulator(): Promise<void>;
   project: MakeCodeProject;
   projectEdited: boolean;
   resetProject: () => void;
@@ -311,30 +311,11 @@ export const ProjectProvider = ({
   const hideSimulatorPromiseRef = useRef<Promise<void> | null>(null);
 
   const hideSimulator = useCallback(async () => {
+    await doAfterEditorUpdate(() => Promise.resolve());
     hideSimulatorPromiseRef.current =
       driverRef.current?.hideSimulator() ?? null;
     await hideSimulatorPromiseRef.current;
-  }, [driverRef]);
-
-  const initAsyncCalled = useRef(false);
-  useEffect(() => {
-    const initAsync = async () => {
-      // Hide simulator to avoid it from making noise when editor is not visible. 
-      // Hiding it prevents it from loading.
-      if (
-        window.location.pathname === createDataSamplesPageUrl() ||
-        window.location.pathname === createTestingModelPageUrl()
-      ) {
-        initAsyncCalled.current = true;
-        await doAfterEditorUpdate(() => Promise.resolve());
-        await hideSimulator();
-      }
-    };
-    if (!initAsyncCalled.current) {
-      void initAsync();
-    }
-    return;
-  }, [doAfterEditorUpdate, driverRef, hideSimulator]);
+  }, [doAfterEditorUpdate, driverRef]);
 
   const browserNavigationToEditor = useCallback(async () => {
     try {
@@ -505,8 +486,7 @@ export const ProjectProvider = ({
       focusVisible: openedViaKeyboardRef.current,
     };
     navigate(createTestingModelPageUrl(), { state });
-    void hideSimulator();
-  }, [hideSimulator, navigate]);
+  }, [navigate]);
   const onSave = saveHex;
   const downloadActions = useDownloadActions();
   const onDownload = useCallback(
@@ -526,6 +506,7 @@ export const ProjectProvider = ({
       loadFile,
       openEditor,
       browserNavigationToEditor,
+      hideSimulator,
       project,
       projectEdited,
       resetProject,
@@ -544,6 +525,7 @@ export const ProjectProvider = ({
       loadFile,
       openEditor,
       browserNavigationToEditor,
+      hideSimulator,
       project,
       projectEdited,
       resetProject,
