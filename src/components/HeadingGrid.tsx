@@ -10,22 +10,43 @@ import { ReactNode } from "react";
 
 interface HeadingGridProps extends GridProps {
   headings: GridColumnHeadingItemProps[];
+  rightItems: ReactNode;
 }
-
-const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
+export const headingGridCommonProps: GridProps = {
+  height: "3.25rem",
+  borderBottomWidth: 3,
+  borderColor: "gray.200",
+  zIndex: 1,
+};
+const HeadingGrid = ({ headings, rightItems, ...props }: HeadingGridProps) => {
   return (
-    <Grid
-      flexShrink={0}
-      h="3.25rem"
-      alignItems="center"
-      borderBottomWidth={3}
-      borderColor="gray.200"
-      {...props}
-    >
-      {headings.map((props, idx) => (
-        <GridColumnHeadingItem {...props} key={idx} />
-      ))}
-    </Grid>
+    <>
+      <HStack
+        position="absolute"
+        w="100%"
+        backgroundColor="whitesmoke"
+        {...headingGridCommonProps}
+      />
+      <Grid
+        flexShrink={0}
+        alignItems="center"
+        {...headingGridCommonProps}
+        {...props}
+      >
+        {headings.map((props, idx) => (
+          <GridColumnHeadingItem {...props} key={idx} />
+        ))}
+      </Grid>
+      <HStack
+        position="absolute"
+        right={0}
+        pl={2}
+        backgroundColor="whitesmoke"
+        {...headingGridCommonProps}
+      >
+        {rightItems}
+      </HStack>
+    </>
   );
 };
 
