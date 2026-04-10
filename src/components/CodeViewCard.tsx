@@ -54,7 +54,6 @@ const CodeViewCard = ({ project, parentRef }: CodeViewCardProps) => {
       alignSelf="start"
       display="flex"
       flexDirection="column"
-      py={2}
       h="full"
       w="full"
       borderColor="brand.500"

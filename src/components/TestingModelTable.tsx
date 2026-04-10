@@ -4,15 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  Grid,
-  GridItem,
-  GridProps,
-  HStack,
-  Icon,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, GridProps, Icon, VStack } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
@@ -28,8 +20,10 @@ import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
 
+const blockCardMinWidth = "400px";
+
 const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: "290px 360px 40px auto",
+  gridTemplateColumns: "290px 360px 40px minmax(400px, 1fr)",
   gap: 3,
   w: "100%",
 };
@@ -70,69 +64,81 @@ const TestingModelTable = () => {
         justifyContent="start"
         flexGrow={1}
         alignItems="start"
-        overflow="auto"
         flexShrink={1}
         ref={scrollableAreaRef}
       >
-        <HStack gap={0} h="min-content" w="full">
-          <Grid
-            {...gridCommonProps}
-            {...(projectEdited ? { w: "fit-content", pr: 0 } : {})}
-            py={2}
-            autoRows="max-content"
-            h="fit-content"
-            alignSelf="start"
-          >
-            {actions.map((action) => {
-              const { requiredConfidence: threshold } = action;
-              return (
-                <Box
-                  key={action.id}
-                  role="region"
-                  aria-label={intl.formatMessage(
-                    {
-                      id: "action-region",
-                    },
-                    { action: action.name }
-                  )}
-                  display="contents"
-                >
-                  <GridItem>
-                    <ActionNameCard
-                      value={action}
-                      viewMode={ActionCardNameViewMode.ReadOnly}
-                      disabled={!isConnected}
+        <Grid
+          {...gridCommonProps}
+          py={2}
+          autoRows="max-content"
+          h="fit-content"
+          alignSelf="start"
+        >
+          {actions.map((action, actionIdx) => {
+            const { requiredConfidence: threshold } = action;
+            return (
+              <Box
+                key={action.id}
+                role="region"
+                aria-label={intl.formatMessage(
+                  {
+                    id: "action-region",
+                  },
+                  { action: action.name }
+                )}
+                display="contents"
+              >
+                <GridItem>
+                  <ActionNameCard
+                    value={action}
+                    viewMode={ActionCardNameViewMode.ReadOnly}
+                    disabled={!isConnected}
+                  />
+                </GridItem>
+                <GridItem>
+                  <ActionCertaintyCard
+                    actionName={action.name}
+                    actionId={action.id}
+                    onThresholdChange={(val) =>
+                      setRequiredConfidence(action.id, val)
+                    }
+                    requiredConfidence={
+                      threshold ?? mlSettings.defaultRequiredConfidence
+                    }
+                    disabled={!isConnected}
+                  />
+                </GridItem>
+                <VStack justifyContent="center" h="full">
+                  <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
+                </VStack>
+                {!projectEdited && (
+                  <GridItem position="relative">
+                    <CodeViewDefaultBlockCard
+                      action={action}
+                      minW={blockCardMinWidth}
+                      position="absolute"
                     />
                   </GridItem>
-                  <GridItem>
-                    <ActionCertaintyCard
-                      actionName={action.name}
-                      actionId={action.id}
-                      onThresholdChange={(val) =>
-                        setRequiredConfidence(action.id, val)
-                      }
-                      requiredConfidence={
-                        threshold ?? mlSettings.defaultRequiredConfidence
-                      }
-                      disabled={!isConnected}
+                )}
+
+                {projectEdited && actionIdx === 0 && (
+                  <GridItem
+                    rowSpan={actions.length}
+                    minW={0}
+                    h="100%"
+                    maxW="100%"
+                    position="relative"
+                  >
+                    <CodeViewCard
+                      parentRef={scrollableAreaRef}
+                      project={project}
                     />
                   </GridItem>
-                  <VStack justifyContent="center" h="full">
-                    <Icon as={RiArrowRightLine} boxSize={10} color="gray.600" />
-                  </VStack>
-                  <GridItem>
-                    {!projectEdited && (
-                      <CodeViewDefaultBlockCard action={action} />
-                    )}
-                  </GridItem>
-                </Box>
-              );
-            })}
-          </Grid>
-          {projectEdited && (
-            <CodeViewCard parentRef={scrollableAreaRef} project={project} />
-          )}
-        </HStack>
+                )}
+              </Box>
+            );
+          })}
+        </Grid>
       </VStack>
     </MakeCodeRenderBlocksProvider>
   );
