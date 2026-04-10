@@ -337,7 +337,7 @@ export const ProjectProvider = ({
     try {
       setProjectEdited();
       await doAfterEditorUpdate(() => Promise.resolve());
-      
+
       // Wait for simulator to finish hiding before showing simulator.
       await hideSimulatorPromiseRef.current;
       await driverRef.current?.showSimulator();
