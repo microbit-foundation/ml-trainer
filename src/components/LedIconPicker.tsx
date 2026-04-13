@@ -5,6 +5,7 @@
  */
 import {
   Grid,
+  HStack,
   IconButton,
   Popover,
   PopoverArrow,
@@ -22,9 +23,14 @@ import LedIconSvg from "./icons/LedIconSvg";
 interface LedIconPicker {
   actionName: string;
   onIconSelected: (icon: MakeCodeIcon) => void;
+  children: React.ReactElement;
 }
 
-const LedIconPicker = ({ actionName, onIconSelected }: LedIconPicker) => {
+const LedIconPicker = ({
+  actionName,
+  onIconSelected,
+  children,
+}: LedIconPicker) => {
   const intl = useIntl();
   const handleClick = useCallback(
     (icon: MakeCodeIcon, callback: () => void) => {
@@ -39,23 +45,26 @@ const LedIconPicker = ({ actionName, onIconSelected }: LedIconPicker) => {
       {({ onClose }) => (
         <>
           <PopoverTrigger>
-            <IconButton
-              variant="ghost"
-              color="blackAlpha.700"
-              aria-label={
-                actionName
-                  ? intl.formatMessage(
-                      { id: "select-icon-action-aria" },
-                      { action: actionName }
-                    )
-                  : intl.formatMessage({
-                      id: "select-icon-action-untitled-aria",
-                    })
-              }
-              size="sm"
-            >
-              <RiArrowDropDownFill size={32} />
-            </IconButton>
+            <HStack cursor="pointer">
+              {children}
+              <IconButton
+                variant="ghost"
+                color="blackAlpha.700"
+                aria-label={
+                  actionName
+                    ? intl.formatMessage(
+                        { id: "select-icon-action-aria" },
+                        { action: actionName }
+                      )
+                    : intl.formatMessage({
+                        id: "select-icon-action-untitled-aria",
+                      })
+                }
+                size="sm"
+              >
+                <RiArrowDropDownFill size={32} />
+              </IconButton>
+            </HStack>
           </PopoverTrigger>
           <Portal>
             <PopoverContent w="100%" height="300px" overflowY="auto">

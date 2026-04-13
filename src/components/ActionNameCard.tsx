@@ -60,6 +60,7 @@ const ActionNameCard = ({
   const setHint = useStore((s) => s.setHint);
   const { icon, id } = value;
   const [localName, setLocalName] = useState<string>(value.name);
+
   useEffect(() => {
     // Occurs when the name is updated in another tab.
     setLocalName(value.name);
@@ -161,6 +162,14 @@ const ActionNameCard = ({
             { id: "delete-action-aria" },
             { action: localName }
           )}
+          _after={{
+            position: "absolute",
+            top: -2,
+            right: -2,
+            bottom: -2,
+            left: -2,
+            content: '""',
+          }}
         />
       )}
       <CardBody p={0} alignContent="center">
@@ -173,14 +182,15 @@ const ActionNameCard = ({
                 colorScheme="brand2"
                 initiallyOn={false}
               />
-            ) : (
-              <LedIconSvg icon={icon} />
-            )}
-            {viewMode === ActionCardNameViewMode.Editable && (
+            ) : viewMode === ActionCardNameViewMode.Editable ? (
               <LedIconPicker
                 actionName={value.name}
                 onIconSelected={handleIconSelected}
-              />
+              >
+                <LedIconSvg icon={icon} />
+              </LedIconPicker>
+            ) : (
+              <LedIconSvg icon={icon} />
             )}
           </HStack>
           <Input
