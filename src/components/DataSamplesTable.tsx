@@ -233,8 +233,6 @@ const DataSamplesTable = ({
         </>
       )}
       <HeadingGrid
-        position="sticky"
-        top={0}
         {...gridCommonProps}
         headings={headings}
         w={gridRef.current?.clientWidth}

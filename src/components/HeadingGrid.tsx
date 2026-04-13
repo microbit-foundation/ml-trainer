@@ -30,6 +30,8 @@ const HeadingGrid = ({ headings, rightItems, ...props }: HeadingGridProps) => {
       <Grid
         flexShrink={0}
         alignItems="center"
+        position="sticky"
+        top={0}
         {...headingGridCommonProps}
         {...props}
       >
