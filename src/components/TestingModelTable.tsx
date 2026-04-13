@@ -21,10 +21,11 @@ import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
 
 const blockCardMinWidth = "400px";
+const gap = 3;
 
 const gridCommonProps: Partial<GridProps> = {
   gridTemplateColumns: "290px 360px 40px minmax(400px, 1fr)",
-  gap: 3,
+  gap,
   w: "100%",
 };
 
@@ -123,7 +124,8 @@ const TestingModelTable = () => {
 
                 {projectEdited && actionIdx === 0 && (
                   <GridItem
-                    rowSpan={actions.length}
+                    // Extra row to extend beyond the grid.
+                    rowSpan={actions.length + 1}
                     minW={0}
                     h="100%"
                     maxW="100%"
@@ -132,6 +134,8 @@ const TestingModelTable = () => {
                     <CodeViewCard
                       parentRef={scrollableAreaRef}
                       project={project}
+                      // To remove extra gap for extra row.
+                      mb={gap}
                     />
                   </GridItem>
                 )}
