@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Portal,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { memo, useCallback } from "react";
 import { RiArrowDropDownFill } from "react-icons/ri";
@@ -44,22 +45,33 @@ const LedIconPicker = ({
     <Popover placement="right-start" isLazy lazyBehavior="keepMounted">
       {({ onClose }) => (
         <>
+          <VisuallyHidden>
+            {/* For the icon to be read out by screen reader. */}
+            {children}
+          </VisuallyHidden>
           <PopoverTrigger>
-            <HStack cursor="pointer">
+            <HStack
+              as="button"
+              borderRadius={2}
+              aria-label={
+                actionName
+                  ? intl.formatMessage(
+                      { id: "select-icon-action-aria" },
+                      { action: actionName }
+                    )
+                  : intl.formatMessage({
+                      id: "select-icon-action-untitled-aria",
+                    })
+              }
+              _focusVisible={{ boxShadow: "outline", outline: "none" }}
+              cursor="pointer"
+            >
               {children}
               <IconButton
+                as="div"
                 variant="ghost"
                 color="blackAlpha.700"
-                aria-label={
-                  actionName
-                    ? intl.formatMessage(
-                        { id: "select-icon-action-aria" },
-                        { action: actionName }
-                      )
-                    : intl.formatMessage({
-                        id: "select-icon-action-untitled-aria",
-                      })
-                }
+                aria-label=""
                 size="sm"
               >
                 <RiArrowDropDownFill size={32} />
