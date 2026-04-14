@@ -200,7 +200,7 @@ const TestingModelPage = () => {
         onNextLoading={editorLoading}
       />
       <Flex as="main" flexGrow={1} flexDir="column">
-            <TestingModelTable />
+        <TestingModelTable />
       </Flex>
     </DefaultPageLayout>
   ) : (
