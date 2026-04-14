@@ -24,7 +24,7 @@ const blockCardMinWidth = "400px";
 const gap = 3;
 
 const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: "290px 360px 40px minmax(400px, 1fr)",
+  gridTemplateColumns: `290px 360px 40px minmax(${blockCardMinWidth}, 1fr)`,
   gap,
   w: "100%",
 };
@@ -53,24 +53,25 @@ const TestingModelTable = () => {
   const isConnected = useDataConnected();
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
-  const scrollableAreaRef = useRef<HTMLDivElement>(null);
+  const gridAreaRef = useRef<HTMLDivElement>(null);
   const intl = useIntl();
+
   return (
     <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
       <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
       <VStack
-        px={5}
-        w="full"
+        w="100vw"
         h={0}
         justifyContent="start"
         flexGrow={1}
         alignItems="start"
         flexShrink={1}
-        ref={scrollableAreaRef}
+        ref={gridAreaRef}
       >
         <Grid
           {...gridCommonProps}
           py={2}
+          px={5}
           autoRows="max-content"
           h="fit-content"
           alignSelf="start"
@@ -132,7 +133,7 @@ const TestingModelTable = () => {
                     position="relative"
                   >
                     <CodeViewCard
-                      parentRef={scrollableAreaRef}
+                      parentRef={gridAreaRef}
                       project={project}
                       // To remove extra gap for extra row.
                       mb={gap}

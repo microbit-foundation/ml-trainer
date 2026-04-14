@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridProps, Text } from "@chakra-ui/react";
+import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
 import { ButtonData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -37,7 +37,16 @@ const gridCommonProps: Partial<GridProps> = {
 
 const headings: GridColumnHeadingItemProps[] = [
   { titleId: "action-label", descriptionId: "action-tooltip" },
-  { titleId: "data-samples-label", descriptionId: "data-samples-tooltip" },
+  {
+    titleId: "data-samples-label",
+    descriptionId: "data-samples-tooltip",
+    itemsRight: (
+      <HStack position="sticky" right={0} backgroundColor="whitesmoke" pl={2}>
+        <ShowGraphsCheckbox />
+        <DataSamplesMenu />
+      </HStack>
+    ),
+  },
 ];
 
 interface DataSamplesTableProps {
@@ -236,12 +245,6 @@ const DataSamplesTable = ({
         {...gridCommonProps}
         headings={headings}
         w={gridRef.current?.clientWidth}
-        rightItems={
-          <>
-            <ShowGraphsCheckbox />
-            <DataSamplesMenu />
-          </>
-        }
       />
       <Grid
         {...gridCommonProps}

@@ -288,7 +288,13 @@ const DataSamplesPage = () => {
         }
         backLabelId="home-action"
       >
-        <Flex as="main" flexGrow={1} flexDir="column" ref={pageRef}>
+        <Flex
+          as="main"
+          flexGrow={1}
+          flexDir="column"
+          ref={pageRef}
+          w="max-content"
+        >
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}
             setSelectedActionIdx={setSelectedActionIdx}
