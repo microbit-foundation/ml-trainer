@@ -249,7 +249,7 @@ const DataSamplesTable = ({
         alignItems="start"
         autoRows="max-content"
         flexGrow={1}
-        h={0}
+        h="fit-content"
         ref={(node) => {
           arrowNavRef(node);
           gridRef.current = node;
