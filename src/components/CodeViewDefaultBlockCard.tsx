@@ -23,7 +23,7 @@ const CodeViewDefaultBlockCard = ({
       h="120px"
       display="flex"
       borderColor="brand.500"
-      width="fit-content"
+      maxW="100%"
       justifyContent="center"
       className={tourElClassname.makeCodeCodeView}
       {...props}

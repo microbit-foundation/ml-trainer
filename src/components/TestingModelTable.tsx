@@ -151,10 +151,9 @@ const TestingModelTable = () => {
                       />
                     </VStack>
                     {!projectEdited && (
-                      <GridItem position="relative">
+                      <GridItem position="relative" w="100%">
                         <CodeViewDefaultBlockCard
                           action={action}
-                          minW={blockCardMinWidth}
                           position="absolute"
                         />
                       </GridItem>

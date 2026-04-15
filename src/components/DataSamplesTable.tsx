@@ -241,10 +241,7 @@ const DataSamplesTable = ({
           />
         </>
       )}
-      <HeadingGrid
-        {...gridCommonProps}
-        headings={headings}
-      />
+      <HeadingGrid {...gridCommonProps} headings={headings} />
       <Grid
         {...gridCommonProps}
         py={2}
