@@ -294,6 +294,7 @@ const DataSamplesPage = () => {
           flexDir="column"
           ref={pageRef}
           w="max-content"
+          minWidth="100%"
         >
           <DataSamplesTable
             selectedActionIdx={selectedActionIdx}

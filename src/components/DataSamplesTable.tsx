@@ -244,7 +244,6 @@ const DataSamplesTable = ({
       <HeadingGrid
         {...gridCommonProps}
         headings={headings}
-        w={gridRef.current?.clientWidth}
       />
       <Grid
         {...gridCommonProps}
