@@ -40,6 +40,15 @@ const flash = keyframes({
   "100%": {},
 });
 
+const bigHitArea = {
+  position: "absolute",
+  top: -2,
+  right: -2,
+  bottom: -2,
+  left: -2,
+  content: '""',
+};
+
 interface ActionDataSamplesCardProps {
   preview?: boolean;
   value: ActionData;
@@ -106,6 +115,7 @@ const ActionDataSamplesCard = ({
               borderColor="blackAlpha.500"
               boxShadow="sm"
               onClick={() => deleteActionRecording(value.id, recording.id)}
+              _after={bigHitArea}
             />
             <DataSample
               recording={recording}
@@ -358,6 +368,7 @@ const DataSample = ({
             }
           )}
           onClick={handleDelete}
+          _after={bigHitArea}
         />
       )}
       {hasGraph && (
