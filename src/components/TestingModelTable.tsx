@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { useDataConnected } from "../data-connection-flow";
@@ -27,6 +27,7 @@ import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
+import { useResizeObserverContentRect } from "../hooks/use-resize-observer";
 
 const blockCardMinWidth = "400px";
 const gap = 3;
@@ -65,22 +66,11 @@ const TestingModelTable = () => {
   const intl = useIntl();
 
   const scrollableAreaRef = useRef<HTMLDivElement>(null);
-  const [scrollbarWidth, setScrollbarWidth] = useState<number>(0);
-  useEffect(() => {
-    const scrollEl = scrollableAreaRef.current;
-    if (!scrollEl) {
-      return;
-    }
-    const measure = () => {
-      const hasScrollbar = scrollEl.scrollHeight > scrollEl.clientHeight;
-      const scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth;
-      setScrollbarWidth(hasScrollbar ? scrollbarWidth : 0);
-    };
-
-    measure(); // run on mount.
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+  const contentRect = useResizeObserverContentRect(scrollableAreaRef);
+  const scrollbarWidth = scrollableAreaRef.current
+    ? scrollableAreaRef.current.offsetWidth -
+      (contentRect?.width ?? scrollableAreaRef.current.offsetWidth)
+    : 0;
 
   return (
     <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
