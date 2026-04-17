@@ -70,6 +70,8 @@ interface Rect {
 const useRects = (ref: RefObject<HTMLElement | undefined>): Rect[] => {
   const [rects, setRects] = useState<Rect[]>([]);
   useLayoutEffect(() => {
+    // Scroll ref element into view before calculating rect.
+    ref.current?.scrollIntoView({ behavior: "instant", inline: "nearest" });
     const resizeObserver = new ResizeObserver(() => {
       if (ref.current) {
         setRects([

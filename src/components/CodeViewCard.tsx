@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Card, SkeletonText, VStack } from "@chakra-ui/react";
+import { Box, Card, CardProps, SkeletonText, VStack } from "@chakra-ui/react";
 import {
   BlockLayout,
   MakeCodeBlocksRendering,
@@ -12,12 +12,12 @@ import {
 import { memo, useLayoutEffect, useRef, useState } from "react";
 import { tourElClassname } from "../tours";
 
-interface CodeViewCardProps {
+interface CodeViewCardProps extends CardProps {
   project: MakeCodeProject;
   parentRef: React.RefObject<HTMLDivElement>;
 }
 
-const CodeViewCard = ({ project, parentRef }: CodeViewCardProps) => {
+const CodeViewCard = ({ project, parentRef, ...props }: CodeViewCardProps) => {
   // This is used to set the tour cutout as the card can be taller than
   // the parent in a scrollable area.
   const [observableHeight, setObservableHeight] = useState<number | string>(
@@ -54,7 +54,6 @@ const CodeViewCard = ({ project, parentRef }: CodeViewCardProps) => {
       alignSelf="start"
       display="flex"
       flexDirection="column"
-      py={2}
       h="full"
       w="full"
       borderColor="brand.500"
@@ -67,6 +66,7 @@ const CodeViewCard = ({ project, parentRef }: CodeViewCardProps) => {
         p={5}
         objectFit="contain"
         position="relative"
+        {...props}
       >
         <Box
           position="absolute"

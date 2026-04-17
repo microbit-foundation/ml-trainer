@@ -36,15 +36,12 @@ const gridCommonProps: Partial<GridProps> = {
 };
 
 const headings: GridColumnHeadingItemProps[] = [
-  {
-    titleId: "action-label",
-    descriptionId: "action-tooltip",
-  },
+  { titleId: "action-label", descriptionId: "action-tooltip" },
   {
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
     itemsRight: (
-      <HStack>
+      <HStack position="sticky" right={0} backgroundColor="whitesmoke" pl={2}>
         <ShowGraphsCheckbox />
         <DataSamplesMenu />
       </HStack>
@@ -244,21 +241,15 @@ const DataSamplesTable = ({
           />
         </>
       )}
-      <HeadingGrid
-        position="sticky"
-        top={0}
-        {...gridCommonProps}
-        headings={headings}
-      />
+      <HeadingGrid {...gridCommonProps} headings={headings} />
       <Grid
         {...gridCommonProps}
         py={2}
         pb={gridPadding > 0 ? `${gridPadding}px` : 2}
         alignItems="start"
         autoRows="max-content"
-        overflow="auto"
         flexGrow={1}
-        h={0}
+        h="fit-content"
         ref={(node) => {
           arrowNavRef(node);
           gridRef.current = node;
