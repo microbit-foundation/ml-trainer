@@ -5,6 +5,7 @@
  */
 import {
   Grid,
+  HStack,
   IconButton,
   Popover,
   PopoverArrow,
@@ -12,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Portal,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { memo, useCallback } from "react";
 import { RiArrowDropDownFill } from "react-icons/ri";
@@ -22,9 +24,14 @@ import LedIconSvg from "./icons/LedIconSvg";
 interface LedIconPicker {
   actionName: string;
   onIconSelected: (icon: MakeCodeIcon) => void;
+  children: React.ReactElement;
 }
 
-const LedIconPicker = ({ actionName, onIconSelected }: LedIconPicker) => {
+const LedIconPicker = ({
+  actionName,
+  onIconSelected,
+  children,
+}: LedIconPicker) => {
   const intl = useIntl();
   const handleClick = useCallback(
     (icon: MakeCodeIcon, callback: () => void) => {
@@ -38,10 +45,14 @@ const LedIconPicker = ({ actionName, onIconSelected }: LedIconPicker) => {
     <Popover placement="right-start" isLazy lazyBehavior="keepMounted">
       {({ onClose }) => (
         <>
+          <VisuallyHidden>
+            {/* For the icon to be read out by screen reader. */}
+            {children}
+          </VisuallyHidden>
           <PopoverTrigger>
-            <IconButton
-              variant="ghost"
-              color="blackAlpha.700"
+            <HStack
+              as="button"
+              borderRadius={2}
               aria-label={
                 actionName
                   ? intl.formatMessage(
@@ -52,10 +63,20 @@ const LedIconPicker = ({ actionName, onIconSelected }: LedIconPicker) => {
                       id: "select-icon-action-untitled-aria",
                     })
               }
-              size="sm"
+              _focusVisible={{ boxShadow: "outline", outline: "none" }}
+              cursor="pointer"
             >
-              <RiArrowDropDownFill size={32} />
-            </IconButton>
+              {children}
+              <IconButton
+                as="div"
+                variant="ghost"
+                color="blackAlpha.700"
+                aria-label=""
+                size="sm"
+              >
+                <RiArrowDropDownFill size={32} />
+              </IconButton>
+            </HStack>
           </PopoverTrigger>
           <Portal>
             <PopoverContent w="100%" height="300px" overflowY="auto">
