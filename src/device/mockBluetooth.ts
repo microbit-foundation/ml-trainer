@@ -8,6 +8,7 @@ import {
   FlashDataSource,
   FlashOptions,
   LedMatrix,
+  PinValue,
   ProgressStage,
 } from "@microbit/microbit-connection";
 import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
@@ -329,4 +330,16 @@ export class MockBluetoothConnection
   async setMagnetometerPeriod(_value: number): Promise<void> {}
   async triggerMagnetometerCalibration(): Promise<void> {}
   async uartWrite(_data: Uint8Array): Promise<void> {}
+  getTemperature = notConnected;
+  getTemperaturePeriod = notConnected;
+  async setTemperaturePeriod(_value: number): Promise<void> {}
+  getAnalogPins = notConnected;
+  async setAnalogPins(_pins: number[]): Promise<void> {}
+  getInputPins = notConnected;
+  async setInputPins(_pins: number[]): Promise<void> {}
+  readPins = notConnected;
+  async writePins(_data: PinValue[]): Promise<void> {}
+  async writePinPwm(_pin: number): Promise<void> {}
+  subscribeToEvent = notConnected;
+  sendEvent = notConnected;
 }
