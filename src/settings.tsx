@@ -344,4 +344,15 @@ export interface Settings {
    * have API for checking whether a device is bonded.
    */
   bondedDevices?: string[];
+  /**
+   * The user's decision on analytics consent.
+   *
+   * `undefined` means the user has not yet been asked, and is the signal
+   * the consent UI uses to decide whether to prompt on first run. Analytics
+   * events must not be emitted while this is `undefined` or `"denied"`.
+   *
+   * Stored alongside other settings so the existing settings-load gate at
+   * startup covers consent too — no separate preferences store is needed.
+   */
+  analyticsConsent?: "granted" | "denied";
 }

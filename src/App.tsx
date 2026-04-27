@@ -106,15 +106,15 @@ const Providers = ({ children }: ProviderLayoutProps) => {
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
         <LoggingProvider value={logging}>
-          <ConsentProvider>
-            <TranslationProvider>
+          <TranslationProvider>
+            <ConsentProvider>
               <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
                 <DataConnectionEventProvider>
                   <BufferedDataProvider>{children}</BufferedDataProvider>
                 </DataConnectionEventProvider>
               </ConnectionsProvider>
-            </TranslationProvider>
-          </ConsentProvider>
+            </ConsentProvider>
+          </TranslationProvider>
         </LoggingProvider>
       </ChakraProvider>
     </React.StrictMode>
@@ -139,6 +139,14 @@ const Layout = () => {
       createCodePageUrl(),
     ];
   }, []);
+
+  // Emit one navigate event per pathname change, including on initial
+  // mount. `location.pathname` excludes query and fragment, so this
+  // matches what GA4 Enhanced Measurement collects as `page_path` on
+  // web — the Pages-and-screens report aligns without extra work.
+  useEffect(() => {
+    logging.navigate({ path: location.pathname });
+  }, [location.pathname]);
 
   useEffect(() => {
     return useStore.subscribe(

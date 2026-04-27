@@ -4,12 +4,14 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Event, Logging } from "./logging";
+import { Event, Logging, Navigation } from "./logging";
 
 export class MockLogging implements Logging {
   events: Event[] = [];
   errors: any[] = [];
   logs: any[] = [];
+  navigations: Navigation[] = [];
+  consent: boolean | undefined;
 
   event(event: Event): void {
     this.events.push(event);
@@ -19,5 +21,11 @@ export class MockLogging implements Logging {
   }
   log(e: any): void {
     this.logs.push(e);
+  }
+  setConsent(granted: boolean): void {
+    this.consent = granted;
+  }
+  navigate(args: Navigation): void {
+    this.navigations.push(args);
   }
 }

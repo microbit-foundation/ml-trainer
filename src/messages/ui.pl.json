@@ -185,6 +185,58 @@
       "value": "Przyjaciel opowiadający historyjki za pomocą AI"
     }
   ],
+  "analytics-consent-allow-action": [
+    {
+      "type": 0,
+      "value": "Allow analytics"
+    }
+  ],
+  "analytics-consent-analytics": [
+    {
+      "type": 0,
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+    }
+  ],
+  "analytics-consent-change-later": [
+    {
+      "type": 0,
+      "value": "You can change this in Settings later."
+    }
+  ],
+  "analytics-consent-decline-action": [
+    {
+      "type": 0,
+      "value": "No thanks"
+    }
+  ],
+  "analytics-consent-learn-more": [
+    {
+      "type": 0,
+      "value": "Learn more"
+    }
+  ],
+  "analytics-consent-setting-helper": [
+    {
+      "type": 0,
+      "value": "Helps us improve the app with anonymous usage data."
+    }
+  ],
+  "analytics-consent-setting-label": [
+    {
+      "type": 0,
+      "value": "Share anonymous usage data"
+    }
+  ],
+  "analytics-consent-title": [
+    {
+      "type": 0,
+      "value": "Help improve "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    }
+  ],
   "animation-bluetooth-mode-label": [
     {
       "type": 0,

@@ -211,6 +211,13 @@ export interface State {
   save: SaveState;
 
   settings: Settings;
+  /**
+   * `true` once `loadSettingsFromStorage` has resolved. Lets surfaces
+   * that branch on a settings field (e.g. the analytics consent
+   * provider on first run) wait until the persisted decision is
+   * actually known, rather than acting on the default.
+   */
+  settingsLoaded: boolean;
 
   trainModelProgress: number;
   trainModelDialogStage: TrainModelDialogStage;
@@ -431,6 +438,7 @@ const createMlStore = (logging: Logging) => {
         },
         projectEdited: false,
         settings: defaultSettings,
+        settingsLoaded: false,
         model: undefined,
         isEditorOpen: false,
         isEditorReady: false,
@@ -2235,5 +2243,5 @@ export const getAllProjectsFromStorage = async (): Promise<boolean> => {
 
 export const loadSettingsFromStorage = async () => {
   const settings = await storage.getSettings();
-  useStore.setState({ settings });
+  useStore.setState({ settings, settingsLoaded: true });
 };

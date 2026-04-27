@@ -16,12 +16,16 @@ import {
   AspectRatio,
   FormControl,
   FormHelperText,
+  FormLabel,
+  HStack,
+  Switch,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useDeployment } from "../deployment";
 import {
   defaultSettings,
   graphColorSchemeOptions,
@@ -46,7 +50,12 @@ export const SettingsDialog = ({
   finalFocusRef,
 }: SettingsDialogProps) => {
   const [settings, setSettings] = useSettings();
+  const { logging } = useDeployment();
   const intl = useIntl();
+  // Show the analytics toggle only when the native consent flow is the
+  // active surface; the web build defers to the shared-assets cookie
+  // modal accessed via the nav-drawer "Manage cookies" link.
+  const showAnalyticsToggle = import.meta.env.VITE_BUILD_MODE === "apps";
   const resetConfirmDialog = useDisclosure();
   const handleResetToDefault = useCallback(() => {
     resetConfirmDialog.onOpen();
@@ -57,11 +66,15 @@ export const SettingsDialog = ({
       ...defaultSettings,
       languageId: settings.languageId,
       toursCompleted: settings.toursCompleted,
+      // Privacy decisions aren't a UI preference — preserve through
+      // "Restore defaults" so users aren't re-prompted unexpectedly.
+      analyticsConsent: settings.analyticsConsent,
     });
     resetConfirmDialog.onClose();
   }, [
     resetConfirmDialog,
     setSettings,
+    settings.analyticsConsent,
     settings.languageId,
     settings.toursCompleted,
   ]);
@@ -166,6 +179,29 @@ export const SettingsDialog = ({
                     />
                   </AspectRatio>
                 </VStack>
+                {showAnalyticsToggle && (
+                  <FormControl>
+                    <HStack justify="space-between" align="center">
+                      <FormLabel htmlFor="analyticsConsent" mb={0}>
+                        <FormattedMessage id="analytics-consent-setting-label" />
+                      </FormLabel>
+                      <Switch
+                        id="analyticsConsent"
+                        isChecked={settings.analyticsConsent === "granted"}
+                        onChange={(e) => {
+                          const granted = e.target.checked;
+                          setSettings({
+                            analyticsConsent: granted ? "granted" : "denied",
+                          });
+                          logging.setConsent(granted);
+                        }}
+                      />
+                    </HStack>
+                    <FormHelperText lineHeight="base">
+                      <FormattedMessage id="analytics-consent-setting-helper" />
+                    </FormHelperText>
+                  </FormControl>
+                )}
                 <FormControl>
                   <Button variant="link" onClick={handleResetToDefault}>
                     <FormattedMessage id="restore-defaults-action" />
