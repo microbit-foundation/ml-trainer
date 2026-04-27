@@ -1,4 +1,4 @@
-import { Capacitor } from "@capacitor/core";
+import { isNativePlatform } from "./platform";
 
 // Temporary helper to avoiding untranslated text on web platform.
 export const getLegacyTextIdIfNeeded = ({
@@ -8,5 +8,5 @@ export const getLegacyTextIdIfNeeded = ({
   legacyId: string;
   id: string;
 }) => {
-  return Capacitor.getPlatform() === "web" ? legacyId : id;
+  return isNativePlatform() ? id : legacyId;
 };
