@@ -71,7 +71,7 @@ const getSubtitleId = (
     case ProgressStage.FullFlashing:
       return isNativePlatform()
         ? "downloading-stage-flashing-native"
-        : "downloading-stage-flashing";
+        : "downloading-subtitle";
     default:
       throw new Error(stage);
   }
