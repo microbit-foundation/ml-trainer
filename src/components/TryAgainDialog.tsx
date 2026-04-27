@@ -20,6 +20,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { DataConnectionStep } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
+import { getLegacyTextIdIfNeeded } from "../get-legacy-text-id";
 
 const OneLineContent = ({ textId }: { textId: string }) => {
   return (
@@ -86,7 +87,10 @@ const configs: Record<
     children: <OneLineContent textId="webusb-retry-no-select" />,
   },
   [DataConnectionStep.TryAgainBluetoothSelectMicrobit]: {
-    headingId: "connect-bluetooth-heading",
+    headingId: getLegacyTextIdIfNeeded({
+      legacyId: "connect-bluetooth-heading",
+      id: "connecting-data-collection-microbit-heading",
+    }),
     children: (
       <OneLineContent textId="connect-bluetooth-cancelled-connection" />
     ),

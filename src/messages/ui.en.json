@@ -544,7 +544,7 @@
   "connect-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Connecting to data collection micro:bit"
+      "value": "Connect using Web Bluetooth"
     }
   ],
   "connect-bluetooth-invalid-pattern": [
@@ -989,6 +989,12 @@
     {
       "type": 0,
       "value": "Connecting…"
+    }
+  ],
+  "connecting-data-collection-microbit-heading": [
+    {
+      "type": 0,
+      "value": "Connecting to data collection micro:bit"
     }
   ],
   "continue-makecode-action": [
@@ -1447,12 +1453,6 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Please wait. Downloading program to micro:bit."
-    }
-  ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
@@ -1463,6 +1463,12 @@
     {
       "type": 0,
       "value": "Waiting for micro:bit to reboot..."
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "Please wait. Downloading program to micro:bit."
     }
   ],
   "duplicate-project-action": [

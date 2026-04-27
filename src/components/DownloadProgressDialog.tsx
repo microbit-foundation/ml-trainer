@@ -23,6 +23,7 @@ import { isNativePlatform } from "../platform";
 import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 import LoadingAnimation from "./LoadingAnimation";
 import BluetoothPatternInput from "./BluetoothPatternInput";
+import { getLegacyTextIdIfNeeded } from "../get-legacy-text-id";
 
 export interface DownloadProgressDialogProps {
   isOpen: boolean;
@@ -62,12 +63,15 @@ const getSubtitleId = (
     case ProgressStage.ResettingDevice:
       return "downloading-stage-resetting-device";
     case ProgressStage.Connecting:
-      return "downloading-stage-connecting";
+      return getLegacyTextIdIfNeeded({
+        legacyId: "connecting",
+        id: "downloading-stage-connecting",
+      });
     case ProgressStage.PartialFlashing:
     case ProgressStage.FullFlashing:
       return isNativePlatform()
         ? "downloading-stage-flashing-native"
-        : "downloading-stage-flashing";
+        : "downloading-subtitle";
     default:
       throw new Error(stage);
   }

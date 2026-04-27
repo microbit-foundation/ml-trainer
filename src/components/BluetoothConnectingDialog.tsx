@@ -18,6 +18,7 @@ import { FormattedMessage } from "react-intl";
 import { isNativePlatform } from "../platform";
 import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
 import LoadingAnimation from "./LoadingAnimation";
+import { getLegacyTextIdIfNeeded } from "../get-legacy-text-id";
 
 export interface BluetoothConnectingDialogProps {
   isOpen: boolean;
@@ -55,12 +56,22 @@ const BluetoothConnectingDialog = ({
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            <FormattedMessage id="connect-bluetooth-heading" />
+            <FormattedMessage
+              id={getLegacyTextIdIfNeeded({
+                legacyId: "connect-bluetooth-heading",
+                id: "connecting-data-collection-microbit-heading",
+              })}
+            />
           </ModalHeader>
           <ModalBody>
             <VStack width="100%" gap={5} alignItems="center">
               <Text textAlign="center">
-                <FormattedMessage id="downloading-stage-connecting" />
+                <FormattedMessage
+                  id={getLegacyTextIdIfNeeded({
+                    legacyId: "connecting",
+                    id: "downloading-stage-connecting",
+                  })}
+                />
               </Text>
               <LoadingAnimation />
             </VStack>

@@ -543,6 +543,10 @@
     "defaultMessage": "Conectando…",
     "description": "Text shown while waiting for bluetooth/radio connection"
   },
+  "connecting-data-collection-microbit-heading": {
+    "defaultMessage": "Connecting to data collection micro:bit",
+    "description": "Connection dialogs"
+  },
   "continue-makecode-action": {
     "defaultMessage": "Continuar no MakeCode",
     "description": "Continue to MakeCode editor button text"
@@ -783,10 +787,6 @@
     "defaultMessage": "Finding micro:bit…",
     "description": "Progress text during device discovery stage of flashing"
   },
-  "downloading-stage-flashing": {
-    "defaultMessage": "Please wait. Downloading program to micro:bit.",
-    "description": "Progress text during actual flashing stage"
-  },
   "downloading-stage-flashing-native": {
     "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
     "description": "Progress text during native flashing stage"
@@ -794,6 +794,10 @@
   "downloading-stage-resetting-device": {
     "defaultMessage": "Waiting for micro:bit to reboot...",
     "description": "Progress text when rebooting micro:bit before flashing"
+  },
+  "downloading-subtitle": {
+    "defaultMessage": "Por favor, aguarde. Baixando o programa para o micro:bit.",
+    "description": "Progress text"
   },
   "duplicate-project-action": {
     "defaultMessage": "Duplicar",

@@ -987,6 +987,12 @@
       "value": "S'està connectant..."
     }
   ],
+  "connecting-data-collection-microbit-heading": [
+    {
+      "type": 0,
+      "value": "Connecting to data collection micro:bit"
+    }
+  ],
   "continue-makecode-action": [
     {
       "type": 0,
@@ -1443,12 +1449,6 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Please wait. Downloading program to micro:bit."
-    }
-  ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
@@ -1459,6 +1459,12 @@
     {
       "type": 0,
       "value": "Waiting for micro:bit to reboot..."
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "Si us plau, espera. Transferint el programa a la micro:bit."
     }
   ],
   "duplicate-project-action": [
