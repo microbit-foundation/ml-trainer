@@ -276,7 +276,7 @@
     "description": "Label indicating Bluetooth needs to be enabled"
   },
   "connect-bluetooth-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit",
+    "defaultMessage": "Connect using Web Bluetooth",
     "description": "Connection dialogs"
   },
   "connect-bluetooth-invalid-pattern": {
@@ -542,6 +542,10 @@
   "connecting": {
     "defaultMessage": "Connecting…",
     "description": "Text shown while waiting for bluetooth/radio connection"
+  },
+  "connecting-data-collection-microbit-heading": {
+    "defaultMessage": "Connecting to data collection micro:bit",
+    "description": "Connection dialogs"
   },
   "continue-makecode-action": {
     "defaultMessage": "Continue to MakeCode",

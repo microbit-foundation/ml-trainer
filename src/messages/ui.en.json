@@ -544,7 +544,7 @@
   "connect-bluetooth-heading": [
     {
       "type": 0,
-      "value": "Connecting to data collection micro:bit"
+      "value": "Connect using Web Bluetooth"
     }
   ],
   "connect-bluetooth-invalid-pattern": [
@@ -989,6 +989,12 @@
     {
       "type": 0,
       "value": "Connecting…"
+    }
+  ],
+  "connecting-data-collection-microbit-heading": [
+    {
+      "type": 0,
+      "value": "Connecting to data collection micro:bit"
     }
   ],
   "continue-makecode-action": [

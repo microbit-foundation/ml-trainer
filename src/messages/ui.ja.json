@@ -975,6 +975,12 @@
       "value": "接続中..."
     }
   ],
+  "connecting-data-collection-microbit-heading": [
+    {
+      "type": 0,
+      "value": "Connecting to data collection micro:bit"
+    }
+  ],
   "continue-makecode-action": [
     {
       "type": 0,

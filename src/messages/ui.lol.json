@@ -979,6 +979,12 @@
       "value": "crwdns362836:0crwdne362836:0"
     }
   ],
+  "connecting-data-collection-microbit-heading": [
+    {
+      "type": 0,
+      "value": "Connecting to data collection micro:bit"
+    }
+  ],
   "continue-makecode-action": [
     {
       "type": 0,

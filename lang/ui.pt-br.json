@@ -543,6 +543,10 @@
     "defaultMessage": "Conectando…",
     "description": "Text shown while waiting for bluetooth/radio connection"
   },
+  "connecting-data-collection-microbit-heading": {
+    "defaultMessage": "Connecting to data collection micro:bit",
+    "description": "Connection dialogs"
+  },
   "continue-makecode-action": {
     "defaultMessage": "Continuar no MakeCode",
     "description": "Continue to MakeCode editor button text"
