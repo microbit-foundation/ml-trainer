@@ -372,13 +372,13 @@ const DataSample = ({
     onDelete(actionId, recording.id);
   }, [actionId, onDelete, recording.id]);
   return (
-    <HStack key={recording.id} position="relative" ref={ref}>
+    <HStack key={recording.id} position="relative" ref={ref} gap={0}>
       {hasClose && (
         <Portal containerRef={ref}>
           <CloseButton
             position="absolute"
             top={0}
-            right={2}
+            right={0}
             size="sm"
             aria-label={intl.formatMessage(
               {
