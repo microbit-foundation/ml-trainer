@@ -1421,12 +1421,6 @@
       "value": "Finding micro:bit…"
     }
   ],
-  "downloading-stage-flashing": [
-    {
-      "type": 0,
-      "value": "Please wait. Downloading program to micro:bit."
-    }
-  ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
@@ -1437,6 +1431,12 @@
     {
       "type": 0,
       "value": "Waiting for micro:bit to reboot..."
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
     }
   ],
   "duplicate-project-action": [
