@@ -39,6 +39,21 @@ const themePackageAlias = themePackageExternal
   ? theme
   : path.resolve(__dirname, internal);
 
+// Auto-derive the runtime Firebase-config gate from the presence of the
+// iOS plist that `npm run sync-native` drops in. The gate controls
+// whether `createLogging` instantiates `FirebaseAnalyticsLogging` or
+// falls back to `ConsoleLogging` (see src/deployment/index.ts). Setting
+// this here means a contributor never has to remember to flip the env
+// var manually.
+if (
+  process.env.VITE_HAS_FIREBASE_CONFIG === undefined &&
+  fs.existsSync(
+    path.resolve(__dirname, "ios/App/App/GoogleService-Info.plist")
+  )
+) {
+  process.env.VITE_HAS_FIREBASE_CONFIG = "true";
+}
+
 const viteEjsPlugin = (data: ejs.Data): Plugin => {
   return {
     name: "ejs",
