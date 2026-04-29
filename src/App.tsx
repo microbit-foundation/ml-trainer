@@ -33,6 +33,7 @@ import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
+import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
@@ -263,12 +264,14 @@ const Layout = () => {
   // Native back button / swipe-back handling (no-op on desktop).
   useNativeBackButton();
 
+  const isEditorLoadingFile = useStore((s) => s.isEditorLoadingFile);
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
       <ScrollRestoration />
       <ProjectProvider driverRef={driverRef}>
         <EditCodeDialog ref={driverRef} />
+        <LoadingOverlay loading={isEditorLoadingFile} />
         <Outlet />
       </ProjectProvider>
     </ErrorBoundary>
