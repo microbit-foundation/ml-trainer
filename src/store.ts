@@ -195,6 +195,7 @@ export interface State {
     editorContentLoadedPromise: PromiseInfo<void>;
   };
   isEditorTimedOutDialogOpen: boolean;
+  isLoadingOverlayVisible: boolean;
   langChanged: boolean;
 
   download: DownloadState;
@@ -329,6 +330,8 @@ export interface Actions {
   startPredicting(buffer: BufferedData): void;
   stopPredicting(): void;
 
+  setLoadingOverlayVisible(visible: boolean): void;
+
   languageDialogOnOpen(): void;
   settingsDialogOnOpen(): void;
   connectFirstDialogOnOpen(): void;
@@ -445,6 +448,7 @@ const createMlStore = (logging: Logging) => {
         isEditorTimedOutDialogOpen: false,
         langChanged: false,
         appEditNeedsFlushToEditor: true,
+        isLoadingOverlayVisible: false,
         // This dialog flow spans two pages
         trainModelDialogStage: TrainModelDialogStage.Closed,
         trainModelProgress: 0,
@@ -1070,6 +1074,10 @@ const createMlStore = (logging: Logging) => {
               timestamp
             )
           );
+        },
+
+        setLoadingOverlayVisible(visible: boolean) {
+          set({ isLoadingOverlayVisible: visible });
         },
 
         async downloadDataset() {

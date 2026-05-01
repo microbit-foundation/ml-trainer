@@ -375,33 +375,39 @@ export const ProjectProvider = ({
       setPostImportDialogState,
     ]
   );
+  const setLoadingOverlayVisible = useStore((s) => s.setLoadingOverlayVisible);
   const loadFile = useCallback(
     async (
       file: File,
       type: LoadType,
       loadAction: LoadAction
     ): Promise<void> => {
-      const fileExtension = getLowercaseFileExtension(file.name);
-      logging.event({
-        type,
-        detail: {
-          extension: fileExtension || "none",
-        },
-      });
-      if (fileExtension === "json") {
-        const actionsString = await readFileAsText(file);
-        const actions = JSON.parse(actionsString) as unknown;
-        if (isDatasetUserFileFormat(actions)) {
-          await loadDataset(actions, loadAction);
-          navigate(createDataSamplesPageUrl());
+      try {
+        setLoadingOverlayVisible(true);
+        const fileExtension = getLowercaseFileExtension(file.name);
+        logging.event({
+          type,
+          detail: {
+            extension: fileExtension || "none",
+          },
+        });
+        if (fileExtension === "json") {
+          const actionsString = await readFileAsText(file);
+          const actions = JSON.parse(actionsString) as unknown;
+          if (isDatasetUserFileFormat(actions)) {
+            await loadDataset(actions, loadAction);
+            navigate(createDataSamplesPageUrl());
+          } else {
+            setPostImportDialogState(PostImportDialogState.Error);
+          }
+        } else if (fileExtension === "hex") {
+          const hex = await readFileAsText(file);
+          await importProjectFromHexText(hex, file.name);
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
-      } else if (fileExtension === "hex") {
-        const hex = await readFileAsText(file);
-        await importProjectFromHexText(hex, file.name);
-      } else {
-        setPostImportDialogState(PostImportDialogState.Error);
+      } finally {
+        setLoadingOverlayVisible(false);
       }
     },
     [
@@ -409,6 +415,7 @@ export const ProjectProvider = ({
       loadDataset,
       logging,
       navigate,
+      setLoadingOverlayVisible,
       setPostImportDialogState,
     ]
   );

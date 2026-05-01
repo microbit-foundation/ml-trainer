@@ -82,18 +82,31 @@ const ImportPage = () => {
 
   const loadProject = useStore((s) => s.loadProject);
   const newSession = useStore((s) => s.newSession);
+  const setLoadingOverlayVisible = useStore((s) => s.setLoadingOverlayVisible);
 
   const handleOpenProject = useCallback(async () => {
-    if (project) {
-      await loadProject(project, name);
-      navigate(createDataSamplesPageUrl());
-    } else {
-      // If no resource fetched, start as new empty session
-      // with provided project name
-      await newSession(name);
-      navigate(createDataSamplesPageUrl());
+    try {
+      setLoadingOverlayVisible(true);
+      if (project) {
+        await loadProject(project, name);
+        navigate(createDataSamplesPageUrl());
+      } else {
+        // If no resource fetched, start as new empty session
+        // with provided project name
+        await newSession(name);
+        navigate(createDataSamplesPageUrl());
+      }
+    } finally {
+      setLoadingOverlayVisible(false);
     }
-  }, [loadProject, name, navigate, newSession, project]);
+  }, [
+    loadProject,
+    name,
+    navigate,
+    newSession,
+    project,
+    setLoadingOverlayVisible,
+  ]);
 
   return (
     <DefaultPageLayout

@@ -264,14 +264,14 @@ const Layout = () => {
   // Native back button / swipe-back handling (no-op on desktop).
   useNativeBackButton();
 
-  const isEditorLoadingFile = useStore((s) => s.isEditorLoadingFile);
+  const isLoadingOverlayVisible = useStore((s) => s.isLoadingOverlayVisible);
   return (
     // We use this even though we have errorElement as this does logging.
     <ErrorBoundary>
       <ScrollRestoration />
       <ProjectProvider driverRef={driverRef}>
         <EditCodeDialog ref={driverRef} />
-        <LoadingOverlay loading={isEditorLoadingFile} />
+        <LoadingOverlay loading={isLoadingOverlayVisible} />
         <Outlet />
       </ProjectProvider>
     </ErrorBoundary>
