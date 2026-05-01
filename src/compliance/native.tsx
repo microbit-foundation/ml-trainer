@@ -13,14 +13,14 @@ import {
 } from "react";
 import { CookieConsent, useDeployment } from "../deployment";
 import { useSettings, useStore } from "../store";
-import { MobileConsentDialog } from "./MobileConsentDialog";
+import { NativeConsentDialog } from "./NativeConsentDialog";
 
 const consentVersion = 1;
 
 /**
  * Native (Capacitor) compliance: persists the user's analytics
  * decision in `Settings.analyticsConsent`, prompts on first run via
- * `MobileConsentDialog`, and keeps the active logger's consent state
+ * `NativeConsentDialog`, and keeps the active logger's consent state
  * in sync. Settings are the only affordance to revisit the decision —
  * `manageCookies` is intentionally undefined so the (web-shaped)
  * "manage cookies" link is hidden in the navigation drawer on native.
@@ -89,7 +89,7 @@ export const createNativeCompliance = () => {
     return (
       <consentContext.Provider value={value}>
         {children}
-        <MobileConsentDialog
+        <NativeConsentDialog
           isOpen={isOpen}
           appNameFull={appNameFull}
           privacyPolicyLink={privacyPolicyLink}

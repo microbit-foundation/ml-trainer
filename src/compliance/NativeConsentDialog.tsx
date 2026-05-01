@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 
-interface MobileConsentDialogProps {
+interface NativeConsentDialogProps {
   isOpen: boolean;
   appNameFull: string;
   privacyPolicyLink?: string;
@@ -26,25 +26,13 @@ interface MobileConsentDialogProps {
   onDecline: () => void;
 }
 
-/**
- * Single-screen consent modal for the native build, per the §Consent UX
- * section of `app-analytics-firebase.md`. Buttons are visually equal
- * weight; copy is in "usage data on your device" terms rather than
- * "cookies"; an inline reassurance points users at Settings to change
- * their mind. Dismiss-by-overlay/escape is disabled — the user must
- * make an explicit choice.
- *
- * Brand-coupled values (`appNameFull`, privacy policy URL) are passed
- * in by the provider rather than read via `useDeployment` to keep this
- * file out of the deployment ⇄ compliance import cycle.
- */
-export const MobileConsentDialog = ({
+export const NativeConsentDialog = ({
   isOpen,
   appNameFull,
   privacyPolicyLink,
   onAllow,
   onDecline,
-}: MobileConsentDialogProps) => (
+}: NativeConsentDialogProps) => (
   <Modal
     isOpen={isOpen}
     onClose={onDecline}
