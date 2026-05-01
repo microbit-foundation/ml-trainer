@@ -11,9 +11,14 @@ PODS:
   - CapacitorFilesystem (7.1.6):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
+  - CapacitorFirebaseAnalytics (7.5.0):
+    - Capacitor
+    - CapacitorFirebaseAnalytics/Lite (= 7.5.0)
   - CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport (7.5.0):
     - Capacitor
     - FirebaseAnalytics/WithoutAdIdSupport (~> 11.7.0)
+  - CapacitorFirebaseAnalytics/Lite (7.5.0):
+    - Capacitor
   - CapacitorKeyboard (7.0.5):
     - Capacitor
   - CapacitorShare (7.0.4):
@@ -100,6 +105,7 @@ DEPENDENCIES:
   - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorFirebaseAnalytics (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
@@ -174,6 +180,6 @@ SPEC CHECKSUMS:
   SentryCapacitor: 1d620200b850ef6f4e7056f5e20d7860e7c04572
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: a52769d2a61cdb7381d4ced2548114fe68d9045d
+PODFILE CHECKSUM: 9ae6ef04aa0fb3118bde97629ae28f474b2796c9
 
 COCOAPODS: 1.16.2

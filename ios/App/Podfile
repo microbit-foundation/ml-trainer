@@ -13,7 +13,7 @@ def capacitor_pods
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCommunityBluetoothLe', :path => '../../node_modules/@capacitor-community/bluetooth-le'
   pod 'CapacitorCommunitySafeArea', :path => '../../node_modules/@capacitor-community/safe-area'
-  pod 'CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport', :path => '../../node_modules/@capacitor-firebase/analytics'
+  pod 'CapacitorFirebaseAnalytics', :path => '../../node_modules/@capacitor-firebase/analytics'
   pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
   pod 'CapacitorFilesystem', :path => '../../node_modules/@capacitor/filesystem'
   pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
@@ -25,7 +25,13 @@ end
 
 target 'App' do
   capacitor_pods
-  # Add your Pods here
+  # Add your Pods here.
+  # Per the @capacitor-firebase/analytics README, Firebase deps must be
+  # added outside `capacitor_pods` because cap sync regenerates that
+  # block on every run and writes only the bare pod name (which
+  # resolves to the plugin's `Lite` subspec — no Firebase SDK pulled
+  # in). The line below pulls Firebase in via the IDFA-free subspec.
+  pod 'CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport', :path => '../../node_modules/@capacitor-firebase/analytics'
 end
 
 post_install do |installer|
