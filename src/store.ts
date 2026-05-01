@@ -739,6 +739,7 @@ const createMlStore = (logging: Logging) => {
 
         async addNewAction() {
           const { actions, dataWindow, id, project, projectEdited } = get();
+          logging.event({ type: "action_create" });
           const newAction: ActionData = {
             icon: actionIcon({
               isFirstAction: actions.length === 0,

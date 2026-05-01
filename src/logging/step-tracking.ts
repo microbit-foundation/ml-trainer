@@ -84,7 +84,11 @@ const connectStepNames: Record<DataConnectionStep, string | undefined> = {
   PairingLost: "pairing_lost",
   BadFirmware: "bad_firmware",
   MicrobitUnsupported: "microbit_unsupported",
-  WebUsbBluetoothUnsupported: "webusb_bluetooth_unsupported",
+  // No transport possible — there's no funnel through this terminal
+  // screen. The cohort is captured by the webusb_available /
+  // webbluetooth_available user properties; emitting step / exit
+  // events here would have no honest `flow` value.
+  WebUsbBluetoothUnsupported: undefined,
   ManualFlashingTutorial: "manual_flashing_tutorial",
   ConnectionLost: "connection_lost",
   StartOver: "start_over",
