@@ -23,7 +23,7 @@ import {
 } from "./download-machine";
 import { Logging } from "../logging/logging";
 import {
-  dataConnectionTypeToFlow,
+  downloadFlowTypeToFlow,
   logFlashTransition,
 } from "../logging/step-tracking";
 import { Settings } from "../settings";
@@ -284,12 +284,13 @@ const performFlash = async (deps: DownloadDependencies): Promise<void> => {
     };
     await connection.flash(createUniversalHexFlashDataSource(hex.hex), options);
     const actions = useStore.getState().actions;
+    const flowType = getDownloadFlowType(deps.dataConnection.type);
     deps.logging.event({
       type: "device_flash",
       detail: {
         actions: actions.length,
         samples: getTotalNumSamples(actions),
-        flow: dataConnectionTypeToFlow(deps.dataConnection.type),
+        flow: downloadFlowTypeToFlow(flowType),
       },
     });
     await sendEvent({ type: "flashSuccess" }, deps);

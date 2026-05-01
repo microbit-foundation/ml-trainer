@@ -33,7 +33,9 @@ export const dataConnectionTypeToFlow = (
   }
 };
 
-const downloadFlowTypeToFlow = (type: DownloadFlowType): AnalyticsFlow => {
+export const downloadFlowTypeToFlow = (
+  type: DownloadFlowType
+): AnalyticsFlow => {
   switch (type) {
     case "browser-default":
       return "web_bluetooth";
