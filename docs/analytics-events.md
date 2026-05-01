@@ -139,7 +139,7 @@ Emitted from `performFlash` on `flashSuccess`.
 
 | Event         | Params                       | When fired                                                                                                                                                          |
 | ------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `model_train` | `actions:int`, `samples:int` | User started training a model. Fires at the start of training; if outcome data is wanted later, consider extending to a `_start` / `_success` / `_failure` triplet. |
+| `model_train` | `actions:int`, `samples:int` | User started training a model. Fires at the start of training. |
 
 ## Hex save events
 
@@ -186,7 +186,7 @@ Bulk-aware — `count` covers both single delete and multi-select bulk delete in
 
 ### `project_search`
 
-Projects page only. Fires once per intentional search (debounced ~400ms after the last keystroke), not per keypress. No params today — consider adding `query_length:int` if more dimensionality is wanted.
+Projects page only. Fires once per intentional search (debounced ~400ms after the last keystroke), not per keypress. No params.
 
 ### `project_sort`
 
@@ -217,14 +217,12 @@ Reliability signal for the share-link preview pipeline. Sentry has the full requ
 | -------- | ------------------------------- |
 | `reason` | `network` / `parse` / `unknown` |
 
-`not_found` and `timeout` were in the original plan but aren't emitted yet — `fetchSharedHeader` would need to surface the HTTP status to widen the enum. Tracked as a follow-up.
-
 ## Editor events
 
-| Event                 | Params | When fired                                                                                                                                           |
-| --------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `editor_open`         | —      | User opened the MakeCode editor                                                                                                                      |
-| `editor_open_failure` | —      | MakeCode editor failed to load within the timeout. Pairs with `editor_open`. Consider an `editor_open_success` later if load-success rate is wanted. |
+| Event                 | Params | When fired                                                                  |
+| --------------------- | ------ | --------------------------------------------------------------------------- |
+| `editor_open`         | —      | User opened the MakeCode editor                                             |
+| `editor_open_failure` | —      | MakeCode editor failed to load within the timeout. Pairs with `editor_open`. |
 
 ## Removed / migrated events
 

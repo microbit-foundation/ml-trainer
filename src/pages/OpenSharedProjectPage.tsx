@@ -183,9 +183,10 @@ const useProjectPreload = (setName: (name: string) => void) => {
         if (cleanedUp) {
           return;
         }
+        const reason = e instanceof ShareFailure ? e.kind : "unknown";
         logging.event({
           type: "project_share_failure",
-          detail: { reason: classifyShareFailure(e) },
+          detail: { reason },
         });
         logging.error("Failed to preload shared project", e);
         setSharedState(SharedState.Failed);
@@ -204,40 +205,28 @@ const useProjectPreload = (setName: (name: string) => void) => {
   };
 };
 
-/**
- * Classify a fetch/parse error from the share preload pipeline into a
- * stable analytics dimension. Distinguishing 404 from generic network
- * errors would require fetchSharedHeader to surface the HTTP status —
- * left as a follow-up; "not_found" not yet emitted.
- */
-const classifyShareFailure = (e: unknown): string => {
-  if (e instanceof TypeError) {
-    return "network";
+type ShareFailureKind = "network" | "parse";
+
+class ShareFailure extends Error {
+  constructor(public readonly kind: ShareFailureKind, message: string) {
+    super(message);
+    this.name = "ShareFailure";
   }
-  if (e instanceof Error) {
-    if (e.message === "Network error") {
-      return "network";
-    }
-    if (
-      e.message === "Incorrect header data" ||
-      e.message === "Error downloding project"
-    ) {
-      return "parse";
-    }
-  }
-  return "unknown";
-};
+}
 
 const fetchSharedHeader = async (shareId: string): Promise<Header> => {
   const headerResponse = await fetch(
     `https://www.makecode.com/api/${encodeURIComponent(shareId)}`
   );
   if (!headerResponse.ok) {
-    throw new Error("Network error");
+    throw new ShareFailure(
+      "network",
+      `Header fetch returned ${headerResponse.status}`
+    );
   }
   const header = (await headerResponse.json()) as Header;
   if (!header || !header.id || !header.name) {
-    throw new Error("Incorrect header data");
+    throw new ShareFailure("parse", "Header missing required fields");
   }
   return header;
 };
@@ -247,11 +236,14 @@ const fetchSharedProjectText = async (longId: string): Promise<ScriptText> => {
     `https://www.makecode.com/api/${encodeURIComponent(longId)}/text`
   );
   if (!textResponse.ok) {
-    throw new Error("Network error");
+    throw new ShareFailure(
+      "network",
+      `Project text fetch returned ${textResponse.status}`
+    );
   }
   const text = (await textResponse.json()) as ScriptText;
   if (typeof text !== "object") {
-    throw new Error("Error downloding project");
+    throw new ShareFailure("parse", "Project text was not an object");
   }
   return text;
 };
