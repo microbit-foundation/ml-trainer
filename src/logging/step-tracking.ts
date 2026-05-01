@@ -141,8 +141,8 @@ export const logConnectionTransition = (
       event.type === "connectFlashFailure"
         ? "connect"
         : event.type === "flashFailure"
-          ? "flash"
-          : "data";
+        ? "flash"
+        : "data";
     logging.event({
       type: "device_connect_failure",
       detail: { stage, code: event.code ?? "unknown", flow },
