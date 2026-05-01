@@ -345,14 +345,13 @@ export interface Settings {
    */
   bondedDevices?: string[];
   /**
-   * The user's decision on analytics consent.
+   * The user's analytics consent decision on the native (Capacitor)
+   * build. Web builds use the shared-assets cookie modal instead and
+   * ignore this field.
    *
-   * `undefined` means the user has not yet been asked, and is the signal
-   * the consent UI uses to decide whether to prompt on first run. Analytics
-   * events must not be emitted while this is `undefined` or `"denied"`.
-   *
-   * Stored alongside other settings so the existing settings-load gate at
-   * startup covers consent too — no separate preferences store is needed.
+   * `undefined` means the user has not been asked yet — the consent UI
+   * uses this to decide whether to prompt on first run. Analytics events
+   * must not be emitted while this is `undefined` or `"denied"`.
    */
   analyticsConsent?: "granted" | "denied";
 }
