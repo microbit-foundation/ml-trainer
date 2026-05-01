@@ -9,9 +9,9 @@ import { createNativeCompliance } from "../compliance/native";
 import { createWebCompliance } from "../compliance/web";
 import { flags } from "../flags";
 import { wrapWithDevValidator } from "../logging/dev-validator";
-import { FirebaseAnalyticsLogging } from "../logging/firebase-analytics";
-import { GASentryLogging } from "../logging/ga-sentry";
 import { Logging } from "../logging/logging";
+import { NativeLogging } from "../logging/native";
+import { WebLogging } from "../logging/web";
 import { ConsoleLogging } from "./default/logging";
 
 // This is configured via a vite alias, defaulting to ./default
@@ -88,7 +88,7 @@ const brandFactory: BrandConfigFactory = df;
 const isAppsBuild = import.meta.env.VITE_BUILD_MODE === "apps";
 // Set true by the private build pipeline once `GoogleService-Info.plist`
 // and `google-services.json` have been dropped into place. Without
-// these, instantiating `FirebaseAnalyticsLogging` would crash iOS at
+// these, instantiating `NativeLogging` would crash iOS at
 // `FirebaseApp.configure()`. Keeping this a build-time flag (not a
 // runtime try/catch) means a fresh OSS clone falls back to
 // `ConsoleLogging` cleanly — see the "Low-friction OSS launch" section
@@ -98,11 +98,9 @@ const hasFirebaseConfig = import.meta.env.VITE_HAS_FIREBASE_CONFIG === "true";
 const createLogging = (env: Record<string, string>): Logging => {
   let base: Logging;
   if (isAppsBuild) {
-    base = hasFirebaseConfig
-      ? new FirebaseAnalyticsLogging()
-      : new ConsoleLogging();
+    base = hasFirebaseConfig ? new NativeLogging(env) : new ConsoleLogging();
   } else {
-    base = new GASentryLogging(env);
+    base = new WebLogging(env);
   }
   // Dev-only Firebase-spec validator catches drift between the
   // permissive gtag world and the stricter Firebase rules before the

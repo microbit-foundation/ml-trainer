@@ -9,28 +9,28 @@ import {
   FirebaseAnalytics,
 } from "@capacitor-firebase/analytics";
 import { Event, Logging, Navigation } from "./logging";
+import { initSentry, reportBreadcrumb, reportError } from "./sentry";
 
 /**
- * A Logging backend that emits events to Firebase Analytics via the
- * @capacitor-firebase/analytics native bridge. Intended for the Capacitor
- * (iOS/Android) builds; on web, use the gtag-based backend instead. The
- * construction site is responsible for only instantiating this on native
- * platforms — the class itself does not guard.
+ * A Logging backend for the Capacitor (iOS/Android) build: emits events
+ * to Firebase Analytics via the @capacitor-firebase/analytics native
+ * bridge, and forwards errors plus event breadcrumbs to Sentry through
+ * `@sentry/capacitor`, which captures JS-side errors in the WebView
+ * and native crashes / ANRs via the bundled native Sentry SDKs. The
+ * construction site is responsible for only instantiating this on
+ * native platforms — the class itself does not guard.
  *
  * Events are gated at this layer in addition to Firebase's own consent
  * mode so that a denied user produces zero SDK calls, not just calls
  * that the SDK internally drops. `setConsent` must be called before any
  * events can be emitted; the default state is denied.
- *
- * Errors and general log output are intentionally not forwarded to
- * Firebase — Firebase Analytics has no custom-error API, and the project
- * uses Sentry for that. A composed Logging implementation (Firebase for
- * events, Sentry for errors) is the expected shape in deployment.
  */
-export class FirebaseAnalyticsLogging implements Logging {
+export class NativeLogging implements Logging {
   private consentGranted = false;
+  private sentryDsn: string | undefined;
 
-  constructor() {
+  constructor(env: Record<string, string>) {
+    this.sentryDsn = initSentry(env);
     // Firebase's default consent state for analytics_storage is "granted"
     // unless overridden. Explicitly deny at startup so nothing lands in
     // GA4 until the user has agreed; setConsent below flips this on.
@@ -98,6 +98,13 @@ export class FirebaseAnalyticsLogging implements Logging {
     void FirebaseAnalytics.logEvent({ name: event.type, params }).catch(() => {
       // Silent — analytics must never crash calling code.
     });
+
+    reportBreadcrumb(this.sentryDsn, "Event", {
+      type: event.type,
+      message: event.message,
+      value: event.value,
+      detail: event.detail as unknown,
+    });
   }
 
   setUserProperty(name: string, value: string): void {
@@ -109,13 +116,12 @@ export class FirebaseAnalyticsLogging implements Logging {
     });
   }
 
-  error(_message: string, _e: unknown): void {
-    // Errors are Sentry's job; intentionally a no-op here so a composed
-    // logger (Firebase + Sentry) doesn't double-report.
+  error(message: string, e: unknown): void {
+    reportError(this.sentryDsn, message, e);
   }
 
-  log(_e: unknown): void {
-    // As above — general diagnostic logging is not a Firebase concern.
+  log(v: unknown): void {
+    console.log(v);
   }
 
   navigate({ path }: Navigation): void {

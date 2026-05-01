@@ -3,12 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  addBreadcrumb as sentryAddBreadcrumb,
-  captureException as sentryCaptureException,
-  init as sentryInit,
-} from "@sentry/browser";
 import { Event, Logging, Navigation } from "./logging";
+import { initSentry, reportBreadcrumb, reportError } from "./sentry";
 
 type GtagParams = Record<string, string | number | boolean>;
 
@@ -31,49 +27,11 @@ type GtagFn = {
  * gtag is hostname-gated to `*.microbit.org` by shared-assets, and the
  * script does not load in Capacitor builds.
  */
-export class GASentryLogging implements Logging {
+export class WebLogging implements Logging {
   private sentryDsn: string | undefined;
 
   constructor(env: Record<string, string>) {
-    const version = env.VITE_VERSION || "unknown";
-    const stage = env.VITE_STAGE || "unknown";
-    // Disable Sentry for the REVIEW stage even if the env var is set. If
-    // we reconsider this then we should at least disable it for localhost
-    // to avoid noise from development branch e2e tests.
-    this.sentryDsn = stage === "REVIEW" ? undefined : env.VITE_SENTRY_DSN;
-
-    if (this.sentryDsn) {
-      try {
-        sentryInit({
-          dsn: this.sentryDsn,
-          release: `createai-v${version}`,
-          environment: stage,
-          ignoreErrors: [
-            // Low consequence and a big chunk of quota.
-            "ResizeObserver loop completed with undelivered notifications",
-
-            // User did not select a device.
-            /^NotFoundError: User cancelled the requestDevice\(\) chooser.$/,
-            /^USB request device failed\/cancelled: {"code":"no-device-selected"}$/,
-            /^Flashing failed: {"code":"no-device-selected"}$/,
-
-            // Could not claim device.
-            /^USB request device failed\/cancelled: {"code":"clear-connect"}$/,
-            /^Failed to execute 'claimInterface' on 'USBDevice': Unable to claim interface.$/,
-            /^Flashing failed: {"code":"clear-connect"}$/,
-
-            // Firmware too old (V1).
-            /^USB request device failed\/cancelled: {"code":"update-req"}$/,
-            /^Flashing failed: {"code":"update-req"}$/,
-
-            // User disconnected micro:bit.
-            /^Error processing gatt operations queue - device disconnected$/,
-          ],
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    this.sentryDsn = initSentry(env);
   }
 
   log(v: unknown): void {
@@ -97,19 +55,7 @@ export class GASentryLogging implements Logging {
   }
 
   error(message: string, e: unknown): void {
-    console.error(message, e);
-    if (this.sentryDsn) {
-      try {
-        sentryAddBreadcrumb({
-          message,
-          type: "error-message",
-          level: "error",
-        });
-        sentryCaptureException(e);
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    reportError(this.sentryDsn, message, e);
   }
 
   event(event: Event): void {
@@ -139,7 +85,7 @@ export class GASentryLogging implements Logging {
         gtag("event", event.type, params);
       }
 
-      this.breadcrumb("Event", {
+      reportBreadcrumb(this.sentryDsn, "Event", {
         type: event.type,
         message: event.message,
         value: event.value,
@@ -158,20 +104,6 @@ export class GASentryLogging implements Logging {
       }
     } catch (e) {
       console.error(e);
-    }
-  }
-
-  private breadcrumb(category: string, data: object | string): void {
-    if (this.sentryDsn) {
-      sentryAddBreadcrumb({
-        category,
-        message: typeof data === "string" ? data : undefined,
-        data: typeof data === "object" ? data : undefined,
-        level: "info",
-      });
-    } else {
-      // Avoid double-logging via console + Sentry breadcrumbs when Sentry is on.
-      console.log(category, JSON.stringify(data));
     }
   }
 }

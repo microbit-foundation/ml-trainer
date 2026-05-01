@@ -81,7 +81,7 @@ const validateEvent = (event: Event): void => {
       event
     );
   }
-  // FirebaseAnalyticsLogging flattens `detail`'s primitive entries
+  // NativeLogging flattens `detail`'s primitive entries
   // into top-level params; mirror that here so we catch regressions
   // before the apps build runs.
   if (

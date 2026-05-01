@@ -18,6 +18,7 @@ dependencies {
     implementation project(':capacitor-share')
     implementation project(':microbit-capacitor-community-nordic-dfu')
     implementation project(':microbit-capacitor-sqlite-vanilla')
+    implementation project(':sentry-capacitor')
 
 }
 

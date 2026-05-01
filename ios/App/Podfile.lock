@@ -28,6 +28,12 @@ PODS:
     - Capacitor
   - NordicDFU (4.16.0):
     - ZIPFoundation (= 0.9.19)
+  - Sentry (9.8.0):
+    - Sentry/Core (= 9.8.0)
+  - Sentry/Core (9.8.0)
+  - SentryCapacitor (4.0.0):
+    - Capacitor
+    - Sentry (= 9.8.0)
   - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
@@ -42,11 +48,13 @@ DEPENDENCIES:
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
   - "MicrobitCapacitorCommunityNordicDfu (from `../../node_modules/@microbit/capacitor-community-nordic-dfu`)"
   - "MicrobitCapacitorSqliteVanilla (from `../../node_modules/@microbit/capacitor-sqlite-vanilla`)"
+  - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
   trunk:
     - IONFilesystemLib
     - NordicDFU
+    - Sentry
     - ZIPFoundation
 
 EXTERNAL SOURCES:
@@ -72,6 +80,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@microbit/capacitor-community-nordic-dfu"
   MicrobitCapacitorSqliteVanilla:
     :path: "../../node_modules/@microbit/capacitor-sqlite-vanilla"
+  SentryCapacitor:
+    :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 12914e6f1b7835e161a74ebd19cb361efa37a7dd
@@ -87,8 +97,10 @@ SPEC CHECKSUMS:
   MicrobitCapacitorCommunityNordicDfu: fd00d14531eb46f4cc5cfc989d59f46ac12bbcac
   MicrobitCapacitorSqliteVanilla: 007363ee4be41cd778997dda58b6827173ffb67f
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
+  Sentry: 88746bf877eff714bc45315a39ad1d1efea2cdda
+  SentryCapacitor: 1d620200b850ef6f4e7056f5e20d7860e7c04572
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 971f7936ab1b1d3a89b04175f271c753d0ccaa8b
+PODFILE CHECKSUM: ff4cedf0485c068a796072d110aa77ae17c1e319
 
 COCOAPODS: 1.16.2
