@@ -23,4 +23,7 @@ export class ConsoleLogging implements Logging {
   navigate(args: Navigation): void {
     console.log("[ConsoleLogging] navigate:", args);
   }
+  setUserProperty(name: string, value: string): void {
+    console.log("[ConsoleLogging] setUserProperty:", name, value);
+  }
 }

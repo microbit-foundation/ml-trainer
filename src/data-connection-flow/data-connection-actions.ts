@@ -21,6 +21,7 @@ import {
   getInitialDataConnectionType,
 } from "./data-connection-types";
 import { Logging } from "../logging/logging";
+import { logConnectionTransition } from "../logging/step-tracking";
 import {
   isWebUSBConnection,
   isWebBluetoothSupported,
@@ -97,6 +98,14 @@ const sendEvent = async (
     ...result.assign,
     step: result.step,
   });
+
+  logConnectionTransition(
+    deps.logging,
+    state.step,
+    result.step,
+    event,
+    state.type
+  );
 
   // Execute actions sequentially, getting fresh state for each
   for (const action of result.actions) {
@@ -448,13 +457,6 @@ const performConnectData = async (
   deps: DataConnectionDeps
 ): Promise<void> => {
   syncConnectionSettings(deps);
-  const state = getDataConnectionState();
-  // Only log for user-initiated connections, not reconnects.
-  if (!state.isReconnecting) {
-    const logMessage =
-      state.type === DataConnectionType.Radio ? "radio-bridge" : "bluetooth";
-    deps.logging.event({ type: "connect-user", message: logMessage });
-  }
   try {
     const connection = deps.connections.getDataConnection();
     if (clearDevice) {

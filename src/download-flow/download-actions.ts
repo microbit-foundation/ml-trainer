@@ -22,6 +22,10 @@ import {
   getDownloadFlowType,
 } from "./download-machine";
 import { Logging } from "../logging/logging";
+import {
+  dataConnectionTypeToFlow,
+  logFlashTransition,
+} from "../logging/step-tracking";
 import { Settings } from "../settings";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
@@ -211,14 +215,6 @@ const performConnectFlash = async (
   syncConnectionSettings(deps);
   const state = getDownloadState();
   const { microbitChoice } = state;
-  const actions = useStore.getState().actions;
-  deps.logging.event({
-    type: "hex-download",
-    detail: {
-      actions: actions.length,
-      samples: getTotalNumSamples(actions),
-    },
-  });
 
   let connection = deps.connections.getDefaultFlashConnection();
 
@@ -287,6 +283,15 @@ const performFlash = async (deps: DownloadDependencies): Promise<void> => {
       progress: deps.flashingProgressCallback,
     };
     await connection.flash(createUniversalHexFlashDataSource(hex.hex), options);
+    const actions = useStore.getState().actions;
+    deps.logging.event({
+      type: "device_flash",
+      detail: {
+        actions: actions.length,
+        samples: getTotalNumSamples(actions),
+        flow: dataConnectionTypeToFlow(deps.dataConnection.type),
+      },
+    });
     await sendEvent({ type: "flashSuccess" }, deps);
   } catch (e) {
     if (e instanceof DeviceError) {
@@ -320,6 +325,17 @@ const sendEvent = async (
     ...result.assign,
     step: result.step,
   });
+
+  const failureCode =
+    "code" in event && typeof event.code === "string" ? event.code : undefined;
+  logFlashTransition(
+    deps.logging,
+    state.step,
+    result.step,
+    event.type,
+    flowType,
+    failureCode
+  );
 
   // Execute actions
   for (const action of result.actions) {

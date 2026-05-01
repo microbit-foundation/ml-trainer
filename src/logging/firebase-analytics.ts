@@ -67,22 +67,11 @@ export class FirebaseAnalyticsLogging implements Logging {
     if (!this.consentGranted) {
       return;
     }
-    // Firebase is stricter than gtag: event and param names must match
-    // /[A-Za-z][A-Za-z0-9_]*/ and be ≤40 chars, and param values must
-    // be primitives (strings ≤100 chars, numbers, booleans). GA4 on web
-    // has long accepted hyphens via gtag, so historical event names here
-    // are kebab-case — rewrite to snake_case so the SDK accepts them.
-    // Names also have reserved-word collisions to watch for (app_open,
-    // session_start, first_open, screen_view, in_app_purchase,
-    // user_engagement); today's names don't collide but a dev-mode
-    // validator is a sensible follow-up.
-    const name = event.type.replace(/-/g, "_");
-
-    // Call sites pass structured data under `detail` (e.g. { actions,
-    // samples }); flatten its primitive fields into top-level params so
-    // GA4 sees them as breakdowns. Non-primitive fields are dropped
-    // silently — Firebase would reject them, and the adapt layer can
-    // reshape anything it wants to preserve.
+    // Firebase rules: event and param names must match
+    // /[A-Za-z][A-Za-z0-9_]*/ and be ≤40 chars, param values must be
+    // primitives (strings ≤100 chars, numbers, booleans). Source uses
+    // snake_case so no rewrite is needed; the dev-mode validator
+    // catches drift.
     const params: Record<string, string | number | boolean> = {};
     if (
       event.detail !== undefined &&
@@ -106,8 +95,17 @@ export class FirebaseAnalyticsLogging implements Logging {
       params.value = event.value;
     }
 
-    void FirebaseAnalytics.logEvent({ name, params }).catch(() => {
+    void FirebaseAnalytics.logEvent({ name: event.type, params }).catch(() => {
       // Silent — analytics must never crash calling code.
+    });
+  }
+
+  setUserProperty(name: string, value: string): void {
+    if (!this.consentGranted) {
+      return;
+    }
+    void FirebaseAnalytics.setUserProperty({ key: name, value }).catch(() => {
+      // Silent.
     });
   }
 

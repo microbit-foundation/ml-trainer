@@ -1273,7 +1273,7 @@ const createMlStore = (logging: Logging) => {
         async trainModel() {
           const { actions, dataWindow, id, project, projectEdited } = get();
           logging.event({
-            type: "model-train",
+            type: "model_train",
             detail: {
               actions: actions.length,
               samples: getTotalNumSamples(actions),

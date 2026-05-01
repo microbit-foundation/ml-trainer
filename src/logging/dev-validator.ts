@@ -49,6 +49,8 @@ const RESERVED_EVENT_NAMES = new Set([
 ]);
 
 const STRING_PARAM_MAX = 100;
+const USER_PROPERTY_NAME_MAX = 24;
+const USER_PROPERTY_VALUE_MAX = 36;
 
 const warn = (message: string, context?: unknown) => {
   if (context !== undefined) {
@@ -65,16 +67,15 @@ const validateName = (kind: "event" | "param", name: string) => {
 };
 
 const validateEvent = (event: Event): void => {
-  // Mirror the FirebaseAnalyticsLogging rewrite so the warning matches
-  // what would actually be sent. Web's gtag accepts hyphens, so call
-  // sites are kebab-case today.
-  const name = event.type.replace(/-/g, "_");
-  if (RESERVED_EVENT_NAMES.has(name)) {
-    warn(`event name "${name}" is reserved by Firebase`, event);
+  if (RESERVED_EVENT_NAMES.has(event.type)) {
+    warn(`event name "${event.type}" is reserved by Firebase`, event);
   } else {
-    validateName("event", name);
+    validateName("event", event.type);
   }
-  if (typeof event.message === "string" && event.message.length > STRING_PARAM_MAX) {
+  if (
+    typeof event.message === "string" &&
+    event.message.length > STRING_PARAM_MAX
+  ) {
     warn(
       `event message exceeds Firebase ${STRING_PARAM_MAX}-char string param cap (${event.message.length})`,
       event
@@ -111,6 +112,20 @@ const validateNavigation = (args: Navigation): void => {
   }
 };
 
+const validateUserProperty = (name: string, value: string): void => {
+  validateName("param", name);
+  if (name.length > USER_PROPERTY_NAME_MAX) {
+    warn(
+      `user property name exceeds Firebase ${USER_PROPERTY_NAME_MAX}-char cap (${name.length}): "${name}"`
+    );
+  }
+  if (value.length > USER_PROPERTY_VALUE_MAX) {
+    warn(
+      `user property "${name}" value exceeds Firebase ${USER_PROPERTY_VALUE_MAX}-char cap (${value.length})`
+    );
+  }
+};
+
 /**
  * Wrap a Logging implementation so that emitted events and navigations
  * are validated against the Firebase spec, with violations logged as
@@ -134,5 +149,9 @@ export const wrapWithDevValidator = (logging: Logging): Logging => ({
   navigate(args) {
     validateNavigation(args);
     logging.navigate(args);
+  },
+  setUserProperty(name, value) {
+    validateUserProperty(name, value);
+    logging.setUserProperty(name, value);
   },
 });

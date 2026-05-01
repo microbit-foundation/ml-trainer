@@ -8,23 +8,28 @@ import {
   captureException as sentryCaptureException,
   init as sentryInit,
 } from "@sentry/browser";
-import { adaptEvent } from "./adapt-event";
 import { Event, Logging, Navigation } from "./logging";
 
-type GtagFn = (
-  command: "event",
-  eventName: string,
-  params: Record<string, string | number>
-) => void;
+type GtagParams = Record<string, string | number | boolean>;
+
+type GtagFn = {
+  (command: "event", eventName: string, params: GtagParams): void;
+  (
+    command: "set",
+    target: "user_properties",
+    values: Record<string, string>
+  ): void;
+};
 
 /**
  * A Logging backend for the web build: emits events through gtag (when
  * shared-assets/common.js has set it up) and forwards errors plus event
- * breadcrumbs to Sentry. Events are fanned through `adaptEvent` to match
- * the historic UA-shape on GA4. The construction site is responsible for
- * only instantiating this on the web build — gtag is hostname-gated to
- * `*.microbit.org` by shared-assets, and the script does not load in
- * Capacitor builds.
+ * breadcrumbs to Sentry. Events are sent in GA4-native shape (name +
+ * flat params), so call-site `detail` fields become event params
+ * directly — no UA-era category/label/value fan-out. The construction
+ * site is responsible for only instantiating this on the web build —
+ * gtag is hostname-gated to `*.microbit.org` by shared-assets, and the
+ * script does not load in Capacitor builds.
  */
 export class GASentryLogging implements Logging {
   private sentryDsn: string | undefined;
@@ -111,16 +116,27 @@ export class GASentryLogging implements Logging {
     try {
       const gtag = (window as Window & { gtag?: GtagFn }).gtag;
       if (gtag) {
-        for (const adapted of adaptEvent(event)) {
-          const gae: Record<string, string | number> = {
-            event_category: "createai",
-          };
-          if (adapted.message) {
-            gae.event_label = adapted.message;
+        const params: GtagParams = {};
+        if (
+          event.detail !== undefined &&
+          typeof event.detail === "object" &&
+          event.detail !== null
+        ) {
+          for (const [k, v] of Object.entries(
+            event.detail as Record<string, unknown>
+          )) {
+            if (isPrimitive(v)) {
+              params[k] = v;
+            }
           }
-          gae.value = typeof adapted.value === "number" ? adapted.value : 1;
-          gtag("event", adapted.type, gae);
         }
+        if (event.message !== undefined) {
+          params.message = event.message;
+        }
+        if (event.value !== undefined) {
+          params.value = event.value;
+        }
+        gtag("event", event.type, params);
       }
 
       this.breadcrumb("Event", {
@@ -129,6 +145,17 @@ export class GASentryLogging implements Logging {
         value: event.value,
         detail: event.detail as unknown,
       });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setUserProperty(name: string, value: string): void {
+    try {
+      const gtag = (window as Window & { gtag?: GtagFn }).gtag;
+      if (gtag) {
+        gtag("set", "user_properties", { [name]: value });
+      }
     } catch (e) {
       console.error(e);
     }
@@ -148,3 +175,6 @@ export class GASentryLogging implements Logging {
     }
   }
 }
+
+const isPrimitive = (v: unknown): v is string | number | boolean =>
+  typeof v === "string" || typeof v === "number" || typeof v === "boolean";

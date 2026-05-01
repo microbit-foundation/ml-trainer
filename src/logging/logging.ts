@@ -47,4 +47,13 @@ export interface Logging {
    * router's location-change effect, including on initial mount.
    */
   navigate(args: Navigation): void;
+  /**
+   * Set a GA4 user property. User-scoped values that auto-attach to
+   * every subsequent event for the same user, used for cohort breakdowns
+   * (e.g. capability flags) without paying event-count for them.
+   *
+   * Names: lowercase snake_case, ≤24 chars. Values: ≤36 chars. Set early
+   * (e.g. on app boot) so subsequent events are queryable by them.
+   */
+  setUserProperty(name: string, value: string): void;
 }

@@ -12,6 +12,7 @@ export class MockLogging implements Logging {
   logs: any[] = [];
   navigations: Navigation[] = [];
   consent: boolean | undefined;
+  userProperties: Record<string, string> = {};
 
   event(event: Event): void {
     this.events.push(event);
@@ -27,5 +28,8 @@ export class MockLogging implements Logging {
   }
   navigate(args: Navigation): void {
     this.navigations.push(args);
+  }
+  setUserProperty(name: string, value: string): void {
+    this.userProperties[name] = value;
   }
 }

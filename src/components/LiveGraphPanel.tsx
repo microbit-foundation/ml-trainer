@@ -24,6 +24,7 @@ import {
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
+import { dataConnectionTypeToFlow } from "../logging/step-tracking";
 import { TrainModelDialogStage } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -64,20 +65,21 @@ const LiveGraphPanel = ({
     !isDataConnectionDialogOpen(dataConnection.step);
 
   const handleConnectOrReconnect = useCallback(() => {
-    logging.event({
-      type: "connect-user",
-    });
     actions.connect();
-  }, [actions, logging]);
+  }, [actions]);
   useShortcut(keyboardShortcuts.connect, handleConnectOrReconnect, {
     enabled: isDisconnected,
   });
   const handleDisconnect = useCallback(() => {
     logging.event({
-      type: "disconnect-user",
+      type: "device_disconnect",
+      detail: {
+        reason: "user",
+        flow: dataConnectionTypeToFlow(dataConnection.type),
+      },
     });
     void actions.disconnect();
-  }, [actions, logging]);
+  }, [actions, dataConnection.type, logging]);
   useShortcut(keyboardShortcuts.disconnect, handleDisconnect, {
     enabled: isConnected,
   });

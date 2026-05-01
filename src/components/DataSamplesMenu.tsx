@@ -53,7 +53,7 @@ const DataSamplesMenu = () => {
 
   const download = useCallback(async () => {
     logging.event({
-      type: "dataset-save",
+      type: "dataset_save",
       detail: {
         actions: actions.length,
         samples: getTotalNumSamples(actions),
@@ -75,7 +75,7 @@ const DataSamplesMenu = () => {
   const deleteAllActions = useStore((s) => s.deleteAllActions);
   const handleDeleteAllActions = useCallback(async () => {
     logging.event({
-      type: "dataset-delete",
+      type: "dataset_clear",
     });
     await deleteAllActions();
     closeDialog();

@@ -43,12 +43,9 @@ const OpenSharedProjectPage = () => {
   const handleOpenProject = useCallback(async () => {
     if (!header || !projectText) return;
     await loadProject({ header: { ...header, name }, text: projectText }, name);
-    logging.event({
-      type: "import-shared-project-complete",
-      detail: { shareId },
-    });
+    logging.event({ type: "project_share_open" });
     navigate(createDataSamplesPageUrl());
-  }, [loadProject, header, projectText, name, navigate, logging, shareId]);
+  }, [loadProject, header, projectText, name, navigate, logging]);
 
   if (sharedState === SharedState.Failed) {
     return <ErrorPreloading />;
@@ -163,10 +160,6 @@ const useProjectPreload = (setName: (name: string) => void) => {
     let cleanedUp = false;
     const loadAsync = async () => {
       try {
-        logging.event({
-          type: "import-shared-project-start",
-          detail: { shareId },
-        });
         const header = await fetchSharedHeader(shareId);
         if (cleanedUp) {
           throw new Error("Cancelled");
@@ -186,18 +179,16 @@ const useProjectPreload = (setName: (name: string) => void) => {
         }
         setSharedState(SharedState.Complete);
         setProjectText(text);
-        logging.event({
-          type: "import-shared-project-preloaded",
-          detail: { shareId },
-        });
       } catch (e: unknown) {
-        logging.event({
-          type: "import-shared-project-failed",
-          detail: { shareId, error: e },
-        });
-        if (!cleanedUp) {
-          setSharedState(SharedState.Failed);
+        if (cleanedUp) {
+          return;
         }
+        logging.event({
+          type: "project_share_failure",
+          detail: { reason: classifyShareFailure(e) },
+        });
+        logging.error("Failed to preload shared project", e);
+        setSharedState(SharedState.Failed);
       }
     };
     void loadAsync();
@@ -211,6 +202,30 @@ const useProjectPreload = (setName: (name: string) => void) => {
     dataset,
     projectText,
   };
+};
+
+/**
+ * Classify a fetch/parse error from the share preload pipeline into a
+ * stable analytics dimension. Distinguishing 404 from generic network
+ * errors would require fetchSharedHeader to surface the HTTP status —
+ * left as a follow-up; "not_found" not yet emitted.
+ */
+const classifyShareFailure = (e: unknown): string => {
+  if (e instanceof TypeError) {
+    return "network";
+  }
+  if (e instanceof Error) {
+    if (e.message === "Network error") {
+      return "network";
+    }
+    if (
+      e.message === "Incorrect header data" ||
+      e.message === "Error downloding project"
+    ) {
+      return "parse";
+    }
+  }
+  return "unknown";
 };
 
 const fetchSharedHeader = async (shareId: string): Promise<Header> => {

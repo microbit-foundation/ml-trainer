@@ -386,27 +386,30 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (navigator.bluetooth) {
-      navigator.bluetooth
-        .getAvailability()
-        .then((bluetoothAvailable) => {
-          logging.event({
-            type: "boot",
-            detail: {
-              bluetoothAvailable,
-            },
+    // Capability flags are user-scoped GA4 dimensions on the web build —
+    // they describe the browser's WebUSB / WebBluetooth API surface, not
+    // anything Capacitor knows about. On native builds connectivity goes
+    // through native plugins and these properties would be misleading.
+    if (!isNativePlatform()) {
+      logging.setUserProperty(
+        "webusb_available",
+        "usb" in navigator ? "yes" : "no"
+      );
+      if (navigator.bluetooth) {
+        navigator.bluetooth
+          .getAvailability()
+          .then((bluetoothAvailable) => {
+            logging.setUserProperty(
+              "webbluetooth_available",
+              bluetoothAvailable ? "yes" : "no"
+            );
+          })
+          .catch((err) => {
+            logging.error("Error checking BT availability", err);
           });
-        })
-        .catch((err) => {
-          logging.error("Error checking BT availability", err);
-        });
-    } else {
-      logging.event({
-        type: "boot",
-        detail: {
-          bluetoothAvailable: false,
-        },
-      });
+      } else {
+        logging.setUserProperty("webbluetooth_available", "no");
+      }
     }
     const scriptId = "crowdin-jipt";
     if (

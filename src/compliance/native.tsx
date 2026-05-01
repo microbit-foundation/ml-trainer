@@ -67,7 +67,11 @@ export const createNativeCompliance = () => {
           new CustomEvent<CookieConsent & { version: number }>(
             "consentchange",
             {
-              detail: { analytics: granted, functional: true, version: consentVersion },
+              detail: {
+                analytics: granted,
+                functional: true,
+                version: consentVersion,
+              },
             }
           )
         );
