@@ -443,7 +443,7 @@ export const ProjectProvider = ({
         }
       } else {
         logging.event({
-          type: "hex_save",
+          type: "project_save",
           detail: {
             actions: actions.length,
             samples: getTotalNumSamples(actions),

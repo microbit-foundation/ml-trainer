@@ -143,12 +143,6 @@ Emitted from `performFlash` on `flashSuccess`.
 | ------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `model_train` | `actions:int`, `samples:int` | User started training a model. Fires at the start of training. |
 
-## Hex save events
-
-| Event      | Params                                                         | When fired                                                                                                                         |
-| ---------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `hex_save` | `actions:int`, `samples:int`, `destination: download \| share` | User saved the compiled program `.hex` file. `destination` describes where the hex went (download to disk vs. native share sheet). |
-
 ## Project events
 
 CRUD events from the home page and projects page carry a `surface` param so PMs can compare which entry point drives behaviour. Each event below lists which `surface` values are actually emitted today.
@@ -158,6 +152,16 @@ CRUD events from the home page and projects page carry a `surface` param so PMs 
 | Param     | Values                                                                                   |
 | --------- | ---------------------------------------------------------------------------------------- |
 | `surface` | `home` (only value emitted today; ProjectsPage doesn't currently expose a Create action) |
+
+### `project_save`
+
+User saved the compiled `.hex` (their full work — program plus trained model) to disk or via the native share sheet. Distinct from `dataset_save`, which saves just the recorded movement data.
+
+| Param         | Values                       |
+| ------------- | ---------------------------- |
+| `actions`     | int                          |
+| `samples`     | int                          |
+| `destination` | `download` / `share`         |
 
 ### `project_open`
 
@@ -236,7 +240,8 @@ Migration notes from the previous (UA-shaped) events. Listed for grep-ability wh
 | `WebUSB-available`, `WebBluetooth-available`                                                               | Dropped (fan-outs from `boot`). Replaced by user properties.                                                                  |
 | `connect-user`                                                                                             | Replaced by first emission of `device_connect_step`                                                                           |
 | `disconnect-user`                                                                                          | Renamed to `device_disconnect`; widened with `reason` param to also capture unexpected drops                                  |
-| `dataset-save` / `model-train` / `hex-save` / `hex-download` (plus their `-actions` / `-samples` fan-outs) | Consolidated to a single event each with raw numeric params; UA-era bucketing removed                                         |
+| `dataset-save` / `model-train` / `hex-download` (plus their `-actions` / `-samples` fan-outs)              | Consolidated to a single event each with raw numeric params; UA-era bucketing removed                                         |
+| `hex-save`                                                                                                 | Renamed to `project_save`; consolidated from `-actions` / `-samples` fan-outs; `save_type` param renamed to `destination`     |
 | `dataset-delete`                                                                                           | Renamed to `dataset_clear`                                                                                                    |
 | `drop-load` / `file-upload`                                                                                | Split: `dataset_load` (`.json` branch) and `project_import` (`.hex` branch). Logging moved inside the parsed-format branches. |
 | `session-open-new`                                                                                         | Renamed to `project_create`                                                                                                   |
