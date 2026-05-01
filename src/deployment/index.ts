@@ -25,6 +25,13 @@ export interface BrandConfig {
   appNameShort: string;
   appNameFull: string;
   /**
+   * Stable analytics identifier slug for this product. Attached as
+   * the `product` param on every event the logger emits, so dashboards
+   * can split traffic by product when multiple sibling apps share a
+   * GA4 property.
+   */
+  product: string;
+  /**
    * Read by vite.config.ts at build time for HTML meta tags. Not used at
    * runtime.
    */
@@ -94,11 +101,16 @@ const isAppsBuild = import.meta.env.VITE_BUILD_MODE === "apps";
 // of `mobile-analytics-plan.md`.
 const hasFirebaseConfig = import.meta.env.VITE_HAS_FIREBASE_CONFIG === "true";
 
-const createLogging = (env: Record<string, string>): Logging => {
+const createLogging = (
+  env: Record<string, string>,
+  product: string
+): Logging => {
   if (isAppsBuild) {
-    return hasFirebaseConfig ? new NativeLogging(env) : new ConsoleLogging();
+    return hasFirebaseConfig
+      ? new NativeLogging(env, product)
+      : new ConsoleLogging();
   }
-  return new WebLogging(env);
+  return new WebLogging(env, product);
 };
 
 const createCompliance = (
@@ -115,7 +127,7 @@ export const deployment: DeploymentConfig = (() => {
   const brand = brandFactory(env);
   const composed: DeploymentConfig = {
     ...brand,
-    logging: createLogging(env),
+    logging: createLogging(env, brand.product),
     compliance: createCompliance(env),
   };
   if (import.meta.env.DEV || flags.e2e) {

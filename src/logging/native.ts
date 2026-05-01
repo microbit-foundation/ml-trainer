@@ -29,7 +29,7 @@ export class NativeLogging implements Logging {
   private consentGranted = false;
   private sentryDsn: string | undefined;
 
-  constructor(env: Record<string, string>) {
+  constructor(env: Record<string, string>, private product: string) {
     this.sentryDsn = initSentry(env);
     // Firebase's default consent state for analytics_storage is "granted"
     // unless overridden. Explicitly deny at startup so nothing lands in
@@ -94,6 +94,9 @@ export class NativeLogging implements Logging {
     if (event.value !== undefined) {
       params.value = event.value;
     }
+    // Product is injected here so it lands on every event without
+    // call sites having to pass it. See BrandConfig.product.
+    params.product = this.product;
 
     void FirebaseAnalytics.logEvent({ name: event.type, params }).catch(() => {
       // Silent — analytics must never crash calling code.

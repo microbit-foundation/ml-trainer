@@ -11,6 +11,7 @@ const defaultBrandFactory: BrandConfigFactory = () => ({
   chakraTheme: theme,
   appNameFull: "ml-trainer",
   appNameShort: "ml-trainer",
+  product: "ml-trainer",
   AppLogo: (props: BoxProps) => {
     return (
       <VStack

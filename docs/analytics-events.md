@@ -8,6 +8,7 @@ Analytics events emitted by the app.
 - Capacitor build emits via `@capacitor-firebase/analytics`. `screen_view` is emitted manually from the navigate hook (Firebase doesn't auto-collect it inside a WebView).
 - Both backends use the same event names and param shapes. Backend code: `src/logging/web.ts`, `src/logging/native.ts`. Source-of-truth call sites are documented per event below.
 - Names are snake_case, ≤40 chars (Firebase rule). Param values must be primitives (string ≤100 chars, number, or boolean).
+- Every event automatically carries a **`product`** param injected by the logger from `BrandConfig.product`. It's not listed on individual event tables — assume it's always present. Lets dashboards split traffic by product when sibling apps share a GA4 property.
 
 ## User properties
 

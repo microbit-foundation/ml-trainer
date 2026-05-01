@@ -30,7 +30,7 @@ type GtagFn = {
 export class WebLogging implements Logging {
   private sentryDsn: string | undefined;
 
-  constructor(env: Record<string, string>) {
+  constructor(env: Record<string, string>, private product: string) {
     this.sentryDsn = initSentry(env);
   }
 
@@ -82,6 +82,9 @@ export class WebLogging implements Logging {
         if (event.value !== undefined) {
           params.value = event.value;
         }
+        // Product is injected here so it lands on every event without
+        // call sites having to pass it. See BrandConfig.product.
+        params.product = this.product;
         gtag("event", event.type, params);
       }
 
