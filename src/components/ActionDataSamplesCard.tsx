@@ -372,7 +372,12 @@ const DataSample = ({
     onDelete(actionId, recording.id);
   }, [actionId, onDelete, recording.id]);
   return (
-    <HStack key={recording.id} position="relative" ref={ref} gap={0}>
+    <HStack
+      key={recording.id}
+      position="relative"
+      ref={ref}
+      gap={hasFingerprint && hasGraph ? 2 : 0}
+    >
       {hasClose && (
         <Portal containerRef={ref}>
           <CloseButton
