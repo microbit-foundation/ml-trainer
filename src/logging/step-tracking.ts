@@ -8,6 +8,7 @@ import {
   DataConnectionStep,
   DataConnectionType,
 } from "../data-connection-flow/data-connection-types";
+import { DownloadEvent } from "../download-flow/download-machine-common";
 import { DownloadFlowType } from "../download-flow/download-machine";
 import { DownloadStep } from "../download-flow/download-types";
 import { Logging } from "./logging";
@@ -92,24 +93,6 @@ const connectStepNames: Record<DataConnectionStep, string | undefined> = {
   LocationDisabled: "location_disabled",
 };
 
-const connectFailureStage = (
-  eventType: DataConnectionEvent["type"]
-): string | undefined => {
-  switch (eventType) {
-    // performConnectFlash → couldn't make the connection needed for flashing
-    case "connectFlashFailure":
-      return "connect";
-    // performFlash → flashing the firmware itself failed
-    case "flashFailure":
-      return "flash";
-    // performConnectData → couldn't establish data connection (post-flash)
-    case "connectDataFailure":
-      return "data";
-    default:
-      return undefined;
-  }
-};
-
 /**
  * Emit step / exit / success / failure events for a data-connection
  * state machine transition. Called from `sendEvent` after the transition
@@ -146,15 +129,23 @@ export const logConnectionTransition = (
   // Terminal failure: emit alongside the step into the failure screen,
   // so the failure-rate-by-stage breakdown is one query without joining
   // step events to event payloads.
-  const stage = connectFailureStage(event.type);
-  if (stage) {
-    const code =
-      "code" in event && typeof event.code === "string"
-        ? event.code
-        : "unknown";
+  if (
+    event.type === "connectFlashFailure" ||
+    event.type === "flashFailure" ||
+    event.type === "connectDataFailure"
+  ) {
+    // performConnectFlash → couldn't make the connection needed for flashing
+    // performFlash → flashing the firmware itself failed
+    // performConnectData → couldn't establish data connection (post-flash)
+    const stage =
+      event.type === "connectFlashFailure"
+        ? "connect"
+        : event.type === "flashFailure"
+          ? "flash"
+          : "data";
     logging.event({
       type: "device_connect_failure",
-      detail: { stage, code, flow },
+      detail: { stage, code: event.code ?? "unknown", flow },
     });
   }
 
@@ -235,9 +226,8 @@ export const logFlashTransition = (
   logging: Logging,
   oldStep: DownloadStep,
   newStep: DownloadStep,
-  eventType: string,
-  flowType: DownloadFlowType,
-  failureCode?: string
+  event: DownloadEvent,
+  flowType: DownloadFlowType
 ): void => {
   if (oldStep === newStep) {
     return;
@@ -247,19 +237,19 @@ export const logFlashTransition = (
   const newName = flashStepNames[newStep];
   const flow = downloadFlowTypeToFlow(flowType);
 
-  if (eventType === "connectFlashFailure" || eventType === "flashFailure") {
+  if (event.type === "connectFlashFailure" || event.type === "flashFailure") {
     logging.event({
       type: "device_flash_failure",
       detail: {
-        stage: eventType === "flashFailure" ? "flash" : "connect",
-        code: failureCode ?? "unknown",
+        stage: event.type === "flashFailure" ? "flash" : "connect",
+        code: event.code ?? "unknown",
         flow,
       },
     });
   }
 
   if (newStep === "None" && oldName !== undefined) {
-    if (eventType === "close") {
+    if (event.type === "close") {
       logging.event({
         type: "device_flash_exit",
         detail: { at_step: oldName, reason: "close", flow },
@@ -274,7 +264,7 @@ export const logFlashTransition = (
       detail: {
         step: newName,
         from: oldName ?? "idle",
-        via: eventType,
+        via: event.type,
         flow,
       },
     });

@@ -327,16 +327,7 @@ const sendEvent = async (
     step: result.step,
   });
 
-  const failureCode =
-    "code" in event && typeof event.code === "string" ? event.code : undefined;
-  logFlashTransition(
-    deps.logging,
-    state.step,
-    result.step,
-    event.type,
-    flowType,
-    failureCode
-  );
+  logFlashTransition(deps.logging, state.step, result.step, event, flowType);
 
   // Execute actions
   for (const action of result.actions) {
