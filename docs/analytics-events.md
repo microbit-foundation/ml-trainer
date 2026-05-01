@@ -6,9 +6,8 @@ Analytics events emitted by the app.
 
 - Web build emits via gtag. GA4 Enhanced Measurement auto-collects `page_view`, `session_start`, `first_visit`, `user_engagement`, etc. — those are not redocumented here.
 - Capacitor build emits via `@capacitor-firebase/analytics`. `screen_view` is emitted manually from the navigate hook (Firebase doesn't auto-collect it inside a WebView).
-- Both backends use the same event names and param shapes. Backend code: `src/logging/ga-sentry.ts`, `src/logging/firebase-analytics.ts`. Source-of-truth call sites are documented per event below.
+- Both backends use the same event names and param shapes. Backend code: `src/logging/web.ts`, `src/logging/native.ts`. Source-of-truth call sites are documented per event below.
 - Names are snake_case, ≤40 chars (Firebase rule). Param values must be primitives (string ≤100 chars, number, or boolean).
-- A dev-only validator (`src/logging/dev-validator.ts`) warns when an event would be silently dropped or renamed by Firebase.
 
 ## User properties
 

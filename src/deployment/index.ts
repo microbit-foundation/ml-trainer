@@ -8,7 +8,6 @@ import React, { ComponentType, ReactNode, useContext } from "react";
 import { createNativeCompliance } from "../compliance/native";
 import { createWebCompliance } from "../compliance/web";
 import { flags } from "../flags";
-import { wrapWithDevValidator } from "../logging/dev-validator";
 import { Logging } from "../logging/logging";
 import { NativeLogging } from "../logging/native";
 import { WebLogging } from "../logging/web";
@@ -96,16 +95,10 @@ const isAppsBuild = import.meta.env.VITE_BUILD_MODE === "apps";
 const hasFirebaseConfig = import.meta.env.VITE_HAS_FIREBASE_CONFIG === "true";
 
 const createLogging = (env: Record<string, string>): Logging => {
-  let base: Logging;
   if (isAppsBuild) {
-    base = hasFirebaseConfig ? new NativeLogging(env) : new ConsoleLogging();
-  } else {
-    base = new WebLogging(env);
+    return hasFirebaseConfig ? new NativeLogging(env) : new ConsoleLogging();
   }
-  // Dev-only Firebase-spec validator catches drift between the
-  // permissive gtag world and the stricter Firebase rules before the
-  // apps build runs.
-  return import.meta.env.DEV ? wrapWithDevValidator(base) : base;
+  return new WebLogging(env);
 };
 
 const createCompliance = (
