@@ -38,7 +38,7 @@ export const NativeConsentDialog = ({
     onClose={onDecline}
     closeOnEsc={false}
     closeOnOverlayClick={false}
-    size={{ base: "full", md: "lg" }}
+    size="lg"
     isCentered
   >
     <ModalOverlay />

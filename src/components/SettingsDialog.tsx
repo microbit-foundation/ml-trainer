@@ -182,7 +182,11 @@ export const SettingsDialog = ({
                 {showAnalyticsToggle && (
                   <FormControl>
                     <HStack justify="space-between" align="center">
-                      <FormLabel htmlFor="analyticsConsent" mb={0}>
+                      <FormLabel
+                        htmlFor="analyticsConsent"
+                        mb={0}
+                        fontWeight="normal"
+                      >
                         <FormattedMessage id="analytics-consent-setting-label" />
                       </FormLabel>
                       <Switch
