@@ -391,8 +391,6 @@ export const ProjectProvider = ({
             extension: fileExtension || "none",
           },
         });
-        // TODO: Remove temporary wait
-        await new Promise((res) => setTimeout(res, 3_000));
         if (fileExtension === "json") {
           const actionsString = await readFileAsText(file);
           const actions = JSON.parse(actionsString) as unknown;
