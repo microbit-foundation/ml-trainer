@@ -349,10 +349,7 @@ const ImportProjectButton = () => {
   }, []);
   return (
     <>
-      <LoadProjectInput
-        ref={loadProjectRef}
-        accept=".json,.hex"
-      />
+      <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <IconButton
         icon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
