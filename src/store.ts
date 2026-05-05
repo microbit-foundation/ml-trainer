@@ -176,7 +176,7 @@ export interface State {
   isEditorReady: boolean;
   /**
    * Whether we're expecting an editorChange call with a new header id
-   * because we've
+   * because we've loaded a new hex file.
    *
    * In this case we need to update app state from the project.
    */
