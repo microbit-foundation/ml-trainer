@@ -83,7 +83,7 @@ const ProjectPreview = ({
           isLoading={isLoading}
           projectName={projectName}
         />
-        {!isLoading && (
+        {!isLoading && project !== undefined && (
           <>
             {dataset && <DataPreview dataset={dataset} />}
             {project && <MakeCodePreview project={project} />}
