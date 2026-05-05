@@ -39,20 +39,17 @@ const themePackageAlias = themePackageExternal
   ? theme
   : path.resolve(__dirname, internal);
 
-// Auto-derive the runtime Firebase-config gate from the presence of
-// the native config files that `npm run sync-native` drops in. The
-// gate controls whether `createLogging` instantiates `NativeLogging`
-// or falls back to `ConsoleLogging` (see src/deployment/index.ts).
-// Setting this here means a contributor never has to remember to flip
-// the env var manually. Both files must be present — a partial-config
-// state would compile but skip Firebase init silently on whichever
-// platform was missing.
+// Auto-derive the runtime Firebase-config gate from the theme-package's
+// native/ directory — the source of truth for whether real Firebase
+// config is available for this build. Controls whether `createLogging`
+// instantiates `NativeLogging` or falls back to `ConsoleLogging`; see
+// src/deployment/index.ts. Setting this here means a contributor never
+// has to remember to flip the env var manually.
+const themePackageNative = path.resolve(__dirname, external, "native");
 if (
   process.env.VITE_HAS_FIREBASE_CONFIG === undefined &&
-  fs.existsSync(
-    path.resolve(__dirname, "ios/App/App/GoogleService-Info.plist")
-  ) &&
-  fs.existsSync(path.resolve(__dirname, "android/app/google-services.json"))
+  fs.existsSync(path.join(themePackageNative, "GoogleService-Info.plist")) &&
+  fs.existsSync(path.join(themePackageNative, "google-services.json"))
 ) {
   process.env.VITE_HAS_FIREBASE_CONFIG = "true";
 }

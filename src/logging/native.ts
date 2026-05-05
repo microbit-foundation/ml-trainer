@@ -31,30 +31,26 @@ export class NativeLogging implements Logging {
 
   constructor(env: Record<string, string>, private product: string) {
     this.sentryDsn = initSentry(env);
-    // Firebase's default consent state for analytics_storage is "granted"
-    // unless overridden. Explicitly deny at startup so nothing lands in
-    // GA4 until the user has agreed; setConsent below flips this on.
-    void FirebaseAnalytics.setConsent({
-      type: ConsentType.AnalyticsStorage,
-      status: ConsentStatus.Denied,
-    }).catch(() => {
-      // Swallow: if the native bridge is unavailable at construction
-      // time, the event gate below still prevents emission.
-    });
+    // Firebase auto-collection is disabled at startup via the
+    // FirebaseDataCollectionDefaultEnabled key in Info.plist (iOS) /
+    // AndroidManifest meta-data (Android). setConsent below flips
+    // collection on once the user has granted analytics consent.
   }
 
   /**
    * Update the user's analytics consent. Called by the consent provider
    * on load (with the persisted decision) and on every change.
    *
-   * Note: Firebase respects the flag going forward but does not delete
-   * events already buffered on disk. The JS-side gate below is what
-   * actually guarantees no events are sent post-denial; the SDK call
-   * keeps Firebase's own consent-mode state in sync for anything the
-   * SDK emits automatically (e.g. session_start).
+   * Toggles Firebase's master analytics_collection_enabled flag and
+   * mirrors the GDPR consent-mode AnalyticsStorage status. The JS-side
+   * gate below is what actually guarantees no events are sent post-
+   * denial for our own events.
    */
   setConsent(granted: boolean): void {
     this.consentGranted = granted;
+    void FirebaseAnalytics.setEnabled({ enabled: granted }).catch(() => {
+      // Ignore: JS-side gate is authoritative for our own events.
+    });
     void FirebaseAnalytics.setConsent({
       type: ConsentType.AnalyticsStorage,
       status: granted ? ConsentStatus.Granted : ConsentStatus.Denied,
