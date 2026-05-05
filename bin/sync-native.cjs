@@ -1,13 +1,17 @@
 /**
- * Sync native-side artifacts from the optional theme-package into the
- * iOS / Android project trees. Today: copies Firebase config plists
- * into the locations Capacitor expects. Future passes can extend this
- * to apply theme-supplied bundle IDs, app names, or other native-only
- * brand values when those need to vary per deployment.
+ * Sync native-side artifacts into the iOS / Android project trees.
+ * For each target, the source-of-truth order is:
  *
- * No-op if the theme-package isn't installed or doesn't ship a
- * `native/` directory — keeps a fresh OSS clone running without
- * private config.
+ *   1. Theme-package's `native/` directory, if installed and present
+ *      (private builds — overlays real Firebase config, etc.)
+ *   2. Committed stub at `bin/stubs/<file>`, if any
+ *      (OSS clones — keeps Xcode's Copy Bundle Resources phase happy
+ *      with a file that's harmless because the Info.plist setting
+ *      FirebaseDataCollectionDefaultEnabled=false keeps Firebase Core
+ *      dormant after configure())
+ *
+ * Destination paths are gitignored — local modifications never appear
+ * in git status.
  */
 const fs = require("fs");
 const path = require("path");
@@ -15,36 +19,34 @@ const path = require("path");
 const projectRoot = path.resolve(__dirname, "..");
 const themePackageName = "@microbit-foundation/ml-trainer-microbit";
 
-// Resolve the theme-package via the consumer's node_modules directly,
-// matching the pattern vite.config.ts already uses. Avoids needing a
-// `"./package.json"` entry in the theme-package's `exports` map (which
-// is currently strict) just so we can find its root.
-const themePackageRoot = path.join(
+const themePackageNativeDir = path.join(
   projectRoot,
   "node_modules",
-  themePackageName
+  themePackageName,
+  "native"
 );
-
-const nativeDir = path.join(themePackageRoot, "native");
-if (!fs.existsSync(nativeDir)) {
-  // Theme-package isn't installed, or doesn't ship native artifacts —
-  // either way nothing to do. Keeps a fresh OSS clone running.
-  process.exit(0);
-}
+const stubsDir = path.join(__dirname, "stubs");
 
 const targets = [
   {
-    from: path.join(nativeDir, "GoogleService-Info.plist"),
+    name: "GoogleService-Info.plist",
     to: path.join(projectRoot, "ios/App/App/GoogleService-Info.plist"),
   },
   {
-    from: path.join(nativeDir, "google-services.json"),
+    name: "google-services.json",
     to: path.join(projectRoot, "android/app/google-services.json"),
   },
 ];
 
-for (const { from, to } of targets) {
-  if (!fs.existsSync(from)) continue;
+for (const { name, to } of targets) {
+  const themeSrc = path.join(themePackageNativeDir, name);
+  const stubSrc = path.join(stubsDir, name);
+  const from = fs.existsSync(themeSrc)
+    ? themeSrc
+    : fs.existsSync(stubSrc)
+      ? stubSrc
+      : undefined;
+  if (!from) continue;
   fs.mkdirSync(path.dirname(to), { recursive: true });
   fs.copyFileSync(from, to);
   console.log(

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Stub Firebase config. Committed so Xcode's Copy Bundle Resources
-  phase always finds the file at build time; private builds overlay
-  this with the real plist via bin/sync-native.cjs before iOS archives.
-
-  The Info.plist sets FirebaseDataCollectionDefaultEnabled=false so
-  Firebase Core stays dormant after configure() — nothing collects
-  with stub credentials. Private builds re-enable collection via
-  FirebaseAnalytics.setEnabled() once the user has granted consent.
+  Stub Firebase config used as a fallback when no theme-package
+  ships a real GoogleService-Info.plist. bin/sync-native.cjs copies
+  this into ios/App/App/ so Xcode's Copy Bundle Resources phase has
+  a file to bundle. The Info.plist sets FirebaseDataCollectionDefaultEnabled=false
+  so Firebase Core stays dormant after configure() with these stub
+  credentials.
 -->
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
