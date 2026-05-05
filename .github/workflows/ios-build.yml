@@ -60,6 +60,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: npm run sync-native
+
       - run: node ./bin/print-apps-ci-env.cjs >> $GITHUB_ENV
       - run: npm run build:apps
 
