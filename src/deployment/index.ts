@@ -92,13 +92,11 @@ export interface DeploymentConfig extends BrandConfig {
 const brandFactory: BrandConfigFactory = df;
 
 const isAppsBuild = import.meta.env.VITE_BUILD_MODE === "apps";
-// Set true by the private build pipeline once `GoogleService-Info.plist`
-// and `google-services.json` have been dropped into place. Without
-// these, instantiating `NativeLogging` would crash iOS at
-// `FirebaseApp.configure()`. Keeping this a build-time flag (not a
-// runtime try/catch) means a fresh OSS clone falls back to
-// `ConsoleLogging` cleanly — see the "Low-friction OSS launch" section
-// of `mobile-analytics-plan.md`.
+// True only when the native Firebase config files are in place.
+// Without them `NativeLogging` would crash iOS at
+// `FirebaseApp.configure()`, so a fresh OSS clone falls back to
+// `ConsoleLogging`. The flag is set automatically in vite.config.ts
+// when the plist + google-services.json are present.
 const hasFirebaseConfig = import.meta.env.VITE_HAS_FIREBASE_CONFIG === "true";
 
 const createLogging = (
