@@ -24,7 +24,7 @@ import {
 import microbitImage from "../images/stylised-microbit-black.svg";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
-import { dataConnectionTypeToFlow } from "../logging/step-tracking";
+import { dataConnectionTypeToAnalyticsTransport } from "../logging/step-tracking";
 import { TrainModelDialogStage } from "../model";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
@@ -75,7 +75,7 @@ const LiveGraphPanel = ({
       type: "device_disconnect",
       detail: {
         reason: "user",
-        flow: dataConnectionTypeToFlow(dataConnection.type),
+        transport: dataConnectionTypeToAnalyticsTransport(dataConnection.type),
       },
     });
     void actions.disconnect();

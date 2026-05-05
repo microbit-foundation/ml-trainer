@@ -14,16 +14,28 @@ import { DownloadStep } from "../download-flow/download-types";
 import { Logging } from "./logging";
 
 /**
- * Canonical analytics value for which transport flow is in use. Both
- * the connect and the flash state machines map onto this same set so
- * dashboards can compare reliability across transports without joining
- * two sources of truth.
+ * The user-mode descriptor: which transport stack the user's hardware
+ * setup uses end-to-end. `web_bluetooth` and `native_bluetooth`
+ * differentiate platforms because their connection codepaths and
+ * failure modes differ; `radio` covers the radio-bridge flow.
+ *
+ * For events emitted from the download state machine the actual flash
+ * happens over WebUSB / native USB regardless of this value — the
+ * dimension is the user's overall setup, not the per-event transport.
  */
-export type AnalyticsFlow = "web_bluetooth" | "native_bluetooth" | "radio";
+export type AnalyticsTransport = "web_bluetooth" | "native_bluetooth" | "radio";
 
-export const dataConnectionTypeToFlow = (
+/**
+ * Which user-goal-driven state machine the event came from.
+ * `data_connection` = connecting a micro:bit so the app can read live
+ * sensor data (recording, predictions). `download` = flashing the
+ * user's program to a micro:bit.
+ */
+export type AnalyticsTask = "data_connection" | "download";
+
+export const dataConnectionTypeToAnalyticsTransport = (
   type: DataConnectionType
-): AnalyticsFlow => {
+): AnalyticsTransport => {
   switch (type) {
     case DataConnectionType.WebBluetooth:
       return "web_bluetooth";
@@ -34,9 +46,9 @@ export const dataConnectionTypeToFlow = (
   }
 };
 
-export const downloadFlowTypeToFlow = (
+export const downloadFlowTypeToAnalyticsTransport = (
   type: DownloadFlowType
-): AnalyticsFlow => {
+): AnalyticsTransport => {
   switch (type) {
     case "browser-default":
       return "web_bluetooth";
@@ -55,7 +67,7 @@ export const downloadFlowTypeToFlow = (
  * GA4 dashboards. States that map to `undefined` are filtered out — they
  * are transient (e.g. WebUsbChooseMicrobit triggers an OS picker that
  * resolves in <1s) or are bounded by a more specific terminal event
- * (Connected → device_connect_success).
+ * (Connected → device_success).
  *
  * If a new state is added to DataConnectionStep without an entry here,
  * the `Record<DataConnectionStep, …>` shape will fail compilation —
@@ -87,7 +99,7 @@ const connectStepNames: Record<DataConnectionStep, string | undefined> = {
   // No transport possible — there's no funnel through this terminal
   // screen. The cohort is captured by the webusb_available /
   // webbluetooth_available user properties; emitting step / exit
-  // events here would have no honest `flow` value.
+  // events here would have no honest `transport` value.
   WebUsbBluetoothUnsupported: undefined,
   ManualFlashingTutorial: "manual_flashing_tutorial",
   ConnectionLost: "connection_lost",
@@ -117,50 +129,49 @@ export const logConnectionTransition = (
 
   const oldName = connectStepNames[oldStep];
   const newName = connectStepNames[newStep];
-  const flow = dataConnectionTypeToFlow(type);
+  const transport = dataConnectionTypeToAnalyticsTransport(type);
+  const task: AnalyticsTask = "data_connection";
 
   // Terminal success: bounds the funnel without an extra step event for
   // Connected (which is just "the dialog closed and we're using the
   // device").
   if (newStep === "Connected") {
     logging.event({
-      type: "device_connect_success",
-      detail: { flow },
+      type: "device_success",
+      detail: { task, transport },
     });
     return;
   }
 
   // Terminal failure: emit alongside the step into the failure screen,
-  // so the failure-rate-by-stage breakdown is one query without joining
-  // step events to event payloads.
+  // so the failure-rate analysis is one query without joining step
+  // events to event payloads. `at_step` carries the step the user was
+  // on when the SDK reported the failure.
   if (
     event.type === "connectFlashFailure" ||
     event.type === "flashFailure" ||
     event.type === "connectDataFailure"
   ) {
-    // performConnectFlash → couldn't make the connection needed for flashing
-    // performFlash → flashing the firmware itself failed
-    // performConnectData → couldn't establish data connection (post-flash)
-    const stage =
-      event.type === "connectFlashFailure"
-        ? "connect"
-        : event.type === "flashFailure"
-        ? "flash"
-        : "data";
     logging.event({
-      type: "device_connect_failure",
-      detail: { stage, code: event.code ?? "unknown", flow },
+      type: "device_failure",
+      detail: {
+        task,
+        at_step: oldName ?? "unknown",
+        code: event.code ?? "unknown",
+        transport,
+      },
     });
   }
 
   // Unexpected disconnect: only emit when the user actually sees the
   // ConnectionLost screen — brief auto-reconnects don't trip this.
   // Pairs with the user-initiated `device_disconnect` from the
-  // LiveGraphPanel button (reason: "user").
+  // LiveGraphPanel button (reason: "user"). No `task` param: disconnect
+  // is always from the data-connection state machine.
   if (newStep === "ConnectionLost") {
     logging.event({
       type: "device_disconnect",
-      detail: { reason: "unknown", flow },
+      detail: { reason: "unknown", transport },
     });
   }
 
@@ -170,8 +181,8 @@ export const logConnectionTransition = (
   if (newStep === "Idle" && oldName !== undefined) {
     if (event.type === "close") {
       logging.event({
-        type: "device_connect_exit",
-        detail: { at_step: oldName, reason: "close", flow },
+        type: "device_exit",
+        detail: { task, at_step: oldName, reason: "close", transport },
       });
     }
     // event.type === "disconnect" is the user-initiated disconnect — the
@@ -183,12 +194,13 @@ export const logConnectionTransition = (
   // Standard step entry — only when the new state is user-meaningful.
   if (newName !== undefined) {
     logging.event({
-      type: "device_connect_step",
+      type: "device_step",
       detail: {
+        task,
         step: newName,
         from: oldName ?? "idle",
         via: event.type,
-        flow,
+        transport,
       },
     });
   }
@@ -222,9 +234,10 @@ const flashStepNames: Record<DownloadStep, string | undefined> = {
 
 /**
  * Download/flash flow analogue of `logConnectionTransition`. Emits
- * device_flash_step / _exit / _failure. The terminal `device_flash`
- * (success) is logged from `performFlash` itself with the
- * actions/samples context that's only available there.
+ * device_step / device_exit / device_failure with `task: "download"`.
+ * The terminal `device_success` for this task is logged from
+ * `performFlash` itself with the actions/samples context that's only
+ * available there.
  */
 export const logFlashTransition = (
   logging: Logging,
@@ -239,15 +252,17 @@ export const logFlashTransition = (
 
   const oldName = flashStepNames[oldStep];
   const newName = flashStepNames[newStep];
-  const flow = downloadFlowTypeToFlow(flowType);
+  const transport = downloadFlowTypeToAnalyticsTransport(flowType);
+  const task: AnalyticsTask = "download";
 
   if (event.type === "connectFlashFailure" || event.type === "flashFailure") {
     logging.event({
-      type: "device_flash_failure",
+      type: "device_failure",
       detail: {
-        stage: event.type === "flashFailure" ? "flash" : "connect",
+        task,
+        at_step: oldName ?? "unknown",
         code: event.code ?? "unknown",
-        flow,
+        transport,
       },
     });
   }
@@ -255,8 +270,8 @@ export const logFlashTransition = (
   if (newStep === "None" && oldName !== undefined) {
     if (event.type === "close") {
       logging.event({
-        type: "device_flash_exit",
-        detail: { at_step: oldName, reason: "close", flow },
+        type: "device_exit",
+        detail: { task, at_step: oldName, reason: "close", transport },
       });
     }
     return;
@@ -264,12 +279,13 @@ export const logFlashTransition = (
 
   if (newName !== undefined) {
     logging.event({
-      type: "device_flash_step",
+      type: "device_step",
       detail: {
+        task,
         step: newName,
         from: oldName ?? "idle",
         via: event.type,
-        flow,
+        transport,
       },
     });
   }

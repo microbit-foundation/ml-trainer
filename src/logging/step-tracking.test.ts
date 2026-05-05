@@ -34,13 +34,13 @@ describe("logConnectionTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_connect_success",
-        detail: { flow: "native_bluetooth" },
+        type: "device_success",
+        detail: { task: "data_connection", transport: "native_bluetooth" },
       },
     ]);
   });
 
-  it("emits failure with code, alongside the step into the failure screen", () => {
+  it("emits failure with code and at_step, alongside the step into the failure screen", () => {
     const logging = new MockLogging();
     logConnectionTransition(
       logging,
@@ -51,20 +51,22 @@ describe("logConnectionTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_connect_failure",
+        type: "device_failure",
         detail: {
-          stage: "connect",
+          task: "data_connection",
+          at_step: "connecting_microbits",
           code: "device-in-use",
-          flow: "web_bluetooth",
+          transport: "web_bluetooth",
         },
       },
       {
-        type: "device_connect_step",
+        type: "device_step",
         detail: {
+          task: "data_connection",
           step: "connect_failed",
           from: "connecting_microbits",
           via: "connectFlashFailure",
-          flow: "web_bluetooth",
+          transport: "web_bluetooth",
         },
       },
     ]);
@@ -80,12 +82,17 @@ describe("logConnectionTransition", () => {
       DataConnectionType.Radio
     );
     expect(logging.events[0]).toEqual({
-      type: "device_connect_failure",
-      detail: { stage: "flash", code: "unknown", flow: "radio" },
+      type: "device_failure",
+      detail: {
+        task: "data_connection",
+        at_step: "bluetooth_connecting",
+        code: "unknown",
+        transport: "radio",
+      },
     });
   });
 
-  it("maps connectDataFailure to stage: 'data'", () => {
+  it("emits failure for connectDataFailure with at_step from the previous screen", () => {
     const logging = new MockLogging();
     logConnectionTransition(
       logging,
@@ -94,14 +101,14 @@ describe("logConnectionTransition", () => {
       { type: "connectDataFailure", code: "pairing-information-lost" },
       DataConnectionType.NativeBluetooth
     );
-    expect(
-      logging.events.find((e) => e.type === "device_connect_failure")
-    ).toEqual({
-      type: "device_connect_failure",
+    expect(logging.events.find((e) => e.type === "device_failure")).toEqual({
+      type: "device_failure",
       detail: {
-        stage: "data",
+        task: "data_connection",
+        // Connected maps to undefined → falls back to "unknown".
+        at_step: "unknown",
         code: "pairing-information-lost",
-        flow: "native_bluetooth",
+        transport: "native_bluetooth",
       },
     });
   });
@@ -118,16 +125,17 @@ describe("logConnectionTransition", () => {
     expect(logging.events).toEqual([
       {
         type: "device_disconnect",
-        detail: { reason: "unknown", flow: "web_bluetooth" },
+        detail: { reason: "unknown", transport: "web_bluetooth" },
       },
       {
-        type: "device_connect_step",
+        type: "device_step",
         detail: {
+          task: "data_connection",
           step: "connection_lost",
           // Connected maps to undefined, so `from` falls back to "idle".
           from: "idle",
           via: "deviceDisconnected",
-          flow: "web_bluetooth",
+          transport: "web_bluetooth",
         },
       },
     ]);
@@ -144,11 +152,12 @@ describe("logConnectionTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_connect_exit",
+        type: "device_exit",
         detail: {
+          task: "data_connection",
           at_step: "enter_bluetooth_pattern",
           reason: "close",
-          flow: "native_bluetooth",
+          transport: "native_bluetooth",
         },
       },
     ]);
@@ -191,12 +200,13 @@ describe("logConnectionTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_connect_step",
+        type: "device_step",
         detail: {
+          task: "data_connection",
           step: "start",
           from: "idle",
           via: "connect",
-          flow: "radio",
+          transport: "radio",
         },
       },
     ]);
@@ -216,7 +226,7 @@ describe("logFlashTransition", () => {
     expect(logging.events).toEqual([]);
   });
 
-  it("emits failure with code alongside the step into the failure screen", () => {
+  it("emits failure with code and at_step alongside the step into the failure screen", () => {
     const logging = new MockLogging();
     logFlashTransition(
       logging,
@@ -227,16 +237,22 @@ describe("logFlashTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_flash_failure",
-        detail: { stage: "flash", code: "device-disconnected", flow: "radio" },
+        type: "device_failure",
+        detail: {
+          task: "download",
+          at_step: "flashing",
+          code: "device-disconnected",
+          transport: "radio",
+        },
       },
       {
-        type: "device_flash_step",
+        type: "device_step",
         detail: {
+          task: "download",
           step: "connect_failed",
           from: "flashing",
           via: "flashFailure",
-          flow: "radio",
+          transport: "radio",
         },
       },
     ]);
@@ -252,8 +268,13 @@ describe("logFlashTransition", () => {
       "browser-default"
     );
     expect(logging.events[0]).toEqual({
-      type: "device_flash_failure",
-      detail: { stage: "connect", code: "unknown", flow: "web_bluetooth" },
+      type: "device_failure",
+      detail: {
+        task: "download",
+        at_step: "connect_cable",
+        code: "unknown",
+        transport: "web_bluetooth",
+      },
     });
   });
 
@@ -268,11 +289,12 @@ describe("logFlashTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_flash_exit",
+        type: "device_exit",
         detail: {
+          task: "download",
           at_step: "choose_microbit",
           reason: "close",
-          flow: "native_bluetooth",
+          transport: "native_bluetooth",
         },
       },
     ]);
@@ -289,12 +311,13 @@ describe("logFlashTransition", () => {
     );
     expect(logging.events).toEqual([
       {
-        type: "device_flash_step",
+        type: "device_step",
         detail: {
+          task: "download",
           step: "choose_microbit",
           from: "help",
           via: "next",
-          flow: "web_bluetooth",
+          transport: "web_bluetooth",
         },
       },
     ]);
