@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Stub Firebase config used as a fallback when no theme-package
-  ships a real GoogleService-Info.plist. bin/sync-native.cjs copies
+  ships a real GoogleService-Info.plist. bin/apply-brand.cjs copies
   this into ios/App/App/ so Xcode's Copy Bundle Resources phase has
   a file to bundle. The Info.plist sets FirebaseDataCollectionDefaultEnabled=false
   so Firebase Core stays dormant after configure() with these stub

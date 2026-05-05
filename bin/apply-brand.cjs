@@ -1,5 +1,10 @@
 /**
- * Sync native-side artifacts into the iOS / Android project trees.
+ * Apply the deployment-time brand overlay to the iOS / Android
+ * project trees. Today: copy native config files (Firebase plists)
+ * from the brand source into their canonical destinations. Future
+ * passes can extend this to bundle IDs, app names, and other
+ * brand-coupled native values.
+ *
  * For each target, the source-of-truth order is:
  *
  *   1. Theme-package's `native/` directory, if installed and present
@@ -50,7 +55,7 @@ for (const { name, to } of targets) {
   fs.mkdirSync(path.dirname(to), { recursive: true });
   fs.copyFileSync(from, to);
   console.log(
-    `[sync-native] ${path.relative(projectRoot, from)} → ${path.relative(
+    `[apply-brand] ${path.relative(projectRoot, from)} → ${path.relative(
       projectRoot,
       to
     )}`
