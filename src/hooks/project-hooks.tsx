@@ -391,6 +391,8 @@ export const ProjectProvider = ({
             extension: fileExtension || "none",
           },
         });
+        // TODO: Remove temporary wait
+        await new Promise((res) => setTimeout(res, 3_000));
         if (fileExtension === "json") {
           const actionsString = await readFileAsText(file);
           const actions = JSON.parse(actionsString) as unknown;
@@ -549,24 +551,29 @@ export const ProjectProvider = ({
       const appUrlListener = CapacitorApp.addListener(
         "appUrlOpen",
         async (evt) => {
-          const contents = await Filesystem.readFile({
-            path: evt.url,
-            encoding: Encoding.UTF8,
-          });
-          let filename = decodeURIComponent(
-            evt.url.substring(evt.url.lastIndexOf("/") + 1)
-          );
-          // Forgivingly shim broken filenames to hex files,
-          // we can't rely on android to maintain file data.
-          // Even Android's Files app often passes us a broken
-          // filename. MakeCode is resilient to bad files.
-          if (filename.length === 0) {
-            filename = `${untitledProjectName}.hex`;
+          try {
+            setLoadingOverlayVisible(true);
+            const contents = await Filesystem.readFile({
+              path: evt.url,
+              encoding: Encoding.UTF8,
+            });
+            let filename = decodeURIComponent(
+              evt.url.substring(evt.url.lastIndexOf("/") + 1)
+            );
+            // Forgivingly shim broken filenames to hex files,
+            // we can't rely on android to maintain file data.
+            // Even Android's Files app often passes us a broken
+            // filename. MakeCode is resilient to bad files.
+            if (filename.length === 0) {
+              filename = `${untitledProjectName}.hex`;
+            }
+            if (!filename.includes(".")) {
+              filename += ".hex";
+            }
+            await importProjectFromHexText(contents.data as string, filename);
+          } finally {
+            setLoadingOverlayVisible(false);
           }
-          if (!filename.includes(".")) {
-            filename += ".hex";
-          }
-          await importProjectFromHexText(contents.data as string, filename);
         }
       );
 
@@ -588,6 +595,7 @@ export const ProjectProvider = ({
     importProjectFromHexText,
     isEditorReady,
     logging,
+    setLoadingOverlayVisible,
   ]);
 
   const value = useMemo(
