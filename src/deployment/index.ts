@@ -8,9 +8,9 @@ import React, { ComponentType, ReactNode, useContext } from "react";
 import { createNativeCompliance } from "../compliance/native";
 import { createWebCompliance } from "../compliance/web";
 import { flags } from "../flags";
+import { Logger } from "../logging/logger";
 import { Logging } from "../logging/logging";
-import { NativeLogging } from "../logging/native";
-import { WebLogging } from "../logging/web";
+import { NativeSink, WebSink } from "../logging/sink";
 import { ConsoleLogging } from "./default/logging";
 
 // This is configured via a vite alias, defaulting to ./default
@@ -93,7 +93,7 @@ const brandFactory: BrandConfigFactory = df;
 
 const isAppsBuild = import.meta.env.VITE_BUILD_MODE === "apps";
 // True only when the native Firebase config files are in place.
-// Without them `NativeLogging` would crash iOS at
+// Without them the Logger's NativeSink would crash iOS at
 // `FirebaseApp.configure()`, so a fresh OSS clone falls back to
 // `ConsoleLogging`. The flag is set automatically in vite.config.ts
 // when the plist + google-services.json are present.
@@ -105,10 +105,10 @@ const createLogging = (
 ): Logging => {
   if (isAppsBuild) {
     return hasFirebaseConfig
-      ? new NativeLogging(env, product)
+      ? new Logger(new NativeSink(), env, product)
       : new ConsoleLogging();
   }
-  return new WebLogging(env, product);
+  return new Logger(new WebSink(), env, product);
 };
 
 const createCompliance = (
