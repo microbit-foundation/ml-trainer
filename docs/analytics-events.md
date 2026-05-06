@@ -149,9 +149,9 @@ User saved the compiled `.hex` (their full work — program plus trained model) 
 
 ### `project_rename`
 
-| Param     | Values              |
-| --------- | ------------------- |
-| `surface` | `home` / `projects` |
+| Param     | Values                            |
+| --------- | --------------------------------- |
+| `surface` | `home` / `projects` / `toolbar`   |
 
 ### `project_duplicate`
 
@@ -183,11 +183,11 @@ Projects page only. Fires when the user changes sort field or direction.
 
 ### `project_import`
 
-User imported a `.hex` project from a file. Pairs with `dataset_load` (which fires on the `.json` branch). Logging is inside the parsed-format branch, so this only fires once the file is known to be a hex.
+User opened a project. The hex-file branches pair with `dataset_load` (which fires on the `.json` branch); logging there is inside the parsed-format branch, so the event only fires once the file is known to be a hex. The `microbit_org` source fires when a project is loaded from the import landing page after fetching a microbit.org resource.
 
-| Param    | Values                 |
-| -------- | ---------------------- |
-| `source` | `drop` / `file_picker` |
+| Param    | Values                                |
+| -------- | ------------------------------------- |
+| `source` | `drop` / `file_picker` / `microbit_org` |
 
 ### `project_share_open`
 

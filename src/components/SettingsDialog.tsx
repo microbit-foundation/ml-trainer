@@ -26,6 +26,7 @@ import {
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useDeployment } from "../deployment";
+import { isNativePlatform } from "../platform";
 import {
   defaultSettings,
   graphColorSchemeOptions,
@@ -55,7 +56,7 @@ export const SettingsDialog = ({
   // Show the analytics toggle only when the native consent flow is the
   // active surface; the web build defers to the shared-assets cookie
   // modal accessed via the nav-drawer "Manage cookies" link.
-  const showAnalyticsToggle = import.meta.env.VITE_BUILD_MODE === "apps";
+  const showAnalyticsToggle = isNativePlatform();
   const resetConfirmDialog = useDisclosure();
   const handleResetToDefault = useCallback(() => {
     resetConfirmDialog.onOpen();

@@ -8,7 +8,7 @@ import { useLogging } from "../logging/logging-hooks";
 import { ProjectNameDialogReason } from "../project-utils";
 import { useStore } from "../store";
 
-export type ProjectActionSurface = "home" | "projects";
+export type ProjectActionSurface = "home" | "projects" | "toolbar";
 
 interface UseProjectCardActionsOptions {
   surface: ProjectActionSurface;

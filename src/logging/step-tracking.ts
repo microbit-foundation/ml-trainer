@@ -65,9 +65,9 @@ export const downloadFlowTypeToAnalyticsTransport = (
  * The lookup decouples the analytics dimension from the state-machine
  * state names, so refactoring states (rename, split, merge) doesn't move
  * GA4 dashboards. States that map to `undefined` are filtered out — they
- * are transient (e.g. WebUsbChooseMicrobit triggers an OS picker that
- * resolves in <1s) or are bounded by a more specific terminal event
- * (Connected → device_success).
+ * are bounded by a more specific terminal event (Connected →
+ * device_success) or have no honest funnel value (e.g.
+ * WebUsbBluetoothUnsupported, where there's no transport to attribute).
  *
  * If a new state is added to DataConnectionStep without an entry here,
  * the `Record<DataConnectionStep, …>` shape will fail compilation —
@@ -83,7 +83,7 @@ const connectStepNames: Record<DataConnectionStep, string | undefined> = {
   EnterBluetoothPattern: "enter_bluetooth_pattern",
   NativeBluetoothPreConnectTutorial: "native_bluetooth_tutorial",
   WebBluetoothPreConnectTutorial: "webbluetooth_tutorial",
-  WebUsbChooseMicrobit: undefined,
+  WebUsbChooseMicrobit: "webusb_choose_microbit",
   BluetoothConnect: "bluetooth_connecting",
   ConnectingMicrobits: "connecting_microbits",
   FlashingInProgress: "flashing",

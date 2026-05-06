@@ -178,11 +178,11 @@ describe("logConnectionTransition", () => {
 
   it("does not emit a step event when newStep maps to undefined", () => {
     const logging = new MockLogging();
-    // WebUsbChooseMicrobit is a transient OS picker; intentionally filtered.
+    // WebUsbBluetoothUnsupported has no honest transport value; intentionally filtered.
     logConnectionTransition(
       logging,
-      "WebUsbFlashingTutorial",
-      "WebUsbChooseMicrobit",
+      "Start",
+      "WebUsbBluetoothUnsupported",
       { type: "next" } as DataConnectionEvent,
       DataConnectionType.WebBluetooth
     );

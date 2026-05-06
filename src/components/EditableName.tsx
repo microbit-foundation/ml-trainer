@@ -21,6 +21,7 @@ import {
 } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
+import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 
 interface EditableNameProps {
@@ -53,6 +54,7 @@ const EditableName = ({
   const getCurrentProject = useStore((s) => s.getCurrentProject);
   const renameProject = useStore((s) => s.setProjectName);
   const id = useStore((s) => s.id);
+  const logging = useLogging();
   const ref = useRef<HTMLButtonElement>(null);
   const projectName = getCurrentProject().header?.name;
   const [value, setValue] = useState(projectName);
@@ -71,11 +73,17 @@ const EditableName = ({
   const handleSubmit = useCallback(
     async (nextValue: string) => {
       if (id) {
+        if (nextValue !== projectName) {
+          logging.event({
+            type: "project_rename",
+            detail: { surface: "toolbar" },
+          });
+        }
         await renameProject(nextValue, id);
         setEditing(false);
       }
     },
-    [id, renameProject]
+    [id, logging, projectName, renameProject]
   );
 
   useEffect(() => {

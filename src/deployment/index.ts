@@ -12,6 +12,7 @@ import { Logger } from "../logging/logger";
 import { Logging } from "../logging/logging";
 import { NativeSink, WebSink } from "../logging/sink";
 import { isStageWithAnalytics } from "../logging/stage";
+import { isNativePlatform } from "../platform";
 import { ConsoleLogging } from "./default/logging";
 
 // This is configured via a vite alias, defaulting to ./default
@@ -119,7 +120,7 @@ const createLogging = (
 const createCompliance = (
   env: Record<string, string>
 ): DeploymentConfig["compliance"] => {
-  if (isAppsBuild) {
+  if (isNativePlatform()) {
     return createNativeCompliance();
   }
   return createWebCompliance(env);
