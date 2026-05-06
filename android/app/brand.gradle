@@ -1,0 +1,13 @@
+// Brand-coupled build properties. Committed values are OSS-neutral; for
+// private builds the theme package's apply-brand step drops a sibling
+// `brand.private.gradle` (gitignored) that overrides these values.
+// Consumed in build.gradle for namespace, applicationId, and string
+// resources (app_name, title_activity_main, etc.) emitted via resValue.
+
+ext.brandAppId = "org.microbit.mltrainer"
+ext.brandDisplayName = "ml-trainer"
+
+def privateBrand = file("brand.private.gradle")
+if (privateBrand.exists()) {
+    apply from: privateBrand
+}

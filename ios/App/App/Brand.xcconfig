@@ -1,0 +1,13 @@
+// Brand-coupled build settings. Committed values are OSS-neutral; for
+// private builds the theme package's apply-brand step drops a sibling
+// `Brand.private.xcconfig` (gitignored) that overrides these values.
+// Substituted into Info.plist via `$(BRAND_*)` references and into
+// project.pbxproj for bundle id, dev team, and provisioning profile.
+
+BRAND_BUNDLE_ID = org.microbit.mltrainer
+BRAND_DISPLAY_NAME = ml-trainer
+BRAND_BLUETOOTH_USAGE_DESCRIPTION = ml-trainer uses Bluetooth to connect to your micro:bit.
+BRAND_DEVELOPMENT_TEAM =
+BRAND_PROVISIONING_PROFILE_SPECIFIER =
+
+#include? "Brand.private.xcconfig"

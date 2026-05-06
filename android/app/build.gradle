@@ -1,15 +1,20 @@
+apply from: 'brand.gradle'
 apply plugin: 'com.android.application'
 
 android {
-    namespace "org.microbit.createai"
+    namespace project.brandAppId
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "org.microbit.createai"
+        applicationId project.brandAppId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "app_name", project.brandDisplayName
+        resValue "string", "title_activity_main", project.brandDisplayName
+        resValue "string", "package_name", project.brandAppId
+        resValue "string", "custom_url_scheme", project.brandAppId
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'
         }
