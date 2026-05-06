@@ -11,6 +11,7 @@ import { flags } from "../flags";
 import { Logger } from "../logging/logger";
 import { Logging } from "../logging/logging";
 import { NativeSink, WebSink } from "../logging/sink";
+import { isStageWithAnalytics } from "../logging/stage";
 import { ConsoleLogging } from "./default/logging";
 
 // This is configured via a vite alias, defaulting to ./default
@@ -105,7 +106,11 @@ const createLogging = (
 ): Logging => {
   if (isAppsBuild) {
     return hasFirebaseConfig
-      ? new Logger(new NativeSink(), env, product)
+      ? new Logger(
+          new NativeSink(isStageWithAnalytics(env.VITE_STAGE)),
+          env,
+          product
+        )
       : new ConsoleLogging();
   }
   return new Logger(new WebSink(), env, product);

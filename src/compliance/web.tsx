@@ -5,6 +5,7 @@
  */
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { CookieConsent } from "../deployment";
+import { isStageWithAnalytics } from "../logging/stage";
 
 /**
  * Surface of the shared-assets `commonConsent` API
@@ -47,10 +48,7 @@ export const createWebCompliance = (env: Record<string, string>) => {
   ) => {
     const domain = window.location.hostname;
     const config: ConsentConfig = {
-      ga:
-        env.VITE_STAGE === "PRODUCTION" || env.VITE_STAGE === "STAGING"
-          ? {}
-          : undefined,
+      ga: isStageWithAnalytics(env.VITE_STAGE) ? {} : undefined,
       custom: [
         {
           type: "local",

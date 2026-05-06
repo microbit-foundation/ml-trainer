@@ -74,19 +74,27 @@ export class WebSink implements AnalyticsSink {
  * auto-collection is disabled at startup via the
  * FirebaseDataCollectionDefaultEnabled key in Info.plist (iOS) /
  * AndroidManifest meta-data (Android); setConsent flips it on.
+ *
+ * `stageEnabled` mirrors the web cookie modal's stage gate: on
+ * REVIEW / BETA / local dev all SDK methods become no-ops so
+ * developer / preview traffic never reaches the live property. The
+ * consent UX (first-run dialog + Settings toggle) is intentionally
+ * left visible on gated stages so it stays exercisable.
  */
 export class NativeSink implements AnalyticsSink {
   private consentGranted = false;
 
+  constructor(private stageEnabled: boolean) {}
+
   event(name: string, params: AnalyticsParams): void {
-    if (!this.consentGranted) return;
+    if (!this.stageEnabled || !this.consentGranted) return;
     void FirebaseAnalytics.logEvent({ name, params }).catch(() => {
       // Silent — analytics must never crash calling code.
     });
   }
 
   setUserProperty(name: string, value: string): void {
-    if (!this.consentGranted) return;
+    if (!this.stageEnabled || !this.consentGranted) return;
     void FirebaseAnalytics.setUserProperty({ key: name, value }).catch(() => {
       // Silent.
     });
@@ -94,6 +102,7 @@ export class NativeSink implements AnalyticsSink {
 
   setConsent(granted: boolean): void {
     this.consentGranted = granted;
+    if (!this.stageEnabled) return;
     void FirebaseAnalytics.setEnabled({ enabled: granted }).catch(() => {
       // Ignore: JS-side gate is authoritative for our own events.
     });
@@ -106,7 +115,7 @@ export class NativeSink implements AnalyticsSink {
   }
 
   navigate(path: string): void {
-    if (!this.consentGranted) return;
+    if (!this.stageEnabled || !this.consentGranted) return;
     // Firebase doesn't auto-collect screen_view inside a Capacitor
     // WebView (its automatic tracking is hooked into the native view
     // hierarchy). screen_name matches the page_path GA4 Enhanced
