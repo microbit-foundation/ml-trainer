@@ -24,6 +24,12 @@
 /android/app/src/main/assets/public
 /ios/App/App/public
 
+# Firebase config plists dropped in by `npm run sync-native` from the
+# optional private theme-package — out of OSS history. See
+# bin/sync-native.cjs and mobile-analytics-plan.md.
+/ios/App/App/GoogleService-Info.plist
+/android/app/google-services.json
+
 # Fastlane
 fastlane/report.xml
 fastlane/Preview.html

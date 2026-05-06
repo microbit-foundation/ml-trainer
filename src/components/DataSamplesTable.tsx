@@ -12,6 +12,7 @@ import { useDataConnected } from "../data-connection-flow";
 import useKeyboardHeight from "../hooks/use-keyboard-height";
 import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DataSamplesPageHint } from "../model";
 import { isIOS } from "../platform";
 import { useStore } from "../store";
@@ -164,10 +165,12 @@ const DataSamplesTable = ({
     [tourStart]
   );
 
+  const logging = useLogging();
   const handleConfirm = useCallback(async () => {
+    logging.event({ type: "action_delete" });
     await deleteAction(selectedAction);
     closeDialog();
-  }, [closeDialog, deleteAction, selectedAction]);
+  }, [closeDialog, deleteAction, logging, selectedAction]);
 
   const actionNameInputEl = useCallback(
     (idx: number) => document.getElementById(actionNameInputId(actions[idx])),

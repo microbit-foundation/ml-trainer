@@ -43,12 +43,9 @@ const OpenSharedProjectPage = () => {
   const handleOpenProject = useCallback(async () => {
     if (!header || !projectText) return;
     await loadProject({ header: { ...header, name }, text: projectText }, name);
-    logging.event({
-      type: "import-shared-project-complete",
-      detail: { shareId },
-    });
+    logging.event({ type: "project_share_open" });
     navigate(createDataSamplesPageUrl());
-  }, [loadProject, header, projectText, name, navigate, logging, shareId]);
+  }, [loadProject, header, projectText, name, navigate, logging]);
 
   if (sharedState === SharedState.Failed) {
     return <ErrorPreloading />;
@@ -163,10 +160,6 @@ const useProjectPreload = (setName: (name: string) => void) => {
     let cleanedUp = false;
     const loadAsync = async () => {
       try {
-        logging.event({
-          type: "import-shared-project-start",
-          detail: { shareId },
-        });
         const header = await fetchSharedHeader(shareId);
         if (cleanedUp) {
           throw new Error("Cancelled");
@@ -186,18 +179,17 @@ const useProjectPreload = (setName: (name: string) => void) => {
         }
         setSharedState(SharedState.Complete);
         setProjectText(text);
-        logging.event({
-          type: "import-shared-project-preloaded",
-          detail: { shareId },
-        });
       } catch (e: unknown) {
-        logging.event({
-          type: "import-shared-project-failed",
-          detail: { shareId, error: e },
-        });
-        if (!cleanedUp) {
-          setSharedState(SharedState.Failed);
+        if (cleanedUp) {
+          return;
         }
+        const reason = e instanceof ShareFailure ? e.kind : "unknown";
+        logging.event({
+          type: "project_share_failure",
+          detail: { reason },
+        });
+        logging.error("Failed to preload shared project", e);
+        setSharedState(SharedState.Failed);
       }
     };
     void loadAsync();
@@ -213,16 +205,28 @@ const useProjectPreload = (setName: (name: string) => void) => {
   };
 };
 
+type ShareFailureKind = "network" | "parse";
+
+class ShareFailure extends Error {
+  constructor(public readonly kind: ShareFailureKind, message: string) {
+    super(message);
+    this.name = "ShareFailure";
+  }
+}
+
 const fetchSharedHeader = async (shareId: string): Promise<Header> => {
   const headerResponse = await fetch(
     `https://www.makecode.com/api/${encodeURIComponent(shareId)}`
   );
   if (!headerResponse.ok) {
-    throw new Error("Network error");
+    throw new ShareFailure(
+      "network",
+      `Header fetch returned ${headerResponse.status}`
+    );
   }
   const header = (await headerResponse.json()) as Header;
   if (!header || !header.id || !header.name) {
-    throw new Error("Incorrect header data");
+    throw new ShareFailure("parse", "Header missing required fields");
   }
   return header;
 };
@@ -232,11 +236,14 @@ const fetchSharedProjectText = async (longId: string): Promise<ScriptText> => {
     `https://www.makecode.com/api/${encodeURIComponent(longId)}/text`
   );
   if (!textResponse.ok) {
-    throw new Error("Network error");
+    throw new ShareFailure(
+      "network",
+      `Project text fetch returned ${textResponse.status}`
+    );
   }
   const text = (await textResponse.json()) as ScriptText;
   if (typeof text !== "object") {
-    throw new Error("Error downloding project");
+    throw new ShareFailure("parse", "Project text was not an object");
   }
   return text;
 };

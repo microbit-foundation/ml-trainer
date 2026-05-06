@@ -344,4 +344,14 @@ export interface Settings {
    * have API for checking whether a device is bonded.
    */
   bondedDevices?: string[];
+  /**
+   * The user's analytics consent decision on the native (Capacitor)
+   * build. Web builds use the shared-assets cookie modal instead and
+   * ignore this field.
+   *
+   * `undefined` means the user has not been asked yet — the consent UI
+   * uses this to decide whether to prompt on first run. Analytics events
+   * must not be emitted while this is `undefined` or `"denied"`.
+   */
+  analyticsConsent?: "granted" | "denied";
 }

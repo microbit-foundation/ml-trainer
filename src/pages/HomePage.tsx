@@ -99,14 +99,19 @@ const ProjectRow = () => {
   const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
 
+  const logging = useLogging();
   const handleOpenProject = useCallback(
     async (id?: string) => {
       if (id) {
+        logging.event({
+          type: "project_open",
+          detail: { surface: "home" },
+        });
         await loadProjectAndModelFromStorage(id);
         navigate(createDataSamplesPageUrl());
       }
     },
-    [navigate]
+    [logging, navigate]
   );
 
   const {
@@ -123,7 +128,7 @@ const ProjectRow = () => {
     handleOpenConfirmDialog,
     handleCloseConfirmDialog,
     handleDeleteProject,
-  } = useProjectCardActions();
+  } = useProjectCardActions({ surface: "home" });
 
   return (
     <>
@@ -305,7 +310,8 @@ const NewProjectCard = () => {
     async (projectName: string) => {
       setIsOpen(false);
       logging.event({
-        type: "session-open-new",
+        type: "project_create",
+        detail: { surface: "home" },
       });
       await newSession(projectName);
       navigate(createDataSamplesPageUrl());

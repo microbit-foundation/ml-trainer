@@ -271,7 +271,7 @@ export const ProjectProvider = ({
           editorTimedOut();
           logging.log("[MakeCode] Load timed out");
           logging.event({
-            type: "makecode-load-failed",
+            type: "editor_open_failure",
           });
           throw new CodeEditorError("MakeCode load timed out");
         }
@@ -302,7 +302,7 @@ export const ProjectProvider = ({
     async (focusVisible?: boolean) => {
       openedViaKeyboardRef.current = focusVisible ?? false;
       logging.event({
-        type: "edit-in-makecode",
+        type: "editor_open",
       });
       try {
         setProjectEdited();
@@ -382,13 +382,9 @@ export const ProjectProvider = ({
       loadAction: LoadAction
     ): Promise<void> => {
       const fileExtension = getLowercaseFileExtension(file.name);
-      logging.event({
-        type,
-        detail: {
-          extension: fileExtension || "none",
-        },
-      });
+      const source = type === "drop-load" ? "drop" : "file_picker";
       if (fileExtension === "json") {
+        logging.event({ type: "dataset_load", detail: { source } });
         const actionsString = await readFileAsText(file);
         const actions = JSON.parse(actionsString) as unknown;
         if (isDatasetUserFileFormat(actions)) {
@@ -398,6 +394,7 @@ export const ProjectProvider = ({
           setPostImportDialogState(PostImportDialogState.Error);
         }
       } else if (fileExtension === "hex") {
+        logging.event({ type: "project_import", detail: { source } });
         const hex = await readFileAsText(file);
         await importProjectFromHexText(hex, file.name);
       } else {
@@ -446,11 +443,11 @@ export const ProjectProvider = ({
         }
       } else {
         logging.event({
-          type: "hex-save",
+          type: "project_save",
           detail: {
             actions: actions.length,
             samples: getTotalNumSamples(actions),
-            saveType,
+            destination: saveType,
           },
         });
         // Dismiss the progress dialog now that the hex is ready.
