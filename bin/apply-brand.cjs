@@ -1,56 +1,88 @@
 /**
- * Apply the deployment-time brand overlay to the iOS / Android
- * project trees. Today: copy native config files (Firebase plists)
- * from the brand source into their canonical destinations. Future
- * passes can extend this to bundle IDs, app names, and other
- * brand-coupled native values.
+ * Apply the deployment-time brand overlay. Each entry copies a file
+ * from the active theme package's `native/` directory to a gitignored
+ * destination in the apps repo. Each destination is deleted before
+ * the copy step so a previous run's branded overlay doesn't linger
+ * after the theme package is removed.
  *
- * For each target, the source-of-truth order is:
+ *   - Firebase configs fall back to a committed OSS-neutral stub at
+ *     `bin/stubs/<file>` if the theme package isn't installed (keeps
+ *     Xcode's Copy Bundle Resources phase happy on OSS clones).
  *
- *   1. Theme-package's `native/` directory, if installed and present
- *      (private builds — overlays real Firebase config, etc.)
- *   2. Committed stub at `bin/stubs/<file>`, if any
- *      (OSS clones — keeps Xcode's Copy Bundle Resources phase happy
- *      with a file that's harmless because the Info.plist setting
- *      FirebaseDataCollectionDefaultEnabled=false keeps Firebase Core
- *      dormant after configure())
+ *   - Brand overlays for iOS xcconfig, Android gradle, and Fastlane
+ *     env are copied only when the theme package provides them; on
+ *     OSS clones the committed defaults in Brand.xcconfig,
+ *     brand.gradle, and the fastlane Appfile/Matchfile env fallbacks
+ *     take effect.
  *
- * Destination paths are gitignored — local modifications never appear
- * in git status.
+ * capacitor.config.ts reads brand.json directly with the same
+ * theme→stub fallback for appId/appName.
+ *
+ * When BRAND_REQUIRE_PRIVATE is set (branded CI), the script errors
+ * if the theme package isn't installed, instead of silently producing
+ * an OSS build.
  */
 const fs = require("fs");
 const path = require("path");
 
 const projectRoot = path.resolve(__dirname, "..");
-const themePackageName = "@microbit-foundation/ml-trainer-microbit";
-
 const themePackageNativeDir = path.join(
   projectRoot,
   "node_modules",
-  themePackageName,
+  "@microbit-foundation",
+  "ml-trainer-microbit",
   "native"
 );
 const stubsDir = path.join(__dirname, "stubs");
 
-const targets = [
+if (
+  process.env.BRAND_REQUIRE_PRIVATE &&
+  !fs.existsSync(themePackageNativeDir)
+) {
+  console.error(
+    `[apply-brand] BRAND_REQUIRE_PRIVATE is set but the theme package is not installed at ${path.relative(
+      projectRoot,
+      themePackageNativeDir
+    )}. Refusing to fall back to OSS defaults.`
+  );
+  process.exit(1);
+}
+
+const overlays = [
   {
-    name: "GoogleService-Info.plist",
-    to: path.join(projectRoot, "ios/App/App/GoogleService-Info.plist"),
+    src: "GoogleService-Info.plist",
+    dest: "ios/App/App/GoogleService-Info.plist",
+    stub: true,
   },
   {
-    name: "google-services.json",
-    to: path.join(projectRoot, "android/app/google-services.json"),
+    src: "google-services.json",
+    dest: "android/app/google-services.json",
+    stub: true,
+  },
+  {
+    src: "Brand.private.xcconfig",
+    dest: "ios/App/App/Brand.private.xcconfig",
+  },
+  {
+    src: "brand.private.gradle",
+    dest: "android/app/brand.private.gradle",
+  },
+  {
+    src: "fastlane.env",
+    dest: "fastlane/.env",
   },
 ];
 
-for (const { name, to } of targets) {
-  const themeSrc = path.join(themePackageNativeDir, name);
-  const stubSrc = path.join(stubsDir, name);
+for (const { src, dest, stub } of overlays) {
+  const themeSrc = path.join(themePackageNativeDir, src);
+  const stubSrc = stub ? path.join(stubsDir, src) : undefined;
   const from = fs.existsSync(themeSrc)
     ? themeSrc
-    : fs.existsSync(stubSrc)
-      ? stubSrc
-      : undefined;
+    : stubSrc && fs.existsSync(stubSrc)
+    ? stubSrc
+    : undefined;
+  const to = path.join(projectRoot, dest);
+  fs.rmSync(to, { force: true });
   if (!from) continue;
   fs.mkdirSync(path.dirname(to), { recursive: true });
   fs.copyFileSync(from, to);

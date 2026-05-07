@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>CreateAI</string>
+	<string>$(BRAND_DISPLAY_NAME)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -52,9 +52,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<string>$(BRAND_BLUETOOTH_USAGE_DESCRIPTION)</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<string>$(BRAND_BLUETOOTH_USAGE_DESCRIPTION)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

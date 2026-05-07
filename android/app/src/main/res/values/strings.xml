@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
+<!--
+  Brand-coupled strings (app_name, title_activity_main) are generated
+  from build.gradle's resValue calls, driven by brand.gradle (and the
+  optional brand.private.gradle overlay).
+-->
 <resources>
-    <string name="app_name">CreateAI</string>
-    <string name="title_activity_main">CreateAI</string>
-    <string name="package_name">org.microbit.createai</string>
-    <string name="custom_url_scheme">org.microbit.createai</string>
 </resources>

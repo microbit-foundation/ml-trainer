@@ -57,7 +57,13 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Refuse to fall back to OSS-neutral brand defaults — branded CI
+      # requires the private theme overlay. Scoped to this step so it
+      # doesn't trip the postinstall apply-brand during `npm ci` (which
+      # runs before the theme package is installed).
       - run: npm run apply-brand
+        env:
+          BRAND_REQUIRE_PRIVATE: "1"
 
       - run: node ./bin/print-apps-ci-env.cjs >> $GITHUB_ENV
       - run: npm run build:apps

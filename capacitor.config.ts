@@ -1,9 +1,26 @@
 import type { CapacitorConfig } from "@capacitor/cli";
+import { existsSync, readFileSync } from "fs";
 import { networkInterfaces } from "os";
+import { resolve } from "path";
+
+const localBrandPath = resolve(__dirname, "brand.local.json");
+const themeBrandPath = resolve(
+  __dirname,
+  "node_modules/@microbit-foundation/ml-trainer-microbit/native/brand.json"
+);
+const brandPath = existsSync(localBrandPath)
+  ? localBrandPath
+  : existsSync(themeBrandPath)
+    ? themeBrandPath
+    : resolve(__dirname, "bin/stubs/brand.json");
+const brand = JSON.parse(readFileSync(brandPath, "utf8")) as {
+  appId: string;
+  appName: string;
+};
 
 const config: CapacitorConfig = {
-  appId: "org.microbit.createai",
-  appName: "micro:bit CreateAI",
+  appId: brand.appId,
+  appName: brand.appName,
   webDir: "dist",
   android: {
     adjustMarginsForEdgeToEdge: "disable",
