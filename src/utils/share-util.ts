@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Encoding, Directory, Filesystem } from "@capacitor/filesystem";
+import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 import { Share } from "@capacitor/share";
-import { HexData } from "../model";
 import { isIOS } from "../platform";
 
 const shareFromDirectory = "share";
@@ -39,15 +38,6 @@ export const shareFile = async (
     ...(isIOS() ? {} : { text }),
     files: [url],
   });
-};
-
-export const shareHex = async (hex: HexData) => {
-  await shareFile(
-    `${hex.name}.hex`,
-    hex.hex,
-    `Share ${hex.name}`,
-    `micro:bit CreateAI project: ${hex.name}`
-  );
 };
 
 /**
