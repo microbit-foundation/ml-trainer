@@ -70,7 +70,8 @@ const ActionDataSamplesCard = ({
 }: ActionDataSamplesCardProps) => {
   const intl = useIntl();
   const deleteActionRecording = useStore((s) => s.deleteActionRecording);
-  const view = useStore((s) => s.settings.dataSamplesView);
+  const settingsDataSamplesView = useStore((s) => s.settings.dataSamplesView);
+  const view = preview ? DataSamplesView.Graph : settingsDataSamplesView;
   if (view === DataSamplesView.GraphAndDataFeatures) {
     // We split the cards in this case
     return (
