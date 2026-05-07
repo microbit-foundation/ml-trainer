@@ -3,6 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { App as CapacitorApp } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
+import { Encoding, Filesystem } from "@capacitor/filesystem";
 import { useToast } from "@chakra-ui/react";
 import {
   EditorWorkspaceSaveRequest,
@@ -22,6 +25,8 @@ import {
 } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useDeployment } from "../deployment";
+import { useDownloadActions } from "../download-flow/download-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import {
   HexData,
@@ -30,6 +35,7 @@ import {
   SaveStep,
   SaveType,
 } from "../model";
+import { isIOS } from "../platform";
 import {
   untitledProjectName as untitled,
   untitledProjectName,
@@ -47,12 +53,7 @@ import {
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { useDownloadActions } from "../download-flow/download-hooks";
-import { Capacitor } from "@capacitor/core";
-import { App as CapacitorApp } from "@capacitor/app";
-import { Encoding, Filesystem } from "@capacitor/filesystem";
-import { isIOS } from "../platform";
-import { isShareCanceled, shareHex } from "../utils/share-util";
+import { isShareCanceled, shareFile } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
 
@@ -141,6 +142,7 @@ export const ProjectProvider = ({
   children,
 }: ProjectProviderProps) => {
   const intl = useIntl();
+  const { appNameFull } = useDeployment();
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
@@ -454,7 +456,18 @@ export const ProjectProvider = ({
         setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
         if (saveType === SaveType.Share) {
           try {
-            await shareHex(hex);
+            await shareFile(
+              `${hex.name}.hex`,
+              hex.hex,
+              intl.formatMessage(
+                { id: "share-named-file" },
+                { name: hex.name }
+              ),
+              intl.formatMessage(
+                { id: "share-file-description" },
+                { appNameFull, name: hex.name }
+              )
+            );
           } catch (e) {
             if (!isShareCanceled(e)) {
               logging.error("Sharing failed", e);
@@ -477,6 +490,7 @@ export const ProjectProvider = ({
       }
     },
     [
+      appNameFull,
       save,
       getCurrentProject,
       settings.showPreSaveHelp,

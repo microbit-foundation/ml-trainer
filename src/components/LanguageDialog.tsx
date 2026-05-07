@@ -23,10 +23,9 @@ import {
   Stack,
   Text,
   Tooltip,
-  VStack,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
-import ModalFooterContent from "./ModalFooterContent";
 import React, { useCallback, useRef, useState } from "react";
 import {
   RiCheckboxBlankLine,
@@ -35,10 +34,11 @@ import {
   RiExternalLinkLine,
 } from "react-icons/ri";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-import { deployment } from "../deployment";
+import { deployment, useDeployment } from "../deployment";
+import { flags } from "../flags";
 import { allLanguages, Language } from "../settings";
 import { useStore } from "../store";
-import { flags } from "../flags";
+import ModalFooterContent from "./ModalFooterContent";
 
 interface LanguageDialogProps {
   isOpen: boolean;
@@ -250,6 +250,7 @@ const SupportStatement = ({
   intl,
   ...rest
 }: SupportStatementProps) => {
+  const { appNameFull } = useDeployment();
   return (
     <Text {...rest}>
       <Text as="div" pb={1}>
@@ -260,7 +261,7 @@ const SupportStatement = ({
           Microsoft MakeCode
         </SupportedListItem>
         <SupportedListItem supported={uiSupported(language)} intl={intl}>
-          micro:bit CreateAI
+          {appNameFull}
         </SupportedListItem>
       </List>
     </Text>
