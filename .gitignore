@@ -32,6 +32,10 @@
 /android/app/brand.private.gradle
 /fastlane/.env
 
+# Xcode per-user state (window layout, breakpoints, scheme selection).
+# Shared schemes live under xcshareddata/ and stay in git.
+**/xcuserdata/
+
 # Fastlane
 fastlane/report.xml
 fastlane/Preview.html
