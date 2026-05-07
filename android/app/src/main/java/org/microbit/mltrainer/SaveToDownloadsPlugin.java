@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-package org.microbit.createai;
+package org.microbit.mltrainer;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;

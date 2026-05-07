@@ -1,4 +1,4 @@
-package org.microbit.createai;
+package org.microbit.mltrainer;
 
 import android.os.Bundle;
 
