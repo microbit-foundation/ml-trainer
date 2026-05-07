@@ -3221,6 +3221,20 @@
       "value": "Share"
     }
   ],
+  "share-file-description": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " project: "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
   "share-hex-dialog-heading": [
     {
       "type": 0,
@@ -3239,6 +3253,16 @@
     {
       "type": 0,
       "value": " to continue working."
+    }
+  ],
+  "share-named-file": [
+    {
+      "type": 0,
+      "value": "Share "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "sharing-description": [

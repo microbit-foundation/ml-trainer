@@ -1811,6 +1811,10 @@
     "defaultMessage": "Share",
     "description": "Label for action that initiates sharing the project on mobile"
   },
+  "share-file-description": {
+    "defaultMessage": "{appNameFull} project: {name}",
+    "description": "Label for a hex file with app name context"
+  },
   "share-hex-dialog-heading": {
     "defaultMessage": "Share project as a hex file",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
@@ -1818,6 +1822,10 @@
   "share-hex-dialog-message1": {
     "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "share-named-file": {
+    "defaultMessage": "Share {name}",
+    "description": "Label for sharing a named file"
   },
   "sharing-description": {
     "defaultMessage": "Your project will be ready to share soon.",
