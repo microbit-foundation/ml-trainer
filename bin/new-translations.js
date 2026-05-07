@@ -1,10 +1,16 @@
 #!/usr/bin/env node
 
 /**
- * Reports new translation copy introduced on the current branch vs main.
+ * Reports new translation copy introduced since a base ref (default: main).
  *
- * "New" means the defaultMessage text doesn't exist anywhere in the main
- * branch file — we ignore message IDs (which may be renamed) and
+ * Usage: new-translations.js [base-ref]
+ *
+ * Examples:
+ *   new-translations.js              # working tree vs main
+ *   new-translations.js v1.2.3       # working tree vs tag v1.2.3
+ *
+ * "New" means the defaultMessage text doesn't exist anywhere in the base
+ * ref's file — we ignore message IDs (which may be renamed) and
  * descriptions (which aren't translated).
  *
  * Word counting follows Crowdin's approach: a word is a combination of
@@ -81,23 +87,24 @@ function countWords(message) {
 // ---------------------------------------------------------------------------
 
 const LANG_FILE = "lang/ui.en.json";
+const baseRef = process.argv[2] ?? "main";
 
-const branchJson = JSON.parse(readFileSync(LANG_FILE, "utf-8"));
-const mainJson = JSON.parse(
-  execSync(`git show main:${LANG_FILE}`, { encoding: "utf-8" })
+const currentJson = JSON.parse(readFileSync(LANG_FILE, "utf-8"));
+const baseJson = JSON.parse(
+  execSync(`git show ${baseRef}:${LANG_FILE}`, { encoding: "utf-8" })
 );
 
-const mainMessages = extractMessages(mainJson);
+const baseMessages = extractMessages(baseJson);
 const newEntries = [];
 
-for (const [id, entry] of Object.entries(branchJson)) {
-  if (!mainMessages.has(entry.defaultMessage)) {
+for (const [id, entry] of Object.entries(currentJson)) {
+  if (!baseMessages.has(entry.defaultMessage)) {
     newEntries.push({ id, message: entry.defaultMessage });
   }
 }
 
 if (newEntries.length === 0) {
-  console.log("No new translation copy on this branch.");
+  console.log(`No new translation copy since ${baseRef}.`);
   process.exit(0);
 }
 
