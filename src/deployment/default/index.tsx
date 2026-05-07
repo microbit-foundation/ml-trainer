@@ -4,23 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { BoxProps, Text, VStack } from "@chakra-ui/react";
-import { ReactNode, createContext } from "react";
-import { CookieConsent, DeploymentConfigFactory } from "..";
-import { NullLogging } from "./logging";
+import { BrandConfigFactory } from "..";
 import theme from "./theme";
 
-const stubConsentValue: CookieConsent = {
-  analytics: false,
-  functional: true,
-};
-const stubConsentContext = createContext<CookieConsent | undefined>(
-  stubConsentValue
-);
-
-const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
+const defaultBrandFactory: BrandConfigFactory = () => ({
   chakraTheme: theme,
   appNameFull: "ml-trainer",
   appNameShort: "ml-trainer",
+  product: "ml-trainer",
   AppLogo: (props: BoxProps) => {
     return (
       <VStack
@@ -35,16 +26,6 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
     );
   },
   OrgLogo: undefined,
-  logging: new NullLogging(),
-  compliance: {
-    ConsentProvider: ({ children }: { children: ReactNode }) => (
-      <stubConsentContext.Provider value={stubConsentValue}>
-        {children}
-      </stubConsentContext.Provider>
-    ),
-    consentContext: stubConsentContext,
-    manageCookies: undefined,
-  },
   supportLinks: {
     // Just placeholders, these need replacing in a real deployment with branded help content.
     bluetooth: "https://support.microbit.org",
@@ -54,4 +35,4 @@ const defaultDeploymentFactory: DeploymentConfigFactory = () => ({
   },
 });
 
-export default defaultDeploymentFactory;
+export default defaultBrandFactory;

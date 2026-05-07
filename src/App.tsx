@@ -7,11 +7,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ChakraProvider, useToast } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
-import {
-  createRadioBridgeConnection,
-  createWebBluetoothConnection,
-  createWebUSBConnection,
-} from "@microbit/microbit-connection";
+import { createBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
+import { createRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
+import { createUSBConnection } from "@microbit/microbit-connection/usb";
 import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -25,6 +23,7 @@ import {
   useRouteError,
 } from "react-router-dom";
 import "theme-package/fonts/fonts.css";
+import { useNativeBackButton } from "./back-button";
 import {
   broadcastChannel,
   BroadcastChannelData,
@@ -35,24 +34,27 @@ import EditCodeDialog from "./components/EditCodeDialog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import NotFound from "./components/NotFound";
-import { ConnectProvider } from "./connect-actions-hooks";
-import { ConnectStatusProvider } from "./connect-status-hooks";
-import { ConnectionStageProvider } from "./connection-stage-hooks";
+import { ConnectionsProvider } from "./connections-hooks";
+import { DataConnectionEventProvider } from "./data-connection-flow";
 import { deployment, useDeployment } from "./deployment";
-import { MockWebBluetoothConnection } from "./device/mockBluetooth";
+import { MockBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
-import { MockWebUSBConnection } from "./device/mockUsb";
+import { MockUSBConnection } from "./device/mockUsb";
 import { flags } from "./flags";
 import { ProjectProvider } from "./hooks/project-hooks";
+import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
 import TranslationProvider from "./messages/TranslationProvider";
 import { PostImportDialogState } from "./model";
 import CodePage from "./pages/CodePage";
 import DataSamplesPage from "./pages/DataSamplesPage";
+import HomePage from "./pages/HomePage";
 import ImportPage from "./pages/ImportPage";
 import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
+import ProjectsPage from "./pages/ProjectsPage";
 import TestingModelPage from "./pages/TestingModelPage";
+import { isNativePlatform } from "./platform";
 import { projectSessionStorage } from "./session-storage";
 import {
   getAllProjectsFromStorage,
@@ -71,8 +73,6 @@ import {
   createProjectsPageUrl,
   createTestingModelPageUrl,
 } from "./urls";
-import ProjectsPage from "./pages/ProjectsPage";
-import HomePage from "./pages/HomePage";
 
 export interface ProviderLayoutProps {
   children: ReactNode;
@@ -87,11 +87,14 @@ const isMockDeviceMode = () =>
 const logging = deployment.logging;
 
 const usb = isMockDeviceMode()
-  ? new MockWebUSBConnection()
-  : createWebUSBConnection({ logging });
+  ? new MockUSBConnection()
+  : createUSBConnection({ logging });
 const bluetooth = isMockDeviceMode()
-  ? new MockWebBluetoothConnection()
-  : createWebBluetoothConnection({ logging });
+  ? new MockBluetoothConnection()
+  : createBluetoothConnection({
+      logging,
+      deviceBondState: useStore.getState().deviceBondState,
+    });
 const radioBridge = isMockDeviceMode()
   ? new MockRadioBridgeConnection(usb)
   : createRadioBridgeConnection(usb, { logging });
@@ -103,19 +106,15 @@ const Providers = ({ children }: ProviderLayoutProps) => {
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
         <LoggingProvider value={logging}>
-          <ConsentProvider>
-            <TranslationProvider>
-              <ConnectStatusProvider>
-                <ConnectProvider {...{ usb, bluetooth, radioBridge }}>
-                  <BufferedDataProvider>
-                    <ConnectionStageProvider>
-                      {children}
-                    </ConnectionStageProvider>
-                  </BufferedDataProvider>
-                </ConnectProvider>
-              </ConnectStatusProvider>
-            </TranslationProvider>
-          </ConsentProvider>
+          <TranslationProvider>
+            <ConsentProvider>
+              <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
+                <DataConnectionEventProvider>
+                  <BufferedDataProvider>{children}</BufferedDataProvider>
+                </DataConnectionEventProvider>
+              </ConnectionsProvider>
+            </ConsentProvider>
+          </TranslationProvider>
         </LoggingProvider>
       </ChakraProvider>
     </React.StrictMode>
@@ -140,6 +139,14 @@ const Layout = () => {
       createCodePageUrl(),
     ];
   }, []);
+
+  // Emit one navigate event per pathname change, including on initial
+  // mount. `location.pathname` excludes query and fragment, so this
+  // matches what GA4 Enhanced Measurement collects as `page_path` on
+  // web — the Pages-and-screens report aligns without extra work.
+  useEffect(() => {
+    logging.navigate({ path: location.pathname });
+  }, [location.pathname]);
 
   useEffect(() => {
     return useStore.subscribe(
@@ -172,17 +179,26 @@ const Layout = () => {
     if (!storageError) {
       return;
     }
-    const messages =
-      storageError.type === "quota"
-        ? {
-            title: intl.formatMessage({ id: "storage-error-quota-title" }),
-            description: intl.formatMessage({
-              id: "storage-error-quota-description",
-            }),
-          }
-        : {
-            title: intl.formatMessage({ id: "storage-error-other" }),
-          };
+    const messages = (() => {
+      if (storageError.type === "quota") {
+        return {
+          title: intl.formatMessage({ id: "storage-error-quota-title" }),
+          description: intl.formatMessage({
+            id: "storage-error-quota-description",
+          }),
+        };
+      }
+      if (storageError.kind === "device") {
+        return {
+          title: intl.formatMessage({
+            id: "storage-error-device-other",
+          }),
+        };
+      }
+      return {
+        title: intl.formatMessage({ id: "storage-error-other" }),
+      };
+    })();
     const toastOptions = {
       id: "storage-error",
       position: "top" as const,
@@ -251,6 +267,9 @@ const Layout = () => {
     removeModel,
     updateProjectTimestampUrls,
   ]);
+
+  // Native back button / swipe-back handling (no-op on desktop).
+  useNativeBackButton();
 
   return (
     // We use this even though we have errorElement as this does logging.
@@ -353,28 +372,44 @@ const createRouter = () => {
 };
 
 const App = () => {
+  // Detect safe area insets and set CSS variables for nav bar side only
+  useSafeAreaInsets();
+
+  // Set status bar style on native platforms (LIGHT = dark icons for light backgrounds)
   useEffect(() => {
-    if (navigator.bluetooth) {
-      navigator.bluetooth
-        .getAvailability()
-        .then((bluetoothAvailable) => {
-          logging.event({
-            type: "boot",
-            detail: {
-              bluetoothAvailable,
-            },
+    if (isNativePlatform()) {
+      void import("@capacitor-community/safe-area").then(
+        ({ SafeArea, SystemBarsStyle }) =>
+          SafeArea.setSystemBarsStyle({ style: SystemBarsStyle.Light })
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    // Capability flags are user-scoped GA4 dimensions on the web build —
+    // they describe the browser's WebUSB / WebBluetooth API surface, not
+    // anything Capacitor knows about. On native builds connectivity goes
+    // through native plugins and these properties would be misleading.
+    if (!isNativePlatform()) {
+      logging.setUserProperty(
+        "webusb_available",
+        "usb" in navigator ? "yes" : "no"
+      );
+      if (navigator.bluetooth) {
+        navigator.bluetooth
+          .getAvailability()
+          .then((bluetoothAvailable) => {
+            logging.setUserProperty(
+              "webbluetooth_available",
+              bluetoothAvailable ? "yes" : "no"
+            );
+          })
+          .catch((err) => {
+            logging.error("Error checking BT availability", err);
           });
-        })
-        .catch((err) => {
-          logging.error(err);
-        });
-    } else {
-      logging.event({
-        type: "boot",
-        detail: {
-          bluetoothAvailable: false,
-        },
-      });
+      } else {
+        logging.setUserProperty("webbluetooth_available", "no");
+      }
     }
     const scriptId = "crowdin-jipt";
     if (

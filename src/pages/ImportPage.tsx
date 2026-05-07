@@ -72,7 +72,7 @@ const ImportPage = () => {
         setProject(project);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
-        logging.error(e);
+        logging.error("Failed to fetch project", e);
       }
     };
     void updateAsync().then(() => {
@@ -85,6 +85,10 @@ const ImportPage = () => {
 
   const handleOpenProject = useCallback(async () => {
     if (project) {
+      logging.event({
+        type: "project_import",
+        detail: { source: "microbit_org" },
+      });
       await loadProject(project, name);
       navigate(createDataSamplesPageUrl());
     } else {
@@ -93,7 +97,7 @@ const ImportPage = () => {
       await newSession(name);
       navigate(createDataSamplesPageUrl());
     }
-  }, [loadProject, name, navigate, newSession, project]);
+  }, [loadProject, logging, name, navigate, newSession, project]);
 
   return (
     <DefaultPageLayout

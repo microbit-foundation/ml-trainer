@@ -1,0 +1,39 @@
+require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
+
+platform :ios, '15.0'
+use_frameworks!
+
+# workaround to avoid Xcode caching of Pods that requires
+# Product -> Clean Build Folder after new Cordova plugins installed
+# Requires CocoaPods 1.6 or newer
+install! 'cocoapods', :disable_input_output_paths => true
+
+def capacitor_pods
+  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorCommunityBluetoothLe', :path => '../../node_modules/@capacitor-community/bluetooth-le'
+  pod 'CapacitorCommunitySafeArea', :path => '../../node_modules/@capacitor-community/safe-area'
+  pod 'CapacitorFirebaseAnalytics', :path => '../../node_modules/@capacitor-firebase/analytics'
+  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
+  pod 'CapacitorFilesystem', :path => '../../node_modules/@capacitor/filesystem'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
+  pod 'CapacitorShare', :path => '../../node_modules/@capacitor/share'
+  pod 'MicrobitCapacitorCommunityNordicDfu', :path => '../../node_modules/@microbit/capacitor-community-nordic-dfu'
+  pod 'MicrobitCapacitorSqliteVanilla', :path => '../../node_modules/@microbit/capacitor-sqlite-vanilla'
+  pod 'SentryCapacitor', :path => '../../node_modules/@sentry/capacitor'
+end
+
+target 'App' do
+  capacitor_pods
+  # Add your Pods here.
+  # Per the @capacitor-firebase/analytics README, Firebase deps must be
+  # added outside `capacitor_pods` because cap sync regenerates that
+  # block on every run and writes only the bare pod name (which
+  # resolves to the plugin's `Lite` subspec — no Firebase SDK pulled
+  # in). The line below pulls Firebase in via the IDFA-free subspec.
+  pod 'CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport', :path => '../../node_modules/@capacitor-firebase/analytics'
+end
+
+post_install do |installer|
+  assertDeploymentTarget(installer)
+end

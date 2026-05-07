@@ -6,7 +6,6 @@
 import {
   Button,
   Checkbox,
-  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -19,6 +18,7 @@ import {
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
+import ModalFooterContent from "./ModalFooterContent";
 
 export interface DownloadHelpDialogProps
   extends Omit<ComponentProps<typeof Modal>, "children"> {
@@ -40,7 +40,7 @@ const DownloadHelpDialog = ({
       closeOnOverlayClick={false}
       motionPreset="none"
       onClose={onClose}
-      size="xl"
+      size={{ base: "full", md: "xl" }}
       isCentered
       {...rest}
     >
@@ -58,21 +58,24 @@ const DownloadHelpDialog = ({
               />
             </Text>
           </ModalBody>
-          <ModalFooter justifyContent="space-between">
-            <Checkbox
-              isChecked={isSkipNextTime}
-              onChange={(e) => setSkipNextTime(e.target.checked)}
+          <ModalFooter>
+            <ModalFooterContent
+              leftContent={
+                <Checkbox
+                  isChecked={isSkipNextTime}
+                  onChange={(e) => setSkipNextTime(e.target.checked)}
+                >
+                  <FormattedMessage id="dont-show-again" />
+                </Checkbox>
+              }
             >
-              <FormattedMessage id="dont-show-again" />
-            </Checkbox>
-            <HStack gap={5}>
               <Button variant="secondary" onClick={onClose} size="lg">
                 <FormattedMessage id="cancel-action" />
               </Button>
               <Button variant="primary" onClick={handleOnNext} size="lg">
                 <FormattedMessage id="next-action" />
               </Button>
-            </HStack>
+            </ModalFooterContent>
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>

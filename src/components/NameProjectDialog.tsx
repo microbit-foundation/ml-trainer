@@ -85,6 +85,7 @@ export const NameProjectDialog = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      size="md"
       finalFocusRef={finalFocusRef}
       initialFocusRef={ref}
       onCloseComplete={onCloseComplete}

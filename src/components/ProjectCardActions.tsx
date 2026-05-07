@@ -3,7 +3,6 @@ import {
   Checkbox,
   HStack,
   IconButton,
-  Menu,
   MenuButton,
   MenuItem,
   MenuList,
@@ -20,6 +19,7 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ProjectNameDialogReason } from "../project-utils";
+import Menu from "./Menu";
 
 interface ProjectCardMenuProps {
   id: string;

@@ -5,13 +5,16 @@
  * SPDX-License-Identifier: MIT
  */
 import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
-import { ButtonEvent } from "@microbit/microbit-connection";
-import { useCallback, useEffect, useState } from "react";
+import { ButtonData } from "@microbit/microbit-connection";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useConnectActions } from "../connect-actions-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnected } from "../data-connection-flow";
+import useKeyboardHeight from "../hooks/use-keyboard-height";
+import { useMicrobitButtonListener } from "../hooks/use-microbit-button-listener";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
+import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DataSamplesPageHint } from "../model";
+import { isIOS } from "../platform";
 import { useStore } from "../store";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { actionNameInputId } from "./ActionNameCard";
@@ -34,15 +37,12 @@ const gridCommonProps: Partial<GridProps> = {
 };
 
 const headings: GridColumnHeadingItemProps[] = [
-  {
-    titleId: "action-label",
-    descriptionId: "action-tooltip",
-  },
+  { titleId: "action-label", descriptionId: "action-tooltip" },
   {
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
     itemsRight: (
-      <HStack>
+      <HStack position="sticky" right={0} backgroundColor="whitesmoke" pl={2}>
         <ShowGraphsCheckbox />
         <DataSamplesMenu />
       </HStack>
@@ -62,6 +62,37 @@ const DataSamplesTable = ({
   hint,
 }: DataSamplesTableProps) => {
   const actions = useStore((s) => s.actions);
+  const keyboardHeight = useKeyboardHeight();
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  // Calculate how much of the grid is actually obscured by the keyboard.
+  // The keyboard covers bottomContent first, so the grid loses less than
+  // the full keyboard height. Extra padding ensures the last item isn't
+  // flush against the keyboard edge.
+  const extraPadding = isIOS() ? 32 : 16;
+  const [gridPadding, setGridPadding] = useState(0);
+  useEffect(() => {
+    if (keyboardHeight > 0 && gridRef.current) {
+      const gridBottom = gridRef.current.getBoundingClientRect().bottom;
+      const visibleBottom = window.innerHeight - keyboardHeight;
+      const obscured = gridBottom - visibleBottom;
+      setGridPadding(obscured > 0 ? obscured + extraPadding : 0);
+    } else {
+      setGridPadding(0);
+    }
+  }, [extraPadding, keyboardHeight]);
+
+  // Scroll the focused element into view after the padding has been applied,
+  // so the scroll container has enough room.
+  useEffect(() => {
+    if (gridPadding > 0 && document.activeElement instanceof HTMLElement) {
+      document.activeElement.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+      });
+    }
+  }, [gridPadding]);
+
   // Default to first action being selected if last action is deleted.
   const selectedAction: ActionData = actions[selectedActionIdx] ?? actions[0];
 
@@ -78,10 +109,8 @@ const DataSamplesTable = ({
     (s) => s.connectToRecordDialogOnOpen
   );
   const closeDialog = useStore((s) => s.closeDialog);
-  const tourState = useStore((s) => s.tourState);
 
-  const connection = useConnectActions();
-  const { isConnected } = useConnectionStage();
+  const isConnected = useDataConnected();
   const isNonConnectionDialogOpen = useStore(
     (s) => s.isNonConnectionDialogOpen
   );
@@ -91,8 +120,13 @@ const DataSamplesTable = ({
     undefined
   );
 
-  useEffect(() => {
-    const listener = (e: ButtonEvent) => {
+  const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
+    continuousRecording: false,
+    recordingsToCapture: 1,
+  });
+
+  const buttonListener = useCallback(
+    (e: ButtonData) => {
       // Allow Button B recording when no dialogs are opened and the
       // record button for selected action is displayed.
       if (
@@ -106,23 +140,11 @@ const DataSamplesTable = ({
         });
         recordingDialogOnOpen();
       }
-    };
-    connection.addButtonListener("B", listener);
-    return () => {
-      connection.removeButtonListener("B", listener);
-    };
-  }, [
-    connection,
-    isNonConnectionDialogOpen,
-    recordingDialogOnOpen,
-    selectedAction,
-    tourState,
-  ]);
+    },
+    [isNonConnectionDialogOpen, recordingDialogOnOpen, selectedAction]
+  );
 
-  const [recordingOptions, setRecordingOptions] = useState<RecordingOptions>({
-    continuousRecording: false,
-    recordingsToCapture: 1,
-  });
+  useMicrobitButtonListener("B", buttonListener);
   const handleRecord = useCallback(
     (recordingOptions: RecordingOptions) => {
       setRecordingOptions(recordingOptions);
@@ -143,10 +165,12 @@ const DataSamplesTable = ({
     [tourStart]
   );
 
+  const logging = useLogging();
   const handleConfirm = useCallback(async () => {
+    logging.event({ type: "action_delete" });
     await deleteAction(selectedAction);
     closeDialog();
-  }, [closeDialog, deleteAction, selectedAction]);
+  }, [closeDialog, deleteAction, logging, selectedAction]);
 
   const actionNameInputEl = useCallback(
     (idx: number) => document.getElementById(actionNameInputId(actions[idx])),
@@ -220,21 +244,19 @@ const DataSamplesTable = ({
           />
         </>
       )}
-      <HeadingGrid
-        position="sticky"
-        top={0}
-        {...gridCommonProps}
-        headings={headings}
-      />
+      <HeadingGrid {...gridCommonProps} headings={headings} />
       <Grid
         {...gridCommonProps}
         py={2}
+        pb={gridPadding > 0 ? `${gridPadding}px` : 2}
         alignItems="start"
         autoRows="max-content"
-        overflow="auto"
         flexGrow={1}
-        h={0}
-        ref={arrowNavRef}
+        h="fit-content"
+        ref={(node) => {
+          arrowNavRef(node);
+          gridRef.current = node;
+        }}
       >
         {actions.map((action, idx) => (
           <DataSamplesTableRow

@@ -1,0 +1,23 @@
+// Brand-coupled build properties. Committed values are OSS-neutral.
+// Consumed in build.gradle for applicationId and string resources
+// (app_name, title_activity_main) emitted via resValue.
+
+ext.brandAppId = "org.microbit.mltrainer"
+ext.brandDisplayName = "ml-trainer"
+
+// Theme-package brand overlay (CI / release builds). Dropped in by
+// `npm run apply-brand` when the private theme package is installed.
+def privateBrand = file("brand.private.gradle")
+if (privateBrand.exists()) {
+    apply from: privateBrand
+}
+
+// Personal developer override for local builds. Loaded last so it
+// wins over both the committed defaults and the theme overlay.
+// Gitignored and not managed by `apply-brand`. See README →
+// "Signing for your own iOS device" (the same pattern applies if you
+// need to override the Android applicationId).
+def localBrand = file("brand.local.gradle")
+if (localBrand.exists()) {
+    apply from: localBrand
+}

@@ -1,0 +1,12 @@
+# Brand-coupled values come from env (with OSS-neutral fallbacks). For
+# private builds, `fastlane/.env` is dropped in by apply-brand and loaded
+# automatically by fastlane via dotenv.
+
+# iOS
+app_identifier ENV.fetch("BRAND_APP_IDENTIFIER", "org.microbit.mltrainer")
+apple_id ENV["APPLE_ID"] # Only needed for deliver/pilot, not for building
+team_id ENV.fetch("BRAND_APPLE_TEAM_ID", "")
+
+# Android
+# Authentication via Workload Identity Federation (google-github-actions/auth sets GOOGLE_APPLICATION_CREDENTIALS)
+package_name ENV.fetch("BRAND_APP_IDENTIFIER", "org.microbit.mltrainer")

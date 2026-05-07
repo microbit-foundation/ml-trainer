@@ -21,6 +21,9 @@ module.exports = {
     "bootstrap-template.js",
     "playwright.config.ts",
     "CMakeFiles",
+    "android",
+    "ios",
+    "firmware",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

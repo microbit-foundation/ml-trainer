@@ -15,17 +15,17 @@ import {
   HStack,
   Icon,
   keyframes,
-  Menu,
   MenuItem,
   MenuList,
   Portal,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback } from "react";
+import { forwardRef, ReactNode, useCallback, useRef } from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataSamplesView, ActionData, RecordingData } from "../model";
+import Menu from "./Menu";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
@@ -39,6 +39,15 @@ const flash = keyframes({
   },
   "100%": {},
 });
+
+const bigHitArea = {
+  position: "absolute",
+  top: -2,
+  right: -2,
+  bottom: -2,
+  left: -2,
+  content: '""',
+};
 
 interface ActionDataSamplesCardProps {
   preview?: boolean;
@@ -82,32 +91,34 @@ const ActionDataSamplesCard = ({
           </DataSamplesRowCard>
         )}
         {value.recordings.map((recording, idx) => (
-          <DataSamplesRowCard
+          <GraphAndDataFeaturesDataSampleCard
             onSelectRow={onSelectRow}
             selected={selected}
             key={recording.id}
+            closeButton={
+              <CloseButton
+                aria-label={intl.formatMessage(
+                  {
+                    id: "delete-recording-aria",
+                  },
+                  {
+                    sample: value.recordings.length - idx,
+                    numSamples: value.recordings.length,
+                    action: value.name,
+                  }
+                )}
+                position="absolute"
+                top={-2}
+                right={-2}
+                rounded="full"
+                bgColor="white"
+                borderColor="blackAlpha.500"
+                boxShadow="sm"
+                onClick={() => deleteActionRecording(value.id, recording.id)}
+                _after={bigHitArea}
+              />
+            }
           >
-            <CloseButton
-              aria-label={intl.formatMessage(
-                {
-                  id: "delete-recording-aria",
-                },
-                {
-                  sample: value.recordings.length - idx,
-                  numSamples: value.recordings.length,
-                  action: value.name,
-                }
-              )}
-              position="absolute"
-              top={-2}
-              right={-2}
-              rounded="full"
-              bgColor="white"
-              zIndex={1}
-              borderColor="blackAlpha.500"
-              boxShadow="sm"
-              onClick={() => deleteActionRecording(value.id, recording.id)}
-            />
             <DataSample
               recording={recording}
               numRecordings={value.recordings.length}
@@ -120,7 +131,7 @@ const ActionDataSamplesCard = ({
               view={view}
               hasClose={false}
             />
-          </DataSamplesRowCard>
+          </GraphAndDataFeaturesDataSampleCard>
         ))}
       </HStack>
     );
@@ -164,36 +175,57 @@ const ActionDataSamplesCard = ({
   );
 };
 
+interface GraphAndDataFeaturesDataSampleCardProps
+  extends DataSamplesRowCardProps {
+  children: ReactNode;
+  closeButton: ReactNode;
+}
+
+const GraphAndDataFeaturesDataSampleCard = ({
+  children,
+  closeButton,
+  ...props
+}: GraphAndDataFeaturesDataSampleCardProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <DataSamplesRowCard {...props} ref={ref}>
+      <Portal containerRef={ref}>{closeButton}</Portal>
+      {children}
+    </DataSamplesRowCard>
+  );
+};
+
 interface DataSamplesRowCardProps extends CardProps {
   selected: boolean;
   onSelectRow?: () => void;
   children: ReactNode;
 }
 
-const DataSamplesRowCard = ({
-  selected,
-  onSelectRow,
-  children,
-  ...rest
-}: DataSamplesRowCardProps) => {
-  return (
-    <Card
-      onClick={onSelectRow}
-      p={2}
-      h="120px"
-      display="flex"
-      flexDirection="row"
-      width="fit-content"
-      borderColor={selected ? "brand.500" : "transparent"}
-      borderWidth={1}
-      {...rest}
-    >
-      <CardBody display="flex" flexDirection="row" p={1} gap={3}>
-        {children}
-      </CardBody>
-    </Card>
-  );
-};
+const DataSamplesRowCard = forwardRef<HTMLDivElement, DataSamplesRowCardProps>(
+  function DataSamplesRowCard(
+    { selected, onSelectRow, children, ...rest }: DataSamplesRowCardProps,
+    ref
+  ) {
+    return (
+      <Card
+        ref={ref}
+        onClick={onSelectRow}
+        p={2}
+        h="120px"
+        display="flex"
+        flexDirection="row"
+        width="fit-content"
+        borderColor={selected ? "brand.500" : "transparent"}
+        borderWidth={1}
+        {...rest}
+      >
+        <CardBody display="flex" flexDirection="row" p={1} gap={3}>
+          {children}
+        </CardBody>
+      </Card>
+    );
+  }
+);
 
 interface RecordingAreaProps extends BoxProps {
   action: ActionData;
@@ -329,6 +361,7 @@ const DataSample = ({
   view: DataSamplesView;
   hasClose?: boolean;
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const hasGraph =
     view === DataSamplesView.Graph ||
     view === DataSamplesView.GraphAndDataFeatures;
@@ -340,26 +373,33 @@ const DataSample = ({
     onDelete(actionId, recording.id);
   }, [actionId, onDelete, recording.id]);
   return (
-    <HStack key={recording.id} position="relative">
+    <HStack
+      key={recording.id}
+      position="relative"
+      ref={ref}
+      gap={hasFingerprint && hasGraph ? 2 : 0}
+    >
       {hasClose && (
-        <CloseButton
-          position="absolute"
-          top={0}
-          right={0}
-          zIndex={1}
-          size="sm"
-          aria-label={intl.formatMessage(
-            {
-              id: "delete-recording-aria",
-            },
-            {
-              sample: numRecordings - recordingIndex,
-              numSamples: numRecordings,
-              action: actionName,
-            }
-          )}
-          onClick={handleDelete}
-        />
+        <Portal containerRef={ref}>
+          <CloseButton
+            position="absolute"
+            top={0}
+            right={0}
+            size="sm"
+            aria-label={intl.formatMessage(
+              {
+                id: "delete-recording-aria",
+              },
+              {
+                sample: numRecordings - recordingIndex,
+                numSamples: numRecordings,
+                action: actionName,
+              }
+            )}
+            onClick={handleDelete}
+            _after={bigHitArea}
+          />
+        </Portal>
       )}
       {hasGraph && (
         <RecordingGraph

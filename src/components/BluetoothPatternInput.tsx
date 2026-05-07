@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -11,9 +12,10 @@ import {
   GridItem,
   NumberInput,
   NumberInputField,
+  Text,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
   generateMatrix,
@@ -22,21 +24,29 @@ import {
   transformMatrixToColumns,
   updateMatrixColumns,
 } from "../bt-pattern-matrix-utils";
-import React from "react";
+import { isNativePlatform } from "../platform";
+import {
+  BluetoothPattern,
+  microbitNameToBluetoothPattern,
+  microbitPatternToName,
+} from "../bt-pattern-utils";
 
 interface BluetoothPatternInputProps {
-  pattern: boolean[];
-  onChange: (matrix: boolean[]) => void;
+  onChange?: (name: string) => void;
   invalid: boolean;
+  microbitName: string | undefined;
 }
 
 const matrixDim = 5;
 
 const BluetoothPatternInput = ({
-  pattern,
   onChange,
   invalid,
+  microbitName,
 }: BluetoothPatternInputProps) => {
+  const pattern = microbitName
+    ? microbitNameToBluetoothPattern(microbitName)
+    : (Array(25).fill(false) as BluetoothPattern);
   const [highlighted, setHighlighted] = useState<boolean[][]>(
     generateMatrix(matrixDim, false)
   );
@@ -53,7 +63,7 @@ const BluetoothPatternInput = ({
     (colIdx: number, rowIdx: number) => {
       const columns = updateMatrixColumns(matrixColumns, { colIdx, rowIdx });
       const matrix = transformColumnsToMatrix(columns) as boolean[];
-      onChange(matrix);
+      onChange && onChange(microbitPatternToName(matrix));
     },
     [matrixColumns, onChange]
   );
@@ -73,10 +83,13 @@ const BluetoothPatternInput = ({
     [inputValues, updateMatrix]
   );
 
+  const nativePlatform = isNativePlatform();
+  const isEditable = !!onChange;
+
   return (
     <Grid
       templateColumns="repeat(5, 35px)"
-      templateRows="repeat(6, 35px)"
+      templateRows={`repeat(${nativePlatform ? 7 : 6}, 35px)`}
       gap={1}
     >
       {matrixColumns.map((cells, colIdx) => (
@@ -100,19 +113,56 @@ const BluetoothPatternInput = ({
                 onMouseLeave={clearHighlighted}
                 isOn={c}
                 isHighlighted={highlighted[colIdx][rowIdx]}
+                editable={isEditable}
               />
             </GridItem>
           ))}
+          {nativePlatform && (
+            <GridItem
+              rowStart={6}
+              textAlign="center"
+              key={`col-${colIdx}-pattern-letter`}
+              aria-hidden
+            >
+              <Text>{microbitName ? microbitName[colIdx] : " "}</Text>
+            </GridItem>
+          )}
           <GridItem key={`col-${colIdx}-pattern-input`}>
-            <PatternColumnInput
-              isInvalid={invalid}
-              onChange={columnInputOnChange(colIdx)}
-              colIdx={colIdx}
-              value={inputValues[colIdx]}
-            />
+            {isEditable && (
+              <PatternColumnInput
+                isInvalid={invalid}
+                onChange={columnInputOnChange(colIdx)}
+                colIdx={colIdx}
+                value={inputValues[colIdx]}
+              />
+            )}
           </GridItem>
         </React.Fragment>
       ))}
+      {nativePlatform && (
+        <VisuallyHidden>
+          {!isEditable && (
+            <Text>
+              <FormattedMessage
+                id="connect-pattern-label"
+                values={{
+                  numLedsOnCol1: inputValues[0],
+                  numLedsOnCol2: inputValues[1],
+                  numLedsOnCol3: inputValues[2],
+                  numLedsOnCol4: inputValues[3],
+                  numLedsOnCol5: inputValues[4],
+                }}
+              />
+            </Text>
+          )}
+          <Text>
+            <FormattedMessage
+              id="microbit-name-label"
+              values={{ name: microbitName }}
+            />
+          </Text>
+        </VisuallyHidden>
+      )}
     </Grid>
   );
 };
@@ -123,6 +173,7 @@ interface PatternBoxProps {
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   isHighlighted: boolean;
+  editable: boolean;
 }
 
 const PatternBox = ({
@@ -131,8 +182,9 @@ const PatternBox = ({
   onMouseEnter,
   onMouseLeave,
   isHighlighted,
+  editable,
 }: PatternBoxProps) => {
-  return (
+  return editable ? (
     <Button
       size="sm"
       w="100%"
@@ -146,6 +198,13 @@ const PatternBox = ({
       borderWidth={isHighlighted && !isOn ? 3 : 0}
       borderColor={isHighlighted ? (isOn ? "white" : "brand2.500") : undefined}
       opacity={isHighlighted && isOn ? 0.25 : 1}
+    />
+  ) : (
+    <Box
+      w="100%"
+      h="100%"
+      bgColor={isOn ? "brand2.500" : "gray.300"}
+      borderRadius={5}
     />
   );
 };

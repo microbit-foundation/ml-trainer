@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import { Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
@@ -16,6 +16,7 @@ import ConnectContainerDialog, {
 } from "./ConnectContainerDialog";
 import ExternalLink from "./ExternalLink";
 import { useDeployment } from "../deployment";
+import DialogFooterLink from "./DialogFooterLink";
 
 const itemsConfig = {
   radio: [
@@ -89,13 +90,13 @@ const WhatYouWillNeedDialog = ({
       footerLeft={
         <VStack alignItems="start">
           {onLinkClick && (
-            <Button onClick={onLinkClick} variant="link" size="lg">
+            <DialogFooterLink onClick={onLinkClick}>
               <FormattedMessage
                 id={`connect-${type}-start-switch-${
                   type === "bluetooth" ? "radio" : "bluetooth"
                 }`}
               />
-            </Button>
+            </DialogFooterLink>
           )}
           {reconnect && (
             <ExternalLink

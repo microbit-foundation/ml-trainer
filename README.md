@@ -48,6 +48,101 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `dist` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
+## iOS/Android development
+
+### Local development
+
+To get a proper dev server for iOS/Android development run:
+
+```bash
+npm run cap:sync:dev
+```
+
+Then run
+
+```bash
+npm run dev:apps
+```
+
+Use e.g. `npx cap open ios` to open the IDE and run from there.
+
+The vite dev server run by dev:apps will be running inside the app.
+
+### Signing for your own iOS device
+
+The repo defaults to bundle id `org.microbit.mltrainer` and an empty Apple
+development team — fine for the iOS Simulator, but to install on a real
+iPhone or iPad you need to sign with your own Apple Developer account.
+The default bundle id is reserved for the Micro:bit Educational
+Foundation's developer account, so unless you're a member of that team
+you'll need to use one of your own.
+
+Drop a gitignored override at `ios/App/App/Brand.local.xcconfig`:
+
+```
+BRAND_BUNDLE_ID = com.yourname.mltrainer
+BRAND_DEVELOPMENT_TEAM = ABC1234567
+```
+
+Your team id is in Xcode → Settings → Accounts → your Apple ID, or
+under [Apple Developer → Membership](https://developer.apple.com/account).
+
+This file is loaded after `Brand.xcconfig` and after the optional
+private theme overlay, so it wins. It's gitignored and not touched by
+`npm run apply-brand`, so it survives `npm install`.
+
+If you also need to override the Android `applicationId` (rare for
+local debug builds — only matters if you plan to publish), drop
+`android/app/brand.local.gradle`:
+
+```groovy
+ext.brandAppId = "com.yourname.mltrainer"
+ext.brandDisplayName = "ml-trainer (yourname)"
+```
+
+To keep the Capacitor-level `appId` consistent (only relevant if you
+hit a plugin that keys off it), also drop `brand.local.json` at the
+repo root:
+
+```json
+{
+  "appId": "com.yourname.mltrainer",
+  "appName": "ml-trainer"
+}
+```
+
+### Signed builds
+
+CI builds signed artifacts using [Fastlane](https://fastlane.tools/). iOS certificates and provisioning profiles are managed via [Fastlane Match](https://docs.fastlane.tools/actions/match/) with encrypted credentials stored in a private repository. Android signing uses a keystore stored in CI secrets.
+
+To run Fastlane locally:
+
+```bash
+bundle install
+bundle exec fastlane ios build    # Build signed IPA (macOS only)
+bundle exec fastlane android build # Build signed APK/AAB
+```
+
+Or you can use Homebrew via `brew install fastlane` and drop the `bundle exec` (this can sidestep Ruby version issues).
+
+Android builds require the signing keystore and passwords via environment variables. iOS builds require Match credentials to fetch certificates.
+
+### App versioning
+
+App releases use tags with an `-apps` suffix to distinguish them from web releases on main until we merge the apps work back. The marketing version is derived from the tag with the suffix stripped (store limitation).
+
+When creating an apps tag we target next unreleased minor version, so if main is on v1.2.3:
+
+| Stage    | Example tag              | Marketing version | Build number  |
+| -------- | ------------------------ | ----------------- | ------------- |
+| Internal | `v1.3.0-apps.internal.1` | 1.3.0             | CI run number |
+| Beta     | `v1.3.0-apps.beta.1`     | 1.3.0             | CI run number |
+| Public   | `v1.3.0-apps`            | 1.3.0             | CI run number |
+
+If main releases a new minor version (e.g., 1.3.0) before apps ships, then we'll bump the next apps version (assuming we've merged main into apps).
+
+If we've merged apps back into main before we get to a public release we can drop the apps suffix.
+
 ## Deployments
 
 Most users should use the supported Foundation deployment at https://createai.microbit.org/

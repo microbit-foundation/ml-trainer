@@ -22,7 +22,10 @@ import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
-import { DownloadState, MicrobitToFlash } from "../model";
+import {
+  DownloadState,
+  SameOrDifferentChoice,
+} from "../download-flow/download-types";
 
 export interface DownloadChooseMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -31,7 +34,9 @@ export interface DownloadChooseMicrobitDialogProps
   stage: DownloadState;
 }
 
-type MicrobitOption = MicrobitToFlash.Same | MicrobitToFlash.Different;
+type MicrobitOption =
+  | SameOrDifferentChoice.Same
+  | SameOrDifferentChoice.Different;
 
 const DownloadChooseMicrobitDialog = ({
   onSameMicrobitClick,
@@ -40,9 +45,9 @@ const DownloadChooseMicrobitDialog = ({
   ...props
 }: DownloadChooseMicrobitDialogProps) => {
   const defaultValue =
-    stage.microbitToFlash === MicrobitToFlash.Default
-      ? MicrobitToFlash.Same
-      : stage.microbitToFlash;
+    stage.microbitChoice === SameOrDifferentChoice.Default
+      ? SameOrDifferentChoice.Same
+      : stage.microbitChoice;
   const [selected, setSelected] = useState<MicrobitOption>(defaultValue);
   const handleOptionChange = useCallback(
     (opt: MicrobitOption) => setSelected(opt),
@@ -56,11 +61,11 @@ const DownloadChooseMicrobitDialog = ({
   const group = getRootProps();
   const radioCardOptions: Omit<RadioCardProps, "isSelected">[] = [
     {
-      id: MicrobitToFlash.Same,
+      id: SameOrDifferentChoice.Same,
       imgSrc: microbitImage,
     },
     {
-      id: MicrobitToFlash.Different,
+      id: SameOrDifferentChoice.Different,
       imgSrc: twoMicrobitsImage,
     },
   ];
@@ -68,7 +73,7 @@ const DownloadChooseMicrobitDialog = ({
     <ConnectContainerDialog
       {...props}
       onNextClick={
-        selected === MicrobitToFlash.Same
+        selected === SameOrDifferentChoice.Same
           ? onSameMicrobitClick
           : onDifferentMicrobitClick
       }

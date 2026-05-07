@@ -6,12 +6,11 @@
  */
 import { HStack } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
-import { AccelerometerDataEvent } from "@microbit/microbit-connection";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { AccelerometerData } from "@microbit/microbit-connection";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
-import { useConnectActions } from "../connect-actions-hooks";
-import { ConnectionStatus } from "../connect-status-hooks";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
+import { useDataConnected } from "../data-connection-flow";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { maxAccelerationScaleForGraphs } from "../mlConfig";
 import { useSettings, useStore } from "../store";
@@ -29,8 +28,7 @@ interface LiveGraphProps {
 }
 
 const LiveGraph = ({ paused }: LiveGraphProps) => {
-  const { isConnected, status } = useConnectionStage();
-  const connectActions = useConnectActions();
+  const isConnected = useDataConnected();
   const [{ graphColorScheme, graphLineScheme, graphLineWeight }] =
     useSettings();
 
@@ -114,15 +112,12 @@ const LiveGraph = ({ paused }: LiveGraphProps) => {
   ]);
 
   useEffect(() => {
-    if (
-      (isConnected || status === ConnectionStatus.ReconnectingAutomatically) &&
-      !paused
-    ) {
+    if (isConnected && !paused) {
       chart?.start();
     } else {
       chart?.stop();
     }
-  }, [chart, isConnected, paused, status]);
+  }, [chart, isConnected, paused]);
 
   // Draw on graph to display that users are recording.
   const isRecording = useStore((s) => s.isRecording);
@@ -149,8 +144,8 @@ const LiveGraph = ({ paused }: LiveGraphProps) => {
     z: 0,
   });
 
-  useEffect(() => {
-    const listener = ({ data }: AccelerometerDataEvent) => {
+  const accelerometerListener = useCallback(
+    (data: AccelerometerData) => {
       const t = new Date().getTime();
       dataRef.current = {
         x: smoothenDataPoint(dataRef.current.x, data.x),
@@ -160,14 +155,11 @@ const LiveGraph = ({ paused }: LiveGraphProps) => {
       lineX.append(t, dataRef.current.x, false);
       lineY.append(t, dataRef.current.y, false);
       lineZ.append(t, dataRef.current.z, false);
-    };
-    if (isConnected) {
-      connectActions.addAccelerometerListener(listener);
-    }
-    return () => {
-      connectActions.removeAccelerometerListener(listener);
-    };
-  }, [connectActions, isConnected, lineX, lineY, lineZ]);
+    },
+    [lineX, lineY, lineZ]
+  );
+
+  useAccelerometerListener(accelerometerListener);
 
   return (
     <HStack

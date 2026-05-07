@@ -7,6 +7,7 @@ import { HStack } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
 import { useLocation } from "react-router";
 import { keyboardShortcuts, useShortcut } from "../../keyboard-shortcut-hooks";
+import { useNativeTabletBreakpoint } from "../../native-breakpoint-hooks";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
@@ -52,6 +53,7 @@ const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
     }
   }, [tourTriggerName]);
   useShortcut(keyboardShortcuts.settings, settingsDialogOnOpen);
+  const useTabletLayout = useNativeTabletBreakpoint();
   return (
     <>
       <LanguageDialog isOpen={isLanguageDialogOpen} onClose={closeDialog} />
@@ -61,10 +63,9 @@ const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
         onClose={closeDialog}
         onChooseConnect={() => setPostConnectTourTrigger(tourTrigger)}
         explanationTextId="connect-to-tour-body"
-        options={{ postConnectTourTrigger: tourTrigger }}
       />
       <AboutDialog isOpen={isAboutDialogOpen} onClose={closeDialog} />
-      <HStack spacing={3} display={{ base: "none", lg: "flex" }}>
+      <HStack spacing={3} display={useTabletLayout ? "none" : "flex"}>
         {toolbarItems}
         <SettingsMenu
           onLanguageDialogOpen={languageDialogOnOpen}
@@ -72,7 +73,7 @@ const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
         />
       </HStack>
       <HelpMenu
-        display={{ base: "none", lg: "block" }}
+        display={useTabletLayout ? "none" : "block"}
         onAboutDialogOpen={aboutDialogOnOpen}
         onConnectFirstDialogOpen={connectFirstDialogOnOpen}
         onFeedbackOpen={feedbackOnOpen}

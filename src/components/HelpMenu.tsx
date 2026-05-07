@@ -7,7 +7,6 @@ import {
   Box,
   BoxProps,
   IconButton,
-  Menu,
   MenuButton,
   MenuList,
   Portal,
@@ -16,6 +15,7 @@ import { useRef } from "react";
 import { RiQuestionLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import HelpMenuItems from "./HelpMenuItems";
+import Menu from "./Menu";
 import { TourTrigger } from "../model";
 
 interface HelpMenuProps extends BoxProps {

@@ -24,6 +24,7 @@ import ProjectsToolbar from "../components/ProjectsToolbar";
 import Search from "../components/Search";
 import SortInput from "../components/SortInput";
 import { useProjectCardActions } from "../hooks/use-project-card-actions";
+import { useLogging } from "../logging/logging-hooks";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
@@ -41,6 +42,7 @@ const ProjectsPage = () => {
   const deleteProjects = useStore((s) => s.deleteProjects);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
   const mobileIconOnly = useBreakpointValue({ base: true, md: false });
+  const logging = useLogging();
 
   useEffect(() => {
     const projectIds = new Set(allProjectData.map((p) => p.id));
@@ -48,30 +50,42 @@ const ProjectsPage = () => {
   }, [allProjectData]);
 
   const [orderByField, setOrderByField] = useState<OrderByField>("timestamp");
+  const [orderByDirection, setOrderByDirection] = useState<"asc" | "desc">(
+    "desc"
+  );
   const handleOrderByFieldChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const value = e.target.value as OrderByField;
-    if (value === "name") {
-      setOrderByDirection("asc");
-    } else {
-      setOrderByDirection("desc");
-    }
+    const direction = value === "name" ? "asc" : "desc";
+    setOrderByDirection(direction);
     setOrderByField(value);
+    logging.event({
+      type: "project_sort",
+      detail: { field: value, direction },
+    });
   };
   const toggleOrderByDirection = () => {
-    setOrderByDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    setOrderByDirection((prev) => {
+      const next = prev === "asc" ? "desc" : "asc";
+      logging.event({
+        type: "project_sort",
+        detail: { field: orderByField, direction: next },
+      });
+      return next;
+    });
   };
-  const [orderByDirection, setOrderByDirection] = useState<"asc" | "desc">(
-    "desc"
-  );
 
   const handleOpenProject = useCallback(
     async (id?: string) => {
+      logging.event({
+        type: "project_open",
+        detail: { surface: "projects" },
+      });
       await loadProjectAndModelFromStorage(id ?? selectedProjectIds[0]);
       navigate(createDataSamplesPageUrl());
     },
-    [navigate, selectedProjectIds]
+    [logging, navigate, selectedProjectIds]
   );
 
   const {
@@ -89,8 +103,10 @@ const ProjectsPage = () => {
     handleCloseConfirmDialog,
     handleDeleteProject,
   } = useProjectCardActions({
+    surface: "projects",
     getSelectedProjectId: () =>
       selectedProjectIds.length === 1 ? selectedProjectIds[0] : undefined,
+    getSelectedProjectIds: () => selectedProjectIds,
     onDeleteSelected: () => deleteProjects(selectedProjectIds),
   });
 
@@ -136,6 +152,18 @@ const ProjectsPage = () => {
   const handleQueryClear = useCallback(() => {
     setQuery("");
   }, []);
+
+  // Debounced project_search log: emit one event per intentional search,
+  // not per keystroke. The trailing 400ms idle window is long enough that
+  // a user typing "rps" doesn't fire three searches in dashboards.
+  useEffect(() => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    const handle = setTimeout(() => {
+      logging.event({ type: "project_search" });
+    }, 400);
+    return () => clearTimeout(handle);
+  }, [logging, query]);
 
   const getSearchResults = useCallback(() => {
     const normalizedQuery = query.toLowerCase().trim();

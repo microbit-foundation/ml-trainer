@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import { MenuDivider, MenuItem } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { MdOutlineCookie } from "react-icons/md";
@@ -13,7 +14,7 @@ import {
   RiInformationLine,
 } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { useConnectionStage } from "../connection-stage-hooks";
+import { useDataConnected } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { TourTrigger } from "../model";
 import { useStore } from "../store";
@@ -98,7 +99,7 @@ const HelpMenuItems = ({
           <FormattedMessage id="privacy" />
         </MenuItem>
       )}
-      {deployment.compliance.manageCookies && (
+      {deployment.compliance.manageCookies && !Capacitor.isNativePlatform() && (
         <MenuItem
           as="button"
           onClick={deployment.compliance.manageCookies}
@@ -127,7 +128,7 @@ const TourMenuItem = ({
   tourTrigger,
 }: TourMenuItemProps) => {
   const tourStart = useStore((s) => s.tourStart);
-  const { isConnected } = useConnectionStage();
+  const isConnected = useDataConnected();
   const handleClick = useCallback(async () => {
     if (!isConnected) {
       onConnectFirstDialogOpen();

@@ -27,6 +27,7 @@ interface TemplateStrings {
   appNameFull: string;
   ogDescription: undefined | string;
   metaDescription: undefined | string;
+  buildMode?: string;
 }
 
 // Support optionally pulling in external branding if the module is installed.
@@ -37,6 +38,21 @@ const themePackageExternal = fs.existsSync(external);
 const themePackageAlias = themePackageExternal
   ? theme
   : path.resolve(__dirname, internal);
+
+// Auto-derive the runtime Firebase-config gate from the theme-package's
+// native/ directory — the source of truth for whether real Firebase
+// config is available for this build. Controls whether `createLogging`
+// instantiates `NativeLogging` or falls back to `ConsoleLogging`; see
+// src/deployment/index.ts. Setting this here means a contributor never
+// has to remember to flip the env var manually.
+const themePackageNative = path.resolve(__dirname, external, "native");
+if (
+  process.env.VITE_HAS_FIREBASE_CONFIG === undefined &&
+  fs.existsSync(path.join(themePackageNative, "GoogleService-Info.plist")) &&
+  fs.existsSync(path.join(themePackageNative, "google-services.json"))
+) {
+  process.env.VITE_HAS_FIREBASE_CONFIG = "true";
+}
 
 const viteEjsPlugin = (data: ejs.Data): Plugin => {
   return {
@@ -60,6 +76,10 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         ogDescription: undefined,
         metaDescription: undefined,
       };
+
+  // Add VITE_BUILD_MODE environment variable to template data
+  strings.buildMode = process.env.VITE_BUILD_MODE;
+
   return {
     base: process.env.BASE_URL ?? "/",
     plugins: [viteEjsPlugin(strings), react(), svgr()],

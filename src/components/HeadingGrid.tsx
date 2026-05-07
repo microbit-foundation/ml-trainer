@@ -11,15 +11,18 @@ import { ReactNode } from "react";
 interface HeadingGridProps extends GridProps {
   headings: GridColumnHeadingItemProps[];
 }
-
 const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
   return (
     <Grid
       flexShrink={0}
-      h="3.25rem"
       alignItems="center"
+      position="sticky"
+      top={0}
+      height="3.25rem"
       borderBottomWidth={3}
       borderColor="gray.200"
+      zIndex={1}
+      backgroundColor="whitesmoke"
       {...props}
     >
       {headings.map((props, idx) => (
