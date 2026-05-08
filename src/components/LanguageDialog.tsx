@@ -36,7 +36,8 @@ import {
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { deployment, useDeployment } from "../deployment";
 import { flags } from "../flags";
-import { allLanguages, Language } from "../settings";
+import { isNativePlatform } from "../platform";
+import { allLanguages, Language, nativeLanguageIds } from "../settings";
 import { useStore } from "../store";
 import ModalFooterContent from "./ModalFooterContent";
 
@@ -61,6 +62,10 @@ export const LanguageDialog = ({
       onClose();
     },
     [onClose, setLanguage]
+  );
+  const fullySupportedLanguages = allLanguages.filter(fullySupported);
+  const partiallySupportedLanguages = allLanguages.filter(
+    (l) => !fullySupported(l)
   );
   return (
     <Modal
@@ -87,15 +92,13 @@ export const LanguageDialog = ({
                 <FormattedMessage id="language-fully-supported-heading" />
               </Text>
               <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
-                {allLanguages
-                  .filter((l) => l.makeCode && uiSupported(l))
-                  .map((language) => (
-                    <LanguageCard
-                      key={language.id}
-                      language={language}
-                      onChooseLanguage={handleChooseLanguage}
-                    />
-                  ))}
+                {fullySupportedLanguages.map((language) => (
+                  <LanguageCard
+                    key={language.id}
+                    language={language}
+                    onChooseLanguage={handleChooseLanguage}
+                  />
+                ))}
               </SimpleGrid>
               <Text
                 marginTop="1em"
@@ -108,15 +111,13 @@ export const LanguageDialog = ({
                 <FormattedMessage id="language-partially-supported-heading" />
               </Text>
               <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
-                {allLanguages
-                  .filter((l) => !(l.makeCode && uiSupported(l)))
-                  .map((language) => (
-                    <LanguageCard
-                      key={language.id}
-                      language={language}
-                      onChooseLanguage={handleChooseLanguage}
-                    />
-                  ))}
+                {partiallySupportedLanguages.map((language) => (
+                  <LanguageCard
+                    key={language.id}
+                    language={language}
+                    onChooseLanguage={handleChooseLanguage}
+                  />
+                ))}
               </SimpleGrid>
             </VStack>
           </ModalBody>
@@ -232,9 +233,15 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
   );
 };
 
-const uiSupported = (language: Language): boolean =>
-  language.ui === true ||
-  (language.ui === "preview" && flags.translationPreview);
+const uiSupported = (language: Language): boolean => {
+  if (isNativePlatform() && !nativeLanguageIds.includes(language.id)) {
+    return false;
+  }
+  return (
+    language.ui === true ||
+    (language.ui === "preview" && flags.translationPreview)
+  );
+};
 
 const fullySupported = (language: Language): boolean => {
   return uiSupported(language) === true && language.makeCode;
