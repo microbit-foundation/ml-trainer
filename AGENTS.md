@@ -19,7 +19,7 @@ When documenting properties/fields use the following style of comment:
 To add or amend UI strings:
 
 1. Edit `lang/ui.en.json` (and `lang/ui.en-us.json` — we maintain the en-US copy manually).
-2. Run `find lang -type f -not -name 'ui.en.json' -not -name 'ui.en-us.json' | while read n; do git checkout main -- $n; done && npm run i18n:compile` to update `src/messages/` via formatjs and ensure that outdated text of new message is not preserved in non-English translation bundles as we iterate on the text.
+2. Run `npm run i18n:reset-translations && npm run i18n:compile`. The reset step rewinds non-English translations to the last regular release tag (e.g. `v1.3.1`, ignoring pre-release suffixes like `-apps.internal.N`) so outdated text of an in-flight message is not preserved in translation bundles as we iterate; the compile step regenerates `src/messages/` via formatjs.
 
 ## Vitest
 
