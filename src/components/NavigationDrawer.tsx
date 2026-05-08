@@ -134,8 +134,11 @@ const NavigationDrawer = ({
     >
       <DrawerOverlay />
       <DrawerContent>
-        <DrawerHeader bgColor="brand2.500" px={4} py={3}>
-          <AppLogo transform="scale(0.85)" transformOrigin="left" />
+        <DrawerHeader bgColor="brand2.500" p={0}>
+          <Box h="max(0px, calc(env(safe-area-inset-top) - 12px))" />
+          <HStack h="64px" px={4} alignItems="center">
+            <AppLogo transform="scale(0.85)" transformOrigin="left" />
+          </HStack>
         </DrawerHeader>
         <DrawerBody px={0} py={0}>
           <VStack align="stretch" spacing={0} h="100%">
