@@ -12,7 +12,6 @@ import { getEditorVersionOverride } from "../editor-version";
 import { useProject } from "../hooks/project-hooks";
 import { getMakeCodeLang } from "../settings";
 import { useSettings } from "../store";
-import { isNativePlatform } from "../platform";
 
 const controllerId = "MicrobitMachineLearningTool";
 
@@ -34,9 +33,7 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
       controller={2}
       lang={getMakeCodeLang(languageId)}
       loading="eager"
-      version={
-        getEditorVersionOverride() ?? (isNativePlatform() ? "beta" : undefined)
-      }
+      version={getEditorVersionOverride()}
       {...editorCallbacks}
       {...props}
     />
