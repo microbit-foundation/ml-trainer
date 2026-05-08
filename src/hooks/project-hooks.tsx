@@ -408,6 +408,7 @@ export const ProjectProvider = ({
           logging.event({ type: "project_import", detail: { source } });
           const hex = await readFileAsText(file);
           await importProjectFromHexText(hex, file.name);
+          // importProjectFromHexText clears loading overlay.
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
@@ -587,6 +588,7 @@ export const ProjectProvider = ({
               filename += ".hex";
             }
             await importProjectFromHexText(contents.data as string, filename);
+            // importProjectFromHexText clears loading overlay.
           } catch (e) {
             setLoadingOverlayVisible(false);
             throw e;
