@@ -23,8 +23,15 @@ export interface Language {
 export const allLanguages: Language[] = [
   {
     id: "en",
-    name: "English",
-    enName: "English",
+    name: "English (UK)",
+    enName: "English (UK)",
+    ui: true,
+    makeCode: true,
+  },
+  {
+    id: "en-US",
+    name: "English (US)",
+    enName: "English (US)",
     ui: true,
     makeCode: true,
   },

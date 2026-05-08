@@ -17,11 +17,11 @@ describe("matchLanguage", () => {
 
     // Exact matches
     expect(matchLanguage(["en"])).toBe("en");
+    expect(matchLanguage(["en-US"])).toBe("en-US");
     expect(matchLanguage(["fr"])).toBe("fr");
     expect(matchLanguage(["ja"])).toBe("ja");
 
     // Regional variants to base language
-    expect(matchLanguage(["en-US"])).toBe("en");
     expect(matchLanguage(["en-GB"])).toBe("en");
     expect(matchLanguage(["fr-CA"])).toBe("fr");
 

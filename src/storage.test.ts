@@ -7,7 +7,7 @@ import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { ActionData, RecordingData } from "./model";
 import { DataSamplesView } from "./model";
-import { Settings } from "./settings";
+import { defaultSettings, Settings } from "./settings";
 import { Database, IdbDatabase, MakeCodeData } from "./storage";
 import { SqliteDatabase } from "./sqlite-storage";
 import { createBetterSqlite3Connection } from "./testing/better-sqlite3-adapter";
@@ -503,7 +503,7 @@ describe.each(backends)("$name", ({ name, factory }) => {
     it("getSettings returns default settings initially", async () => {
       const loaded = await db.getSettings();
       expect(loaded).toBeDefined();
-      expect(loaded.languageId).toBe("en");
+      expect(loaded.languageId).toBe(defaultSettings.languageId);
     });
   });
 
