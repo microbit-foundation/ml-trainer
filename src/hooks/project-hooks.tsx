@@ -346,12 +346,14 @@ export const ProjectProvider = ({
   }, [doAfterEditorUpdate, logging, setProjectEdited]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
+  const setLoadingOverlayVisible = useStore((s) => s.setLoadingOverlayVisible);
   const importProjectFromHexText = useCallback(
     async (hex: string, fileName: string) => {
       const makeCodeMagicMark = "41140E2FB82FA2BB";
       // Check if is a MakeCode hex, otherwise show error dialog.
       if (!hex.includes(makeCodeMagicMark)) {
         setPostImportDialogState(PostImportDialogState.Error);
+        setLoadingOverlayVisible(false);
         return;
       }
       const hasTimedOut = await checkIfEditorStartUpTimedOut(
@@ -359,9 +361,11 @@ export const ProjectProvider = ({
       );
       if (hasTimedOut) {
         openEditorTimedOutDialog();
+        setLoadingOverlayVisible(false);
         return;
       }
       // This triggers the code in editorChanged to update actions etc.
+      // It is fire-and-forget: loading overlay is cleared by editorChange.
       setEditorLoadingFile();
       driverRef.current!.importFile({
         filename: fileName,
@@ -374,10 +378,10 @@ export const ProjectProvider = ({
       editorReadyPromise.promise,
       openEditorTimedOutDialog,
       setEditorLoadingFile,
+      setLoadingOverlayVisible,
       setPostImportDialogState,
     ]
   );
-  const setLoadingOverlayVisible = useStore((s) => s.setLoadingOverlayVisible);
   const loadFile = useCallback(
     async (
       file: File,
@@ -404,8 +408,6 @@ export const ProjectProvider = ({
           logging.event({ type: "project_import", detail: { source } });
           const hex = await readFileAsText(file);
           await importProjectFromHexText(hex, file.name);
-          // importProjectFromHexText runs asynchronously without awaiting.
-          // The loading overlay is dismissed in editorChange, not here.
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
@@ -585,8 +587,6 @@ export const ProjectProvider = ({
               filename += ".hex";
             }
             await importProjectFromHexText(contents.data as string, filename);
-            // importProjectFromHexText runs asynchronously without awaiting.
-            // The loading overlay is dismissed in editorChange, not here.
           } catch (e) {
             setLoadingOverlayVisible(false);
             throw e;
