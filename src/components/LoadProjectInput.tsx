@@ -21,10 +21,6 @@ export interface LoadProjectInputProps {
    * A project can be opened from .json or .hex file.
    */
   accept: ".json" | ".hex" | ".json,.hex";
-  /**
-   * Set file loading state.
-   */
-  setLoading?: (isLoading: boolean) => void;
 }
 
 export interface LoadProjectInputRef {
@@ -32,10 +28,7 @@ export interface LoadProjectInputRef {
 }
 
 const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
-  function LoadProjectInput(
-    { accept, setLoading }: LoadProjectInputProps,
-    ref
-  ) {
+  function LoadProjectInput({ accept }: LoadProjectInputProps, ref) {
     const { loadFile } = useProject();
     const inputRef = useRef<HTMLInputElement>(null);
     const [action, setAction] = useState<LoadAction>("replaceProject");
@@ -55,12 +48,10 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
     const onOpen = useCallback(
       async (files: File[]) => {
         if (files.length === 1) {
-          setLoading && setLoading(true);
           await loadFile(files[0], "file-upload", action);
-          setLoading && setLoading(false);
         }
       },
-      [action, loadFile, setLoading]
+      [action, loadFile]
     );
 
     const handleOpenFile = useCallback(

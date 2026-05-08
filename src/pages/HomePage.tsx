@@ -353,27 +353,9 @@ const ImportProjectButton = () => {
   const handleContinueSessionFromFile = useCallback(() => {
     loadProjectRef.current?.chooseFile("replaceProject");
   }, []);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const loadingTimeoutRef = useRef<NodeJS.Timeout>();
-  const handleSetLoading = useCallback((loading: boolean) => {
-    if (loading && loadingTimeoutRef.current === undefined) {
-      loadingTimeoutRef.current = setTimeout(() => {
-        setLoading(loading);
-      }, 500); // Only show loading state if it takes > 500 ms.
-    }
-    if (!loading) {
-      setLoading(loading);
-      clearTimeout(loadingTimeoutRef.current);
-      loadingTimeoutRef.current = undefined;
-    }
-  }, []);
   return (
     <>
-      <LoadProjectInput
-        ref={loadProjectRef}
-        accept=".json,.hex"
-        setLoading={handleSetLoading}
-      />
+      <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <IconButton
         icon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
@@ -385,7 +367,6 @@ const ImportProjectButton = () => {
         leftIcon={<RiUpload2Line />}
         onClick={handleContinueSessionFromFile}
         display={{ base: "none", sm: "inline-flex" }}
-        isLoading={isLoading}
       >
         <FormattedMessage id="import-file-action" />
       </ButtonWithLoading>

@@ -346,12 +346,14 @@ export const ProjectProvider = ({
   }, [doAfterEditorUpdate, logging, setProjectEdited]);
   const resetProject = useStore((s) => s.resetProject);
   const loadDataset = useStore((s) => s.loadDataset);
+  const setLoadingOverlayVisible = useStore((s) => s.setLoadingOverlayVisible);
   const importProjectFromHexText = useCallback(
     async (hex: string, fileName: string) => {
       const makeCodeMagicMark = "41140E2FB82FA2BB";
       // Check if is a MakeCode hex, otherwise show error dialog.
       if (!hex.includes(makeCodeMagicMark)) {
         setPostImportDialogState(PostImportDialogState.Error);
+        setLoadingOverlayVisible(false);
         return;
       }
       const hasTimedOut = await checkIfEditorStartUpTimedOut(
@@ -359,9 +361,11 @@ export const ProjectProvider = ({
       );
       if (hasTimedOut) {
         openEditorTimedOutDialog();
+        setLoadingOverlayVisible(false);
         return;
       }
       // This triggers the code in editorChanged to update actions etc.
+      // It is fire-and-forget: loading overlay is cleared by editorChange.
       setEditorLoadingFile();
       driverRef.current!.importFile({
         filename: fileName,
@@ -374,6 +378,7 @@ export const ProjectProvider = ({
       editorReadyPromise.promise,
       openEditorTimedOutDialog,
       setEditorLoadingFile,
+      setLoadingOverlayVisible,
       setPostImportDialogState,
     ]
   );
@@ -383,24 +388,33 @@ export const ProjectProvider = ({
       type: LoadType,
       loadAction: LoadAction
     ): Promise<void> => {
-      const fileExtension = getLowercaseFileExtension(file.name);
-      const source = type === "drop-load" ? "drop" : "file_picker";
-      if (fileExtension === "json") {
-        logging.event({ type: "dataset_load", detail: { source } });
-        const actionsString = await readFileAsText(file);
-        const actions = JSON.parse(actionsString) as unknown;
-        if (isDatasetUserFileFormat(actions)) {
-          await loadDataset(actions, loadAction);
-          navigate(createDataSamplesPageUrl());
+      try {
+        const fileExtension = getLowercaseFileExtension(file.name);
+        const source = type === "drop-load" ? "drop" : "file_picker";
+        if (fileExtension === "json") {
+          setLoadingOverlayVisible(true);
+          logging.event({ type: "dataset_load", detail: { source } });
+          const actionsString = await readFileAsText(file);
+          const actions = JSON.parse(actionsString) as unknown;
+          if (isDatasetUserFileFormat(actions)) {
+            await loadDataset(actions, loadAction);
+            navigate(createDataSamplesPageUrl());
+          } else {
+            setPostImportDialogState(PostImportDialogState.Error);
+          }
+          setLoadingOverlayVisible(false);
+        } else if (fileExtension === "hex") {
+          setLoadingOverlayVisible(true);
+          logging.event({ type: "project_import", detail: { source } });
+          const hex = await readFileAsText(file);
+          await importProjectFromHexText(hex, file.name);
+          // importProjectFromHexText clears loading overlay.
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
-      } else if (fileExtension === "hex") {
-        logging.event({ type: "project_import", detail: { source } });
-        const hex = await readFileAsText(file);
-        await importProjectFromHexText(hex, file.name);
-      } else {
-        setPostImportDialogState(PostImportDialogState.Error);
+      } catch (e) {
+        setLoadingOverlayVisible(false);
+        throw e;
       }
     },
     [
@@ -408,6 +422,7 @@ export const ProjectProvider = ({
       loadDataset,
       logging,
       navigate,
+      setLoadingOverlayVisible,
       setPostImportDialogState,
     ]
   );
@@ -553,24 +568,31 @@ export const ProjectProvider = ({
       const appUrlListener = CapacitorApp.addListener(
         "appUrlOpen",
         async (evt) => {
-          const contents = await Filesystem.readFile({
-            path: evt.url,
-            encoding: Encoding.UTF8,
-          });
-          let filename = decodeURIComponent(
-            evt.url.substring(evt.url.lastIndexOf("/") + 1)
-          );
-          // Forgivingly shim broken filenames to hex files,
-          // we can't rely on android to maintain file data.
-          // Even Android's Files app often passes us a broken
-          // filename. MakeCode is resilient to bad files.
-          if (filename.length === 0) {
-            filename = `${untitledProjectName}.hex`;
+          try {
+            setLoadingOverlayVisible(true);
+            const contents = await Filesystem.readFile({
+              path: evt.url,
+              encoding: Encoding.UTF8,
+            });
+            let filename = decodeURIComponent(
+              evt.url.substring(evt.url.lastIndexOf("/") + 1)
+            );
+            // Forgivingly shim broken filenames to hex files,
+            // we can't rely on android to maintain file data.
+            // Even Android's Files app often passes us a broken
+            // filename. MakeCode is resilient to bad files.
+            if (filename.length === 0) {
+              filename = `${untitledProjectName}.hex`;
+            }
+            if (!filename.includes(".")) {
+              filename += ".hex";
+            }
+            await importProjectFromHexText(contents.data as string, filename);
+            // importProjectFromHexText clears loading overlay.
+          } catch (e) {
+            setLoadingOverlayVisible(false);
+            throw e;
           }
-          if (!filename.includes(".")) {
-            filename += ".hex";
-          }
-          await importProjectFromHexText(contents.data as string, filename);
         }
       );
 
@@ -592,6 +614,7 @@ export const ProjectProvider = ({
     importProjectFromHexText,
     isEditorReady,
     logging,
+    setLoadingOverlayVisible,
   ]);
 
   const value = useMemo(

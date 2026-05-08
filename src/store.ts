@@ -176,7 +176,7 @@ export interface State {
   isEditorReady: boolean;
   /**
    * Whether we're expecting an editorChange call with a new header id
-   * because we've
+   * because we've loaded a new hex file.
    *
    * In this case we need to update app state from the project.
    */
@@ -195,6 +195,7 @@ export interface State {
     editorContentLoadedPromise: PromiseInfo<void>;
   };
   isEditorTimedOutDialogOpen: boolean;
+  isLoadingOverlayVisible: boolean;
   langChanged: boolean;
 
   download: DownloadState;
@@ -336,6 +337,8 @@ export interface Actions {
   startPredicting(buffer: BufferedData): void;
   stopPredicting(): void;
 
+  setLoadingOverlayVisible(visible: boolean): void;
+
   languageDialogOnOpen(): void;
   settingsDialogOnOpen(): void;
   connectFirstDialogOnOpen(): void;
@@ -453,6 +456,7 @@ const createMlStore = (logging: Logging) => {
         isEditorTimedOutDialogOpen: false,
         langChanged: false,
         appEditNeedsFlushToEditor: true,
+        isLoadingOverlayVisible: false,
         // This dialog flow spans two pages
         trainModelDialogStage: TrainModelDialogStage.Closed,
         trainModelProgress: 0,
@@ -1081,6 +1085,10 @@ const createMlStore = (logging: Logging) => {
           );
         },
 
+        setLoadingOverlayVisible(visible: boolean) {
+          set({ isLoadingOverlayVisible: visible });
+        },
+
         async downloadDataset() {
           const { actions, project } = get();
           const name = project.header?.name ?? untitledProjectName;
@@ -1566,6 +1574,7 @@ const createMlStore = (logging: Logging) => {
                     model: undefined,
                     isEditorOpen: false,
                     isEditorLoadingFile: false,
+                    isLoadingOverlayVisible: false,
                   };
                 }
               } else if (isEditorOpen) {
