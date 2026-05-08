@@ -1,8 +1,21 @@
 default_platform(:ios)
 
+# Branded release lanes require the private overlay (apply-brand drops
+# fastlane/.env so dotenv loads BRAND_*). Calling this at the top of a
+# lane fails fast with a clear message if the overlay didn't land —
+# without it match/upload would fail much deeper with cryptic errors.
+def require_brand_env(*keys)
+  keys.each do |key|
+    if ENV[key].nil? || ENV[key].empty?
+      UI.user_error!("#{key} is not set; the private brand overlay is required for this lane.")
+    end
+  end
+end
+
 platform :ios do
   desc "Build signed IPA for App Store/TestFlight"
   lane :build do
+    require_brand_env("BRAND_APP_IDENTIFIER", "BRAND_APPLE_TEAM_ID", "BRAND_MATCH_GIT_URL")
     setup_ci if ENV["CI"]
 
     # Fetch certificates and profiles from Match repo
@@ -27,6 +40,7 @@ platform :ios do
       )
     end
 
+    app_id = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
     build_app(
       workspace: "ios/App/App.xcworkspace",
       scheme: "App",
@@ -37,7 +51,7 @@ platform :ios do
       export_options: {
         signingStyle: "manual",
         provisioningProfiles: {
-          "org.microbit.createai" => "match AppStore org.microbit.createai"
+          app_id => "match AppStore #{app_id}"
         }
       }
     )
@@ -45,6 +59,7 @@ platform :ios do
 
   desc "Upload to TestFlight for internal testing"
   lane :upload do
+    require_brand_env("BRAND_APP_IDENTIFIER")
     api_key = app_store_connect_api_key(
       key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
       issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
@@ -93,6 +108,7 @@ platform :android do
 
   desc "Upload to Google Play internal testing track"
   lane :upload do
+    require_brand_env("BRAND_APP_IDENTIFIER")
     upload_to_play_store(
       track: "internal",
       release_status: "draft",

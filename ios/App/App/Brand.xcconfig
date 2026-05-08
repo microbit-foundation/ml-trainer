@@ -1,0 +1,20 @@
+// Brand-coupled build settings. Committed values are OSS-neutral.
+// Substituted into Info.plist via `$(BRAND_*)` references and into
+// project.pbxproj for bundle id, dev team, and provisioning profile.
+
+BRAND_BUNDLE_ID = org.microbit.mltrainer
+BRAND_DISPLAY_NAME = ml-trainer
+BRAND_BLUETOOTH_USAGE_DESCRIPTION = ml-trainer uses Bluetooth to connect to your micro:bit.
+BRAND_DEVELOPMENT_TEAM =
+BRAND_PROVISIONING_PROFILE_SPECIFIER =
+
+// Theme-package brand overlay (CI / release builds). Dropped in by
+// `npm run apply-brand` when the private theme package is installed.
+#include? "Brand.private.xcconfig"
+
+// Personal developer override for local builds (your own bundle id and
+// signing team for running on a real device). Loaded last so it wins
+// over both the committed defaults and the theme overlay. Gitignored
+// and not managed by `apply-brand`. See README → "Signing for your
+// own iOS device".
+#include? "Brand.local.xcconfig"

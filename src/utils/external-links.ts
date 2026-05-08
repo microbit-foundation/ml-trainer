@@ -33,7 +33,4 @@ export const supportSiteFolderUrl = () =>
 
 export const accessibilityUrl = () => `${microbitOrgBaseUrl}accessibility/`;
 
-export const learnMoreUrl = () =>
-  isPublicFacingStage()
-    ? "https://microbit.org/ai"
-    : `${microbitOrgBaseUrl}createai`;
+export const learnMoreUrl = () => `${microbitOrgBaseUrl}createai/`;

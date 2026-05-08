@@ -24,6 +24,25 @@
 /android/app/src/main/assets/public
 /ios/App/App/public
 
+# Brand overlays applied by `npm run apply-brand` when a private theme
+# package is installed.
+/ios/App/App/GoogleService-Info.plist
+/android/app/google-services.json
+/ios/App/App/Brand.private.xcconfig
+/android/app/brand.private.gradle
+/fastlane/.env
+
+# Personal developer brand overrides for local iOS / Android builds.
+# Not managed by `apply-brand`, so they survive `npm install`.
+# See README for setup.
+/ios/App/App/Brand.local.xcconfig
+/android/app/brand.local.gradle
+/brand.local.json
+
+# Xcode per-user state (window layout, breakpoints, scheme selection).
+# Shared schemes live under xcshareddata/ and stay in git.
+**/xcuserdata/
+
 # Fastlane
 fastlane/report.xml
 fastlane/Preview.html

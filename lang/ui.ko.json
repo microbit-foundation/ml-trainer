@@ -83,6 +83,38 @@
     "defaultMessage": "AI 스토리텔링 친구",
     "description": "Home page resource card title"
   },
+  "analytics-consent-allow-action": {
+    "defaultMessage": "Allow analytics",
+    "description": "Accept button on the analytics consent dialog"
+  },
+  "analytics-consent-analytics": {
+    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads.",
+    "description": "Body of the analytics consent dialog explaining the optional analytics collection"
+  },
+  "analytics-consent-change-later": {
+    "defaultMessage": "You can change this in Settings later.",
+    "description": "Reassurance line on the analytics consent dialog about reversibility"
+  },
+  "analytics-consent-decline-action": {
+    "defaultMessage": "No thanks",
+    "description": "Decline button on the analytics consent dialog"
+  },
+  "analytics-consent-learn-more": {
+    "defaultMessage": "Learn more",
+    "description": "Link on the analytics consent dialog to the privacy policy"
+  },
+  "analytics-consent-setting-helper": {
+    "defaultMessage": "Helps us improve the app with anonymous usage data.",
+    "description": "Helper text for the analytics consent toggle in the settings dialog"
+  },
+  "analytics-consent-setting-label": {
+    "defaultMessage": "Share anonymous usage data",
+    "description": "Label for the analytics consent toggle in the settings dialog"
+  },
+  "analytics-consent-title": {
+    "defaultMessage": "Help improve {appNameFull}",
+    "description": "Title of the first-run analytics consent dialog on mobile"
+  },
   "animation-bluetooth-mode-label": {
     "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
     "description": "Aria label for animation"
@@ -1779,6 +1811,10 @@
     "defaultMessage": "Share",
     "description": "Label for action that initiates sharing the project on mobile"
   },
+  "share-file-description": {
+    "defaultMessage": "{appNameFull} project: {name}",
+    "description": "Label for a hex file with app name context"
+  },
   "share-hex-dialog-heading": {
     "defaultMessage": "Share project as a hex file",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
@@ -1786,6 +1822,10 @@
   "share-hex-dialog-message1": {
     "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
+  },
+  "share-named-file": {
+    "defaultMessage": "Share {name}",
+    "description": "Label for sharing a named file"
   },
   "sharing-description": {
     "defaultMessage": "Your project will be ready to share soon.",

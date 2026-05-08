@@ -68,6 +68,49 @@ Use e.g. `npx cap open ios` to open the IDE and run from there.
 
 The vite dev server run by dev:apps will be running inside the app.
 
+### Signing for your own iOS device
+
+The repo defaults to bundle id `org.microbit.mltrainer` and an empty Apple
+development team — fine for the iOS Simulator, but to install on a real
+iPhone or iPad you need to sign with your own Apple Developer account.
+The default bundle id is reserved for the Micro:bit Educational
+Foundation's developer account, so unless you're a member of that team
+you'll need to use one of your own.
+
+Drop a gitignored override at `ios/App/App/Brand.local.xcconfig`:
+
+```
+BRAND_BUNDLE_ID = com.yourname.mltrainer
+BRAND_DEVELOPMENT_TEAM = ABC1234567
+```
+
+Your team id is in Xcode → Settings → Accounts → your Apple ID, or
+under [Apple Developer → Membership](https://developer.apple.com/account).
+
+This file is loaded after `Brand.xcconfig` and after the optional
+private theme overlay, so it wins. It's gitignored and not touched by
+`npm run apply-brand`, so it survives `npm install`.
+
+If you also need to override the Android `applicationId` (rare for
+local debug builds — only matters if you plan to publish), drop
+`android/app/brand.local.gradle`:
+
+```groovy
+ext.brandAppId = "com.yourname.mltrainer"
+ext.brandDisplayName = "ml-trainer (yourname)"
+```
+
+To keep the Capacitor-level `appId` consistent (only relevant if you
+hit a plugin that keys off it), also drop `brand.local.json` at the
+repo root:
+
+```json
+{
+  "appId": "com.yourname.mltrainer",
+  "appName": "ml-trainer"
+}
+```
+
 ### Signed builds
 
 CI builds signed artifacts using [Fastlane](https://fastlane.tools/). iOS certificates and provisioning profiles are managed via [Fastlane Match](https://docs.fastlane.tools/actions/match/) with encrypted credentials stored in a private repository. Android signing uses a keystore stored in CI secrets.

@@ -88,6 +88,10 @@ const ImportPage = () => {
     try {
       setLoadingOverlayVisible(true);
       if (project) {
+        logging.event({
+          type: "project_import",
+          detail: { source: "microbit_org" },
+        });
         await loadProject(project, name);
         navigate(createDataSamplesPageUrl());
       } else {
@@ -101,6 +105,7 @@ const ImportPage = () => {
     }
   }, [
     loadProject,
+    logging,
     name,
     navigate,
     newSession,

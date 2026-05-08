@@ -13,6 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--
+          Disable Firebase's default analytics collection at startup so
+          nothing is collected until the user has granted analytics
+          consent. NativeLogging.setConsent flips collection back on
+          via FirebaseAnalytics.setEnabled() once consent is granted.
+        -->
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
             android:name=".MainActivity"

@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>CreateAI</string>
+	<string>$(BRAND_DISPLAY_NAME)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -37,6 +37,14 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<!--
+	  Disable Firebase's default data collection at startup so nothing
+	  is collected until the user has granted analytics consent.
+	  NativeLogging.setConsent() flips collection back on via
+	  FirebaseAnalytics.setEnabled() once consent is granted.
+	-->
+	<key>FirebaseDataCollectionDefaultEnabled</key>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,9 +52,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<string>$(BRAND_BLUETOOTH_USAGE_DESCRIPTION)</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>The micro:bit CreateAI app uses Bluetooth to connect to your micro:bit.</string>
+	<string>$(BRAND_BLUETOOTH_USAGE_DESCRIPTION)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

@@ -1,9 +1,9 @@
-git_url "git@github.com:microbit-foundation/ios-certificates.git"
+git_url ENV.fetch("BRAND_MATCH_GIT_URL", "")
 
 storage_mode "git"
 
 type "appstore"
 
-app_identifier "org.microbit.createai"
+app_identifier ENV.fetch("BRAND_APP_IDENTIFIER", "org.microbit.mltrainer")
 
-team_id "Z2ZPB8NPHN"
+team_id ENV.fetch("BRAND_APPLE_TEAM_ID", "")

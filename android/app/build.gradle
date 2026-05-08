@@ -1,15 +1,22 @@
+apply from: 'brand.gradle'
 apply plugin: 'com.android.application'
 
 android {
-    namespace "org.microbit.createai"
+    // Pinned to the Java source layout (org.microbit.mltrainer) so the
+    // R / BuildConfig classes and the manifest's `.MainActivity` reference
+    // resolve regardless of the brand. Brand-coupled identity flows
+    // through applicationId, not namespace.
+    namespace "org.microbit.mltrainer"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "org.microbit.createai"
+        applicationId project.brandAppId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "app_name", project.brandDisplayName
+        resValue "string", "title_activity_main", project.brandDisplayName
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'
         }

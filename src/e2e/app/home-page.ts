@@ -6,6 +6,47 @@
 import { expect, type Page, type BrowserContext } from "@playwright/test";
 import { getAbsoluteFilePath, Navbar } from "./shared";
 
+/**
+ * Browser-context script: poll the app's IndexedDB until the default
+ * settings row exists (the app writes it asynchronously on first load),
+ * then patch `analyticsConsent` to "denied". Polling avoids racing the
+ * app's `db.add`, which throws on key collision and would otherwise
+ * break startup if our `put` landed first.
+ */
+const seedAnalyticsConsentDenied = async () => {
+  const openDb = () =>
+    new Promise<IDBDatabase>((resolve, reject) => {
+      const req = indexedDB.open("ml", 1);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  for (let i = 0; i < 50; i++) {
+    const db = await openDb();
+    const existing = await new Promise<unknown>((resolve, reject) => {
+      const tx = db.transaction("settings", "readonly");
+      const get = tx.objectStore("settings").get("settings");
+      get.onsuccess = () => resolve(get.result);
+      get.onerror = () => reject(get.error);
+    });
+    if (existing && typeof existing === "object") {
+      await new Promise<void>((resolve, reject) => {
+        const tx = db.transaction("settings", "readwrite");
+        tx.objectStore("settings").put(
+          { ...existing, analyticsConsent: "denied" },
+          "settings"
+        );
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+      db.close();
+      return;
+    }
+    db.close();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+  throw new Error("Timed out waiting for IDB settings row to appear");
+};
+
 export class HomePage {
   public navbar: Navbar;
   private url: string;
@@ -48,6 +89,10 @@ export class HomePage {
       (flags) => localStorage.setItem("flags", flags.join(",")),
       flags
     );
+    // Pre-seed analyticsConsent so the native consent dialog doesn't
+    // auto-open and block UI under flags.ios / flags.android. Web
+    // compliance is suppressed separately via the MBCC cookie.
+    await this.page.evaluate(seedAnalyticsConsentDenied);
     // Reload so the app reads the flags on startup
     const response = await this.page.reload();
     return response;

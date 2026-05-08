@@ -3,6 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { App as CapacitorApp } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
+import { Encoding, Filesystem } from "@capacitor/filesystem";
 import { useToast } from "@chakra-ui/react";
 import {
   EditorWorkspaceSaveRequest,
@@ -22,6 +25,8 @@ import {
 } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useDeployment } from "../deployment";
+import { useDownloadActions } from "../download-flow/download-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import {
   HexData,
@@ -30,6 +35,7 @@ import {
   SaveStep,
   SaveType,
 } from "../model";
+import { isIOS } from "../platform";
 import {
   untitledProjectName as untitled,
   untitledProjectName,
@@ -47,12 +53,7 @@ import {
   getLowercaseFileExtension,
   readFileAsText,
 } from "../utils/fs-util";
-import { useDownloadActions } from "../download-flow/download-hooks";
-import { Capacitor } from "@capacitor/core";
-import { App as CapacitorApp } from "@capacitor/app";
-import { Encoding, Filesystem } from "@capacitor/filesystem";
-import { isIOS } from "../platform";
-import { isShareCanceled, shareHex } from "../utils/share-util";
+import { isShareCanceled, shareFile } from "../utils/share-util";
 
 class CodeEditorError extends Error {}
 
@@ -141,6 +142,7 @@ export const ProjectProvider = ({
   children,
 }: ProjectProviderProps) => {
   const intl = useIntl();
+  const { appNameFull } = useDeployment();
   const toast = useToast();
   const logging = useLogging();
   const projectEdited = useStore((s) => s.projectEdited);
@@ -271,7 +273,7 @@ export const ProjectProvider = ({
           editorTimedOut();
           logging.log("[MakeCode] Load timed out");
           logging.event({
-            type: "makecode-load-failed",
+            type: "editor_open_failure",
           });
           throw new CodeEditorError("MakeCode load timed out");
         }
@@ -302,7 +304,7 @@ export const ProjectProvider = ({
     async (focusVisible?: boolean) => {
       openedViaKeyboardRef.current = focusVisible ?? false;
       logging.event({
-        type: "edit-in-makecode",
+        type: "editor_open",
       });
       try {
         setProjectEdited();
@@ -385,13 +387,9 @@ export const ProjectProvider = ({
       try {
         setLoadingOverlayVisible(true);
         const fileExtension = getLowercaseFileExtension(file.name);
-        logging.event({
-          type,
-          detail: {
-            extension: fileExtension || "none",
-          },
-        });
+        const source = type === "drop-load" ? "drop" : "file_picker";
         if (fileExtension === "json") {
+          logging.event({ type: "dataset_load", detail: { source } });
           const actionsString = await readFileAsText(file);
           const actions = JSON.parse(actionsString) as unknown;
           if (isDatasetUserFileFormat(actions)) {
@@ -401,6 +399,7 @@ export const ProjectProvider = ({
             setPostImportDialogState(PostImportDialogState.Error);
           }
         } else if (fileExtension === "hex") {
+          logging.event({ type: "project_import", detail: { source } });
           const hex = await readFileAsText(file);
           await importProjectFromHexText(hex, file.name);
         } else {
@@ -453,18 +452,29 @@ export const ProjectProvider = ({
         }
       } else {
         logging.event({
-          type: "hex-save",
+          type: "project_save",
           detail: {
             actions: actions.length,
             samples: getTotalNumSamples(actions),
-            saveType,
+            destination: saveType,
           },
         });
         // Dismiss the progress dialog now that the hex is ready.
         setSave({ hex, step: SaveStep.ChooseDestination, type: saveType });
         if (saveType === SaveType.Share) {
           try {
-            await shareHex(hex);
+            await shareFile(
+              `${hex.name}.hex`,
+              hex.hex,
+              intl.formatMessage(
+                { id: "share-named-file" },
+                { name: hex.name }
+              ),
+              intl.formatMessage(
+                { id: "share-file-description" },
+                { appNameFull, name: hex.name }
+              )
+            );
           } catch (e) {
             if (!isShareCanceled(e)) {
               logging.error("Sharing failed", e);
@@ -487,6 +497,7 @@ export const ProjectProvider = ({
       }
     },
     [
+      appNameFull,
       save,
       getCurrentProject,
       settings.showPreSaveHelp,
