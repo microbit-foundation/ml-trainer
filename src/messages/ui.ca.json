@@ -190,7 +190,7 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
     }
   ],
   "analytics-consent-change-later": [
