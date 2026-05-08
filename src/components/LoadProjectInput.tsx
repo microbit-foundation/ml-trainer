@@ -28,10 +28,7 @@ export interface LoadProjectInputRef {
 }
 
 const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
-  function LoadProjectInput(
-    { accept }: LoadProjectInputProps,
-    ref
-  ) {
+  function LoadProjectInput({ accept }: LoadProjectInputProps, ref) {
     const { loadFile } = useProject();
     const inputRef = useRef<HTMLInputElement>(null);
     const [action, setAction] = useState<LoadAction>("replaceProject");
