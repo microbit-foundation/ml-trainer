@@ -1574,6 +1574,7 @@ const createMlStore = (logging: Logging) => {
                     model: undefined,
                     isEditorOpen: false,
                     isEditorLoadingFile: false,
+                    isLoadingOverlayVisible: false
                   };
                 }
               } else if (isEditorOpen) {

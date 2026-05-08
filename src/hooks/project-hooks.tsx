@@ -384,29 +384,28 @@ export const ProjectProvider = ({
       type: LoadType,
       loadAction: LoadAction
     ): Promise<void> => {
-      try {
+      const fileExtension = getLowercaseFileExtension(file.name);
+      const source = type === "drop-load" ? "drop" : "file_picker";
+      if (fileExtension === "json") {
         setLoadingOverlayVisible(true);
-        const fileExtension = getLowercaseFileExtension(file.name);
-        const source = type === "drop-load" ? "drop" : "file_picker";
-        if (fileExtension === "json") {
-          logging.event({ type: "dataset_load", detail: { source } });
-          const actionsString = await readFileAsText(file);
-          const actions = JSON.parse(actionsString) as unknown;
-          if (isDatasetUserFileFormat(actions)) {
-            await loadDataset(actions, loadAction);
-            navigate(createDataSamplesPageUrl());
-          } else {
-            setPostImportDialogState(PostImportDialogState.Error);
-          }
-        } else if (fileExtension === "hex") {
-          logging.event({ type: "project_import", detail: { source } });
-          const hex = await readFileAsText(file);
-          await importProjectFromHexText(hex, file.name);
+        logging.event({ type: "dataset_load", detail: { source } });
+        const actionsString = await readFileAsText(file);
+        const actions = JSON.parse(actionsString) as unknown;
+        if (isDatasetUserFileFormat(actions)) {
+          await loadDataset(actions, loadAction);
+          navigate(createDataSamplesPageUrl());
         } else {
           setPostImportDialogState(PostImportDialogState.Error);
         }
-      } finally {
         setLoadingOverlayVisible(false);
+      } else if (fileExtension === "hex") {
+        setLoadingOverlayVisible(true);
+        logging.event({ type: "project_import", detail: { source } });
+        const hex = await readFileAsText(file);
+        await importProjectFromHexText(hex, file.name);
+        // Loading overlay visiblity gets set to false in editorChange.
+      } else {
+        setPostImportDialogState(PostImportDialogState.Error);
       }
     },
     [
@@ -560,29 +559,26 @@ export const ProjectProvider = ({
       const appUrlListener = CapacitorApp.addListener(
         "appUrlOpen",
         async (evt) => {
-          try {
-            setLoadingOverlayVisible(true);
-            const contents = await Filesystem.readFile({
-              path: evt.url,
-              encoding: Encoding.UTF8,
-            });
-            let filename = decodeURIComponent(
-              evt.url.substring(evt.url.lastIndexOf("/") + 1)
-            );
-            // Forgivingly shim broken filenames to hex files,
-            // we can't rely on android to maintain file data.
-            // Even Android's Files app often passes us a broken
-            // filename. MakeCode is resilient to bad files.
-            if (filename.length === 0) {
-              filename = `${untitledProjectName}.hex`;
-            }
-            if (!filename.includes(".")) {
-              filename += ".hex";
-            }
-            await importProjectFromHexText(contents.data as string, filename);
-          } finally {
-            setLoadingOverlayVisible(false);
+          setLoadingOverlayVisible(true);
+          const contents = await Filesystem.readFile({
+            path: evt.url,
+            encoding: Encoding.UTF8,
+          });
+          let filename = decodeURIComponent(
+            evt.url.substring(evt.url.lastIndexOf("/") + 1)
+          );
+          // Forgivingly shim broken filenames to hex files,
+          // we can't rely on android to maintain file data.
+          // Even Android's Files app often passes us a broken
+          // filename. MakeCode is resilient to bad files.
+          if (filename.length === 0) {
+            filename = `${untitledProjectName}.hex`;
           }
+          if (!filename.includes(".")) {
+            filename += ".hex";
+          }
+          await importProjectFromHexText(contents.data as string, filename);
+          // Loading overlay visiblity gets set to false in editorChange.
         }
       );
 
