@@ -48,7 +48,7 @@
     "description": "Region label for action row"
   },
   "action-tooltip": {
-    "defaultMessage": "The type of movement you want {appNameFull} to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "The type of movement you want {appNameFull} to recognize e.g. ‘waving’ or ‘clapping’.",
     "description": "Tooltip explaining action"
   },
   "actions-label": {
@@ -120,7 +120,7 @@
     "description": "Aria label for animation"
   },
   "animation-label": {
-    "defaultMessage": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected.",
+    "defaultMessage": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognize wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected.",
     "description": "Aria label for animation"
   },
   "animation-pause-action": {
@@ -392,7 +392,7 @@
     "description": "micro:bit radio connection error message"
   },
   "connect-help-alt": {
-    "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2",
+    "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labeled 1 and Connect button labeled 2",
     "description": "Alt text for image in connect help dialog"
   },
   "connect-micro-usb-cable": {
@@ -440,7 +440,7 @@
     "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
   },
   "connect-popup-bluetooth-alt": {
-    "defaultMessage": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2",
+    "defaultMessage": "Web Bluetooth connection dialog with BBC micro:bit entry labeled 1 and Pair button labeled 2",
     "description": "Alt text"
   },
   "connect-popup-bluetooth-instruction2": {
@@ -980,15 +980,15 @@
     "description": "Go action"
   },
   "graph-color-scheme": {
-    "defaultMessage": "Graph colour scheme",
+    "defaultMessage": "Graph color scheme",
     "description": "Graph colour scheme setting label"
   },
   "graph-color-scheme-color-blind-1": {
-    "defaultMessage": "Colour blind alternative 1",
+    "defaultMessage": "Color blind alternative 1",
     "description": "Graph colour scheme option"
   },
   "graph-color-scheme-color-blind-2": {
-    "defaultMessage": "Colour blind alternative 2",
+    "defaultMessage": "Color blind alternative 2",
     "description": "Graph colour scheme option"
   },
   "graph-color-scheme-default": {
@@ -1312,7 +1312,7 @@
     "description": "Heading for live graph"
   },
   "live-graph-tooltip": {
-    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in.",
+    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each colored line represents a different direction (dimension) you are moving the micro:bit in.",
     "description": "Tooltip for live graph heading"
   },
   "live-graph-tooltip-aria": {
@@ -1384,7 +1384,7 @@
     "description": "Title for home page row"
   },
   "name-action-hint": {
-    "defaultMessage": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’",
+    "defaultMessage": "Name an action you want CreateAI to recognize, like ‘waving’ or ‘jumping’",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1996,7 +1996,7 @@
     "description": "Tour step description"
   },
   "tour-dataSamples-actions-common-content": {
-    "defaultMessage": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’.",
+    "defaultMessage": "An action is the type of movement you want the machine learning model to recognize e.g. ‘waving’ or ‘clapping’.",
     "description": "Tour step content"
   },
   "tour-dataSamples-actions-noRecordings-content": {
@@ -2004,7 +2004,7 @@
     "description": "Tour step content"
   },
   "tour-dataSamples-connected-content": {
-    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements, or actions.",
+    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognize different movements, or actions.",
     "description": "Tour step content"
   },
   "tour-dataSamples-connected-title": {
@@ -2068,7 +2068,7 @@
     "description": "Tour step title"
   },
   "train-description": {
-    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognise different actions when you move your micro:bit.",
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognize different actions when you move your micro:bit.",
     "description": "Explanation on training dialog"
   },
   "train-error-body": {

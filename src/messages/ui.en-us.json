@@ -108,7 +108,7 @@
     },
     {
       "type": 0,
-      "value": " to recognise e.g. ‘waving’ or ‘clapping’."
+      "value": " to recognize e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "actions-label": [
@@ -246,7 +246,7 @@
   "animation-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognise wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+      "value": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognize wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
     }
   ],
   "animation-pause-action": [
@@ -722,7 +722,7 @@
   "connect-help-alt": [
     {
       "type": 0,
-      "value": "WebUSB connection dialog with BBC micro:bit entry labelled 1 and Connect button labelled 2"
+      "value": "WebUSB connection dialog with BBC micro:bit entry labeled 1 and Connect button labeled 2"
     }
   ],
   "connect-micro-usb-cable": [
@@ -842,7 +842,7 @@
   "connect-popup-bluetooth-alt": [
     {
       "type": 0,
-      "value": "Web Bluetooth connection dialog with BBC micro:bit entry labelled 1 and Pair button labelled 2"
+      "value": "Web Bluetooth connection dialog with BBC micro:bit entry labeled 1 and Pair button labeled 2"
     }
   ],
   "connect-popup-bluetooth-instruction2": [
@@ -1770,19 +1770,19 @@
   "graph-color-scheme": [
     {
       "type": 0,
-      "value": "Graph colour scheme"
+      "value": "Graph color scheme"
     }
   ],
   "graph-color-scheme-color-blind-1": [
     {
       "type": 0,
-      "value": "Colour blind alternative 1"
+      "value": "Color blind alternative 1"
     }
   ],
   "graph-color-scheme-color-blind-2": [
     {
       "type": 0,
-      "value": "Colour blind alternative 2"
+      "value": "Color blind alternative 2"
     }
   ],
   "graph-color-scheme-default": [
@@ -2322,7 +2322,7 @@
   "live-graph-tooltip": [
     {
       "type": 0,
-      "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each coloured line represents a different direction (dimension) you are moving the micro:bit in."
+      "value": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each colored line represents a different direction (dimension) you are moving the micro:bit in."
     }
   ],
   "live-graph-tooltip-aria": [
@@ -2452,7 +2452,7 @@
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
+      "value": "Name an action you want CreateAI to recognize, like ‘waving’ or ‘jumping’"
     }
   ],
   "name-project": [
@@ -3662,7 +3662,7 @@
   "tour-dataSamples-actions-common-content": [
     {
       "type": 0,
-      "value": "An action is the type of movement you want the machine learning model to recognise e.g. ‘waving’ or ‘clapping’."
+      "value": "An action is the type of movement you want the machine learning model to recognize e.g. ‘waving’ or ‘clapping’."
     }
   ],
   "tour-dataSamples-actions-noRecordings-content": [
@@ -3674,7 +3674,7 @@
   "tour-dataSamples-connected-content": [
     {
       "type": 0,
-      "value": "Now you can start collecting data samples to train a machine learning (ML) model to recognise different movements, or actions."
+      "value": "Now you can start collecting data samples to train a machine learning (ML) model to recognize different movements, or actions."
     }
   ],
   "tour-dataSamples-connected-title": [
@@ -3778,7 +3778,7 @@
     },
     {
       "type": 0,
-      "value": " to recognise different actions when you move your micro:bit."
+      "value": " to recognize different actions when you move your micro:bit."
     }
   ],
   "train-error-body": [

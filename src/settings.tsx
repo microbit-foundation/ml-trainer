@@ -23,8 +23,15 @@ export interface Language {
 export const allLanguages: Language[] = [
   {
     id: "en",
-    name: "English",
-    enName: "English",
+    name: "English (UK)",
+    enName: "English (UK)",
+    ui: true,
+    makeCode: true,
+  },
+  {
+    id: "en-US",
+    name: "English (US)",
+    enName: "English (US)",
     ui: true,
     makeCode: true,
   },
@@ -270,6 +277,14 @@ export const allLanguages: Language[] = [
 
 export const getMakeCodeLang = (languageId: string): string =>
   allLanguages.find((l) => l.id === languageId)?.makeCode ? languageId : "en";
+
+/**
+ * Languages with UI translations covering the native (iOS/Android) app's
+ * additional strings. Other languages still appear in the picker on native,
+ * but as 'partially supported' — missing strings fall back to English. Add
+ * ids here as translations land.
+ */
+export const nativeLanguageIds = ["en", "en-US"];
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
 const defaultLanguageId = allLanguages[0].id;
