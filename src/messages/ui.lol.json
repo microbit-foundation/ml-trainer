@@ -168,59 +168,63 @@
   "analytics-consent-allow-action": [
     {
       "type": 0,
-      "value": "Allow analytics"
+      "value": "crwdns369621:0crwdne369621:0"
     }
   ],
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "crwdns369623:0crwdne369623:0"
     }
   ],
   "analytics-consent-change-later": [
     {
       "type": 0,
-      "value": "You can change this in Settings later."
+      "value": "crwdns369625:0crwdne369625:0"
     }
   ],
   "analytics-consent-decline-action": [
     {
       "type": 0,
-      "value": "No thanks"
+      "value": "crwdns369627:0crwdne369627:0"
     }
   ],
   "analytics-consent-learn-more": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "crwdns369629:0crwdne369629:0"
     }
   ],
   "analytics-consent-setting-helper": [
     {
       "type": 0,
-      "value": "Helps us improve the app with anonymous usage data."
+      "value": "crwdns369631:0crwdne369631:0"
     }
   ],
   "analytics-consent-setting-label": [
     {
       "type": 0,
-      "value": "Share anonymous usage data"
+      "value": "crwdns369633:0crwdne369633:0"
     }
   ],
   "analytics-consent-title": [
     {
       "type": 0,
-      "value": "Help improve "
+      "value": "crwdns369635:0"
     },
     {
       "type": 1,
       "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369635:0"
     }
   ],
   "animation-bluetooth-mode-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating how to reset to Bluetooth mode."
+      "value": "crwdns369637:0crwdne369637:0"
     }
   ],
   "animation-label": [
@@ -298,75 +302,63 @@
   "bluetooth-disabled-body": [
     {
       "type": 0,
-      "value": "Please turn on Bluetooth and try again."
+      "value": "crwdns369639:0crwdne369639:0"
     }
   ],
   "bluetooth-disabled-heading": [
     {
       "type": 0,
-      "value": "Bluetooth is turned off"
+      "value": "crwdns369641:0crwdne369641:0"
     }
   ],
   "bluetooth-permission-denied-body-android": [
     {
+      "type": 0,
+      "value": "crwdns369643:0"
+    },
+    {
       "type": 1,
       "value": "appNameShort"
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+      "value": "crwdnd369643:0"
     },
     {
-      "children": [
-        {
-          "type": 1,
-          "value": "appNameShort"
-        },
-        {
-          "type": 0,
-          "value": " settings"
-        }
-      ],
-      "type": 8,
-      "value": "link"
+      "type": 1,
+      "value": "appNameShort"
     },
     {
       "type": 0,
-      "value": "."
+      "value": "crwdne369643:0"
     }
   ],
   "bluetooth-permission-denied-body-ios": [
     {
+      "type": 0,
+      "value": "crwdns369645:0"
+    },
+    {
       "type": 1,
       "value": "appNameShort"
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+      "value": "crwdnd369645:0"
     },
     {
-      "children": [
-        {
-          "type": 1,
-          "value": "appNameShort"
-        },
-        {
-          "type": 0,
-          "value": " settings"
-        }
-      ],
-      "type": 8,
-      "value": "link"
+      "type": 1,
+      "value": "appNameShort"
     },
     {
       "type": 0,
-      "value": "."
+      "value": "crwdne369645:0"
     }
   ],
   "bluetooth-permission-denied-heading": [
     {
       "type": 0,
-      "value": "Bluetooth permission required"
+      "value": "crwdns369647:0crwdne369647:0"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -530,7 +522,7 @@
   "confirm-share-action": [
     {
       "type": 0,
-      "value": "Confirm and share"
+      "value": "crwdns369649:0crwdne369649:0"
     }
   ],
   "connect-action": [
@@ -578,7 +570,7 @@
   "connect-bluetooth-enabled": [
     {
       "type": 0,
-      "value": "Bluetooth enabled"
+      "value": "crwdns369651:0crwdne369651:0"
     }
   ],
   "connect-bluetooth-heading": [
@@ -650,7 +642,7 @@
   "connect-cannot-see-pattern": [
     {
       "type": 0,
-      "value": "I do not see a pattern"
+      "value": "crwdns369653:0crwdne369653:0"
     }
   ],
   "connect-computer": [
@@ -722,31 +714,31 @@
   "connect-native-change-pattern": [
     {
       "type": 0,
-      "value": "My pattern is different"
+      "value": "crwdns369655:0crwdne369655:0"
     }
   ],
   "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Confirm this pattern matches your micro:bit"
+      "value": "crwdns369657:0crwdne369657:0"
     }
   ],
   "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "If needed, change the pattern below to match."
+      "value": "crwdns369659:0crwdne369659:0"
     }
   ],
   "connect-native-start-battery-check": [
     {
       "type": 0,
-      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
+      "value": "crwdns369661:0crwdne369661:0"
     }
   ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "Connect micro:bit battery pack"
+      "value": "crwdns369663:0crwdne369663:0"
     }
   ],
   "connect-pattern-heading": [
@@ -772,7 +764,7 @@
   "connect-pattern-label": [
     {
       "type": 0,
-      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+      "value": "crwdns369665:0"
     },
     {
       "type": 1,
@@ -780,7 +772,7 @@
     },
     {
       "type": 0,
-      "value": ", "
+      "value": "crwdnd369665:0"
     },
     {
       "type": 1,
@@ -788,7 +780,7 @@
     },
     {
       "type": 0,
-      "value": ", "
+      "value": "crwdnd369665:0"
     },
     {
       "type": 1,
@@ -796,7 +788,7 @@
     },
     {
       "type": 0,
-      "value": ", "
+      "value": "crwdnd369665:0"
     },
     {
       "type": 1,
@@ -804,7 +796,7 @@
     },
     {
       "type": 0,
-      "value": ", and "
+      "value": "crwdnd369665:0"
     },
     {
       "type": 1,
@@ -812,7 +804,7 @@
     },
     {
       "type": 0,
-      "value": "."
+      "value": "crwdne369665:0"
     }
   ],
   "connect-pattern-subtitle": [
@@ -980,37 +972,37 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Try another way"
+      "value": "crwdns369667:0crwdne369667:0"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "crwdns369669:0crwdne369669:0"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "crwdns369671:0crwdne369671:0"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
     {
       "type": 0,
-      "value": "Try the following:"
+      "value": "crwdns369673:0crwdne369673:0"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
     {
       "type": 0,
-      "value": "Disconnect and then reconnect the micro:bit with the power source."
+      "value": "crwdns369675:0crwdne369675:0"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
     {
       "type": 0,
-      "value": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
+      "value": "crwdns369677:0crwdne369677:0"
     }
   ],
   "connect-with-batteries": [
@@ -1034,7 +1026,7 @@
   "connecting-data-collection-microbit-heading": [
     {
       "type": 0,
-      "value": "Connecting to data collection micro:bit"
+      "value": "crwdns369679:0crwdne369679:0"
     }
   ],
   "continue-makecode-action": [
@@ -1452,7 +1444,7 @@
   "downloading-data-collection-microbit-header": [
     {
       "type": 0,
-      "value": "Downloading data collection program to micro:bit"
+      "value": "crwdns369681:0crwdne369681:0"
     }
   ],
   "downloading-header": [
@@ -1470,31 +1462,31 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Choose ‘Pair’ if asked"
+      "value": "crwdns369683:0crwdne369683:0"
     }
   ],
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit…"
+      "value": "crwdns369685:0crwdne369685:0"
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit…"
+      "value": "crwdns369687:0crwdne369687:0"
     }
   ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
-      "value": "Please do not interact with the micro:bit before the download is complete."
+      "value": "crwdns369689:0crwdne369689:0"
     }
   ],
   "downloading-stage-resetting-device": [
     {
       "type": 0,
-      "value": "Waiting for micro:bit to reboot..."
+      "value": "crwdns369691:0crwdne369691:0"
     }
   ],
   "downloading-subtitle": [
@@ -2268,27 +2260,13 @@
   "location-disabled-body": [
     {
       "type": 0,
-      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Settings"
-        }
-      ],
-      "type": 8,
-      "value": "link"
-    },
-    {
-      "type": 0,
-      "value": " and try again."
+      "value": "crwdns369693:0crwdne369693:0"
     }
   ],
   "location-disabled-heading": [
     {
       "type": 0,
-      "value": "Location services required"
+      "value": "crwdns369695:0crwdne369695:0"
     }
   ],
   "main-menu": [
@@ -2338,11 +2316,15 @@
   "microbit-name-label": [
     {
       "type": 0,
-      "value": "micro:bit name: "
+      "value": "crwdns369697:0"
     },
     {
       "type": 1,
       "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369697:0"
     }
   ],
   "microbit-not-connected": [
@@ -2408,81 +2390,67 @@
   "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit failed."
+      "value": "crwdns369699:0crwdne369699:0"
     }
   ],
   "native-bluetooth-error-check": [
     {
       "type": 0,
-      "value": "Please check that:"
+      "value": "crwdns369701:0crwdne369701:0"
     }
   ],
   "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "the micro:bit is close to this device"
+      "value": "crwdns369703:0crwdne369703:0"
     }
   ],
   "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+      "value": "crwdns369705:0crwdne369705:0"
     }
   ],
   "native-bluetooth-error-check-pattern": [
     {
       "type": 0,
-      "value": "the pattern you entered is correct"
+      "value": "crwdns369707:0crwdne369707:0"
     }
   ],
   "native-bluetooth-error-forget-device": [
     {
       "type": 0,
-      "value": "Please forget this device in your Bluetooth settings and try again."
+      "value": "crwdns369709:0crwdne369709:0"
     }
   ],
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Go to Bluetooth in the Settings app"
+      "value": "crwdns369711:0crwdne369711:0"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
     {
       "type": 0,
-      "value": "Tap the "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "information"
-        }
-      ],
-      "type": 8,
-      "value": "infoIcon"
-    },
-    {
-      "type": 0,
-      "value": " icon next to the BBC micro:bit device"
+      "value": "crwdns369713:0crwdne369713:0"
     }
   ],
   "native-bluetooth-error-forget-device-step-3": [
     {
       "type": 0,
-      "value": "Tap ‘Forget This Device’"
+      "value": "crwdns369715:0crwdne369715:0"
     }
   ],
   "native-bluetooth-error-forget-device-step-4": [
     {
       "type": 0,
-      "value": "Return to this app to try again"
+      "value": "crwdns369717:0crwdne369717:0"
     }
   ],
   "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "Could not connect to micro:bit"
+      "value": "crwdns369719:0crwdne369719:0"
     }
   ],
   "new-project-setup-title": [
@@ -2746,7 +2714,7 @@
   "reconnect-failed-native-heading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to data collection micro:bit"
+      "value": "crwdns369721:0crwdne369721:0"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -3030,19 +2998,19 @@
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears."
+      "value": "crwdns369723:0crwdne369723:0"
     }
   ],
   "reset-to-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Reset to Bluetooth mode"
+      "value": "crwdns369725:0crwdne369725:0"
     }
   ],
   "reset-to-bluetooth-mode-subtitle": [
     {
       "type": 0,
-      "value": "Press RESET three times."
+      "value": "crwdns369727:0crwdne369727:0"
     }
   ],
   "reset-to-default-action": [
@@ -3116,13 +3084,13 @@
   "save-to-files-action": [
     {
       "type": 0,
-      "value": "Save to Files"
+      "value": "crwdns369729:0crwdne369729:0"
     }
   ],
   "saving-dataset-toast-title": [
     {
       "type": 0,
-      "value": "Your data samples have been downloaded"
+      "value": "crwdns369731:0crwdne369731:0"
     }
   ],
   "saving-description": [
@@ -3218,33 +3186,41 @@
   "share-action": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "crwdns369733:0crwdne369733:0"
     }
   ],
   "share-file-description": [
+    {
+      "type": 0,
+      "value": "crwdns369735:0"
+    },
     {
       "type": 1,
       "value": "appNameFull"
     },
     {
       "type": 0,
-      "value": " project: "
+      "value": "crwdnd369735:0"
     },
     {
       "type": 1,
       "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369735:0"
     }
   ],
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as a hex file"
+      "value": "crwdns369737:0crwdne369737:0"
     }
   ],
   "share-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+      "value": "crwdns369739:0"
     },
     {
       "type": 1,
@@ -3252,29 +3228,33 @@
     },
     {
       "type": 0,
-      "value": " to continue working."
+      "value": "crwdne369739:0"
     }
   ],
   "share-named-file": [
     {
       "type": 0,
-      "value": "Share "
+      "value": "crwdns369741:0"
     },
     {
       "type": 1,
       "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369741:0"
     }
   ],
   "sharing-description": [
     {
       "type": 0,
-      "value": "Your project will be ready to share soon."
+      "value": "crwdns369743:0crwdne369743:0"
     }
   ],
   "sharing-title": [
     {
       "type": 0,
-      "value": "Sharing…"
+      "value": "crwdns369745:0crwdne369745:0"
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -3382,25 +3362,25 @@
   "storage-error-device-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to device storage"
+      "value": "crwdns369747:0crwdne369747:0"
     }
   ],
   "storage-error-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to browser storage"
+      "value": "crwdns369749:0crwdne369749:0"
     }
   ],
   "storage-error-quota-description": [
     {
       "type": 0,
-      "value": "Your project edit may not be saved."
+      "value": "crwdns369751:0crwdne369751:0"
     }
   ],
   "storage-error-quota-title": [
     {
       "type": 0,
-      "value": "Browser storage full"
+      "value": "crwdns369753:0crwdne369753:0"
     }
   ],
   "support-request": [

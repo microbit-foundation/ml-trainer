@@ -194,7 +194,7 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
     }
   ],
   "analytics-consent-change-later": [
@@ -212,7 +212,7 @@
   "analytics-consent-learn-more": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "Saiba mais"
     }
   ],
   "analytics-consent-setting-helper": [
@@ -488,7 +488,7 @@
   "clear": [
     {
       "type": 0,
-      "value": "Limpar/Apagar"
+      "value": "Limpar"
     }
   ],
   "click-to-reload-page-action": [
@@ -848,7 +848,7 @@
   "connect-popup-bluetooth-instruction2": [
     {
       "type": 0,
-      "value": "Selecione 'Parear'"
+      "value": "Selecione \"Parear\""
     }
   ],
   "connect-popup-bluetooth-title": [
@@ -2686,7 +2686,7 @@
   "privacy": [
     {
       "type": 0,
-      "value": "Política de privacidade"
+      "value": "Política de Privacidade"
     }
   ],
   "project-ideas-row-carousel": [
@@ -2810,7 +2810,7 @@
   "reconnect-failed-native-heading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to data collection micro:bit"
+      "value": "Falha ao reconectar ao micro:bit de coleta de dados"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -3308,7 +3308,7 @@
   "share-action": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "Compartilhar"
     }
   ],
   "share-file-description": [

@@ -190,7 +190,7 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
     }
   ],
   "analytics-consent-change-later": [
@@ -208,7 +208,7 @@
   "analytics-consent-learn-more": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "Aprèn-ne més"
     }
   ],
   "analytics-consent-setting-helper": [
@@ -242,7 +242,7 @@
   "animation-label": [
     {
       "type": 0,
-      "value": "Animació que demostra els cinc passos del flux de treball del CreateAI: Connectar, Recollir dades, Provar el Model, Codificar i Ús. Connectar: Una micro:bit està connectada a l'ordinador, establint una comunicació entre els dos. Recollir Dades: una micro:bit està lligada al canell. Es recullen les dades de dos moviments: una onada (representat per la icona d'un cor) i sacseig (representat per la icona d'una creu). Es recullen diferents mostres i s'entrena un model de machine learning. L'ordinador, després intenta reconèixer els gestos de l'onada i el sacseig en temps real. L'usuari després pot retornar al pas de Recollir Dades i obtenir mostres adicionals i fer altre cop la prova del model. Codificar: l'usuari escriu un programa utilitzant els blocs de MakeCode que incorporen el model entrenat. El programa acabat es baixa a la micro:bit. Ús: La micro:bit respon als moviments físics de l'usuari, mostrant icones diferents a la pantalla de LEDs depenent de si es detecta un gest d'onada o de sacseig. "
+      "value": "Animació que demostra els cinc passos del flux de treball del CreateAI: Connectar, Recollir dades, Provar el Model, Codificar i Ús. Connectar: Una micro:bit està connectada a l'ordinador, establint una comunicació entre els dos. Recollir Dades: una micro:bit està lligada al canell. Es recullen les dades de dos moviments: una onada (representat per la icona d'un cor) i sacseig (representat per la icona d'una creu). Es recullen diferents mostres i s'entrena un model de machine learning. L'ordinador, després intenta reconèixer els gestos de l'onada i el sacseig en temps real. L'usuari després pot retornar al pas de Recollir Dades i obtenir mostres adicionals i fer altre cop la prova del model. Codificar: l'usuari escriu un programa utilitzant els blocs de MakeCode que incorporen el model entrenat. El programa acabat es transfereix a la micro:bit. Ús: La micro:bit respon als moviments físics de l'usuari, mostrant icones diferents a la pantalla de LEDs depenent de si es detecta un gest d'onada o de sacseig. "
     }
   ],
   "animation-pause-action": [
@@ -2544,7 +2544,7 @@
   "newpage-new-project-title": [
     {
       "type": 0,
-      "value": "Projecte nou"
+      "value": "Nou projecte"
     }
   ],
   "next-action": [
@@ -2788,7 +2788,7 @@
   "reconnect-failed-native-heading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to data collection micro:bit"
+      "value": "No s'ha pogut tornar a connectar amb la micro:bit de recollida de dades"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -3090,7 +3090,7 @@
   "rename-project-action": [
     {
       "type": 0,
-      "value": "Canvia el nom"
+      "value": "Reanomena"
     }
   ],
   "rename-project-heading": [
@@ -3286,7 +3286,7 @@
   "share-action": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "Comparteix"
     }
   ],
   "share-file-description": [
