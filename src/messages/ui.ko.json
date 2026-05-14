@@ -182,7 +182,7 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
     }
   ],
   "analytics-consent-change-later": [
@@ -200,7 +200,7 @@
   "analytics-consent-learn-more": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "더 살펴보기"
     }
   ],
   "analytics-consent-setting-helper": [
@@ -2762,7 +2762,7 @@
   "reconnect-failed-native-heading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to data collection micro:bit"
+      "value": "데이터 수집 micro:bit에 다시 연결할 수 없습니다."
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -3236,7 +3236,7 @@
   "share-action": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "공유하기"
     }
   ],
   "share-file-description": [

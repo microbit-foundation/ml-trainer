@@ -182,7 +182,7 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
     }
   ],
   "analytics-consent-change-later": [
@@ -200,7 +200,7 @@
   "analytics-consent-learn-more": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "さらに詳しく"
     }
   ],
   "analytics-consent-setting-helper": [
@@ -2766,7 +2766,7 @@
   "reconnect-failed-native-heading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to data collection micro:bit"
+      "value": "データ収集用micro:bitへの接続に失敗しました"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -3240,7 +3240,7 @@
   "share-action": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "共有"
     }
   ],
   "share-file-description": [

@@ -194,7 +194,7 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads."
+      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
     }
   ],
   "analytics-consent-change-later": [
@@ -212,7 +212,7 @@
   "analytics-consent-learn-more": [
     {
       "type": 0,
-      "value": "Learn more"
+      "value": "Meer informatie"
     }
   ],
   "analytics-consent-setting-helper": [
@@ -2806,7 +2806,7 @@
   "reconnect-failed-native-heading": [
     {
       "type": 0,
-      "value": "Failed to reconnect to data collection micro:bit"
+      "value": "Niet gelukt om opnieuw verbinding te maken met de gegevensverzameling micro:bit"
     }
   ],
   "reconnect-failed-radio-heading": [
@@ -3312,7 +3312,7 @@
   "share-action": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "Delen"
     }
   ],
   "share-file-description": [

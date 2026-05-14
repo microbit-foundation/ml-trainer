@@ -84,39 +84,39 @@
     "description": "Home page resource card title"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "Allow analytics",
+    "defaultMessage": "crwdns369621:0crwdne369621:0",
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads.",
+    "defaultMessage": "crwdns369623:0crwdne369623:0",
     "description": "Body of the analytics consent dialog explaining the optional analytics collection"
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "You can change this in Settings later.",
+    "defaultMessage": "crwdns369625:0crwdne369625:0",
     "description": "Reassurance line on the analytics consent dialog about reversibility"
   },
   "analytics-consent-decline-action": {
-    "defaultMessage": "No thanks",
+    "defaultMessage": "crwdns369627:0crwdne369627:0",
     "description": "Decline button on the analytics consent dialog"
   },
   "analytics-consent-learn-more": {
-    "defaultMessage": "Learn more",
+    "defaultMessage": "crwdns369629:0crwdne369629:0",
     "description": "Link on the analytics consent dialog to the privacy policy"
   },
   "analytics-consent-setting-helper": {
-    "defaultMessage": "Helps us improve the app with anonymous usage data.",
+    "defaultMessage": "crwdns369631:0crwdne369631:0",
     "description": "Helper text for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "Share anonymous usage data",
+    "defaultMessage": "crwdns369633:0crwdne369633:0",
     "description": "Label for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-title": {
-    "defaultMessage": "Help improve {appNameFull}",
+    "defaultMessage": "crwdns369635:0{appNameFull}crwdne369635:0",
     "description": "Title of the first-run analytics consent dialog on mobile"
   },
   "animation-bluetooth-mode-label": {
-    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "defaultMessage": "crwdns369637:0crwdne369637:0",
     "description": "Aria label for animation"
   },
   "animation-label": {
@@ -168,23 +168,23 @@
     "description": "Blocks preview heading text"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "defaultMessage": "crwdns369639:0crwdne369639:0",
     "description": "Body text for Bluetooth disabled error dialog"
   },
   "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetooth is turned off",
+    "defaultMessage": "crwdns369641:0crwdne369641:0",
     "description": "Heading for Bluetooth disabled error dialog"
   },
   "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
+    "defaultMessage": "crwdns369643:0{appNameShort}crwdnd369643:0{appNameShort}crwdne369643:0",
     "description": "Body text for Bluetooth permission denied error dialog on Android"
   },
   "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
+    "defaultMessage": "crwdns369645:0{appNameShort}crwdnd369645:0{appNameShort}crwdne369645:0",
     "description": "Body text for Bluetooth permission denied error dialog on iOS"
   },
   "bluetooth-permission-denied-heading": {
-    "defaultMessage": "Bluetooth permission required",
+    "defaultMessage": "crwdns369647:0crwdne369647:0",
     "description": "Heading for Bluetooth permission denied error dialog"
   },
   "bluetooth-unsupported-advice": {
@@ -272,7 +272,7 @@
     "description": "Confirm and save action label"
   },
   "confirm-share-action": {
-    "defaultMessage": "Confirm and share",
+    "defaultMessage": "crwdns369649:0crwdne369649:0",
     "description": "Confirm and share action label"
   },
   "connect-action": {
@@ -304,7 +304,7 @@
     "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
   },
   "connect-bluetooth-enabled": {
-    "defaultMessage": "Bluetooth enabled",
+    "defaultMessage": "crwdns369651:0crwdne369651:0",
     "description": "Label indicating Bluetooth needs to be enabled"
   },
   "connect-bluetooth-heading": {
@@ -352,7 +352,7 @@
     "description": "Project download instructions"
   },
   "connect-cannot-see-pattern": {
-    "defaultMessage": "I do not see a pattern",
+    "defaultMessage": "crwdns369653:0crwdne369653:0",
     "description": "Link to troubleshooting not seeing Bluetooth pattern"
   },
   "connect-computer": {
@@ -400,23 +400,23 @@
     "description": "Label for cable icon in list of requirements"
   },
   "connect-native-change-pattern": {
-    "defaultMessage": "My pattern is different",
+    "defaultMessage": "crwdns369655:0crwdne369655:0",
     "description": "Change Bluetooth pattern link"
   },
   "connect-native-pattern-heading": {
-    "defaultMessage": "Confirm this pattern matches your micro:bit",
+    "defaultMessage": "crwdns369657:0crwdne369657:0",
     "description": "Native Bluetooth pattern dialog heading"
   },
   "connect-native-pattern-subtitle": {
-    "defaultMessage": "If needed, change the pattern below to match.",
+    "defaultMessage": "crwdns369659:0crwdne369659:0",
     "description": "Native Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-battery-check": {
-    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on.",
+    "defaultMessage": "crwdns369661:0crwdne369661:0",
     "description": "Instruction to check the micro:bit is powered on via the battery pack"
   },
   "connect-native-start-heading": {
-    "defaultMessage": "Connect micro:bit battery pack",
+    "defaultMessage": "crwdns369663:0crwdne369663:0",
     "description": "Connection dialog heading"
   },
   "connect-pattern-heading": {
@@ -428,7 +428,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-label": {
-    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
+    "defaultMessage": "crwdns369665:0{numLedsOnCol1}crwdnd369665:0{numLedsOnCol2}crwdnd369665:0{numLedsOnCol3}crwdnd369665:0{numLedsOnCol4}crwdnd369665:0{numLedsOnCol5}crwdne369665:0",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
@@ -540,27 +540,27 @@
     "description": "Troubleshooting heading"
   },
   "connect-try-another-way": {
-    "defaultMessage": "Try another way",
+    "defaultMessage": "crwdns369667:0crwdne369667:0",
     "description": "Link to alternative connection method"
   },
   "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "crwdns369669:0crwdne369669:0",
     "description": "Link to troubleshooting entering Bluetooth mode"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "crwdns369671:0crwdne369671:0",
     "description": "Unable to enter Bluetooth mode dialog heading"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
-    "defaultMessage": "Try the following:",
+    "defaultMessage": "crwdns369673:0crwdne369673:0",
     "description": "Heading for list of things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "defaultMessage": "crwdns369675:0crwdne369675:0",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "defaultMessage": "crwdns369677:0crwdne369677:0",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
@@ -576,7 +576,7 @@
     "description": "Text shown while waiting for bluetooth/radio connection"
   },
   "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit",
+    "defaultMessage": "crwdns369679:0crwdne369679:0",
     "description": "Connection dialogs"
   },
   "continue-makecode-action": {
@@ -796,7 +796,7 @@
     "description": "Progress text"
   },
   "downloading-data-collection-microbit-header": {
-    "defaultMessage": "Downloading data collection program to micro:bit",
+    "defaultMessage": "crwdns369681:0crwdne369681:0",
     "description": "Progress text"
   },
   "downloading-header": {
@@ -808,28 +808,28 @@
     "description": "Progress text"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "Choose ‘Pair’ if asked",
+    "defaultMessage": "crwdns369683:0crwdne369683:0",
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "Connecting to micro:bit…",
+    "defaultMessage": "crwdns369685:0crwdne369685:0",
     "description": "Progress text during connection stage of flashing"
   },
   "downloading-stage-finding-device": {
-    "defaultMessage": "Finding micro:bit…",
+    "defaultMessage": "crwdns369687:0crwdne369687:0",
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
+    "defaultMessage": "crwdns369689:0crwdne369689:0",
     "description": "Progress text during native flashing stage"
   },
   "downloading-stage-resetting-device": {
-    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "defaultMessage": "crwdns369691:0crwdne369691:0",
     "description": "Progress text when rebooting micro:bit before flashing"
   },
   "downloading-subtitle": {
     "defaultMessage": "crwdns362932:0crwdne362932:0",
-    "description": "Progress text"
+    "description": "Progress text during actual flashing stage"
   },
   "duplicate-project-action": {
     "defaultMessage": "crwdns369323:0crwdne369323:0",
@@ -1324,11 +1324,11 @@
     "description": "Aria label for loading spinner"
   },
   "location-disabled-body": {
-    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
+    "defaultMessage": "crwdns369693:0crwdne369693:0",
     "description": "Body text for location disabled error dialog (Android only)"
   },
   "location-disabled-heading": {
-    "defaultMessage": "Location services required",
+    "defaultMessage": "crwdns369695:0crwdne369695:0",
     "description": "Heading for location disabled error dialog (Android only)"
   },
   "main-menu": {
@@ -1356,7 +1356,7 @@
     "description": "Title of MakeCode load error dialog"
   },
   "microbit-name-label": {
-    "defaultMessage": "micro:bit name: {name}",
+    "defaultMessage": "crwdns369697:0{name}crwdne369697:0",
     "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
@@ -1400,47 +1400,47 @@
     "description": "Text under project name field"
   },
   "native-bluetooth-error-body": {
-    "defaultMessage": "The connection to the micro:bit failed.",
+    "defaultMessage": "crwdns369699:0crwdne369699:0",
     "description": "Body text for native Bluetooth connection error dialog"
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:",
+    "defaultMessage": "crwdns369701:0crwdne369701:0",
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {
-    "defaultMessage": "the micro:bit is close to this device",
+    "defaultMessage": "crwdns369703:0crwdne369703:0",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-mode": {
-    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "defaultMessage": "crwdns369705:0crwdne369705:0",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "the pattern you entered is correct",
+    "defaultMessage": "crwdns369707:0crwdne369707:0",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "defaultMessage": "crwdns369709:0crwdne369709:0",
     "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "defaultMessage": "crwdns369711:0crwdne369711:0",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "defaultMessage": "crwdns369713:0crwdne369713:0",
     "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
   },
   "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "Tap ‘Forget This Device’",
+    "defaultMessage": "crwdns369715:0crwdne369715:0",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "Return to this app to try again",
+    "defaultMessage": "crwdns369717:0crwdne369717:0",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-heading": {
-    "defaultMessage": "Could not connect to micro:bit",
+    "defaultMessage": "crwdns369719:0crwdne369719:0",
     "description": "Heading for native Bluetooth connection error dialog"
   },
   "new-project-setup-title": {
@@ -1600,7 +1600,7 @@
     "description": "Connection error dialog"
   },
   "reconnect-failed-native-heading": {
-    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "defaultMessage": "crwdns369721:0crwdne369721:0",
     "description": "Connection error dialog for native Bluetooth reconnection failure"
   },
   "reconnect-failed-radio-heading": {
@@ -1704,15 +1704,15 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
+    "defaultMessage": "crwdns369723:0crwdne369723:0",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Reset to Bluetooth mode",
+    "defaultMessage": "crwdns369725:0crwdne369725:0",
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times.",
+    "defaultMessage": "crwdns369727:0crwdne369727:0",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {
@@ -1753,14 +1753,14 @@
   },
   "save-hex-dialog-message2": {
     "defaultMessage": "crwdns363318:0crwdne363318:0",
-    "description": "Text in the dialog shown when saving a hex file"
+    "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
   },
   "save-to-files-action": {
-    "defaultMessage": "Save to Files",
+    "defaultMessage": "crwdns369729:0crwdne369729:0",
     "description": "Label for action that saves the project to the device file system on Android"
   },
   "saving-dataset-toast-title": {
-    "defaultMessage": "Your data samples have been downloaded",
+    "defaultMessage": "crwdns369731:0crwdne369731:0",
     "description": "Notification after a dataset has been downloaded"
   },
   "saving-description": {
@@ -1808,31 +1808,31 @@
     "description": "Label for settings actions menu button"
   },
   "share-action": {
-    "defaultMessage": "Share",
+    "defaultMessage": "crwdns369733:0crwdne369733:0",
     "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-file-description": {
-    "defaultMessage": "{appNameFull} project: {name}",
+    "defaultMessage": "crwdns369735:0{appNameFull}crwdnd369735:0{name}crwdne369735:0",
     "description": "Label for a hex file with app name context"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "Share project as a hex file",
+    "defaultMessage": "crwdns369737:0crwdne369737:0",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "defaultMessage": "crwdns369739:0{appNameFull}crwdne369739:0",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "share-named-file": {
-    "defaultMessage": "Share {name}",
+    "defaultMessage": "crwdns369741:0{name}crwdne369741:0",
     "description": "Label for sharing a named file"
   },
   "sharing-description": {
-    "defaultMessage": "Your project will be ready to share soon.",
+    "defaultMessage": "crwdns369743:0crwdne369743:0",
     "description": "Sharing progress dialog text for mobile"
   },
   "sharing-title": {
-    "defaultMessage": "Sharing…",
+    "defaultMessage": "crwdns369745:0crwdne369745:0",
     "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
@@ -1904,19 +1904,19 @@
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
   "storage-error-device-other": {
-    "defaultMessage": "Failed to save your project to device storage",
+    "defaultMessage": "crwdns369747:0crwdne369747:0",
     "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
-    "defaultMessage": "Failed to save your project to browser storage",
-    "description": "Toast shown when a storage write fails for an unknown reason"
+    "defaultMessage": "crwdns369749:0crwdne369749:0",
+    "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
   },
   "storage-error-quota-description": {
-    "defaultMessage": "Your project edit may not be saved.",
+    "defaultMessage": "crwdns369751:0crwdne369751:0",
     "description": "Toast description when browser storage quota is exceeded"
   },
   "storage-error-quota-title": {
-    "defaultMessage": "Browser storage full",
+    "defaultMessage": "crwdns369753:0crwdne369753:0",
     "description": "Toast title when browser storage quota is exceeded"
   },
   "support-request": {

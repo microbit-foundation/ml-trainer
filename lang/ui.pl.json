@@ -88,7 +88,7 @@
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. No personal data is shared, and we don't use third-party ads.",
+    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads.",
     "description": "Body of the analytics consent dialog explaining the optional analytics collection"
   },
   "analytics-consent-change-later": {
@@ -100,7 +100,7 @@
     "description": "Decline button on the analytics consent dialog"
   },
   "analytics-consent-learn-more": {
-    "defaultMessage": "Learn more",
+    "defaultMessage": "Dowiedz się więcej",
     "description": "Link on the analytics consent dialog to the privacy policy"
   },
   "analytics-consent-setting-helper": {
@@ -829,7 +829,7 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "Proszę czekać. Pobieranie programu na micro:bita.",
-    "description": "Progress text"
+    "description": "Progress text during actual flashing stage"
   },
   "duplicate-project-action": {
     "defaultMessage": "Duplikuj",
@@ -1600,7 +1600,7 @@
     "description": "Connection error dialog"
   },
   "reconnect-failed-native-heading": {
-    "defaultMessage": "Failed to reconnect to data collection micro:bit",
+    "defaultMessage": "Nie udało się połączyć z micro:bitem do zbierania danych",
     "description": "Connection error dialog for native Bluetooth reconnection failure"
   },
   "reconnect-failed-radio-heading": {
@@ -1753,7 +1753,7 @@
   },
   "save-hex-dialog-message2": {
     "defaultMessage": "Możesz go również otworzyć za pomocą Microsoft MakeCode, jeśli nie musisz zmieniać akcji i próbek danych.",
-    "description": "Text in the dialog shown when saving a hex file"
+    "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
   },
   "save-to-files-action": {
     "defaultMessage": "Save to Files",
@@ -1808,7 +1808,7 @@
     "description": "Label for settings actions menu button"
   },
   "share-action": {
-    "defaultMessage": "Share",
+    "defaultMessage": "Udostępnij",
     "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-file-description": {
@@ -1909,7 +1909,7 @@
   },
   "storage-error-other": {
     "defaultMessage": "Failed to save your project to browser storage",
-    "description": "Toast shown when a storage write fails for an unknown reason"
+    "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
   },
   "storage-error-quota-description": {
     "defaultMessage": "Your project edit may not be saved.",
