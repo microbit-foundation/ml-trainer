@@ -14,6 +14,8 @@ const microbitOrgBaseUrl = isPublicFacingStage()
 const langPath = (languageId: string) =>
   languageId === "en" ? "" : `${languageId.toLowerCase()}/`;
 
+const learnMoreUrlLanguages = ["fr", "ga-IE", "nl", "pl", "pt-BR"];
+
 export const projectUrl = (slug: string, language: string) =>
   `${microbitOrgBaseUrl}${langPath(
     language
@@ -33,4 +35,7 @@ export const supportSiteFolderUrl = () =>
 
 export const accessibilityUrl = () => `${microbitOrgBaseUrl}accessibility/`;
 
-export const learnMoreUrl = () => `${microbitOrgBaseUrl}createai/`;
+export const learnMoreUrl = (languageId: string) =>
+  `${microbitOrgBaseUrl}${langPath(
+    learnMoreUrlLanguages.includes(languageId) ? languageId : "en"
+  )}createai/`;
