@@ -22,9 +22,6 @@ const config: CapacitorConfig = {
   appId: brand.appId,
   appName: brand.appName,
   webDir: "dist",
-  android: {
-    adjustMarginsForEdgeToEdge: "disable",
-  },
   plugins: {
     SafeArea: {
       // "DARK" = light/white icons for dark header background
