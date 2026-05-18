@@ -63,7 +63,7 @@ type Phase = "idle" | "entering" | "travelling" | "settling" | "settled";
 const hiddenDotsEachSide = 5;
 const travelEdgeOpacity: Record<number, number> = { 0: 0.1, 1: 0.35, 2: 0.65 };
 const settledEdgeOpacity: Record<number, number> = {
-  0: 0.1,
+  0: 0,
   1: 0.25,
   2: 0.45,
   3: 0.7,
