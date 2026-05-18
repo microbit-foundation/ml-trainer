@@ -97,7 +97,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(false);
 
-  const signalGap = useBreakpointValue({ base: 130, sm: 230, md: 230 }) ?? 230;
+  const signalGap = useBreakpointValue({ base: 130, sm: 260, md: 260 }) ?? 260;
 
   // All dot metrics derived from the current gap
   const { dotSize, dotGap } = useMemo(
