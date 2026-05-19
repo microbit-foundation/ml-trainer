@@ -87,7 +87,7 @@
     "@emotion/styled": "^11.11.5",
     "@formatjs/intl-localematcher": "^0.8.0",
     "@microbit/capacitor-community-nordic-dfu": "file:../nordic-dfu",
-    "@microbit/capacitor-sqlite-vanilla": "^0.1.0-alpha.5",
+    "@microbit/capacitor-sqlite-vanilla": "file:../capacitor-sqlite-vanilla",
     "@microbit/makecode-embed": "^0.0.0-noproject.76",
     "@microbit/microbit-connection": "file:../microbit-connection/packages/microbit-connection/microbit-microbit-connection-0.0.0.tgz",
     "@microbit/ml-header-generator": "^0.4.3",
