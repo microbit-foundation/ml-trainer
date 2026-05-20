@@ -63,7 +63,7 @@ type Phase = "idle" | "entering" | "travelling" | "settling" | "settled";
 const hiddenDotsEachSide = 5;
 const travelEdgeOpacity: Record<number, number> = { 0: 0.1, 1: 0.35, 2: 0.65 };
 const settledEdgeOpacity: Record<number, number> = {
-  0: 0.1,
+  0: 0,
   1: 0.25,
   2: 0.45,
   3: 0.7,
@@ -97,7 +97,7 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(false);
 
-  const signalGap = useBreakpointValue({ base: 130, sm: 230, md: 230 }) ?? 230;
+  const signalGap = useBreakpointValue({ base: 130, sm: 260, md: 260 }) ?? 260;
 
   // All dot metrics derived from the current gap
   const { dotSize, dotGap } = useMemo(

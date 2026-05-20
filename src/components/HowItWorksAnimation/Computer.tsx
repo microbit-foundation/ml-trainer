@@ -16,7 +16,9 @@ import { animations } from "../../utils/animations";
 import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
 import { useAnimation } from "../AnimationProvider";
 
-interface ComputerProps extends IconProps {}
+interface ComputerProps extends IconProps {
+  isTablet: boolean;
+}
 type DisplayType =
   | "none"
   | "tick"
@@ -36,7 +38,7 @@ export interface ComputerRef {
 }
 
 const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
-  { ...props }: ComputerProps,
+  { isTablet, ...props }: ComputerProps,
   ref
 ) {
   const { withPlayState } = useAnimation();
@@ -86,22 +88,39 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
       opacity={visible ? 1 : 0}
       transition="opacity 0.3s ease"
     >
-      <Icon viewBox="0 0 195.46 133.33" {...props}>
-        <path
-          fill="none"
-          stroke="#1e1e1c"
-          strokeMiterlimit={10}
-          strokeWidth="4px"
-          d="M22.78,112.02V19.03c0-7.64,6.2-13.84,13.84-13.84h122.44c7.64,0,13.84,6.2,13.84,13.84v93.1"
-        />
-        <path
-          fill="none"
-          stroke="#1e1e1c"
-          strokeMiterlimit={10}
-          strokeWidth="4px"
-          d="M187.33,111.97H8.14c-1.36,0-2.49,1.13-2.49,2.48,0,7.23,5.76,13.11,12.99,13.11h158.18c7.23,0,12.99-5.88,12.99-13.11,0-.68-.23-1.35-.68-1.81-.56-.34-1.13-.56-1.81-.68"
-        />
-      </Icon>
+      {isTablet ? (
+        <Icon viewBox="0 0 195.46 133.33" {...props} mt="-10px">
+          <rect
+            fill="none"
+            stroke="#1e1e1c"
+            strokeMiterlimit={10}
+            strokeWidth="4px"
+            width="170"
+            height="120"
+            x={10}
+            y={3}
+            rx="15"
+          />
+          <circle cx="97" cy="15" r="3" />
+        </Icon>
+      ) : (
+        <Icon viewBox="0 0 195.46 133.33" {...props}>
+          <path
+            fill="none"
+            stroke="#1e1e1c"
+            strokeMiterlimit={10}
+            strokeWidth="4px"
+            d="M22.78,112.02V19.03c0-7.64,6.2-13.84,13.84-13.84h122.44c7.64,0,13.84,6.2,13.84,13.84v93.1"
+          />
+          <path
+            fill="none"
+            stroke="#1e1e1c"
+            strokeMiterlimit={10}
+            strokeWidth="4px"
+            d="M187.33,111.97H8.14c-1.36,0-2.49,1.13-2.49,2.48,0,7.23,5.76,13.11,12.99,13.11h158.18c7.23,0,12.99-5.88,12.99-13.11,0-.68-.23-1.35-.68-1.81-.56-.34-1.13-.56-1.81-.68"
+          />
+        </Icon>
+      )}
       <Stack
         position="absolute"
         width={{ base: "80%", sm: "60%", md: "40%" }}
