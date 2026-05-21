@@ -103,6 +103,14 @@ const BluetoothPatternInput = ({
               <PatternBox
                 onClick={() => {
                   clearHighlighted();
+                  const numSelectedInCol = cells.filter(Boolean).length;
+                  const isTopSelectedCellInCol =
+                    rowIdx + numSelectedInCol === matrixDim;
+                  // If top selected cell in column, deselect it.
+                  if (isTopSelectedCellInCol) {
+                    updateMatrix(colIdx, rowIdx + 1);
+                    return;
+                  }
                   updateMatrix(colIdx, rowIdx);
                 }}
                 onMouseEnter={() => {
