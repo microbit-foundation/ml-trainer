@@ -90,4 +90,16 @@
     <!-- Foreground service permission for Nordic DFU library -->
     <!-- Note: Android 14+ (API 34+) requires specifying a foreground service type if using foreground services -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!--
+      firebase-analytics injects the advertising-ID and Privacy Sandbox
+      ad-services permissions by default. We don't use AdMob, Google
+      Signals, or attribution APIs — analytics is gated behind explicit
+      consent with AdStorage/AdPersonalization/AdUserData never granted
+      (see src/logging/sink.ts). Strip the permissions so the merged
+      manifest matches the Play Console "no advertising ID" declaration.
+    -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />
 </manifest>
