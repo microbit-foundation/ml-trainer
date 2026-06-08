@@ -1,6 +1,7 @@
 package org.microbit.mltrainer;
 
 import android.content.pm.PackageInfo;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -8,7 +9,9 @@ import android.webkit.WebView;
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.getcapacitor.BridgeActivity;
 
@@ -34,29 +37,43 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Enable edge-to-edge mode for all Android versions.
-        // On API 35+ this is automatic, but older versions need this call
-        // to make status/navigation bars transparent and allow content underneath.
-        // The @capacitor-community/safe-area plugin handles icon colors via config.
+        // Enable edge-to-edge mode for all Android versions. On API 35+ this is
+        // automatic, but older versions need this call to make the status /
+        // navigation bars transparent and allow content underneath.
         EdgeToEdge.enable(this);
+        setupSystemBarsStyle();
         setupSafeAreaInsets();
     }
 
     /**
+     * Styles the system bars for our light UI: dark icons on a white
+     * background. Replaces @capacitor-community/safe-area's
+     * setSystemBarsStyle(LIGHT) call.
+     */
+    private void setupSystemBarsStyle() {
+        WindowInsetsControllerCompat controller =
+            WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        controller.setAppearanceLightStatusBars(true);
+        controller.setAppearanceLightNavigationBars(true);
+        // Shows behind the transparent bars (and in the padded safe area on
+        // older WebViews, see setupSafeAreaInsets).
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+    }
+
+    /**
      * Applies the safe area insets ourselves via a single window insets
-     * listener, adapted from @capacitor-community/safe-area.
+     * listener (we no longer use @capacitor-community/safe-area).
      *
-     * Owning the listener lets us:
+     * This does two things at once:
      *
-     * - Emulate the safe area for older Chromium WebViews (< v140) that report
+     * - Emulates the safe area for older Chromium WebViews (< v140) that report
      *   env(safe-area-inset-*) as 0px, by padding the decorView and zeroing the
-     *   insets (and pass the insets through unchanged for newer WebViews).
-     * - Never offset for the on-screen keyboard. The keyboard overlays the
+     *   insets (and passes the insets through unchanged for newer WebViews).
+     * - Never offsets for the on-screen keyboard. The keyboard overlays the
      *   WebView; keyboard avoidance is handled in JS (see useKeyboardHeight).
      *
-     * Must be called after EdgeToEdge.enable() and after the bridge has loaded
-     * its plugins, as both install their own listener that would otherwise
-     * override ours.
+     * Must be called after EdgeToEdge.enable(), which installs its own listener
+     * that would otherwise override ours.
      */
     private void setupSafeAreaInsets() {
         final int webViewMajorVersion = getWebViewMajorVersion();
@@ -84,6 +101,10 @@ public class MainActivity extends BridgeActivity {
             view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             return builder.setInsets(barsTypeMask, Insets.of(0, 0, 0, 0)).build();
         });
+
+        // Force an initial pass: unlike the plugin we don't install a
+        // WebViewClient that re-requests insets after the page loads.
+        ViewCompat.requestApplyInsets(getWindow().getDecorView());
     }
 
     /**
