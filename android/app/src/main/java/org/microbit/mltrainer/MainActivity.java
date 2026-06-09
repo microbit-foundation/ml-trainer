@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends BridgeActivity {
 
     /**
-     * Chromium WebView versions below this report env(safe-area-inset-*) as
+     * Chromium WebView versions below 140 report env(safe-area-inset-*) as
      * 0px, so we emulate the safe area with padding for them. At or above it,
      * the WebView reports the insets correctly and we pass them through.
      * See https://issues.chromium.org/issues/40699457
@@ -46,9 +46,7 @@ public class MainActivity extends BridgeActivity {
     }
 
     /**
-     * Styles the system bars for our light UI: dark icons on a white
-     * background. Replaces @capacitor-community/safe-area's
-     * setSystemBarsStyle(LIGHT) call.
+     * Styles the system bars (we no longer use @capacitor-community/safe-area).
      */
     private void setupSystemBarsStyle() {
         WindowInsetsControllerCompat controller =
