@@ -26,16 +26,6 @@ const config: CapacitorConfig = {
     adjustMarginsForEdgeToEdge: "disable",
   },
   plugins: {
-    SafeArea: {
-      // "DARK" = light/white icons for dark header background
-      // (confusing name - it refers to the background, not the icons)
-      statusBarStyle: "DARK",
-      navigationBarStyle: "LIGHT",
-    },
-    // Required by @capacitor-community/safe-area plugin from v8
-    SystemBars: {
-      insetsHandling: "disable",
-    },
     Keyboard: {
       // Prevent iOS from resizing the WebView when the keyboard opens.
       // We handle scroll-into-view manually via useKeyboardHeight.

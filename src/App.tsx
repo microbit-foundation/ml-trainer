@@ -378,16 +378,6 @@ const App = () => {
   // Detect safe area insets and set CSS variables for nav bar side only
   useSafeAreaInsets();
 
-  // Set status bar style on native platforms (LIGHT = dark icons for light backgrounds)
-  useEffect(() => {
-    if (isNativePlatform()) {
-      void import("@capacitor-community/safe-area").then(
-        ({ SafeArea, SystemBarsStyle }) =>
-          SafeArea.setSystemBarsStyle({ style: SystemBarsStyle.Light })
-      );
-    }
-  }, []);
-
   useEffect(() => {
     // Capability flags are user-scoped GA4 dimensions on the web build —
     // they describe the browser's WebUSB / WebBluetooth API surface, not

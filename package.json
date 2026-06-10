@@ -72,7 +72,6 @@
   },
   "dependencies": {
     "@capacitor-community/bluetooth-le": "^7.3.0",
-    "@capacitor-community/safe-area": "^7.0.0-beta.5",
     "@capacitor-firebase/analytics": "^7.5.0",
     "@capacitor/android": "^7.4.4",
     "@capacitor/app": "^7.1.0",
