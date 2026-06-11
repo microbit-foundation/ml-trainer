@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { flags } from "../flags";
 import { isNativePlatform } from "../platform";
 import { PermissionStep } from "../shared-steps";
 
@@ -202,7 +203,7 @@ export interface DataConnectionState {
 export const getInitialDataConnectionType = (
   isWebBluetoothSupported: boolean
 ): DataConnectionType => {
-  if (isNativePlatform()) {
+  if (isNativePlatform() && !flags.nativeScreenshots) {
     return DataConnectionType.NativeBluetooth;
   }
   // Default to WebBluetooth if supported

@@ -23,6 +23,7 @@ import {
 } from "./data-connection-flow";
 import { isNativePlatform } from "./platform";
 import { useStore } from "./store";
+import { flags } from "./flags";
 
 /**
  * Union type for connections that can be used for data collection.
@@ -114,7 +115,7 @@ const createConnections = (
     },
 
     getDefaultFlashConnection() {
-      return isNativePlatform() ? bluetooth : usb;
+      return isNativePlatform() && !flags.nativeScreenshots ? bluetooth : usb;
     },
 
     getDataConnection() {

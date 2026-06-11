@@ -24,6 +24,7 @@ import hexRadioBridge from "./firmware/radio-bridge-v0.2.1.hex";
 import hexRadioLocal from "./firmware/local-sensors-v0.2.1.hex";
 import { isNativePlatform } from "../platform";
 import { HexUrl } from "../model";
+import { flags } from "../flags";
 
 export enum HexType {
   RadioRemote = "radio-remote",
@@ -37,7 +38,7 @@ export const getHexFileUrl = (
   type: HexType
 ): string | undefined => {
   if (type === HexType.Bluetooth) {
-    if (isNativePlatform()) {
+    if (isNativePlatform() && !flags.nativeScreenshots) {
       return {
         V1: hexV1JustWorks,
         V2: hexV2JustWorks,

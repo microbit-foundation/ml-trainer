@@ -1,6 +1,7 @@
 import { MicrobitBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
 import { MicrobitUSBConnection } from "@microbit/microbit-connection/usb";
 import { isNativePlatform } from "../platform";
+import { flags } from "../flags";
 
 export type MicrobitConnection =
   | MicrobitBluetoothConnection
@@ -26,7 +27,7 @@ export const isNativeBluetoothConnection = (
 export const isWebBluetoothSupported = async (
   bluetooth: MicrobitBluetoothConnection
 ): Promise<boolean> => {
-  if (isNativePlatform()) {
+  if (isNativePlatform() && !flags.nativeScreenshots) {
     return false;
   }
   // Only check for "unsupported" - the browser's device picker handles the

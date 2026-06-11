@@ -16,6 +16,7 @@ import {
   FlowDefinition,
 } from "../state-machine";
 import { isNativePlatform } from "../platform";
+import { flags } from "../flags";
 
 // =============================================================================
 // Types
@@ -217,7 +218,8 @@ export const guards = {
     ctx.isWebUsbSupported,
 
   /** Native Bluetooth flow is available on iOS/Android apps. */
-  isNativeBluetoothFlowSupported: () => isNativePlatform(),
+  isNativeBluetoothFlowSupported: () =>
+    isNativePlatform() && !flags.nativeScreenshots,
 
   /** No connection flow is available - show unsupported browser message. */
   hasNoSupportedFlow: (ctx: DataConnectionFlowContext) =>

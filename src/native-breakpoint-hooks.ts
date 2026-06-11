@@ -5,6 +5,7 @@
  */
 import { useBreakpointValue } from "@chakra-ui/react";
 import { isNativePlatform } from "./platform";
+import { flags } from "./flags";
 
 /**
  * On native platforms, use the tablet breakpoint even when the viewport is
@@ -16,7 +17,7 @@ import { isNativePlatform } from "./platform";
  */
 export const useNativeTabletBreakpoint = (): boolean => {
   const isLg = useBreakpointValue({ base: false, lg: true }) ?? false;
-  if (isNativePlatform()) {
+  if (isNativePlatform() || flags.nativeScreenshots) {
     return true;
   }
   return !isLg;

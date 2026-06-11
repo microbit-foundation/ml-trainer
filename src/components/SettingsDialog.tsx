@@ -23,7 +23,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useDeployment } from "../deployment";
 import { isNativePlatform } from "../platform";
@@ -99,6 +99,8 @@ export const SettingsDialog = ({
       ),
     };
   }, [intl]);
+
+  const headingRef = useRef<HTMLHeadingElement>(null);
   return (
     <>
       <ConfirmDialog
@@ -120,10 +122,17 @@ export const SettingsDialog = ({
         onClose={onClose}
         size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
+        initialFocusRef={headingRef}
       >
         <ModalOverlay>
           <ModalContent>
-            <ModalHeader fontSize="lg" fontWeight="bold">
+            <ModalHeader
+              ref={headingRef}
+              tabIndex={-1}
+              fontSize="lg"
+              fontWeight="bold"
+              _focus={{ outline: "none", boxShadow: "none" }}
+            >
               <FormattedMessage id="settings" />
             </ModalHeader>
             <ModalBody>
