@@ -27,6 +27,7 @@
 # Brand overlays applied by `npm run apply-brand` when a private theme
 # package is installed.
 /ios/App/App/GoogleService-Info.plist
+/ios/App/App/App.entitlements
 /android/app/google-services.json
 /ios/App/App/Brand.private.xcconfig
 /android/app/brand.private.gradle

@@ -55,6 +55,11 @@ const overlays = [
     stub: true,
   },
   {
+    src: "App.entitlements",
+    dest: "ios/App/App/App.entitlements",
+    stub: true,
+  },
+  {
     src: "google-services.json",
     dest: "android/app/google-services.json",
     stub: true,
