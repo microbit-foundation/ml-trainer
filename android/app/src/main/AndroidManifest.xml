@@ -35,6 +35,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!--
+              App Links for web deep links (e.g. https://<host>/import?...).
+              autoVerify makes Android verify ownership against
+              https://<host>/.well-known/assetlinks.json so these open the
+              app directly without a chooser. Claims the whole host. 
+              The host is set via the deepLinkHost manifest placeholder
+              (see app/build.gradle).
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="${deepLinkHost}" />
+            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />

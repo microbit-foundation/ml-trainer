@@ -5,6 +5,10 @@
 ext.brandAppId = "org.microbit.mltrainer"
 ext.brandDisplayName = "ml-trainer"
 
+// Host for App Links, injected into AndroidManifest.xml as the
+// `${deepLinkHost}` manifest placeholder.
+ext.brandDeepLinkHost = "mltrainer.microbit.org"
+
 // Theme-package brand overlay (CI / release builds). Dropped in by
 // `npm run apply-brand` when the private theme package is installed.
 def privateBrand = file("brand.private.gradle")
