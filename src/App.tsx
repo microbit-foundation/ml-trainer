@@ -37,6 +37,7 @@ import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
+import { useDeepLinks } from "./deep-links-hook";
 import { deployment, useDeployment } from "./deployment";
 import { MockBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
@@ -271,6 +272,9 @@ const Layout = () => {
 
   // Native back button / swipe-back handling (no-op on desktop).
   useNativeBackButton();
+
+  // Native deep link (Universal Link / App Link) handling (no-op on desktop).
+  useDeepLinks();
 
   const isLoadingOverlayVisible = useStore((s) => s.isLoadingOverlayVisible);
   return (
