@@ -15,6 +15,12 @@
  *     brand.gradle, and the fastlane Appfile/Matchfile env fallbacks
  *     take effect.
  *
+ *   - The deep link association files (App.entitlements and the web
+ *     .well-known/apple-app-site-association and .well-known/
+ *     assetlinks.json) carry the brand's bundle/package ids, Apple
+ *     Team ID, and Android signing fingerprints, so they fall back to
+ *     committed stubs at `bin/stubs/<file>`.
+ *
  * capacitor.config.ts reads brand.json directly with the same
  * theme→stub fallback for appId/appName.
  *
@@ -57,6 +63,16 @@ const overlays = [
   {
     src: "App.entitlements",
     dest: "ios/App/App/App.entitlements",
+    stub: true,
+  },
+  {
+    src: "apple-app-site-association",
+    dest: "public/.well-known/apple-app-site-association",
+    stub: true,
+  },
+  {
+    src: "assetlinks.json",
+    dest: "public/.well-known/assetlinks.json",
     stub: true,
   },
   {

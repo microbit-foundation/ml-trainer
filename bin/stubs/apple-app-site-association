@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "org.microbit.mltrainer"
+        ],
+        "components": [
+          {
+            "/": "*",
+            "comment": "Open every path on this host in the app."
+          }
+        ]
+      }
+    ]
+  }
+}
