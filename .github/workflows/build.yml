@@ -46,7 +46,7 @@ jobs:
         if: github.repository_owner == 'microbit-foundation'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - run: npm run apply-brand
       - run: node ./bin/print-web-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
       - name: Run Playwright tests
