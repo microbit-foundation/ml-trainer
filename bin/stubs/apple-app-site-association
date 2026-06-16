@@ -3,7 +3,7 @@
     "details": [
       {
         "appIDs": [
-          "org.microbit.mltrainer"
+          "REPLACE_WITH_TEAM_ID.org.microbit.mltrainer"
         ],
         "components": [
           {
