@@ -44,5 +44,9 @@ module.exports = {
     "imgs/**": {
       CacheControl: "public, max-age=0, must-revalidate",
     },
+    ".well-known/apple-app-site-association": {
+      ContentType: "application/json",
+      CacheControl: "public, max-age=0, must-revalidate",
+    },
   },
 };
