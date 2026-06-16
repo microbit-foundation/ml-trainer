@@ -39,7 +39,7 @@
               App Links for web deep links (e.g. https://<host>/import?...).
               autoVerify makes Android verify ownership against
               https://<host>/.well-known/assetlinks.json so these open the
-              app directly without a chooser. Claims the whole host. 
+              app directly without a chooser. Claims the whole host.
               The host is set via the deepLinkHost manifest placeholder
               (see app/build.gradle).
             -->
