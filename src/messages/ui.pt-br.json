@@ -218,19 +218,19 @@
   "analytics-consent-setting-helper": [
     {
       "type": 0,
-      "value": "Helps us improve the app with anonymous usage data."
+      "value": "Ajuda-nos a melhorar o aplicativo com dados anônimos de uso."
     }
   ],
   "analytics-consent-setting-label": [
     {
       "type": 0,
-      "value": "Share anonymous usage data"
+      "value": "Compartilhar dados de uso anônimos"
     }
   ],
   "analytics-consent-title": [
     {
       "type": 0,
-      "value": "Help improve "
+      "value": "Ajude a melhorar "
     },
     {
       "type": 1,
@@ -1010,7 +1010,7 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
     {
       "type": 0,
-      "value": "Try the following:"
+      "value": "Tente o seguinte:"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [

@@ -176,25 +176,25 @@
   "analytics-consent-allow-action": [
     {
       "type": 0,
-      "value": "Allow analytics"
+      "value": "アナリティクスの許可"
     }
   ],
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
+      "value": "アプリの改善に役立てるため、お客様のアプリ利用状況に関する匿名データを収集させていただきたいと考えております。個人データを共有したり、サードパーティーの広告を掲載したりすることはありません。"
     }
   ],
   "analytics-consent-change-later": [
     {
       "type": 0,
-      "value": "You can change this in Settings later."
+      "value": "これは後でこれらの設定を変更できます。"
     }
   ],
   "analytics-consent-decline-action": [
     {
       "type": 0,
-      "value": "No thanks"
+      "value": "同意しない"
     }
   ],
   "analytics-consent-learn-more": [
@@ -206,23 +206,23 @@
   "analytics-consent-setting-helper": [
     {
       "type": 0,
-      "value": "Helps us improve the app with anonymous usage data."
+      "value": "匿名の使用データでアプリの改善に役立ちます。"
     }
   ],
   "analytics-consent-setting-label": [
     {
       "type": 0,
-      "value": "Share anonymous usage data"
+      "value": "匿名の利用データを提供する"
     }
   ],
   "analytics-consent-title": [
     {
-      "type": 0,
-      "value": "Help improve "
-    },
-    {
       "type": 1,
       "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "の改善にご協力をお願いします。"
     }
   ],
   "animation-bluetooth-mode-label": [
@@ -306,13 +306,13 @@
   "bluetooth-disabled-body": [
     {
       "type": 0,
-      "value": "Please turn on Bluetooth and try again."
+      "value": "Bluetoothを有効にしてもう一度お試しください。"
     }
   ],
   "bluetooth-disabled-heading": [
     {
       "type": 0,
-      "value": "Bluetooth is turned off"
+      "value": "Bluetoothがオフになっています"
     }
   ],
   "bluetooth-permission-denied-body-android": [
@@ -374,7 +374,7 @@
   "bluetooth-permission-denied-heading": [
     {
       "type": 0,
-      "value": "Bluetooth permission required"
+      "value": "Bluetoothの権限が必要です"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -3279,12 +3279,12 @@
   ],
   "share-named-file": [
     {
-      "type": 0,
-      "value": "Share "
-    },
-    {
       "type": 1,
       "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "を共有"
     }
   ],
   "sharing-description": [
@@ -3296,7 +3296,7 @@
   "sharing-title": [
     {
       "type": 0,
-      "value": "Sharing…"
+      "value": "共有しています…"
     }
   ],
   "show-graphs-checkbox-label-text": [

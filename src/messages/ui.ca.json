@@ -184,25 +184,25 @@
   "analytics-consent-allow-action": [
     {
       "type": 0,
-      "value": "Allow analytics"
+      "value": "Permet analítiques"
     }
   ],
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
+      "value": "Ens agradaria recollir dades anònimes sobre com useu l'app per ajudar-nos a millorar-la. No compartirem dades personals ni farem servir anuncis de tercers."
     }
   ],
   "analytics-consent-change-later": [
     {
       "type": 0,
-      "value": "You can change this in Settings later."
+      "value": "Podeu canviar això a la configuració més tard."
     }
   ],
   "analytics-consent-decline-action": [
     {
       "type": 0,
-      "value": "No thanks"
+      "value": "No gràcies"
     }
   ],
   "analytics-consent-learn-more": [
@@ -214,19 +214,19 @@
   "analytics-consent-setting-helper": [
     {
       "type": 0,
-      "value": "Helps us improve the app with anonymous usage data."
+      "value": "Ajudeu-nos a millorar l'app amb dades d'ús anònimes"
     }
   ],
   "analytics-consent-setting-label": [
     {
       "type": 0,
-      "value": "Share anonymous usage data"
+      "value": "Compartiu dades d'ús anònimament"
     }
   ],
   "analytics-consent-title": [
     {
       "type": 0,
-      "value": "Help improve "
+      "value": "Ajudeu a millorar "
     },
     {
       "type": 1,
@@ -236,7 +236,7 @@
   "animation-bluetooth-mode-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating how to reset to Bluetooth mode."
+      "value": "Animació mostrant com tornar al mode Bluetooth."
     }
   ],
   "animation-label": [
@@ -314,13 +314,13 @@
   "bluetooth-disabled-body": [
     {
       "type": 0,
-      "value": "Please turn on Bluetooth and try again."
+      "value": "Si us plau, engega el Bluetooth i torna-ho a provar."
     }
   ],
   "bluetooth-disabled-heading": [
     {
       "type": 0,
-      "value": "Bluetooth is turned off"
+      "value": "El Bluetooth està apagat"
     }
   ],
   "bluetooth-permission-denied-body-android": [
@@ -330,17 +330,17 @@
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+      "value": " fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a "
     },
     {
       "children": [
         {
-          "type": 1,
-          "value": "appNameShort"
+          "type": 0,
+          "value": "la configuració de "
         },
         {
-          "type": 0,
-          "value": " settings"
+          "type": 1,
+          "value": "appNameShort"
         }
       ],
       "type": 8,
@@ -358,17 +358,17 @@
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+      "value": " fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a "
     },
     {
       "children": [
         {
-          "type": 1,
-          "value": "appNameShort"
+          "type": 0,
+          "value": "la configuració de "
         },
         {
-          "type": 0,
-          "value": " settings"
+          "type": 1,
+          "value": "appNameShort"
         }
       ],
       "type": 8,
@@ -382,7 +382,7 @@
   "bluetooth-permission-denied-heading": [
     {
       "type": 0,
-      "value": "Bluetooth permission required"
+      "value": "Es requereix el permís de Bluetooth"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -538,7 +538,7 @@
   "confirm-share-action": [
     {
       "type": 0,
-      "value": "Confirm and share"
+      "value": "Confirma i comparteix"
     }
   ],
   "connect-action": [
@@ -586,7 +586,7 @@
   "connect-bluetooth-enabled": [
     {
       "type": 0,
-      "value": "Bluetooth enabled"
+      "value": "Bluetooth habilitat"
     }
   ],
   "connect-bluetooth-heading": [
@@ -658,7 +658,7 @@
   "connect-cannot-see-pattern": [
     {
       "type": 0,
-      "value": "I do not see a pattern"
+      "value": "No veig cap patró"
     }
   ],
   "connect-computer": [
@@ -730,31 +730,31 @@
   "connect-native-change-pattern": [
     {
       "type": 0,
-      "value": "My pattern is different"
+      "value": "El meu patró és diferent"
     }
   ],
   "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Confirm this pattern matches your micro:bit"
+      "value": "Confirma que aquest patró és el de la teva micro:bit"
     }
   ],
   "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "If needed, change the pattern below to match."
+      "value": "Si cal, canvieu el patró de més avall per coincidir."
     }
   ],
   "connect-native-start-battery-check": [
     {
       "type": 0,
-      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
+      "value": "Connecta el porta-piles, després, comprova si la llum del darrere de la micro:bit està engegat."
     }
   ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "Connect micro:bit battery pack"
+      "value": "Connecta el porta piles de la micro:bit"
     }
   ],
   "connect-pattern-heading": [
@@ -780,7 +780,7 @@
   "connect-pattern-label": [
     {
       "type": 0,
-      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+      "value": "El nombre de LEDs encesos a cada columna de la micro:bit, d'esquerra a dreta, són "
     },
     {
       "type": 1,
@@ -812,7 +812,7 @@
     },
     {
       "type": 0,
-      "value": ", and "
+      "value": " i "
     },
     {
       "type": 1,
@@ -988,31 +988,31 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Try another way"
+      "value": "Prova-ho d'una altra manera"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "No pots entrar en mode Bluetooth?"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "No pots entrar en mode Bluetooth?"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
     {
       "type": 0,
-      "value": "Try the following:"
+      "value": "Intenta el següent:"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
     {
       "type": 0,
-      "value": "Disconnect and then reconnect the micro:bit with the power source."
+      "value": "Desconnecta i reconnecta la micro:bit a la corrent."
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
