@@ -13,8 +13,8 @@ concurrency:
 
 jobs:
   build-ios:
-    # Only run for apps releases, not web releases
-    if: ${{ github.event_name != 'release' || contains(github.event.release.tag_name, '-apps') }}
+    # Only run for apps releases, or pushes to main or branches whose name ends with -apps
+    if: ${{ (github.event_name != 'release' && (github.ref_name == 'main' || endsWith(github.ref_name, '-apps'))) || (github.event_name == 'release' && contains(github.event.release.tag_name, '-apps')) }}
     timeout-minutes: 25
     runs-on: macos-26
     permissions:
