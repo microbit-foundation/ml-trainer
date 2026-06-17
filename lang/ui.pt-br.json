@@ -104,15 +104,15 @@
     "description": "Link on the analytics consent dialog to the privacy policy"
   },
   "analytics-consent-setting-helper": {
-    "defaultMessage": "Helps us improve the app with anonymous usage data.",
+    "defaultMessage": "Ajuda-nos a melhorar o aplicativo com dados anônimos de uso.",
     "description": "Helper text for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "Share anonymous usage data",
+    "defaultMessage": "Compartilhar dados de uso anônimos",
     "description": "Label for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-title": {
-    "defaultMessage": "Help improve {appNameFull}",
+    "defaultMessage": "Ajude a melhorar {appNameFull}",
     "description": "Title of the first-run analytics consent dialog on mobile"
   },
   "animation-bluetooth-mode-label": {
@@ -552,7 +552,7 @@
     "description": "Unable to enter Bluetooth mode dialog heading"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
-    "defaultMessage": "Try the following:",
+    "defaultMessage": "Tente o seguinte:",
     "description": "Heading for list of things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {

@@ -188,25 +188,25 @@
   "analytics-consent-allow-action": [
     {
       "type": 0,
-      "value": "Allow analytics"
+      "value": "Analyses toestaan"
     }
   ],
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
+      "value": "We willen graag anonieme gegevens verzamelen over hoe je de app gebruikt om ons te helpen het te verbeteren. We delen geen persoonlijke gegevens of gebruiken geen advertenties van derden."
     }
   ],
   "analytics-consent-change-later": [
     {
       "type": 0,
-      "value": "You can change this in Settings later."
+      "value": "Je kunt dit later wijzigen in de instellingen."
     }
   ],
   "analytics-consent-decline-action": [
     {
       "type": 0,
-      "value": "No thanks"
+      "value": "Nee, bedankt"
     }
   ],
   "analytics-consent-learn-more": [
@@ -218,29 +218,33 @@
   "analytics-consent-setting-helper": [
     {
       "type": 0,
-      "value": "Helps us improve the app with anonymous usage data."
+      "value": "Helpt ons de app te verbeteren met anonieme gebruiksgegevens."
     }
   ],
   "analytics-consent-setting-label": [
     {
       "type": 0,
-      "value": "Share anonymous usage data"
+      "value": "Deel anonieme gebruiksgegevens"
     }
   ],
   "analytics-consent-title": [
     {
       "type": 0,
-      "value": "Help improve "
+      "value": "Help "
     },
     {
       "type": 1,
       "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " te verbeteren"
     }
   ],
   "animation-bluetooth-mode-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating how to reset to Bluetooth mode."
+      "value": "Animatie om te tonen hoe je de Bluetooth-modus kunt terugzetten."
     }
   ],
   "animation-label": [
@@ -318,13 +322,13 @@
   "bluetooth-disabled-body": [
     {
       "type": 0,
-      "value": "Please turn on Bluetooth and try again."
+      "value": "Schakel alsejeblieft Bluetooth in en probeer opnieuw."
     }
   ],
   "bluetooth-disabled-heading": [
     {
       "type": 0,
-      "value": "Bluetooth is turned off"
+      "value": "Bluetooth is uitgeschakeld"
     }
   ],
   "bluetooth-permission-denied-body-android": [
@@ -334,7 +338,7 @@
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+      "value": " gebruikt Bluetooth om verbinding te maken met je micro:bit. Schakel Toestemming voor nabij gelegen toestellen in in de "
     },
     {
       "children": [
@@ -344,7 +348,7 @@
         },
         {
           "type": 0,
-          "value": " settings"
+          "value": " instellingen"
         }
       ],
       "type": 8,
@@ -362,7 +366,7 @@
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+      "value": " gebruikt Bluetooth om verbinding te maken met je micro:bit. Schakel toestemming voor  nabij gelegen toestellen in in de "
     },
     {
       "children": [
@@ -372,7 +376,7 @@
         },
         {
           "type": 0,
-          "value": " settings"
+          "value": " instellingen"
         }
       ],
       "type": 8,
@@ -386,7 +390,7 @@
   "bluetooth-permission-denied-heading": [
     {
       "type": 0,
-      "value": "Bluetooth permission required"
+      "value": "Bluetooth-machtiging vereist"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -542,7 +546,7 @@
   "confirm-share-action": [
     {
       "type": 0,
-      "value": "Confirm and share"
+      "value": "Bevestigen en delen"
     }
   ],
   "connect-action": [
@@ -590,7 +594,7 @@
   "connect-bluetooth-enabled": [
     {
       "type": 0,
-      "value": "Bluetooth enabled"
+      "value": "Bluetooth ingeschakeld"
     }
   ],
   "connect-bluetooth-heading": [
@@ -662,7 +666,7 @@
   "connect-cannot-see-pattern": [
     {
       "type": 0,
-      "value": "I do not see a pattern"
+      "value": "Ik zie geen patroon"
     }
   ],
   "connect-computer": [
@@ -734,31 +738,31 @@
   "connect-native-change-pattern": [
     {
       "type": 0,
-      "value": "My pattern is different"
+      "value": "Mijn patroon is anders"
     }
   ],
   "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Confirm this pattern matches your micro:bit"
+      "value": "Bevestig dat dit patroon overeenkomt met je micro:bit"
     }
   ],
   "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "If needed, change the pattern below to match."
+      "value": "Indien nodig, wijzig het patroon hieronder om overeen te komen."
     }
   ],
   "connect-native-start-battery-check": [
     {
       "type": 0,
-      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
+      "value": "Sluit het batterijpakket aan en controleer dat het licht op de achterkant van de micro:bit aan is."
     }
   ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "Connect micro:bit battery pack"
+      "value": "Verbind micro:bit batterijpakket"
     }
   ],
   "connect-pattern-heading": [
@@ -784,7 +788,7 @@
   "connect-pattern-label": [
     {
       "type": 0,
-      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+      "value": "Het aantal LED's in elke kolom van het micro:bit display, van links tot rechts. zijn "
     },
     {
       "type": 1,
@@ -816,7 +820,7 @@
     },
     {
       "type": 0,
-      "value": ", and "
+      "value": " en "
     },
     {
       "type": 1,
@@ -992,37 +996,37 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Try another way"
+      "value": "Probeer een andere manier"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Kun je de Bluetooth modus niet aanzetten?"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Kun je de Bluetooth modus niet aanzetten?"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
     {
       "type": 0,
-      "value": "Try the following:"
+      "value": "Probeer het volgende:"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
     {
       "type": 0,
-      "value": "Disconnect and then reconnect the micro:bit with the power source."
+      "value": "Ontkoppel en verbind de micro:bit vervolgens opnieuw met de stroombron."
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
     {
       "type": 0,
-      "value": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
+      "value": "Als je micro:bit een '+' pictogram toont, sluit dan de micro:bit aan op een computer met een USB-kabel en download een eenvoudig programma. Ontkoppel/Vergeet de micro:bit in de Instellingen app voordat je het opnieuw probeert."
     }
   ],
   "connect-with-batteries": [
@@ -1046,7 +1050,7 @@
   "connecting-data-collection-microbit-heading": [
     {
       "type": 0,
-      "value": "Connecting to data collection micro:bit"
+      "value": "Verbinden met gegevensverzameling-micro:bit"
     }
   ],
   "continue-makecode-action": [
@@ -1472,7 +1476,7 @@
   "downloading-data-collection-microbit-header": [
     {
       "type": 0,
-      "value": "Downloading data collection program to micro:bit"
+      "value": "Downloaden van programma voor gegevensverzameling naar micro:bit"
     }
   ],
   "downloading-header": [
@@ -1490,31 +1494,31 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Choose ‘Pair’ if asked"
+      "value": "Kies ‘Koppel’ indien gevraagd"
     }
   ],
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit…"
+      "value": "Verbinden met micro:bit..."
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit…"
+      "value": "Vinden micro:bit..."
     }
   ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
-      "value": "Please do not interact with the micro:bit before the download is complete."
+      "value": "Alsjeblieft niets te doen met de micro:bit voordat de download is voltooid."
     }
   ],
   "downloading-stage-resetting-device": [
     {
       "type": 0,
-      "value": "Waiting for micro:bit to reboot..."
+      "value": "Wachten op micro:bit opnieuw opstarten..."
     }
   ],
   "downloading-subtitle": [
@@ -2340,13 +2344,13 @@
   "location-disabled-body": [
     {
       "type": 0,
-      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
+      "value": "Locatiediensten zijn vereist voor Bluetooth op dit apparaat. Schakel locatiediensten in in "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Settings"
+          "value": "instellingen"
         }
       ],
       "type": 8,
@@ -2354,13 +2358,13 @@
     },
     {
       "type": 0,
-      "value": " and try again."
+      "value": " en probeer het opnieuw."
     }
   ],
   "location-disabled-heading": [
     {
       "type": 0,
-      "value": "Location services required"
+      "value": "Locatiediensten vereist"
     }
   ],
   "main-menu": [
@@ -2406,7 +2410,7 @@
   "microbit-name-label": [
     {
       "type": 0,
-      "value": "micro:bit name: "
+      "value": "micro:bit naam: "
     },
     {
       "type": 1,
@@ -2476,55 +2480,55 @@
   "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit failed."
+      "value": "De verbinding met de micro:bit is mislukt."
     }
   ],
   "native-bluetooth-error-check": [
     {
       "type": 0,
-      "value": "Please check that:"
+      "value": "Controleer alsjeblieft dat:"
     }
   ],
   "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "the micro:bit is close to this device"
+      "value": "de micro:bit dicht bij dit apparaat is"
     }
   ],
   "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+      "value": "de micro:bit in Bluetooth modus is (laat het koppeling patroon zien)"
     }
   ],
   "native-bluetooth-error-check-pattern": [
     {
       "type": 0,
-      "value": "the pattern you entered is correct"
+      "value": "het door jouw ingevoerde patroon juist is"
     }
   ],
   "native-bluetooth-error-forget-device": [
     {
       "type": 0,
-      "value": "Please forget this device in your Bluetooth settings and try again."
+      "value": "Vergeet alsjeblieft dit apparaat in je Bluetooth instellingen en probeer het opnieuw."
     }
   ],
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Go to Bluetooth in the Settings app"
+      "value": "Ga naar Bluetooth in de Instellingen app"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
     {
       "type": 0,
-      "value": "Tap the "
+      "value": "Tik op het "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "information"
+          "value": "informatie"
         }
       ],
       "type": 8,
@@ -2532,25 +2536,25 @@
     },
     {
       "type": 0,
-      "value": " icon next to the BBC micro:bit device"
+      "value": " pictogram naast het BBC micro:bit apparaat"
     }
   ],
   "native-bluetooth-error-forget-device-step-3": [
     {
       "type": 0,
-      "value": "Tap ‘Forget This Device’"
+      "value": "Klik op 'vergeet dit apparaat’"
     }
   ],
   "native-bluetooth-error-forget-device-step-4": [
     {
       "type": 0,
-      "value": "Return to this app to try again"
+      "value": "Keer terug naar deze app om het opnieuw te proberen"
     }
   ],
   "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "Could not connect to micro:bit"
+      "value": "Kan geen verbinding maken met micro:bit"
     }
   ],
   "new-project-setup-title": [
@@ -3128,19 +3132,19 @@
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears."
+      "value": "Houd A+B ingedrukt en druk op RESET. Blijf A+B ingedrukt houden totdat het Bluetooth pictogram verschijnt."
     }
   ],
   "reset-to-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Reset to Bluetooth mode"
+      "value": "Reset naar Bluetooth modus"
     }
   ],
   "reset-to-bluetooth-mode-subtitle": [
     {
       "type": 0,
-      "value": "Press RESET three times."
+      "value": "Druk drie keer op RESET."
     }
   ],
   "reset-to-default-action": [
@@ -3214,13 +3218,13 @@
   "save-to-files-action": [
     {
       "type": 0,
-      "value": "Save to Files"
+      "value": "Opslaan naar bestand"
     }
   ],
   "saving-dataset-toast-title": [
     {
       "type": 0,
-      "value": "Your data samples have been downloaded"
+      "value": "Jouw data samples zijn gedownload"
     }
   ],
   "saving-description": [
@@ -3332,13 +3336,13 @@
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as a hex file"
+      "value": "Project delen als een hex-bestand"
     }
   ],
   "share-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+      "value": "Het hex-bestand bevat je acties, data samples en je MakeCode project. Open het in "
     },
     {
       "type": 1,
@@ -3346,13 +3350,13 @@
     },
     {
       "type": 0,
-      "value": " to continue working."
+      "value": " om verder te werken."
     }
   ],
   "share-named-file": [
     {
       "type": 0,
-      "value": "Share "
+      "value": "Deel "
     },
     {
       "type": 1,
@@ -3362,13 +3366,13 @@
   "sharing-description": [
     {
       "type": 0,
-      "value": "Your project will be ready to share soon."
+      "value": "Je project zal binnenkort klaar zijn om te worden gedeeld."
     }
   ],
   "sharing-title": [
     {
       "type": 0,
-      "value": "Sharing…"
+      "value": "Delen..."
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -3476,25 +3480,25 @@
   "storage-error-device-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to device storage"
+      "value": "Opslaan van project naar opslag op je apparaat is mislukt"
     }
   ],
   "storage-error-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to browser storage"
+      "value": "Opslaan van project naar opslag van je browser is mislukt"
     }
   ],
   "storage-error-quota-description": [
     {
       "type": 0,
-      "value": "Your project edit may not be saved."
+      "value": "Je projectwijziging is mogelijk niet opgeslagen."
     }
   ],
   "storage-error-quota-title": [
     {
       "type": 0,
-      "value": "Browser storage full"
+      "value": "Browseropslag is vol"
     }
   ],
   "support-request": [
