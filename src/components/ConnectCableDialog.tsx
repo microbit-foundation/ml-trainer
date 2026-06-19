@@ -92,7 +92,7 @@ const ConnectCableDialog = ({
         <Text width="100%">
           <FormattedMessage id={subtitleId} />
         </Text>
-        <AnimationProvider>
+        <AnimationProvider removeAnimationIfReducedMotion>
           <PlugMicrobitAnimation
             alt={intl.formatMessage({ id: "connect-cable-alt" })}
           />

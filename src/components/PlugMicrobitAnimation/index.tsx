@@ -92,7 +92,7 @@ const PlugMicrobitAnimation = ({
           left="50%"
           bottom="100%"
           width={connectorWidth}
-          transform={connectorPlugged}
+          transform={unplug ? connectorLifted : connectorPlugged}
           animation={withPlayState(
             `${connectorKeyframes} ${cycleDuration}s ease-in-out infinite`
           )}

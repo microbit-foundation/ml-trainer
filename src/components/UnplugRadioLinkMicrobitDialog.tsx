@@ -40,7 +40,7 @@ const UnplugRadioLinkMicrobitDialog = ({
               <FormattedMessage id="radio-link-microbit" />
             </Text>
           </VStack>
-          <AnimationProvider>
+          <AnimationProvider removeAnimationIfReducedMotion>
             <PlugMicrobitAnimation
               width="200px"
               unplug

@@ -41,7 +41,7 @@ const ConnectRadioDataCollectionMicrobitDialog = ({
               <FormattedMessage id="data-collection-microbit" />
             </Text>
           </VStack>
-          <AnimationProvider>
+          <AnimationProvider removeAnimationIfReducedMotion>
             <PlugMicrobitAnimation
               alt={intl.formatMessage({ id: "connect-cable-alt" })}
             />
