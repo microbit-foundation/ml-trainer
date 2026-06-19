@@ -5,11 +5,12 @@
  */
 import { HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import connectCable from "../images/connect-cable.gif";
 import microbitOnWrist from "../images/stylised-microbit-on-wrist.svg";
+import { AnimationProvider } from "./AnimationProvider";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import PlugMicrobitAnimation from "./PlugMicrobitAnimation";
 
 export interface ConnectRadioDataCollectionMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
@@ -40,12 +41,11 @@ const ConnectRadioDataCollectionMicrobitDialog = ({
               <FormattedMessage id="data-collection-microbit" />
             </Text>
           </VStack>
-          <Image
-            src={connectCable}
-            alt={intl.formatMessage({ id: "connect-cable-alt" })}
-            objectFit="contain"
-            boxSize="241px"
-          />
+          <AnimationProvider>
+            <PlugMicrobitAnimation
+              alt={intl.formatMessage({ id: "connect-cable-alt" })}
+            />
+          </AnimationProvider>
         </HStack>
       </VStack>
     </ConnectContainerDialog>
