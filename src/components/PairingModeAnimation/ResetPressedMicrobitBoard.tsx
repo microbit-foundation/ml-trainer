@@ -3,14 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Icon,
-  IconProps,
-  keyframes,
-  StackProps,
-  VStack,
-  Heading,
-} from "@chakra-ui/react";
+import { Icon, IconProps, StackProps, VStack, Heading } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 import { MicrobitBoardBack } from "./MicrobitBoardBack";

@@ -6,10 +6,10 @@
 import {
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalOverlay,
-  ModalCloseButton,
-} from "@chakra-ui/modal";
+} from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 
 interface FeedbackFormProps {

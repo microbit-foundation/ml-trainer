@@ -3,23 +3,22 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button } from "@chakra-ui/button";
-import { Box, VStack } from "@chakra-ui/layout";
 import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/modal";
-import {
+  Box,
+  Button,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
 } from "@chakra-ui/react";
 import {
   FormEvent,

@@ -8,13 +8,13 @@ import {
   Box,
   HStack,
   Image,
-  keyframes,
   Stack,
   Text,
   usePrefersReducedMotion,
   VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { FormattedMessage } from "react-intl";
 import { useDataConnected } from "../data-connection-flow";
 import microbitButtonB from "../images/microbit-button-b.svg";

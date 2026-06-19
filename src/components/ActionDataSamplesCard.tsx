@@ -14,13 +14,13 @@ import {
   CloseButton,
   HStack,
   Icon,
-  keyframes,
   MenuItem,
   MenuList,
   Portal,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { forwardRef, ReactNode, useCallback, useRef } from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
