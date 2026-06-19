@@ -44,16 +44,12 @@ interface PlugMicrobitAnimationProps extends BoxProps {
    * Plays the unplug animation instead of the plug-in one.
    */
   unplug?: boolean;
-  /**
-   * Width of the animation.
-   */
-  width?: string;
 }
 
 const PlugMicrobitAnimation = ({
   alt,
   unplug = false,
-  width,
+  width = "225px",
   ...props
 }: PlugMicrobitAnimationProps) => {
   const { withPlayState } = useAnimation();
@@ -65,7 +61,7 @@ const PlugMicrobitAnimation = ({
       aria-label={alt}
       position="relative"
       overflow="hidden"
-      width={width ?? "225px"}
+      width={width}
       pt={connectorHeadroom}
       userSelect="none"
       {...props}
