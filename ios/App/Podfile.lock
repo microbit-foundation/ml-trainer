@@ -5,8 +5,6 @@ PODS:
     - Capacitor
   - CapacitorCommunityBluetoothLe (8.1.3):
     - Capacitor
-  - CapacitorCommunitySafeArea (7.0.0):
-    - Capacitor
   - CapacitorCordova (8.3.4)
   - CapacitorFilesystem (8.1.2):
     - Capacitor
@@ -102,7 +100,6 @@ DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorCommunityBluetoothLe (from `../../node_modules/@capacitor-community/bluetooth-le`)"
-  - "CapacitorCommunitySafeArea (from `../../node_modules/@capacitor-community/safe-area`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorFirebaseAnalytics (from `../../node_modules/@capacitor-firebase/analytics`)"
@@ -135,8 +132,6 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/app"
   CapacitorCommunityBluetoothLe:
     :path: "../../node_modules/@capacitor-community/bluetooth-le"
-  CapacitorCommunitySafeArea:
-    :path: "../../node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorFilesystem:
@@ -158,7 +153,6 @@ SPEC CHECKSUMS:
   Capacitor: d13cad5fa09155679672808cc4ca9fbc2997e1b4
   CapacitorApp: 449ffe26375e96f8aaaee625ac6e01e5c57c8650
   CapacitorCommunityBluetoothLe: ab4b04474c7c13315cd591dee0995f1adce73c98
-  CapacitorCommunitySafeArea: 211e919d3f0ff6020a3b2acb3b772fa30fb685ef
   CapacitorCordova: c07921bdcfec6f691bae22274446b4d606ebf6a4
   CapacitorFilesystem: 2db285a1ac6e475cc27cae2e1bea999000f9e2be
   CapacitorFirebaseAnalytics: 27ad621b8f41c2cd2b2169f2db6f476cdac49011
@@ -180,6 +174,6 @@ SPEC CHECKSUMS:
   SentryCapacitor: 1d620200b850ef6f4e7056f5e20d7860e7c04572
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 9ae6ef04aa0fb3118bde97629ae28f474b2796c9
+PODFILE CHECKSUM: 29d696bc2bbc03ae11a4ec8f381a42af12266d5c
 
 COCOAPODS: 1.16.2

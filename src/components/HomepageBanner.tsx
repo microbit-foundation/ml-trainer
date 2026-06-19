@@ -2,6 +2,7 @@ import { Button, Heading, HStack, Link, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage } from "react-intl";
 import bannerBackground from "theme-package/images/banner-background.svg";
 import { useDeployment } from "../deployment";
+import { useSettings } from "../store";
 import { learnMoreUrl } from "../utils/external-links";
 
 // For landscape mobile screen sizes.
@@ -9,7 +10,7 @@ const shortScreenHeightBreakpoint = "@media (max-height: 700px)";
 
 const HomepageBanner = () => {
   const { appNameShort } = useDeployment();
-
+  const [settings] = useSettings();
   return (
     <HStack w="100%">
       <HStack
@@ -59,7 +60,7 @@ const HomepageBanner = () => {
           </VStack>
           <Button
             as={Link}
-            href={learnMoreUrl()}
+            href={learnMoreUrl(settings.languageId)}
             backgroundColor="white"
             border={0}
             textColor="brand.700"

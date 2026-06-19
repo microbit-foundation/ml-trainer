@@ -23,7 +23,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useDeployment } from "../deployment";
 import { isNativePlatform } from "../platform";
@@ -57,6 +57,10 @@ export const SettingsDialog = ({
   // active surface; the web build defers to the shared-assets cookie
   // modal accessed via the nav-drawer "Manage cookies" link.
   const showAnalyticsToggle = isNativePlatform();
+  // Focus the heading rather than the first form control on open. Otherwise
+  // the graph colour scheme <select> takes focus and on mobile that opens its
+  // picker as soon as the dialog appears.
+  const initialFocusRef = useRef<HTMLHeadingElement>(null);
   const resetConfirmDialog = useDisclosure();
   const handleResetToDefault = useCallback(() => {
     resetConfirmDialog.onOpen();
@@ -120,10 +124,17 @@ export const SettingsDialog = ({
         onClose={onClose}
         size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
+        initialFocusRef={initialFocusRef}
       >
         <ModalOverlay>
           <ModalContent>
-            <ModalHeader fontSize="lg" fontWeight="bold">
+            <ModalHeader
+              ref={initialFocusRef}
+              tabIndex={-1}
+              _focus={{ outline: "none", boxShadow: "none" }}
+              fontSize="lg"
+              fontWeight="bold"
+            >
               <FormattedMessage id="settings" />
             </ModalHeader>
             <ModalBody>

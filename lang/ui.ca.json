@@ -84,19 +84,19 @@
     "description": "Home page resource card title"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "Allow analytics",
+    "defaultMessage": "Permet analítiques",
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads.",
+    "defaultMessage": "Ens agradaria recollir dades anònimes sobre com useu l'app per ajudar-nos a millorar-la. No compartirem dades personals ni farem servir anuncis de tercers.",
     "description": "Body of the analytics consent dialog explaining the optional analytics collection"
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "You can change this in Settings later.",
+    "defaultMessage": "Podeu canviar això a la configuració més tard.",
     "description": "Reassurance line on the analytics consent dialog about reversibility"
   },
   "analytics-consent-decline-action": {
-    "defaultMessage": "No thanks",
+    "defaultMessage": "No gràcies",
     "description": "Decline button on the analytics consent dialog"
   },
   "analytics-consent-learn-more": {
@@ -104,19 +104,19 @@
     "description": "Link on the analytics consent dialog to the privacy policy"
   },
   "analytics-consent-setting-helper": {
-    "defaultMessage": "Helps us improve the app with anonymous usage data.",
+    "defaultMessage": "Ajudeu-nos a millorar l'app amb dades d'ús anònimes",
     "description": "Helper text for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "Share anonymous usage data",
+    "defaultMessage": "Compartiu dades d'ús anònimament",
     "description": "Label for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-title": {
-    "defaultMessage": "Help improve {appNameFull}",
+    "defaultMessage": "Ajudeu a millorar {appNameFull}",
     "description": "Title of the first-run analytics consent dialog on mobile"
   },
   "animation-bluetooth-mode-label": {
-    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "defaultMessage": "Animació mostrant com tornar al mode Bluetooth.",
     "description": "Aria label for animation"
   },
   "animation-label": {
@@ -168,23 +168,23 @@
     "description": "Blocks preview heading text"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "defaultMessage": "Si us plau, engega el Bluetooth i torna-ho a provar.",
     "description": "Body text for Bluetooth disabled error dialog"
   },
   "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetooth is turned off",
+    "defaultMessage": "El Bluetooth està apagat",
     "description": "Heading for Bluetooth disabled error dialog"
   },
   "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
+    "defaultMessage": "{appNameShort} fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a <link>la configuració de {appNameShort}</link>.",
     "description": "Body text for Bluetooth permission denied error dialog on Android"
   },
   "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
+    "defaultMessage": "{appNameShort} fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a <link>la configuració de {appNameShort}</link>.",
     "description": "Body text for Bluetooth permission denied error dialog on iOS"
   },
   "bluetooth-permission-denied-heading": {
-    "defaultMessage": "Bluetooth permission required",
+    "defaultMessage": "Es requereix el permís de Bluetooth",
     "description": "Heading for Bluetooth permission denied error dialog"
   },
   "bluetooth-unsupported-advice": {
@@ -272,7 +272,7 @@
     "description": "Confirm and save action label"
   },
   "confirm-share-action": {
-    "defaultMessage": "Confirm and share",
+    "defaultMessage": "Confirma i comparteix",
     "description": "Confirm and share action label"
   },
   "connect-action": {
@@ -304,7 +304,7 @@
     "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
   },
   "connect-bluetooth-enabled": {
-    "defaultMessage": "Bluetooth enabled",
+    "defaultMessage": "Bluetooth habilitat",
     "description": "Label indicating Bluetooth needs to be enabled"
   },
   "connect-bluetooth-heading": {
@@ -352,7 +352,7 @@
     "description": "Project download instructions"
   },
   "connect-cannot-see-pattern": {
-    "defaultMessage": "I do not see a pattern",
+    "defaultMessage": "No veig cap patró",
     "description": "Link to troubleshooting not seeing Bluetooth pattern"
   },
   "connect-computer": {
@@ -400,23 +400,23 @@
     "description": "Label for cable icon in list of requirements"
   },
   "connect-native-change-pattern": {
-    "defaultMessage": "My pattern is different",
+    "defaultMessage": "El meu patró és diferent",
     "description": "Change Bluetooth pattern link"
   },
   "connect-native-pattern-heading": {
-    "defaultMessage": "Confirm this pattern matches your micro:bit",
+    "defaultMessage": "Confirma que aquest patró és el de la teva micro:bit",
     "description": "Native Bluetooth pattern dialog heading"
   },
   "connect-native-pattern-subtitle": {
-    "defaultMessage": "If needed, change the pattern below to match.",
+    "defaultMessage": "Si cal, canvieu el patró de més avall per coincidir.",
     "description": "Native Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-battery-check": {
-    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on.",
+    "defaultMessage": "Connecta el porta-piles, després, comprova si la llum del darrere de la micro:bit està engegat.",
     "description": "Instruction to check the micro:bit is powered on via the battery pack"
   },
   "connect-native-start-heading": {
-    "defaultMessage": "Connect micro:bit battery pack",
+    "defaultMessage": "Connecta el porta piles de la micro:bit",
     "description": "Connection dialog heading"
   },
   "connect-pattern-heading": {
@@ -428,7 +428,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-label": {
-    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
+    "defaultMessage": "El nombre de LEDs encesos a cada columna de la micro:bit, d'esquerra a dreta, són {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} i {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-subtitle": {
@@ -540,23 +540,23 @@
     "description": "Troubleshooting heading"
   },
   "connect-try-another-way": {
-    "defaultMessage": "Try another way",
+    "defaultMessage": "Prova-ho d'una altra manera",
     "description": "Link to alternative connection method"
   },
   "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "No pots entrar en mode Bluetooth?",
     "description": "Link to troubleshooting entering Bluetooth mode"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "No pots entrar en mode Bluetooth?",
     "description": "Unable to enter Bluetooth mode dialog heading"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
-    "defaultMessage": "Try the following:",
+    "defaultMessage": "Intenta el següent:",
     "description": "Heading for list of things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "defaultMessage": "Desconnecta i reconnecta la micro:bit a la corrent.",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {

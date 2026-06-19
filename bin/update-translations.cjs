@@ -15,6 +15,8 @@ const fs = require("fs");
 const okExitStatus = 0;
 const errExitStatus = 2;
 
+// Adding a new language?
+// Don't forget that the MakeCode extension also needs its translations updating.
 const languages = [
   "ca",
   "en",

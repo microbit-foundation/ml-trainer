@@ -19,6 +19,7 @@ import MicrobitOnWrist, { MicrobitOnWristRef } from "./MicrobitOnWrist";
 import Signal, { SignalRef } from "./Signal";
 import StepFlow, { StepFlowRef } from "./StepFlow";
 import { testModeldurationInSec } from "./TestModelScreen";
+import { isNativePlatform } from "../../platform";
 
 const fadeInOutDuration = 2; //s
 const duration = {
@@ -369,6 +370,7 @@ const HowItWorksAnimation = () => {
           }
           rightItems={
             <Computer
+              isTablet={isNativePlatform()}
               height="auto"
               ref={computerRef}
               width={{ base: "100%", sm: "80%", md: "60%" }}

@@ -284,16 +284,29 @@ export const getMakeCodeLang = (languageId: string): string =>
  * but as 'partially supported' — missing strings fall back to English. Add
  * ids here as translations land.
  */
-export const nativeLanguageIds = ["en", "en-US"];
+export const nativeLanguageIds = ["en", "en-US", "nl", "fr", "pl", "es-ES"];
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
 const defaultLanguageId = allLanguages[0].id;
+
+const isValidLanguageId = (langId: string): boolean => {
+  try {
+    Intl.getCanonicalLocales(langId);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 /**
  * Match the user's preferred languages (from browser/OS) to supported languages.
  */
 export const matchLanguage = (requestedLanguages: readonly string[]): string =>
-  match(requestedLanguages, supportedLanguageIds, defaultLanguageId);
+  match(
+    requestedLanguages.filter(isValidLanguageId),
+    supportedLanguageIds,
+    defaultLanguageId
+  );
 
 /**
  * Get the initial language, checking URL parameter first, then OS/browser preference.
