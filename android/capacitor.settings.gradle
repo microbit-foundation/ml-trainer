@@ -24,10 +24,10 @@ include ':capacitor-share'
 project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/share/android')
 
 include ':microbit-capacitor-community-nordic-dfu'
-project(':microbit-capacitor-community-nordic-dfu').projectDir = new File('../../nordic-dfu/android')
+project(':microbit-capacitor-community-nordic-dfu').projectDir = new File('../node_modules/@microbit/capacitor-community-nordic-dfu/android')
 
 include ':microbit-capacitor-sqlite-vanilla'
-project(':microbit-capacitor-sqlite-vanilla').projectDir = new File('../../capacitor-sqlite-vanilla/android')
+project(':microbit-capacitor-sqlite-vanilla').projectDir = new File('../node_modules/@microbit/capacitor-sqlite-vanilla/android')
 
 include ':sentry-capacitor'
 project(':sentry-capacitor').projectDir = new File('../node_modules/@sentry/capacitor/android')

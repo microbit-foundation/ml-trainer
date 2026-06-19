@@ -77,10 +77,10 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - IONFilesystemLib (1.1.2)
-  - MicrobitCapacitorCommunityNordicDfu (0.0.0):
+  - MicrobitCapacitorCommunityNordicDfu (8.0.0-microbit.1):
     - Capacitor
     - NordicDFU (~> 4.16.0)
-  - MicrobitCapacitorSqliteVanilla (0.0.0):
+  - MicrobitCapacitorSqliteVanilla (0.1.0):
     - Capacitor
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
@@ -109,8 +109,8 @@ DEPENDENCIES:
   - "CapacitorFirebaseAnalytics/AnalyticsWithoutAdIdSupport (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
-  - MicrobitCapacitorCommunityNordicDfu (from `../../../nordic-dfu`)
-  - MicrobitCapacitorSqliteVanilla (from `../../../capacitor-sqlite-vanilla`)
+  - "MicrobitCapacitorCommunityNordicDfu (from `../../node_modules/@microbit/capacitor-community-nordic-dfu`)"
+  - "MicrobitCapacitorSqliteVanilla (from `../../node_modules/@microbit/capacitor-sqlite-vanilla`)"
   - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
@@ -148,9 +148,9 @@ EXTERNAL SOURCES:
   CapacitorShare:
     :path: "../../node_modules/@capacitor/share"
   MicrobitCapacitorCommunityNordicDfu:
-    :path: "../../../nordic-dfu"
+    :path: "../../node_modules/@microbit/capacitor-community-nordic-dfu"
   MicrobitCapacitorSqliteVanilla:
-    :path: "../../../capacitor-sqlite-vanilla"
+    :path: "../../node_modules/@microbit/capacitor-sqlite-vanilla"
   SentryCapacitor:
     :path: "../../node_modules/@sentry/capacitor"
 
@@ -171,8 +171,8 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 0471a5b5bff51f3a91b1e76df22c952d04c63967
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
-  MicrobitCapacitorCommunityNordicDfu: 49778b329137f3088a92d868b2dd8b064b48e2ce
-  MicrobitCapacitorSqliteVanilla: 8d3600ba1357bf7d877758bef1622330010bcd04
+  MicrobitCapacitorCommunityNordicDfu: c68ca3803e6f771f645fa74a3745f52a6bdb4f58
+  MicrobitCapacitorSqliteVanilla: 20d31db6cb14e3ad0c2c4d61d13bda4ca6337cba
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -180,6 +180,6 @@ SPEC CHECKSUMS:
   SentryCapacitor: 1d620200b850ef6f4e7056f5e20d7860e7c04572
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 5ab71e007e74035c15390c7158f74c788ec198fd
+PODFILE CHECKSUM: 9ae6ef04aa0fb3118bde97629ae28f474b2796c9
 
 COCOAPODS: 1.16.2
