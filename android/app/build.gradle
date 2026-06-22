@@ -17,8 +17,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resValue "string", "app_name", project.brandDisplayName
         resValue "string", "title_activity_main", project.brandDisplayName
-        // Host for the App Links intent-filter in AndroidManifest.xml.
-        manifestPlaceholders = [deepLinkHost: project.brandDeepLinkHost]
+        // App Links are claimed only when a brand supplies a deep link host
+        // (brandDeepLinkHost via brand.private.gradle / brand.local.gradle).
+        // Unbranded/OSS builds leave the deep link activity-alias disabled
+        // (see AndroidManifest.xml) so they claim no domain. The fallback
+        // host is unused while disabled, so it points at the reserved
+        // .invalid TLD (RFC 2606) which can never resolve or be verified.
+        def deepLinkHost = project.findProperty("brandDeepLinkHost")
+        manifestPlaceholders = [
+            deepLinkHost   : deepLinkHost ?: "mltrainer.invalid",
+            deepLinkEnabled: deepLinkHost ? "true" : "false",
+        ]
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'
         }
