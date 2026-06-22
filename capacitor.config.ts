@@ -22,9 +22,6 @@ const config: CapacitorConfig = {
   appId: brand.appId,
   appName: brand.appName,
   webDir: "dist",
-  android: {
-    adjustMarginsForEdgeToEdge: "disable",
-  },
   plugins: {
     Keyboard: {
       // Prevent iOS from resizing the WebView when the keyboard opens.

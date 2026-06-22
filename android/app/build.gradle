@@ -6,8 +6,8 @@ android {
     // R / BuildConfig classes and the manifest's `.MainActivity` reference
     // resolve regardless of the brand. Brand-coupled identity flows
     // through applicationId, not namespace.
-    namespace "org.microbit.mltrainer"
-    compileSdk rootProject.ext.compileSdkVersion
+    namespace = "org.microbit.mltrainer"
+    compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId project.brandAppId
         minSdkVersion rootProject.ext.minSdkVersion
@@ -25,7 +25,7 @@ android {
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
-            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
     signingConfigs {

@@ -1,14 +1,14 @@
 PODS:
-  - Capacitor (7.4.5):
+  - Capacitor (8.3.4):
     - CapacitorCordova
-  - CapacitorApp (7.1.1):
+  - CapacitorApp (8.1.0):
     - Capacitor
-  - CapacitorCommunityBluetoothLe (7.3.2):
+  - CapacitorCommunityBluetoothLe (8.1.3):
     - Capacitor
-  - CapacitorCordova (7.4.5)
-  - CapacitorFilesystem (7.1.6):
+  - CapacitorCordova (8.3.4)
+  - CapacitorFilesystem (8.1.2):
     - Capacitor
-    - IONFilesystemLib (~> 1.0.1)
+    - IONFilesystemLib (~> 1.1.1)
   - CapacitorFirebaseAnalytics (7.5.0):
     - Capacitor
     - CapacitorFirebaseAnalytics/Lite (= 7.5.0)
@@ -17,9 +17,9 @@ PODS:
     - FirebaseAnalytics/WithoutAdIdSupport (~> 11.7.0)
   - CapacitorFirebaseAnalytics/Lite (7.5.0):
     - Capacitor
-  - CapacitorKeyboard (7.0.5):
+  - CapacitorKeyboard (8.0.3):
     - Capacitor
-  - CapacitorShare (7.0.4):
+  - CapacitorShare (8.0.1):
     - Capacitor
   - FirebaseAnalytics/WithoutAdIdSupport (11.7.0):
     - FirebaseCore (~> 11.7.0)
@@ -74,11 +74,11 @@ PODS:
   - GoogleUtilities/UserDefaults (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - IONFilesystemLib (1.0.1)
-  - MicrobitCapacitorCommunityNordicDfu (7.0.0-microbit.4):
+  - IONFilesystemLib (1.1.2)
+  - MicrobitCapacitorCommunityNordicDfu (8.0.0-microbit.1):
     - Capacitor
     - NordicDFU (~> 4.16.0)
-  - MicrobitCapacitorSqliteVanilla (0.1.0-alpha.5):
+  - MicrobitCapacitorSqliteVanilla (0.1.0):
     - Capacitor
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
@@ -150,23 +150,23 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 12914e6f1b7835e161a74ebd19cb361efa37a7dd
-  CapacitorApp: 63b237168fc869e758481dba283315a85743ee78
-  CapacitorCommunityBluetoothLe: 9aa29c1555fbe797e6b595db824c2acd39a5bdf5
-  CapacitorCordova: 31bbe4466000c6b86d9b7f1181ee286cff0205aa
-  CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
+  Capacitor: d13cad5fa09155679672808cc4ca9fbc2997e1b4
+  CapacitorApp: 449ffe26375e96f8aaaee625ac6e01e5c57c8650
+  CapacitorCommunityBluetoothLe: ab4b04474c7c13315cd591dee0995f1adce73c98
+  CapacitorCordova: c07921bdcfec6f691bae22274446b4d606ebf6a4
+  CapacitorFilesystem: 2db285a1ac6e475cc27cae2e1bea999000f9e2be
   CapacitorFirebaseAnalytics: 27ad621b8f41c2cd2b2169f2db6f476cdac49011
-  CapacitorKeyboard: 2fa1e17aec16aef8b01adbc20e8fc295db46104d
-  CapacitorShare: 25f7fc5dd0e4edbde5d6801c6de5d14a8b450a41
+  CapacitorKeyboard: 31c8285d92c9d1410071d52449f16d2c6673b6f4
+  CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
   FirebaseAnalytics: bc9e565af9044ba8d6c6e4157e4edca8e5fdf7ec
   FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
   FirebaseCoreInternal: d6c17dafc8dc33614733a8b52df78fcb4394c881
   FirebaseInstallations: 9347e719c3d52d8d7b9074b2c32407dd027305e9
   GoogleAppMeasurement: 0471a5b5bff51f3a91b1e76df22c952d04c63967
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
-  MicrobitCapacitorCommunityNordicDfu: fd00d14531eb46f4cc5cfc989d59f46ac12bbcac
-  MicrobitCapacitorSqliteVanilla: 007363ee4be41cd778997dda58b6827173ffb67f
+  IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
+  MicrobitCapacitorCommunityNordicDfu: c68ca3803e6f771f645fa74a3745f52a6bdb4f58
+  MicrobitCapacitorSqliteVanilla: 20d31db6cb14e3ad0c2c4d61d13bda4ca6337cba
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47

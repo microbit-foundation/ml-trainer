@@ -284,7 +284,7 @@ export const getMakeCodeLang = (languageId: string): string =>
  * but as 'partially supported' — missing strings fall back to English. Add
  * ids here as translations land.
  */
-export const nativeLanguageIds = ["en", "en-US"];
+export const nativeLanguageIds = ["en", "en-US", "nl", "fr", "pl", "es-ES"];
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
 const defaultLanguageId = allLanguages[0].id;

@@ -84,19 +84,19 @@
     "description": "Home page resource card title"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "Allow analytics",
+    "defaultMessage": "アナリティクスの許可",
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads.",
+    "defaultMessage": "アプリの改善に役立てるため、お客様のアプリ利用状況に関する匿名データを収集させていただきたいと考えております。個人データを共有したり、サードパーティーの広告を掲載したりすることはありません。",
     "description": "Body of the analytics consent dialog explaining the optional analytics collection"
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "You can change this in Settings later.",
+    "defaultMessage": "これは後でこれらの設定を変更できます。",
     "description": "Reassurance line on the analytics consent dialog about reversibility"
   },
   "analytics-consent-decline-action": {
-    "defaultMessage": "No thanks",
+    "defaultMessage": "同意しない",
     "description": "Decline button on the analytics consent dialog"
   },
   "analytics-consent-learn-more": {
@@ -104,15 +104,15 @@
     "description": "Link on the analytics consent dialog to the privacy policy"
   },
   "analytics-consent-setting-helper": {
-    "defaultMessage": "Helps us improve the app with anonymous usage data.",
+    "defaultMessage": "匿名の使用データでアプリの改善に役立ちます。",
     "description": "Helper text for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "Share anonymous usage data",
+    "defaultMessage": "匿名の利用データを提供する",
     "description": "Label for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-title": {
-    "defaultMessage": "Help improve {appNameFull}",
+    "defaultMessage": "{appNameFull}の改善にご協力をお願いします。",
     "description": "Title of the first-run analytics consent dialog on mobile"
   },
   "animation-bluetooth-mode-label": {
@@ -168,11 +168,11 @@
     "description": "Blocks preview heading text"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "defaultMessage": "Bluetoothを有効にしてもう一度お試しください。",
     "description": "Body text for Bluetooth disabled error dialog"
   },
   "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetooth is turned off",
+    "defaultMessage": "Bluetoothがオフになっています",
     "description": "Heading for Bluetooth disabled error dialog"
   },
   "bluetooth-permission-denied-body-android": {
@@ -184,7 +184,7 @@
     "description": "Body text for Bluetooth permission denied error dialog on iOS"
   },
   "bluetooth-permission-denied-heading": {
-    "defaultMessage": "Bluetooth permission required",
+    "defaultMessage": "Bluetoothの権限が必要です",
     "description": "Heading for Bluetooth permission denied error dialog"
   },
   "bluetooth-unsupported-advice": {
@@ -1824,7 +1824,7 @@
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "share-named-file": {
-    "defaultMessage": "Share {name}",
+    "defaultMessage": "{name}を共有",
     "description": "Label for sharing a named file"
   },
   "sharing-description": {
@@ -1832,7 +1832,7 @@
     "description": "Sharing progress dialog text for mobile"
   },
   "sharing-title": {
-    "defaultMessage": "Sharing…",
+    "defaultMessage": "共有しています…",
     "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {

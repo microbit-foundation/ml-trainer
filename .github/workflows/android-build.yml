@@ -13,8 +13,8 @@ concurrency:
 
 jobs:
   build-android:
-    # Only run for apps releases, not web releases
-    if: ${{ github.event_name != 'release' || contains(github.event.release.tag_name, '-apps') }}
+    # Only run for apps releases, or pushes to main or branches whose name ends with -apps
+    if: ${{ (github.event_name != 'release' && (github.ref_name == 'main' || endsWith(github.ref_name, '-apps'))) || (github.event_name == 'release' && contains(github.event.release.tag_name, '-apps')) }}
     timeout-minutes: 15
     runs-on: ubuntu-latest
     permissions:
@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
 
