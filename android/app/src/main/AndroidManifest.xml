@@ -60,6 +60,29 @@
             </intent-filter>
         </activity>
 
+        <!--
+          App Links for web deep links (e.g. https://<host>/import?...).
+          On an activity-alias so it can be toggled per build: the
+          deepLinkEnabled / deepLinkHost placeholders (see app/build.gradle)
+          are only set to a real host when a brand provides one, so
+          unbranded/OSS builds leave this alias disabled and claim no domain.
+          autoVerify makes Android verify ownership against
+          https://<host>/.well-known/assetlinks.json so verified links open
+          the app directly. Targets MainActivity, which handles the intent.
+        -->
+        <activity-alias
+            android:name=".DeepLinkActivity"
+            android:targetActivity=".MainActivity"
+            android:enabled="${deepLinkEnabled}"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="${deepLinkHost}" />
+            </intent-filter>
+        </activity-alias>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
