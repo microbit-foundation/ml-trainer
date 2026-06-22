@@ -2,9 +2,5 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!--
-	  OSS-neutral default: no associated domains, so unbranded/fork builds
-	  claim no Universal Links (and need no Associated Domains capability).
-	-->
 </dict>
 </plist>
