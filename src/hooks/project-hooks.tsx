@@ -54,6 +54,7 @@ import {
   readFileAsText,
 } from "../utils/fs-util";
 import { isShareCanceled, shareFile } from "../utils/share-util";
+import { isWebUrl } from "../utils/url-util";
 
 class CodeEditorError extends Error {}
 
@@ -568,6 +569,11 @@ export const ProjectProvider = ({
       const appUrlListener = CapacitorApp.addListener(
         "appUrlOpen",
         async (evt) => {
+          // Web deep links (Universal/App Links, e.g. https://.../import?...)
+          // are handled by useDeepLinks; this handler only opens files.
+          if (isWebUrl(evt.url)) {
+            return;
+          }
           try {
             setLoadingOverlayVisible(true);
             const contents = await Filesystem.readFile({
