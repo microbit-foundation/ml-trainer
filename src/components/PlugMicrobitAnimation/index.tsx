@@ -69,13 +69,13 @@ const PlugMicrobitAnimation = ({
       <Box position="relative" width="100%">
         <Box
           position="absolute"
-          left="50%"
-          top="50%"
-          width="70%"
+          left="40%"
+          top="16%"
+          width="23%"
           aspectRatio="1"
           transform="translate(-75%, -75%)"
           borderRadius="full"
-          bgGradient={`radial(closest-side, ${glowColor}, transparent)`}
+          bgGradient={`radial(closest-side, ${glowColor} 50%, transparent)`}
           opacity={0}
           animation={withPlayState(
             `${glowKeyframes} ${cycleDuration}s ease-in-out infinite`
