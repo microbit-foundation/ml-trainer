@@ -96,6 +96,10 @@ const PlugMicrobitAnimation = ({
         <Image
           src={microbitImage}
           alt=""
+          // Intrinsic size reserves the right height before the image loads,
+          // preventing the dialog from shifting as the animation appears.
+          htmlWidth={1280}
+          htmlHeight={1030}
           display="block"
           width="100%"
           position="relative"
