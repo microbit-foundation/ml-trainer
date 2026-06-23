@@ -3,14 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Image, Text, VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
-import connectCableImage from "../images/connect-cable.gif";
+import { AnimationProvider } from "./AnimationProvider";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
 import DialogFooterLink from "./DialogFooterLink";
+import PlugMicrobitAnimation from "./PlugMicrobitAnimation";
 
 type LinkType = "switch" | "skip" | "none";
 interface Config {
@@ -91,12 +92,11 @@ const ConnectCableDialog = ({
         <Text width="100%">
           <FormattedMessage id={subtitleId} />
         </Text>
-        <Image
-          src={connectCableImage}
-          alt={intl.formatMessage({ id: "connect-cable-alt" })}
-          objectFit="contain"
-          boxSize="241px"
-        />
+        <AnimationProvider removeAnimationIfReducedMotion>
+          <PlugMicrobitAnimation
+            alt={intl.formatMessage({ id: "connect-cable-alt" })}
+          />
+        </AnimationProvider>
       </VStack>
     </ConnectContainerDialog>
   );

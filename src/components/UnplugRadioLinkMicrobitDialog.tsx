@@ -5,11 +5,12 @@
  */
 import { HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { FormattedMessage, useIntl } from "react-intl";
-import unplugMicrobit from "../images/unplug-microbit.gif";
 import microbitWithComputer from "../images/stylised-microbit-with-usb-computer.svg";
+import { AnimationProvider } from "./AnimationProvider";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";
+import PlugMicrobitAnimation from "./PlugMicrobitAnimation";
 
 export interface ConnectCableDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {}
@@ -39,14 +40,15 @@ const UnplugRadioLinkMicrobitDialog = ({
               <FormattedMessage id="radio-link-microbit" />
             </Text>
           </VStack>
-          <Image
-            src={unplugMicrobit}
-            alt={intl.formatMessage({
-              id: "unplug-radio-link-microbit-label",
-            })}
-            objectFit="contain"
-            boxSize="241px"
-          />
+          <AnimationProvider removeAnimationIfReducedMotion>
+            <PlugMicrobitAnimation
+              width="200px"
+              unplug
+              alt={intl.formatMessage({
+                id: "unplug-radio-link-microbit-label",
+              })}
+            />
+          </AnimationProvider>
         </HStack>
       </VStack>
     </ConnectContainerDialog>
