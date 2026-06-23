@@ -180,7 +180,7 @@
     "description": "Body text for Bluetooth permission denied error dialog on Android"
   },
   "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} gebruikt Bluetooth om verbinding te maken met je micro:bit. Schakel toestemming voor  nabij gelegen toestellen in in de <link>{appNameShort} instellingen</link>.",
+    "defaultMessage": "{appNameShort} gebruikt Bluetooth om verbinding te maken met je micro:bit. Schakel Bluetooth-toegang in in de <link>{appNameShort} instellingen</link>.",
     "description": "Body text for Bluetooth permission denied error dialog on iOS"
   },
   "bluetooth-permission-denied-heading": {
