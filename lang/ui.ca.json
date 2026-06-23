@@ -560,7 +560,7 @@
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "defaultMessage": "Si la teva micro:bit mostra una icona \"+\", connecta-la a un ordinador amb un cable USB i descarrega un programa senzill. Desvincula/oblida la micro:bit a l'aplicació Configuració abans de tornar-ho a intentar.",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
@@ -576,7 +576,7 @@
     "description": "Text shown while waiting for bluetooth/radio connection"
   },
   "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit",
+    "defaultMessage": "Connexió a la recopilació de dades de la micro:bit",
     "description": "Connection dialogs"
   },
   "continue-makecode-action": {
@@ -604,7 +604,7 @@
     "description": "Create project dialog heading"
   },
   "createai-taster-lessons-resource-title": {
-    "defaultMessage": "Taster lessons",
+    "defaultMessage": "Classes de degustació",
     "description": "Home page resource card title"
   },
   "data-actions-menu": {
@@ -700,15 +700,15 @@
     "description": "Confirmation dialog heading"
   },
   "delete-project-confirm-text": {
-    "defaultMessage": "Are you sure you want to delete the project \"{project}\"?",
+    "defaultMessage": "Estàs segur que vols suprimir el projecte \"{project}\"?",
     "description": "Confirmation dialog text"
   },
   "delete-projects-confirm-heading": {
-    "defaultMessage": "Confirm delete projects",
+    "defaultMessage": "Confirma l'eliminació del projecte",
     "description": "Confirmation dialog heading"
   },
   "delete-projects-confirm-text": {
-    "defaultMessage": "Are you sure you want to delete {numProjects} projects?",
+    "defaultMessage": "Estàs segur que vols suprimir el projecte{numProjects}?",
     "description": "Confirmation dialog text"
   },
   "delete-recording-aria": {
@@ -796,7 +796,7 @@
     "description": "Progress text"
   },
   "downloading-data-collection-microbit-header": {
-    "defaultMessage": "Downloading data collection program to micro:bit",
+    "defaultMessage": "Transfereix el programa de recollida de dades a la micro:bit",
     "description": "Progress text"
   },
   "downloading-header": {
@@ -808,23 +808,23 @@
     "description": "Progress text"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "Choose ‘Pair’ if asked",
+    "defaultMessage": "Tria \"Aparella\" si t'ho demana",
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "Connecting to micro:bit…",
+    "defaultMessage": "Connectant la micro.bit...",
     "description": "Progress text during connection stage of flashing"
   },
   "downloading-stage-finding-device": {
-    "defaultMessage": "Finding micro:bit…",
+    "defaultMessage": "Trobar la micro:bit…",
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
+    "defaultMessage": "Si us plau, no interactuïs amb la micro:bit abans que la descàrrega s'hagi completat.",
     "description": "Progress text during native flashing stage"
   },
   "downloading-stage-resetting-device": {
-    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "defaultMessage": "Esperant que la micro:bit es reiniciï...",
     "description": "Progress text when rebooting micro:bit before flashing"
   },
   "downloading-subtitle": {
@@ -1028,7 +1028,7 @@
     "description": "Help icon aria label"
   },
   "help-resources-row-carousel": {
-    "defaultMessage": "List of help resources",
+    "defaultMessage": "Llista de recursos d'ajuda",
     "description": "Label for home page row carousel"
   },
   "help-resources-row-title": {
@@ -1052,11 +1052,11 @@
     "description": "Link to home page"
   },
   "homepage-banner-heading": {
-    "defaultMessage": "New to {appName}?",
+    "defaultMessage": "Ets nou a {appName}?",
     "description": "Homepage banner heading"
   },
   "homepage-banner-subtitle": {
-    "defaultMessage": "Machine learning with movement and the micro:bit",
+    "defaultMessage": "Aprenentatge automàtic amb moviment i la micro:bit",
     "description": "Homepage banner subtitle"
   },
   "import-data-samples-action": {
@@ -1324,11 +1324,11 @@
     "description": "Aria label for loading spinner"
   },
   "location-disabled-body": {
-    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
+    "defaultMessage": "Calen serveis de localització per al Bluetooth en aquest dispositiu. Activa els serveis de localització a <link>Configuració</link> i torna-ho a provar.",
     "description": "Body text for location disabled error dialog (Android only)"
   },
   "location-disabled-heading": {
-    "defaultMessage": "Location services required",
+    "defaultMessage": "Serveis de localització necessaris",
     "description": "Heading for location disabled error dialog (Android only)"
   },
   "main-menu": {
@@ -1356,7 +1356,7 @@
     "description": "Title of MakeCode load error dialog"
   },
   "microbit-name-label": {
-    "defaultMessage": "micro:bit name: {name}",
+    "defaultMessage": "nom de la micro:bit: {name}",
     "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
@@ -1372,11 +1372,11 @@
     "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
   },
   "move-hint": {
-    "defaultMessage": "Move the micro:bit to explore how different actions change the graph",
+    "defaultMessage": "Mou la micro:bit per explorar com diferents accions canvien el gràfic",
     "description": "Hint when you have just connected a micro:bit"
   },
   "my-projects-row-carousel": {
-    "defaultMessage": "List of my projects",
+    "defaultMessage": "Llista dels meus projectes",
     "description": "Label for home page row carousel"
   },
   "my-projects-row-title": {
@@ -1384,7 +1384,7 @@
     "description": "Title for home page row"
   },
   "name-action-hint": {
-    "defaultMessage": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’",
+    "defaultMessage": "Anomena una acció que vulguis que CreateAI reconegui, com ara \"sacsejar la mà\" o \"saltar\".",
     "description": "Hint shown when you have an unnamed action"
   },
   "name-project": {
@@ -1400,11 +1400,11 @@
     "description": "Text under project name field"
   },
   "native-bluetooth-error-body": {
-    "defaultMessage": "The connection to the micro:bit failed.",
+    "defaultMessage": "La connexió amb la micro:bit ha fallat.",
     "description": "Body text for native Bluetooth connection error dialog"
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:",
+    "defaultMessage": "",
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {

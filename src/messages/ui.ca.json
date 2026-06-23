@@ -1018,7 +1018,7 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
     {
       "type": 0,
-      "value": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
+      "value": "Si la teva micro:bit mostra una icona \"+\", connecta-la a un ordinador amb un cable USB i descarrega un programa senzill. Desvincula/oblida la micro:bit a l'aplicació Configuració abans de tornar-ho a intentar."
     }
   ],
   "connect-with-batteries": [
@@ -1042,7 +1042,7 @@
   "connecting-data-collection-microbit-heading": [
     {
       "type": 0,
-      "value": "Connecting to data collection micro:bit"
+      "value": "Connexió a la recopilació de dades de la micro:bit"
     }
   ],
   "continue-makecode-action": [
@@ -1084,7 +1084,7 @@
   "createai-taster-lessons-resource-title": [
     {
       "type": 0,
-      "value": "Taster lessons"
+      "value": "Classes de degustació"
     }
   ],
   "data-actions-menu": [
@@ -1276,7 +1276,7 @@
   "delete-project-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete the project \""
+      "value": "Estàs segur que vols suprimir el projecte \""
     },
     {
       "type": 1,
@@ -1290,13 +1290,13 @@
   "delete-projects-confirm-heading": [
     {
       "type": 0,
-      "value": "Confirm delete projects"
+      "value": "Confirma l'eliminació del projecte"
     }
   ],
   "delete-projects-confirm-text": [
     {
       "type": 0,
-      "value": "Are you sure you want to delete "
+      "value": "Estàs segur que vols suprimir el projecte"
     },
     {
       "type": 1,
@@ -1304,7 +1304,7 @@
     },
     {
       "type": 0,
-      "value": " projects?"
+      "value": "?"
     }
   ],
   "delete-recording-aria": [
@@ -1468,7 +1468,7 @@
   "downloading-data-collection-microbit-header": [
     {
       "type": 0,
-      "value": "Downloading data collection program to micro:bit"
+      "value": "Transfereix el programa de recollida de dades a la micro:bit"
     }
   ],
   "downloading-header": [
@@ -1486,31 +1486,31 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Choose ‘Pair’ if asked"
+      "value": "Tria \"Aparella\" si t'ho demana"
     }
   ],
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit…"
+      "value": "Connectant la micro.bit..."
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit…"
+      "value": "Trobar la micro:bit…"
     }
   ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
-      "value": "Please do not interact with the micro:bit before the download is complete."
+      "value": "Si us plau, no interactuïs amb la micro:bit abans que la descàrrega s'hagi completat."
     }
   ],
   "downloading-stage-resetting-device": [
     {
       "type": 0,
-      "value": "Waiting for micro:bit to reboot..."
+      "value": "Esperant que la micro:bit es reiniciï..."
     }
   ],
   "downloading-subtitle": [
@@ -1824,7 +1824,7 @@
   "help-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of help resources"
+      "value": "Llista de recursos d'ajuda"
     }
   ],
   "help-resources-row-title": [
@@ -1860,7 +1860,7 @@
   "homepage-banner-heading": [
     {
       "type": 0,
-      "value": "New to "
+      "value": "Ets nou a "
     },
     {
       "type": 1,
@@ -1874,7 +1874,7 @@
   "homepage-banner-subtitle": [
     {
       "type": 0,
-      "value": "Machine learning with movement and the micro:bit"
+      "value": "Aprenentatge automàtic amb moviment i la micro:bit"
     }
   ],
   "import-data-samples-action": [
@@ -2322,13 +2322,13 @@
   "location-disabled-body": [
     {
       "type": 0,
-      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
+      "value": "Calen serveis de localització per al Bluetooth en aquest dispositiu. Activa els serveis de localització a "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Settings"
+          "value": "Configuració"
         }
       ],
       "type": 8,
@@ -2336,13 +2336,13 @@
     },
     {
       "type": 0,
-      "value": " and try again."
+      "value": " i torna-ho a provar."
     }
   ],
   "location-disabled-heading": [
     {
       "type": 0,
-      "value": "Location services required"
+      "value": "Serveis de localització necessaris"
     }
   ],
   "main-menu": [
@@ -2388,7 +2388,7 @@
   "microbit-name-label": [
     {
       "type": 0,
-      "value": "micro:bit name: "
+      "value": "nom de la micro:bit: "
     },
     {
       "type": 1,
@@ -2416,13 +2416,13 @@
   "move-hint": [
     {
       "type": 0,
-      "value": "Move the micro:bit to explore how different actions change the graph"
+      "value": "Mou la micro:bit per explorar com diferents accions canvien el gràfic"
     }
   ],
   "my-projects-row-carousel": [
     {
       "type": 0,
-      "value": "List of my projects"
+      "value": "Llista dels meus projectes"
     }
   ],
   "my-projects-row-title": [
@@ -2434,7 +2434,7 @@
   "name-action-hint": [
     {
       "type": 0,
-      "value": "Name an action you want CreateAI to recognise, like ‘waving’ or ‘jumping’"
+      "value": "Anomena una acció que vulguis que CreateAI reconegui, com ara \"sacsejar la mà\" o \"saltar\"."
     }
   ],
   "name-project": [
@@ -2458,14 +2458,10 @@
   "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit failed."
+      "value": "La connexió amb la micro:bit ha fallat."
     }
   ],
   "native-bluetooth-error-check": [
-    {
-      "type": 0,
-      "value": "Please check that:"
-    }
   ],
   "native-bluetooth-error-check-distance": [
     {
