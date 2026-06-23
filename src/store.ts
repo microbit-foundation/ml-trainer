@@ -154,15 +154,16 @@ export interface State {
    */
   hint: DataSamplesPageHint;
   /**
-   * Whether the most recent change made the data ready for training (enough
-   * recordings and every action named), gating the train hint.
+   * Whether the data was ready for training (enough recordings and every
+   * action named) as of the last data change.
    *
-   * Set when a data or naming change crosses into readiness and cleared by
-   * subsequent data edits, so the train hint shows at the moment the data
-   * first becomes ready rather than whenever the data happens to be ready
-   * (e.g. after loading a project that already has enough data).
+   * Used as the baseline for spotting the moment the data first becomes ready,
+   * which is when we show the train hint. Reset to false on load/import/new
+   * session so that the first edit to an already-ready loaded project
+   * re-triggers the hint, rather than the loaded data counting as "no
+   * transition".
    */
-  dataBecameSufficientForTraining: boolean;
+  wasDataSufficientForTraining: boolean;
   /**
    * Set to true if user has moved the micro:bit.
    * This is used to decide whether to show the move hint.
@@ -407,7 +408,7 @@ const createMlStore = (logging: Logging) => {
         actions: [createFirstAction()],
         dataWindow: currentDataWindow,
         hint: null,
-        dataBecameSufficientForTraining: false,
+        wasDataSufficientForTraining: false,
         hasMoved: false,
         isRecording: false,
         project: createUntitledProject(),
@@ -560,7 +561,7 @@ const createMlStore = (logging: Logging) => {
               appEditNeedsFlushToEditor: true,
               timestamp,
               hint: getHint(actions, false, false),
-              dataBecameSufficientForTraining: false,
+              wasDataSufficientForTraining: false,
             },
             false,
             "newSession"
@@ -594,7 +595,10 @@ const createMlStore = (logging: Logging) => {
 
         setHint(suppressTrainAndAddActionHint = false) {
           set(
-            ({ actions, dataBecameSufficientForTraining }) => {
+            ({ actions, wasDataSufficientForTraining }) => {
+              const dataBecameSufficientForTraining =
+                !wasDataSufficientForTraining &&
+                hasSufficientNamedDataForTraining(actions);
               const hint = getHint(
                 actions,
                 suppressTrainAndAddActionHint,
@@ -629,7 +633,7 @@ const createMlStore = (logging: Logging) => {
             dataWindow: getDataWindowFromActions(persistedData.actions),
             appEditNeedsFlushToEditor: true,
             isEditorOpen: false,
-            dataBecameSufficientForTraining: false,
+            wasDataSufficientForTraining: false,
             ...persistedData,
           });
         },
@@ -759,7 +763,14 @@ const createMlStore = (logging: Logging) => {
         },
 
         async addNewAction() {
-          const { actions, dataWindow, id, project, projectEdited } = get();
+          const {
+            actions,
+            dataWindow,
+            id,
+            project,
+            projectEdited,
+            wasDataSufficientForTraining,
+          } = get();
           logging.event({ type: "action_create" });
           const newAction: ActionData = {
             icon: actionIcon({
@@ -780,8 +791,9 @@ const createMlStore = (logging: Logging) => {
             dataWindow
           );
           const timestamp = Date.now();
+          const isReady = hasSufficientNamedDataForTraining(updatedActions);
           const dataBecameSufficientForTraining =
-            checkIfDataBecameSufficientForTraining(actions, updatedActions);
+            !wasDataSufficientForTraining && isReady;
           set({
             actions: updatedActions,
             hint: getHint(
@@ -789,7 +801,7 @@ const createMlStore = (logging: Logging) => {
               false,
               dataBecameSufficientForTraining
             ),
-            dataBecameSufficientForTraining,
+            wasDataSufficientForTraining: isReady,
             model: undefined,
             timestamp,
             ...updatedProject,
@@ -808,7 +820,14 @@ const createMlStore = (logging: Logging) => {
         },
 
         async addActionRecording(actionId: string, recording: RecordingData) {
-          const { actions, dataWindow, id, project, projectEdited } = get();
+          const {
+            actions,
+            dataWindow,
+            id,
+            project,
+            projectEdited,
+            wasDataSufficientForTraining,
+          } = get();
           const action = actions.find((a) => a.id === actionId);
           if (!action) {
             return;
@@ -828,8 +847,9 @@ const createMlStore = (logging: Logging) => {
             dataWindow
           );
           const timestamp = Date.now();
+          const isReady = hasSufficientNamedDataForTraining(updatedActions);
           const dataBecameSufficientForTraining =
-            checkIfDataBecameSufficientForTraining(actions, updatedActions);
+            !wasDataSufficientForTraining && isReady;
           set({
             actions: updatedActions,
             hint: getHint(
@@ -837,7 +857,7 @@ const createMlStore = (logging: Logging) => {
               false,
               dataBecameSufficientForTraining
             ),
-            dataBecameSufficientForTraining,
+            wasDataSufficientForTraining: isReady,
             model: undefined,
             timestamp,
 
@@ -858,7 +878,14 @@ const createMlStore = (logging: Logging) => {
         },
 
         async deleteAction(action: ActionData) {
-          const { actions, dataWindow, id, project, projectEdited } = get();
+          const {
+            actions,
+            dataWindow,
+            id,
+            project,
+            projectEdited,
+            wasDataSufficientForTraining,
+          } = get();
           const remainingActions = actions.filter((a) => a.id !== action.id);
           const newActions =
             remainingActions.length === 0
@@ -874,12 +901,13 @@ const createMlStore = (logging: Logging) => {
             newDataWindow
           );
           const timestamp = Date.now();
+          const isReady = hasSufficientNamedDataForTraining(newActions);
           const dataBecameSufficientForTraining =
-            checkIfDataBecameSufficientForTraining(actions, newActions);
+            !wasDataSufficientForTraining && isReady;
           set({
             actions: newActions,
             hint: getHint(newActions, false, dataBecameSufficientForTraining),
-            dataBecameSufficientForTraining,
+            wasDataSufficientForTraining: isReady,
             dataWindow: newDataWindow,
             model: undefined,
             hasMoved: true,
@@ -909,8 +937,7 @@ const createMlStore = (logging: Logging) => {
             project,
             projectEdited,
             model,
-            dataBecameSufficientForTraining:
-              prevDataBecameSufficientForTraining,
+            wasDataSufficientForTraining,
           } = get();
           const action = actions.find((a) => a.id === actionId);
           if (!action) {
@@ -929,11 +956,14 @@ const createMlStore = (logging: Logging) => {
           );
           const timestamp = Date.now();
           // Naming can complete the data (enough recordings + every action
-          // named), so it can be the change that surfaces the train hint.
-          // Naming never clears the flag; only data edits do.
+          // named), so it can be the change that surfaces the train hint. We
+          // deliberately don't update the wasDataSufficientForTraining baseline
+          // here: naming fires repeatedly while typing, and leaving the
+          // baseline untouched keeps the hint stable (no flicker) and means
+          // only a later data edit clears it.
           const dataBecameSufficientForTraining =
-            checkIfDataBecameSufficientForTraining(actions, newActions) ||
-            prevDataBecameSufficientForTraining;
+            !wasDataSufficientForTraining &&
+            hasSufficientNamedDataForTraining(newActions);
           const newHint = getHint(
             newActions,
             false,
@@ -941,7 +971,6 @@ const createMlStore = (logging: Logging) => {
           );
           set({
             actions: newActions,
-            dataBecameSufficientForTraining,
             // Hint is set separately in DataSamplesPage.tsx and debounced
             // to avoid aria-live interruptions. Hint is set to null when
             // the hint will change to avoid showing incorrect hint.
@@ -1049,7 +1078,14 @@ const createMlStore = (logging: Logging) => {
         },
 
         async deleteActionRecording(actionId: string, recordingId: string) {
-          const { actions, dataWindow, id, project, projectEdited } = get();
+          const {
+            actions,
+            dataWindow,
+            id,
+            project,
+            projectEdited,
+            wasDataSufficientForTraining,
+          } = get();
           const action = actions.find((a) => a.id === actionId);
           if (!action) {
             return;
@@ -1077,8 +1113,9 @@ const createMlStore = (logging: Logging) => {
             newDataWindow
           );
           const timestamp = Date.now();
+          const isReady = hasSufficientNamedDataForTraining(updatedActions);
           const dataBecameSufficientForTraining =
-            checkIfDataBecameSufficientForTraining(actions, updatedActions);
+            !wasDataSufficientForTraining && isReady;
           set({
             actions: updatedActions,
             hint: getHint(
@@ -1086,7 +1123,7 @@ const createMlStore = (logging: Logging) => {
               false,
               dataBecameSufficientForTraining
             ),
-            dataBecameSufficientForTraining,
+            wasDataSufficientForTraining: isReady,
             dataWindow: newDataWindow,
             model: undefined,
             hasMoved: true,
@@ -1121,7 +1158,7 @@ const createMlStore = (logging: Logging) => {
           set({
             actions,
             hint: getHint(actions, false, false),
-            dataBecameSufficientForTraining: false,
+            wasDataSufficientForTraining: false,
             dataWindow: currentDataWindow,
             model: undefined,
             hasMoved: true,
@@ -1196,7 +1233,7 @@ const createMlStore = (logging: Logging) => {
               model: undefined,
               timestamp,
               hint: getHint(newActionsWithIcons, true, false),
-              dataBecameSufficientForTraining: false,
+              wasDataSufficientForTraining: false,
               ...updatedProject,
             });
             await storageWriteWithErrHandling(() =>
@@ -1225,7 +1262,7 @@ const createMlStore = (logging: Logging) => {
               model: undefined,
               timestamp,
               hint: getHint(newActionsWithIcons, true, false),
-              dataBecameSufficientForTraining: false,
+              wasDataSufficientForTraining: false,
               ...updatedProject,
             });
             projectSessionStorage.setProjectId(newId);
@@ -1282,7 +1319,7 @@ const createMlStore = (logging: Logging) => {
               actions: newActions,
               dataWindow: getDataWindowFromActions(newActions),
               hint: getHint(newActions, true, false),
-              dataBecameSufficientForTraining: false,
+              wasDataSufficientForTraining: false,
               model: undefined,
               project,
               projectEdited,
@@ -1629,7 +1666,7 @@ const createMlStore = (logging: Logging) => {
                     actions: newActions,
                     dataWindow: getDataWindowFromActions(newActions),
                     hint: getHint(newActions, true, false),
-                    dataBecameSufficientForTraining: false,
+                    wasDataSufficientForTraining: false,
                     model: undefined,
                     isEditorOpen: false,
                     isEditorLoadingFile: false,
@@ -2113,28 +2150,14 @@ const hasSufficientDataForTraining = (actions: ActionData[]): boolean => {
  * {@link hasSufficientDataForTraining} (which gates actual training) so that
  * the transition is detected when naming completes, not just when the
  * recordings are in place.
+ *
+ * Compared against {@link State.wasDataSufficientForTraining} (the baseline
+ * from the previous data change) to spot the moment the data first becomes
+ * ready, which is when the train hint shows.
  */
 const hasSufficientNamedDataForTraining = (actions: ActionData[]): boolean =>
   hasSufficientDataForTraining(actions) &&
   actions.every((a) => a.name.length > 0);
-
-/**
- * Computes the next value of {@link State.dataBecameSufficientForTraining}
- * after a data change.
- *
- * Edge-triggered: true only for the change that crosses from not-ready to
- * ready for the train hint; any other change returns false. This is what
- * limits the train hint to the moment the data first becomes ready, and clears
- * it on subsequent data edits. Naming is handled differently (see
- * {@link Actions.setActionName}) so that completing a name surfaces the hint
- * rather than clearing it.
- */
-const checkIfDataBecameSufficientForTraining = (
-  prevActions: ActionData[],
-  nextActions: ActionData[]
-): boolean =>
-  !hasSufficientNamedDataForTraining(prevActions) &&
-  hasSufficientNamedDataForTraining(nextActions);
 
 export const useHasSufficientDataForTraining = (): boolean => {
   const actions = useStore((s) => s.actions);
