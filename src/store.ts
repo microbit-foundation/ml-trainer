@@ -847,9 +847,14 @@ const createMlStore = (logging: Logging) => {
             dataWindow
           );
           const timestamp = Date.now();
-          const isReady = hasSufficientNamedDataForTraining(updatedActions);
+          // We deliberately don't update wasDataSufficientForTraining: 
+          // a 10-sample or continuous capture would trigger the train
+          // hint and clear the hint on the next. The whole session counts
+          // as one change; we update wasDataSufficientForTraining when the 
+          // dialog closes (see closeDialog).
           const dataBecameSufficientForTraining =
-            !wasDataSufficientForTraining && isReady;
+            !wasDataSufficientForTraining &&
+            hasSufficientNamedDataForTraining(updatedActions);
           set({
             actions: updatedActions,
             hint: getHint(
@@ -857,7 +862,6 @@ const createMlStore = (logging: Logging) => {
               false,
               dataBecameSufficientForTraining
             ),
-            wasDataSufficientForTraining: isReady,
             model: undefined,
             timestamp,
 
@@ -2021,7 +2025,7 @@ const createMlStore = (logging: Logging) => {
         },
 
         closeDialog() {
-          set({
+          set((state) => ({
             isLanguageDialogOpen: false,
             isSettingsDialogOpen: false,
             isConnectFirstDialogOpen: false,
@@ -2038,7 +2042,14 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.Closed,
             postImportDialogState: PostImportDialogState.None,
             save: { step: SaveStep.None, type: SaveType.Download },
-          });
+            // Closing the recording dialog ends a recording session (including
+            // recording multiple in one go). If it reached the train hint, 
+            // advance the baseline now so the whole session counts as a single 
+            // insufficient -> sufficient transition.
+            ...(state.isRecordingDialogOpen && state.hint?.type === "train"
+              ? { wasDataSufficientForTraining: true }
+              : {}),
+          }));
         },
 
         isNonConnectionDialogOpen() {
