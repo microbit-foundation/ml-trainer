@@ -5,6 +5,12 @@
 ext.brandAppId = "org.microbit.mltrainer"
 ext.brandDisplayName = "ml-trainer"
 
+// Host for App Links. Deliberately NOT set here: the deep link
+// activity-alias is enabled (and a domain claimed) only when a brand
+// supplies `ext.brandDeepLinkHost` via the overlay below (or
+// brand.local.gradle). This keeps unbranded/OSS builds from claiming a
+// micro:bit domain. See app/build.gradle and AndroidManifest.xml.
+
 // Theme-package brand overlay (CI / release builds). Dropped in by
 // `npm run apply-brand` when the private theme package is installed.
 def privateBrand = file("brand.private.gradle")
