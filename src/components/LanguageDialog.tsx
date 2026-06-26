@@ -3,22 +3,20 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button } from "@chakra-ui/button";
 import {
+  BoxProps,
+  Button,
+  HStack,
+  Icon,
+  Link,
+  List,
+  ListItem,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/modal";
-import {
-  BoxProps,
-  HStack,
-  Icon,
-  Link,
-  List,
-  ListItem,
   SimpleGrid,
   Stack,
   Text,
@@ -74,6 +72,7 @@ export const LanguageDialog = ({
       size={{ base: "full", md: "4xl" }}
       scrollBehavior="outside"
       finalFocusRef={finalFocusRef}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

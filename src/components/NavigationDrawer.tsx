@@ -131,6 +131,7 @@ const NavigationDrawer = ({
       onClose={onClose}
       onCloseComplete={handleCloseComplete}
       placement={placement}
+      preserveScrollBarGap={false}
     >
       <DrawerOverlay />
       <DrawerContent>

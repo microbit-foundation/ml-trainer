@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps } from "@chakra-ui/layout";
+import { BoxProps } from "@chakra-ui/react";
 import { useCallback } from "react";
 import FileDropTarget from "./FileDropTarget";
 import { useProject } from "../hooks/project-hooks";

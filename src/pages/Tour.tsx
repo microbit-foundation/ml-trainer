@@ -92,6 +92,7 @@ const Tour = () => {
       onClose={() => {}}
       isCentered
       size={step.modalSize}
+      preserveScrollBarGap={false}
     >
       {/* Hack: Use ModalOverlay for the single-step tour over MakeCode which is itself in a full screen modal.
           TourOverlay doesn't appear over the modal.

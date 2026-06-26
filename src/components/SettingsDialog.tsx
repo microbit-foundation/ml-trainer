@@ -3,21 +3,19 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button } from "@chakra-ui/button";
 import {
+  AspectRatio,
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  HStack,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/modal";
-import {
-  AspectRatio,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  HStack,
   Switch,
   Text,
   useDisclosure,
@@ -125,6 +123,7 @@ export const SettingsDialog = ({
         size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
         initialFocusRef={initialFocusRef}
+        preserveScrollBarGap={false}
       >
         <ModalOverlay>
           <ModalContent>

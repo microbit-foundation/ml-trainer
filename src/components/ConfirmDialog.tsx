@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button } from "@chakra-ui/button";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -11,8 +10,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-} from "@chakra-ui/modal";
-import { Heading } from "@chakra-ui/react";
+  Button,
+  Heading,
+} from "@chakra-ui/react";
 import { ReactNode, useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -52,6 +52,7 @@ export const ConfirmDialog = ({
       isCentered
       finalFocusRef={finalFocusRef}
       onCloseComplete={onCloseComplete}
+      preserveScrollBarGap={false}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>

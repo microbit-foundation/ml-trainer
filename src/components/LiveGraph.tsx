@@ -4,8 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack } from "@chakra-ui/react";
-import { useSize } from "@chakra-ui/react-use-size";
+import { HStack, useSize } from "@chakra-ui/react";
 import { AccelerometerData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";

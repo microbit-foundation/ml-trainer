@@ -6,10 +6,10 @@
 import {
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalOverlay,
-  ModalCloseButton,
-} from "@chakra-ui/modal";
+} from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 
 interface FeedbackFormProps {
@@ -52,6 +52,7 @@ const FeedbackForm = ({
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

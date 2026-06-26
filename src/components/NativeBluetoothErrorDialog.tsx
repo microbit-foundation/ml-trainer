@@ -41,6 +41,7 @@ const NativeBluetoothErrorDialog = ({
       onClose={onClose}
       size={{ base: "full", md: "xl" }}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

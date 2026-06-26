@@ -3,14 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  AspectRatio,
-  Box,
-  HStack,
-  keyframes,
-  useToken,
-  VStack,
-} from "@chakra-ui/react";
+import { AspectRatio, Box, HStack, useToken, VStack } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { forwardRef, memo, useImperativeHandle, useRef } from "react";
 import { icons, LedIconType } from "../utils/icons";
 import { useIntl } from "react-intl";

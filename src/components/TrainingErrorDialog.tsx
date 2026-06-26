@@ -19,7 +19,13 @@ import { FormattedMessage } from "react-intl";
 
 const TrainingErrorDialog = ({ ...rest }: Omit<ModalProps, "children">) => {
   return (
-    <Modal motionPreset="none" size="lg" isCentered {...rest}>
+    <Modal
+      motionPreset="none"
+      size="lg"
+      isCentered
+      {...rest}
+      preserveScrollBarGap={false}
+    >
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>

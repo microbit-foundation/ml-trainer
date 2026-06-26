@@ -79,6 +79,7 @@ const ConnectErrorDialog = ({
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

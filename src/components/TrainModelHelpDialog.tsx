@@ -40,6 +40,7 @@ const TrainModelIntroDialog = ({
       size="xl"
       isCentered
       {...props}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

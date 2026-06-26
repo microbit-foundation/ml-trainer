@@ -67,6 +67,7 @@ const PermissionErrorDialog = ({
       onClose={onClose}
       size={{ base: "full", md: "lg" }}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

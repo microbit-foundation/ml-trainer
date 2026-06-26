@@ -21,8 +21,8 @@ import {
   Text,
   TextProps,
   VStack,
-  keyframes,
 } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { useAnimation } from "../AnimationProvider";
 
 export interface ABLabelledMicrobitBoardRef {

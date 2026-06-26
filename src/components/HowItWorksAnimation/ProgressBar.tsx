@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, keyframes } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 

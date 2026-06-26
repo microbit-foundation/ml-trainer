@@ -7,11 +7,11 @@ import {
   HStack,
   Icon,
   IconProps,
-  keyframes,
   StackProps,
   Box,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { useImperativeHandle, forwardRef, useState, useMemo } from "react";
 import { useAnimation } from "../AnimationProvider";
 

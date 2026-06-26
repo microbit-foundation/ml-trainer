@@ -3,14 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  HStack,
-  Icon,
-  IconProps,
-  keyframes,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, HStack, Icon, IconProps, VStack } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 

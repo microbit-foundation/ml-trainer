@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, keyframes, Stack, StackProps, useToken } from "@chakra-ui/react";
+import { Icon, Stack, StackProps, useToken } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { icons, LedIconType, Off } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";

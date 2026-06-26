@@ -1,9 +1,5 @@
-import {
-  Icon,
-  IconProps,
-  keyframes,
-  usePrefersReducedMotion,
-} from "@chakra-ui/react";
+import { Icon, IconProps, usePrefersReducedMotion } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 
 export const animations = {
   tada: `${keyframes({

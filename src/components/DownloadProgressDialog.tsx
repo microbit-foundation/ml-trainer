@@ -107,6 +107,7 @@ const DownloadProgressDialog = ({
       onClose={noop}
       size={{ base: "full", md: "3xl" }}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

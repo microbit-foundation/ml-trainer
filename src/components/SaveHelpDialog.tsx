@@ -46,7 +46,13 @@ const SaveHelpDialog = ({ isOpen, onClose, onSave }: SaveHelpDialogProps) => {
     useStore((s) => s.save.type) === SaveType.Share ? "share" : "save";
 
   return (
-    <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal
+      size="xl"
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      preserveScrollBarGap={false}
+    >
       <ModalOverlay>
         <ModalContent>
           <ModalHeader>

@@ -10,7 +10,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Box, Flex, keyframes, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
 import { useAnimation } from "../AnimationProvider";

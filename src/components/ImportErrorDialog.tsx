@@ -31,6 +31,7 @@ const ImportErrorDialog = ({
       isCentered
       onClose={onClose}
       {...props}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

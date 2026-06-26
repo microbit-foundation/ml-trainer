@@ -29,6 +29,7 @@ const TrainModelInsufficientDataDialog = ({
       isCentered
       onClose={onClose}
       {...rest}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

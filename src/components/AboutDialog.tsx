@@ -4,13 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
-} from "@chakra-ui/modal";
-import {
   AspectRatio,
   Box,
   Button,
@@ -18,7 +11,12 @@ import {
   Icon,
   Image,
   Link,
+  Modal,
+  ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
   SimpleGrid,
   Table,
   TableCaption,
@@ -26,9 +24,9 @@ import {
   Td,
   Text,
   Tr,
-  VStack,
-  VisuallyHidden,
   useClipboard,
+  VisuallyHidden,
+  VStack,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { RiFileCopy2Line, RiGithubFill } from "react-icons/ri";
@@ -68,6 +66,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

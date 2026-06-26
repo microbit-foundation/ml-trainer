@@ -44,6 +44,7 @@ export const NativeConsentDialog = ({
       size="lg"
       isCentered
       initialFocusRef={headingRef}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay />
       <ModalContent>
