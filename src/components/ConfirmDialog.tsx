@@ -52,6 +52,7 @@ export const ConfirmDialog = ({
       isCentered
       finalFocusRef={finalFocusRef}
       onCloseComplete={onCloseComplete}
+      preserveScrollBarGap={false}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>

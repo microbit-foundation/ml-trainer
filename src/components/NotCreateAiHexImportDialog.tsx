@@ -29,6 +29,7 @@ const NotCreateAiHexImportDialog = ({
       isCentered
       onClose={onClose}
       {...props}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

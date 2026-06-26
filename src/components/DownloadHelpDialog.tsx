@@ -43,6 +43,7 @@ const DownloadHelpDialog = ({
       size={{ base: "full", md: "xl" }}
       isCentered
       {...rest}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

@@ -35,6 +35,7 @@ const TrainingModelProgressDialog = ({
       size={{ base: "full", md: "2xl" }}
       isCentered
       finalFocusRef={finalFocusRef}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

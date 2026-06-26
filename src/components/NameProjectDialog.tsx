@@ -88,6 +88,7 @@ export const NameProjectDialog = ({
       finalFocusRef={finalFocusRef}
       initialFocusRef={ref}
       onCloseComplete={onCloseComplete}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

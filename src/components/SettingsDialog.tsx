@@ -123,6 +123,7 @@ export const SettingsDialog = ({
         size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
         initialFocusRef={initialFocusRef}
+        preserveScrollBarGap={false}
       >
         <ModalOverlay>
           <ModalContent>

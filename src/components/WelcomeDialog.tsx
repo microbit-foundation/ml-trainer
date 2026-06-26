@@ -40,6 +40,7 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
         onClose={handleClose}
         isOpen={isOpen}
         {...rest}
+        preserveScrollBarGap={false}
       >
         <ModalOverlay>
           <ModalContent>

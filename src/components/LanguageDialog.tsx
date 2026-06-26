@@ -72,6 +72,7 @@ export const LanguageDialog = ({
       size={{ base: "full", md: "4xl" }}
       scrollBehavior="outside"
       finalFocusRef={finalFocusRef}
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

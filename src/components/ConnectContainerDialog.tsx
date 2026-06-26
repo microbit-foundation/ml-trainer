@@ -47,6 +47,7 @@ const ConnectContainerDialog = ({
       onClose={onClose}
       size={{ base: "full", md: "3xl" }}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

@@ -274,6 +274,7 @@ const RecordingDialog = ({
       onClose={handleOnClose}
       size={{ base: "full", md: "lg" }}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay>
         <ModalContent>

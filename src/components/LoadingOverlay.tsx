@@ -16,6 +16,7 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
       closeOnOverlayClick={false}
       onClose={doNothing}
       isCentered
+      preserveScrollBarGap={false}
     >
       <ModalOverlay />
       <ModalContent
