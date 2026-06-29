@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, BoxProps, Image, keyframes } from "@chakra-ui/react";
+import { Box, BoxProps, Image } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import connectorImage from "../../images/micro-usb-connector.png";
 import microbitImage from "../../images/microbit.png";
 import { useAnimation } from "../AnimationProvider";
