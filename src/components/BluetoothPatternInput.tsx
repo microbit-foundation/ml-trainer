@@ -78,8 +78,11 @@ const BluetoothPatternInput = ({
   return (
     <HStack gap={1} alignItems="flex-start">
       {matrixColumns.map((cells, colIdx) => {
-        const letter =
-          nativePlatform && microbitName ? microbitName[colIdx] : undefined;
+        const letter = nativePlatform
+          ? microbitName
+            ? microbitName[colIdx]
+            : ""
+          : undefined;
         return isEditable ? (
           <PatternColumn
             key={colIdx}
