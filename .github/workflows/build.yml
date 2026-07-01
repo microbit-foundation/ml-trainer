@@ -31,13 +31,14 @@ jobs:
       # Not really secret but worth keeping out the repo to prevent unintended use
       VITE_SENTRY_DSN: ${{ secrets.PROTOTYPE_SENTRY_DSN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
-      - uses: microbit-foundation/npm-package-versioner-action@v1
+      - run: npm install -g npm@11 --registry=https://registry.npmjs.org
+      - uses: microbit-foundation/npm-package-versioner-action@v3
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -56,7 +57,7 @@ jobs:
           args: npx playwright test
       - name: Store reports
         if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA') && failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: playwright-report/

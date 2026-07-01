@@ -22,21 +22,23 @@ jobs:
       packages: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
 
-      - uses: microbit-foundation/npm-package-versioner-action@v1
+      - run: npm install -g npm@11 --registry=https://registry.npmjs.org
+
+      - uses: microbit-foundation/npm-package-versioner-action@v3
 
       # Strip prerelease suffix - app stores require X.Y.Z format
       - name: Set marketing version
         run: echo "MARKETING_VERSION=$(jq -r .version package.json | sed 's/-.*//')" >> $GITHUB_ENV
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: "temurin"
           java-version: "21"
@@ -90,13 +92,13 @@ jobs:
         run: rm -f "$RUNNER_TEMP/keystore.jks"
         if: always()
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: android-apk-${{ github.sha }}
           path: android/app/build/outputs/apk/release/*.apk
           retention-days: 30
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: android-aab-${{ github.sha }}
           path: android/app/build/outputs/bundle/release/*.aab
