@@ -19,8 +19,8 @@ const unhide = (el: Element) => el.removeAttribute("aria-hidden");
  * modal is open.
  *
  * TalkBack on Android ignores `aria-modal`, so it relies on background
- * content being `aria-hidden`. Chakra hides the background via hideOthers, 
- * which intentionally leaves aria-live regions (and their ancestors) unhidden 
+ * content being `aria-hidden`. Chakra hides the background via hideOthers,
+ * which intentionally leaves aria-live regions (and their ancestors) unhidden
  * so the homepage carousels/hints leak into the tree behind a modal.
  */
 export const useModalHideBackground = () => {
