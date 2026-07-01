@@ -75,9 +75,9 @@ const ActionNameCard = ({
   }, [value.id, viewMode]);
 
   // Avoid autofocus on mobile/native as it triggers the keyboard
-  const allowAutoFocus =
-    useBreakpointValue({ base: false, md: true }) && !isNativePlatform();
-
+  const isDesktop =
+    useBreakpointValue({ base: false, md: true }, { ssr: false }) &&
+    !isNativePlatform();
   const debouncedSetActionName = useMemo(
     () =>
       debounce(
@@ -186,6 +186,7 @@ const ActionNameCard = ({
               <LedIconPicker
                 actionName={value.name}
                 onIconSelected={handleIconSelected}
+                autoFocus={!isDesktop && localName.length === 0}
               >
                 <LedIconSvg icon={icon} />
               </LedIconPicker>
@@ -195,7 +196,7 @@ const ActionNameCard = ({
           </HStack>
           <Input
             id={actionNameInputId(value)}
-            autoFocus={allowAutoFocus && localName.length === 0}
+            autoFocus={isDesktop && localName.length === 0}
             isTruncated
             readOnly={viewMode !== ActionCardNameViewMode.Editable}
             value={localName}
