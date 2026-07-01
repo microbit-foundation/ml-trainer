@@ -5,9 +5,6 @@
  */
 import { useEffect } from "react";
 
-/**
- * Marker so we only ever clear the attribute we added ourselves.
- */
 const marker = "data-hidden-by-modal";
 
 // Use `aria-hidden` rather than `inert`: it removes the background from the
