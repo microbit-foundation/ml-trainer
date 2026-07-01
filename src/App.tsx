@@ -43,6 +43,7 @@ import { MockBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 import { MockUSBConnection } from "./device/mockUsb";
 import { flags } from "./flags";
+import { useModalHideBackground } from "./hooks/use-modal-hide-background";
 import { ProjectProvider } from "./hooks/project-hooks";
 import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import { LoggingProvider } from "./logging/logging-hooks";
@@ -381,6 +382,11 @@ const createRouter = () => {
 const App = () => {
   // Detect safe area insets and set CSS variables for nav bar side only
   useSafeAreaInsets();
+
+  // Hide the app background from assistive tech while any modal is open.
+  // Works around Chakra not applying this for always-mounted dialogs, which
+  // lets TalkBack swipe into the page behind the dialog on Android.
+  useModalHideBackground();
 
   useEffect(() => {
     // Capability flags are user-scoped GA4 dimensions on the web build —
