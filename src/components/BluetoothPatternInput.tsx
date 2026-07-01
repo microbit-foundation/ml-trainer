@@ -187,9 +187,6 @@ const PatternColumn = ({
           )}
           onMouseEnter={() => onHighlight(colIdx, rowIdx)}
           onMouseLeave={onClearHighlight}
-          // Re-activating the checked (topmost lit) LED turns it off, matching
-          // the previous click-to-toggle behaviour. Selecting any other LED
-          // fires the radio group's onChange instead.
           onReactivate={
             isOn && rowIdx === topLitRowIdx
               ? () => onSelect(colIdx, rowIdx + 1)
