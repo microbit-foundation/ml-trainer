@@ -19,10 +19,9 @@ const unhide = (el: Element) => el.removeAttribute("aria-hidden");
  * modal is open.
  *
  * TalkBack on Android ignores `aria-modal`, so it relies on background
- * content being `aria-hidden`. In practice `#root` is left reachable for our
- * modals, letting TalkBack swipe out of the dialog (via the WebView root)
- * into the page behind it. Modals portal to `<body>` as siblings of `#root`,
- * so hiding `#root` leaves the dialog itself reachable.
+ * content being `aria-hidden`. Chakra hides the background via hideOthers, 
+ * which intentionally leaves aria-live regions (and their ancestors) unhidden 
+ * so the homepage carousels/hints leak into the tree behind a modal.
  */
 export const useModalHideBackground = () => {
   useEffect(() => {
