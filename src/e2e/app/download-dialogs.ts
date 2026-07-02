@@ -10,6 +10,7 @@ import {
   ConnectBehavior,
   MockBluetoothConnection,
 } from "../../device/mockBluetooth";
+import { selectPatternColumn } from "./bluetooth-pattern";
 
 export const downloadDialogTitles: {
   browserDefault: Record<string, string>;
@@ -138,9 +139,7 @@ export class DownloadDialogs {
 
   async enterBluetoothPatternValues(values: number[]) {
     for (let i = 0; i < values.length; i++) {
-      await this.page
-        .getByLabel(`Column ${i + 1} - number of LEDs lit`)
-        .fill(values[i].toString());
+      await selectPatternColumn(this.page, i, values[i]);
     }
   }
 

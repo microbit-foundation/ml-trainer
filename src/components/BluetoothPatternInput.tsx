@@ -186,6 +186,7 @@ const PatternColumn = ({
             { id: "connect-pattern-led-option-label" },
             { colNum, numLeds: matrixDim - rowIdx }
           )}
+          testId={`bluetooth-pattern-led-${colIdx}-${matrixDim - rowIdx}`}
           onMouseEnter={() => onHighlight(colIdx, rowIdx)}
           onMouseLeave={onClearHighlight}
           onReactivate={
@@ -208,6 +209,7 @@ interface PatternLedOptionProps extends UseRadioProps {
   isOn: boolean;
   isHighlighted: boolean;
   label: string;
+  testId: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   onReactivate?: () => void;
@@ -217,6 +219,7 @@ const PatternLedOption = ({
   isOn,
   isHighlighted,
   label,
+  testId,
   onMouseEnter,
   onMouseLeave,
   onReactivate,
@@ -228,6 +231,7 @@ const PatternLedOption = ({
   return (
     <Box
       as="label"
+      data-testid={testId}
       w={cellSize}
       h={cellSize}
       cursor="pointer"
