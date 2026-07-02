@@ -183,7 +183,7 @@ const PatternColumn = ({
           isOn={isOn}
           isHighlighted={highlighted[rowIdx]}
           label={
-            // TODO: Remove web fallback use the label version once it is 
+            // TODO: Remove web fallback use the label version once it is
             // translated on the web for the supported languages.
             isNativePlatform()
               ? intl.formatMessage(

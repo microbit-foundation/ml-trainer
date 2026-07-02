@@ -36,9 +36,7 @@ export const selectPatternColumn = async (
  * Get the number of lit LEDs in each of the five pattern columns as strings
  * (e.g. ["1", "2", "3", "4", "5"]), or "0" for an unset column.
  */
-export const getPatternColumnValues = async (
-  page: Page
-): Promise<string[]> => {
+export const getPatternColumnValues = async (page: Page): Promise<string[]> => {
   const values: string[] = [];
   for (let colIdx = 0; colIdx < numCols; colIdx++) {
     let value = "0";
