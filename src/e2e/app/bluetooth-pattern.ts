@@ -20,6 +20,10 @@ const ledOptionTestId = (colIdx: number, numLeds: number): string =>
  * (0-based). Each column is a radio group and each LED is an option; a count of
  * 0 leaves the column unset. The radio input is visually hidden, so the test id
  * sits on the wrapping label, which toggles it when clicked.
+ *
+ * The selection is idempotent: the dialog may arrive pre-populated (the name is
+ * derived from the flashed device id), and clicking an already-selected option
+ * would toggle it off. So we only click when it isn't already selected.
  */
 export const selectPatternColumn = async (
   page: Page,
@@ -29,7 +33,11 @@ export const selectPatternColumn = async (
   if (numLeds <= 0) {
     return;
   }
-  await page.getByTestId(ledOptionTestId(colIdx, numLeds)).click();
+  const option = page.getByTestId(ledOptionTestId(colIdx, numLeds));
+  const radio = option.getByRole("radio");
+  if (!(await radio.isChecked())) {
+    await option.click();
+  }
 };
 
 /**
