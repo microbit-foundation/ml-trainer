@@ -37,7 +37,7 @@ interface BluetoothPatternInputProps {
 
 const matrixDim = 5;
 const cellSize = "44px";
-const cellGap = 1.5
+const cellGap = 1.5;
 
 const BluetoothPatternInput = ({
   onChange,
@@ -182,10 +182,18 @@ const PatternColumn = ({
           {...getRadioProps({ value: rowIdx.toString() })}
           isOn={isOn}
           isHighlighted={highlighted[rowIdx]}
-          label={intl.formatMessage(
-            { id: "connect-pattern-led-option-label" },
-            { colNum, numLeds: matrixDim - rowIdx }
-          )}
+          label={
+            // TODO: Remove web fallback use the label version once it is 
+            // translated on the web for the supported languages.
+            isNativePlatform()
+              ? intl.formatMessage(
+                  {
+                    id: "connect-pattern-led-option-label",
+                  },
+                  { colNum, numLeds: matrixDim - rowIdx }
+                )
+              : `${matrixDim - rowIdx}`
+          }
           testId={`bluetooth-pattern-led-${colIdx}-${matrixDim - rowIdx}`}
           onMouseEnter={() => onHighlight(colIdx, rowIdx)}
           onMouseLeave={onClearHighlight}
