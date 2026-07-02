@@ -11,6 +11,10 @@ import {
   MockBluetoothConnection,
 } from "../../device/mockBluetooth";
 import { MockRadioBridgeConnection } from "../../device/mockRadioBridge";
+import {
+  getPatternColumnValues,
+  selectPatternColumn,
+} from "./bluetooth-pattern";
 
 export type RadioDisconnectType = "bridge" | "remote";
 
@@ -215,24 +219,16 @@ export class ConnectionDialogs {
   async enterBluetoothPattern() {
     const numCols = 5;
     for (let i = 0; i < numCols; i++) {
-      const n = (i + 1).toString();
-      await this.page.getByLabel(`Column ${n} - number of LEDs lit`).fill(n);
+      await selectPatternColumn(this.page, i, i + 1);
     }
   }
 
   /**
-   * Get the current values in the bluetooth pattern column inputs.
+   * Get the number of lit LEDs in each bluetooth pattern column.
    * Useful for verifying a stored pattern is pre-populated.
    */
   async getBluetoothPatternValues(): Promise<string[]> {
-    const values: string[] = [];
-    for (let i = 0; i < 5; i++) {
-      const input = this.page.getByLabel(
-        `Column ${i + 1} - number of LEDs lit`
-      );
-      values.push(await input.inputValue());
-    }
-    return values;
+    return getPatternColumnValues(this.page);
   }
 
   /**

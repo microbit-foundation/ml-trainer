@@ -431,6 +431,10 @@
     "defaultMessage": "Het aantal LED's in elke kolom van het micro:bit display, van links tot rechts. zijn {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} en {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
+  "connect-pattern-led-option-label": {
+    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
+  },
   "connect-pattern-subtitle": {
     "defaultMessage": "Kopieer het getoonde patroon op de micro:bit.",
     "description": "Instruction for bluetooth pattern dialog"

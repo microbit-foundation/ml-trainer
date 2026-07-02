@@ -5,18 +5,16 @@
  */
 import {
   Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Grid,
-  GridItem,
-  NumberInput,
-  NumberInputField,
+  HStack,
   Text,
+  useRadio,
+  useRadioGroup,
+  UseRadioProps,
   VisuallyHidden,
+  VStack,
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { useCallback, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   generateMatrix,
   getHighlightedColumns,
@@ -38,6 +36,8 @@ interface BluetoothPatternInputProps {
 }
 
 const matrixDim = 5;
+const cellSize = "44px";
+const cellGap = 1.5;
 
 const BluetoothPatternInput = ({
   onChange,
@@ -51,118 +51,69 @@ const BluetoothPatternInput = ({
     generateMatrix(matrixDim, false)
   );
   const matrixColumns = transformMatrixToColumns(pattern, matrixDim);
-  const [inputValues, setInputValues] = useState<string[]>(
-    matrixColumns.map((cols) => cols.filter((c) => c).length.toString())
-  );
 
   const clearHighlighted = useCallback(() => {
     setHighlighted(generateMatrix(matrixDim, false));
   }, []);
 
+  const highlightCell = useCallback(
+    (colIdx: number, rowIdx: number) => {
+      setHighlighted(getHighlightedColumns(matrixColumns, { colIdx, rowIdx }));
+    },
+    [matrixColumns]
+  );
+
   const updateMatrix = useCallback(
     (colIdx: number, rowIdx: number) => {
+      clearHighlighted();
       const columns = updateMatrixColumns(matrixColumns, { colIdx, rowIdx });
       const matrix = transformColumnsToMatrix(columns) as boolean[];
       onChange && onChange(microbitPatternToName(matrix));
     },
-    [matrixColumns, onChange]
-  );
-
-  const columnInputOnChange = useCallback(
-    (colIdx: number): ((value: string) => void) => {
-      return (value) => {
-        const colValue = value === "" ? 0 : parseInt(value);
-        if (isNaN(colValue) || colValue > 5 || colValue < 0) {
-          // Do nothing when input value is not valid.
-          return;
-        }
-        setInputValues(inputValues.map((v, i) => (i === colIdx ? value : v)));
-        updateMatrix(colIdx, matrixDim - colValue);
-      };
-    },
-    [inputValues, updateMatrix]
+    [clearHighlighted, matrixColumns, onChange]
   );
 
   const nativePlatform = isNativePlatform();
   const isEditable = !!onChange;
 
   return (
-    <Grid
-      templateColumns="repeat(5, 35px)"
-      templateRows={`repeat(${nativePlatform ? 7 : 6}, 35px)`}
-      gap={1}
-    >
-      {matrixColumns.map((cells, colIdx) => (
-        <React.Fragment key={colIdx}>
-          {cells.map((c, rowIdx) => (
-            <GridItem
-              colSpan={1}
-              rowStart={rowIdx + 1}
-              key={`col-${colIdx}-cell-${rowIdx}`}
-            >
-              <PatternBox
-                onClick={() => {
-                  clearHighlighted();
-                  const numSelectedInCol = cells.filter(Boolean).length;
-                  const isTopSelectedCellInCol =
-                    rowIdx + numSelectedInCol === matrixDim;
-                  // If top selected cell in column, deselect it.
-                  if (isTopSelectedCellInCol) {
-                    updateMatrix(colIdx, rowIdx + 1);
-                    return;
-                  }
-                  updateMatrix(colIdx, rowIdx);
-                }}
-                onMouseEnter={() => {
-                  setHighlighted(
-                    getHighlightedColumns(matrixColumns, { colIdx, rowIdx })
-                  );
-                }}
-                onMouseLeave={clearHighlighted}
-                isOn={c}
-                isHighlighted={highlighted[colIdx][rowIdx]}
-                editable={isEditable}
-              />
-            </GridItem>
-          ))}
-          {nativePlatform && (
-            <GridItem
-              rowStart={6}
-              textAlign="center"
-              key={`col-${colIdx}-pattern-letter`}
-              aria-hidden
-            >
-              <Text>{microbitName ? microbitName[colIdx] : " "}</Text>
-            </GridItem>
-          )}
-          <GridItem key={`col-${colIdx}-pattern-input`}>
-            {isEditable && (
-              <PatternColumnInput
-                isInvalid={invalid}
-                onChange={columnInputOnChange(colIdx)}
-                colIdx={colIdx}
-                value={inputValues[colIdx]}
-              />
-            )}
-          </GridItem>
-        </React.Fragment>
-      ))}
-      {nativePlatform && (
+    <HStack gap={cellGap} alignItems="flex-start">
+      {matrixColumns.map((cells, colIdx) => {
+        const letter = nativePlatform
+          ? microbitName
+            ? microbitName[colIdx]
+            : ""
+          : undefined;
+        return isEditable ? (
+          <PatternColumn
+            key={colIdx}
+            colIdx={colIdx}
+            cells={cells}
+            letter={letter}
+            invalid={invalid}
+            highlighted={highlighted[colIdx]}
+            onSelect={updateMatrix}
+            onHighlight={highlightCell}
+            onClearHighlight={clearHighlighted}
+          />
+        ) : (
+          <ReadonlyPatternColumn key={colIdx} cells={cells} letter={letter} />
+        );
+      })}
+      {nativePlatform && !isEditable && (
         <VisuallyHidden>
-          {!isEditable && (
-            <Text>
-              <FormattedMessage
-                id="connect-pattern-label"
-                values={{
-                  numLedsOnCol1: inputValues[0],
-                  numLedsOnCol2: inputValues[1],
-                  numLedsOnCol3: inputValues[2],
-                  numLedsOnCol4: inputValues[3],
-                  numLedsOnCol5: inputValues[4],
-                }}
-              />
-            </Text>
-          )}
+          <Text>
+            <FormattedMessage
+              id="connect-pattern-label"
+              values={{
+                numLedsOnCol1: matrixColumns[0].filter(Boolean).length,
+                numLedsOnCol2: matrixColumns[1].filter(Boolean).length,
+                numLedsOnCol3: matrixColumns[2].filter(Boolean).length,
+                numLedsOnCol4: matrixColumns[3].filter(Boolean).length,
+                numLedsOnCol5: matrixColumns[4].filter(Boolean).length,
+              }}
+            />
+          </Text>
           <Text>
             <FormattedMessage
               id="microbit-name-label"
@@ -171,87 +122,180 @@ const BluetoothPatternInput = ({
           </Text>
         </VisuallyHidden>
       )}
-    </Grid>
+    </HStack>
   );
 };
 
-interface PatternBoxProps {
+interface PatternColumnProps {
+  colIdx: number;
+  cells: boolean[];
+  letter: string | undefined;
+  invalid: boolean;
+  highlighted: boolean[];
+  onSelect: (colIdx: number, rowIdx: number) => void;
+  onHighlight: (colIdx: number, rowIdx: number) => void;
+  onClearHighlight: () => void;
+}
+
+/**
+ * A single column of the pairing pattern, presented as a radio group where each
+ * LED is an option. Selecting an LED lights it and every LED below it, so the
+ * checked option is the topmost lit LED and communicates how many LEDs are lit.
+ */
+const PatternColumn = ({
+  colIdx,
+  cells,
+  letter,
+  invalid,
+  highlighted,
+  onSelect,
+  onHighlight,
+  onClearHighlight,
+}: PatternColumnProps) => {
+  const intl = useIntl();
+  const colNum = colIdx + 1;
+  const numLit = cells.filter(Boolean).length;
+  // The topmost lit LED is the checked option; nothing is checked when the
+  // column is empty (a not-yet-entered column).
+  const topLitRowIdx = numLit > 0 ? matrixDim - numLit : -1;
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: `bluetooth-pattern-column-${colIdx}`,
+    value: numLit > 0 ? topLitRowIdx.toString() : "",
+    onChange: (value: string) => onSelect(colIdx, parseInt(value)),
+  });
+
+  return (
+    <VStack
+      gap={cellGap}
+      {...getRootProps()}
+      role="radiogroup"
+      aria-label={intl.formatMessage(
+        { id: "connect-pattern-input-label" },
+        { colNum }
+      )}
+      aria-invalid={invalid || undefined}
+    >
+      {cells.map((isOn, rowIdx) => (
+        <PatternLedOption
+          key={rowIdx}
+          {...getRadioProps({ value: rowIdx.toString() })}
+          isOn={isOn}
+          isHighlighted={highlighted[rowIdx]}
+          label={
+            // TODO: Remove web fallback use the label version once it is
+            // translated on the web for the supported languages.
+            isNativePlatform()
+              ? intl.formatMessage(
+                  {
+                    id: "connect-pattern-led-option-label",
+                  },
+                  { colNum, numLeds: matrixDim - rowIdx }
+                )
+              : `${matrixDim - rowIdx}`
+          }
+          testId={`bluetooth-pattern-led-${colIdx}-${matrixDim - rowIdx}`}
+          onMouseEnter={() => onHighlight(colIdx, rowIdx)}
+          onMouseLeave={onClearHighlight}
+          onReactivate={
+            isOn && rowIdx === topLitRowIdx
+              ? () => onSelect(colIdx, rowIdx + 1)
+              : undefined
+          }
+        />
+      ))}
+      {letter !== undefined && (
+        <Text h={cellSize} lineHeight={cellSize} aria-hidden>
+          {letter}
+        </Text>
+      )}
+    </VStack>
+  );
+};
+
+interface PatternLedOptionProps extends UseRadioProps {
   isOn: boolean;
-  onClick: () => void;
+  isHighlighted: boolean;
+  label: string;
+  testId: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  isHighlighted: boolean;
-  editable: boolean;
+  onReactivate?: () => void;
 }
 
-const PatternBox = ({
+const PatternLedOption = ({
   isOn,
-  onClick,
+  isHighlighted,
+  label,
+  testId,
   onMouseEnter,
   onMouseLeave,
-  isHighlighted,
-  editable,
-}: PatternBoxProps) => {
-  return editable ? (
-    <Button
-      size="sm"
-      w="100%"
-      h="100%"
-      as="div"
-      variant="led"
-      onClick={onClick}
+  onReactivate,
+  ...radioProps
+}: PatternLedOptionProps) => {
+  const { getInputProps, getRadioProps } = useRadio(radioProps);
+  const input = getInputProps();
+  const box = getRadioProps();
+  return (
+    <Box
+      as="label"
+      data-testid={testId}
+      w={cellSize}
+      h={cellSize}
+      cursor="pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      bgColor={isOn ? "brand2.500" : "gray.300"}
-      borderWidth={isHighlighted && !isOn ? 3 : 0}
-      borderColor={isHighlighted ? (isOn ? "white" : "brand2.500") : undefined}
-      opacity={isHighlighted && isOn ? 0.25 : 1}
-    />
-  ) : (
-    <Box
-      w="100%"
-      h="100%"
-      bgColor={isOn ? "brand2.500" : "gray.300"}
-      borderRadius={5}
-    />
+    >
+      <input
+        {...input}
+        aria-label={label}
+        onClick={(e) => {
+          input.onClick?.(e);
+          onReactivate?.();
+        }}
+      />
+      <Box
+        {...box}
+        w="100%"
+        h="100%"
+        borderRadius={5}
+        bgColor={isOn ? "brand2.500" : "gray.300"}
+        borderWidth={isHighlighted && !isOn ? 3 : 0}
+        borderColor={
+          isHighlighted ? (isOn ? "white" : "brand2.500") : undefined
+        }
+        opacity={isHighlighted && isOn ? 0.25 : 1}
+        _focusVisible={{ boxShadow: "outline" }}
+      />
+    </Box>
   );
 };
 
-interface PatternColumnInputProps {
-  colIdx: number;
-  value: string;
-  isInvalid: boolean;
-  onChange: (value: string) => void;
+interface ReadonlyPatternColumnProps {
+  cells: boolean[];
+  letter: string | undefined;
 }
 
-const PatternColumnInput = ({
-  colIdx,
-  value,
-  isInvalid,
-  onChange,
-}: PatternColumnInputProps) => {
-  return (
-    <FormControl isInvalid={isInvalid}>
-      <VisuallyHidden>
-        <FormLabel>
-          <FormattedMessage
-            id="connect-pattern-input-label"
-            values={{ colNum: colIdx + 1 }}
-          />
-        </FormLabel>
-      </VisuallyHidden>
-      <NumberInput
-        isRequired
-        value={value}
-        min={0}
-        max={5}
-        size="sm"
-        onChange={onChange}
-      >
-        <NumberInputField p={1} m={0} opacity={0} _focus={{ opacity: 1 }} />
-      </NumberInput>
-    </FormControl>
-  );
-};
+const ReadonlyPatternColumn = ({
+  cells,
+  letter,
+}: ReadonlyPatternColumnProps) => (
+  <VStack gap={1} aria-hidden>
+    {cells.map((isOn, rowIdx) => (
+      <Box
+        key={rowIdx}
+        w={cellSize}
+        h={cellSize}
+        borderRadius={5}
+        bgColor={isOn ? "brand2.500" : "gray.300"}
+      />
+    ))}
+    {letter !== undefined && (
+      <Text h={cellSize} lineHeight={cellSize}>
+        {letter}
+      </Text>
+    )}
+  </VStack>
+);
 
 export default BluetoothPatternInput;

@@ -431,6 +431,10 @@
     "defaultMessage": "Liczba włączonych diod LED w każdej kolumnie wyświetlacza micro:bita, od lewej do prawej, jest {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} i {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
+  "connect-pattern-led-option-label": {
+    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
+  },
   "connect-pattern-subtitle": {
     "defaultMessage": "Skopiuj wzór wyświetlany na micro:bicie.",
     "description": "Instruction for bluetooth pattern dialog"
