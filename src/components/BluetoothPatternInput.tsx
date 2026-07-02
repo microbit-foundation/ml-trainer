@@ -36,7 +36,8 @@ interface BluetoothPatternInputProps {
 }
 
 const matrixDim = 5;
-const cellSize = "35px";
+const cellSize = "44px";
+const cellGap = 1.5
 
 const BluetoothPatternInput = ({
   onChange,
@@ -76,7 +77,7 @@ const BluetoothPatternInput = ({
   const isEditable = !!onChange;
 
   return (
-    <HStack gap={1} alignItems="flex-start">
+    <HStack gap={cellGap} alignItems="flex-start">
       {matrixColumns.map((cells, colIdx) => {
         const letter = nativePlatform
           ? microbitName
@@ -166,7 +167,7 @@ const PatternColumn = ({
 
   return (
     <VStack
-      gap={1}
+      gap={cellGap}
       {...getRootProps()}
       role="radiogroup"
       aria-label={intl.formatMessage(
