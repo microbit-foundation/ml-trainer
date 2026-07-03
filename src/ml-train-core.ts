@@ -55,8 +55,7 @@ const createModel = (
 };
 
 /**
- * Train a model from pre-computed feature/label matrices. Uses whichever
- * TensorFlow.js backend is active on the calling thread.
+ * Train a model from pre-computed feature/label matrices.
  */
 export const trainModelFromFeatures = async (
   features: number[][],

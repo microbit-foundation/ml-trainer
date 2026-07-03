@@ -115,9 +115,6 @@ describe("Model tests", () => {
 });
 
 describe("model serialization", () => {
-  // Guards the worker round-trip: a model trained in the worker is serialised
-  // to in-memory artifacts, transferred, and reloaded on the main thread. If
-  // the marshaling silently corrupted the weights, predictions would diverge.
   test("reloaded model predicts identically to the original", async () => {
     if (trainingResult.error) {
       throw new Error("No model returned");

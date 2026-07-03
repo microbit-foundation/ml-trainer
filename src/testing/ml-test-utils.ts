@@ -12,7 +12,7 @@ import { DataWindow } from "../project-utils";
 /**
  * Train a model from raw action data using the app's configured
  * hyperparameters. Mirrors what the training worker does (feature extraction +
- * trainModelFromFeatures) but runs in-process
+ * trainModelFromFeatures) but runs in-process.
  */
 export const trainModelForTest = async (
   data: ActionData[],
