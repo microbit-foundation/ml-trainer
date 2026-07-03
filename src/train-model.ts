@@ -17,7 +17,7 @@ import type {
   TrainWorkerResponse,
 } from "./train-worker-protocol";
 
-export const trainModelInWorker = (
+export const trainModel = (
   data: ActionData[],
   dataWindow: DataWindow,
   onProgress?: (progress: number) => void

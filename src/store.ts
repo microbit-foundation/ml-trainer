@@ -40,7 +40,7 @@ import {
   generateProject,
 } from "./makecode/utils";
 import { Confidences, predict } from "./ml";
-import { trainModelInWorker } from "./train-model-in-worker";
+import { trainModel } from "./train-model";
 import { mlSettings } from "./mlConfig";
 import {
   Action,
@@ -1294,7 +1294,7 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
-          const trainingResult = await trainModelInWorker(
+          const trainingResult = await trainModel(
             actions,
             dataWindow,
             (trainModelProgress) =>

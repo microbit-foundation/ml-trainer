@@ -9,30 +9,12 @@ import { getMlFilters, mlSettings } from "./mlConfig";
 import {
   artifactsToModel,
   modelToArtifacts,
-  trainModelFromFeatures,
   type TrainingResult,
 } from "./ml-train-core";
 import { ActionData, XYZData } from "./model";
 import { DataWindow } from "./project-utils";
 
 export { artifactsToModel, modelToArtifacts, type TrainingResult };
-
-export const trainModel = async (
-  data: ActionData[],
-  dataWindow: DataWindow,
-  onProgress?: (progress: number) => void
-): Promise<TrainingResult> => {
-  const { features, labels } = prepareFeaturesAndLabels(data, dataWindow);
-  return trainModelFromFeatures(
-    features,
-    labels,
-    {
-      numEpochs: mlSettings.numEpochs,
-      learningRate: mlSettings.learningRate,
-    },
-    onProgress
-  );
-};
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (

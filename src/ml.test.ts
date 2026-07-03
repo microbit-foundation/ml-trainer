@@ -16,8 +16,8 @@ import {
   modelToArtifacts,
   prepareFeaturesAndLabels,
   TrainingResult,
-  trainModel,
 } from "./ml";
+import { trainModelForTest } from "./testing/ml-test-utils";
 import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
 import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
 import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
@@ -45,7 +45,10 @@ let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
-  trainingResult = await trainModel(migratedActionData, currentDataWindow);
+  ({ trainingResult } = await trainModelForTest(
+    migratedActionData,
+    currentDataWindow
+  ));
 });
 
 const getModelResults = (data: ActionData[]) => {
