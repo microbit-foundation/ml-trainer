@@ -1294,10 +1294,6 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
-          // Small delay so the progress dialog renders before training starts.
-          // Training itself now runs in a Web Worker (see trainModelInWorker),
-          // so it no longer blocks the main thread / UI.
-          await new Promise((res) => setTimeout(res, 100));
           const trainingResult = await trainModelInWorker(
             actions,
             dataWindow,
