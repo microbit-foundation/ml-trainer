@@ -51,6 +51,7 @@ ctx.onmessage = (event: MessageEvent<TrainWorkerRequest>) => {
       // Free WASM memory; the worker is also terminated by the caller.
       result.model.dispose();
     } catch (e) {
+      console.error("Model training worker failed", e);
       post({ kind: "error" });
     }
   })();

@@ -40,8 +40,8 @@ import {
   generateProject,
 } from "./makecode/utils";
 import { Confidences, predict } from "./ml";
-import { trainModel } from "./train-model";
 import { mlSettings } from "./mlConfig";
+import { trainModel } from "./train-model";
 import {
   Action,
   ActionData,
