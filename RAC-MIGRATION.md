@@ -1,0 +1,157 @@
+# Chakra → react-aria-components + Panda CSS migration
+
+Status: **foundation + first screen (LanguageDialog) done and verified.** This
+doc is the handover for continuing the migration in a new session.
+
+## Goal
+
+Replace Chakra UI with **react-aria-components (RAC)** for behaviour/accessibility
+and **Panda CSS** for styling, building reusable primitives in `src/shared-ui/`
+(intended for later extraction into a library shared across sibling apps). The
+**visual result must match the current Chakra UI closely** (colours, spacing,
+radii, shadows, type). Interaction details have some wiggle room; the look does
+not. The OSS-vs-private brand split must be preserved.
+
+Compare against the live branded deployment (https://createai.microbit.org/) —
+the OSS default theme is a washed-out grey and hides real issues.
+
+## Architecture
+
+### Styling: Panda, build-time, no PostCSS
+Chakra swaps a runtime theme via `ChakraProvider`; Panda generates CSS at build
+time from `panda.config.ts`. Vite uses the LightningCSS transformer (PostCSS
+disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
+- `npm run panda` → `panda codegen` (generates `styled-system/`) + `panda cssgen`
+  (writes `src/styled-system.css`) + `bin/unlayer-panda.mjs` (see coexistence).
+- `npm run panda:watch` → `bin/panda-dev.mjs` (watch + unlayer on each rebuild).
+- Wired into `build`, `predev`, `postinstall`. `styled-system/` and
+  `src/styled-system.css` are generated and git-ignored.
+- `main.tsx` imports `./styled-system.css`. `styled-system/*` is aliased in both
+  `tsconfig.json` (paths) and `vite.config.ts`.
+
+### Tokens & the OSS/private preset split
+- `bin/gen-chakra-tokens.mjs` snapshots the **exact** Chakra v2 default token
+  scales from `@chakra-ui/theme` into `src/deployment/default/chakra-tokens.ts`
+  (committed, generated — do not hand-edit; ignored by lint). This decouples the
+  preset from Chakra for eventual removal.
+- `src/deployment/default/panda-preset.ts` = **OSS preset**: the Chakra token
+  set + this app's overrides (`gray` 10/25/500/600, `brand`→Chakra blue,
+  `brand2`→Chakra gray, `radii.button` 2rem, `outline`/`outlineDark`/
+  `outlineLight` shadows, Helvetica fonts, `display` font token), the recipes,
+  and the RAC condition widening (below).
+- `src/deployment/default/panda-recipes.ts` = config recipes: `button` (11
+  variants), `heading` (+ `marketing` variant), `dialog` (slot recipe, incl.
+  `full` size with safe-area/gradient).
+- **Private preset**: `../ml-trainer-microbit/src/panda-preset.ts` (plain object,
+  no `@pandacss/dev` dep) overrides the brand colour ramps
+  (`brand`/`brand2`/`purple`/`teal`/`blue`/`pink`/`orange`) and the `display`
+  font (GT Walsheim). Exported via the package's `./panda-preset` entry.
+- `panda.config.ts` merges them: `presets: ["@pandacss/preset-base", ossPreset,
+  brandPreset?]` with `eject: true` (drops Panda's default theme; keeps base
+  utilities). `brandPreset` is resolved with `require(...)` guarded by try/catch
+  — the build-time equivalent of the `theme-package` vite alias swap.
+
+### shared-ui (`src/shared-ui/`)
+`Button`, `Text`, `Heading`, `Link`, `Icon`, `CloseIcon`, `List`/`ListItem`,
+`Modal` (+ `ModalHeader`/`Body`/`Footer`), `Tooltip`, `Toast` (+ `ToastProvider`,
+`useToast`), `useBreakpointValue`, and `system.ts` (re-exports Panda `css`/`cva`/
+`sva`/`cx`/`token` + jsx patterns `Box`/`Flex`/`Stack`/`HStack`/`VStack`/`Grid`/
+`GridItem`/`Center`/`Wrap`/`styled`). Layout uses Panda patterns directly
+(Panda-native idiom); responsive props use object syntax `{ base, md }`.
+
+## Hard-won patterns / gotchas (READ before continuing)
+
+1. **CSS layer conflict (the big one).** Chakra/Emotion inject *unlayered* CSS;
+   Panda emits into `@layer`, and unlayered CSS always beats layered regardless
+   of specificity — so Chakra's reset `:where(*){border-width:0}` silently kills
+   Panda component borders/padding. Fix: `bin/unlayer-panda.mjs` strips the
+   `@layer` wrappers from the generated CSS during coexistence. **Temporary** —
+   remove and set `preflight: true` once Chakra is gone.
+2. **RAC interaction states.** The preset widens Panda's `hover`/`active`/
+   `focusVisible`/`disabled` conditions to also match RAC's `data-*` attributes,
+   so Chakra-shaped `_hover`/`_active` style objects work unchanged on RAC.
+3. **`staticCss` for recipe variants.** shared-ui forwards `variant`/`size` as
+   runtime props, so Panda's static analysis can't see which variants are used.
+   `panda.config.ts` `staticCss` generates all recipe variants; the `dialog`
+   size uses `responsive: true` because it's chosen via `{ base, md }` objects.
+4. **Responsive recipe variants must be symmetric.** Panda applies the
+   base-breakpoint variant's CSS unconditionally; if `full` sets more props than
+   `4xl`, they leak into desktop. Every non-full dialog size restates the box
+   props (`dialogBox`) so the larger breakpoint fully overrides `full`.
+5. **`brand2` = Chakra's *unmodified* gray** in OSS (not the locally overridden
+   `gray` whose 500 is the light brand grey). Getting this wrong made card text
+   near-invisible.
+6. **OSS vs private divergence → semantic tokens.** The only structural button
+   difference is the `language` variant (OSS grey `brand2`, private blue `brand`).
+   Driven by semantic tokens `languageText`/`languageTextHover` overridden in the
+   private preset — keeps the recipe shared. The `marketing` heading font is the
+   same idea via the `display` font token. **TODO:** do a full diff of the
+   private Chakra theme vs OSS default and token-drive any other divergences.
+7. **Icons inherit `currentColor`.** Don't pass `fill` to react-icons (it
+   overrides their default `fill="currentColor"` → black). `Icon`/`CloseIcon` set
+   `fill: currentColor` in CSS.
+8. **Atomic overrides.** Panda longhand beats shorthand across separate `css()`
+   calls (and utilities beat recipes only via source order). To override, merge
+   into a *single* `css()` call (see `Tooltip`) or use matching longhands.
+
+## How to run / verify
+
+- **Branded build locally**: build the sibling `ml-trainer-microbit` package
+  (`npm run build` there → produces `dist/panda-preset.js`) and make it
+  resolvable from `node_modules/@microbit-foundation/ml-trainer-microbit`
+  (e.g. `npm link`). With it present, vite's `theme-package` alias and
+  `panda.config.ts` both resolve CreateAI branding; without it you get the OSS
+  default. (Currently a local symlink — see "Private preset consumption".)
+- `npm run build` then `npm run preview` → http://localhost:4173, then compare
+  against the live deployment (see Goal).
+- Chakra v2 is the parity source of truth for stock component styles
+  (Button/Modal/Alert/CloseButton bases) — check `@chakra-ui/theme` and
+  `@chakra-ui/components` in node_modules (or the Chakra v2 repo).
+- `npm test`, `npm run test:e2e:headless`, `npm run typecheck`, `npm run lint`
+  all green at this checkpoint.
+
+## Coexistence shims to remove once Chakra is gone
+- `bin/unlayer-panda.mjs` + `bin/panda-dev.mjs`; set Panda `preflight: true`.
+- The Emotion `exclude` list in `panda.config.ts` (files still using Emotion
+  `css`/`keyframes` that trip Panda's extractor).
+- `BrandConfig.chakraTheme` and `<ChakraProvider>` in `App.tsx`.
+- Chakra/Emotion/framer-motion deps.
+
+## Known issues / decisions deferred
+- **Dialog focus restoration** (LanguageDialog): opened from a Chakra menu item
+  that's gone on close, so focus falls to `<body>`. The manual `finalFocusRef`
+  bridge was intentionally **not** added — this resolves automatically once
+  `SettingsMenu` becomes a RAC `Menu` (RAC returns focus to the trigger on menu
+  close, and the dialog then restores to it). Fix as part of the Menu migration.
+- **Toast** uses RAC's `UNSTABLE_Toast*` API (functional; behind `Toast.tsx`).
+- **HomePage** is a composition root (`DefaultPageLayout`/`CarouselRow`/cards) —
+  not a contained screen; migrate bottom-up.
+- **Private preset consumption** is a local symlink — needs a real story
+  (publish the `panda-preset` export, or a documented `npm link`/`file:` dep)
+  before the team/CI can build the branded app.
+
+## Next steps (recommended order)
+1. **Settings `Menu` → RAC** (`SettingsMenu`, `LanguageMenuItem`, `Menu.tsx`):
+   build a shared-ui `Menu` (RAC `MenuTrigger`/`Menu`/`MenuItem`). Removes the
+   LanguageDialog focus hack for free.
+2. **App shell**: `DefaultPageLayout`, `ActionBar`, `NavigationDrawer` (Drawer) —
+   unblocks all pages.
+3. **Self-contained dialogs**: `ConfirmDialog` (AlertDialog), `NameProjectDialog`
+   (forms) — exercises patterns HomePage needs. Add `ModalCloseButton` (uses
+   `CloseIcon`), `IconButton`, form controls, `Spinner`, `VisuallyHidden` on
+   demand.
+4. **Pages**: HomePage, then DataSamplesPage, etc.
+5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
+   and token-drive them up front.
+6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs
+   Panda build) or a component gallery, to replace the manual screenshot loop.
+
+## Key files
+- `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/unlayer-panda.mjs`,
+  `bin/panda-dev.mjs`
+- `src/deployment/default/{panda-preset,panda-recipes,chakra-tokens}.ts`
+- `src/shared-ui/**`
+- `src/components/LanguageDialog.tsx`, `src/components/ModalFooterContent.tsx`
+  (migrated); `src/App.tsx` (`ToastProvider` mounted, `ChakraProvider` retained)
+- Private: `../ml-trainer-microbit/src/panda-preset.ts`, its `package.json`
+  (`./panda-preset` export)

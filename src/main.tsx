@@ -5,5 +5,6 @@
  */
 import App from "./App";
 import ReactDOM from "react-dom/client";
+import "./styled-system.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(<App />);

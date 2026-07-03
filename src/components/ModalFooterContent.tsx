@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Flex, HStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { Box, Flex, HStack } from "../shared-ui";
 
 interface ModalFooterContentProps {
   /**
@@ -29,7 +29,7 @@ const ModalFooterContent = ({
 }: ModalFooterContentProps) => (
   <Flex
     direction={{ base: "column", md: "row" }}
-    justifyContent={leftContent ? "space-between" : "end"}
+    justifyContent={leftContent ? "space-between" : "flex-end"}
     alignItems={{ base: "flex-start", md: "center" }}
     gap={{ base: 4, md: 0 }}
     width="100%"
@@ -37,7 +37,7 @@ const ModalFooterContent = ({
     {leftContent && <Box flexShrink={0}>{leftContent}</Box>}
     <HStack
       gap={5}
-      justifyContent="end"
+      justifyContent="flex-end"
       alignSelf="flex-end"
       width={leftContent ? "auto" : "100%"}
     >

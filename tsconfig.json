@@ -14,6 +14,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Panda CSS generated output, imported as styled-system/* */
+    "paths": {
+      "styled-system/*": ["./styled-system/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

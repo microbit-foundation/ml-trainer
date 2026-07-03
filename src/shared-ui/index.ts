@@ -1,0 +1,22 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * shared-ui — react-aria-components + Panda CSS primitives replacing Chakra,
+ * designed to be extracted into a library shared across sibling apps. Visuals
+ * match the Chakra theme; behaviour follows react-aria patterns.
+ */
+export * from "./system";
+export * from "./Button";
+export * from "./Text";
+export * from "./Heading";
+export * from "./Link";
+export * from "./Icon";
+export * from "./CloseIcon";
+export * from "./List";
+export * from "./Modal";
+export * from "./Tooltip";
+export * from "./Toast";
+export { useBreakpointValue } from "./hooks/useBreakpointValue";

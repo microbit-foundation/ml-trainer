@@ -15,6 +15,8 @@ module.exports = {
   ],
   ignorePatterns: [
     "dist",
+    "styled-system",
+    "src/deployment/default/chakra-tokens.ts",
     ".eslintrc.cjs",
     "deployment.cjs",
     "bin/**/*.js",

@@ -35,6 +35,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
+import { ToastProvider } from "./shared-ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
@@ -107,6 +108,7 @@ const Providers = ({ children }: ProviderLayoutProps) => {
   return (
     <React.StrictMode>
       <ChakraProvider theme={deployment.chakraTheme}>
+        <ToastProvider />
         <LoggingProvider value={logging}>
           <TranslationProvider>
             <ConsentProvider>

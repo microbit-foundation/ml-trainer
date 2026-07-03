@@ -112,6 +112,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     resolve: {
       alias: {
         "theme-package": themePackageAlias,
+        "styled-system": path.resolve(__dirname, "styled-system"),
       },
     },
   };
