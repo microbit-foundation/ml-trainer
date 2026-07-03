@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  *
- * Web Worker that runs model training off the main thread. 
+ * Web Worker that runs model training off the main thread.
  * This module must only import TensorFlow.js and the tfjs-only training core —
  * importing app modules would drag DOM/UI code into the worker bundle.
  */

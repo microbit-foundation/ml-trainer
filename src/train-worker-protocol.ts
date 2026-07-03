@@ -11,7 +11,7 @@ import type * as tf from "@tensorflow/tfjs";
 import type { TrainModelOptions } from "./ml-train-core";
 
 /**
- * Sent from the main thread to start a training run. 
+ * Sent from the main thread to start a training run.
  */
 export interface TrainWorkerRequest {
   features: number[][];

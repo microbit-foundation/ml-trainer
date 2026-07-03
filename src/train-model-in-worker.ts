@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  *
- * Main-thread entry point for training. Computes features on the main thread, 
- * runs the actual training in a Web Worker so the UI never freezes, then 
+ * Main-thread entry point for training. Computes features on the main thread,
+ * runs the actual training in a Web Worker so the UI never freezes, then
  * reconstructs the trained model on the main thread where prediction happens.
  */
 import { artifactsToModel, prepareFeaturesAndLabels } from "./ml";
@@ -37,7 +37,9 @@ export const trainModelInWorker = (
       resolve(result);
     };
 
-    worker.onmessage = ({ data: message }: MessageEvent<TrainWorkerResponse>) => {
+    worker.onmessage = ({
+      data: message,
+    }: MessageEvent<TrainWorkerResponse>) => {
       switch (message.kind) {
         case "progress":
           onProgress?.(message.value);
