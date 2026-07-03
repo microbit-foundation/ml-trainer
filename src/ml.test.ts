@@ -12,6 +12,8 @@ import * as tf from "@tensorflow/tfjs";
 import { ActionData, OldActionData } from "./model";
 import {
   applyFilters,
+  artifactsToModel,
+  modelToArtifacts,
   prepareFeaturesAndLabels,
   TrainingResult,
   trainModel,
@@ -106,6 +108,34 @@ describe("Model tests", () => {
     const { tensorFlowResultAccuracy } = getModelResults(migratedTestData);
     // The model thinks 1-2 samples of still are circle.
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
+  });
+});
+
+describe("model serialization", () => {
+  // Guards the worker round-trip: a model trained in the worker is serialised
+  // to in-memory artifacts, transferred, and reloaded on the main thread. If
+  // the marshaling silently corrupted the weights, predictions would diverge.
+  test("reloaded model predicts identically to the original", async () => {
+    if (trainingResult.error) {
+      throw new Error("No model returned");
+    }
+    const { features } = prepareFeaturesAndLabels(
+      migratedActionData,
+      currentDataWindow
+    );
+    const input = tf.tensor(features);
+    const before = (
+      trainingResult.model.predict(input) as tf.Tensor
+    ).dataSync();
+
+    const artifacts = await modelToArtifacts(trainingResult.model);
+    const reloaded = await artifactsToModel(artifacts);
+    const after = (reloaded.predict(input) as tf.Tensor).dataSync();
+
+    expect(after.length).toBe(before.length);
+    for (let i = 0; i < before.length; i++) {
+      expect(after[i]).toBeCloseTo(before[i], 5);
+    }
   });
 });
 

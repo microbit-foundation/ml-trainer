@@ -5,14 +5,17 @@
  * SPDX-License-Identifier: MIT
  */
 import * as tf from "@tensorflow/tfjs";
-import { SymbolicTensor } from "@tensorflow/tfjs";
 import { getMlFilters, mlSettings } from "./mlConfig";
+import {
+  artifactsToModel,
+  modelToArtifacts,
+  trainModelFromFeatures,
+  type TrainingResult,
+} from "./ml-train-core";
 import { ActionData, XYZData } from "./model";
 import { DataWindow } from "./project-utils";
 
-export type TrainingResult =
-  | { error: false; model: tf.LayersModel }
-  | { error: true };
+export { artifactsToModel, modelToArtifacts, type TrainingResult };
 
 export const trainModel = async (
   data: ActionData[],
@@ -20,28 +23,15 @@ export const trainModel = async (
   onProgress?: (progress: number) => void
 ): Promise<TrainingResult> => {
   const { features, labels } = prepareFeaturesAndLabels(data, dataWindow);
-  const model: tf.LayersModel = createModel(data);
-  const totalNumEpochs = mlSettings.numEpochs;
-
-  try {
-    await model.fit(tf.tensor(features), tf.tensor(labels), {
-      epochs: totalNumEpochs,
-      batchSize: 16,
-      shuffle: true,
-      // We don't do anything with the validation data, so might
-      // as well train using all of it.
-      validationSplit: 0,
-      callbacks: {
-        onEpochEnd: (epoch: number) => {
-          // Epochs indexed at 0
-          onProgress && onProgress(epoch / (totalNumEpochs - 1));
-        },
-      },
-    });
-  } catch (err) {
-    return { error: true };
-  }
-  return { error: false, model };
+  return trainModelFromFeatures(
+    features,
+    labels,
+    {
+      numEpochs: mlSettings.numEpochs,
+      learningRate: mlSettings.learningRate,
+    },
+    onProgress
+  );
 };
 
 // Exported for testing
@@ -66,31 +56,6 @@ export const prepareFeaturesAndLabels = (
     });
   });
   return { features, labels };
-};
-
-const createModel = (actions: ActionData[]): tf.LayersModel => {
-  const numberOfClasses: number = actions.length;
-  const inputShape = [
-    mlSettings.includedFilters.size * mlSettings.includedAxes.length,
-  ];
-
-  const input = tf.input({ shape: inputShape });
-  const normalizer = tf.layers.batchNormalization().apply(input);
-  const dense = tf.layers
-    .dense({ units: 16, activation: "relu" })
-    .apply(normalizer);
-  const softmax = tf.layers
-    .dense({ units: numberOfClasses, activation: "softmax" })
-    .apply(dense) as SymbolicTensor;
-  const model = tf.model({ inputs: input, outputs: softmax });
-
-  model.compile({
-    loss: "categoricalCrossentropy",
-    optimizer: tf.train.sgd(mlSettings.learningRate),
-    metrics: ["accuracy"],
-  });
-
-  return model;
 };
 
 const normalize = (value: number, min: number, max: number) => {

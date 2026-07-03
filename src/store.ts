@@ -39,7 +39,8 @@ import {
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
-import { Confidences, predict, trainModel } from "./ml";
+import { Confidences, predict } from "./ml";
+import { trainModelInWorker } from "./train-model-in-worker";
 import { mlSettings } from "./mlConfig";
 import {
   Action,
@@ -1293,10 +1294,11 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
-          // Delay so we get UI change before training starts. The initial part of training
-          // can block the UI. 50 ms is not sufficient, so use 100 for now.
+          // Small delay so the progress dialog renders before training starts.
+          // Training itself now runs in a Web Worker (see trainModelInWorker),
+          // so it no longer blocks the main thread / UI.
           await new Promise((res) => setTimeout(res, 100));
-          const trainingResult = await trainModel(
+          const trainingResult = await trainModelInWorker(
             actions,
             dataWindow,
             (trainModelProgress) =>
