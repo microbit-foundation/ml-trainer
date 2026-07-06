@@ -95,6 +95,18 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
 8. **Atomic overrides.** Panda longhand beats shorthand across separate `css()`
    calls (and utilities beat recipes only via source order). To override, merge
    into a *single* `css()` call (see `Tooltip`) or use matching longhands.
+9. **Styles must be literals at the JSX/`css()` site.** Panda's static extractor
+   only reads `css` prop object literals and `css()` call literals where they
+   appear — it does *not* follow an object returned from a helper function. A
+   helper like `const fooCss = () => ({ h: 12, ... })` used as `css={fooCss()}`
+   silently generates *no* CSS for those tokens (unless the same class happens to
+   be emitted elsewhere), and it fails quietly — no error, just missing styles,
+   so you only catch it by measuring. To share trigger/element styling, wrap it
+   in a **component** with an inline `css` literal (see `ActionBarMenuButton`),
+   not a style-object helper. Prefer recipe variants (e.g. `size="lg"`) for
+   dimensions over utility overrides — variants are generated via `staticCss` and
+   don't depend on call-site extraction. This bit the action-bar menu triggers:
+   the button silently fell back to `size:md` (40px), shrinking the focus ring.
 
 ## How to run / verify
 
