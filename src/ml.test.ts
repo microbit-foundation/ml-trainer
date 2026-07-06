@@ -12,10 +12,12 @@ import * as tf from "@tensorflow/tfjs";
 import { ActionData, OldActionData } from "./model";
 import {
   applyFilters,
+  artifactsToModel,
+  modelToArtifacts,
   prepareFeaturesAndLabels,
   TrainingResult,
-  trainModel,
 } from "./ml";
+import { trainModelForTest } from "./testing/ml-test-utils";
 import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
 import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
 import testData from "./test-fixtures/shake-still-circle-legacy-test-data.json";
@@ -43,7 +45,10 @@ let trainingResult: TrainingResult;
 beforeAll(async () => {
   // No webgl in tests running in node.
   await tf.setBackend("cpu");
-  trainingResult = await trainModel(migratedActionData, currentDataWindow);
+  ({ trainingResult } = await trainModelForTest(
+    migratedActionData,
+    currentDataWindow
+  ));
 });
 
 const getModelResults = (data: ActionData[]) => {
@@ -106,6 +111,31 @@ describe("Model tests", () => {
     const { tensorFlowResultAccuracy } = getModelResults(migratedTestData);
     // The model thinks 1-2 samples of still are circle.
     expect(parseFloat(tensorFlowResultAccuracy)).toBeGreaterThan(0.85);
+  });
+});
+
+describe("model serialization", () => {
+  test("reloaded model predicts identically to the original", async () => {
+    if (trainingResult.error) {
+      throw new Error("No model returned");
+    }
+    const { features } = prepareFeaturesAndLabels(
+      migratedActionData,
+      currentDataWindow
+    );
+    const input = tf.tensor(features);
+    const before = (
+      trainingResult.model.predict(input) as tf.Tensor
+    ).dataSync();
+
+    const artifacts = await modelToArtifacts(trainingResult.model);
+    const reloaded = await artifactsToModel(artifacts);
+    const after = (reloaded.predict(input) as tf.Tensor).dataSync();
+
+    expect(after.length).toBe(before.length);
+    for (let i = 0; i < before.length; i++) {
+      expect(after[i]).toBeCloseTo(before[i], 5);
+    }
   });
 });
 

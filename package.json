@@ -108,6 +108,7 @@
     "@microbit/smoothie": "^1.37.0-microbit.2",
     "@sentry/capacitor": "^4.0.0",
     "@tensorflow/tfjs": "^4.20.0",
+    "@tensorflow/tfjs-backend-wasm": "^4.20.0",
     "@types/w3c-web-serial": "^1.0.6",
     "@types/w3c-web-usb": "^1.0.6",
     "bowser": "^2.11.0",
