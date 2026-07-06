@@ -401,20 +401,24 @@ export const MoveMicrobitHint = () => {
 export const TrainHint = () => {
   return (
     <HStack
-      m={0}
       position="absolute"
-      right={0}
+      right={{ md: "unset", base: 0 }}
+      left={{ base: "unset", md: 0 }}
       spacing={0}
-      zIndex={2}
-      transform="translate(-80px, -85px)"
+      zIndex={1}
+      transform={{
+        base: "translate(-80px, -85px)",
+        md: "translate(-100%, 15px)",
+      }}
+      w="fit-content"
     >
       <HStack>
         <Box
           position="absolute"
           background="radial-gradient(50% 50% at 50% 50%, rgba(245,245,245,1) 75%, rgba(245,245,245,0) 100%);"
           transform="translate(-50px, 0)"
-          w="calc(100% + 50px)"
-          h="120%"
+          w={{ base: "calc(100% + 50px)", md: "calc(110%)" }}
+          h={{ base: "120%", md: "100%" }}
         />
         <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
         <VisuallyHidden>
@@ -422,7 +426,7 @@ export const TrainHint = () => {
             <FormattedMessage id="train-hint-label" />
           </Text>
         </VisuallyHidden>
-        <Text textAlign="center" zIndex={3} aria-hidden>
+        <Text textAlign="center" zIndex={3} aria-hidden w="max-content">
           <FormattedMessage
             id="train-hint"
             values={{
@@ -436,8 +440,11 @@ export const TrainHint = () => {
           />
         </Text>
         <EmojiArrow
-          mt={8}
-          transform="rotate(-120deg) scaleY(-1)"
+          mt={{ base: 8, md: 0 }}
+          transform={{
+            base: "rotate(-120deg) scaleY(-1)",
+            md: "scale(0.8, 0.8) rotate(140deg) translate(10px, 10px)",
+          }}
           transformOrigin="center"
           color="brand.500"
         />
