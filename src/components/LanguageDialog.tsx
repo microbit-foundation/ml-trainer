@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import {
   RiCheckboxBlankLine,
   RiCheckboxLine,
@@ -41,11 +41,6 @@ import ModalFooterContent from "./ModalFooterContent";
 interface LanguageDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  // Focus-restoration on close is currently broken: the dialog opens from a
-  // menu item that is gone by close time, so focus falls to <body>. This will
-  // be fixed automatically once SettingsMenu is a react-aria Menu (its close
-  // returns focus to the trigger). See RAC-MIGRATION.md.
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
 /**

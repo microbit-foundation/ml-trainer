@@ -16,6 +16,7 @@ export * from "./Link";
 export * from "./Icon";
 export * from "./CloseIcon";
 export * from "./List";
+export * from "./Menu";
 export * from "./Modal";
 export * from "./Tooltip";
 export * from "./Toast";

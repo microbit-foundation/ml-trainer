@@ -21,7 +21,7 @@ import {
   spacing,
   zIndex,
 } from "./chakra-tokens";
-import { button, dialog, heading } from "./panda-recipes";
+import { button, dialog, heading, menu } from "./panda-recipes";
 
 // gray overrides from the original Chakra theme (components/../colors.ts):
 // adds the very-light 10/25 stops and replaces 500/600.
@@ -104,6 +104,7 @@ export const ossPreset = definePreset({
     },
     slotRecipes: {
       dialog,
+      menu,
     },
   },
   // Widen the interaction conditions so the Chakra-shaped recipe/style objects

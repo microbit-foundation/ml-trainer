@@ -3,18 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  IconButton,
-  MenuButton,
-  MenuList,
-  Portal,
-} from "@chakra-ui/react";
-import { useRef } from "react";
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
+import { Button, MenuList, MenuTrigger } from "../shared-ui";
 import LanguageMenuItem from "./LanguageMenuItem";
-import Menu from "./Menu";
 import SettingsMenuItem from "./SettingsMenuItem";
 
 interface SettingsMenuProps {
@@ -29,35 +21,30 @@ const SettingsMenu = ({
   onSettingsDialogOpen,
 }: SettingsMenuProps) => {
   const intl = useIntl();
-  const settingsMenuRef = useRef(null);
-  const containerRef = useRef(null);
   return (
-    <Box ref={containerRef}>
-      <Menu>
-        <MenuButton
-          ref={settingsMenuRef}
-          as={IconButton}
-          aria-label={intl.formatMessage({ id: "settings-menu-action" })}
-          size="lg"
-          fontSize="2xl"
-          color="white"
-          icon={<RiSettings2Line size={24} />}
-          variant="plain"
-          isRound
-          h={12}
-          w={12}
-          _focusVisible={{
-            boxShadow: "outlineDark",
-          }}
-        />
-        <Portal containerRef={containerRef}>
-          <MenuList>
-            <LanguageMenuItem onOpen={onLanguageDialogOpen} />
-            <SettingsMenuItem onOpen={onSettingsDialogOpen} />
-          </MenuList>
-        </Portal>
-      </Menu>
-    </Box>
+    <MenuTrigger>
+      <Button
+        variant="plain"
+        aria-label={intl.formatMessage({ id: "settings-menu-action" })}
+        css={{
+          borderRadius: "full",
+          color: "white",
+          h: 12,
+          w: 12,
+          minW: 12,
+          // Square icon button: the recipe's default md size adds px:4, which
+          // would squeeze the icon horizontally within the fixed-width button.
+          px: 0,
+          _focusVisible: { boxShadow: "outlineDark" },
+        }}
+      >
+        <RiSettings2Line size={24} />
+      </Button>
+      <MenuList>
+        <LanguageMenuItem onOpen={onLanguageDialogOpen} />
+        <SettingsMenuItem onOpen={onSettingsDialogOpen} />
+      </MenuList>
+    </MenuTrigger>
   );
 };
 
