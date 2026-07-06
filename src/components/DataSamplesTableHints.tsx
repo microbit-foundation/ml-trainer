@@ -22,6 +22,7 @@ import moveMicrobitImage from "../images/move-microbit.svg";
 import { Action } from "../model";
 import Emoji, { animations, EmojiAi } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
+import StraightArrow from "./StraightArrow";
 import UpCurveArrow from "./UpCurveArrow";
 
 export const NameFirstActionHint = () => {
@@ -408,17 +409,19 @@ export const TrainHint = () => {
       zIndex={2}
       transform={{
         base: "translate(-80px, -85px)",
-        md: "translate(-100%, 15px)",
+        md: "translate(-100%, 2px)",
       }}
       w="fit-content"
+      pointerEvents="none"
     >
       <HStack>
         <Box
           position="absolute"
           background="radial-gradient(50% 50% at 50% 50%, rgba(245,245,245,1) 75%, rgba(245,245,245,0) 100%);"
           transform="translate(-50px, 0)"
-          w={{ base: "calc(100% + 50px)", md: "calc(110%)" }}
-          h={{ base: "120%", md: "100%" }}
+          w="calc(100% + 50px)"
+          h="120%"
+          display={{ base: "block", md: "none" }}
         />
         <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
         <VisuallyHidden>
@@ -440,13 +443,19 @@ export const TrainHint = () => {
           />
         </Text>
         <EmojiArrow
-          mt={{ base: 8, md: 0 }}
-          transform={{
-            base: "rotate(-120deg) scaleY(-1)",
-            md: "scale(0.8, 0.8) rotate(140deg) translate(10px, 10px)",
-          }}
+          display={{ base: "block", md: "none" }}
+          mt={8}
+          transform="rotate(-120deg) scaleY(-1)"
           transformOrigin="center"
           color="brand.500"
+        />
+        <StraightArrow
+          boxSize={10}
+          display={{ base: "none", md: "block" }}
+          // transform="scale(0.8, 0.8) rotate(160deg) translate(10px, -20px)"
+          transformOrigin="center"
+          color="brand.500"
+          mr="2"
         />
       </HStack>
     </HStack>
