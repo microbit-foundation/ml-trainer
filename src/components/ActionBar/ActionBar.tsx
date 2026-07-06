@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, BoxProps, HStack, StackProps, VStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { Box, BoxProps, HStack, HstackProps, VStack } from "../../shared-ui";
 
 export interface ActionBarProps extends BoxProps {
   itemsLeft?: ReactNode;
   itemsCenter?: ReactNode;
   itemsRight?: ReactNode;
-  itemsLeftProps?: StackProps;
-  itemsCenterProps?: StackProps;
+  itemsLeftProps?: HstackProps;
+  itemsCenterProps?: HstackProps;
 }
 
 /**
@@ -32,11 +32,9 @@ const ActionBar = ({
   return (
     <VStack
       as="header"
-      spacing={0}
-      bgColor="brand2.500"
-      sx={{
-        "--inset-top": "env(safe-area-inset-top)",
-      }}
+      gap={0}
+      bg="brand2.500"
+      css={{ "--inset-top": "env(safe-area-inset-top)" }}
       {...rest}
     >
       {/* Status bar spacer: full inset minus overlap (but never negative) */}
@@ -51,7 +49,7 @@ const ActionBar = ({
         gap={0}
         h="64px"
         w="100%"
-        sx={{ pl: "var(--window-controls-left, 0px)" }}
+        pl="var(--window-controls-left, 0px)"
       >
         <HStack
           flex={itemsCenter ? { base: "0 1 max-content", xl: "1 0" } : "4 0"}
@@ -61,12 +59,7 @@ const ActionBar = ({
           {itemsLeft}
         </HStack>
         {itemsCenter && (
-          <HStack
-            flex="2 1"
-            justifyContent="center"
-            px={3}
-            {...itemsCenterProps}
-          >
+          <HStack flex="2 1" justifyContent="center" px={3} {...itemsCenterProps}>
             {itemsCenter}
           </HStack>
         )}

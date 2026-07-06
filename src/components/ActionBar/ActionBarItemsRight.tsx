@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
 import { useLocation } from "react-router";
 import { keyboardShortcuts, useShortcut } from "../../keyboard-shortcut-hooks";
 import { useNativeTabletBreakpoint } from "../../native-breakpoint-hooks";
+import { HStack } from "../../shared-ui";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";
@@ -65,7 +65,7 @@ const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
         explanationTextId="connect-to-tour-body"
       />
       <AboutDialog isOpen={isAboutDialogOpen} onClose={closeDialog} />
-      <HStack spacing={3} display={useTabletLayout ? "none" : "flex"}>
+      <HStack gap={3} display={useTabletLayout ? "none" : "flex"}>
         {toolbarItems}
         <SettingsMenu
           onLanguageDialogOpen={languageDialogOnOpen}

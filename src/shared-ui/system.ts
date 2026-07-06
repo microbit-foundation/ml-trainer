@@ -11,6 +11,14 @@
 export { css, cva, sva, cx } from "styled-system/css";
 export { token } from "styled-system/tokens";
 export type { SystemStyleObject } from "styled-system/types";
+export type {
+  BoxProps,
+  FlexProps,
+  StackProps,
+  HstackProps,
+  VstackProps,
+  GridProps,
+} from "styled-system/jsx";
 
 // Layout patterns — the Panda-native equivalents of Chakra's Box/Flex/Stack/etc.
 export {
