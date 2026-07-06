@@ -3,102 +3,77 @@
  *
  * SPDX-License-Identifier: MIT
  *
- * Main-thread entry point for training. Computes features on the main thread,
- * runs the actual training in a Web Worker so the UI never freezes, then
- * reconstructs the trained model on the main thread where prediction happens.
+ * Main-thread entry point for training. Computes features on the main
+ * thread, then trains in the ML worker so the UI never freezes. The trained
+ * model stays live in the worker for prediction; the main thread receives
+ * only its serialised artifacts and ml4f machine code.
  */
-import { artifactsToModel, prepareFeaturesAndLabels } from "./ml";
-import { TrainingResult } from "./ml-train-core";
+import { prepareFeaturesAndLabels } from "./ml";
+import { mlWorker } from "./ml-worker-client";
 import { mlSettings } from "./mlConfig";
-import { ActionData } from "./model";
+import { ActionData, TrainedModel } from "./model";
 import { DataWindow } from "./project-utils";
-import type {
-  TrainWorkerRequest,
-  TrainWorkerResponse,
-} from "./train-worker-protocol";
+
+export type TrainModelResult =
+  | { error: false; model: TrainedModel }
+  | { error: true };
 
 const minTrainingDurationMs = 2000;
 
-export const trainModel = (
+export const trainModel = async (
   data: ActionData[],
   dataWindow: DataWindow,
   onProgress: (progress: number) => void
-): Promise<TrainingResult> => {
+): Promise<TrainModelResult> => {
   const { features, labels } = prepareFeaturesAndLabels(data, dataWindow);
   const startTime = Date.now();
-  return new Promise<TrainingResult>((resolve) => {
-    const worker = new Worker(new URL("./train.worker.ts", import.meta.url), {
-      type: "module",
-    });
-    let settled = false;
+  let settled = false;
 
-    const finish = (result: TrainingResult) => {
-      if (settled) {
-        return;
-      }
-      settled = true;
-      worker.terminate();
-      onProgress(1);
-      resolve(result);
-    };
+  // Latest real training progress (0–1) reported by the worker.
+  let actualProgress = 0;
 
-    const onOutcome = (result: TrainingResult) => {
-      const remaining = minTrainingDurationMs - (Date.now() - startTime);
-      if (result.error || remaining <= 0) {
-        finish(result);
-      } else {
-        setTimeout(() => finish(result), remaining);
-      }
-    };
-
-    // Latest real training progress (0–1) reported by the worker.
-    let actualProgress = 0;
-
-    // Animate progress bar. Visual only — completion is handled by onOutcome.
-    // Show whichever is lower: time-based fill vs real training progress
-    // (so if training is slower than min duration, the bar tracks it rather
-    // than filling to 100% and pausing while it waits to finish).
-    const tick = () => {
-      if (settled) {
-        return;
-      }
-      const timingProgress = Math.min(
-        (Date.now() - startTime) / minTrainingDurationMs,
-        1
-      );
-      onProgress(Math.min(timingProgress, actualProgress));
-      requestAnimationFrame(tick);
-    };
+  // Animate progress bar. Visual only — completion is handled below.
+  // Show whichever is lower: time-based fill vs real training progress
+  // (so if training is slower than min duration, the bar tracks it rather
+  // than filling to 100% and pausing while it waits to finish).
+  const tick = () => {
+    if (settled) {
+      return;
+    }
+    const timingProgress = Math.min(
+      (Date.now() - startTime) / minTrainingDurationMs,
+      1
+    );
+    onProgress(Math.min(timingProgress, actualProgress));
     requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 
-    worker.onmessage = ({
-      data: message,
-    }: MessageEvent<TrainWorkerResponse>) => {
-      switch (message.kind) {
-        case "progress":
-          actualProgress = message.value;
-          break;
-        case "complete":
-          // Reconstruct the model on the main thread, where prediction runs.
-          artifactsToModel(message.artifacts)
-            .then((model) => onOutcome({ error: false, model }))
-            .catch(() => onOutcome({ error: true }));
-          break;
-        case "error":
-          onOutcome({ error: true });
-          break;
+  const trainResult = await mlWorker.train(
+    features,
+    labels,
+    {
+      numEpochs: mlSettings.numEpochs,
+      learningRate: mlSettings.learningRate,
+    },
+    (value) => {
+      actualProgress = value;
+    }
+  );
+  const result: TrainModelResult = trainResult
+    ? {
+        error: false,
+        model: {
+          artifacts: trainResult.artifacts,
+          machineCode: trainResult.machineCode,
+        },
       }
-    };
-    worker.onerror = () => onOutcome({ error: true });
-
-    const request: TrainWorkerRequest = {
-      features,
-      labels,
-      options: {
-        numEpochs: mlSettings.numEpochs,
-        learningRate: mlSettings.learningRate,
-      },
-    };
-    worker.postMessage(request);
-  });
+    : { error: true };
+  const remaining = minTrainingDurationMs - (Date.now() - startTime);
+  if (!result.error && remaining > 0) {
+    await new Promise((resolve) => setTimeout(resolve, remaining));
+  }
+  settled = true;
+  onProgress(1);
+  return result;
 };

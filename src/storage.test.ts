@@ -5,6 +5,7 @@
  */
 import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
+import { artifactsToModel, modelToArtifacts } from "./ml-train-core";
 import { ActionData, RecordingData } from "./model";
 import { DataSamplesView } from "./model";
 import { defaultSettings, Settings } from "./settings";
@@ -560,26 +561,31 @@ describe.each(backends)("$name models", ({ name, factory }) => {
     }
   });
 
-  const createSimpleModel = (): tf.LayersModel => {
+  const createModelArtifacts = async (): Promise<tf.io.ModelArtifacts> => {
     const input = tf.input({ shape: [3] });
     const dense = tf.layers.dense({ units: 2 }).apply(input);
-    return tf.model({ inputs: input, outputs: dense as tf.SymbolicTensor });
+    const model = tf.model({
+      inputs: input,
+      outputs: dense as tf.SymbolicTensor,
+    });
+    const artifacts = await modelToArtifacts(model);
+    model.dispose();
+    return artifacts;
   };
 
   it("save and load round-trip", async () => {
     const projectData = makeProjectData();
     await db.newSession([makeAction()], makeMakeCodeData(), projectData);
 
-    const model = createSimpleModel();
-    await db.saveModel(projectData.id, model);
+    const artifacts = await createModelArtifacts();
+    await db.saveModel(projectData.id, artifacts);
 
     const loaded = await db.loadModel(projectData.id);
     expect(loaded).toBeDefined();
-    expect(loaded!.inputs[0].shape).toEqual([null, 3]);
-    expect(loaded!.outputs[0].shape).toEqual([null, 2]);
-
-    model.dispose();
-    loaded!.dispose();
+    const reloaded = await artifactsToModel(loaded!);
+    expect(reloaded.inputs[0].shape).toEqual([null, 3]);
+    expect(reloaded.outputs[0].shape).toEqual([null, 2]);
+    reloaded.dispose();
   });
 
   it("load non-existent returns undefined", async () => {
@@ -594,22 +600,20 @@ describe.each(backends)("$name models", ({ name, factory }) => {
     const projectData = makeProjectData();
     await db.newSession([makeAction()], makeMakeCodeData(), projectData);
 
-    const model = createSimpleModel();
-    await db.saveModel(projectData.id, model);
+    const artifacts = await createModelArtifacts();
+    await db.saveModel(projectData.id, artifacts);
     await db.removeModel(projectData.id);
 
     const loaded = await db.loadModel(projectData.id);
     expect(loaded).toBeUndefined();
-
-    model.dispose();
   });
 
   it("duplicateProject copies model", async () => {
     const projectData = makeProjectData();
     await db.newSession([makeAction()], makeMakeCodeData(), projectData);
 
-    const model = createSimpleModel();
-    await db.saveModel(projectData.id, model);
+    const artifacts = await createModelArtifacts();
+    await db.saveModel(projectData.id, artifacts);
 
     const newId = uuid();
     await db.duplicateProject(projectData.id, {
@@ -618,11 +622,10 @@ describe.each(backends)("$name models", ({ name, factory }) => {
       timestamp: Date.now(),
     });
 
-    const cloneModel = await db.loadModel(newId);
-    expect(cloneModel).toBeDefined();
-    expect(cloneModel!.inputs[0].shape).toEqual([null, 3]);
-
-    model.dispose();
-    cloneModel!.dispose();
+    const clone = await db.loadModel(newId);
+    expect(clone).toBeDefined();
+    const reloaded = await artifactsToModel(clone!);
+    expect(reloaded.inputs[0].shape).toEqual([null, 3]);
+    reloaded.dispose();
   });
 });

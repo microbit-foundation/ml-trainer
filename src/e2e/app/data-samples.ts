@@ -96,6 +96,14 @@ export class DataSamplesPage {
     return new TrainModelDialog(this.page);
   }
 
+  /**
+   * Navigate via the "Testing model" button that replaces "Train model"
+   * when the project has a trained model.
+   */
+  async navigateToTestingModel() {
+    await this.page.getByRole("button", { name: "Testing model" }).click();
+  }
+
   async importDataSamples(filePathFromProjectRoot: string) {
     const filePath = getAbsoluteFilePath(filePathFromProjectRoot);
     // Open the menu

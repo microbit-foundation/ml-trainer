@@ -8,7 +8,6 @@ import { Capacitor } from "@capacitor/core";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { ProgressStage } from "@microbit/microbit-connection";
 import { DeviceBondState } from "@microbit/microbit-connection/bluetooth";
-import * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 import { devtools, subscribeWithSelector } from "zustand/middleware";
@@ -39,7 +38,8 @@ import {
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
-import { Confidences, predict } from "./ml";
+import { applyFilters, Confidences } from "./ml";
+import { mlWorker } from "./ml-worker-client";
 import { mlSettings } from "./mlConfig";
 import { trainModel } from "./train-model";
 import {
@@ -58,6 +58,7 @@ import {
   TourState,
   TourTrigger,
   TourTriggerName,
+  TrainedModel,
   TrainModelDialogStage,
 } from "./model";
 import { isNativePlatform } from "./platform";
@@ -104,7 +105,7 @@ const updateProject = (
   project: MakeCodeProject,
   projectEdited: boolean,
   actions: ActionData[],
-  model: tf.LayersModel | undefined,
+  model: TrainedModel | undefined,
   dataWindow: DataWindow
 ): Pick<Store, "project" | "projectEdited" | "appEditNeedsFlushToEditor"> => {
   const actionsData = { data: actions };
@@ -146,7 +147,7 @@ export interface State {
   id: string | undefined;
   actions: ActionData[];
   dataWindow: DataWindow;
-  model: tf.LayersModel | undefined;
+  model: TrainedModel | undefined;
 
   timestamp: number;
 
@@ -1831,24 +1832,43 @@ const createMlStore = (logging: Logging) => {
           if (!model || predictionInterval) {
             return;
           }
+          const classificationIds = actions.map((a) => a.id);
+          // Don't queue a new predict request while one is in flight; skip
+          // the tick instead.
+          let inFlight = false;
           const newPredictionInterval = setInterval(() => {
+            if (inFlight) {
+              return;
+            }
             const startTime = Date.now() - dataWindow.duration;
-            const input = {
-              model,
-              data: buffer.getSamples(startTime),
-              classificationIds: actions.map((a) => a.id),
-            };
-            if (input.data.x.length > dataWindow.minSamples) {
-              const result = predict(input, dataWindow);
-              if (result.error) {
-                logging.error("Prediction error", result.detail);
-              } else {
-                const { confidences } = result;
+            const data = buffer.getSamples(startTime);
+            if (data.x.length <= dataWindow.minSamples) {
+              return;
+            }
+            const features = Object.values(applyFilters(data, dataWindow));
+            inFlight = true;
+            mlWorker
+              .predict(features)
+              .then((values) => {
+                inFlight = false;
+                // The worker drops requests while training/loading a model
+                // and after errors; skip those ticks.
+                if (!values) {
+                  return;
+                }
+                // Discard stale responses after stopPredicting/restart.
+                if (get().predictionInterval !== newPredictionInterval) {
+                  return;
+                }
+                const confidences = classificationIds.reduce(
+                  (acc, id, idx) => ({ ...acc, [id]: values[idx] }),
+                  {} as Confidences
+                );
                 const detected = getDetectedAction(
                   // Get latest actions from store so that changes to
                   // recognition point are realised.
                   get().actions,
-                  result.confidences
+                  confidences
                 );
                 set({
                   predictionResult: {
@@ -1856,8 +1876,11 @@ const createMlStore = (logging: Logging) => {
                     confidences,
                   },
                 });
-              }
-            }
+              })
+              .catch((err) => {
+                inFlight = false;
+                logging.error("Prediction error", err);
+              });
           }, 1000 / mlSettings.updatesPrSecond);
           set({ predictionInterval: newPredictionInterval });
         },
@@ -2001,10 +2024,24 @@ const getDataWindowFromActions = (actions: ActionData[]): DataWindow => {
 };
 
 const loadModelFromStorage = async (id: string) => {
-  const model = await storageWithErrHandling(
+  const artifacts = await storageWithErrHandling(
     () => storage.loadModel(id),
     false
   );
+  let model: TrainedModel | undefined;
+  if (artifacts) {
+    // Only the model artifacts are persisted; compile the machine code with
+    // the current ml4f as part of loading the model into the worker.
+    const loaded = await mlWorker.loadModel(artifacts);
+    if (loaded?.machineCode) {
+      model = { artifacts, machineCode: loaded.machineCode };
+    } else {
+      deployment.logging.error(
+        "Storage error",
+        new Error("Failed to load stored model in ML worker")
+      );
+    }
+  }
   useStore.setState({ model }, false, "loadModel");
 };
 
@@ -2024,7 +2061,7 @@ useStore.subscribe(async (state, prevState) => {
       broadcastChannel.postMessage(message);
     } else if (newModel) {
       await storageWriteWithErrHandling(
-        () => storage.saveModel(newId, newModel),
+        () => storage.saveModel(newId, newModel.artifacts),
         false
       );
     }
