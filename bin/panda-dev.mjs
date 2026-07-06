@@ -5,10 +5,15 @@
  */
 // Dev watcher for Panda during the Chakra coexistence period.
 //
-// Runs `panda --watch` (regenerating styled-system + src/styled-system.css on
-// source changes) and, whenever the generated CSS is rewritten with `@layer`
-// wrappers, strips them via bin/unlayer-panda.mjs. The `@layer` guard means our
-// own rewrite doesn't retrigger processing. See bin/unlayer-panda.mjs for why.
+// Runs `panda cssgen --watch` (re-extracting src/styled-system.css on source
+// changes) and, whenever the generated CSS is rewritten with `@layer` wrappers,
+// strips them via bin/unlayer-panda.mjs. The `@layer` guard means our own
+// rewrite doesn't retrigger processing. See bin/unlayer-panda.mjs for why.
+//
+// `--outfile` is a cssgen-only flag, so this must be `cssgen`, not the bare
+// `panda` (codegen) command. cssgen watches the config too, so recipe/token
+// edits are picked up; only new files in styled-system/ (rare) need a one-shot
+// `npm run panda` codegen.
 import { spawn } from "node:child_process";
 import { readFileSync, watch } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -17,7 +22,7 @@ const cssFile = "src/styled-system.css";
 
 const panda = spawn(
   "panda",
-  ["--watch", "--outfile", cssFile],
+  ["cssgen", "--watch", "--outfile", cssFile],
   { stdio: "inherit", shell: true }
 );
 
