@@ -53,8 +53,9 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
 
 ### shared-ui (`src/shared-ui/`)
 `Button`, `Text`, `Heading`, `Link`, `Icon`, `CloseIcon`, `List`/`ListItem`,
-`Modal` (+ `ModalHeader`/`Body`/`Footer`), `Menu` (`MenuTrigger`/`MenuList`/
-`MenuItem`), `Tooltip`, `Toast` (+ `ToastProvider`,
+`IconButton`, `Modal` (+ `ModalHeader`/`Body`/`Footer`), `Menu`
+(`MenuTrigger`/`MenuList`/`MenuItem`/`MenuDivider`), `Tooltip`, `Toast`
+(+ `ToastProvider`,
 `useToast`), `useBreakpointValue`, and `system.ts` (re-exports Panda `css`/`cva`/
 `sva`/`cx`/`token` + jsx patterns `Box`/`Flex`/`Stack`/`HStack`/`VStack`/`Grid`/
 `GridItem`/`Center`/`Wrap`/`styled`). Layout uses Panda patterns directly
@@ -127,16 +128,17 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   before the team/CI can build the branded app.
 
 ## Next steps (recommended order)
-1. ✅ **Settings `Menu` → RAC** — done. shared-ui `Menu` (`MenuTrigger`/
-   `MenuList`/`MenuItem`) built on RAC; `SettingsMenu`/`LanguageMenuItem`/
-   `SettingsMenuItem` migrated; LanguageDialog focus hack removed (RAC restores
-   focus to the trigger on close — verified). Remaining Chakra menus (`HelpMenu`,
-   `DataSamplesMenu`, `ToolbarMenu`, `MoreMenuButton`, `ProjectCardActions`,
-   `TestingModelPage`) still use the old `components/Menu.tsx` back-button
-   wrapper; port them onto shared-ui `MenuTrigger` next, then delete
-   `components/Menu.tsx`. NB: the square icon-button trigger currently uses
-   `Button variant="plain"` + a `px:0`/round css override inline — promote to a
-   shared-ui `IconButton` when the next trigger needs it.
+1. ✅ **Settings + Help `Menu` → RAC** — done. shared-ui `Menu` (`MenuTrigger`/
+   `MenuList`/`MenuItem`/`MenuDivider`) built on RAC, plus a shared-ui
+   `IconButton` (square, `px:0`, `isRound`) for the action-bar triggers (see
+   `ActionBar/action-bar-menu-button.ts` for the shared white/round/focus css).
+   `SettingsMenu`/`LanguageMenuItem`/`SettingsMenuItem` and `HelpMenu`/
+   `HelpMenuItems` migrated; link items use RAC `MenuItem` `href`/`target`/`rel`,
+   actions use `onAction`. LanguageDialog focus hack removed (RAC restores focus
+   to the trigger on close — verified). Remaining Chakra menus (`DataSamplesMenu`,
+   `ToolbarMenu`, `MoreMenuButton`, `ProjectCardActions`, `TestingModelPage`)
+   still use the old `components/Menu.tsx` back-button wrapper; port them onto
+   shared-ui `MenuTrigger` next, then delete `components/Menu.tsx`.
 2. **App shell**: `DefaultPageLayout`, `ActionBar`, `NavigationDrawer` (Drawer) —
    unblocks all pages.
 3. **Self-contained dialogs**: `ConfirmDialog` (AlertDialog), `NameProjectDialog`
@@ -156,7 +158,9 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   (`panda-recipes.ts` holds the `menu` slot recipe + `plain` button variant)
 - `src/shared-ui/**` (incl. `Menu.tsx`)
 - `src/components/LanguageDialog.tsx`, `src/components/ModalFooterContent.tsx`,
-  `src/components/{SettingsMenu,LanguageMenuItem,SettingsMenuItem}.tsx`
-  (migrated); `src/App.tsx` (`ToastProvider` mounted, `ChakraProvider` retained)
+  `src/components/{SettingsMenu,LanguageMenuItem,SettingsMenuItem}.tsx`,
+  `src/components/{HelpMenu,HelpMenuItems}.tsx`,
+  `src/components/ActionBar/action-bar-menu-button.ts` (migrated);
+  `src/App.tsx` (`ToastProvider` mounted, `ChakraProvider` retained)
 - Private: `../ml-trainer-microbit/src/panda-preset.ts`, its `package.json`
   (`./panda-preset` export)

@@ -363,7 +363,7 @@ export const dialog = defineSlotRecipe({
  */
 export const menu = defineSlotRecipe({
   className: "menu",
-  slots: ["content", "list", "item", "icon"],
+  slots: ["content", "list", "item", "icon", "divider"],
   base: {
     content: {
       bg: "white",
@@ -412,6 +412,16 @@ export const menu = defineSlotRecipe({
       justifyContent: "center",
       flexShrink: 0,
       marginEnd: "0.75rem",
+      // Chakra's MenuIcon shrinks glyphs to 0.8em; items passing an explicitly
+      // sized icon (e.g. h/w) override this.
+      fontSize: "0.8em",
+    },
+    divider: {
+      border: 0,
+      borderBottom: "1px solid",
+      borderColor: "gray.200",
+      my: "2",
+      opacity: 0.6,
     },
   },
 });

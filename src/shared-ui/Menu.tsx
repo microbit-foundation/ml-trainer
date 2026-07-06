@@ -12,6 +12,7 @@ import {
   MenuTrigger as RACMenuTrigger,
   Popover,
   PopoverProps,
+  Separator,
 } from "react-aria-components";
 import { css, cx } from "styled-system/css";
 import { menu } from "styled-system/recipes";
@@ -140,5 +141,20 @@ export const MenuItem = ({
       {icon ? <span className={slots.icon}>{icon}</span> : null}
       {children}
     </RACMenuItem>
+  );
+};
+
+export interface MenuDividerProps {
+  css?: SystemStyleObject;
+  className?: string;
+}
+
+/** Horizontal rule separating groups of menu items. */
+export const MenuDivider = ({ css: cssProp, className }: MenuDividerProps) => {
+  const slots = menu();
+  return (
+    <Separator
+      className={cx(slots.divider, cssProp ? css(cssProp) : undefined, className)}
+    />
   );
 };

@@ -5,7 +5,8 @@
  */
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { Button, MenuList, MenuTrigger } from "../shared-ui";
+import { IconButton, MenuList, MenuTrigger } from "../shared-ui";
+import { actionBarMenuButtonCss } from "./ActionBar/action-bar-menu-button";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenuItem from "./SettingsMenuItem";
 
@@ -23,23 +24,14 @@ const SettingsMenu = ({
   const intl = useIntl();
   return (
     <MenuTrigger>
-      <Button
+      <IconButton
         variant="plain"
+        isRound
         aria-label={intl.formatMessage({ id: "settings-menu-action" })}
-        css={{
-          borderRadius: "full",
-          color: "white",
-          h: 12,
-          w: 12,
-          minW: 12,
-          // Square icon button: the recipe's default md size adds px:4, which
-          // would squeeze the icon horizontally within the fixed-width button.
-          px: 0,
-          _focusVisible: { boxShadow: "outlineDark" },
-        }}
+        css={actionBarMenuButtonCss()}
       >
         <RiSettings2Line size={24} />
-      </Button>
+      </IconButton>
       <MenuList>
         <LanguageMenuItem onOpen={onLanguageDialogOpen} />
         <SettingsMenuItem onOpen={onSettingsDialogOpen} />

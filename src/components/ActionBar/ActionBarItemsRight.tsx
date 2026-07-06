@@ -73,7 +73,7 @@ const ItemsRight = ({ toolbarItems }: ItemsRightProps) => {
         />
       </HStack>
       <HelpMenu
-        display={useTabletLayout ? "none" : "block"}
+        hidden={useTabletLayout}
         onAboutDialogOpen={aboutDialogOnOpen}
         onConnectFirstDialogOpen={connectFirstDialogOnOpen}
         onFeedbackOpen={feedbackOnOpen}
