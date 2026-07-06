@@ -431,6 +431,10 @@
     "defaultMessage": "crwdns369665:0{numLedsOnCol1}crwdnd369665:0{numLedsOnCol2}crwdnd369665:0{numLedsOnCol3}crwdnd369665:0{numLedsOnCol4}crwdnd369665:0{numLedsOnCol5}crwdne369665:0",
     "description": "Screen reader text for numeric pattern input"
   },
+  "connect-pattern-led-option-label": {
+    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
+  },
   "connect-pattern-subtitle": {
     "defaultMessage": "crwdns362778:0crwdne362778:0",
     "description": "Instruction for bluetooth pattern dialog"
