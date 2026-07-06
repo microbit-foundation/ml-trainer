@@ -5,9 +5,9 @@
  */
 import { RiQuestionLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { IconButton, MenuList, MenuTrigger } from "../shared-ui";
+import { MenuList, MenuTrigger } from "../shared-ui";
 import { TourTrigger } from "../model";
-import { actionBarMenuButtonCss } from "./ActionBar/action-bar-menu-button";
+import { ActionBarMenuButton } from "./ActionBar/ActionBarMenuButton";
 import HelpMenuItems from "./HelpMenuItems";
 
 interface HelpMenuProps {
@@ -32,14 +32,12 @@ const HelpMenu = ({
   const intl = useIntl();
   return (
     <MenuTrigger>
-      <IconButton
-        variant="plain"
-        isRound
+      <ActionBarMenuButton
         aria-label={intl.formatMessage({ id: "help-label" })}
-        css={actionBarMenuButtonCss(hidden)}
+        hidden={hidden}
       >
         <RiQuestionLine size={24} />
-      </IconButton>
+      </ActionBarMenuButton>
       <MenuList>
         <HelpMenuItems
           onAboutDialogOpen={onAboutDialogOpen}

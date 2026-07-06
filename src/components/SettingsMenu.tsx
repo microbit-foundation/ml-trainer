@@ -5,8 +5,8 @@
  */
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { IconButton, MenuList, MenuTrigger } from "../shared-ui";
-import { actionBarMenuButtonCss } from "./ActionBar/action-bar-menu-button";
+import { MenuList, MenuTrigger } from "../shared-ui";
+import { ActionBarMenuButton } from "./ActionBar/ActionBarMenuButton";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenuItem from "./SettingsMenuItem";
 
@@ -24,14 +24,11 @@ const SettingsMenu = ({
   const intl = useIntl();
   return (
     <MenuTrigger>
-      <IconButton
-        variant="plain"
-        isRound
+      <ActionBarMenuButton
         aria-label={intl.formatMessage({ id: "settings-menu-action" })}
-        css={actionBarMenuButtonCss()}
       >
         <RiSettings2Line size={24} />
-      </IconButton>
+      </ActionBarMenuButton>
       <MenuList>
         <LanguageMenuItem onOpen={onLanguageDialogOpen} />
         <SettingsMenuItem onOpen={onSettingsDialogOpen} />
