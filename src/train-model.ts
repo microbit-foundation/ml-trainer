@@ -17,45 +17,79 @@ import type {
   TrainWorkerResponse,
 } from "./train-worker-protocol";
 
+const minTrainingDurationMs = 2000;
+
 export const trainModel = (
   data: ActionData[],
   dataWindow: DataWindow,
-  onProgress?: (progress: number) => void
+  onProgress: (progress: number) => void
 ): Promise<TrainingResult> => {
   const { features, labels } = prepareFeaturesAndLabels(data, dataWindow);
+  const startTime = Date.now();
   return new Promise<TrainingResult>((resolve) => {
     const worker = new Worker(new URL("./train.worker.ts", import.meta.url), {
       type: "module",
     });
     let settled = false;
+
     const finish = (result: TrainingResult) => {
       if (settled) {
         return;
       }
       settled = true;
       worker.terminate();
+      onProgress(1);
       resolve(result);
     };
+
+    const onOutcome = (result: TrainingResult) => {
+      const remaining = minTrainingDurationMs - (Date.now() - startTime);
+      if (result.error || remaining <= 0) {
+        finish(result);
+      } else {
+        setTimeout(() => finish(result), remaining);
+      }
+    };
+
+    // Latest real training progress (0–1) reported by the worker.
+    let actualProgress = 0;
+
+    // Animate progress bar. Visual only — completion is handled by onOutcome.
+    // Show whichever is lower: time-based fill vs real training progress
+    // (so if training is slower than min duration, the bar tracks it rather
+    // than filling to 100% and pausing while it waits to finish).
+    const tick = () => {
+      if (settled) {
+        return;
+      }
+      const timingProgress = Math.min(
+        (Date.now() - startTime) / minTrainingDurationMs,
+        1
+      );
+      onProgress(Math.min(timingProgress, actualProgress));
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
 
     worker.onmessage = ({
       data: message,
     }: MessageEvent<TrainWorkerResponse>) => {
       switch (message.kind) {
         case "progress":
-          onProgress?.(message.value);
+          actualProgress = message.value;
           break;
         case "complete":
           // Reconstruct the model on the main thread, where prediction runs.
           artifactsToModel(message.artifacts)
-            .then((model) => finish({ error: false, model }))
-            .catch(() => finish({ error: true }));
+            .then((model) => onOutcome({ error: false, model }))
+            .catch(() => onOutcome({ error: true }));
           break;
         case "error":
-          finish({ error: true });
+          onOutcome({ error: true });
           break;
       }
     };
-    worker.onerror = () => finish({ error: true });
+    worker.onerror = () => onOutcome({ error: true });
 
     const request: TrainWorkerRequest = {
       features,
