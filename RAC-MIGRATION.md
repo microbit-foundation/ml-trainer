@@ -116,6 +116,15 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   (e.g. `npm link`). With it present, vite's `theme-package` alias and
   `panda.config.ts` both resolve CreateAI branding; without it you get the OSS
   default. (Currently a local symlink — see "Private preset consumption".)
+- **After changing the private preset (or (re)linking it), do a *clean* Panda
+  regen**: `rm -rf styled-system src/styled-system.css && npm run panda` (or
+  `panda codegen --clean`). Incremental `panda codegen` does not detect changes
+  in an *external* preset dependency, so it keeps stale (OSS) token values even
+  though the config loads the new preset — the brand colours silently stay OSS
+  (e.g. `brand2.500` grey `#718096` instead of green `#00a000`, `brand.500`
+  `#3182ce` instead of `#007dbc`). A fresh checkout is unaffected (empty
+  `styled-system/` → full gen). Vite's `theme-package` alias resolves at
+  dev-server start, so also restart the dev server after (re)linking.
 - `npm run build` then `npm run preview` → http://localhost:4173, then compare
   against the live deployment (see Goal).
 - Chakra v2 is the parity source of truth for stock component styles
