@@ -405,7 +405,7 @@ export const TrainHint = () => {
       right={{ md: "unset", base: 0 }}
       left={{ base: "unset", md: 0 }}
       spacing={0}
-      zIndex={1}
+      zIndex={2}
       transform={{
         base: "translate(-80px, -85px)",
         md: "translate(-100%, 15px)",
