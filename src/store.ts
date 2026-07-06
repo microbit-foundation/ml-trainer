@@ -39,8 +39,9 @@ import {
   generateCustomFiles,
   generateProject,
 } from "./makecode/utils";
-import { Confidences, predict, trainModel } from "./ml";
+import { Confidences, predict } from "./ml";
 import { mlSettings } from "./mlConfig";
+import { trainModel } from "./train-model";
 import {
   Action,
   ActionData,
@@ -1293,9 +1294,6 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
-          // Delay so we get UI change before training starts. The initial part of training
-          // can block the UI. 50 ms is not sufficient, so use 100 for now.
-          await new Promise((res) => setTimeout(res, 100));
           const trainingResult = await trainModel(
             actions,
             dataWindow,

@@ -11,7 +11,8 @@
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import * as tf from "@tensorflow/tfjs";
 import { assert, vi } from "vitest";
-import { TrainingResult, trainModel } from "../ml";
+import { TrainingResult } from "../ml";
+import { trainModelForTest } from "../testing/ml-test-utils";
 import { ActionData, DatasetEditorJsonFormat } from "../model";
 import oldProject from "../test-fixtures/project-to-update.json";
 import actionData from "../test-fixtures/wand-data-samples.json";
@@ -42,7 +43,7 @@ beforeAll(async () => {
   const randomSpy = vi.spyOn(Math, "random");
   randomSpy.mockImplementation(() => 0.5);
 
-  trainingResult = await trainModel(data.data, currentDataWindow);
+  ({ trainingResult } = await trainModelForTest(data.data, currentDataWindow));
 });
 
 describe("test project generation", () => {

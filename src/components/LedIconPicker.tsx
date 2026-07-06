@@ -25,12 +25,14 @@ interface LedIconPicker {
   actionName: string;
   onIconSelected: (icon: MakeCodeIcon) => void;
   children: React.ReactElement;
+  autoFocus?: boolean;
 }
 
 const LedIconPicker = ({
   actionName,
   onIconSelected,
   children,
+  autoFocus = false,
 }: LedIconPicker) => {
   const intl = useIntl();
   const handleClick = useCallback(
@@ -64,6 +66,7 @@ const LedIconPicker = ({
                     })
               }
               _focusVisible={{ boxShadow: "outline", outline: "none" }}
+              autoFocus={autoFocus}
               cursor="pointer"
             >
               {children}

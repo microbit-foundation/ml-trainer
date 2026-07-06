@@ -4,6 +4,20 @@
   "private": true,
   "type": "module",
   "license": "MIT",
+  "allowScripts": {
+    "aws-sdk": false,
+    "better-sqlite3@12.6.2": true,
+    "fsevents": true,
+    "esbuild": true,
+    "core-js": false,
+    "@sentry/capacitor": false,
+    "protobufjs": false,
+    "@firebase/util": false
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.18.0"
+  },
   "scripts": {
     "build": "npm run panda && tsc && cross-env VITE_VERSION=$npm_package_version vite build",
     "build:apps": "npm run panda && tsc && cross-env VITE_BUILD_MODE=apps VITE_VERSION=$npm_package_version vite build",
@@ -50,7 +64,7 @@
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.orderby": "^4.6.9",
     "@types/lodash.upperfirst": "^4.3.9",
-    "@types/node": "^18.16.0",
+    "@types/node": "^24.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -71,7 +85,7 @@
     "typescript": "^5.4.2",
     "vite": "^6.3.5",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^3.2.3",
+    "vitest": "^4.1.9",
     "vitest-dom": "^0.1.1"
   },
   "dependencies": {
@@ -94,9 +108,11 @@
     "@microbit/makecode-embed": "^0.0.0-noproject.76",
     "@microbit/microbit-connection": "^1.0.0-beta.2",
     "@microbit/ml-header-generator": "^0.4.3",
+    "@microbit/ml4f": "^2.0.0-beta.0",
     "@microbit/smoothie": "^1.37.0-microbit.2",
     "@sentry/capacitor": "^4.0.0",
     "@tensorflow/tfjs": "^4.20.0",
+    "@tensorflow/tfjs-backend-wasm": "^4.20.0",
     "@types/w3c-web-serial": "^1.0.6",
     "@types/w3c-web-usb": "^1.0.6",
     "bowser": "^2.11.0",
@@ -109,7 +125,6 @@
     "lodash.debounce": "^4.0.8",
     "lodash.orderby": "^4.6.0",
     "lodash.upperfirst": "^4.3.1",
-    "ml4f": "git://github.com/microsoft/ml4f#v1.10.1",
     "nrf-intel-hex": "^1.4.0",
     "react": "^18.3.1",
     "react-aria-components": "^1.19.0",
