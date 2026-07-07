@@ -9,11 +9,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
+import { compileModel } from "@microbit/ml4f";
 import * as tf from "@tensorflow/tfjs";
-import { assert, vi } from "vitest";
-import { TrainingResult } from "../ml";
+import { vi } from "vitest";
+import { modelToArtifacts } from "../ml-train-core";
 import { trainModelForTest } from "../testing/ml-test-utils";
-import { ActionData, DatasetEditorJsonFormat } from "../model";
+import { ActionData, DatasetEditorJsonFormat, TrainedModel } from "../model";
 import oldProject from "../test-fixtures/project-to-update.json";
 import actionData from "../test-fixtures/wand-data-samples.json";
 import {
@@ -32,7 +33,7 @@ const data: DatasetEditorJsonFormat = {
   data: actionData as ActionData[],
 };
 
-let trainingResult: TrainingResult;
+let trainedModel: TrainedModel;
 
 beforeAll(async () => {
   // No webgl in tests running in node.
@@ -43,16 +44,25 @@ beforeAll(async () => {
   const randomSpy = vi.spyOn(Math, "random");
   randomSpy.mockImplementation(() => 0.5);
 
-  ({ trainingResult } = await trainModelForTest(data.data, currentDataWindow));
+  const { trainingResult } = await trainModelForTest(
+    data.data,
+    currentDataWindow
+  );
+  if (trainingResult.error) {
+    throw new Error("Training failed");
+  }
+  trainedModel = {
+    artifacts: await modelToArtifacts(trainingResult.model),
+    machineCode: compileModel(trainingResult.model, {}).machineCode,
+  };
 });
 
 describe("test project generation", () => {
   it("generates a project", () => {
-    assert(!trainingResult.error);
     const result = generateProject(
       "A project name",
       data,
-      trainingResult.model,
+      trainedModel,
       currentDataWindow,
       false
     );
@@ -62,7 +72,6 @@ describe("test project generation", () => {
 
 describe("test project update", () => {
   it("updates an old project to the latest extension version correctly", () => {
-    assert(!trainingResult.error);
     // The oldProject has had the _history and .simstate fields removed.
     // We don't care about these and it makes equality easier to test.
     const projectToUpdate = oldProject as unknown as MakeCodeProject;
@@ -79,7 +88,7 @@ describe("test project update", () => {
     const newProject = generateProject(
       "Untitled",
       data,
-      trainingResult.model,
+      trainedModel,
       currentDataWindow,
       false
     );
@@ -94,7 +103,7 @@ describe("test project update", () => {
         ...generateProject(
           "Untitled",
           data,
-          trainingResult.model,
+          trainedModel,
           currentDataWindow,
           false
         ).text,
@@ -106,7 +115,7 @@ describe("test project update", () => {
         ...projectToUpdate.text,
         ...generateCustomFiles(
           data,
-          trainingResult.model,
+          trainedModel,
           currentDataWindow,
           true,
           projectToUpdate as unknown as MakeCodeProject

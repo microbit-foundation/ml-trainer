@@ -4,17 +4,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import * as tf from "@tensorflow/tfjs";
 import { getMlFilters, mlSettings } from "./mlConfig";
-import {
-  artifactsToModel,
-  modelToArtifacts,
-  type TrainingResult,
-} from "./ml-train-core";
 import { ActionData, XYZData } from "./model";
 import { DataWindow } from "./project-utils";
-
-export { artifactsToModel, modelToArtifacts, type TrainingResult };
 
 // Exported for testing
 export const prepareFeaturesAndLabels = (
@@ -72,35 +64,4 @@ export const applyFilters = (
   }, {} as Record<string, number>);
 };
 
-interface PredictInput {
-  model: tf.LayersModel;
-  data: XYZData;
-  classificationIds: string[];
-}
-
 export type Confidences = Record<string, number>;
-
-export type ConfidencesResult =
-  | { error: true; detail: unknown }
-  | { error: false; confidences: Confidences };
-
-// For predicting
-export const predict = (
-  { model, data, classificationIds }: PredictInput,
-  dataWindow: DataWindow
-): ConfidencesResult => {
-  const input = Object.values(applyFilters(data, dataWindow));
-  const prediction = model.predict(tf.tensor([input])) as tf.Tensor;
-  try {
-    const confidences = prediction.dataSync() as Float32Array;
-    return {
-      error: false,
-      confidences: classificationIds.reduce(
-        (acc, id, idx) => ({ ...acc, [id]: confidences[idx] }),
-        {}
-      ),
-    };
-  } catch (e) {
-    return { error: true, detail: e };
-  }
-};
