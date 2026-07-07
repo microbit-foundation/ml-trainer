@@ -30,7 +30,7 @@ export const getHint = (
   if (firstUnnamedActionIdx > -1 && firstUnnamedActionIdx !== lastActionIdx) {
     return { type: "name-action-short", actionIdx: firstUnnamedActionIdx };
   }
-  
+
   // If unnamed last action has recordings, use name action with samples hint.
   if (lastAction.name.length === 0 && lastAction.recordings.length > 0) {
     return {
@@ -39,8 +39,8 @@ export const getHint = (
     };
   }
   // If unnamed last action has no recordings, use name action hint for first
-  // two actions, otherwise, use the shorter name action hint for the rest. 
-  // The short name action hint only occupies space within the action row so 
+  // two actions, otherwise, use the shorter name action hint for the rest.
+  // The short name action hint only occupies space within the action row so
   // that it is more visible in shorter screen sizes.
   if (lastAction.name.length === 0) {
     return {
