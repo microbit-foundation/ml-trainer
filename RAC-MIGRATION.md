@@ -39,9 +39,18 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   `brand2`→Chakra gray, `radii.button` 2rem, `outline`/`outlineDark`/
   `outlineLight` shadows, Helvetica fonts, `display` font token), the recipes,
   and the RAC condition widening (below).
-- `src/deployment/default/panda-recipes.ts` = config recipes: `button` (11
-  variants), `heading` (+ `marketing` variant), `dialog` (slot recipe, incl.
-  `full` size with safe-area/gradient).
+- `src/shared-ui/*.recipe.ts` = config recipes colocated with their components:
+  `button` (11 variants), `heading` (+ `marketing` variant), `dialog` (slot
+  recipe, incl. `full` size with safe-area/gradient), `menu` (slot recipe).
+  **Convention**: new shared-ui config recipes go in `<Component>.recipe.ts`
+  next to the component (named after the component, e.g. `Modal.recipe.ts`
+  exports `dialog`) and must be registered in the OSS preset's
+  `recipes`/`slotRecipes` to take effect. These files are build-time only
+  (imported by the preset, run during Panda codegen) — components consume the
+  generated `styled-system/recipes` output, never the `.recipe.ts` file, and
+  recipe files must not import app code. Use config recipes for shared-ui
+  primitives (preset-extensible, `recipes` layer is overridable by call-site
+  style props); use colocated `cva`/`sva` for one-off feature-component styling.
 - **Private preset**: `../ml-trainer-microbit/src/panda-preset.ts` (plain object,
   no `@pandacss/dev` dep) overrides the brand colour ramps
   (`brand`/`brand2`/`purple`/`teal`/`blue`/`pink`/`orange`) and the `display`
@@ -175,8 +184,9 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
 ## Key files
 - `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/unlayer-panda.mjs`,
   `bin/panda-dev.mjs`
-- `src/deployment/default/{panda-preset,panda-recipes,chakra-tokens}.ts`
-  (`panda-recipes.ts` holds the `menu` slot recipe + `plain` button variant)
+- `src/deployment/default/{panda-preset,chakra-tokens}.ts`,
+  `src/shared-ui/*.recipe.ts` (`Menu.recipe.ts` holds the `menu` slot recipe;
+  `Button.recipe.ts` the `plain` button variant)
 - `src/shared-ui/**` (incl. `Menu.tsx`)
 - `src/components/LanguageDialog.tsx`, `src/components/ModalFooterContent.tsx`,
   `src/components/{SettingsMenu,LanguageMenuItem,SettingsMenuItem}.tsx`,

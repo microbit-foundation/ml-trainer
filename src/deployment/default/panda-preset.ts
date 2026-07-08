@@ -21,7 +21,12 @@ import {
   spacing,
   zIndex,
 } from "./chakra-tokens";
-import { button, dialog, heading, menu } from "./panda-recipes";
+// Config recipes are colocated with the shared-ui components they style; this
+// preset registers them so Panda merges them at codegen time.
+import { button } from "../../shared-ui/Button.recipe";
+import { heading } from "../../shared-ui/Heading.recipe";
+import { menu } from "../../shared-ui/Menu.recipe";
+import { dialog } from "../../shared-ui/Modal.recipe";
 
 // gray overrides from the original Chakra theme (components/../colors.ts):
 // adds the very-light 10/25 stops and replaces 500/600.
