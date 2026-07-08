@@ -7,10 +7,11 @@ import {
   SQLiteVanilla,
   SQLiteConnection,
 } from "@microbit/capacitor-sqlite-vanilla";
-import * as tf from "@tensorflow/tfjs";
+import type * as tf from "@tensorflow/tfjs";
 import { v4 as uuid } from "uuid";
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { ActionData, RecordingData } from "./model";
+import { weightDataToArrayBuffer } from "./storageUtils";
 import { MakeCodeIcon } from "./utils/icons";
 import {
   untitledProjectName,
@@ -933,38 +934,24 @@ export class SqliteDatabase implements Database {
 
   async saveModel(
     id: string | undefined,
-    model: tf.LayersModel
+    artifacts: tf.io.ModelArtifacts
   ): Promise<void> {
     id = this.assertProjectId(id);
     return this.serialise(async (db) => {
-      await model.save(
-        tf.io.withSaveHandler(async (artifacts) => {
-          // Normalize weight data to single ArrayBuffer for consistent serialization.
-          const weightData = artifacts.weightData
-            ? tf.io.concatenateArrayBuffers(
-                Array.isArray(artifacts.weightData)
-                  ? artifacts.weightData
-                  : [artifacts.weightData]
-              )
-            : undefined;
-          const metadata = JSON.stringify({
-            modelTopology: artifacts.modelTopology,
-            weightSpecs: artifacts.weightSpecs,
-            format: artifacts.format,
-            generatedBy: artifacts.generatedBy,
-            convertedBy: artifacts.convertedBy,
-            signature: artifacts.signature,
-            userDefinedMetadata: artifacts.userDefinedMetadata,
-            trainingConfig: artifacts.trainingConfig,
-          });
-          await db.run(
-            "INSERT OR REPLACE INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
-            [id, metadata, weightData ? arrayBufferToBase64(weightData) : null]
-          );
-          return {
-            modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
-          };
-        })
+      const weightData = weightDataToArrayBuffer(artifacts.weightData);
+      const metadata = JSON.stringify({
+        modelTopology: artifacts.modelTopology,
+        weightSpecs: artifacts.weightSpecs,
+        format: artifacts.format,
+        generatedBy: artifacts.generatedBy,
+        convertedBy: artifacts.convertedBy,
+        signature: artifacts.signature,
+        userDefinedMetadata: artifacts.userDefinedMetadata,
+        trainingConfig: artifacts.trainingConfig,
+      });
+      await db.run(
+        "INSERT OR REPLACE INTO models (project_id, metadata, weight_data) VALUES (?, ?, ?)",
+        [id, metadata, weightData ? arrayBufferToBase64(weightData) : null]
       );
     });
   }
@@ -976,7 +963,7 @@ export class SqliteDatabase implements Database {
     });
   }
 
-  async loadModel(id: string): Promise<tf.LayersModel | undefined> {
+  async loadModel(id: string): Promise<tf.io.ModelArtifacts | undefined> {
     return this.serialise(async (db) => {
       const result = await db.query(
         "SELECT metadata, weight_data FROM models WHERE project_id = ?",
@@ -990,13 +977,12 @@ export class SqliteDatabase implements Database {
         tf.io.ModelArtifacts,
         "weightData"
       >;
-      const artifacts: tf.io.ModelArtifacts = {
+      return {
         ...metadata,
         weightData: row.weight_data
           ? base64ToArrayBuffer(row.weight_data)
           : undefined,
       };
-      return tf.loadLayersModel(tf.io.fromMemory(artifacts));
     });
   }
 }

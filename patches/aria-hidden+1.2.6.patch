@@ -1,0 +1,39 @@
+diff --git a/node_modules/aria-hidden/dist/es2015/index.js b/node_modules/aria-hidden/dist/es2015/index.js
+index 00aa2ea..6eee4f3 100644
+--- a/node_modules/aria-hidden/dist/es2015/index.js
++++ b/node_modules/aria-hidden/dist/es2015/index.js
+@@ -130,7 +130,7 @@ export var hideOthers = function (originalTarget, parentNode, markerName) {
+     }
+     // we should not hide aria-live elements - https://github.com/theKashey/aria-hidden/issues/10
+     // and script elements, as they have no impact on accessibility.
+-    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll('[aria-live], script')));
++    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll('script')));
+     return applyAttributeToOthers(targets, activeParentNode, markerName, 'aria-hidden');
+ };
+ /**
+diff --git a/node_modules/aria-hidden/dist/es2019/index.js b/node_modules/aria-hidden/dist/es2019/index.js
+index 17404da..a3e8a57 100644
+--- a/node_modules/aria-hidden/dist/es2019/index.js
++++ b/node_modules/aria-hidden/dist/es2019/index.js
+@@ -125,7 +125,7 @@ export const hideOthers = (originalTarget, parentNode, markerName = 'data-aria-h
+     }
+     // we should not hide aria-live elements - https://github.com/theKashey/aria-hidden/issues/10
+     // and script elements, as they have no impact on accessibility.
+-    targets.push(...Array.from(activeParentNode.querySelectorAll('[aria-live], script')));
++    targets.push(...Array.from(activeParentNode.querySelectorAll('script')));
+     return applyAttributeToOthers(targets, activeParentNode, markerName, 'aria-hidden');
+ };
+ /**
+diff --git a/node_modules/aria-hidden/dist/es5/index.js b/node_modules/aria-hidden/dist/es5/index.js
+index 1b86f56..f7f3e35 100644
+--- a/node_modules/aria-hidden/dist/es5/index.js
++++ b/node_modules/aria-hidden/dist/es5/index.js
+@@ -133,7 +133,7 @@ var hideOthers = function (originalTarget, parentNode, markerName) {
+     }
+     // we should not hide aria-live elements - https://github.com/theKashey/aria-hidden/issues/10
+     // and script elements, as they have no impact on accessibility.
+-    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll('[aria-live], script')));
++    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll('script')));
+     return applyAttributeToOthers(targets, activeParentNode, markerName, 'aria-hidden');
+ };
+ exports.hideOthers = hideOthers;

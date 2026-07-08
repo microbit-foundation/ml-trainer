@@ -8,15 +8,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { compileModel } from "@microbit/ml4f";
 import * as tf from "@tensorflow/tfjs";
 import { ActionData, OldActionData } from "./model";
+import { applyFilters, prepareFeaturesAndLabels } from "./ml";
 import {
-  applyFilters,
   artifactsToModel,
   modelToArtifacts,
-  prepareFeaturesAndLabels,
   TrainingResult,
-} from "./ml";
+} from "./ml-train-core";
 import { trainModelForTest } from "./testing/ml-test-utils";
 import actionDataBadLabels from "./test-fixtures/shake-still-circle-legacy-bad-labels.json";
 import actionData from "./test-fixtures/shake-still-circle-data-samples-legacy.json";
@@ -136,6 +136,19 @@ describe("model serialization", () => {
     for (let i = 0; i < before.length; i++) {
       expect(after[i]).toBeCloseTo(before[i], 5);
     }
+  });
+
+  test("machine code compiled at train time matches compile of reloaded artifacts", async () => {
+    if (trainingResult.error) {
+      throw new Error("No model returned");
+    }
+    const atTrainTime = compileModel(trainingResult.model, {}).machineCode;
+
+    const artifacts = await modelToArtifacts(trainingResult.model);
+    const reloaded = await artifactsToModel(artifacts);
+    const afterReload = compileModel(reloaded, {}).machineCode;
+
+    expect(afterReload).toEqual(atTrainTime);
   });
 });
 

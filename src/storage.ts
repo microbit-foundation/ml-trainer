@@ -1,6 +1,7 @@
 import { MakeCodeProject } from "@microbit/makecode-embed";
 import { DBSchema, IDBPDatabase, IDBPObjectStore, openDB } from "idb";
 import orderBy from "lodash.orderby";
+import type * as tf from "@tensorflow/tfjs";
 import { Action, ActionData, RecordingData } from "./model";
 import {
   migrateLegacyActionDataAndAssignNewIds,
@@ -8,9 +9,8 @@ import {
   renameProject as renameMakecodeProject,
 } from "./project-utils";
 import { defaultSettings, Settings } from "./settings";
-import { prepActionForStorage } from "./storageUtils";
+import { prepActionForStorage, weightDataToArrayBuffer } from "./storageUtils";
 import { v4 as uuid } from "uuid";
-import * as tf from "@tensorflow/tfjs";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { projectSessionStorage } from "./session-storage";
 
@@ -148,9 +148,12 @@ export interface Database {
   deleteProjects(ids: string[]): Promise<void>;
   getSettings(): Promise<Settings>;
   updateSettings(settings: Settings): Promise<void>;
-  saveModel(id: string | undefined, model: tf.LayersModel): Promise<void>;
+  saveModel(
+    id: string | undefined,
+    artifacts: tf.io.ModelArtifacts
+  ): Promise<void>;
   removeModel(id: string | undefined): Promise<void>;
-  loadModel(id: string): Promise<tf.LayersModel | undefined>;
+  loadModel(id: string): Promise<tf.io.ModelArtifacts | undefined>;
 }
 
 enum DatabaseStore {
@@ -174,8 +177,6 @@ interface StoredModelData {
   generatedBy?: string;
   convertedBy?: string | null;
 }
-
-const oldModelUrl = "indexeddb://micro:bit-ai-creator-model";
 
 const defaultTimestamp = Date.now();
 const defaultProjectId = uuid();
@@ -348,29 +349,19 @@ export class IdbDatabase implements Database {
       localStorageProject.settings,
       DatabaseStore.SETTINGS
     );
-    try {
-      const model = await tf.loadLayersModel(oldModelUrl);
-      if (model) {
-        await model.save(
-          tf.io.withSaveHandler(async (artifacts) => {
-            await db.add(
-              DatabaseStore.MODELS,
-              modelArtifactsToStoredData(artifacts),
-              defaultProjectId
-            );
-            return {
-              modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
-            };
-          })
-        );
-      }
-    } catch (err) {
-      // There is no model.
+    const legacyArtifacts = await getLegacyModelArtifacts();
+    if (legacyArtifacts) {
+      await db.add(
+        DatabaseStore.MODELS,
+        modelArtifactsToStoredData(legacyArtifacts),
+        defaultProjectId
+      );
     }
     projectSessionStorage.setProjectId(defaultProjectId);
     // TODO: Re-enable when merging beta to main. Disabled because beta
     // shares an origin with live, so we must not delete live's data.
-    // await tf.io.removeModel(oldModelUrl);
+    // (Delete the record in the legacy "tensorflowjs" IndexedDB database
+    // and the localStorage data.)
     // localStorage.removeItem(DATABASE_NAME);
   }
 
@@ -1035,20 +1026,13 @@ export class IdbDatabase implements Database {
     await db.put(DatabaseStore.SETTINGS, settings, DatabaseStore.SETTINGS);
   }
 
-  async saveModel(id: string | undefined, model: tf.LayersModel) {
+  async saveModel(id: string | undefined, artifacts: tf.io.ModelArtifacts) {
     id = this.assertProjectId(id);
     const db = await this.useDb();
-    await model.save(
-      tf.io.withSaveHandler(async (artifacts) => {
-        await db.put(
-          DatabaseStore.MODELS,
-          modelArtifactsToStoredData(artifacts),
-          id
-        );
-        return {
-          modelArtifactsInfo: tf.io.getModelArtifactsInfoForJSON(artifacts),
-        };
-      })
+    await db.put(
+      DatabaseStore.MODELS,
+      modelArtifactsToStoredData(artifacts),
+      id
     );
   }
 
@@ -1058,13 +1042,13 @@ export class IdbDatabase implements Database {
     await db.delete(DatabaseStore.MODELS, id);
   }
 
-  async loadModel(id: string): Promise<tf.LayersModel | undefined> {
+  async loadModel(id: string): Promise<tf.io.ModelArtifacts | undefined> {
     const db = await this.useDb();
     const stored = await db.get(DatabaseStore.MODELS, id);
     if (!stored) {
       return undefined;
     }
-    const artifacts: tf.io.ModelArtifacts = {
+    return {
       modelTopology: stored.modelTopology,
       weightSpecs: stored.weightSpecs,
       weightData: stored.weightData,
@@ -1073,7 +1057,6 @@ export class IdbDatabase implements Database {
       generatedBy: stored.generatedBy,
       convertedBy: stored.convertedBy,
     };
-    return tf.loadLayersModel(tf.io.fromMemory(artifacts));
   }
 
   private assertProjectId(id: string | undefined) {
@@ -1087,13 +1070,7 @@ export class IdbDatabase implements Database {
 const modelArtifactsToStoredData = (
   artifacts: tf.io.ModelArtifacts
 ): StoredModelData => {
-  const weightData = artifacts.weightData
-    ? tf.io.concatenateArrayBuffers(
-        Array.isArray(artifacts.weightData)
-          ? artifacts.weightData
-          : [artifacts.weightData]
-      )
-    : undefined;
+  const weightData = weightDataToArrayBuffer(artifacts.weightData);
   return {
     modelTopology: artifacts.modelTopology,
     trainingConfig: artifacts.trainingConfig,
@@ -1119,6 +1096,42 @@ const assertDataArray = <T>(data: (undefined | T)[]) => {
     }
   });
   return data as T[];
+};
+
+const legacyTfjsDatabase = "tensorflowjs";
+const legacyTfjsModelStore = "models_store";
+// From the pre-multiple-projects "indexeddb://micro:bit-ai-creator-model" URL.
+const legacyTfjsModelPath = "micro:bit-ai-creator-model";
+
+/**
+ * Read the model that older app versions saved via tfjs, directly from
+ * tfjs's IndexedDB record format so the main thread doesn't need tfjs.
+ */
+const getLegacyModelArtifacts = async (): Promise<
+  tf.io.ModelArtifacts | undefined
+> => {
+  try {
+    const db = await openDB(legacyTfjsDatabase, 1, {
+      upgrade(db) {
+        // The database didn't exist. Mirror tfjs's schema: deployed app
+        // versions still read this database via tfjs, which expects these
+        // stores to exist whenever the database does.
+        db.createObjectStore(legacyTfjsModelStore, { keyPath: "modelPath" });
+        db.createObjectStore("model_info_store", { keyPath: "modelPath" });
+      },
+    });
+    try {
+      const record = (await db.get(
+        legacyTfjsModelStore,
+        legacyTfjsModelPath
+      )) as { modelArtifacts?: tf.io.ModelArtifacts } | undefined;
+      return record?.modelArtifacts;
+    } finally {
+      db.close();
+    }
+  } catch (err) {
+    return undefined;
+  }
 };
 
 interface LegacyPersistedData extends PersistedProjectData {

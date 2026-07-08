@@ -6,8 +6,21 @@
  */
 import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import type * as tf from "@tensorflow/tfjs";
 import { SpotlightStyle } from "./pages/TourOverlay";
 import { MakeCodeIcon } from "./utils/icons";
+
+/**
+ * A trained model as plain, structured-cloneable data. The live
+ * tf.LayersModel exists only in the ML worker; the main thread holds the
+ * serialised artifacts (for persistence and rehydration in the worker) and
+ * the ml4f machine code compiled from them (for MakeCode project
+ * generation).
+ */
+export interface TrainedModel {
+  artifacts: tf.io.ModelArtifacts;
+  machineCode: Uint8Array;
+}
 
 export interface XYZData {
   x: number[];

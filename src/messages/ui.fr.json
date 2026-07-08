@@ -819,6 +819,50 @@
       "value": "."
     }
   ],
+  "connect-pattern-led-option-label": [
+    {
+      "type": 0,
+      "value": "Column "
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " LED lit"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " LEDs lit"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numLeds"
+    }
+  ],
   "connect-pattern-subtitle": [
     {
       "type": 0,

@@ -1,0 +1,201 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Main-thread client for the ML worker. The worker is spawned lazily on
+ * first use and lives for the rest of the session, owning the only live
+ * TensorFlow.js model. The main thread deals only in structured-cloneable
+ * data: model artifacts, feature vectors, confidences and ml4f machine code.
+ */
+import type * as tf from "@tensorflow/tfjs";
+import type { TrainModelOptions } from "./ml-train-core";
+import type { MlWorkerRequest, MlWorkerResponse } from "./ml-worker-protocol";
+
+export interface WorkerTrainResult {
+  artifacts: tf.io.ModelArtifacts;
+  machineCode: Uint8Array;
+}
+
+interface PendingRequest {
+  resolve(response: MlWorkerResponse | undefined): void;
+  onProgress?: (value: number) => void;
+}
+
+export class MlWorkerClient {
+  private worker: Worker | undefined;
+  private nextRequestId = 0;
+  private pending = new Map<number, PendingRequest>();
+  /**
+   * Whether a train/loadModel request is in flight. Prediction requests are
+   * dropped rather than queued behind them (the worker is single-threaded,
+   * so a queued predict could wait behind seconds of training).
+   */
+  private modelOpInFlight = false;
+  /**
+   * Artifacts of the model currently loaded in the worker. Re-sent if the
+   * worker has to be respawned after a fatal error.
+   */
+  private loadedArtifacts: tf.io.ModelArtifacts | undefined;
+
+  /**
+   * Spawn the worker ahead of first use so the large worker chunk fetch,
+   * tfjs parse and wasm backend init happen in the background rather than
+   * after a user interaction (training, or opening a project with a model).
+   * Deferred until the browser is idle so the fetch doesn't compete with
+   * app startup.
+   */
+  warmUp(): void {
+    const spawn = () => this.ensureWorker();
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(spawn);
+    } else {
+      // Safari < 18. Rough proxy for post-startup idleness.
+      setTimeout(spawn, 1000);
+    }
+  }
+
+  private ensureWorker(): Worker {
+    if (!this.worker) {
+      this.worker = new Worker(new URL("./ml.worker.ts", import.meta.url), {
+        type: "module",
+      });
+      this.worker.onmessage = (event: MessageEvent<MlWorkerResponse>) =>
+        this.handleMessage(event.data);
+      this.worker.onerror = () => this.handleFatalError();
+      if (this.loadedArtifacts) {
+        // Restore the model after a respawn so prediction can resume.
+        this.postRequest(
+          (id) => ({
+            kind: "loadModel",
+            id,
+            artifacts: this.loadedArtifacts!,
+          }),
+          this.worker
+        ).catch(() => {
+          // Handled by the requests that find no model.
+        });
+      }
+    }
+    return this.worker;
+  }
+
+  private handleMessage(message: MlWorkerResponse) {
+    const pending = this.pending.get(message.id);
+    if (!pending) {
+      return;
+    }
+    if (message.kind === "progress") {
+      pending.onProgress?.(message.value);
+      return;
+    }
+    this.pending.delete(message.id);
+    pending.resolve(message);
+  }
+
+  /**
+   * Called when the worker itself fails (e.g. its script or wasm binary
+   * failed to load). Fail all pending requests and discard the worker so
+   * the next request respawns it.
+   */
+  private handleFatalError() {
+    const pending = Array.from(this.pending.values());
+    this.pending.clear();
+    this.worker?.terminate();
+    this.worker = undefined;
+    pending.forEach((p) => p.resolve(undefined));
+  }
+
+  private postRequest(
+    createRequest: (id: number) => MlWorkerRequest,
+    worker: Worker = this.ensureWorker(),
+    onProgress?: (value: number) => void
+  ): Promise<MlWorkerResponse | undefined> {
+    const id = this.nextRequestId++;
+    return new Promise((resolve) => {
+      this.pending.set(id, { resolve, onProgress });
+      worker.postMessage(createRequest(id));
+    });
+  }
+
+  /**
+   * Train a model. The trained model stays live in the worker for
+   * prediction; the returned artifacts and ml4f machine code are for
+   * persistence and MakeCode project generation.
+   *
+   * Returns undefined on training or worker failure.
+   */
+  async train(
+    features: number[][],
+    labels: number[][],
+    options: TrainModelOptions,
+    onProgress: (value: number) => void
+  ): Promise<WorkerTrainResult | undefined> {
+    this.modelOpInFlight = true;
+    try {
+      const response = await this.postRequest(
+        (id) => ({ kind: "train", id, features, labels, options }),
+        this.ensureWorker(),
+        onProgress
+      );
+      if (response?.kind !== "trainComplete") {
+        return undefined;
+      }
+      this.loadedArtifacts = response.artifacts;
+      return {
+        artifacts: response.artifacts,
+        machineCode: response.machineCode,
+      };
+    } finally {
+      this.modelOpInFlight = false;
+    }
+  }
+
+  /**
+   * Load a previously trained model into the worker for prediction and
+   * compile it with ml4f to obtain the machine code needed for MakeCode
+   * project generation.
+   *
+   * Returns undefined on failure.
+   */
+  async loadModel(
+    artifacts: tf.io.ModelArtifacts
+  ): Promise<{ machineCode: Uint8Array } | undefined> {
+    this.modelOpInFlight = true;
+    try {
+      const response = await this.postRequest((id) => ({
+        kind: "loadModel",
+        id,
+        artifacts,
+      }));
+      if (response?.kind !== "loadModelComplete") {
+        return undefined;
+      }
+      this.loadedArtifacts = artifacts;
+      return { machineCode: response.machineCode };
+    } finally {
+      this.modelOpInFlight = false;
+    }
+  }
+
+  /**
+   * Predict confidences for a single feature vector using the model loaded
+   * in the worker. Returns undefined if the request was dropped (a model
+   * operation is in flight) or failed; callers skip that tick.
+   */
+  async predict(features: number[]): Promise<number[] | undefined> {
+    if (this.modelOpInFlight) {
+      return undefined;
+    }
+    const response = await this.postRequest((id) => ({
+      kind: "predict",
+      id,
+      features,
+    }));
+    return response?.kind === "predictComplete"
+      ? response.confidences
+      : undefined;
+  }
+}
+
+export const mlWorker = new MlWorkerClient();
