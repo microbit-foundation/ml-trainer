@@ -4,15 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  ButtonGroup,
-  Flex,
-  HStack,
-  MenuItem,
-  MenuList,
-  Portal,
-  usePrevious,
-} from "@chakra-ui/react";
+import { ButtonGroup, Flex, HStack, usePrevious } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,11 +16,11 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import Menu from "../components/Menu";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
+import { Icon, MenuItem, MenuList, MenuTrigger } from "../shared-ui";
 import { useBoardVersion } from "../hooks/use-board-version";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { projectSessionStorage } from "../session-storage";
@@ -152,38 +144,39 @@ const TestingModelPage = () => {
             borderColor="gray.200"
             alignItems="center"
           >
-            <Menu>
-              <ButtonGroup isAttached>
-                <ButtonWithLoading
-                  ref={editButtonRef}
-                  variant="primary"
-                  onClick={maybeOpenEditor}
-                  className={tourElClassname.editInMakeCodeButton}
-                  isLoading={
-                    editorLoading && !isIncompatibleEditorDeviceDialogOpen
-                  }
-                >
-                  <FormattedMessage id="edit-in-makecode-action" />
-                </ButtonWithLoading>
+            <ButtonGroup isAttached>
+              <ButtonWithLoading
+                ref={editButtonRef}
+                variant="primary"
+                onClick={maybeOpenEditor}
+                className={tourElClassname.editInMakeCodeButton}
+                isLoading={
+                  editorLoading && !isIncompatibleEditorDeviceDialogOpen
+                }
+              >
+                <FormattedMessage id="edit-in-makecode-action" />
+              </ButtonWithLoading>
+              <MenuTrigger>
                 <MoreMenuButton
                   variant="primary"
                   aria-label={intl.formatMessage({
                     id: "more-edit-in-makecode-options",
                   })}
                 />
-                <Portal>
-                  <MenuList>
-                    <MenuItem
-                      icon={<RiDeleteBin2Line />}
-                      onClick={resetProject}
-                      isDisabled={!projectEdited}
-                    >
-                      <FormattedMessage id="reset-to-default-action" />
-                    </MenuItem>
-                  </MenuList>
-                </Portal>
-              </ButtonGroup>
-            </Menu>
+                <MenuList>
+                  <MenuItem
+                    icon={<Icon as={RiDeleteBin2Line} />}
+                    onAction={resetProject}
+                    isDisabled={!projectEdited}
+                    textValue={intl.formatMessage({
+                      id: "reset-to-default-action",
+                    })}
+                  >
+                    <FormattedMessage id="reset-to-default-action" />
+                  </MenuItem>
+                </MenuList>
+              </MenuTrigger>
+            </ButtonGroup>
           </HStack>
           <LiveGraphPanel
             showPredictedAction

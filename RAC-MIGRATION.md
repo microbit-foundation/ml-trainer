@@ -165,10 +165,27 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    `SettingsMenu`/`LanguageMenuItem`/`SettingsMenuItem` and `HelpMenu`/
    `HelpMenuItems` migrated; link items use RAC `MenuItem` `href`/`target`/`rel`,
    actions use `onAction`. LanguageDialog focus hack removed (RAC restores focus
-   to the trigger on close — verified). Remaining Chakra menus (`DataSamplesMenu`,
-   `ToolbarMenu`, `MoreMenuButton`, `ProjectCardActions`, `TestingModelPage`)
-   still use the old `components/Menu.tsx` back-button wrapper; port them onto
-   shared-ui `MenuTrigger` next, then delete `components/Menu.tsx`.
+   to the trigger on close — verified).
+1. ✅ **All remaining menus → RAC** — done; `components/Menu.tsx` (back-button
+   wrapper) and the unused `ToolbarMenu` deleted. `DataSamplesMenu`,
+   `ProjectCardActions`, `ActionDataSamplesCard` (record options) and
+   `TestingModelPage` (MakeCode split button) use shared-ui `MenuTrigger`.
+   `MoreMenuButton` rebuilt on shared-ui `IconButton` (divider is
+   `1px solid` **currentColor** — Chakra's `borderLeft="1px"` resolved via the
+   `borders` scale, so it reads white on filled variants). The split buttons
+   keep Chakra `ButtonGroup isAttached` for now — its child selectors style the
+   RAC trigger too. Notable:
+   - shared-ui `MenuItem` now wraps an icon-item's children in a `flex:1`
+     `label` slot span (Chakra parity), so block children (two stacked `Text`s
+     in the record-options items) lay out vertically.
+   - `LoadProjectMenuItem` deleted: the hidden `LoadProjectInput` must live
+     *outside* the menu because RAC popovers unmount on close (Chakra kept the
+     list mounted), which would drop the file input's change event mid-pick.
+     `DataSamplesMenu` renders the input as a sibling and the item calls
+     `chooseFile` via ref.
+   - `DataSamplesMenu`'s Android save toast now uses shared-ui `useToast`;
+     Chakra's `id`-dedup and per-call `position` aren't supported (region is
+     top-centre; repeat saves within the timeout can stack duplicates).
 2. **App shell**: `DefaultPageLayout`, `ActionBar`, `NavigationDrawer` (Drawer) —
    unblocks all pages.
 3. **Self-contained dialogs**: `ConfirmDialog` (AlertDialog), `NameProjectDialog`

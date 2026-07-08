@@ -18,7 +18,7 @@ import { defineSlotRecipe } from "@pandacss/dev";
  */
 export const menu = defineSlotRecipe({
   className: "menu",
-  slots: ["content", "list", "item", "icon", "divider"],
+  slots: ["content", "list", "item", "icon", "label", "divider"],
   base: {
     content: {
       bg: "white",
@@ -60,6 +60,12 @@ export const menu = defineSlotRecipe({
       "&[data-focused]": { bg: "gray.100" },
       "&[data-pressed]": { bg: "gray.200" },
       "&[data-disabled]": { opacity: 0.4, cursor: "not-allowed" },
+    },
+    label: {
+      // Chakra wraps an icon-item's children in a flex:1 span, so block
+      // children (e.g. two stacked <Text>s) lay out vertically rather than as
+      // flex-row siblings of the icon.
+      flex: "1",
     },
     icon: {
       display: "inline-flex",

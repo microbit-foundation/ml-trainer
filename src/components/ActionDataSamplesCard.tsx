@@ -13,9 +13,6 @@ import {
   CardProps,
   CloseButton,
   HStack,
-  Icon,
-  MenuItem,
-  MenuList,
   Portal,
   Text,
   VStack,
@@ -25,7 +22,7 @@ import { forwardRef, ReactNode, useCallback, useRef } from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataSamplesView, ActionData, RecordingData } from "../model";
-import Menu from "./Menu";
+import { Icon, MenuItem, MenuList, MenuTrigger } from "../shared-ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
@@ -245,78 +242,84 @@ const RecordingArea = ({
   const intl = useIntl();
   return (
     <VStack w="8.25rem" justifyContent="center" {...props}>
-      <Menu>
-        <ButtonGroup isAttached>
-          <Button
-            id={recordButtonId(action)}
-            pr={2}
-            variant={selected ? "record" : "recordOutline"}
-            borderRight="none"
-            onClick={() =>
-              onRecord({ recordingsToCapture: 1, continuousRecording: false })
-            }
-            aria-label={intl.formatMessage(
-              { id: "record-action-aria" },
-              { action: action.name }
-            )}
-          >
-            <FormattedMessage id="record-action" />
-          </Button>
+      <ButtonGroup isAttached>
+        <Button
+          id={recordButtonId(action)}
+          pr={2}
+          variant={selected ? "record" : "recordOutline"}
+          borderRight="none"
+          onClick={() =>
+            onRecord({ recordingsToCapture: 1, continuousRecording: false })
+          }
+          aria-label={intl.formatMessage(
+            { id: "record-action-aria" },
+            { action: action.name }
+          )}
+        >
+          <FormattedMessage id="record-action" />
+        </Button>
+        <MenuTrigger>
           <MoreMenuButton
-            minW={8}
+            css={{ minW: 8 }}
             variant={selected ? "record" : "recordOutline"}
             aria-label={intl.formatMessage(
               { id: "recording-options-aria" },
               { action: action.name }
             )}
           />
-          <Portal>
-            <MenuList>
-              <MenuItem
-                onClick={() =>
-                  onRecord({
-                    recordingsToCapture: 10,
-                    continuousRecording: false,
-                  })
-                }
-                icon={<Icon as={RiHashtag} h={5} w={5} />}
-              >
-                <Text fontSize="md">
-                  <FormattedMessage
-                    id="record-samples"
-                    values={{ numSamples: 10 }}
-                  />
-                </Text>
-                <Text fontSize="xs">
-                  <FormattedMessage id="record-samples-help" />
-                </Text>
-              </MenuItem>
-              <MenuItem
-                onClick={() =>
-                  onRecord({
-                    recordingsToCapture: 10,
-                    continuousRecording: true,
-                  })
-                }
-                icon={<Icon as={RiTimerLine} h={5} w={5} />}
-              >
-                <Text fontSize="md">
-                  <FormattedMessage
-                    id="record-seconds"
-                    values={{ numSeconds: 10 }}
-                  />
-                </Text>
-                <Text fontSize="xs">
-                  <FormattedMessage
-                    id="record-seconds-help"
-                    values={{ numSamples: 10 }}
-                  />
-                </Text>
-              </MenuItem>
-            </MenuList>
-          </Portal>
-        </ButtonGroup>
-      </Menu>
+          <MenuList>
+            <MenuItem
+              onAction={() =>
+                onRecord({
+                  recordingsToCapture: 10,
+                  continuousRecording: false,
+                })
+              }
+              icon={<Icon as={RiHashtag} css={{ width: 5, height: 5 }} />}
+              textValue={intl.formatMessage(
+                { id: "record-samples" },
+                { numSamples: 10 }
+              )}
+            >
+              <Text fontSize="md">
+                <FormattedMessage
+                  id="record-samples"
+                  values={{ numSamples: 10 }}
+                />
+              </Text>
+              <Text fontSize="xs">
+                <FormattedMessage id="record-samples-help" />
+              </Text>
+            </MenuItem>
+            <MenuItem
+              onAction={() =>
+                onRecord({
+                  recordingsToCapture: 10,
+                  continuousRecording: true,
+                })
+              }
+              icon={<Icon as={RiTimerLine} css={{ width: 5, height: 5 }} />}
+              textValue={intl.formatMessage(
+                { id: "record-seconds" },
+                { numSeconds: 10 }
+              )}
+            >
+              <Text fontSize="md">
+                <FormattedMessage
+                  id="record-seconds"
+                  values={{ numSeconds: 10 }}
+                />
+              </Text>
+              <Text fontSize="xs">
+                <FormattedMessage
+                  id="record-seconds-help"
+                  values={{ numSamples: 10 }}
+                />
+              </Text>
+            </MenuItem>
+          </MenuList>
+        </MenuTrigger>
+      </ButtonGroup>
       {action.recordings.length < 3 ? (
         <Text
           fontSize="xs"

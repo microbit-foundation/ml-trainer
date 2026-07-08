@@ -59,7 +59,12 @@ const ActionBar = ({
           {itemsLeft}
         </HStack>
         {itemsCenter && (
-          <HStack flex="2 1" justifyContent="center" px={3} {...itemsCenterProps}>
+          <HStack
+            flex="2 1"
+            justifyContent="center"
+            px={3}
+            {...itemsCenterProps}
+          >
             {itemsCenter}
           </HStack>
         )}

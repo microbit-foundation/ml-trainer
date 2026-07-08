@@ -104,7 +104,11 @@ export const MenuList = ({
   return (
     <Popover
       placement={placement}
-      className={cx(slots.content, cssProp ? css(cssProp) : undefined, className)}
+      className={cx(
+        slots.content,
+        cssProp ? css(cssProp) : undefined,
+        className
+      )}
     >
       <RACMenu className={slots.list}>{children}</RACMenu>
     </Popover>
@@ -138,8 +142,14 @@ export const MenuItem = ({
       className={cx(slots.item, cssProp ? css(cssProp) : undefined, className)}
       {...rest}
     >
-      {icon ? <span className={slots.icon}>{icon}</span> : null}
-      {children}
+      {icon ? (
+        <>
+          <span className={slots.icon}>{icon}</span>
+          <span className={slots.label}>{children}</span>
+        </>
+      ) : (
+        children
+      )}
     </RACMenuItem>
   );
 };
@@ -154,7 +164,11 @@ export const MenuDivider = ({ css: cssProp, className }: MenuDividerProps) => {
   const slots = menu();
   return (
     <Separator
-      className={cx(slots.divider, cssProp ? css(cssProp) : undefined, className)}
+      className={cx(
+        slots.divider,
+        cssProp ? css(cssProp) : undefined,
+        className
+      )}
     />
   );
 };
