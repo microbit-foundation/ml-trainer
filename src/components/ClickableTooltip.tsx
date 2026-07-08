@@ -20,7 +20,7 @@ interface ClickableTooltipProps extends Omit<TooltipProps, "label"> {
   label: ReactNode;
   /**
    * Render the tooltip as visual-only: a non-focusable trigger that
-   * shows the tooltip on hover/click not keyboard reachable. This is a 
+   * shows the tooltip on hover/click not keyboard reachable. This is a
    * temporary escape hatch for RecordingFingerprint data features until an
    * accessible solution is implemented.
    */
