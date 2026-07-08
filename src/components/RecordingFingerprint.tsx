@@ -39,6 +39,9 @@ const RecordingFingerprint = ({
     >
       {Object.keys(dataFeatures).map((k) => (
         <ClickableTooltip
+          // Temporary escape hatch from being a tab stop until an 
+          // accessible solution is implemented.
+          visualOnly
           placement="end-end"
           key={k}
           label={

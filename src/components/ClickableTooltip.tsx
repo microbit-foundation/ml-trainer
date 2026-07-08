@@ -18,6 +18,13 @@ interface ClickableTooltipProps extends Omit<TooltipProps, "label"> {
   children: ReactNode;
   titleId?: string;
   label: ReactNode;
+  /**
+   * Render the tooltip as visual-only: a non-focusable trigger that
+   * shows the tooltip on hover/click not keyboard reachable. This is a 
+   * temporary escape hatch for RecordingFingerprint data features until an
+   * accessible solution is implemented.
+   */
+  visualOnly?: boolean;
 }
 
 // Chakra Tooltip doesn't support triggering on mobile/tablets:
@@ -26,23 +33,27 @@ interface ClickableTooltipProps extends Omit<TooltipProps, "label"> {
 // Touch screen readers (iPadOS VoiceOver / Android TalkBack) never open the
 // tooltip, and even when opened its text is only associated with the trigger
 // while open (via aria-describedby that Chakra sets on its cloned child). So the
-// text is unreachable on tablets. We instead expose the same text on an
-// always-present node that is referenced from the real <button> trigger, so it
-// is part of the trigger's accessible name/description regardless of the visual
-// tooltip's open state.
+// text is unreachable on tablets. For the default "button" trigger we instead
+// expose the same text on an always-present node referenced from the button, so
+// it is part of the trigger's accessible name/description regardless of the
+// visual tooltip's open state.
 //
-// The trigger is a real <button> so it is focusable and operable (Enter/Space)
-// on every platform, rather than a role="button" span with none of the
-// behaviour. Chakra clones the outer <Flex> wrapper (which it needs for
-// positioning); that wrapper is a nameless, roleless span, so Chakra stamping
-// its own aria-describedby/handlers onto it is inert to assistive tech.
+// A real <button> is focusable and operable (Enter/Space) on every platform,
+// rather than a role="button" span with none of the behaviour. Chakra clones
+// the outer <Flex> wrapper (which it needs for positioning); that wrapper is a
+// nameless, roleless span, so Chakra stamping its own aria-describedby/handlers
+// onto it is inert to assistive tech.
+//
+// The visualOnly prop opts out of all of the above (see its doc comment).
 
 const ClickableTooltip = ({
   children,
   titleId,
+  visualOnly = false,
   label: tooltipLabel,
   ...rest
 }: ClickableTooltipProps) => {
+  const isButton = !visualOnly;
   const disclosure = useDisclosure();
   const intl = useIntl();
   const ref = useRef<HTMLDivElement>(null);
@@ -93,9 +104,9 @@ const ClickableTooltip = ({
     [disclosure]
   );
 
-  // With a titleId we use a concise name plus the full label as the description;
-  // without one, the full label is the accessible name.
-  const nameProps = titleId
+  const nameProps = !isButton
+    ? {}
+    : titleId
     ? {
         "aria-label": intl.formatMessage({ id: `${titleId}-tooltip-aria` }),
         "aria-describedby": descriptionId,
@@ -106,10 +117,7 @@ const ClickableTooltip = ({
     <Tooltip
       isOpen={disclosure.isOpen}
       label={
-        // Hide the transient Chakra popup from assistive tech; the sibling
-        // description node below is the always-present copy, so this avoids a
-        // second announcement via Chakra's open-state aria-describedby.
-        <Box aria-hidden={true}>{tooltipLabel}</Box>
+        isButton ? <Box aria-hidden={true}>{tooltipLabel}</Box> : tooltipLabel
       }
       {...rest}
       closeOnEsc={true}
@@ -121,13 +129,14 @@ const ClickableTooltip = ({
         onMouseLeave={handleMouseLeave}
       >
         <Button
+          as={isButton ? "button" : "span"}
           {...nameProps}
           variant="unstyled"
-          className="focusable-tooltip"
+          className={isButton ? "focusable-tooltip" : undefined}
           onClick={handleClick}
           onPointerDown={handlePointerDown}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={isButton ? handleFocus : undefined}
+          onBlur={isButton ? handleBlur : undefined}
           onKeyDown={handleKeydown}
           display="flex"
           alignItems="stretch"
@@ -144,9 +153,11 @@ const ClickableTooltip = ({
         >
           {children}
         </Button>
-        <Box id={descriptionId} aria-hidden={true} srOnly>
-          {tooltipLabel}
-        </Box>
+        {isButton && (
+          <Box id={descriptionId} aria-hidden={true} srOnly>
+            {tooltipLabel}
+          </Box>
+        )}
       </Flex>
     </Tooltip>
   );
