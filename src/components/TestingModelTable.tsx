@@ -74,7 +74,8 @@ const TestingModelTable = () => {
             headings={headings}
           />
           <VStack
-            w={`calc(100vw - ${scrollbarWidth}px)`}
+            // Scrollbar-compensated width; inline style (computed value).
+            style={{ width: `calc(100vw - ${scrollbarWidth}px)` }}
             h={0}
             justifyContent="start"
             flexGrow={1}
@@ -143,12 +144,14 @@ const TestingModelTable = () => {
 
                     {projectEdited && actionIdx === 0 && (
                       <GridItem
-                        // Extra row to extend beyond the grid.
-                        rowSpan={actions.length + 1}
                         minW={0}
                         h="100%"
                         maxW="100%"
                         position="relative"
+                        // Extra row to extend beyond the grid. Dynamic value,
+                        // so an inline style (Panda can't extract computed
+                        // spans).
+                        style={{ gridRow: `span ${actions.length + 1}` }}
                       >
                         <CodeViewCard
                           parentRef={gridAreaRef}

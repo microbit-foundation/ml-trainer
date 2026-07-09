@@ -16,7 +16,6 @@ const PercentageMeter = ({
   actionId,
   meterBarWidthPx,
 }: PercentageMeterProps) => {
-  const height = 3;
   const numTicks = 9;
 
   const meterRef = useRef<HTMLDivElement>(null);
@@ -43,18 +42,19 @@ const PercentageMeter = ({
 
   return (
     <HStack
-      w={`${meterBarWidthPx}px`}
-      h={height}
+      h={3}
       rounded="full"
       bg="gray.200"
       overflow="hidden"
       position="relative"
+      // Prop-driven width; inline style (Panda can't extract computed values).
+      style={{ width: `${meterBarWidthPx}px` }}
     >
-      <HStack ref={meterRef} w={0} h={height} rounded="full" bg="gray.600" />
+      <HStack ref={meterRef} w={0} h={3} rounded="full" bg="gray.600" />
       <HStack
         display="inline-flex"
         w="full"
-        h={height}
+        h={3}
         position="absolute"
         justifyContent="space-between"
       >
@@ -68,7 +68,7 @@ const PercentageMeter = ({
                 key={i}
                 bg={i === 0 || i === numTicks + 1 ? undefined : "white"}
                 w={0.5}
-                h={height}
+                h={3}
               />
             ))
         }
