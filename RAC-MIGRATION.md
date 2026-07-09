@@ -440,10 +440,54 @@ Process rules learned the hard way:
    positioning + spotlight clip-path overlay; structurally different from
    the other dialogs), EditableName, ProjectPreview, the animation
    components.
-5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
-   and token-drive them up front.
-6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs
-   Panda build) or a component gallery, to replace the manual screenshot loop.
+5. **Brand-diff audit** (see gotcha #6) — catalogue all OSS/private Chakra
+   theme divergences and token-drive them. Do this while the Chakra themes
+   are still in the tree to diff against; it's small and de-risks every
+   later pass (the `brand2` near-miss shows how these hide).
+6. **Mixed-tree components** — the still-Chakra components rendered *inside*
+   already-ported screens, where cross-stack CSS races live (see the
+   AspectRatio/RecordingGraph gotcha): `RecordingGraph` (also lets the
+   SettingsDialog aspect-ratio wrapper slim down; keep the native
+   `aspectRatio` property, don't return to the pattern),
+   `RecordingFingerprint`, `EditableName`, `ProjectPreview`,
+   `ChooseDeviceOverlay`, `NativeConsentDialog`, the trivial `CodePage` and
+   `OpenSharedProjectPage`, and the two remaining Chakra `useToast` call
+   sites (`App.tsx` update toast, `project-hooks`).
+7. **Leaf sweep** (mechanical batch): `Link` wrapper, `AppLogo`,
+   `PreReleaseNotice`, `NewPageChoice`, `FileDropTarget`/`ProjectDropTarget`/
+   `LoadProjectInput`, `icons/PauseIcon`, `PauseResumeAnimationLink`,
+   `StepByStepIllustration`, `ErrorPage`/`ErrorHandlerErrorView` (port these
+   last-mentioned two carefully — error surfaces shouldn't depend on newly
+   fragile styling paths).
+8. **Animation trees** (~26 files, volume over risk): `HowItWorksAnimation/*`,
+   `PairingModeAnimation/*`, `PlugMicrobitAnimation`, `LoadingAnimation`,
+   `ArrowOne`/`ArrowTwo`, `AnimationProvider`. Remember: as each file drops
+   Emotion, drop it from `panda.config.ts`'s `exclude` list too (gotcha in
+   DataSamplesPage entry) — that list should be empty when this pass ends.
+9. **Tour** (`src/pages/Tour.tsx` + `TourOverlay.tsx` + `tours.tsx` content):
+   needs a positioning decision — RAC `Popover` with an external
+   `triggerRef` pointing at the spotlighted element is the idiomatic
+   replacement for Chakra's `usePopper` (arrow via `OverlayArrow`); the
+   spotlight svg overlay is stack-agnostic and ports as-is. Also drops
+   `returnFocusOnClose={false}` (see comment in Tour.tsx for why).
+10. **BluetoothPatternInput** (#926) — its own careful pass; recently
+    reworked screen-reader-accessible radio machinery, so verify with AT.
+11. **Fidelity harness** — build *before* the kill-switch: the
+    `preflight: true` flip changes global styles everywhere at once, and a
+    Chakra-build vs Panda-build screenshot diff turns that from
+    eyeball-everything into a reviewable diff. The TestingModelPage
+    stash-compare spec is the working prototype.
+12. **Kill-switch**: remove `ChakraProvider`/`BrandConfig.chakraTheme`,
+    delete `src/deployment/default/{theme,colors}.ts` etc., unpick the
+    type-only imports (`model.ts` `PlacementWithLogical`/`ThemingProps`,
+    `deployment/index.ts` `BoxProps`), set `preflight: true`, delete
+    `bin/unlayer-panda.mjs`/`bin/panda-dev.mjs` watch shim + the `exclude`
+    list, drop Chakra/Emotion/framer-motion deps. Full fidelity-harness +
+    e2e pass.
+13. **Private preset consumption** — replace the local symlink with a real
+    mechanism (publish the `panda-preset` export or a documented
+    `file:`/`npm link` story) so team/CI can build the branded app. Gates
+    merging; independent of the passes above, can run in parallel.
 
 ## Key files
 - `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/unlayer-panda.mjs`,
