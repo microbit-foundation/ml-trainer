@@ -272,10 +272,24 @@ Consolidated for review time; all deliberate:
 
 ## Remaining work (agreed order)
 
-1. **Brand-diff audit** (see gotcha #6) — catalogue all OSS/private Chakra
-   theme divergences and token-drive them. Do this while the Chakra themes
-   are still in the tree to diff against; it's small and de-risks every
-   later pass (the `brand2` near-miss shows how these hide).
+1. ✅ **Brand-diff audit** (see gotcha #6) — done; **no uncovered
+   divergences**. `bin/diff-chakra-themes.mjs` (delete at kill-switch) diffs
+   the *resolved* OSS vs private Chakra themes — source text is quote-style
+   noise — with both bundled via esbuild (packages external) so they share
+   this repo's hoisted Chakra, as vite's alias does at runtime; style-config
+   functions are evaluated against the same base theme so ramp-driven
+   divergence stays as token strings. Findings: 70 token deltas, all in the
+   seven colour ramps the private preset overrides
+   (`brand`/`brand2`/`blue`/`purple`/`teal`/`pink`/`orange`), and the script
+   mechanically confirms the Panda preset pair reproduces every one
+   ((private-panda − oss-panda) == (private-chakra − oss-chakra)). Exactly 3
+   structural diffs, all already token-driven: the `language` button colour
+   (`languageText`), its hover (`languageTextHover` — private encodes
+   "no hover change" as hover==rest, matching the private Chakra theme's
+   *absent* `_hover.color`), and the private-only `marketing` heading variant
+   (`display` font). fonts/radii/shadows are byte-identical across sides;
+   `withDefaultVariant` and defaultProps diff clean. Rerun the script after
+   any theme or preset change while Chakra remains.
 2. **Mixed-tree components** — the still-Chakra components rendered *inside*
    already-ported screens, where cross-stack CSS races live (gotcha #11):
    `RecordingGraph` (also lets the SettingsDialog aspect-ratio wrapper slim
