@@ -584,8 +584,13 @@ const createMlStore = (logging: Logging) => {
 
         setHint(suppressTrainAndAddActionHint = false) {
           set(
-            ({ actions }) => {
-              const hint = getHint(actions, suppressTrainAndAddActionHint);
+            ({ actions, model }) => {
+              // Don't hint to train when a model already exists, e.g. after
+              // renaming an action which doesn't invalidate the trained model.
+              const hint = getHint(
+                actions,
+                suppressTrainAndAddActionHint || model !== undefined
+              );
               return { hint };
             },
             false,
@@ -894,7 +899,9 @@ const createMlStore = (logging: Logging) => {
             dataWindow
           );
           const timestamp = Date.now();
-          const newHint = getHint(newActions, false);
+          // Don't hint to train when a model already exists, e.g. after
+          // renaming an action which doesn't invalidate the trained model.
+          const newHint = getHint(newActions, model !== undefined);
           set({
             actions: newActions,
             // Hint is set separately in DataSamplesPage.tsx and debounced
