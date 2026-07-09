@@ -370,9 +370,27 @@ Process rules learned the hard way:
    ConfirmDialog), ~3px internal shift in the certainty card, and the
    MakeCode loading skeleton is an opacity pulse rather than Chakra's
    shimmer.
-1. **Dialog flows**: Recording, TrainModelFlow, Welcome, Connect*, Settings,
-   About, feedback etc. — the last Chakra surfaces besides EditableName,
-   ProjectPreview and the tour/animation components.
+1. **Dialog flows** (in progress) — chunk 1 ✅: the connection flow.
+   Modal grew `motionless` (Chakra's motionPreset="none"; the connect flow
+   steps between dialogs without animation) and `ModalHeader` a `level` prop;
+   Chakra's `closeOnOverlayClick={false}` maps to `isDismissable={false}`
+   (react-aria treats Escape separately, so it still closes, as in Chakra).
+   Ported: `ConnectContainerDialog` (the shared shell for 12 step dialogs),
+   all 12 step dialogs (DownloadChooseMicrobit's radio cards are RAC
+   RadioGroup/Radio with render-prop state classes), the 10 error/
+   troubleshoot dialogs (batch-converted: unwrap ModalOverlay/Content, map
+   props, onClick→onPress — typecheck surfaced the rest), `ExternalLink`
+   (Chakra's ExternalLinkIcon glyph inlined; uses shared-ui Link so
+   jsx-no-target-blank recognises the rel) and `DialogFooterLink`.
+   shared-ui additions: `UnorderedList`/`OrderedList`.
+   Deferred within the flow: `BluetoothPatternInput` (301 lines of
+   recently-reworked screen-reader-accessible radio machinery, #926 — its
+   own pass).
+   Chunk 2 (next): Recording, progress dialogs (needs a ProgressBar
+   primitive), Save*/Download*/Loading*, Welcome/About/Settings/Feedback/
+   TrainModel*, Tour, ImportError, NotCreateAiHex, MakeCodeLoadError,
+   IncompatibleEditorDevice — then EditableName, ProjectPreview, the
+   tour/animation components.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.
 6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs

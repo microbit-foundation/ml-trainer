@@ -14,3 +14,13 @@ export const List = styled("ul", {
 export const ListItem = styled("li", {
   base: {},
 });
+
+/** Bulleted list matching Chakra's <UnorderedList>. */
+export const UnorderedList = styled("ul", {
+  base: { listStyleType: "disc", marginStart: "1em", padding: 0 },
+});
+
+/** Numbered list matching Chakra's <OrderedList>. */
+export const OrderedList = styled("ol", {
+  base: { listStyleType: "decimal", marginStart: "1em", padding: 0 },
+});

@@ -8,13 +8,11 @@ import {
   HStack,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 
 interface WebUsbBluetoothUnsupportedDialogProps {
@@ -28,38 +26,33 @@ const WebUsbBluetoothUnsupportedDialog = ({
 }: WebUsbBluetoothUnsupportedDialogProps) => {
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "3xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="bluetooth-unsupported-header" />
-          </ModalHeader>
-          <ModalBody>
-            <VStack gap={5} textAlign="left" w="100%">
-              <Text w="100%">
-                <FormattedMessage id="bluetooth-unsupported-explain" />
-              </Text>
-              <Text w="100%">
-                <FormattedMessage id="bluetooth-unsupported-advice" />
-              </Text>
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="end">
-            <HStack gap={5}>
-              <Button onClick={onClose} variant="primary" size="lg">
-                <FormattedMessage id="close-action" />
-              </Button>
-            </HStack>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id="bluetooth-unsupported-header" />
+      </ModalHeader>
+      <ModalBody>
+        <VStack gap={5} textAlign="left" w="100%">
+          <Text w="100%">
+            <FormattedMessage id="bluetooth-unsupported-explain" />
+          </Text>
+          <Text w="100%">
+            <FormattedMessage id="bluetooth-unsupported-advice" />
+          </Text>
+        </VStack>
+      </ModalBody>
+      <ModalFooter css={{ justifyContent: "end" }}>
+        <HStack gap={5}>
+          <Button onPress={onClose} variant="primary" size="lg">
+            <FormattedMessage id="close-action" />
+          </Button>
+        </HStack>
+      </ModalFooter>
     </Modal>
   );
 };

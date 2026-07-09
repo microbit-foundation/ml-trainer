@@ -3,15 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  Flex,
-  Image,
-  List,
-  ListItem,
-  Text,
-  VisuallyHidden,
-} from "@chakra-ui/react";
+import { Box, css, Flex, Image, List, ListItem, Text } from "../shared-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import selectMicrobitImage from "../images/select-microbit-web-usb.png";
 import ConnectContainerDialog, {
@@ -66,14 +58,16 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
           position="absolute"
           left="490px"
           top="68px"
+          display="flex"
+          flexDirection="column"
           alignItems="flex-start"
-          spacing={2}
+          gap={2}
         >
           <ListItem>
             <Flex alignItems="center" height="72px">
-              <VisuallyHidden>
+              <span className={css({ srOnly: true })}>
                 <Text>1. </Text>
-              </VisuallyHidden>
+              </span>
               <Text>
                 <FormattedMessage id="connect-popup-instruction1" />
               </Text>
@@ -81,9 +75,9 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
           </ListItem>
           <ListItem>
             <Flex alignItems="center" height="72px">
-              <VisuallyHidden>
+              <span className={css({ srOnly: true })}>
                 <Text>2. </Text>
-              </VisuallyHidden>
+              </span>
               <Text>
                 <FormattedMessage id="connect-popup-webusb-instruction2" />
               </Text>

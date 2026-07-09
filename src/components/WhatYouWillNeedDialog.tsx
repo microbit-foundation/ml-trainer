@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import { Grid, GridItem, Image, Text, VStack } from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";
@@ -114,9 +114,12 @@ const WhatYouWillNeedDialog = ({
       )}
       <Grid
         width="100%"
-        templateColumns={`repeat(${itemsConfig[type].length}, 1fr)`}
         gap={16}
         p="30px"
+        // Item count varies by type; computed template.
+        style={{
+          gridTemplateColumns: `repeat(${itemsConfig[type].length}, 1fr)`,
+        }}
       >
         {itemsConfig[type].map(({ imgSrc, titleId, subtitleId }) => {
           return (

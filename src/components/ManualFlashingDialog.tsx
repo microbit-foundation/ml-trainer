@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Image, Text, VStack } from "../shared-ui";
 import Bowser from "bowser";
 import { ReactNode, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -67,7 +67,7 @@ const ManualFlashingDialog = ({
       headingId="transfer-hex-heading"
       additionalActions={
         closeIsPrimaryAction ? (
-          <Button onClick={props.onClose} variant="primary" size="lg">
+          <Button onPress={props.onClose} variant="primary" size="lg">
             <FormattedMessage id="close-action" />
           </Button>
         ) : undefined
@@ -80,7 +80,7 @@ const ManualFlashingDialog = ({
             id="transfer-hex-manual-download"
             values={{
               link: (chunks: ReactNode) => (
-                <Button variant="link" onClick={handleDownload}>
+                <Button variant="link" onPress={handleDownload}>
                   {chunks}
                 </Button>
               ),

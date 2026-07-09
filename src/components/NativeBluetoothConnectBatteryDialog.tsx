@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Image, Text, VStack } from "@chakra-ui/react";
+import { Image, Text, VStack } from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 import microbitWithBatteryPack from "../images/microbit-with-battery-pack.svg";
 import ConnectContainerDialog, {

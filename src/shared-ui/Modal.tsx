@@ -44,8 +44,10 @@ export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   size?: ModalSize;
-  /** Allow closing by clicking the backdrop / pressing Escape (default true). */
+  /** Allow closing by clicking the backdrop (default true; Escape always closes). */
   isDismissable?: boolean;
+  /** Disable the enter/exit transitions (Chakra's motionPreset="none"). */
+  motionless?: boolean;
   /**
    * Use "alertdialog" for confirmations that interrupt the user (Chakra's
    * AlertDialog).
@@ -76,6 +78,7 @@ export const Modal = ({
   onClose,
   size,
   isDismissable = true,
+  motionless,
   role,
   isCentered,
   onCloseComplete,
@@ -83,6 +86,13 @@ export const Modal = ({
   children,
 }: ModalProps) => {
   const slots = dialog({ size, centered: isCentered });
+  const motionlessClass = motionless
+    ? css({
+        transition: "none",
+        "&[data-entering]": { opacity: 1, transform: "none" },
+        "&[data-exiting]": { opacity: 1, transform: "none" },
+      })
+    : undefined;
   const handleUnmount = () => {
     onCloseComplete?.();
     const el = finalFocusRef?.current;
@@ -100,10 +110,10 @@ export const Modal = ({
         }
       }}
       isDismissable={isDismissable}
-      className={slots.overlay}
+      className={cx(slots.overlay, motionlessClass)}
     >
       <UnmountCallback callback={handleUnmount} />
-      <RACModal className={slots.content}>
+      <RACModal className={cx(slots.content, motionlessClass)}>
         <Dialog role={role} className={slots.inner}>
           <SlotContext.Provider value={{ slots, onClose }}>
             {children}
@@ -115,7 +125,7 @@ export const Modal = ({
 };
 
 interface SlotProps {
-  children: ReactNode;
+  children?: ReactNode;
   css?: SystemStyleObject;
   className?: string;
 }
@@ -125,11 +135,15 @@ export const ModalHeader = ({
   children,
   css: cssProp,
   className,
-}: SlotProps) => {
+  level,
+}: SlotProps & {
+  /** Heading element level (default 3, like RAC). */ level?: number;
+}) => {
   const { slots } = useDialog();
   return (
     <RACHeading
       slot="title"
+      level={level}
       className={cx(
         slots.header,
         cssProp ? css(cssProp) : undefined,

@@ -9,14 +9,12 @@ import {
   ListItem,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   UnorderedList,
   VStack,
-} from "@chakra-ui/react";
+} from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 
 interface ResetToBluetoothModeTroubleshootDialogProps {
@@ -35,50 +33,45 @@ const ResetToBluetoothModeTroubleshootDialog = ({
 }: ResetToBluetoothModeTroubleshootDialogProps) => {
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-heading" />
-          </ModalHeader>
-          <ModalBody>
-            <VStack textAlign="left" w="100%" gap={3}>
-              <Text w="100%">
-                <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting" />
+      <ModalHeader>
+        <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-heading" />
+      </ModalHeader>
+      <ModalBody>
+        <VStack textAlign="left" w="100%" gap={3}>
+          <Text w="100%">
+            <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting" />
+          </Text>
+          <UnorderedList textAlign="left" ps={8}>
+            <ListItem>
+              <Text>
+                <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting-1" />
               </Text>
-              <UnorderedList textAlign="left" ps={8}>
-                <ListItem>
-                  <Text>
-                    <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting-1" />
-                  </Text>
-                </ListItem>
-                <ListItem>
-                  <Text>
-                    <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting-2" />
-                  </Text>
-                </ListItem>
-              </UnorderedList>
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="end">
-            <HStack gap={5}>
-              <Button onClick={onClose} variant="secondary" size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button onClick={onTryAgain} variant="primary" size="lg">
-                <FormattedMessage id="try-again-action" />
-              </Button>
-            </HStack>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+            </ListItem>
+            <ListItem>
+              <Text>
+                <FormattedMessage id="connect-unable-to-enter-bluetooth-mode-troubleshooting-2" />
+              </Text>
+            </ListItem>
+          </UnorderedList>
+        </VStack>
+      </ModalBody>
+      <ModalFooter css={{ justifyContent: "end" }}>
+        <HStack gap={5}>
+          <Button onPress={onClose} variant="secondary" size="lg">
+            <FormattedMessage id="cancel-action" />
+          </Button>
+          <Button onPress={onTryAgain} variant="primary" size="lg">
+            <FormattedMessage id="try-again-action" />
+          </Button>
+        </HStack>
+      </ModalFooter>
     </Modal>
   );
 };

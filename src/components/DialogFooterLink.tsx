@@ -3,10 +3,32 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, ButtonProps } from "@chakra-ui/react";
+import { ReactNode } from "react";
+import { Button } from "../shared-ui";
 
-const DialogFooterLink = ({ ...props }: ButtonProps) => {
-  return <Button variant="link" size="lg" borderRadius={0} {...props} />;
+interface DialogFooterLinkProps {
+  onClick?: () => void;
+  leftIcon?: ReactNode;
+  children: ReactNode;
+}
+
+/** Link-styled action in a dialog footer's left slot. */
+const DialogFooterLink = ({
+  onClick,
+  leftIcon,
+  children,
+}: DialogFooterLinkProps) => {
+  return (
+    <Button
+      variant="link"
+      size="lg"
+      onPress={onClick}
+      leftIcon={leftIcon}
+      css={{ borderRadius: 0 }}
+    >
+      {children}
+    </Button>
+  );
 };
 
 export default DialogFooterLink;

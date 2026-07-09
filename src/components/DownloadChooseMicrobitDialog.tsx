@@ -3,29 +3,23 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  HStack,
-  Icon,
-  Image,
-  Text,
-  useRadio,
-  useRadioGroup,
-  UseRadioProps,
-  VStack,
-} from "@chakra-ui/react";
 import { useCallback, useState } from "react";
+import {
+  Radio as RACRadio,
+  RadioGroup as RACRadioGroup,
+} from "react-aria-components";
 import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
-import microbitImage from "../images/stylised-microbit-black.svg";
-import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
-import ConnectContainerDialog, {
-  ConnectContainerDialogProps,
-} from "./ConnectContainerDialog";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   DownloadState,
   SameOrDifferentChoice,
 } from "../download-flow/download-types";
+import microbitImage from "../images/stylised-microbit-black.svg";
+import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
+import { Box, css, cx, HStack, Icon, Image, Text, VStack } from "../shared-ui";
+import ConnectContainerDialog, {
+  ConnectContainerDialogProps,
+} from "./ConnectContainerDialog";
 
 export interface DownloadChooseMicrobitDialogProps
   extends Omit<ConnectContainerDialogProps, "children" | "headingId"> {
@@ -44,22 +38,17 @@ const DownloadChooseMicrobitDialog = ({
   stage,
   ...props
 }: DownloadChooseMicrobitDialogProps) => {
+  const intl = useIntl();
   const defaultValue =
     stage.microbitChoice === SameOrDifferentChoice.Default
       ? SameOrDifferentChoice.Same
       : stage.microbitChoice;
   const [selected, setSelected] = useState<MicrobitOption>(defaultValue);
   const handleOptionChange = useCallback(
-    (opt: MicrobitOption) => setSelected(opt),
+    (opt: string) => setSelected(opt as MicrobitOption),
     []
   );
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "chosenDevice",
-    defaultValue,
-    onChange: handleOptionChange,
-  });
-  const group = getRootProps();
-  const radioCardOptions: Omit<RadioCardProps, "isSelected">[] = [
+  const radioCardOptions: RadioCardProps[] = [
     {
       id: SameOrDifferentChoice.Same,
       imgSrc: microbitImage,
@@ -83,84 +72,85 @@ const DownloadChooseMicrobitDialog = ({
         <Text textAlign="left" w="full">
           <FormattedMessage id="download-project-choose-microbit-subtitle" />
         </Text>
-        <HStack
-          gap={5}
-          w="full"
-          justifyContent="space-evenly"
-          {...group}
-          mb={3}
-        >
-          {radioCardOptions.map((config) => {
-            const radio = getRadioProps({ value: config.id });
-            return (
-              <RadioCard
-                key={config.id}
-                {...radio}
-                {...config}
-                isSelected={selected === config.id}
-              />
-            );
+        <RACRadioGroup
+          aria-label={intl.formatMessage({
+            id: "download-project-choose-microbit-title",
           })}
-        </HStack>
+          orientation="horizontal"
+          value={selected}
+          onChange={handleOptionChange}
+          className={css({
+            display: "flex",
+            gap: 5,
+            w: "full",
+            justifyContent: "space-evenly",
+            mb: 3,
+          })}
+        >
+          {radioCardOptions.map((config) => (
+            <RadioCard key={config.id} {...config} />
+          ))}
+        </RACRadioGroup>
       </VStack>
     </ConnectContainerDialog>
   );
 };
 
-interface RadioCardProps extends UseRadioProps {
+interface RadioCardProps {
   id: MicrobitOption;
   imgSrc: string;
-  isSelected: boolean;
 }
 
-const RadioCard = ({ id, imgSrc, isSelected, ...props }: RadioCardProps) => {
-  const { getInputProps, getRadioProps } = useRadio(props);
-
-  const input = getInputProps();
-  const checkbox = getRadioProps();
-
+const RadioCard = ({ id, imgSrc }: RadioCardProps) => {
   return (
-    <Box as="label">
-      <input {...input} />
-      <Box
-        {...checkbox}
-        cursor="pointer"
-        borderWidth="5px"
-        borderRadius="md"
-        borderColor="gray.500"
-        _checked={{
-          borderWidth: "5px",
-          borderColor: "brand.600",
-        }}
-        _focus={{
-          boxShadow: "outline",
-        }}
-        p={4}
-      >
-        <HStack justifyContent="right" mb={-7} mt={-1} mr={-1}>
-          {isSelected ? (
-            <Icon as={RiCheckboxFill} boxSize={6} color="brand.600" />
-          ) : (
-            <Icon as={RiCheckboxBlankLine} boxSize={6} color="gray.500" />
+    <RACRadio value={id} className={css({ cursor: "pointer" })}>
+      {({ isSelected, isFocusVisible }) => (
+        <Box
+          className={cx(
+            css({
+              cursor: "pointer",
+              borderWidth: "5px",
+              borderStyle: "solid",
+              borderRadius: "md",
+              p: 4,
+            }),
+            isSelected
+              ? css({ borderColor: "brand.600" })
+              : css({ borderColor: "gray.500" }),
+            isFocusVisible ? css({ boxShadow: "outline" }) : undefined
           )}
-        </HStack>
-        <VStack>
-          <Image
-            src={imgSrc}
-            alt=""
-            htmlWidth="220px"
-            height="123px"
-            px={12}
-            py={3}
-            position="relative"
-            justifySelf="center"
-          />
-          <Text fontWeight="bold" fontSize="md" w="full">
-            <FormattedMessage id={`download-project-${id}-microbit-option`} />
-          </Text>
-        </VStack>
-      </Box>
-    </Box>
+        >
+          <HStack justifyContent="right" mb={-7} mt={-1} mr={-1}>
+            {isSelected ? (
+              <Icon
+                as={RiCheckboxFill}
+                css={{ width: 6, height: 6, color: "brand.600" }}
+              />
+            ) : (
+              <Icon
+                as={RiCheckboxBlankLine}
+                css={{ width: 6, height: 6, color: "gray.500" }}
+              />
+            )}
+          </HStack>
+          <VStack>
+            <Image
+              src={imgSrc}
+              alt=""
+              width="220px"
+              height="123px"
+              px={12}
+              py={3}
+              position="relative"
+              justifySelf="center"
+            />
+            <Text fontWeight="bold" fontSize="md" w="full">
+              <FormattedMessage id={`download-project-${id}-microbit-option`} />
+            </Text>
+          </VStack>
+        </Box>
+      )}
+    </RACRadio>
   );
 };
 

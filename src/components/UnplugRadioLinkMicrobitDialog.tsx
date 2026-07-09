@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, Image, Text, VStack } from "@chakra-ui/react";
+import { HStack, Image, Text, VStack } from "../shared-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import microbitWithComputer from "../images/stylised-microbit-with-usb-computer.svg";
 import { AnimationProvider } from "./AnimationProvider";
