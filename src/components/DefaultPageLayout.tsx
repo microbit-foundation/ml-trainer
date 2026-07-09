@@ -229,7 +229,12 @@ const DefaultPageLayout = ({
                 ) : (
                   /* Mobile/tablet: centered app logo when no page title */
                   <Box display={useTabletLayout ? "flex" : "none"}>
-                    <AppLogo transform="scale(0.8)" transformOrigin="center" />
+                    <AppLogo
+                      css={{
+                        transform: "scale(0.8)",
+                        transformOrigin: "center",
+                      }}
+                    />
                   </Box>
                 )
               }
@@ -305,7 +310,12 @@ const DefaultPageLayout = ({
                       })}
                     >
                       <AppLogo
-                        transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
+                        css={{
+                          transform: {
+                            base: "scale(0.8)",
+                            sm: "scale(0.93)",
+                          },
+                        }}
                       />
                     </RouterLink>
                   )}

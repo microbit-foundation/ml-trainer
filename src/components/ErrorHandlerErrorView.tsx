@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Text, VStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { Button, Text, VStack } from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 import { isPublicFacingStage } from "../environment";
 import ErrorPage from "./ErrorPage";
@@ -23,7 +23,7 @@ const ErrorHandlerErrorView = ({ error }: ErrorHandlerErrorViewProps) => {
   }
   return (
     <ErrorPage title="An unexpected error occurred">
-      <VStack spacing={3}>
+      <VStack gap={3}>
         <Text>
           <FormattedMessage
             id="support-request"
@@ -43,7 +43,7 @@ const ErrorHandlerErrorView = ({ error }: ErrorHandlerErrorViewProps) => {
           />
         </Text>
         <Text>
-          <Button variant="primary" onClick={() => window.location.reload()}>
+          <Button variant="primary" onPress={() => window.location.reload()}>
             <FormattedMessage id="click-to-reload-page-action" />
           </Button>
         </Text>
@@ -80,12 +80,12 @@ const StorageVersionErrorView = () => {
   };
   return (
     <ErrorPage title="Breaking change to stored data">
-      <VStack spacing={3}>
+      <VStack gap={3}>
         <Text maxW="md" textAlign="center">
           The storage format has changed in this pre-release version and the old
           data format is not supported.
         </Text>
-        <Button variant="primary" onClick={handleClearAndReload}>
+        <Button variant="primary" onPress={handleClearAndReload}>
           Clear data and reload
         </Button>
       </VStack>

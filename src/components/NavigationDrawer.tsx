@@ -137,7 +137,9 @@ const NavigationDrawer = ({
       <DrawerHeader css={{ bg: "brand2.500", px: 0, py: 0 }}>
         <Box h="max(0px, calc(env(safe-area-inset-top) - 12px))" />
         <HStack h="64px" px={4} alignItems="center">
-          <AppLogo transform="scale(0.85)" transformOrigin="left" />
+          <AppLogo
+            css={{ transform: "scale(0.85)", transformOrigin: "left" }}
+          />
         </HStack>
       </DrawerHeader>
       <DrawerBody css={{ px: 0, py: 0 }}>

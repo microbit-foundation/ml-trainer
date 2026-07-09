@@ -1,6 +1,6 @@
-import { Icon } from "@chakra-ui/react";
 import { RiPlayFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
+import { Icon } from "../shared-ui";
 import { useAnimation } from "./AnimationProvider";
 import DialogFooterLink from "./DialogFooterLink";
 import PauseIcon from "./icons/PauseIcon";

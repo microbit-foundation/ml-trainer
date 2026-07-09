@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Input } from "@chakra-ui/react";
 import {
   forwardRef,
   useCallback,
@@ -11,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { css } from "../shared-ui";
 import { LoadAction, useProject } from "../hooks/project-hooks";
 import { isAndroid } from "../platform";
 
@@ -78,9 +78,9 @@ const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
         : accept;
 
     return (
-      <Input
+      <input
         type="file"
-        display="none"
+        className={css({ display: "none" })}
         multiple={false}
         accept={effectiveAccept}
         onChange={handleOpenFile}

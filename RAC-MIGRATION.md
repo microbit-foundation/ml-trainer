@@ -138,9 +138,13 @@ primitive that accepts style overrides must merge them into a *single*
    lookup for token values — see RecordingDialog's countdown), and after porting
    a file, grep it for style props whose value is not a literal. What *does*
    work: same-file consts, ternaries of literals, literal arithmetic
-   (`ratio={30 / 25}`), and custom-named object-literal JSX props (`barCss`,
-   `contentCss` — sentinel-verified; coincidental classes from other call sites
-   can mask a miss, so verify against the generated CSS, not the rendered page).
+   (`ratio={30 / 25}`), custom-named object-literal JSX props (`barCss`,
+   `contentCss` — sentinel-verified), and style props on components created
+   with the `styled()` factory, cross-file (`Link`). What does NOT work:
+   forwarding style props through a *plain* wrapper component
+   (`<AppLogo transform="...">` generated no CSS) — give such wrappers a
+   `css` prop instead. Coincidental classes from other call sites can mask a
+   miss, so verify against the generated CSS, not the rendered page.
 10. **Removing Emotion from a file isn't enough — also remove it from
     `panda.config.ts`'s `exclude` list**, or Panda silently skips extraction for
     the whole file — class names are applied but no CSS rules exist for them
@@ -312,12 +316,22 @@ Consolidated for review time; all deliberate:
    (editing state pixel-identical), shared-project preview page
    (pixel-identical incl. RecordingGraph data previews; blocks-frame
    computed styles match exactly).
-3. **Leaf sweep** (mechanical batch): `Link` wrapper, `AppLogo`,
-   `PreReleaseNotice`, `NewPageChoice`, `FileDropTarget`/`ProjectDropTarget`/
-   `LoadProjectInput`, `icons/PauseIcon`, `PauseResumeAnimationLink`,
-   `StepByStepIllustration`, `ErrorPage`/`ErrorHandlerErrorView` (port these
-   last-mentioned two carefully — error surfaces shouldn't depend on newly
-   fragile styling paths).
+3. ✅ **Leaf sweep** — done. `Link` wrapper (now `styled(RouterLinkAdapted)`;
+   Panda extracts style props on styled-factory components cross-file, so
+   its call sites work unchanged), `AppLogo` (style-prop forwarding through
+   a plain component is NOT extracted — verified missing classes — so it
+   takes a `css` prop now, call sites updated; the vertical divider is a
+   one-off since shared-ui `Divider` is horizontal-only),
+   `PreReleaseNotice`, `FileDropTarget`/`ProjectDropTarget` (dropped the
+   unused BoxProps spread)/`LoadProjectInput` (plain hidden input),
+   `icons/PauseIcon` (plain svg), `PauseResumeAnimationLink`,
+   `ErrorPage`/`ErrorHandlerErrorView` (error surfaces now depend only on
+   the static stylesheet — more robust than Emotion's runtime injection).
+   **Deleted as dead code**: `NewPageChoice`, `StepByStepIllustration` (no
+   importers; NewPage was removed with the multi-project work). Verified:
+   404 page link computed styles identical to live; welcome-dialog pause
+   link renders; drawer header strip byte-identical before/after the
+   AppLogo port.
 4. **Animation trees** (~26 files, volume over risk): `HowItWorksAnimation/*`,
    `PairingModeAnimation/*`, `PlugMicrobitAnimation`, `LoadingAnimation`,
    `ArrowOne`/`ArrowTwo`, `AnimationProvider`. Remember gotcha #10: as each

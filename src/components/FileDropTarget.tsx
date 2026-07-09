@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Center } from "@chakra-ui/react";
 import { ReactNode, useCallback, useState } from "react";
+import { Box, Center } from "../shared-ui";
 import { RiFolderOpenLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 

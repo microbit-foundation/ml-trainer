@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Heading, VStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { Heading, VStack } from "../shared-ui";
 
 type Props = { title: string; children: ReactNode };
 
 const ErrorPage = ({ title, children }: Props) => (
   <VStack
     as="main"
-    spacing={10}
+    gap={10}
     minH="100vh"
     w="100%"
     alignItems="center"
