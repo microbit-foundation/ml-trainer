@@ -11,13 +11,13 @@ import { ProjectNameDialogReason } from "../project-utils";
 import {
   Button,
   Checkbox,
-  css,
   HStack,
   Icon,
   IconButton,
   MenuItem,
   MenuList,
   MenuTrigger,
+  VisuallyHidden,
 } from "../shared-ui";
 
 interface ProjectCardMenuProps {
@@ -97,9 +97,9 @@ const ProjectCardActions = ({
             h: "60px",
           }}
         >
-          <span className={css({ srOnly: true })}>
+          <VisuallyHidden>
             <FormattedMessage id="select-project-action" values={{ name }} />
-          </span>
+          </VisuallyHidden>
         </Checkbox>
       )}
       {onSkipToToolbar && (

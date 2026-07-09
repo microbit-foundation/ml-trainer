@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useMemo } from "react";
 import {
   UNSTABLE_Toast as RACToast,
   UNSTABLE_ToastContent as RACToastContent,
@@ -152,17 +152,33 @@ export const ToastProvider = () => (
 );
 
 export interface ToastOptions extends ToastContent {
-  /** Auto-dismiss after ms. RAC enforces a 5000ms minimum for accessibility. */
-  duration?: number;
+  /**
+   * Auto-dismiss after ms; null means no auto-dismiss (Chakra's semantics).
+   * RAC enforces a 5000ms minimum for accessibility.
+   */
+  duration?: number | null;
+}
+
+export interface ToastFn {
+  (options: ToastOptions): void;
+  /** Whether a toast with this id is currently visible. */
+  isActive(id: string): boolean;
+  /**
+   * Replace a visible toast's content (Chakra's toast.update). The toast is
+   * re-added, so unlike Chakra it re-animates and restarts any timeout.
+   */
+  update(id: string, options: ToastOptions): void;
 }
 
 /**
  * useToast — imperative toast trigger matching the shape of Chakra's
  * `useToast()` call sites: `toast({ title, description, status, duration })`.
  */
-export const useToast = () =>
-  useCallback(
-    ({
+export const useToast = (): ToastFn =>
+  useMemo(() => {
+    const isActive = (id: string) =>
+      toastQueue.visibleToasts.some((t) => t.content.id === id);
+    const add = ({
       id,
       title,
       description,
@@ -170,13 +186,22 @@ export const useToast = () =>
       isClosable,
       duration,
     }: ToastOptions) => {
-      if (id && toastQueue.visibleToasts.some((t) => t.content.id === id)) {
+      if (id && isActive(id)) {
         return;
       }
       toastQueue.add(
         { id, title, description, status, isClosable },
-        { timeout: duration }
+        { timeout: duration ?? undefined }
       );
-    },
-    []
-  );
+    };
+    const update = (id: string, options: ToastOptions) => {
+      const existing = toastQueue.visibleToasts.find(
+        (t) => t.content.id === id
+      );
+      if (existing) {
+        toastQueue.close(existing.key);
+      }
+      add({ ...options, id });
+    };
+    return Object.assign(add, { isActive, update });
+  }, []);

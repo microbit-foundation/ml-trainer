@@ -10,7 +10,8 @@ import {
   MakeCodeProject,
 } from "@microbit/makecode-embed/react";
 import { memo, useLayoutEffect, useRef, useState } from "react";
-import { Box, Card, css, VStack } from "../shared-ui";
+import { Box, Card, VStack } from "../shared-ui";
+import BlocksLoadingSkeleton from "./BlocksLoadingSkeleton";
 import { tourElClassname } from "../tours";
 
 interface CodeViewCardProps {
@@ -97,23 +98,5 @@ const CodeViewCard = ({ project, parentRef, className }: CodeViewCardProps) => {
     </VStack>
   );
 };
-
-/** Pulsing line placeholder standing in for Chakra's SkeletonText. */
-const BlocksLoadingSkeleton = () => (
-  <VStack w="xs" gap={5} alignItems="stretch" aria-hidden>
-    {Array.from(Array(5)).map((_, idx) => (
-      <Box
-        key={idx}
-        h={2}
-        borderRadius="sm"
-        className={css({
-          bg: "gray.200",
-          animation: "skeletonPulse 0.8s linear infinite alternate",
-          "@media (prefers-reduced-motion: reduce)": { animation: "none" },
-        })}
-      />
-    ))}
-  </VStack>
-);
 
 export default memo(CodeViewCard);

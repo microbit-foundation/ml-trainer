@@ -3,7 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, css, Flex, Image, List, ListItem, Text } from "../shared-ui";
+import {
+  Box,
+  Flex,
+  Image,
+  List,
+  ListItem,
+  Text,
+  VisuallyHidden,
+} from "../shared-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import selectMicrobitImage from "../images/select-microbit-bluetooth.png";
 import ConnectContainerDialog, {
@@ -55,9 +63,9 @@ const SelectMicrobitBluetoothDialog = ({
         >
           <ListItem>
             <Flex alignItems="center" height="90px">
-              <span className={css({ srOnly: true })}>
+              <VisuallyHidden>
                 <Text>1. </Text>
-              </span>
+              </VisuallyHidden>
               <Text>
                 <FormattedMessage id="connect-popup-instruction1" />
               </Text>
@@ -65,9 +73,9 @@ const SelectMicrobitBluetoothDialog = ({
           </ListItem>
           <ListItem>
             <Flex alignItems="center" height="57px">
-              <span className={css({ srOnly: true })}>
+              <VisuallyHidden>
                 <Text>2. </Text>
-              </span>
+              </VisuallyHidden>
               <Text>
                 <FormattedMessage id="connect-popup-bluetooth-instruction2" />
               </Text>

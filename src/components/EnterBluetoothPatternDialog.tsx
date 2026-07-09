@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css, Text, VStack } from "../shared-ui";
+import { Text, VisuallyHidden, VStack } from "../shared-ui";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { blank } from "../bt-pattern-utils";
@@ -84,11 +84,11 @@ const EnterBluetoothPatternDialog = ({
             <Text color="red" opacity={showInvalid ? 1 : 0} aria-hidden>
               <FormattedMessage id="connect-bluetooth-invalid-pattern" />
             </Text>
-            <span className={css({ srOnly: true })} role="alert">
+            <VisuallyHidden role="alert">
               {showInvalid && (
                 <FormattedMessage id="connect-bluetooth-invalid-pattern" />
               )}
-            </span>
+            </VisuallyHidden>
           </VStack>
         </VStack>
       </VStack>

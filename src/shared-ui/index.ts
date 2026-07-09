@@ -37,4 +37,5 @@ export * from "./Menu";
 export * from "./Modal";
 export * from "./Tooltip";
 export * from "./Toast";
+export * from "./VisuallyHidden";
 export { useBreakpointValue } from "./hooks/useBreakpointValue";

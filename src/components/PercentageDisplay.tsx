@@ -5,7 +5,7 @@
  */
 import { useCallback, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
-import { css, Text, token } from "../shared-ui";
+import { Text, token, VisuallyHidden } from "../shared-ui";
 import { useStore } from "../store";
 
 interface PercentageDisplayProps {
@@ -62,9 +62,9 @@ const PercentageDisplay = ({
 
   return (
     <>
-      <span className={css({ srOnly: true })}>
+      <VisuallyHidden>
         <Text ref={accessibleTextRef}>{getAriaLabel("0%")}</Text>
-      </span>
+      </VisuallyHidden>
       <Text
         ref={textRef}
         bg="gray.600"

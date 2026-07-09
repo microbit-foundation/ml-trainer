@@ -6,7 +6,7 @@
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { css, HStack, Text, VStack } from "../shared-ui";
+import { css, HStack, Text, VisuallyHidden, VStack } from "../shared-ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
@@ -41,7 +41,7 @@ const PredictedAction = () => {
       py={2.5}
       pt={3.5}
     >
-      <span className={css({ srOnly: true })} aria-live="polite">
+      <VisuallyHidden aria-live="polite">
         <FormattedMessage
           id="estimated-action-aria"
           values={{
@@ -50,7 +50,7 @@ const PredictedAction = () => {
               intl.formatMessage({ id: "unknown" }),
           }}
         />
-      </span>
+      </VisuallyHidden>
       <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
         <Text fontWeight="bold" alignSelf="start">
           <FormattedMessage id="estimated-action-label" />

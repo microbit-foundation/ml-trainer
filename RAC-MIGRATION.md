@@ -265,6 +265,8 @@ Consolidated for review time; all deliberate:
   a11y improvement) rather than the first focusable control.
 - Toast: single top-centre region; no per-call `position`/`variant`
   (`id`-dedup is supported). Repeat Android saves within the timeout can stack.
+  `toast.update()` re-adds the toast, so it re-animates and restarts any
+  timeout (Chakra updated in place).
 - MakeCode loading skeleton is an opacity pulse rather than Chakra's shimmer;
   ~3px internal shift in the certainty card.
 - Toast is built on RAC's `UNSTABLE_Toast*` API (functional; the surface is
@@ -290,14 +292,26 @@ Consolidated for review time; all deliberate:
    (`display` font). fonts/radii/shadows are byte-identical across sides;
    `withDefaultVariant` and defaultProps diff clean. Rerun the script after
    any theme or preset change while Chakra remains.
-2. **Mixed-tree components** — the still-Chakra components rendered *inside*
-   already-ported screens, where cross-stack CSS races live (gotcha #11):
-   `RecordingGraph` (also lets the SettingsDialog aspect-ratio wrapper slim
-   down; keep the native `aspectRatio` property, don't return to the pattern),
-   `RecordingFingerprint`, `EditableName`, `ProjectPreview`,
-   `ChooseDeviceOverlay`, `NativeConsentDialog`, the trivial `CodePage` and
-   `OpenSharedProjectPage`, and the two remaining Chakra `useToast` call
-   sites (`App.tsx` update toast, `project-hooks`).
+2. ✅ **Mixed-tree components** — done: `RecordingGraph` (Panda Box; the
+   SettingsDialog wrapper keeps the native `aspectRatio` property
+   deliberately), `RecordingFingerprint` (data-driven `gridTemplateColumns`
+   and cell colours via inline `style`, gotcha #9; the Grid pattern's
+   `columns` sugar can't take runtime values and injects a default gap),
+   `EditableName` (Chakra Editable rebuilt: preview button ↔ input swap;
+   Enter/blur commits, Escape reverts, select-all on edit, focus returns to
+   the button — behaviour probe-verified identical to live, both variants),
+   `ProjectPreview`/`OpenSharedProjectPage` (array responsive props →
+   object syntax; `BlocksLoadingSkeleton` extracted from CodeViewCard for
+   the MakeCode loader), `ChooseDeviceOverlay`, `NativeConsentDialog`
+   (initial-focus hack dropped per gotcha #14), `CodePage`, and the two
+   Chakra `useToast` call sites. shared-ui additions: `VisuallyHidden`
+   (Panda `srOnly` span, `as="div"` for block content — all raw
+   `css({ srOnly: true })` call sites swept onto it) and Toast
+   `isActive`/`update` + `duration: null` persistence for App.tsx's
+   storage-error toast. Verified vs live: toolbar/drawer EditableName
+   (editing state pixel-identical), shared-project preview page
+   (pixel-identical incl. RecordingGraph data previews; blocks-frame
+   computed styles match exactly).
 3. **Leaf sweep** (mechanical batch): `Link` wrapper, `AppLogo`,
    `PreReleaseNotice`, `NewPageChoice`, `FileDropTarget`/`ProjectDropTarget`/
    `LoadProjectInput`, `icons/PauseIcon`, `PauseResumeAnimationLink`,

@@ -16,6 +16,7 @@ import {
   Image,
   Stack,
   Text,
+  VisuallyHidden,
   VStack,
 } from "../shared-ui";
 import Emoji, { EmojiAi } from "./Emoji";
@@ -206,12 +207,12 @@ export const RecordMoreHint = ({
           className={css({ transform: "rotate(-8deg)" })}
           leftEye={recorded == 2 ? "tick" : "round"}
         />
-        <span className={css({ srOnly: true })}>
+        <VisuallyHidden>
           <FormattedMessage
             id="record-more-hint-label"
             values={{ numSamples, actionName }}
           />
-        </span>
+        </VisuallyHidden>
         <Text textAlign="center" aria-hidden>
           <FormattedMessage id="record-more-hint" values={{ numSamples }} />
         </Text>
@@ -246,12 +247,12 @@ export const AddActionHint = ({ action }: { action: Action }) => {
           />
         </Box>
       </HStack>
-      <span className={css({ srOnly: true })}>
+      <VisuallyHidden>
         <FormattedMessage
           id="add-action-hint-label"
           values={{ actionName: action.name }}
         />
-      </span>
+      </VisuallyHidden>
       <Text textAlign="center" aria-hidden>
         <FormattedMessage
           id="add-action-hint"
@@ -336,9 +337,9 @@ export const TrainHint = () => {
           size="20"
           className={css({ pb: 3, zIndex: 3 }) + " " + spinAnimation}
         />
-        <span className={css({ srOnly: true })}>
+        <VisuallyHidden>
           <FormattedMessage id="train-hint-label" />
-        </span>
+        </VisuallyHidden>
         <Text textAlign="center" zIndex={3} aria-hidden>
           <FormattedMessage
             id="train-hint"

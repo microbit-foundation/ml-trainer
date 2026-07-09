@@ -6,7 +6,7 @@
 import { App as CapacitorApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
-import { useToast } from "@chakra-ui/react";
+import { useToast } from "../shared-ui";
 import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,
@@ -497,7 +497,6 @@ export const ProjectProvider = ({
           // iOS share sheet provides its own feedback.
           toast({
             id: "save-complete",
-            position: "top",
             duration: 5_000,
             title: intl.formatMessage({ id: "saving-toast-title" }),
             status: "info",

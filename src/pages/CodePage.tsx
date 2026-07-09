@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Spinner, VStack } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import { Spinner, VStack } from "../shared-ui";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DownloadDialogs from "../components/DownloadDialogs";
@@ -69,12 +69,15 @@ const CodePage = () => {
         <VStack h="100%" justifyContent="center">
           <Spinner
             aria-label={intl.formatMessage({ id: "loading" })}
-            thickness="16px"
-            speed="2s"
-            emptyColor="whitesmoke"
-            color="brand.600"
-            h="166px"
-            w="166px"
+            css={{
+              width: "166px",
+              height: "166px",
+              borderWidth: "16px",
+              color: "brand.600",
+              borderBottomColor: "whitesmoke",
+              borderLeftColor: "whitesmoke",
+              animationDuration: "2s",
+            }}
           />
         </VStack>
       ) : (

@@ -21,6 +21,7 @@ import {
   ModalCloseButton,
   ModalFooter,
   Text,
+  VisuallyHidden,
   VStack,
 } from "../shared-ui";
 import { useDeployment } from "../deployment";
@@ -149,7 +150,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
                           href={v.href}
                         >
                           <Icon as={RiGithubFill} />
-                          <span className={css({ srOnly: true })}>GitHub</span>
+                          <VisuallyHidden>GitHub</VisuallyHidden>
                         </Link>
                       </td>
                     </tr>

@@ -4,7 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, BoxProps } from "@chakra-ui/react";
 import {
   Chart,
   LineController,
@@ -13,14 +12,15 @@ import {
   PointElement,
   registerables,
 } from "chart.js";
-import { useEffect, useRef } from "react";
+import { ComponentProps, useEffect, useRef } from "react";
+import { Box } from "../shared-ui";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
 import { XYZData } from "../model";
 import { getConfig as getRecordingChartConfig } from "../recording-graph";
 import { useSettings } from "../store";
 
-interface RecordingGraphProps extends BoxProps {
+interface RecordingGraphProps extends ComponentProps<typeof Box> {
   data: XYZData;
   responsive?: boolean;
 }

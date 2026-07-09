@@ -3,21 +3,18 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { FormattedMessage } from "react-intl";
 import {
   Button,
   HStack,
   Link,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import { useRef } from "react";
-import { FormattedMessage } from "react-intl";
+} from "../shared-ui";
 
 interface NativeConsentDialogProps {
   isOpen: boolean;
@@ -34,65 +31,53 @@ export const NativeConsentDialog = ({
   onAllow,
   onDecline,
 }: NativeConsentDialogProps) => {
-  const headingRef = useRef<HTMLHeadingElement>(null);
   return (
     <Modal
       isOpen={isOpen}
       onClose={onDecline}
-      closeOnEsc={false}
-      closeOnOverlayClick={false}
+      isKeyboardDismissDisabled
+      isDismissable={false}
       size="lg"
       isCentered
-      initialFocusRef={headingRef}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader
-          ref={headingRef}
-          tabIndex={-1}
-          fontSize="lg"
-          fontWeight="bold"
-          _focus={{ outline: "none", boxShadow: "none" }}
-        >
-          <FormattedMessage
-            id="analytics-consent-title"
-            values={{ appNameFull }}
-          />
-        </ModalHeader>
-        <ModalBody>
-          <VStack alignItems="flex-start" spacing={3}>
-            <Text>
-              <FormattedMessage id="analytics-consent-analytics" />
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              <FormattedMessage id="analytics-consent-change-later" />
-              {privacyPolicyLink && (
-                <>
-                  {" "}
-                  <Link
-                    href={privacyPolicyLink}
-                    isExternal
-                    rel="noopener noreferrer"
-                  >
-                    <FormattedMessage id="analytics-consent-learn-more" />
-                  </Link>
-                </>
-              )}
-            </Text>
-          </VStack>
-        </ModalBody>
-        <ModalFooter>
-          <HStack spacing={3} w="full" justify="flex-end">
-            <Button variant="secondary" onClick={onDecline}>
-              <FormattedMessage id="analytics-consent-decline-action" />
-            </Button>
-            <Button variant="primary" onClick={onAllow}>
-              <FormattedMessage id="analytics-consent-allow-action" />
-            </Button>
-          </HStack>
-        </ModalFooter>
-      </ModalContent>
+      <ModalHeader css={{ fontSize: "lg", fontWeight: "bold" }}>
+        <FormattedMessage
+          id="analytics-consent-title"
+          values={{ appNameFull }}
+        />
+      </ModalHeader>
+      <ModalBody>
+        <VStack alignItems="flex-start" gap={3}>
+          <Text>
+            <FormattedMessage id="analytics-consent-analytics" />
+          </Text>
+          <Text fontSize="sm" color="gray.600">
+            <FormattedMessage id="analytics-consent-change-later" />
+            {privacyPolicyLink && (
+              <>
+                {" "}
+                <Link
+                  href={privacyPolicyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FormattedMessage id="analytics-consent-learn-more" />
+                </Link>
+              </>
+            )}
+          </Text>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <HStack gap={3} w="full" justify="flex-end">
+          <Button variant="secondary" onPress={onDecline}>
+            <FormattedMessage id="analytics-consent-decline-action" />
+          </Button>
+          <Button variant="primary" onPress={onAllow}>
+            <FormattedMessage id="analytics-consent-allow-action" />
+          </Button>
+        </HStack>
+      </ModalFooter>
     </Modal>
   );
 };

@@ -1,3 +1,8 @@
+import { Header, ScriptText } from "@microbit/makecode-embed/vanilla";
+import { ReactNode, useCallback, useEffect, useState } from "react";
+import { RiInformationLine } from "react-icons/ri";
+import { FormattedMessage } from "react-intl";
+import { useNavigate, useParams } from "react-router";
 import {
   Button,
   Heading,
@@ -8,12 +13,7 @@ import {
   Text,
   VisuallyHidden,
   VStack,
-} from "@chakra-ui/react";
-import { Header, ScriptText } from "@microbit/makecode-embed/vanilla";
-import { ReactNode, useCallback, useEffect, useState } from "react";
-import { RiInformationLine } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
-import { useNavigate, useParams } from "react-router";
+} from "../shared-ui";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
@@ -61,10 +61,10 @@ const OpenSharedProjectPage = () => {
         <VStack
           as="main"
           justifyContent="center"
-          m={[0, 5, 28]}
+          m={{ base: 0, sm: 5, md: 28 }}
           aria-busy="true"
         >
-          <VisuallyHidden>
+          <VisuallyHidden as="div">
             <Heading as="h1">
               <FormattedMessage id="open-shared-project-title" />
             </Heading>
@@ -89,7 +89,10 @@ const OpenSharedProjectPage = () => {
           sourceInfo={
             sharedState === SharedState.Complete && (
               <HStack gap={3}>
-                <Icon as={RiInformationLine} boxSize={6} alignSelf="start" />
+                <Icon
+                  as={RiInformationLine}
+                  css={{ width: 6, height: 6, alignSelf: "start" }}
+                />
                 <Text fontSize="md">
                   <FormattedMessage
                     id="third-party-content-description"
@@ -120,7 +123,7 @@ const OpenSharedProjectPage = () => {
 
 const ErrorPreloading = () => {
   return (
-    <VStack as="main" spacing={10} minH="100vh" w="100%" bgColor="whitesmoke">
+    <VStack as="main" gap={10} minH="100vh" w="100%" bgColor="whitesmoke">
       <Stack maxW="container.md" gap={5}>
         <Heading mt="33vh" as="h1">
           <FormattedMessage id="code-download-error" />
@@ -129,7 +132,7 @@ const ErrorPreloading = () => {
           <FormattedMessage id="open-shared-project-error-description" />
         </Text>
         <Text>
-          <Button variant="primary" onClick={() => window.location.reload()}>
+          <Button variant="primary" onPress={() => window.location.reload()}>
             <FormattedMessage id="click-to-reload-page-action" />
           </Button>
         </Text>

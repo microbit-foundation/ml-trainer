@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ChakraProvider, useToast } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { createBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
 import { createRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
@@ -35,7 +35,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
-import { ToastProvider } from "./shared-ui";
+import { ToastProvider, useToast } from "./shared-ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
@@ -162,7 +162,6 @@ const Layout = () => {
           // Side effects of loading a project, which MakeCode notifies us of.
           navigate(createDataSamplesPageUrl());
           toast({
-            position: "top",
             duration: 5_000,
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
@@ -205,10 +204,8 @@ const Layout = () => {
     })();
     const toastOptions = {
       id: "storage-error",
-      position: "top" as const,
       duration: null,
       isClosable: true,
-      variant: "toast",
       status: "error" as const,
       ...messages,
     };
