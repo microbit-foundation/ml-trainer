@@ -45,7 +45,11 @@ export interface TooltipProps {
     | "top start"
     | "top end"
     | "bottom start"
-    | "bottom end";
+    | "bottom end"
+    | "left top"
+    | "left bottom"
+    | "right top"
+    | "right bottom";
   hasArrow?: boolean;
   /** Controlled open state (otherwise hover/focus driven). */
   isOpen?: boolean;

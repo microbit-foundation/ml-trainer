@@ -24,6 +24,7 @@ import {
 // Config recipes are colocated with the shared-ui components they style; this
 // preset registers them so Panda merges them at codegen time.
 import { button } from "../../shared-ui/Button.recipe";
+import { card } from "../../shared-ui/Card.recipe";
 import { drawer } from "../../shared-ui/Drawer.recipe";
 import { heading } from "../../shared-ui/Heading.recipe";
 import { menu } from "../../shared-ui/Menu.recipe";
@@ -110,6 +111,7 @@ export const ossPreset = definePreset({
       heading,
     },
     slotRecipes: {
+      card,
       dialog,
       drawer,
       field,
@@ -126,6 +128,11 @@ export const ossPreset = definePreset({
       focusVisible: "&:is(:focus-visible, [data-focus-visible])",
       disabled:
         "&:is(:disabled, [disabled], [data-disabled], [aria-disabled=true])",
+      // Short screens (e.g. 1366x768 Chromebooks); reduces card heights and
+      // spacing on the homepage. Replaces src/responsive.ts's
+      // shortScreenHeightBreakpoint, which Panda's extractor couldn't resolve
+      // across files.
+      shortHeight: "@media (max-height: 800px)",
     },
   },
 });

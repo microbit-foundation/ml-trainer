@@ -3,29 +3,47 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Flex, Tooltip, TooltipProps, useDisclosure } from "@chakra-ui/react";
-import { ReactNode, useCallback, useRef } from "react";
+import {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Focusable } from "react-aria-components";
 import { useIntl } from "react-intl";
+import { css, cx, Tooltip, TooltipProps } from "../shared-ui";
 
-interface ClickableTooltipProps extends TooltipProps {
-  children: ReactNode;
+interface ClickableTooltipProps {
+  children: ReactElement;
+  /** Tooltip body. */
+  label: ReactNode;
+  placement?: TooltipProps["placement"];
+  hasArrow?: boolean;
+  /** Make the trigger keyboard-focusable so the tooltip opens on focus. */
   isFocusable?: boolean;
   titleId?: string;
+  isDisabled?: boolean;
 }
 
-// Chakra Tooltip doesn't support triggering on mobile/tablets:
-// https://github.com/chakra-ui/chakra-ui/issues/2691
-
+/**
+ * Tooltip that also opens on click/tap (unlike hover-only tooltips, this works
+ * on mobile/tablets) and, when `isFocusable`, on keyboard focus. Open state is
+ * managed here and the shared-ui Tooltip is fully controlled.
+ */
 const ClickableTooltip = ({
   children,
+  label,
+  placement,
+  hasArrow,
   isFocusable = false,
   titleId,
   isDisabled,
-  ...rest
 }: ClickableTooltipProps) => {
-  const label = useDisclosure();
+  const [isOpen, setOpen] = useState(false);
   const intl = useIntl();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const handleMouseEnter = useCallback(() => {
     const focussedTooltips = Array.from(
       document.querySelectorAll(".focusable-tooltip")
@@ -33,51 +51,64 @@ const ClickableTooltip = ({
     if (
       focussedTooltips.every((tooltip) => tooltip !== document.activeElement)
     ) {
-      label.onOpen();
+      setOpen(true);
     }
-  }, [label]);
+  }, []);
   const handleMouseLeave = useCallback(() => {
     if (
       !isFocusable ||
       (ref.current !== document.activeElement && isFocusable)
     ) {
-      label.onClose();
+      setOpen(false);
     }
-  }, [isFocusable, label]);
-  const handleKeydown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
+  }, [isFocusable]);
+  // Close on Escape wherever focus is, like Chakra's closeOnEsc.
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    const listener = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        label.onClose();
+        setOpen(false);
       }
-    },
-    [label]
-  );
+    };
+    document.addEventListener("keydown", listener);
+    return () => document.removeEventListener("keydown", listener);
+  }, [isOpen]);
   return (
-    <Tooltip isOpen={label.isOpen} {...rest} closeOnEsc={true}>
-      <Flex
-        as="span"
-        aria-label={
-          titleId
-            ? intl.formatMessage({ id: `${titleId}-tooltip-aria` })
-            : undefined
-        }
-        className={isFocusable ? "focusable-tooltip" : undefined}
-        onKeyDown={handleKeydown}
-        ref={ref}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={label.onOpen}
-        tabIndex={isFocusable && !isDisabled ? 0 : undefined}
-        onFocus={isFocusable ? label.onOpen : undefined}
-        onBlur={isFocusable ? label.onClose : undefined}
-        _focusVisible={{
-          boxShadow: "outline",
-          outline: "none",
-        }}
-        borderRadius="50%"
-      >
-        {children}
-      </Flex>
+    <Tooltip
+      content={label}
+      placement={placement}
+      hasArrow={hasArrow}
+      isOpen={isOpen}
+    >
+      <Focusable>
+        <span
+          aria-label={
+            titleId
+              ? intl.formatMessage({ id: `${titleId}-tooltip-aria` })
+              : undefined
+          }
+          className={cx(
+            isFocusable ? "focusable-tooltip" : undefined,
+            css({
+              display: "flex",
+              borderRadius: "50%",
+              outline: "none",
+              _focusVisible: { boxShadow: "outline" },
+            })
+          )}
+          ref={ref}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={() => setOpen(true)}
+          tabIndex={isFocusable && !isDisabled ? 0 : undefined}
+          onFocus={isFocusable ? () => setOpen(true) : undefined}
+          onBlur={isFocusable ? () => setOpen(false) : undefined}
+        >
+          {children}
+        </span>
+      </Focusable>
     </Tooltip>
   );
 };

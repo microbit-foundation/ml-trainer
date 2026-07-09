@@ -1,16 +1,13 @@
-import { Box } from "@chakra-ui/react";
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useRef } from "react";
 import { useSwiper } from "swiper/react";
-import CarouselButton from "./CarouselButton";
 import { isNativePlatform } from "../../platform";
-
-const buttonStyles = {
-  position: "absolute" as const,
-  zIndex: 5,
-  top: "var(--carousel-pt)",
-  // Draw over the box shadow below the carousel cards
-  bottom: "calc(var(--carousel-pb) - 8px)",
-};
+import { css, cx } from "../../shared-ui";
+import CarouselButton from "./CarouselButton";
 
 const SwiperCarouselButtons = () => {
   const isRtl = false;
@@ -45,31 +42,31 @@ const SwiperCarouselButtons = () => {
   }, [swiper]);
 
   return (
-    <Box
-      display={isNativePlatform() ? "none" : ["none", null, "contents"]}
-      sx={{
-        "& .swiper-button-disabled": { display: "none" },
-      }}
+    <div
+      className={cx(
+        css({
+          "& .swiper-button-disabled": { display: "none" },
+        }),
+        isNativePlatform()
+          ? css({ display: "none" })
+          : css({ display: { base: "none", md: "contents" } })
+      )}
     >
       <CarouselButton
         ref={prevButtonRef}
-        aria-hidden="true"
-        {...buttonStyles}
-        left={isRtl ? undefined : 0}
-        right={isRtl ? 0 : undefined}
+        aria-hidden
+        side={isRtl ? "right" : "left"}
         direction={isRtl ? "right" : "left"}
         onClick={() => swiper.slidePrev()}
       />
       <CarouselButton
         ref={nextButtonRef}
-        aria-hidden="true"
-        {...buttonStyles}
-        left={isRtl ? 0 : undefined}
-        right={isRtl ? undefined : 0}
+        aria-hidden
+        side={isRtl ? "left" : "right"}
         direction={isRtl ? "left" : "right"}
         onClick={() => swiper.slideNext()}
       />
-    </Box>
+    </div>
   );
 };
 

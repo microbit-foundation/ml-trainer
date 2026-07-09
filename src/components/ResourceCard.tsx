@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { ReactNode } from "react";
 import {
   AspectRatio,
   Box,
-  HStack,
   Heading,
+  HStack,
   Image,
   LinkBox,
   LinkOverlay,
   VStack,
-} from "@chakra-ui/react";
-import { ReactNode } from "react";
-import Link from "./Link";
+} from "../shared-ui";
 
 interface ResourceCardProps {
   aspectRatio?: number;
@@ -35,7 +34,7 @@ const ResourceCard = ({
     <LinkBox
       display="flex"
       flexDir="column"
-      bgColor="white"
+      bg="white"
       borderRadius="10px"
       overflow="hidden"
       w={64}
@@ -44,15 +43,25 @@ const ResourceCard = ({
     >
       <AspectRatio w="100%" ratio={aspectRatio} position="relative">
         <Box>
-          <Image src={imgSrc} alt="" p={imagePadding} h="100%" w="100%" />
+          <Image
+            src={imgSrc}
+            alt=""
+            h="100%"
+            w="100%"
+            // Spacing token scale (0.25rem units); dynamic, so inline style.
+            style={
+              imagePadding
+                ? { padding: `${imagePadding * 0.25}rem` }
+                : undefined
+            }
+          />
         </Box>
       </AspectRatio>
-      <VStack p={3} py={2} pb={3} flexGrow={1} spacing={3} alignItems="stretch">
+      <VStack p={3} py={2} pb={3} flexGrow={1} gap={3} alignItems="stretch">
         <HStack justifyContent="space-between" alignItems="flex-start">
           <Heading as="h3" fontSize="lg" fontWeight="bold" m={3}>
             <LinkOverlay
               href={url}
-              as={Link}
               _focusVisible={{ boxShadow: "outline", outline: "none" }}
             >
               {title}

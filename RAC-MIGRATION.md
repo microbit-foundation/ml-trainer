@@ -228,7 +228,34 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    - Accepted interaction diff: the auto-focused Cancel button in
      `ConfirmDialog` shows its focus ring even after mouse interaction
      (Chakra focused it invisibly).
-4. **Pages**: HomePage, then DataSamplesPage, etc.
+1. ✅ **HomePage** — done, bottom-up: carousel stack (`CarouselRow`,
+   `SwiperCarousel`, `SwiperCarouselButtons`, `CarouselButton`),
+   `ResourceCard`, `ClickableTooltip` (+`InfoToolTip`), `HomepageBanner`,
+   `ProjectCard`, and the page. New shared-ui: `Card`/`CardBody`
+   (`Card.recipe.ts`, elevated + outline), `LinkBox`/`LinkOverlay`, `Image`,
+   `AspectRatio` re-export; Tooltip placements widened (`left/right top/bottom`).
+   `ClickableTooltip` is now RAC-based (controlled shared-ui Tooltip + RAC
+   `Focusable` around the trigger span; document-level Escape listener matches
+   Chakra's closeOnEsc) — it's shared with DataSamples/Testing surfaces.
+   Hard-won:
+   - **Chakra's LinkOverlay-over-Button pattern needs two things in RAC-land**:
+     (1) react-aria's usePress cancels presses that land outside the button's
+     *bounding rect*, so an `_before` inset overlay silently doesn't work on a
+     RAC `<Button>` — use a plain `<button>` with the `button` recipe class;
+     (2) the button recipe's base sets `position: relative`, which re-anchors
+     the overlay to the button itself — set `position: static` at the call
+     site (this is exactly what Chakra's LinkOverlay did over its Button).
+   - New `_shortHeight` preset condition (`@media (max-height: 800px)`)
+     replaces `src/responsive.ts`'s cross-file constant, which Panda's
+     extractor can't resolve. `HomepageBanner` keeps its own tighter local
+     700px query (same-file consts do resolve).
+   - Idiomatic-RAC follow-up (deferred, deliberate UX change): card
+     collections as RAC `GridList` — whole-item press targets without the
+     overlay hack, arrow-key navigation, and built-in multi-selection that
+     would replace the projects page's checkbox + skip-to-toolbar wiring.
+     Doesn't fit the Swiper-managed home carousel DOM; best tried on the
+     projects page grid.
+1. **Pages**: DataSamplesPage, ProjectsPage, TestingModelPage, etc.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.
 6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs

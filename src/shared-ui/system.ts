@@ -22,6 +22,7 @@ export type {
 
 // Layout patterns — the Panda-native equivalents of Chakra's Box/Flex/Stack/etc.
 export {
+  AspectRatio,
   Box,
   Flex,
   Stack,
