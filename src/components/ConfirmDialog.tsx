@@ -3,18 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  Heading,
-} from "@chakra-ui/react";
-import { ReactNode, useRef } from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "../shared-ui";
 
 export interface ConfirmDialogProps {
   isOpen: boolean;
@@ -42,41 +39,29 @@ export const ConfirmDialog = ({
   const intl = useIntl();
   confirmText = confirmText ?? intl.formatMessage({ id: "confirm-action" });
   cancelText = cancelText ?? intl.formatMessage({ id: "cancel-action" });
-  const leastDestructiveRef = useRef<HTMLButtonElement>(null);
   return (
-    <AlertDialog
+    <Modal
       isOpen={isOpen}
-      leastDestructiveRef={leastDestructiveRef}
       onClose={onCancel}
+      role="alertdialog"
       size="md"
       isCentered
       finalFocusRef={finalFocusRef}
       onCloseComplete={onCloseComplete}
-      preserveScrollBarGap={false}
     >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <Heading as="h2" size="md">
-              {heading}
-            </Heading>
-          </AlertDialogHeader>
-          <AlertDialogBody>{body}</AlertDialogBody>
-          <AlertDialogFooter>
-            <Button ref={leastDestructiveRef} onClick={onCancel}>
-              {cancelText}
-            </Button>
-            <Button
-              variant="solid"
-              colorScheme="red"
-              onClick={onConfirm}
-              ml={3}
-            >
-              {confirmText}
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
+      <ModalHeader css={{ fontWeight: "bold", lineHeight: 1.2 }}>
+        {heading}
+      </ModalHeader>
+      <ModalBody>{body}</ModalBody>
+      <ModalFooter>
+        {/* Least-destructive action gets initial focus (AlertDialog pattern). */}
+        <Button autoFocus onPress={onCancel}>
+          {cancelText}
+        </Button>
+        <Button variant="warningSolid" onPress={onConfirm} css={{ ml: 3 }}>
+          {confirmText}
+        </Button>
+      </ModalFooter>
+    </Modal>
   );
 };

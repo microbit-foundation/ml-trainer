@@ -12,6 +12,15 @@ export const getAbsoluteFilePath = (filePathFromProjectRoot: string) => {
   return path.join(dir.replace("e2e/app", ""), filePathFromProjectRoot);
 };
 
+/**
+ * The modal dialog, excluding menu popovers. react-aria-components popovers
+ * (menus etc.) also have role="dialog" (briefly still present while animating
+ * out), so a bare getByRole("dialog") can be ambiguous. Both Chakra and
+ * shared-ui modals render the dialog on a <section>; popovers are <div>s.
+ */
+export const modalDialog = (page: Page): Locator =>
+  page.getByRole("dialog").and(page.locator("section"));
+
 export class Navbar {
   private saveButton: Locator;
   private homeButton: Locator;

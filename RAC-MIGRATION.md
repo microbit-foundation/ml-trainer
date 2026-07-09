@@ -204,10 +204,30 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    call-site `gap` compensation. `BackArrow` is a plain Panda-styled svg.
    `useNativeTabletBreakpoint` now uses shared-ui `useBreakpointValue`.
    Verified against live at desktop/tablet widths incl. both drawer placements.
-3. **Self-contained dialogs**: `ConfirmDialog` (AlertDialog), `NameProjectDialog`
-   (forms) — exercises patterns HomePage needs. Add `ModalCloseButton` (uses
-   `CloseIcon`), `IconButton`, form controls, `Spinner`, `VisuallyHidden` on
-   demand.
+1. ✅ **Self-contained dialogs** — done. `ConfirmDialog` (shared-ui Modal with
+   `role="alertdialog"`, `isCentered`, `autoFocus` on the least-destructive
+   button) and `NameProjectDialog` (first form) ported. shared-ui additions:
+   - Modal grew `role`, `isCentered` (a `centered` recipe variant),
+     `onCloseComplete` + `finalFocusRef` (unmount sentinel; final focus applied
+     on rAF after RAC's own restore), and `ModalCloseButton` (closeTrigger
+     slot; localised via `close-action` — Chakra's was hardcoded "Close").
+   - `TextField` (+ `TextField.recipe.ts` `field` slot recipe): RAC
+     TextField/Label/Input/Text/FieldError collapsing Chakra's
+     FormControl/FormLabel/Input/FormHelperText/FormErrorMessage. Focus keys
+     off `data-focused` (react-aria treats text-input focus as
+     keyboard-visible, like Chakra's `_focusVisible` on inputs); focus ring
+     wins over invalid styling, as in Chakra.
+   - Button `warningSolid` variant (Chakra solid+red; same values as `record`
+     today but separate so recording UI and destructive actions can diverge).
+   - **RAC popovers have `role="dialog"`** (menus included, and they linger
+     briefly with `data-exiting` while animating out), so a bare Playwright
+     `getByRole("dialog")` can hit strict-mode ambiguity when a dialog opens
+     from a menu. e2e page objects now use the `modalDialog()` helper
+     (`src/e2e/app/shared.ts`) which scopes to `<section>` — both Chakra and
+     shared-ui modals render on a section; popovers are divs.
+   - Accepted interaction diff: the auto-focused Cancel button in
+     `ConfirmDialog` shows its focus ring even after mouse interaction
+     (Chakra focused it invisibly).
 4. **Pages**: HomePage, then DataSamplesPage, etc.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.

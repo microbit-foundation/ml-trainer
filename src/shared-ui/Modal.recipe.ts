@@ -105,6 +105,13 @@ export const dialog = defineSlotRecipe({
     closeTrigger: { position: "absolute", top: "2", insetEnd: "3" },
   },
   variants: {
+    // Chakra's `isCentered`: vertically centre the dialog in the viewport
+    // rather than the default top alignment.
+    centered: {
+      true: {
+        overlay: { alignItems: "center" },
+      },
+    },
     size: {
       xs: { content: { ...dialogBox, maxWidth: "xs" } },
       sm: { content: { ...dialogBox, maxWidth: "sm" } },

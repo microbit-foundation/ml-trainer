@@ -28,6 +28,7 @@ import { drawer } from "../../shared-ui/Drawer.recipe";
 import { heading } from "../../shared-ui/Heading.recipe";
 import { menu } from "../../shared-ui/Menu.recipe";
 import { dialog } from "../../shared-ui/Modal.recipe";
+import { field } from "../../shared-ui/TextField.recipe";
 
 // gray overrides from the original Chakra theme (components/../colors.ts):
 // adds the very-light 10/25 stops and replaces 500/600.
@@ -111,6 +112,7 @@ export const ossPreset = definePreset({
     slotRecipes: {
       dialog,
       drawer,
+      field,
       menu,
     },
   },

@@ -148,6 +148,15 @@ export const button = defineRecipe({
         _hover: { borderColor: "red.600" },
         _active: { bg: "red.50", borderColor: "red.500" },
       },
+      // Chakra's built-in solid + red colorScheme (destructive confirm
+      // buttons). Same values as `record` today, but a separate variant so
+      // recording UI and destructive actions can diverge.
+      warningSolid: {
+        color: "white",
+        bg: "red.500",
+        _hover: { bg: "red.600", _disabled: { bg: "red.500" } },
+        _active: { bg: "red.700" },
+      },
       toolbar: {
         color: "black",
         bg: "white",

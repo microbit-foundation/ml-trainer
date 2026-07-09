@@ -15,6 +15,7 @@ import {
   getPatternColumnValues,
   selectPatternColumn,
 } from "./bluetooth-pattern";
+import { modalDialog } from "./shared";
 
 export type RadioDisconnectType = "bridge" | "remote";
 
@@ -436,7 +437,7 @@ export class ConnectionDialogs {
    * Expect no dialog to be visible (e.g., after clicking Cancel).
    */
   async expectNoDialog() {
-    await expect(this.page.getByRole("dialog")).not.toBeVisible({
+    await expect(modalDialog(this.page)).not.toBeVisible({
       timeout: 10000,
     });
   }

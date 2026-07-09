@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, type Page, type BrowserContext } from "@playwright/test";
-import { getAbsoluteFilePath, Navbar } from "./shared";
+import { getAbsoluteFilePath, modalDialog, Navbar } from "./shared";
 
 /**
  * Browser-context script: poll the app's IndexedDB until the default
@@ -175,7 +175,7 @@ export class HomePage {
     newName: string,
     confirmLabel: string
   ) {
-    const dialog = this.page.getByRole("dialog");
+    const dialog = modalDialog(this.page);
     await expect(dialog).toBeVisible();
     const nameInput = dialog.getByRole("textbox");
     await nameInput.clear();

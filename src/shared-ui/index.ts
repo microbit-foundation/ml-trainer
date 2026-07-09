@@ -12,6 +12,7 @@ export * from "./system";
 export * from "./Button";
 export * from "./IconButton";
 export * from "./Text";
+export * from "./TextField";
 export * from "./Heading";
 export * from "./Link";
 export * from "./Icon";

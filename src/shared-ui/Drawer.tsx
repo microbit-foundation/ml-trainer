@@ -3,27 +3,16 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { createContext, ReactNode, useContext, useEffect, useRef } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { Dialog, Modal as RACModal, ModalOverlay } from "react-aria-components";
 import { css, cx } from "styled-system/css";
 import { drawer, DrawerVariantProps } from "styled-system/recipes";
 import { SystemStyleObject } from "styled-system/types";
+import { UnmountCallback } from "./UnmountCallback";
 
 type DrawerSlots = ReturnType<typeof drawer>;
 
 const SlotContext = createContext<DrawerSlots>(drawer({}));
-
-/**
- * Runs its callback when unmounted. RAC keeps the overlay tree mounted until
- * the exit transition finishes, so mounting this inside the drawer gives the
- * equivalent of Chakra's `onCloseComplete`.
- */
-const UnmountCallback = ({ callback }: { callback?: () => void }) => {
-  const ref = useRef(callback);
-  ref.current = callback;
-  useEffect(() => () => ref.current?.(), []);
-  return null;
-};
 
 export interface DrawerProps extends DrawerVariantProps {
   isOpen: boolean;

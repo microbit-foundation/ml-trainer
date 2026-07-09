@@ -4,23 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  VStack,
-} from "@chakra-ui/react";
-import {
   FormEvent,
   ReactNode,
   useCallback,
@@ -28,9 +11,18 @@ import {
   useRef,
   useState,
 } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-utils";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalFooter,
+  ModalHeader,
+  TextField,
+} from "../shared-ui";
 
 interface NameProjectDialogProps {
   finalFocusRef?: React.RefObject<HTMLElement>;
@@ -55,6 +47,7 @@ export const NameProjectDialog = ({
   helperText = <FormattedMessage id="name-used-when" />,
   confirmText = <FormattedMessage id="confirm-save-action" />,
 }: NameProjectDialogProps) => {
+  const intl = useIntl();
   const initialName = useProjectName();
   const [name, setName] = useState<string>(projectName ?? initialName);
   const isValid = validateProjectName(name);
@@ -86,58 +79,43 @@ export const NameProjectDialog = ({
       onClose={onClose}
       size="md"
       finalFocusRef={finalFocusRef}
-      initialFocusRef={ref}
       onCloseComplete={onCloseComplete}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>{heading}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack>
-              <Box as="form" onSubmit={handleSubmit} width="100%">
-                <FormControl id="projectName" isRequired isInvalid={!isValid}>
-                  <FormLabel>
-                    <FormattedMessage id="name-text" />
-                  </FormLabel>
-                  <Input
-                    ref={ref}
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.currentTarget.value)}
-                    onFocus={handleFocus}
-                    autoComplete="off"
-                  ></Input>
-                  {helperText && (
-                    <FormHelperText color="gray.700">
-                      {helperText}
-                    </FormHelperText>
-                  )}
-                  {!isValid && (
-                    <FormErrorMessage>
-                      <FormattedMessage id="project-name-not-empty" />
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </Box>
-            </VStack>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>
-              <FormattedMessage id="cancel-action" />
-            </Button>
-            <Button
-              variant="primary"
-              onClick={handleSubmit}
-              ml={3}
-              isDisabled={!isValid}
-            >
-              {confirmText}
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>{heading}</ModalHeader>
+      <ModalCloseButton
+        aria-label={intl.formatMessage({ id: "close-action" })}
+      />
+      <ModalBody>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            ref={ref}
+            label={<FormattedMessage id="name-text" />}
+            value={name}
+            onChange={setName}
+            onFocus={handleFocus}
+            autoFocus
+            autoComplete="off"
+            isRequired
+            isInvalid={!isValid}
+            helperText={helperText}
+            helperTextCss={{ color: "gray.700" }}
+            errorMessage={<FormattedMessage id="project-name-not-empty" />}
+          />
+        </form>
+      </ModalBody>
+      <ModalFooter>
+        <Button onPress={onClose}>
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <Button
+          variant="primary"
+          onPress={() => onSave(name)}
+          css={{ ml: 3 }}
+          isDisabled={!isValid}
+        >
+          {confirmText}
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

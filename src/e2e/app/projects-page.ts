@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, Locator, type Page } from "@playwright/test";
+import { modalDialog } from "./shared";
 
 export class ProjectsPage {
   private url: string;
@@ -195,7 +196,7 @@ export class ProjectsPage {
     newName: string,
     confirmLabel: string
   ) {
-    const dialog = this.page.getByRole("dialog");
+    const dialog = modalDialog(this.page);
     await expect(dialog).toBeVisible();
     const nameInput = dialog.getByRole("textbox");
     await nameInput.clear();
