@@ -1,10 +1,14 @@
 # Chakra → react-aria-components + Panda CSS migration
 
-Status: **all pages, menus, the app shell and every dialog are ported.**
-Remaining: the brand-diff audit, a tail of leaf/animation components, Tour,
-BluetoothPatternInput, the fidelity harness, then the Chakra kill-switch —
-see "Remaining work" for the agreed order. This doc is the handover for
-continuing in a new session; per-chunk history lives in git.
+Status: **every component is ported — nothing renders through Chakra any
+more.** The only remaining `@chakra-ui` imports are kill-switch material:
+`ChakraProvider` in `App.tsx`, one `BoxProps` type in `deployment/index.ts`,
+and the OSS Chakra theme files that get deleted. Remaining work: the
+**fidelity harness** (next up — design agreed and detailed in "Remaining
+work" #7; a first step was started and deliberately reverted, see there),
+then the **kill-switch**, then **private preset consumption**. This doc is
+the handover for continuing in a new session; per-chunk history lives in
+git.
 
 ## Goal
 
@@ -396,19 +400,75 @@ Consolidated for review time; all deliberate:
    "click the selected option again" interactions on RAC radios. A real
    screen-reader pass (VoiceOver) on device is still worth doing when the
    native flow is next tested by hand.
-7. **Fidelity harness** — build *before* the kill-switch: the
-   `preflight: true` flip changes global styles everywhere at once, and a
-   Chakra-build vs Panda-build screenshot diff turns that from
-   eyeball-everything into a reviewable diff. The TestingModelPage
-   stash-compare spec (screenshotting the e2e mock fixtures before/after
-   `git stash`) is the working prototype.
+7. **Fidelity harness** (next up — design agreed, build it before the
+   kill-switch). Why: the kill-switch is a *global* change — `preflight:
+   true` swaps the CSS reset on every element; removing `ChakraProvider`
+   also removes Chakra's global body styles (font/colour/bg — **Panda does
+   not currently own these**, a known gap the harness must catch); deleting
+   the unlayer shim puts Panda back inside `@layer`, changing how it
+   competes with *unlayered* third-party CSS (Swiper, MakeCode embed, brand
+   `fonts.css`). Per-component review can't cover that; a whole-app
+   screenshot diff can. Agreed design:
+   - **State catalogue** `src/e2e/fidelity.spec.ts` in its own Playwright
+     project (`--project=fidelity`; add `testIgnore` for it to the default
+     chromium project). ~30–50 `toHaveScreenshot()` states reusing the
+     existing page objects + mock fixtures, which can reach everything:
+     home empty/with-project, projects page (+selection/menus), data
+     samples empty/connected/with-recordings (import
+     `test-data/dataset.json`), the full connect-flow dialogs incl. the
+     pattern input, train-help → testing-model page (a real model trains
+     via `trainModelDialog.train()`), settings/about/language dialogs,
+     drawer, the Connect tour steps (auto-appears after mock connect), at
+     1324/900/390 widths.
+   - **Determinism**: project-level `expect.toHaveScreenshot` defaults
+     `{ animations: "disabled" }` plus `page.emulateMedia({ reducedMotion:
+     "reduce" })` (our reduced-motion handling pauses the welcome
+     animation via `startPausedIfReducedMotion`); `mask` the LiveGraph
+     canvas in connected states; no clock-freezing needed — projects are
+     created fresh each run so relative "last edited" labels are stable.
+     Skip the Feedback dialog (external freshdesk iframe).
+   - **Baseline runner** `bin/fidelity.mjs` (+ `npm run fidelity`): given a
+     git ref, `git worktree add` (detached, in a temp dir), **symlink
+     node_modules into it**, run `npm run panda` there (clean per-side
+     regen — the stale-preset gotcha), start `vite dev --port 5199
+     --strictPort` from the worktree, run the spec with
+     `--update-snapshots`; then serve the working tree on the same port
+     and run the spec in compare mode → Playwright's HTML report gives the
+     side-by-side diffs. Snapshots land in a git-ignored dir
+     (`snapshotPathTemplate` → `.fidelity/`); baselines are per-run
+     artefacts, never committed.
+   - **Plumbing prerequisites**: (a) the seven e2e page objects hardcode
+     `http://localhost:5173` — add an `appUrl` helper (e.g. in
+     `src/e2e/app/shared.ts`) reading `process.env.E2E_PORT ?? "5173"` and
+     swap the call sites, so the harness runs on :5199 and never collides
+     with a locally running dev server (a mechanical version of this edit
+     was started and **deliberately reverted** at a pause point — redo it
+     properly with the helper + imports); (b) `playwright.config.ts` needs
+     the fidelity project and a `FIDELITY_NO_WEBSERVER=1` escape so the
+     runner manages servers itself instead of the config's webServer.
+   - **What it buys**: the kill-switch reviewed as N image diffs instead of
+     click-around-everything; standing protection for Panda version bumps
+     (extractor changes are this migration's silent-failure class); run it
+     twice (brand linked / OSS) for brand-split coverage nobody eyeballs;
+     and a visual-diff artefact for the eventual PR to main. Keep it
+     on-demand, not CI-gating (image baselines are font-rendering
+     sensitive; if CI-gating later, run in the pinned Playwright container
+     from build.yml).
+   - The TestingModelPage stash-compare spec and this branch's many
+     throwaway probes are the prototypes; prefer the **worktree** over
+     `git stash` for the baseline (no touching the working tree, and the
+     stash dance bit us twice with wrong-cwd pops).
 8. **Kill-switch**: remove `ChakraProvider`/`BrandConfig.chakraTheme`,
-   delete `src/deployment/default/{theme,colors}.ts` etc., unpick the
-   type-only imports (`model.ts` `PlacementWithLogical`/`ThemingProps`,
-   `deployment/index.ts` `BoxProps`), set `preflight: true`, delete
-   `bin/unlayer-panda.mjs`/`bin/panda-dev.mjs` watch shim + the `exclude`
-   list, drop Chakra/Emotion/framer-motion deps. Full fidelity-harness +
-   e2e pass.
+   delete `src/deployment/default/{theme,colors,components/*}.ts`, unpick
+   the last type-only import (`deployment/index.ts` `BoxProps`; `model.ts`
+   was already done in the Tour pass), set `preflight: true`, delete
+   `bin/unlayer-panda.mjs`/`bin/panda-dev.mjs` + the (already empty)
+   `exclude` list, drop Chakra/Emotion/framer-motion deps, and delete
+   `bin/diff-chakra-themes.mjs`. **Chakra's global body styles
+   (font/colour/bg/line-height from its theme `styles.global`) currently
+   style the app — add the equivalent `globalCss` to the Panda preset as
+   part of this flip** and let the fidelity harness confirm it. Full
+   fidelity-harness + e2e pass across the flip commit.
 9. **Private preset consumption** — replace the local symlink with a real
    mechanism (publish the `panda-preset` export or a documented
    `file:`/`npm link` story) so team/CI can build the branded app. Gates
