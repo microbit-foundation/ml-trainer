@@ -53,6 +53,11 @@ export interface ModalProps {
   /** Style overrides for the dialog box (Chakra's ModalContent props). */
   contentCss?: SystemStyleObject;
   /**
+   * Style overrides for the backdrop (Chakra's ModalOverlay props), e.g. a
+   * transparent backdrop when something else provides the dimming.
+   */
+  overlayCss?: SystemStyleObject;
+  /**
    * Use "alertdialog" for confirmations that interrupt the user (Chakra's
    * AlertDialog).
    */
@@ -90,6 +95,7 @@ export const Modal = ({
   motionless,
   isKeyboardDismissDisabled,
   contentCss,
+  overlayCss,
   role,
   isCentered,
   onCloseComplete,
@@ -123,7 +129,11 @@ export const Modal = ({
       }}
       isDismissable={isDismissable}
       isKeyboardDismissDisabled={isKeyboardDismissDisabled}
-      className={cx(slots.overlay, motionlessClass)}
+      className={cx(
+        slots.overlay,
+        motionlessClass,
+        overlayCss ? css(overlayCss) : undefined
+      )}
     >
       <UnmountCallback callback={handleUnmount} />
       <RACModal

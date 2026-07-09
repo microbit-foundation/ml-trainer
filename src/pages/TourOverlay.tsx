@@ -3,60 +3,56 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Portal, useModalContext, useToken } from "@chakra-ui/react";
 import { MutableRefObject, RefObject, useLayoutEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { css } from "../shared-ui";
 
 interface TourOverlayProps extends SpotlightStyle {
   referenceRef: MutableRefObject<HTMLElement | undefined>;
 }
 
 /**
- * A replacement for Chakra UI's overlay that cuts out a section to highlight
+ * A replacement for the modal backdrop that cuts out a section to highlight
  * some of the background. Suitable for onboarding tours.
  */
 const TourOverlay = ({ referenceRef, ...clipStyle }: TourOverlayProps) => {
-  const { isOpen } = useModalContext();
-  const zIndex = useToken("zIndex", "overlay");
   const [overlay, cutOut] = useRects(referenceRef);
-  if (!isOpen) {
-    return null;
-  }
-  return (
-    <Portal>
-      <Box
-        as="svg"
-        zIndex={zIndex}
-        position="fixed"
-        left="0"
-        top="0"
-        w="100vw"
-        h="100vh"
-      >
-        <g>
-          <defs>
-            {cutOut && (
-              <clipPath id="mask">
-                <path
-                  clipRule="evenodd"
-                  d={createClipPath(overlay, cutOut, clipStyle)}
-                />
-              </clipPath>
-            )}
-          </defs>
-          <rect
-            clipPath="url(#mask)"
-            clipRule="evenodd"
-            // Matches blackAlpha.600 which is what the regular modal uses.
-            fill="000000"
-            fillOpacity="0.48"
-            height="100%"
-            width="100%"
-            x={0}
-            y={0}
-          />
-        </g>
-      </Box>
-    </Portal>
+  return createPortal(
+    <svg
+      className={css({
+        zIndex: "overlay",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        w: "100vw",
+        h: "100vh",
+      })}
+    >
+      <g>
+        <defs>
+          {cutOut && (
+            <clipPath id="mask">
+              <path
+                clipRule="evenodd"
+                d={createClipPath(overlay, cutOut, clipStyle)}
+              />
+            </clipPath>
+          )}
+        </defs>
+        <rect
+          clipPath="url(#mask)"
+          clipRule="evenodd"
+          // Matches blackAlpha.600 which is what the regular modal uses.
+          fill="000000"
+          fillOpacity="0.48"
+          height="100%"
+          width="100%"
+          x={0}
+          y={0}
+        />
+      </g>
+    </svg>,
+    document.body
   );
 };
 

@@ -360,12 +360,24 @@ Consolidated for review time; all deliberate:
      invisible. The port uses the resolved colour, so the fill now shows.
      Kept as a fix (matches evident intent); check it when the A/B-hold
      path (`PairingModeAnimation pairingMethod`) is next exercised.
-5. **Tour** (`src/pages/Tour.tsx` + `TourOverlay.tsx` + `tours.tsx` content):
-   needs a positioning decision — RAC `Popover` with an external
-   `triggerRef` pointing at the spotlighted element is the idiomatic
-   replacement for Chakra's `usePopper` (arrow via `OverlayArrow`); the
-   spotlight svg overlay is stack-agnostic and ports as-is. Preserve the
-   `returnFocusOnClose={false}` behaviour (see comment in Tour.tsx for why).
+5. ✅ **Tour** — done. Spotlighted steps are a RAC `Popover` with an external
+   `triggerRef` (assigned during render so the keyed, remounted-per-step
+   popover measures the fresh anchor on mount), `OverlayArrow` (white,
+   shadowless, rotated per placement data-attribute),
+   `shouldCloseOnInteractOutside={() => false}` for Chakra's
+   `closeOnOverlayClick={false}`, and a default placement of `"bottom"`
+   (RAC's default is `"top"`; Chakra popper defaulted bottom). Steps without
+   a selector are a shared-ui Modal; Modal grew `overlayCss` so TourOverlay
+   can own the dimming in multi-step tours without a double backdrop.
+   TourOverlay's spotlight svg ported as-is (`createPortal`). Chakra's
+   `returnFocusOnClose={false}` (Tab restarts from the top; avoids focusing
+   the MakeCode iframe) is reproduced by blurring before each tour action —
+   react-aria only restores focus on unmount when focus is still inside the
+   dialog. Probe-verified on both builds: focus lands on `body` after close,
+   popovers/arrows/spotlights match; accepted diff: RAC clamps popovers 12px
+   from the viewport edge (`containerPadding` default) where popper sat
+   flush. `model.ts` and `tours.tsx` no longer import Chakra (two kill-switch
+   unpicks done early).
 6. **BluetoothPatternInput** (#926) — its own careful pass; recently
    reworked screen-reader-accessible radio machinery, so verify with AT.
 7. **Fidelity harness** — build *before* the kill-switch: the
