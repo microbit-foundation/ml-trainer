@@ -25,8 +25,10 @@ import {
 // preset registers them so Panda merges them at codegen time.
 import { button } from "../../shared-ui/Button.recipe";
 import { card } from "../../shared-ui/Card.recipe";
+import { checkbox } from "../../shared-ui/Checkbox.recipe";
 import { drawer } from "../../shared-ui/Drawer.recipe";
 import { heading } from "../../shared-ui/Heading.recipe";
+import { input } from "../../shared-ui/Input.recipe";
 import { menu } from "../../shared-ui/Menu.recipe";
 import { dialog } from "../../shared-ui/Modal.recipe";
 import { field } from "../../shared-ui/TextField.recipe";
@@ -109,9 +111,11 @@ export const ossPreset = definePreset({
     recipes: {
       button,
       heading,
+      input,
     },
     slotRecipes: {
       card,
+      checkbox,
       dialog,
       drawer,
       field,

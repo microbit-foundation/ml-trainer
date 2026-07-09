@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { ButtonHTMLAttributes, forwardRef } from "react";
+import { css, cx } from "styled-system/css";
 import { styled } from "styled-system/jsx";
+import { button } from "styled-system/recipes";
+import { SystemStyleObject } from "styled-system/types";
 
 /**
  * LinkBox — makes a whole box clickable via a nested LinkOverlay (or any
@@ -34,4 +38,51 @@ export const LinkOverlay = styled("a", {
       height: "100%",
     },
   },
+});
+
+export interface LinkOverlayButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className"> {
+  /** Per-instance style overrides, merged after the base. */
+  css?: SystemStyleObject;
+  className?: string;
+}
+
+/**
+ * LinkOverlayButton — the button flavour of LinkOverlay: its `::before`
+ * stretches over the nearest LinkBox so the whole box is clickable.
+ *
+ * Deliberately a plain button, not a react-aria one: react-aria's usePress
+ * cancels presses that land outside the button's bounding rect, which defeats
+ * the overlay. `position: static` overrides the button recipe's base so the
+ * overlay anchors to the LinkBox (Chakra's LinkOverlay did the same over its
+ * Button).
+ */
+export const LinkOverlayButton = forwardRef<
+  HTMLButtonElement,
+  LinkOverlayButtonProps
+>(function LinkOverlayButton({ css: cssProp, className, ...rest }, ref) {
+  return (
+    <button
+      ref={ref}
+      type="button"
+      className={cx(
+        button({ variant: "unstyled" }),
+        css({
+          cursor: "pointer",
+          position: "static",
+          _before: {
+            content: '""',
+            cursor: "pointer",
+            display: "block",
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+          },
+        }),
+        cssProp ? css(cssProp) : undefined,
+        className
+      )}
+      {...rest}
+    />
+  );
 });

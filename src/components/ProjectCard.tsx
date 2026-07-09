@@ -7,8 +7,16 @@ import { RefObject, useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { ProjectNameDialogReason } from "../project-utils";
-import { button } from "styled-system/recipes";
-import { Card, CardBody, css, cx, LinkBox, Stack, Text } from "../shared-ui";
+import {
+  Card,
+  CardBody,
+  css,
+  cx,
+  LinkBox,
+  LinkOverlayButton,
+  Stack,
+  Text,
+} from "../shared-ui";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
@@ -105,39 +113,19 @@ const ProjectCard = ({
                 />
               </svg>
             </svg>
-            {/* Plain button, not RAC: react-aria cancels presses that land
-                outside the button's bounding rect, which defeats the
-                _before overlay stretched over the card. */}
-            <button
-              type="button"
+            <LinkOverlayButton
               onClick={handleLoadProject}
-              className={cx(
-                button({ variant: "unstyled" }),
-                css({
-                  mt: "auto",
-                  h: 8,
-                  textAlign: "left",
-                  fontSize: "xl",
-                  truncate: true,
-                  cursor: "pointer",
-                  // Un-position the button (the recipe base is relative) so
-                  // the overlay anchors to the Card, like Chakra LinkOverlay.
-                  position: "static",
-                  _focusVisible: { boxShadow: "outline", outline: "none" },
-                  // LinkOverlay: stretch the click target over the LinkBox.
-                  _before: {
-                    content: '""',
-                    cursor: "pointer",
-                    display: "block",
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 0,
-                  },
-                })
-              )}
+              css={{
+                mt: "auto",
+                h: 8,
+                textAlign: "left",
+                fontSize: "xl",
+                truncate: true,
+                _focusVisible: { boxShadow: "outline", outline: "none" },
+              }}
             >
               {name}
-            </button>
+            </LinkOverlayButton>
             <Text lineClamp={1} h="1lh">
               {actions.map((a) => a.name).join(", ")}
             </Text>

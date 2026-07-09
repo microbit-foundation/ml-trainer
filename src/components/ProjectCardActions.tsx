@@ -1,4 +1,3 @@
-import { Button, Checkbox, HStack, VisuallyHidden } from "@chakra-ui/react";
 import { RefObject, useCallback, useRef } from "react";
 import { MdMoreVert } from "react-icons/md";
 import {
@@ -10,6 +9,10 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { ProjectNameDialogReason } from "../project-utils";
 import {
+  Button,
+  Checkbox,
+  css,
+  HStack,
   Icon,
   IconButton,
   MenuItem,
@@ -79,41 +82,45 @@ const ProjectCardActions = ({
     >
       {onSelected && (
         <Checkbox
-          p={5}
-          isChecked={isSelected}
+          isSelected={isSelected ?? false}
           onChange={() => onSelected(id)}
-          color="brand.600"
-          zIndex={1}
-          borderColor="gray.600"
-          _hover={{
-            backgroundColor: "blackAlpha.50",
+          css={{
+            px: 5,
+            py: 5,
+            color: "brand.600",
+            zIndex: 1,
+            borderColor: "gray.600",
+            _hover: {
+              backgroundColor: "blackAlpha.50",
+            },
+            borderBottomRightRadius: "md",
+            h: "60px",
           }}
-          borderBottomRightRadius="md"
-          h="60px"
         >
-          <VisuallyHidden>
+          <span className={css({ srOnly: true })}>
             <FormattedMessage id="select-project-action" values={{ name }} />
-          </VisuallyHidden>
+          </span>
         </Checkbox>
       )}
       {onSkipToToolbar && (
         <Button
-          tabIndex={isSelected ? 0 : -1}
-          onClick={onSkipToToolbar}
-          zIndex={3}
-          position="absolute"
-          left="50%"
-          top={1}
-          transform="translateX(-50%)"
+          excludeFromTabOrder={!isSelected}
+          onPress={onSkipToToolbar}
           size="xs"
           variant="primary"
-          opacity={0}
-          pointerEvents="none"
-          _focusVisible={{
-            opacity: 1,
-            pointerEvents: "auto",
-            boxShadow:
-              "0 0 0 2px white, 0 0 0 4px var(--chakra-colors-brand-500)",
+          css={{
+            zIndex: 3,
+            position: "absolute",
+            left: "50%",
+            top: 1,
+            transform: "translateX(-50%)",
+            opacity: 0,
+            pointerEvents: "none",
+            _focusVisible: {
+              opacity: 1,
+              pointerEvents: "auto",
+              boxShadow: "0 0 0 2px white, 0 0 0 4px token(colors.brand.500)",
+            },
           }}
         >
           <FormattedMessage id="project-skip-to-toolbar" />

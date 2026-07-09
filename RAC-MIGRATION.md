@@ -255,7 +255,25 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
      would replace the projects page's checkbox + skip-to-toolbar wiring.
      Doesn't fit the Swiper-managed home carousel DOM; best tried on the
      projects page grid.
-1. **Pages**: DataSamplesPage, ProjectsPage, TestingModelPage, etc.
+1. ✅ **ProjectsPage** — done: `ProjectsToolbar`, `Search`, `SortInput`, the
+   page (grid via Panda `Grid`; Chakra `Slide` replaced with a fixed
+   bottom-sheet div + transform transition), and the rest of
+   `ProjectCardActions` (checkbox + skip-to-toolbar button; the skip button
+   uses RAC `excludeFromTabOrder` instead of `tabIndex=-1`). GridList redesign
+   stays parked until the migration is complete. New shared-ui, extracted
+   after review feedback that the first pass leaned on call-site css:
+   - `input` config recipe (Chakra outline field) shared by new `Input`,
+     `NativeSelect` and TextField's input — selectors match both native
+     pseudo-classes and RAC data attributes.
+   - `InputGroup`/`InputLeftElement`/`InputRightElement`, `ButtonGroup`
+     (`isAttached`; also replaced the two remaining Chakra ButtonGroups in the
+     split buttons), `Checkbox` (Chakra md/blue; `borderColor: inherit` on the
+     control so call sites tint via the root, like Chakra), and
+     `LinkOverlayButton` (encapsulates the plain-button + `position: static` +
+     `_before` overlay pattern and its rationale).
+   Convention reminder: shared-ui components take a `css` prop / recipes;
+   call-site `css()` is for page layout and true one-offs only.
+1. **Pages**: DataSamplesPage, TestingModelPage, etc.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.
 6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs

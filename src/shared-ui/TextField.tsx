@@ -13,7 +13,7 @@ import {
   TextFieldProps as RACTextFieldProps,
 } from "react-aria-components";
 import { css, cx } from "styled-system/css";
-import { field } from "styled-system/recipes";
+import { field, input } from "styled-system/recipes";
 import { SystemStyleObject } from "styled-system/types";
 
 export interface TextFieldProps
@@ -53,7 +53,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </span>
           ) : null}
         </RACLabel>
-        <RACInput ref={ref} className={slots.input} onFocus={onFocus} />
+        <RACInput ref={ref} className={input()} onFocus={onFocus} />
         {helperText && (
           <RACText
             slot="description"

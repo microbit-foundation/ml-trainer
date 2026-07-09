@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ButtonGroup, Flex, HStack, usePrevious } from "@chakra-ui/react";
+import { Flex, HStack, usePrevious } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,7 +20,13 @@ import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
-import { Icon, MenuItem, MenuList, MenuTrigger } from "../shared-ui";
+import {
+  ButtonGroup,
+  Icon,
+  MenuItem,
+  MenuList,
+  MenuTrigger,
+} from "../shared-ui";
 import { useBoardVersion } from "../hooks/use-board-version";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { projectSessionStorage } from "../session-storage";

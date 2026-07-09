@@ -16,7 +16,6 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
-import { button as buttonRecipe } from "styled-system/recipes";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
@@ -41,12 +40,12 @@ import {
   Card,
   CardBody,
   css,
-  cx,
   Heading,
   HStack,
   Icon,
   IconButton,
   LinkBox,
+  LinkOverlayButton,
   Text,
   useBreakpointValue,
   VStack,
@@ -291,39 +290,19 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
                 }}
               />
             </VStack>
-            {/* Plain button, not RAC: react-aria cancels presses that land
-                outside the button's bounding rect, which defeats the
-                _before overlay stretched over the card. */}
-            <button
-              type="button"
+            <LinkOverlayButton
               onClick={onClick}
-              className={cx(
-                buttonRecipe({ variant: "unstyled" }),
-                css({
-                  h: 8,
-                  fontSize: "xl",
-                  cursor: "pointer",
-                  // Un-position the button (the recipe base is relative) so
-                  // the overlay anchors to the Card, like Chakra LinkOverlay.
-                  position: "static",
-                  _focusVisible: {
-                    boxShadow: "outlineLight",
-                    outline: "none",
-                  },
-                  // LinkOverlay: stretch the click target over the LinkBox.
-                  _before: {
-                    content: '""',
-                    cursor: "pointer",
-                    display: "block",
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 0,
-                  },
-                })
-              )}
+              css={{
+                h: 8,
+                fontSize: "xl",
+                _focusVisible: {
+                  boxShadow: "outlineLight",
+                  outline: "none",
+                },
+              }}
             >
               <FormattedMessage id={textId} />
-            </button>
+            </LinkOverlayButton>
           </VStack>
         </CardBody>
       </Card>

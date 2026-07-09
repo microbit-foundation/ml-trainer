@@ -7,7 +7,6 @@ import {
   Box,
   BoxProps,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardProps,
@@ -22,7 +21,13 @@ import { forwardRef, ReactNode, useCallback, useRef } from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataSamplesView, ActionData, RecordingData } from "../model";
-import { Icon, MenuItem, MenuList, MenuTrigger } from "../shared-ui";
+import {
+  ButtonGroup,
+  Icon,
+  MenuItem,
+  MenuList,
+  MenuTrigger,
+} from "../shared-ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";

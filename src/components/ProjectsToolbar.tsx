@@ -1,9 +1,8 @@
-import {
-  Button,
-  ButtonGroup,
-  ButtonGroupProps,
-  IconButton,
-} from "@chakra-ui/react";
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import {
   RiCloseLine,
   RiDeleteBin2Line,
@@ -12,8 +11,9 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ProjectNameDialogReason } from "../project-utils";
+import { Button, ButtonGroup, Icon, IconButton } from "../shared-ui";
 
-interface ProjectsToolbarProps extends ButtonGroupProps {
+interface ProjectsToolbarProps {
   selectedProjectIds: string[];
   onRenameDuplicateProject: (
     reason: ProjectNameDialogReason,
@@ -22,6 +22,9 @@ interface ProjectsToolbarProps extends ButtonGroupProps {
   onDeleteProject: (id?: string) => void;
   onClearSelection: () => void;
   iconOnly?: boolean;
+  /** Attached: square buttons with hairline dividers (default true). */
+  isAttached?: boolean;
+  size?: "md" | "lg";
 }
 
 const ProjectsToolbar = ({
@@ -30,41 +33,47 @@ const ProjectsToolbar = ({
   onDeleteProject,
   onClearSelection,
   iconOnly,
-  ...rest
+  isAttached = true,
+  size,
 }: ProjectsToolbarProps) => {
   const count = selectedProjectIds.length;
   const isSingle = count === 1;
   const intl = useIntl();
-  const iconFontSize = iconOnly ? "xl" : undefined;
 
   return (
     <ButtonGroup
+      isAttached={isAttached}
       role="group"
       aria-label={intl.formatMessage({ id: "selection-actions-group" })}
-      isAttached
-      variant="ghost"
-      sx={{
-        "& > button": { borderRadius: 0 },
-        "& > button + button": {
-          borderLeftWidth: "1px",
-          borderColor: "gray.200",
-        },
-      }}
-      {...rest}
+      css={
+        isAttached
+          ? {
+              "& > button": { borderRadius: 0 },
+              "& > button + button": {
+                borderLeft: "1px solid",
+                borderColor: "gray.200",
+              },
+            }
+          : undefined
+      }
     >
       {isSingle &&
         (iconOnly ? (
           <IconButton
-            onClick={() => onRenameDuplicateProject("rename")}
-            icon={<RiEdit2Line />}
-            fontSize={iconFontSize}
+            variant="ghost"
+            size={size}
+            onPress={() => onRenameDuplicateProject("rename")}
+            css={{ fontSize: "xl" }}
             aria-label={intl.formatMessage({ id: "rename-project-action" })}
-          />
+          >
+            <Icon as={RiEdit2Line} />
+          </IconButton>
         ) : (
           <Button
-            onClick={() => onRenameDuplicateProject("rename")}
-            leftIcon={<RiEdit2Line />}
             variant="ghost"
+            size={size}
+            onPress={() => onRenameDuplicateProject("rename")}
+            leftIcon={<Icon as={RiEdit2Line} />}
           >
             <FormattedMessage id="rename-project-action" />
           </Button>
@@ -72,48 +81,66 @@ const ProjectsToolbar = ({
       {isSingle &&
         (iconOnly ? (
           <IconButton
-            onClick={() => onRenameDuplicateProject("duplicate")}
-            icon={<RiFileCopyLine />}
-            fontSize={iconFontSize}
+            variant="ghost"
+            size={size}
+            onPress={() => onRenameDuplicateProject("duplicate")}
+            css={{ fontSize: "xl" }}
             aria-label={intl.formatMessage({
               id: "duplicate-project-action",
             })}
-          />
+          >
+            <Icon as={RiFileCopyLine} />
+          </IconButton>
         ) : (
           <Button
-            onClick={() => onRenameDuplicateProject("duplicate")}
-            leftIcon={<RiFileCopyLine />}
+            variant="ghost"
+            size={size}
+            onPress={() => onRenameDuplicateProject("duplicate")}
+            leftIcon={<Icon as={RiFileCopyLine} />}
           >
             <FormattedMessage id="duplicate-project-action" />
           </Button>
         ))}
       {iconOnly && isSingle ? (
         <IconButton
-          onClick={() => onDeleteProject()}
-          icon={<RiDeleteBin2Line />}
-          fontSize={iconFontSize}
+          variant="ghost"
+          size={size}
+          onPress={() => onDeleteProject()}
+          css={{ fontSize: "xl" }}
           aria-label={intl.formatMessage(
             { id: "delete-project-action" },
             { count }
           )}
-        />
+        >
+          <Icon as={RiDeleteBin2Line} />
+        </IconButton>
       ) : (
         <Button
-          onClick={() => onDeleteProject()}
-          leftIcon={<RiDeleteBin2Line />}
+          variant="ghost"
+          size={size}
+          onPress={() => onDeleteProject()}
+          leftIcon={<Icon as={RiDeleteBin2Line} />}
         >
           <FormattedMessage id="delete-project-action" values={{ count }} />
         </Button>
       )}
       {iconOnly ? (
         <IconButton
-          onClick={onClearSelection}
-          icon={<RiCloseLine />}
-          fontSize={iconFontSize}
+          variant="ghost"
+          size={size}
+          onPress={onClearSelection}
+          css={{ fontSize: "xl" }}
           aria-label={intl.formatMessage({ id: "clear" })}
-        />
+        >
+          <Icon as={RiCloseLine} />
+        </IconButton>
       ) : (
-        <Button leftIcon={<RiCloseLine />} onClick={onClearSelection}>
+        <Button
+          variant="ghost"
+          size={size}
+          onPress={onClearSelection}
+          leftIcon={<Icon as={RiCloseLine} />}
+        >
           <FormattedMessage id="clear" />
         </Button>
       )}

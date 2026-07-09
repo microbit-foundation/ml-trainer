@@ -1,26 +1,33 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+import { useCallback, useRef } from "react";
+import { RiCloseLine, RiSearch2Line } from "react-icons/ri";
+import { useIntl } from "react-intl";
 import {
-  BoxProps,
+  Icon,
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
-} from "@chakra-ui/react";
-import { useCallback, useRef } from "react";
-import { RiCloseLine, RiSearch2Line } from "react-icons/ri";
-import { useIntl } from "react-intl";
+} from "../shared-ui";
 
-interface SearchProps extends BoxProps {
+interface SearchProps {
   query: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onClear: () => void;
+  /** Extra classes for the root (e.g. a `css(...)` result from the caller). */
+  className?: string;
 }
 
 const Search = ({
   query,
   onChange: onQueryChange,
   onClear,
-  ...rest
+  className,
 }: SearchProps) => {
   const intl = useIntl();
   const ref = useRef<HTMLInputElement>(null);
@@ -33,9 +40,9 @@ const Search = ({
   }, [onClear]);
 
   return (
-    <InputGroup variant="outline" {...rest}>
+    <InputGroup className={className}>
       <InputLeftElement pointerEvents="none">
-        <RiSearch2Line color="gray.800" />
+        <Icon as={RiSearch2Line} css={{ color: "gray.800" }} />
       </InputLeftElement>
       <Input
         aria-label={intl.formatMessage({ id: "search" })}
@@ -44,25 +51,29 @@ const Search = ({
         onChange={onQueryChange}
         type="text"
         placeholder={intl.formatMessage({ id: "search" })}
-        fontSize="lg"
-        _placeholder={{
-          color: "gray.600",
+        css={{
+          pl: 10,
+          pr: 10,
+          fontSize: "lg",
+          _placeholder: { color: "gray.600" },
+          borderRadius: "20px",
+          background: "white",
         }}
-        borderRadius="20px"
-        background="white"
       />
       {query && (
         <InputRightElement>
           <IconButton
-            fontSize="2xl"
-            isRound={false}
             variant="ghost"
             aria-label={intl.formatMessage({ id: "clear" })}
-            // Also used for Zoom, move to theme.
-            color="#838383"
-            icon={<RiCloseLine />}
-            onClick={handleClear}
-          />
+            onPress={handleClear}
+            css={{
+              fontSize: "2xl",
+              // Also used for Zoom, move to theme.
+              color: "#838383",
+            }}
+          >
+            <Icon as={RiCloseLine} />
+          </IconButton>
         </InputRightElement>
       )}
     </InputGroup>
