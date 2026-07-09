@@ -378,8 +378,24 @@ Consolidated for review time; all deliberate:
    from the viewport edge (`containerPadding` default) where popper sat
    flush. `model.ts` and `tours.tsx` no longer import Chakra (two kill-switch
    unpicks done early).
-6. **BluetoothPatternInput** (#926) — its own careful pass; recently
-   reworked screen-reader-accessible radio machinery, so verify with AT.
+6. ✅ **BluetoothPatternInput** (#926) — done. Chakra `useRadioGroup`/
+   `useRadio` → RAC `RadioGroup`/`Radio`; every accessibility contract is
+   probe-verified identical: the ARIA tree (Playwright `ariaSnapshot`,
+   Chakra vs Panda builds) is structurally byte-for-byte the same
+   (radiogroup names, per-LED radio labels, checked semantics), keyboard
+   (arrows change LED count, one tabstop per column), the e2e test-id
+   contract, and pixels. The hard-won part is the **reactivate** affordance
+   (clicking the checked topmost lit LED turns it off — radios fire no
+   change event for that): RAC's press handling swallows the click before
+   React's synthetic handlers see it, and worse, react-aria *re-selects the
+   pressed value against current state* after any handler that runs
+   earlier in the dispatch, silently reverting it. The fix is a native
+   capture listener on the option wrapper that defers the reactivate write
+   by a tick so it lands after react-aria's press processing (see the
+   comment in the component). Worth remembering for any future
+   "click the selected option again" interactions on RAC radios. A real
+   screen-reader pass (VoiceOver) on device is still worth doing when the
+   native flow is next tested by hand.
 7. **Fidelity harness** — build *before* the kill-switch: the
    `preflight: true` flip changes global styles everywhere at once, and a
    Chakra-build vs Panda-build screenshot diff turns that from
