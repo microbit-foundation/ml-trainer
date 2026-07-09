@@ -1,7 +1,10 @@
 # Chakra → react-aria-components + Panda CSS migration
 
-Status: **foundation + first screen (LanguageDialog) done and verified.** This
-doc is the handover for continuing the migration in a new session.
+Status: **all pages, menus, the app shell and every dialog are ported.**
+Remaining: the brand-diff audit, a tail of leaf/animation components, Tour,
+BluetoothPatternInput, the fidelity harness, then the Chakra kill-switch —
+see "Remaining work" for the agreed order. This doc is the handover for
+continuing in a new session; per-chunk history lives in git.
 
 ## Goal
 
@@ -22,7 +25,7 @@ Chakra swaps a runtime theme via `ChakraProvider`; Panda generates CSS at build
 time from `panda.config.ts`. Vite uses the LightningCSS transformer (PostCSS
 disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
 - `npm run panda` → `panda codegen` (generates `styled-system/`) + `panda cssgen`
-  (writes `src/styled-system.css`) + `bin/unlayer-panda.mjs` (see coexistence).
+  (writes `src/styled-system.css`) + `bin/unlayer-panda.mjs` (see gotcha #1).
 - `npm run panda:watch` → `bin/panda-dev.mjs` (watch + unlayer on each rebuild).
 - Wired into `build`, `predev`, `postinstall`. `styled-system/` and
   `src/styled-system.css` are generated and git-ignored.
@@ -38,10 +41,10 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   set + this app's overrides (`gray` 10/25/500/600, `brand`→Chakra blue,
   `brand2`→Chakra gray, `radii.button` 2rem, `outline`/`outlineDark`/
   `outlineLight` shadows, Helvetica fonts, `display` font token), the recipes,
-  and the RAC condition widening (below).
-- `src/shared-ui/*.recipe.ts` = config recipes colocated with their components:
-  `button` (11 variants), `heading` (+ `marketing` variant), `dialog` (slot
-  recipe, incl. `full` size with safe-area/gradient), `menu` (slot recipe).
+  and the RAC condition widening (gotcha #2).
+- `src/shared-ui/*.recipe.ts` = config recipes colocated with their components
+  (`button`, `heading`, `input`, and the slot recipes `dialog`, `drawer`,
+  `menu`, `card`, `checkbox`, `field`, `slider`, `switchRecipe`).
   **Convention**: new shared-ui config recipes go in `<Component>.recipe.ts`
   next to the component (named after the component, e.g. `Modal.recipe.ts`
   exports `dialog`) and must be registered in the OSS preset's
@@ -61,14 +64,22 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   — the build-time equivalent of the `theme-package` vite alias swap.
 
 ### shared-ui (`src/shared-ui/`)
-`Button`, `Text`, `Heading`, `Link`, `Icon`, `CloseIcon`, `List`/`ListItem`,
-`IconButton`, `Modal` (+ `ModalHeader`/`Body`/`Footer`), `Menu`
-(`MenuTrigger`/`MenuList`/`MenuItem`/`MenuDivider`), `Tooltip`, `Toast`
-(+ `ToastProvider`,
-`useToast`), `useBreakpointValue`, and `system.ts` (re-exports Panda `css`/`cva`/
-`sva`/`cx`/`token` + jsx patterns `Box`/`Flex`/`Stack`/`HStack`/`VStack`/`Grid`/
-`GridItem`/`Center`/`Wrap`/`styled`). Layout uses Panda patterns directly
-(Panda-native idiom); responsive props use object syntax `{ base, md }`.
+See `index.ts` for the full export list. Highlights: `Button` (+`ButtonGroup`,
+`IconButton`, `LinkOverlayButton`), `Modal` (+ header/body/footer/close-button
+slots), `Drawer`, `Menu`, `Tooltip`, `Toast` (+`ToastProvider`/`useToast`),
+form primitives (`TextField`, `Input`, `InputGroup`, `NativeSelect`,
+`Checkbox`, `Switch`, `Slider`), `ProgressBar`, `Spinner`, `Card`,
+`LinkBox`/`LinkOverlay`, typography (`Text`/`Heading`/`Link`), `Icon`/
+`CloseIcon`/`CloseButton`, `Divider`, `List`, `Image`, `useBreakpointValue`,
+and `system.ts` (re-exports Panda `css`/`cva`/`sva`/`cx`/`token` + jsx patterns
+`Box`/`Flex`/`Stack`/`HStack`/`VStack`/`Grid`/`GridItem`/`Center`/`Wrap`/
+`styled`). Layout uses Panda patterns directly (Panda-native idiom); responsive
+props use object syntax `{ base, md }`.
+
+Conventions: shared-ui components take a `css` prop / recipe variants;
+call-site `css()` is for page layout and true one-offs only. A shared-ui
+primitive that accepts style overrides must merge them into a *single*
+`css(base, cssProp)` call (gotcha #8).
 
 ## Hard-won patterns / gotchas (READ before continuing)
 
@@ -77,7 +88,7 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    of specificity — so Chakra's reset `:where(*){border-width:0}` silently kills
    Panda component borders/padding. Fix: `bin/unlayer-panda.mjs` strips the
    `@layer` wrappers from the generated CSS during coexistence. **Temporary** —
-   remove and set `preflight: true` once Chakra is gone.
+   remove and set `preflight: true` once Chakra is gone (kill-switch).
 2. **RAC interaction states.** The preset widens Panda's `hover`/`active`/
    `focusVisible`/`disabled` conditions to also match RAC's `data-*` attributes,
    so Chakra-shaped `_hover`/`_active` style objects work unchanged on RAC.
@@ -96,14 +107,20 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    difference is the `language` variant (OSS grey `brand2`, private blue `brand`).
    Driven by semantic tokens `languageText`/`languageTextHover` overridden in the
    private preset — keeps the recipe shared. The `marketing` heading font is the
-   same idea via the `display` font token. **TODO:** do a full diff of the
-   private Chakra theme vs OSS default and token-drive any other divergences.
+   same idea via the `display` font token. The full audit is "Remaining work" #1.
 7. **Icons inherit `currentColor`.** Don't pass `fill` to react-icons (it
    overrides their default `fill="currentColor"` → black). `Icon`/`CloseIcon` set
    `fill: currentColor` in CSS.
-8. **Atomic overrides.** Panda longhand beats shorthand across separate `css()`
-   calls (and utilities beat recipes only via source order). To override, merge
-   into a *single* `css()` call (see `Tooltip`) or use matching longhands.
+8. **Atomic overrides: same-property conflicts across separate `css()` calls
+   race on stylesheet order** — cx'ing a base class with an override class does
+   NOT mean the override wins; the winner is whichever atomic rule happens to be
+   emitted later (this silently shrank LoadingOverlay's 166px spinner to 24px
+   and turned progress-bar fills Chakra-blue). Merge base + overrides into a
+   *single* `css(base, cssProp)` call so conflicts resolve at merge time (see
+   `Tooltip`/`Spinner`/`ProgressBar`). Related: longhand beats shorthand across
+   calls; and a border shorthand plus separate `borderColor` in one object is
+   order-dependent (`border-top: 3px solid` implies currentColor) — use
+   width/style longhands with `borderColor`.
 9. **Styles must be literals at the JSX/`css()` site.** Panda's static extractor
    only reads `css` prop object literals and `css()` call literals where they
    appear — it does *not* follow an object returned from a helper function. A
@@ -114,13 +131,48 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    in a **component** with an inline `css` literal (see `ActionBarMenuButton`),
    not a style-object helper. Prefer recipe variants (e.g. `size="lg"`) for
    dimensions over utility overrides — variants are generated via `staticCss` and
-   don't depend on call-site extraction. This bit the action-bar menu triggers:
-   the button silently fell back to `size:md` (40px), shrinking the focus ring.
-   The same applies to **computed prop values** (`rowSpan={n + 1}`,
-   `` w={`${x}px`} ``, `` w={`calc(...)`} ``): no CSS is generated, and it can even
-   *look* fine if another call site happens to emit the identical class. Use
-   an inline `style` for computed values, and after porting a file, grep it
-   for style props whose value is not a literal.
+   don't depend on call-site extraction. The same applies to **computed prop
+   values** (`rowSpan={n + 1}`, `` w={`${x}px`} ``, `` w={`calc(...)`} ``): no
+   CSS is generated, and it can even *look* fine if another call site happens to
+   emit the identical class. Use an inline `style` (with a runtime `token()`
+   lookup for token values — see RecordingDialog's countdown), and after porting
+   a file, grep it for style props whose value is not a literal. What *does*
+   work: same-file consts, ternaries of literals, literal arithmetic
+   (`ratio={30 / 25}`), and custom-named object-literal JSX props (`barCss`,
+   `contentCss` — sentinel-verified; coincidental classes from other call sites
+   can mask a miss, so verify against the generated CSS, not the rendered page).
+10. **Removing Emotion from a file isn't enough — also remove it from
+    `panda.config.ts`'s `exclude` list**, or Panda silently skips extraction for
+    the whole file — class names are applied but no CSS rules exist for them
+    (found when a hint svg rendered at 0x0: `w_16 h_16` in the class attribute,
+    no matching rules in styled-system.css).
+11. **Panda's `AspectRatio` pattern positions its child via a `&>*` selector
+    that a still-Chakra child's own `position` style beats** (Emotion injects
+    later at equal specificity; Chakra's own AspectRatio used a
+    higher-specificity `& > *:not(style)`). Symptom: the ::before padding
+    spacer stacks above an in-flow child (was a big gap over SettingsDialog's
+    graph preview). Use the native `aspectRatio` css property instead when the
+    child is still Chakra-styled — arguably the better permanent form anyway;
+    the pattern's padding hack predates browser `aspect-ratio` support.
+12. **RAC popovers unmount on close** (Chakra kept the list mounted), so a
+    hidden file input must live *outside* a menu or its change event is dropped
+    mid-pick — `DataSamplesMenu` renders `LoadProjectInput` as a sibling and
+    the item calls `chooseFile` via ref.
+13. **RAC popovers have `role="dialog"`** (menus included, and they linger
+    briefly with `data-exiting` while animating out), so a bare Playwright
+    `getByRole("dialog")` can hit strict-mode ambiguity when a dialog opens
+    from a menu. e2e page objects use the `modalDialog()` helper
+    (`src/e2e/app/shared.ts`), which scopes to `<section>` — both Chakra and
+    shared-ui modals render on a section; popovers are divs.
+14. **react-aria's focus defaults replace Chakra-era hacks — don't port them.**
+    RAC focuses the dialog element itself on open (verified:
+    `section.dialog__inner` is the active element), so initial-focus
+    workarounds like SettingsDialog's focus-the-heading (stopping the first
+    `<select>` opening its picker on mobile) were dropped, and LanguageDialog's
+    restore-focus hack too (RAC restores focus to the trigger on close). Also:
+    react-aria's usePress cancels presses outside the button's bounding rect,
+    so Chakra's LinkOverlay-over-Button pattern needs a plain `<button>` +
+    `position: static` — encapsulated with rationale in `LinkOverlayButton`.
 
 ## How to run / verify
 
@@ -129,7 +181,7 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   resolvable from `node_modules/@microbit-foundation/ml-trainer-microbit`
   (e.g. `npm link`). With it present, vite's `theme-package` alias and
   `panda.config.ts` both resolve CreateAI branding; without it you get the OSS
-  default. (Currently a local symlink — see "Private preset consumption".)
+  default. (Currently a local symlink — see "Remaining work" #9.)
 - **After changing the private preset (or (re)linking it), do a *clean* Panda
   regen**: `rm -rf styled-system src/styled-system.css && npm run panda` (or
   `panda codegen --clean`). Incremental `panda codegen` does not detect changes
@@ -171,19 +223,24 @@ process.on("uncaughtException", async (e) => {   // screenshot on failure
 ```
 
 Flow notes that save time:
-- **Cookie banner** appears in every fresh headless profile (localhost too).
-  Decline non-essential: click "Manage cookies" then the save/confirm button.
+- **Cookie banner**: pre-seed the `MBCC` cookie instead of clicking through it
+  (see `src/e2e/app/home-page.ts` for the exact value) — works on localhost and
+  live.
+- Headless Chrome negotiates **en-US**, so match text with locale-agnostic
+  regexes (`/colou?r/`), and expect the app's actual strings (check
+  `src/messages/ui.en.json`), not what you'd guess.
 - Reach real states, not just landing pages: create projects via the UI, name
   actions, open menus/dialogs/pickers, select checkboxes
   (`.click({ force: true })` — the input is visually hidden behind the styled
   control in both stacks), focus tooltips, resize the viewport for
   tablet/mobile variants. Screenshot each state on both sides.
 - Beyond screenshots, `page.evaluate` probes settle disputes pixels can't:
-  computed styles (e.g. corner radii at the SortInput seam), element sizes
-  (the 0x0 emoji), and canvas `getImageData` painted-pixel counts (LiveGraph).
-  When local and live disagree, probe *both* and diff the numbers.
+  computed styles, element sizes, `document.activeElement` (focus behaviour),
+  and canvas `getImageData` painted-pixel counts (LiveGraph). When local and
+  live disagree, probe *both* and diff the numbers.
 - Watch `pageerror`/console in the probe scripts — a blank screenshot usually
-  means a crash or suspended tree, not a style bug.
+  means a crash or suspended tree, not a style bug (a `pageerror` also caught
+  AboutDialog's unhandled clipboard rejection).
 
 Process rules learned the hard way:
 - **Run the full e2e suite only on a stable tree.** The Playwright webServer is
@@ -194,312 +251,93 @@ Process rules learned the hard way:
 - The radio reconnection specs are flaky under full parallel load on some
   machines (reproduced on unmodified main); rerun the failing spec in
   isolation before suspecting the migration.
-- Fixes found by comparison so far: banner short-height breakpoint, helper
-  text line-height, sort-control seam radii, missing extraction (exclude
-  list), border shorthand colour, LiveGraph canvas timing — i.e. the loop
-  catches real bugs; don't skip it. Formalising it is "Fidelity harness"
-  below.
+- The loop catches real bugs (banner breakpoint, helper-text line-height,
+  seam radii, missing extraction, border colour, LiveGraph timing, the
+  Spinner/ProgressBar override races, the AspectRatio gap) — don't skip it.
+  Formalising it is "Remaining work" #7.
 
-## Coexistence shims to remove once Chakra is gone
-- `bin/unlayer-panda.mjs` + `bin/panda-dev.mjs`; set Panda `preflight: true`.
-- The Emotion `exclude` list in `panda.config.ts` (files still using Emotion
-  `css`/`keyframes` that trip Panda's extractor).
-- `BrandConfig.chakraTheme` and `<ChakraProvider>` in `App.tsx`.
-- Chakra/Emotion/framer-motion deps.
+## Accepted differences from Chakra
 
-## Known issues / decisions deferred
-- **Toast** uses RAC's `UNSTABLE_Toast*` API (functional; behind `Toast.tsx`).
-- **HomePage** is a composition root (`DefaultPageLayout`/`CarouselRow`/cards) —
-  not a contained screen; migrate bottom-up.
-- **Private preset consumption** is a local symlink — needs a real story
-  (publish the `panda-preset` export, or a documented `npm link`/`file:` dep)
-  before the team/CI can build the branded app. The dev server's `fs.allow`
-  includes the theme package's realpath (vite.config.ts) because with a
-  symlink the brand font/image assets resolve outside the project root and
-  Vite would otherwise 403 them — dev-only, builds are unaffected.
+Consolidated for review time; all deliberate:
+- react-aria shows focus rings after mouse interaction in places Chakra hid
+  them (ConfirmDialog's auto-focused Cancel, the slider thumb).
+- Dialogs open with focus on the dialog element itself (announces the title;
+  a11y improvement) rather than the first focusable control.
+- Toast: single top-centre region; no per-call `position`/`variant`
+  (`id`-dedup is supported). Repeat Android saves within the timeout can stack.
+- MakeCode loading skeleton is an opacity pulse rather than Chakra's shimmer;
+  ~3px internal shift in the certainty card.
+- Toast is built on RAC's `UNSTABLE_Toast*` API (functional; the surface is
+  small and contained behind `Toast.tsx`).
 
-## Next steps (recommended order)
-1. ✅ **Settings + Help `Menu` → RAC** — done. shared-ui `Menu` (`MenuTrigger`/
-   `MenuList`/`MenuItem`/`MenuDivider`) built on RAC, plus a shared-ui
-   `IconButton` (square, `px:0`, `isRound`) for the action-bar triggers (see
-   `ActionBar/action-bar-menu-button.ts` for the shared white/round/focus css).
-   `SettingsMenu`/`LanguageMenuItem`/`SettingsMenuItem` and `HelpMenu`/
-   `HelpMenuItems` migrated; link items use RAC `MenuItem` `href`/`target`/`rel`,
-   actions use `onAction`. LanguageDialog focus hack removed (RAC restores focus
-   to the trigger on close — verified).
-1. ✅ **All remaining menus → RAC** — done; `components/Menu.tsx` (back-button
-   wrapper) and the unused `ToolbarMenu` deleted. `DataSamplesMenu`,
-   `ProjectCardActions`, `ActionDataSamplesCard` (record options) and
-   `TestingModelPage` (MakeCode split button) use shared-ui `MenuTrigger`.
-   `MoreMenuButton` rebuilt on shared-ui `IconButton` (divider is
-   `1px solid` **currentColor** — Chakra's `borderLeft="1px"` resolved via the
-   `borders` scale, so it reads white on filled variants). The split buttons
-   keep Chakra `ButtonGroup isAttached` for now — its child selectors style the
-   RAC trigger too. Notable:
-   - shared-ui `MenuItem` now wraps an icon-item's children in a `flex:1`
-     `label` slot span (Chakra parity), so block children (two stacked `Text`s
-     in the record-options items) lay out vertically.
-   - `LoadProjectMenuItem` deleted: the hidden `LoadProjectInput` must live
-     *outside* the menu because RAC popovers unmount on close (Chakra kept the
-     list mounted), which would drop the file input's change event mid-pick.
-     `DataSamplesMenu` renders the input as a sibling and the item calls
-     `chooseFile` via ref.
-   - `DataSamplesMenu`'s Android save toast now uses shared-ui `useToast`;
-     Chakra's `id`-dedup and per-call `position` aren't supported (region is
-     top-centre; repeat saves within the timeout can stack duplicates).
-1. ✅ **App shell** — done. shared-ui `Drawer` (`DrawerHeader`/`DrawerBody`;
-   `Drawer.recipe.ts` slot recipe, `placement` left/right via `staticCss`) built
-   on RAC ModalOverlay/Modal/Dialog; the drawer has no title so it takes a
-   required `aria-label`. `onCloseComplete` (Chakra parity, used to defer
-   navigation until the exit animation ends) is implemented with an
-   unmount-callback sentinel inside the overlay — RAC keeps the tree mounted
-   until the exit transition finishes. `NavigationDrawer` and
-   `DefaultPageLayout` fully ported (incl. `ProjectToolbarItems`' native share
-   menu, previously a raw Chakra Menu *without* back-button integration — now
-   shared-ui `MenuTrigger`, so Android back works there too). shared-ui
-   additions: `Divider`, Button `leftIcon`/`rightIcon` now wrapped in a
-   Chakra-style spaced icon span (`marginEnd`/`marginStart` 2) — no more
-   call-site `gap` compensation. `BackArrow` is a plain Panda-styled svg.
-   `useNativeTabletBreakpoint` now uses shared-ui `useBreakpointValue`.
-   Verified against live at desktop/tablet widths incl. both drawer placements.
-1. ✅ **Self-contained dialogs** — done. `ConfirmDialog` (shared-ui Modal with
-   `role="alertdialog"`, `isCentered`, `autoFocus` on the least-destructive
-   button) and `NameProjectDialog` (first form) ported. shared-ui additions:
-   - Modal grew `role`, `isCentered` (a `centered` recipe variant),
-     `onCloseComplete` + `finalFocusRef` (unmount sentinel; final focus applied
-     on rAF after RAC's own restore), and `ModalCloseButton` (closeTrigger
-     slot; localised via `close-action` — Chakra's was hardcoded "Close").
-   - `TextField` (+ `TextField.recipe.ts` `field` slot recipe): RAC
-     TextField/Label/Input/Text/FieldError collapsing Chakra's
-     FormControl/FormLabel/Input/FormHelperText/FormErrorMessage. Focus keys
-     off `data-focused` (react-aria treats text-input focus as
-     keyboard-visible, like Chakra's `_focusVisible` on inputs); focus ring
-     wins over invalid styling, as in Chakra.
-   - Button `warningSolid` variant (Chakra solid+red; same values as `record`
-     today but separate so recording UI and destructive actions can diverge).
-   - **RAC popovers have `role="dialog"`** (menus included, and they linger
-     briefly with `data-exiting` while animating out), so a bare Playwright
-     `getByRole("dialog")` can hit strict-mode ambiguity when a dialog opens
-     from a menu. e2e page objects now use the `modalDialog()` helper
-     (`src/e2e/app/shared.ts`) which scopes to `<section>` — both Chakra and
-     shared-ui modals render on a section; popovers are divs.
-   - Accepted interaction diff: the auto-focused Cancel button in
-     `ConfirmDialog` shows its focus ring even after mouse interaction
-     (Chakra focused it invisibly).
-1. ✅ **HomePage** — done, bottom-up: carousel stack (`CarouselRow`,
-   `SwiperCarousel`, `SwiperCarouselButtons`, `CarouselButton`),
-   `ResourceCard`, `ClickableTooltip` (+`InfoToolTip`), `HomepageBanner`,
-   `ProjectCard`, and the page. New shared-ui: `Card`/`CardBody`
-   (`Card.recipe.ts`, elevated + outline), `LinkBox`/`LinkOverlay`, `Image`,
-   `AspectRatio` re-export; Tooltip placements widened (`left/right top/bottom`).
-   `ClickableTooltip` is now RAC-based (controlled shared-ui Tooltip + RAC
-   `Focusable` around the trigger span; document-level Escape listener matches
-   Chakra's closeOnEsc) — it's shared with DataSamples/Testing surfaces.
-   Hard-won:
-   - **Chakra's LinkOverlay-over-Button pattern needs two things in RAC-land**:
-     (1) react-aria's usePress cancels presses that land outside the button's
-     *bounding rect*, so an `_before` inset overlay silently doesn't work on a
-     RAC `<Button>` — use a plain `<button>` with the `button` recipe class;
-     (2) the button recipe's base sets `position: relative`, which re-anchors
-     the overlay to the button itself — set `position: static` at the call
-     site (this is exactly what Chakra's LinkOverlay did over its Button).
-   - New `_shortHeight` preset condition (`@media (max-height: 800px)`)
-     replaces `src/responsive.ts`'s cross-file constant, which Panda's
-     extractor can't resolve. `HomepageBanner` keeps its own tighter local
-     700px query (same-file consts do resolve).
-   - Idiomatic-RAC follow-up (deferred, deliberate UX change): card
-     collections as RAC `GridList` — whole-item press targets without the
-     overlay hack, arrow-key navigation, and built-in multi-selection that
-     would replace the projects page's checkbox + skip-to-toolbar wiring.
-     Doesn't fit the Swiper-managed home carousel DOM; best tried on the
-     projects page grid.
-1. ✅ **ProjectsPage** — done: `ProjectsToolbar`, `Search`, `SortInput`, the
-   page (grid via Panda `Grid`; Chakra `Slide` replaced with a fixed
-   bottom-sheet div + transform transition), and the rest of
-   `ProjectCardActions` (checkbox + skip-to-toolbar button; the skip button
-   uses RAC `excludeFromTabOrder` instead of `tabIndex=-1`). GridList redesign
-   stays parked until the migration is complete. New shared-ui, extracted
-   after review feedback that the first pass leaned on call-site css:
-   - `input` config recipe (Chakra outline field) shared by new `Input`,
-     `NativeSelect` and TextField's input — selectors match both native
-     pseudo-classes and RAC data attributes.
-   - `InputGroup`/`InputLeftElement`/`InputRightElement`, `ButtonGroup`
-     (`isAttached`; also replaced the two remaining Chakra ButtonGroups in the
-     split buttons), `Checkbox` (Chakra md/blue; `borderColor: inherit` on the
-     control so call sites tint via the root, like Chakra), and
-     `LinkOverlayButton` (encapsulates the plain-button + `position: static` +
-     `_before` overlay pattern and its rationale).
-   Convention reminder: shared-ui components take a `css` prop / recipes;
-   call-site `css()` is for page layout and true one-offs only.
-1. ✅ **DataSamplesPage** — done (page, `DataSamplesTable`/`Row`, `HeadingGrid`
-   (className API; TestingModelTable call site updated), `ActionNameCard`,
-   `ActionDataSamplesCard` (Chakra-free; `Portal containerRef` →
-   `createPortal` with a state ref), `DataSamplesTableHints`,
-   `Emoji`/`EmojiArrow`/`UpCurveArrow`/`AlertIcon` (plain svgs),
-   `LedIcon`/`LedIconSvg` (`token()` instead of `useToken`), `LedIconPicker`
-   (RAC DialogTrigger/Popover), `LiveGraphPanel`/`LiveGraph`/`LiveGraphLabels`/
-   `PredictedAction`, `ShowGraphsCheckbox`). Still-Chakra dialogs
-   (Recording/TrainModelFlow/Welcome/ConnectFirst etc.) are a later pass.
-   New shared-ui: `CloseButton` (plain button so pseudo-element hit areas
-   work), Toast `id` dedup (Chakra parity for repeat-toast suppression).
-   Emotion keyframes moved to preset `keyframes` (tada, spin3d,
-   microbitWobble, ledTurnOn/Off, recordingFlash);
-   `usePrefersReducedMotion` replaced with `prefers-reduced-motion` media
-   queries in css. New `useElementSize` hook replaces Chakra's `useSize` —
-   it must measure synchronously in a layout effect: LiveGraph paints its
-   only frame while stopped, and an async first measure resizes (= clears)
-   the canvas after that paint.
-   Hard-won:
-   - **Removing Emotion from a file isn't enough — also remove it from
-     `panda.config.ts`'s `exclude` list**, or Panda silently skips extraction
-     for the whole file — class names are applied but no CSS rules exist for
-     them (found when the hints' Emoji svg rendered at 0x0: `w_16 h_16` in
-     the class attribute, no matching rules in styled-system.css).
-   - Border shorthand + separate `borderColor` in one css object is
-     order-dependent (`border-top: 3px solid` implies currentColor); use
-     width/style longhands with `borderColor`.
-1. ✅ **TestingModelPage** — done (page remainder, `TestingModelTable`,
-   `ActionCertaintyCard`, `PercentageMeter`/`PercentageDisplay`,
-   `CodeViewCard`/`CodeViewDefaultBlockCard`/`CodeViewDefaultBlock`,
-   `ButtonWithLoading`). New shared-ui: `Slider` (`Slider.recipe.ts`; RAC
-   Slider with track/filledTrack/thumb slots and a `mark` shown on
-   focus-within, Chakra md styling) and `Spinner` (border-based, sizes
-   sm/md). `ButtonWithLoading` rebuilt on shared-ui Button + Spinner and
-   keeps the `onClick` prop name so its four still-Chakra dialog consumers
-   are untouched. New `usePrevious` hook replaces Chakra's.
-   Verified Chakra-build vs Panda-build (this page is unreachable on live
-   without a device): a temporary spec on the e2e mock fixtures screenshots
-   the page before/after `git stash` — a working preview of the fidelity
-   harness. Accepted diffs: the slider thumb shows its focus ring where
-   Chakra's was invisible (same react-aria focus-visible class of diff as
-   ConfirmDialog), ~3px internal shift in the certainty card, and the
-   MakeCode loading skeleton is an opacity pulse rather than Chakra's
-   shimmer.
-1. **Dialog flows** (in progress) — chunk 1 ✅: the connection flow.
-   Modal grew `motionless` (Chakra's motionPreset="none"; the connect flow
-   steps between dialogs without animation) and `ModalHeader` a `level` prop;
-   Chakra's `closeOnOverlayClick={false}` maps to `isDismissable={false}`
-   (react-aria treats Escape separately, so it still closes, as in Chakra).
-   Ported: `ConnectContainerDialog` (the shared shell for 12 step dialogs),
-   all 12 step dialogs (DownloadChooseMicrobit's radio cards are RAC
-   RadioGroup/Radio with render-prop state classes), the 10 error/
-   troubleshoot dialogs (batch-converted: unwrap ModalOverlay/Content, map
-   props, onClick→onPress — typecheck surfaced the rest), `ExternalLink`
-   (Chakra's ExternalLinkIcon glyph inlined; uses shared-ui Link so
-   jsx-no-target-blank recognises the rel) and `DialogFooterLink`.
-   shared-ui additions: `UnorderedList`/`OrderedList`.
-   Deferred within the flow: `BluetoothPatternInput` (301 lines of
-   recently-reworked screen-reader-accessible radio machinery, #926 — its
-   own pass).
-   Chunk 2 ✅: all remaining self-contained dialogs — Recording, the
-   progress dialogs (DownloadProgress/TrainingModelProgress/Save/Loading/
-   LoadingOverlay), Welcome/About/Settings/Feedback, the three help dialogs
-   (SaveHelp/DownloadHelp/TrainModelHelp), TrainModelInsufficientData,
-   TrainingError, ImportError, NotCreateAiHex, MakeCodeLoadError,
-   IncompatibleEditorDevice, ConnectFirst, EditCodeDialog and
-   SelectFormControl (label + NativeSelect + inline chevron svg).
-   shared-ui additions: `ProgressBar` (RAC, Chakra md Progress track; fill
-   colour via `barCss`), `Switch` (`Switch.recipe.ts`, Chakra md/blue),
-   Modal `isKeyboardDismissDisabled` (closeOnEsc={false}), `contentCss`
-   (ModalContent style overrides, e.g. LoadingOverlay's transparent box)
-   and `aria-label` (dialogs without a ModalHeader: About, Feedback,
-   LoadingOverlay). Chakra's `useClipboard`/`useDisclosure` dropped for
-   navigator.clipboard + useState at the call sites. Notable:
-   - **Same-property overrides across separate `css()` calls race on
-     stylesheet order** (gotcha #8 is real, not theoretical): Spinner's
-     `w/h` and ProgressBar's fill `bg`/radius overrides silently lost to
-     the base styles because the base's utility classes happened to be
-     emitted later. Both now merge base + caller css into a *single*
-     `css(base, cssProp)` call (the Tooltip pattern). Prefer that shape for
-     any shared-ui primitive that takes style overrides.
-   - **Panda's extractor does pick up custom-named object-literal JSX props**
-     (`barCss`, `contentCss`) — verified with a sentinel-value probe, since
-     coincidental classes from other call sites can mask a miss.
-   - **Panda's `AspectRatio` pattern positions its child via a `&>*`
-     selector that a still-Chakra child's own `position` style can beat**
-     (Emotion injects later; Chakra's own AspectRatio used a
-     higher-specificity selector). Symptom: the ::before padding spacer
-     stacks above an in-flow child (SettingsDialog graph preview gap). Use
-     the native `aspectRatio` css property when the child is still
-     Chakra-styled.
-   - **Chakra initial-focus hacks are obsolete**: react-aria focuses the
-     dialog element itself on open (verified: `section.dialog__inner` is
-     the active element), so SettingsDialog's focus-the-heading workaround
-     (stopping the first <select> opening its picker on mobile) was
-     dropped rather than ported; no `initialFocusRef` on shared-ui Modal.
-   - RecordingDialog's countdown font size steps through per-stage values,
-     so it's an inline `style` with a runtime `token()` lookup (gotcha #9).
-   - Toast diffs accepted as before: no per-call `position`/`variant`
-     (RecordingDialog's disconnect toast).
-   - Verified against live: Welcome, Settings, About, Feedback,
-     InsufficientData, SaveHelp (probe script pattern below); Feedback is
-     pixel-identical, others match. About's version table wraps locally —
-     content-related (longer dev version string), not a style diff.
-   Deferred to their own passes: `BluetoothPatternInput` (#926), **Tour**
-   (`src/pages/Tour.tsx` + `TourOverlay.tsx` — Chakra `usePopper`
-   positioning + spotlight clip-path overlay; structurally different from
-   the other dialogs), EditableName, ProjectPreview, the animation
-   components.
-5. **Brand-diff audit** (see gotcha #6) — catalogue all OSS/private Chakra
+## Remaining work (agreed order)
+
+1. **Brand-diff audit** (see gotcha #6) — catalogue all OSS/private Chakra
    theme divergences and token-drive them. Do this while the Chakra themes
    are still in the tree to diff against; it's small and de-risks every
    later pass (the `brand2` near-miss shows how these hide).
-6. **Mixed-tree components** — the still-Chakra components rendered *inside*
-   already-ported screens, where cross-stack CSS races live (see the
-   AspectRatio/RecordingGraph gotcha): `RecordingGraph` (also lets the
-   SettingsDialog aspect-ratio wrapper slim down; keep the native
-   `aspectRatio` property, don't return to the pattern),
+2. **Mixed-tree components** — the still-Chakra components rendered *inside*
+   already-ported screens, where cross-stack CSS races live (gotcha #11):
+   `RecordingGraph` (also lets the SettingsDialog aspect-ratio wrapper slim
+   down; keep the native `aspectRatio` property, don't return to the pattern),
    `RecordingFingerprint`, `EditableName`, `ProjectPreview`,
    `ChooseDeviceOverlay`, `NativeConsentDialog`, the trivial `CodePage` and
    `OpenSharedProjectPage`, and the two remaining Chakra `useToast` call
    sites (`App.tsx` update toast, `project-hooks`).
-7. **Leaf sweep** (mechanical batch): `Link` wrapper, `AppLogo`,
+3. **Leaf sweep** (mechanical batch): `Link` wrapper, `AppLogo`,
    `PreReleaseNotice`, `NewPageChoice`, `FileDropTarget`/`ProjectDropTarget`/
    `LoadProjectInput`, `icons/PauseIcon`, `PauseResumeAnimationLink`,
    `StepByStepIllustration`, `ErrorPage`/`ErrorHandlerErrorView` (port these
    last-mentioned two carefully — error surfaces shouldn't depend on newly
    fragile styling paths).
-8. **Animation trees** (~26 files, volume over risk): `HowItWorksAnimation/*`,
+4. **Animation trees** (~26 files, volume over risk): `HowItWorksAnimation/*`,
    `PairingModeAnimation/*`, `PlugMicrobitAnimation`, `LoadingAnimation`,
-   `ArrowOne`/`ArrowTwo`, `AnimationProvider`. Remember: as each file drops
-   Emotion, drop it from `panda.config.ts`'s `exclude` list too (gotcha in
-   DataSamplesPage entry) — that list should be empty when this pass ends.
-9. **Tour** (`src/pages/Tour.tsx` + `TourOverlay.tsx` + `tours.tsx` content):
+   `ArrowOne`/`ArrowTwo`, `AnimationProvider`. Remember gotcha #10: as each
+   file drops Emotion, drop it from `panda.config.ts`'s `exclude` list too —
+   that list should be empty when this pass ends.
+5. **Tour** (`src/pages/Tour.tsx` + `TourOverlay.tsx` + `tours.tsx` content):
    needs a positioning decision — RAC `Popover` with an external
    `triggerRef` pointing at the spotlighted element is the idiomatic
    replacement for Chakra's `usePopper` (arrow via `OverlayArrow`); the
-   spotlight svg overlay is stack-agnostic and ports as-is. Also drops
-   `returnFocusOnClose={false}` (see comment in Tour.tsx for why).
-10. **BluetoothPatternInput** (#926) — its own careful pass; recently
-    reworked screen-reader-accessible radio machinery, so verify with AT.
-11. **Fidelity harness** — build *before* the kill-switch: the
-    `preflight: true` flip changes global styles everywhere at once, and a
-    Chakra-build vs Panda-build screenshot diff turns that from
-    eyeball-everything into a reviewable diff. The TestingModelPage
-    stash-compare spec is the working prototype.
-12. **Kill-switch**: remove `ChakraProvider`/`BrandConfig.chakraTheme`,
-    delete `src/deployment/default/{theme,colors}.ts` etc., unpick the
-    type-only imports (`model.ts` `PlacementWithLogical`/`ThemingProps`,
-    `deployment/index.ts` `BoxProps`), set `preflight: true`, delete
-    `bin/unlayer-panda.mjs`/`bin/panda-dev.mjs` watch shim + the `exclude`
-    list, drop Chakra/Emotion/framer-motion deps. Full fidelity-harness +
-    e2e pass.
-13. **Private preset consumption** — replace the local symlink with a real
-    mechanism (publish the `panda-preset` export or a documented
-    `file:`/`npm link` story) so team/CI can build the branded app. Gates
-    merging; independent of the passes above, can run in parallel.
+   spotlight svg overlay is stack-agnostic and ports as-is. Preserve the
+   `returnFocusOnClose={false}` behaviour (see comment in Tour.tsx for why).
+6. **BluetoothPatternInput** (#926) — its own careful pass; recently
+   reworked screen-reader-accessible radio machinery, so verify with AT.
+7. **Fidelity harness** — build *before* the kill-switch: the
+   `preflight: true` flip changes global styles everywhere at once, and a
+   Chakra-build vs Panda-build screenshot diff turns that from
+   eyeball-everything into a reviewable diff. The TestingModelPage
+   stash-compare spec (screenshotting the e2e mock fixtures before/after
+   `git stash`) is the working prototype.
+8. **Kill-switch**: remove `ChakraProvider`/`BrandConfig.chakraTheme`,
+   delete `src/deployment/default/{theme,colors}.ts` etc., unpick the
+   type-only imports (`model.ts` `PlacementWithLogical`/`ThemingProps`,
+   `deployment/index.ts` `BoxProps`), set `preflight: true`, delete
+   `bin/unlayer-panda.mjs`/`bin/panda-dev.mjs` watch shim + the `exclude`
+   list, drop Chakra/Emotion/framer-motion deps. Full fidelity-harness +
+   e2e pass.
+9. **Private preset consumption** — replace the local symlink with a real
+   mechanism (publish the `panda-preset` export or a documented
+   `file:`/`npm link` story) so team/CI can build the branded app. Gates
+   merging; independent of the passes above, can run in parallel. Note the
+   dev server's `fs.allow` includes the theme package's realpath
+   (vite.config.ts) because with a symlink the brand font/image assets
+   resolve outside the project root and Vite would otherwise 403 them —
+   dev-only, builds are unaffected.
+
+Parked beyond the migration (deliberate UX change, not parity): card
+collections as RAC `GridList` — whole-item press targets without the overlay
+hack, arrow-key navigation, and built-in multi-selection that would replace
+the projects page's checkbox + skip-to-toolbar wiring. Doesn't fit the
+Swiper-managed home carousel DOM; best tried on the projects page grid.
 
 ## Key files
 - `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/unlayer-panda.mjs`,
   `bin/panda-dev.mjs`
-- `src/deployment/default/{panda-preset,chakra-tokens}.ts`,
-  `src/shared-ui/*.recipe.ts` (`Menu.recipe.ts` holds the `menu` slot recipe;
-  `Button.recipe.ts` the `plain` button variant)
-- `src/shared-ui/**` (incl. `Menu.tsx`)
-- `src/components/LanguageDialog.tsx`, `src/components/ModalFooterContent.tsx`,
-  `src/components/{SettingsMenu,LanguageMenuItem,SettingsMenuItem}.tsx`,
-  `src/components/{HelpMenu,HelpMenuItems}.tsx`,
-  `src/components/ActionBar/action-bar-menu-button.ts` (migrated);
-  `src/App.tsx` (`ToastProvider` mounted, `ChakraProvider` retained)
+- `src/deployment/default/{panda-preset,chakra-tokens}.ts`
+- `src/shared-ui/**` (components + colocated `*.recipe.ts`)
+- `src/e2e/app/shared.ts` (`modalDialog()` helper)
+- `src/App.tsx` (`ToastProvider` mounted, `ChakraProvider` retained until the
+  kill-switch)
 - Private: `../ml-trainer-microbit/src/panda-preset.ts`, its `package.json`
   (`./panda-preset` export)
