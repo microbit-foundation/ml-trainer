@@ -60,6 +60,66 @@ export const ossPreset = definePreset({
   name: "ml-trainer-oss",
   theme: {
     breakpoints,
+    // Ported from the Emotion keyframes in components/Emoji.tsx; reference as
+    // e.g. `animation: "tada 1s ease-in-out"`.
+    keyframes: {
+      tada: {
+        "0%": { transform: "scale(1) rotate(0deg)" },
+        "10%, 20%": { transform: "scale(0.95) rotate(-3deg)" },
+        "30%, 50%, 70%, 90%": { transform: "scale(1.1) rotate(3deg)" },
+        "40%, 60%, 80%": { transform: "scale(1.1) rotate(-3deg)" },
+        "100%": { transform: "scale(1) rotate(0deg)" },
+      },
+      spin3d: {
+        "0%": { transform: "rotate3d(0, 1, 0, 0deg)" },
+        "100%": { transform: "rotate3d(0, 1, 0, 360deg)" },
+      },
+      // Highlight for a freshly added recording (ActionDataSamplesCard).
+      recordingFlash: {
+        "0%, 10%": { backgroundColor: "#4040ff44" },
+        "100%": {},
+      },
+      // LED pixel toggle pop (LedIcon).
+      ledTurnOn: {
+        "0%": { transform: "scale(1)" },
+        "50%": { transform: "scale(1.15)" },
+        "100%": { transform: "scale(1)" },
+      },
+      ledTurnOff: {
+        "0%": { transform: "scale(1)" },
+        "50%": { transform: "scale(0.8)" },
+        "100%": { transform: "scale(1)" },
+      },
+      // Data samples "move your micro:bit" hint: 4 × (2s wobble + 5s pause)
+      // over a 28s duration (moveMicrobitHintTimeoutInSec).
+      microbitWobble: {
+        "0%": { transform: "rotate(0deg)" },
+        "1.79%": { transform: "rotate(22deg)" },
+        "3.57%": { transform: "rotate(-18deg)" },
+        "5.36%": { transform: "rotate(14deg)" },
+        "7.14%": { transform: "rotate(-10deg)" },
+        "8.93%": { transform: "rotate(0deg)" },
+        "26.79%": { transform: "rotate(0deg)" },
+        "28.57%": { transform: "rotate(22deg)" },
+        "30.36%": { transform: "rotate(-18deg)" },
+        "32.14%": { transform: "rotate(14deg)" },
+        "33.93%": { transform: "rotate(-10deg)" },
+        "35.71%": { transform: "rotate(0deg)" },
+        "53.57%": { transform: "rotate(0deg)" },
+        "55.36%": { transform: "rotate(22deg)" },
+        "57.14%": { transform: "rotate(-18deg)" },
+        "58.93%": { transform: "rotate(14deg)" },
+        "60.71%": { transform: "rotate(-10deg)" },
+        "62.5%": { transform: "rotate(0deg)" },
+        "80.36%": { transform: "rotate(0deg)" },
+        "82.14%": { transform: "rotate(22deg)" },
+        "83.93%": { transform: "rotate(-18deg)" },
+        "85.71%": { transform: "rotate(14deg)" },
+        "87.5%": { transform: "rotate(-10deg)" },
+        "89.29%": { transform: "rotate(0deg)" },
+        "100%": { transform: "rotate(0deg)" },
+      },
+    },
     tokens: {
       colors: brandColors,
       spacing,

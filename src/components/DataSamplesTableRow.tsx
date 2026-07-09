@@ -4,10 +4,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, GridItem } from "@chakra-ui/react";
+
 import { RefType } from "react-hotkeys-hook/dist/types";
 import { useIntl } from "react-intl";
 import { ActionData, DataSamplesPageHint } from "../model";
+import { Box, GridItem } from "../shared-ui";
 import ActionDataSamplesCard from "./ActionDataSamplesCard";
 import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import {

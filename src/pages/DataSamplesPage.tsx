@@ -4,12 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Button,
-  Flex,
-  HStack,
-  usePrefersReducedMotion,
-} from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RiAddLine, RiArrowRightLine } from "react-icons/ri";
@@ -27,7 +21,6 @@ import {
 import DefaultPageLayout, {
   ProjectToolbarItems,
 } from "../components/DefaultPageLayout";
-import { animations } from "../components/Emoji";
 import LiveGraphPanel from "../components/LiveGraphPanel";
 import TrainModelDialogs from "../components/TrainModelFlowDialogs";
 import WelcomeDialog from "../components/WelcomeDialog";
@@ -43,6 +36,7 @@ import {
   PostImportDialogState,
 } from "../model";
 import { projectSessionStorage } from "../session-storage";
+import { Button, css, cx, Flex, HStack, Icon } from "../shared-ui";
 import {
   useHasSufficientDataForTraining,
   useSettings,
@@ -104,7 +98,6 @@ const DataSamplesPage = () => {
     enabled: !isAddNewActionDisabled,
   });
   const intl = useIntl();
-  const prefersReducedMotion = usePrefersReducedMotion();
   const welcomeDialogDismissedForProject = useStore(
     (s) => s.welcomeDialogDismissedForProject
   );
@@ -224,8 +217,9 @@ const DataSamplesPage = () => {
               px={5}
               py={2}
               w="full"
-              borderBottomWidth={3}
-              borderTopWidth={3}
+              borderBottomWidth="3px"
+              borderTopWidth="3px"
+              borderStyle="solid"
               borderColor="gray.200"
               alignItems="center"
               position="relative"
@@ -234,8 +228,8 @@ const DataSamplesPage = () => {
                 <Button
                   className={tourElClassname.addActionButton}
                   variant={hasSufficientData ? "secondary" : "primary"}
-                  leftIcon={<RiAddLine />}
-                  onClick={handleAddNewAction}
+                  leftIcon={<Icon as={RiAddLine} />}
+                  onPress={handleAddNewAction}
                   isDisabled={isAddNewActionDisabled}
                 >
                   <FormattedMessage id="add-action-action" />
@@ -247,27 +241,30 @@ const DataSamplesPage = () => {
               <HStack>
                 {model ? (
                   <Button
-                    onClick={handleNavigateToModel}
+                    onPress={handleNavigateToModel}
                     className={tourElClassname.trainModelButton}
                     variant="primary"
-                    rightIcon={<RiArrowRightLine />}
+                    rightIcon={<Icon as={RiArrowRightLine} />}
                   >
                     <FormattedMessage id="testing-model-title" />
                   </Button>
                 ) : (
                   <Button
                     ref={trainButtonRef}
-                    className={tourElClassname.trainModelButton}
-                    onClick={() => trainModelFlowStart(handleNavigateToModel)}
+                    className={cx(
+                      tourElClassname.trainModelButton,
+                      hasSufficientData && !isRecordingDialogOpen
+                        ? css({
+                            animation: "tada 1s ease-in-out",
+                            "@media (prefers-reduced-motion: reduce)": {
+                              animation: "none",
+                            },
+                          })
+                        : undefined
+                    )}
+                    onPress={() => trainModelFlowStart(handleNavigateToModel)}
                     variant={
                       hasSufficientData ? "primary" : "secondary-disabled"
-                    }
-                    animation={
-                      hasSufficientData &&
-                      !isRecordingDialogOpen &&
-                      !prefersReducedMotion
-                        ? animations.tada
-                        : undefined
                     }
                   >
                     <FormattedMessage id="train-model" />

@@ -1,60 +1,32 @@
-import { Icon, IconProps, usePrefersReducedMotion } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
-
-export const animations = {
-  tada: `${keyframes({
-    "0%": {
-      transform: "scale(1) rotate(0deg)",
-    },
-    "10%, 20%": {
-      transform: "scale(0.95) rotate(-3deg)",
-    },
-    "30%, 50%, 70%, 90%": {
-      transform: "scale(1.1) rotate(3deg)",
-    },
-    "40%, 60%, 80%": {
-      transform: "scale(1.1) rotate(-3deg)",
-    },
-    "100%": {
-      transform: "scale(1) rotate(0deg)",
-    },
-  })} 1s ease-in-out`,
-  spin: `${keyframes({
-    "0%": {
-      transform: "rotate3d(0, 1, 0, 0deg)",
-    },
-    "100%": {
-      transform: "rotate3d(0, 1, 0, 360deg)",
-    },
-  })} 2s`,
-};
+import { css, cx } from "../shared-ui";
 
 type Eye = "round" | "tick" | "heart";
 
 type Side = "left" | "right";
 
-interface EmojiProps extends IconProps {
+interface EmojiProps {
   leftEye?: Eye;
   rightEye?: Eye;
+  /** Box size on the spacing scale; the Chakra call sites used 16 and 20. */
+  size?: "16" | "20";
+  className?: string;
 }
 
 const Emoji = ({
   leftEye = "round",
   rightEye = "round",
-  boxSize = 16,
-  color = "brand.500",
-  animation,
-  ...props
+  size = "16",
+  className,
 }: EmojiProps) => {
-  const prefersReducedMotion = usePrefersReducedMotion();
   return (
-    <Icon
-      boxSize={boxSize}
-      color={color}
+    <svg
       aria-hidden
-      animation={prefersReducedMotion ? undefined : animation}
-      {...props}
       viewBox="0 0 124 101"
+      className={cx(
+        css({ color: "brand.500", flexShrink: 0 }),
+        size === "20" ? css({ w: 20, h: 20 }) : css({ w: 16, h: 16 }),
+        className
+      )}
     >
       {/* Outline */}
       <path
@@ -68,7 +40,7 @@ const Emoji = ({
         d="M61.8344 93.8294C57.7797 93.8294 54.4271 90.7241 53.7677 86.6548H47.5807C48.2287 94.4961 54.1355 100.248 61.8344 100.248C69.5251 100.248 75.4317 94.4961 76.0803 86.6548H69.8969C69.2355 90.7241 65.8812 93.8294 61.8344 93.8294Z"
         fill="currentColor"
       />
-    </Icon>
+    </svg>
   );
 };
 
@@ -124,21 +96,16 @@ const HeartEye = ({ side }: { side: Side }) => {
   );
 };
 
-export const EmojiAi = ({
-  boxSize = 16,
-  color = "brand.500",
-  animation,
-  ...props
-}: EmojiProps) => {
-  const prefersReducedMotion = usePrefersReducedMotion();
+export const EmojiAi = ({ size = "16", className }: EmojiProps) => {
   return (
-    <Icon
-      boxSize={boxSize}
-      color={color}
-      animation={prefersReducedMotion ? undefined : animation}
-      {...props}
-      viewBox="0 0 80 80"
+    <svg
       aria-hidden
+      viewBox="0 0 80 80"
+      className={cx(
+        css({ color: "brand.500", flexShrink: 0 }),
+        size === "20" ? css({ w: 20, h: 20 }) : css({ w: 16, h: 16 }),
+        className
+      )}
     >
       <path
         d="M78.34 28.49C66.34 25.51 65.87 25.39 64.6 8.13999C64.54 7.32999 63.87 6.69999 63.06 6.68999C62.23 6.65999 61.57 7.28999 61.49 8.09999C59.74 25.92 58.84 26.12 47.8 28.48C47.07 28.64 46.56 29.28 46.57 30.03C46.58 30.77 47.12 31.41 47.85 31.54C59.24 33.64 59.32 34.33 61.5 51.95C61.6 52.73 62.26 53.32 63.05 53.32C63.84 53.32 64.5 52.72 64.59 51.94C66.64 34.2 66.9 33.82 78.27 31.54C78.99 31.4 79.51 30.78 79.52 30.05C79.53 29.32 79.05 28.68 78.34 28.5V28.49Z"
@@ -164,7 +131,7 @@ export const EmojiAi = ({
         d="M22.96 70.85C20.41 70.85 18.3 68.99 17.88 66.56H13.98C14.39 71.25 18.11 74.68 22.96 74.68C27.81 74.68 31.52 71.24 31.93 66.56H28.04C27.62 68.99 25.51 70.85 22.96 70.85Z"
         fill="currentColor"
       />
-    </Icon>
+    </svg>
   );
 };
 

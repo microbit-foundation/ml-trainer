@@ -24,6 +24,7 @@ export * from "./TextField";
 export * from "./Heading";
 export * from "./Link";
 export * from "./Icon";
+export * from "./CloseButton";
 export * from "./CloseIcon";
 export * from "./Divider";
 export * from "./Drawer";

@@ -4,11 +4,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Icon, Text } from "@chakra-ui/react";
+
 import { AccelerometerData } from "@microbit/microbit-connection";
 import React, { useCallback, useMemo, useRef } from "react";
 import { RiArrowDropLeftFill } from "react-icons/ri";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
+import { Box, Icon, Text } from "../shared-ui";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { getLabelHeights } from "../live-graph-label-config";
 import { useSettings } from "../store";
@@ -94,19 +95,20 @@ const LiveGraphLabels = ({ paused }: LiveGraphLabelsProps) => {
           <Box
             ref={config.arrowHeightRef}
             ml={-7}
-            color={config.color}
             position="absolute"
             w="fit-content"
+            // Graph colours are computed at runtime.
+            style={{ color: config.color }}
           >
-            <Icon as={RiArrowDropLeftFill} boxSize={12} />
+            <Icon as={RiArrowDropLeftFill} css={{ width: 12, height: 12 }} />
           </Box>
           <Text
             ref={config.labelHeightRef}
             ml={1}
             fontSize="xl"
             position="absolute"
-            color={config.color}
             w="fit-content"
+            style={{ color: config.color }}
           >
             {config.label}
           </Text>

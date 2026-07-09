@@ -58,7 +58,7 @@ export const Checkbox = ({
               </svg>
             )}
           </span>
-          {children}
+          {children != null && <span className={slots.label}>{children}</span>}
         </>
       )}
     </RACCheckbox>

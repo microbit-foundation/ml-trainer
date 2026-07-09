@@ -27,6 +27,7 @@ import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
+import { css } from "../shared-ui";
 import { useResizeObserverContentRect } from "../hooks/use-resize-observer";
 
 const blockCardMinWidth = "400px";
@@ -81,7 +82,15 @@ const TestingModelTable = () => {
         ref={scrollableAreaRef}
       >
         <Flex flexGrow={1} flexDir="column" w="max-content">
-          <HeadingGrid {...gridCommonProps} px={5} headings={headings} />
+          <HeadingGrid
+            className={css({
+              gridTemplateColumns: "290px 360px 40px minmax(400px, 1fr)",
+              gap: 3,
+              w: "100%",
+              px: 5,
+            })}
+            headings={headings}
+          />
           <VStack
             w={`calc(100vw - ${scrollbarWidth}px)`}
             h={0}

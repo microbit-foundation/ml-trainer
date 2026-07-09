@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Checkbox } from "@chakra-ui/react";
+import { Checkbox } from "../shared-ui";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { DataSamplesView } from "../model";
@@ -15,8 +15,7 @@ const ShowGraphsCheckbox = () => {
   const setShowGraphs = useStore((s) => s.setShowGraphs);
 
   const handleShowGraphOnChange = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const isChecked = e.target.checked;
+    async (isChecked: boolean) => {
       await setShowGraphs(isChecked);
       await setDataSamplesView(
         isChecked
@@ -30,7 +29,7 @@ const ShowGraphsCheckbox = () => {
   return (
     <>
       {dataSamplesView !== DataSamplesView.Graph && (
-        <Checkbox isChecked={showGraphs} onChange={handleShowGraphOnChange}>
+        <Checkbox isSelected={showGraphs} onChange={handleShowGraphOnChange}>
           <FormattedMessage id="show-graphs-checkbox-label-text" />
         </Checkbox>
       )}

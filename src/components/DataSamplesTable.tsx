@@ -4,7 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridProps, HStack, Text } from "@chakra-ui/react";
 import { ButtonData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,6 +14,7 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DataSamplesPageHint } from "../model";
 import { isIOS } from "../platform";
+import { css, Grid, HStack, Text } from "../shared-ui";
 import { useStore } from "../store";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { actionNameInputId } from "./ActionNameCard";
@@ -28,13 +28,6 @@ import RecordingDialog, {
   RecordingOptions,
 } from "./RecordingDialog";
 import ShowGraphsCheckbox from "./ShowGraphsCheckbox";
-
-const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: "290px 1fr",
-  gap: 3,
-  px: 5,
-  w: "100%",
-};
 
 const headings: GridColumnHeadingItemProps[] = [
   { titleId: "action-label", descriptionId: "action-tooltip" },
@@ -244,13 +237,24 @@ const DataSamplesTable = ({
           />
         </>
       )}
-      <HeadingGrid {...gridCommonProps} headings={headings} />
+      <HeadingGrid
+        className={css({
+          gridTemplateColumns: "290px 1fr",
+          gap: 3,
+          px: 5,
+          w: "100%",
+        })}
+        headings={headings}
+      />
       <Grid
-        {...gridCommonProps}
+        gridTemplateColumns="290px 1fr"
+        gap={3}
+        px={5}
+        w="100%"
         py={2}
         pb={gridPadding > 0 ? `${gridPadding}px` : 2}
         alignItems="start"
-        autoRows="max-content"
+        gridAutoRows="max-content"
         flexGrow={1}
         h="fit-content"
         ref={(node) => {

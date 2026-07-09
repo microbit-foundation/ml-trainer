@@ -142,6 +142,59 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
 - `npm test`, `npm run test:e2e:headless`, `npm run typecheck`, `npm run lint`
   all green at this checkpoint.
 
+### Visual comparison workflow (what has worked well)
+
+Each ported screen is verified by driving the **local branded preview**
+(`npm run build && npm run preview` → :4173) and the **live Chakra deployment**
+through an *identical* scripted flow with headless Playwright, then eyeballing
+the screenshot pairs. Throwaway scripts, parameterised on
+`(baseUrl, outPrefix)` so the same file captures both sides:
+
+```js
+import { createRequire } from "node:module";
+const require = createRequire("<repo>/package.json"); // resolves @playwright/test
+const { chromium } = require("@playwright/test");
+const [url, outPrefix] = process.argv.slice(2);
+const page = await (await chromium.launch()).newPage({
+  viewport: { width: 1324, height: 745 }, // plus 900/390 for tablet/mobile states
+});
+process.on("uncaughtException", async (e) => {   // screenshot on failure
+  console.error("FAILED:", e.message.split("\n")[0]);
+  await page.screenshot({ path: `${outPrefix}-error.png` });
+  process.exit(1);
+});
+```
+
+Flow notes that save time:
+- **Cookie banner** appears in every fresh headless profile (localhost too).
+  Decline non-essential: click "Manage cookies" then the save/confirm button.
+- Reach real states, not just landing pages: create projects via the UI, name
+  actions, open menus/dialogs/pickers, select checkboxes
+  (`.click({ force: true })` — the input is visually hidden behind the styled
+  control in both stacks), focus tooltips, resize the viewport for
+  tablet/mobile variants. Screenshot each state on both sides.
+- Beyond screenshots, `page.evaluate` probes settle disputes pixels can't:
+  computed styles (e.g. corner radii at the SortInput seam), element sizes
+  (the 0x0 emoji), and canvas `getImageData` painted-pixel counts (LiveGraph).
+  When local and live disagree, probe *both* and diff the numbers.
+- Watch `pageerror`/console in the probe scripts — a blank screenshot usually
+  means a crash or suspended tree, not a style bug.
+
+Process rules learned the hard way:
+- **Run the full e2e suite only on a stable tree.** The Playwright webServer is
+  a vite dev server; editing source (or regenerating Panda output) mid-run
+  invalidates modules / re-optimises deps and produces bogus timeout failures.
+  A new react-aria entry-point import also triggers a one-off dep
+  re-optimisation — expect the first run after such a change to be flaky-slow.
+- The radio reconnection specs are flaky under full parallel load on some
+  machines (reproduced on unmodified main); rerun the failing spec in
+  isolation before suspecting the migration.
+- Fixes found by comparison so far: banner short-height breakpoint, helper
+  text line-height, sort-control seam radii, missing extraction (exclude
+  list), border shorthand colour, LiveGraph canvas timing — i.e. the loop
+  catches real bugs; don't skip it. Formalising it is "Fidelity harness"
+  below.
+
 ## Coexistence shims to remove once Chakra is gone
 - `bin/unlayer-panda.mjs` + `bin/panda-dev.mjs`; set Panda `preflight: true`.
 - The Emotion `exclude` list in `panda.config.ts` (files still using Emotion
@@ -273,7 +326,34 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
      `_before` overlay pattern and its rationale).
    Convention reminder: shared-ui components take a `css` prop / recipes;
    call-site `css()` is for page layout and true one-offs only.
-1. **Pages**: DataSamplesPage, TestingModelPage, etc.
+1. ✅ **DataSamplesPage** — done (page, `DataSamplesTable`/`Row`, `HeadingGrid`
+   (className API; TestingModelTable call site updated), `ActionNameCard`,
+   `ActionDataSamplesCard` (Chakra-free; `Portal containerRef` →
+   `createPortal` with a state ref), `DataSamplesTableHints`,
+   `Emoji`/`EmojiArrow`/`UpCurveArrow`/`AlertIcon` (plain svgs),
+   `LedIcon`/`LedIconSvg` (`token()` instead of `useToken`), `LedIconPicker`
+   (RAC DialogTrigger/Popover), `LiveGraphPanel`/`LiveGraph`/`LiveGraphLabels`/
+   `PredictedAction`, `ShowGraphsCheckbox`). Still-Chakra dialogs
+   (Recording/TrainModelFlow/Welcome/ConnectFirst etc.) are a later pass.
+   New shared-ui: `CloseButton` (plain button so pseudo-element hit areas
+   work), Toast `id` dedup (Chakra parity for repeat-toast suppression).
+   Emotion keyframes moved to preset `keyframes` (tada, spin3d,
+   microbitWobble, ledTurnOn/Off, recordingFlash);
+   `usePrefersReducedMotion` replaced with `prefers-reduced-motion` media
+   queries in css. New `useElementSize` hook replaces Chakra's `useSize` —
+   it must measure synchronously in a layout effect: LiveGraph paints its
+   only frame while stopped, and an async first measure resizes (= clears)
+   the canvas after that paint.
+   Hard-won:
+   - **Removing Emotion from a file isn't enough — also remove it from
+     `panda.config.ts`'s `exclude` list**, or Panda silently skips extraction
+     for the whole file — class names are applied but no CSS rules exist for
+     them (found when the hints' Emoji svg rendered at 0x0: `w_16 h_16` in
+     the class attribute, no matching rules in styled-system.css).
+   - Border shorthand + separate `borderColor` in one css object is
+     order-dependent (`border-top: 3px solid` implies currentColor); use
+     width/style longhands with `borderColor`.
+1. **Pages**: TestingModelPage, then the dialog flows.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.
 6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs

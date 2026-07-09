@@ -3,15 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridItem, GridProps, HStack, Text } from "@chakra-ui/react";
-import { FormattedMessage } from "react-intl";
-import InfoToolTip from "./InfoToolTip";
 import { ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
+import { Grid, GridItem, HStack, Text } from "../shared-ui";
+import InfoToolTip from "./InfoToolTip";
 
-interface HeadingGridProps extends GridProps {
+interface HeadingGridProps {
   headings: GridColumnHeadingItemProps[];
+  /** Extra classes for the grid (e.g. a `css(...)` result from the caller). */
+  className?: string;
 }
-const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
+const HeadingGrid = ({ headings, className }: HeadingGridProps) => {
   return (
     <Grid
       flexShrink={0}
@@ -19,11 +21,12 @@ const HeadingGrid = ({ headings, ...props }: HeadingGridProps) => {
       position="sticky"
       top={0}
       height="3.25rem"
-      borderBottomWidth={3}
+      borderBottomWidth="3px"
+      borderBottomStyle="solid"
       borderColor="gray.200"
       zIndex={1}
       backgroundColor="whitesmoke"
-      {...props}
+      className={className}
     >
       {headings.map((props, idx) => (
         <GridColumnHeadingItem {...props} key={idx} />

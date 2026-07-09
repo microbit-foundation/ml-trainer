@@ -29,10 +29,6 @@ try {
 const emotionFiles = [
   "./src/utils/animations.ts",
   "./src/components/LoadingAnimation.tsx",
-  "./src/components/LedIcon.tsx",
-  "./src/components/ActionDataSamplesCard.tsx",
-  "./src/components/Emoji.tsx",
-  "./src/components/DataSamplesTableHints.tsx",
   "./src/components/HowItWorksAnimation/Arrow.tsx",
   "./src/components/HowItWorksAnimation/ProgressBar.tsx",
   "./src/components/HowItWorksAnimation/Gauge.tsx",

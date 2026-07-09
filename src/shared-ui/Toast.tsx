@@ -26,6 +26,8 @@ import { Text } from "./Text";
 export type ToastStatus = "info" | "success" | "warning" | "error";
 
 export interface ToastContent {
+  /** Dedup key: adding a toast whose id is already visible is a no-op. */
+  id?: string;
   title?: ReactNode;
   description?: ReactNode;
   status?: ToastStatus;
@@ -160,10 +162,21 @@ export interface ToastOptions extends ToastContent {
  */
 export const useToast = () =>
   useCallback(
-    ({ title, description, status, isClosable, duration }: ToastOptions) =>
+    ({
+      id,
+      title,
+      description,
+      status,
+      isClosable,
+      duration,
+    }: ToastOptions) => {
+      if (id && toastQueue.visibleToasts.some((t) => t.content.id === id)) {
+        return;
+      }
       toastQueue.add(
-        { title, description, status, isClosable },
+        { id, title, description, status, isClosable },
         { timeout: duration }
-      ),
+      );
+    },
     []
   );

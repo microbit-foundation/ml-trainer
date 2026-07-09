@@ -3,18 +3,21 @@
  *
  * SPDX-License-Identifier: MIT
  */
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useIntl } from "react-intl";
+import { Action } from "../model";
 import {
   Card,
   CardBody,
   CloseButton,
+  css,
+  cx,
   HStack,
   Input,
   useBreakpointValue,
   useToast,
-} from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useIntl } from "react-intl";
-import { Action } from "../model";
+} from "../shared-ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
@@ -76,8 +79,7 @@ const ActionNameCard = ({
 
   // Avoid autofocus on mobile/native as it triggers the keyboard
   const isDesktop =
-    useBreakpointValue({ base: false, md: true }, { ssr: false }) &&
-    !isNativePlatform();
+    useBreakpointValue({ base: false, md: true }) && !isNativePlatform();
   const debouncedSetActionName = useMemo(
     () =>
       debounce(
@@ -106,16 +108,14 @@ const ActionNameCard = ({
     async (e) => {
       const name = e.target.value;
       // Validate action name length
-      if (name.length >= actionNameMaxLength && !toast.isActive(toastId)) {
+      if (name.length >= actionNameMaxLength) {
         toast({
           id: toastId,
-          position: "top",
           duration: 5_000,
           title: intl.formatMessage(
             { id: "action-length-error" },
             { maxLen: actionNameMaxLength }
           ),
-          variant: "subtle",
           status: "error",
         });
         return;
@@ -137,42 +137,51 @@ const ActionNameCard = ({
 
   return (
     <Card
-      p={2}
-      h="120px"
-      display="flex"
-      borderColor={selected ? "brand.500" : "transparent"}
-      borderWidth={1}
-      onClick={onSelectRow}
-      position="relative"
-      className={tourElClassname.dataSamplesActionCard}
-      opacity={disabled ? 0.5 : undefined}
       variant={
         viewMode === ActionCardNameViewMode.Preview ? "outline" : undefined
       }
+      onClick={onSelectRow}
+      className={cx(
+        tourElClassname.dataSamplesActionCard,
+        css({
+          px: 2,
+          py: 2,
+          h: "120px",
+          display: "flex",
+          borderWidth: "1px",
+          borderStyle: "solid",
+        }),
+        selected
+          ? css({ borderColor: "brand.500" })
+          : css({ borderColor: "transparent" }),
+        disabled ? css({ opacity: 0.5 }) : undefined
+      )}
     >
       {viewMode === ActionCardNameViewMode.Editable && onDeleteAction && (
         <CloseButton
-          position="absolute"
-          right={1}
-          top={1}
           onClick={onDeleteAction}
           size="sm"
-          borderRadius="sm"
           aria-label={intl.formatMessage(
             { id: "delete-action-aria" },
             { action: localName }
           )}
-          _after={{
+          css={{
             position: "absolute",
-            top: -2,
-            right: -2,
-            bottom: -2,
-            left: -2,
-            content: '""',
+            right: 1,
+            top: 1,
+            borderRadius: "sm",
+            _after: {
+              position: "absolute",
+              top: -2,
+              right: -2,
+              bottom: -2,
+              left: -2,
+              content: '""',
+            },
           }}
         />
       )}
-      <CardBody p={0} alignContent="center">
+      <CardBody css={{ px: 0, py: 0, alignContent: "center" }}>
         <HStack>
           <HStack>
             {viewMode === ActionCardNameViewMode.ReadOnly ? (
@@ -197,15 +206,30 @@ const ActionNameCard = ({
           <Input
             id={actionNameInputId(value)}
             autoFocus={isDesktop && localName.length === 0}
-            isTruncated
             readOnly={viewMode !== ActionCardNameViewMode.Editable}
             value={localName}
-            borderWidth={0}
             maxLength={18}
-            {...(viewMode !== ActionCardNameViewMode.Editable
-              ? { bgColor: "transparent", size: "lg" }
-              : { bgColor: "gray.25", size: "sm" })}
-            _placeholder={{ opacity: 0.8, color: "gray.900" }}
+            css={
+              viewMode !== ActionCardNameViewMode.Editable
+                ? {
+                    truncate: true,
+                    border: "none",
+                    bg: "transparent",
+                    h: 12,
+                    fontSize: "lg",
+                    _placeholder: { opacity: 0.8, color: "gray.900" },
+                  }
+                : {
+                    truncate: true,
+                    border: "none",
+                    bg: "gray.25",
+                    h: 8,
+                    px: 3,
+                    fontSize: "sm",
+                    borderRadius: "sm",
+                    _placeholder: { opacity: 0.8, color: "gray.900" },
+                  }
+            }
             aria-label={intl.formatMessage({
               id: "action-name-placeholder",
             })}
