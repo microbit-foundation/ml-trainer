@@ -16,6 +16,8 @@ export * from "./Heading";
 export * from "./Link";
 export * from "./Icon";
 export * from "./CloseIcon";
+export * from "./Divider";
+export * from "./Drawer";
 export * from "./List";
 export * from "./Menu";
 export * from "./Modal";

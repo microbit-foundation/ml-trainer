@@ -189,8 +189,21 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    - `DataSamplesMenu`'s Android save toast now uses shared-ui `useToast`;
      Chakra's `id`-dedup and per-call `position` aren't supported (region is
      top-centre; repeat saves within the timeout can stack duplicates).
-2. **App shell**: `DefaultPageLayout`, `ActionBar`, `NavigationDrawer` (Drawer) —
-   unblocks all pages.
+1. ✅ **App shell** — done. shared-ui `Drawer` (`DrawerHeader`/`DrawerBody`;
+   `Drawer.recipe.ts` slot recipe, `placement` left/right via `staticCss`) built
+   on RAC ModalOverlay/Modal/Dialog; the drawer has no title so it takes a
+   required `aria-label`. `onCloseComplete` (Chakra parity, used to defer
+   navigation until the exit animation ends) is implemented with an
+   unmount-callback sentinel inside the overlay — RAC keeps the tree mounted
+   until the exit transition finishes. `NavigationDrawer` and
+   `DefaultPageLayout` fully ported (incl. `ProjectToolbarItems`' native share
+   menu, previously a raw Chakra Menu *without* back-button integration — now
+   shared-ui `MenuTrigger`, so Android back works there too). shared-ui
+   additions: `Divider`, Button `leftIcon`/`rightIcon` now wrapped in a
+   Chakra-style spaced icon span (`marginEnd`/`marginStart` 2) — no more
+   call-site `gap` compensation. `BackArrow` is a plain Panda-styled svg.
+   `useNativeTabletBreakpoint` now uses shared-ui `useBreakpointValue`.
+   Verified against live at desktop/tablet widths incl. both drawer placements.
 3. **Self-contained dialogs**: `ConfirmDialog` (AlertDialog), `NameProjectDialog`
    (forms) — exercises patterns HomePage needs. Add `ModalCloseButton` (uses
    `CloseIcon`), `IconButton`, form controls, `Spinner`, `VisuallyHidden` on

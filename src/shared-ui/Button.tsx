@@ -8,9 +8,25 @@ import {
   Button as RACButton,
   ButtonProps as RACButtonProps,
 } from "react-aria-components";
-import { css, cx } from "styled-system/css";
+import { css, cva, cx } from "styled-system/css";
 import { button, ButtonVariantProps } from "styled-system/recipes";
 import { SystemStyleObject } from "styled-system/types";
+
+// Chakra's ButtonIcon: keeps the glyph centred and spaced from the label
+// (iconSpacing 0.5rem).
+const buttonIcon = cva({
+  base: {
+    display: "inline-flex",
+    alignSelf: "center",
+    flexShrink: 0,
+  },
+  variants: {
+    side: {
+      left: { marginEnd: "2" },
+      right: { marginStart: "2" },
+    },
+  },
+});
 
 export interface ButtonProps
   extends Omit<RACButtonProps, "className" | "children">,
@@ -55,9 +71,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...rest}
       >
-        {leftIcon}
+        {leftIcon ? (
+          <span className={buttonIcon({ side: "left" })}>{leftIcon}</span>
+        ) : null}
         {children}
-        {rightIcon}
+        {rightIcon ? (
+          <span className={buttonIcon({ side: "right" })}>{rightIcon}</span>
+        ) : null}
       </RACButton>
     );
   }

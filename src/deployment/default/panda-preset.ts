@@ -24,6 +24,7 @@ import {
 // Config recipes are colocated with the shared-ui components they style; this
 // preset registers them so Panda merges them at codegen time.
 import { button } from "../../shared-ui/Button.recipe";
+import { drawer } from "../../shared-ui/Drawer.recipe";
 import { heading } from "../../shared-ui/Heading.recipe";
 import { menu } from "../../shared-ui/Menu.recipe";
 import { dialog } from "../../shared-ui/Modal.recipe";
@@ -109,6 +110,7 @@ export const ossPreset = definePreset({
     },
     slotRecipes: {
       dialog,
+      drawer,
       menu,
     },
   },

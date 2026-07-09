@@ -3,22 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Icon,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
-import { ReactNode, useCallback, useEffect, useMemo } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import {
   RiDownload2Line,
@@ -28,14 +13,30 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation, useNavigate } from "react-router";
+import { Link as RouterLink } from "react-router-dom";
 import { isDataConnectionDialogOpen } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
-import { useNativeTabletBreakpoint } from "../native-breakpoint-hooks";
 import { useProject } from "../hooks/project-hooks";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { PostImportDialogState, SaveType } from "../model";
+import { useNativeTabletBreakpoint } from "../native-breakpoint-hooks";
 import Tour from "../pages/Tour";
+import { isIOS, isNativePlatform } from "../platform";
+import {
+  Box,
+  Button,
+  css,
+  Flex,
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  MenuItem,
+  MenuList,
+  MenuTrigger,
+  VStack,
+} from "../shared-ui";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";
@@ -47,14 +48,12 @@ import EditableName from "./EditableName";
 import FeedbackForm from "./FeedbackForm";
 import { tourMap } from "./HelpMenuItems";
 import ImportErrorDialog from "./ImportErrorDialog";
-import Link from "./Link";
 import MakeCodeLoadErrorDialog from "./MakeCodeLoadErrorDialog";
 import NavigationDrawer from "./NavigationDrawer";
 import NotCreateAiHexImportDialog from "./NotCreateAiHexImportDialog";
 import PreReleaseNotice from "./PreReleaseNotice";
 import ProjectDropTarget from "./ProjectDropTarget";
 import SaveDialogs from "./SaveDialogs";
-import { isIOS, isNativePlatform } from "../platform";
 
 interface DefaultPageLayoutProps {
   titleId?: string;
@@ -94,7 +93,9 @@ const DefaultPageLayout = ({
     s.isNonConnectionDialogOpen()
   );
   const { appNameFull } = useDeployment();
-  const drawer = useDisclosure();
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const drawerOnOpen = useCallback(() => setDrawerOpen(true), []);
+  const drawerOnClose = useCallback(() => setDrawerOpen(false), []);
   const useTabletLayout = useNativeTabletBreakpoint();
 
   useEffect(() => {
@@ -147,8 +148,8 @@ const DefaultPageLayout = ({
       <MakeCodeLoadErrorDialog />
       <FeedbackForm isOpen={isFeedbackOpen} onClose={closeDialog} />
       <NavigationDrawer
-        isOpen={drawer.isOpen}
-        onClose={drawer.onClose}
+        isOpen={isDrawerOpen}
+        onClose={drawerOnClose}
         placement={backUrl ? "right" : "left"}
         showProjectName={showProjectName}
         tourTrigger={tourTrigger}
@@ -160,10 +161,10 @@ const DefaultPageLayout = ({
           h="100vh"
           w="100%"
           alignItems="stretch"
-          spacing={0}
-          bgColor="whitesmoke"
+          gap={0}
+          bg="whitesmoke"
           overflow="hidden"
-          sx={{
+          css={{
             // Handle landscape orientation where nav bar moves to side.
             // Uses heuristic: larger inset is nav bar, smaller is camera cutout.
             paddingLeft: "var(--safe-area-nav-left, 0px)",
@@ -188,8 +189,11 @@ const DefaultPageLayout = ({
                               <>
                                 <Icon
                                   as={MdOutlineKeyboardArrowRight}
-                                  color="white"
-                                  boxSize="6"
+                                  css={{
+                                    color: "white",
+                                    width: 6,
+                                    height: 6,
+                                  }}
                                 />
                                 <Heading
                                   size="md"
@@ -234,70 +238,76 @@ const DefaultPageLayout = ({
                   {/* Mobile: back arrow (when backUrl set) or hamburger */}
                   {backUrl ? (
                     <IconButton
-                      display="inline-flex"
-                      sx={{
-                        [backButtonBreakpoint]: {
-                          display: "none",
-                        },
-                      }}
+                      variant="plain"
+                      size="lg"
                       aria-label={intl.formatMessage({
                         id: backLabelId ?? "back-action",
                       })}
-                      icon={<BackArrow />}
-                      color="white"
-                      variant="plain"
-                      size="lg"
-                      fontSize="xl"
-                      onClick={() => navigate(backUrl)}
-                      _focusVisible={{
-                        boxShadow: "outlineDark",
+                      onPress={() => navigate(backUrl)}
+                      css={{
+                        display: "inline-flex",
+                        [backButtonBreakpoint]: {
+                          display: "none",
+                        },
+                        color: "white",
+                        fontSize: "xl",
+                        _focusVisible: {
+                          boxShadow: "outlineDark",
+                        },
                       }}
-                    />
+                    >
+                      <BackArrow />
+                    </IconButton>
                   ) : (
                     <IconButton
-                      display={useTabletLayout ? "inline-flex" : "none"}
-                      aria-label={intl.formatMessage({ id: "main-menu" })}
-                      icon={<RiMenuLine size={24} />}
-                      color="white"
                       variant="plain"
                       size="lg"
-                      fontSize="xl"
-                      onClick={drawer.onOpen}
-                      _focusVisible={{
-                        boxShadow: "outlineDark",
+                      aria-label={intl.formatMessage({ id: "main-menu" })}
+                      onPress={drawerOnOpen}
+                      css={{
+                        display: useTabletLayout ? "inline-flex" : "none",
+                        color: "white",
+                        _focusVisible: {
+                          boxShadow: "outlineDark",
+                        },
                       }}
-                    />
+                    >
+                      <RiMenuLine size={24} />
+                    </IconButton>
                   )}
                   {/* Tablet/desktop: back button with label */}
                   {backUrl && (
                     <Button
-                      display="none"
-                      sx={{
+                      variant="toolbar"
+                      leftIcon={<BackArrow />}
+                      onPress={() => navigate(backUrl)}
+                      css={{
+                        display: "none",
                         [backButtonBreakpoint]: {
                           display: "inline-flex",
                         },
                       }}
-                      leftIcon={<BackArrow />}
-                      variant="toolbar"
-                      onClick={() => navigate(backUrl)}
                     >
                       <FormattedMessage id={backLabelId ?? "back-action"} />
                     </Button>
                   )}
                   {/* Desktop: logo (when no backUrl) */}
                   {!backUrl && (
-                    <Link
-                      href={createHomePageUrl()}
-                      display={useTabletLayout ? "none" : "inline-flex"}
-                      _focusVisible={{
-                        boxShadow: "outlineDark",
-                        borderRadius: "md",
-                      }}
+                    <RouterLink
+                      to={createHomePageUrl()}
+                      className={css({
+                        display: useTabletLayout ? "none" : "inline-flex",
+                        outline: "none",
+                        _focusVisible: {
+                          boxShadow: "outlineDark",
+                          borderRadius: "md",
+                        },
+                      })}
                     >
                       <AppLogo
                         transform={{ base: "scale(0.8)", sm: "scale(0.93)" }}
                       />
-                    </Link>
+                    </RouterLink>
                   )}
                 </>
               }
@@ -307,18 +317,20 @@ const DefaultPageLayout = ({
                   {/* Mobile/tablet: right-side hamburger when back arrow is on the left */}
                   {backUrl && (
                     <IconButton
-                      display={useTabletLayout ? "inline-flex" : "none"}
-                      aria-label={intl.formatMessage({ id: "main-menu" })}
-                      icon={<RiMenuLine size={24} />}
-                      color="white"
                       variant="plain"
                       size="lg"
-                      fontSize="xl"
-                      onClick={drawer.onOpen}
-                      _focusVisible={{
-                        boxShadow: "outlineDark",
+                      aria-label={intl.formatMessage({ id: "main-menu" })}
+                      onPress={drawerOnOpen}
+                      css={{
+                        display: useTabletLayout ? "inline-flex" : "none",
+                        color: "white",
+                        _focusVisible: {
+                          boxShadow: "outlineDark",
+                        },
                       }}
-                    />
+                    >
+                      <RiMenuLine size={24} />
+                    </IconButton>
                   )}
                 </>
               }
@@ -340,6 +352,7 @@ const DefaultPageLayout = ({
 };
 
 export const ProjectToolbarItems = () => {
+  const intl = useIntl();
   const { saveHex } = useProject();
   const handleSave = useCallback(() => {
     void saveHex(SaveType.Download);
@@ -357,37 +370,38 @@ export const ProjectToolbarItems = () => {
       {shareOnly ? (
         <Button
           variant="toolbar"
-          leftIcon={<RiShareLine />}
-          onClick={handleShare}
+          leftIcon={<Icon as={RiShareLine} />}
+          onPress={handleShare}
         >
           <FormattedMessage id="share-action" />
         </Button>
       ) : canShare ? (
-        <Menu>
-          <MenuButton as={Button} leftIcon={<RiShareLine />} variant="toolbar">
+        <MenuTrigger>
+          <Button variant="toolbar" leftIcon={<Icon as={RiShareLine} />}>
             <FormattedMessage id="share-action" />
-          </MenuButton>
-
-          <MenuList zIndex={2}>
+          </Button>
+          <MenuList>
             <MenuItem
-              onClick={handleSave}
-              icon={<Icon h={5} w={5} as={RiDownload2Line} />}
+              onAction={handleSave}
+              icon={<Icon as={RiDownload2Line} css={{ width: 5, height: 5 }} />}
+              textValue={intl.formatMessage({ id: "save-to-files-action" })}
             >
               <FormattedMessage id="save-to-files-action" />
             </MenuItem>
             <MenuItem
-              onClick={handleShare}
-              icon={<Icon h={5} w={5} as={RiShareLine} />}
+              onAction={handleShare}
+              icon={<Icon as={RiShareLine} css={{ width: 5, height: 5 }} />}
+              textValue={intl.formatMessage({ id: "share-action" })}
             >
               <FormattedMessage id="share-action" />
             </MenuItem>
           </MenuList>
-        </Menu>
+        </MenuTrigger>
       ) : (
         <Button
           variant="toolbar"
-          leftIcon={<RiDownload2Line />}
-          onClick={handleSave}
+          leftIcon={<Icon as={RiDownload2Line} />}
+          onPress={handleSave}
         >
           <FormattedMessage id="save-action" />
         </Button>
@@ -405,17 +419,19 @@ export const HomeToolbarItem = () => {
   }, [navigate]);
   return (
     <IconButton
-      onClick={handleHomeClick}
-      color="white"
-      icon={<RiHome2Line size={24} />}
-      aria-label={intl.formatMessage({ id: "homepage" })}
+      onPress={handleHomeClick}
       variant="plain"
       size="lg"
-      fontSize="xl"
-      _focusVisible={{
-        boxShadow: "outlineDark",
+      aria-label={intl.formatMessage({ id: "homepage" })}
+      css={{
+        color: "white",
+        _focusVisible: {
+          boxShadow: "outlineDark",
+        },
       }}
-    />
+    >
+      <RiHome2Line size={24} />
+    </IconButton>
   );
 };
 

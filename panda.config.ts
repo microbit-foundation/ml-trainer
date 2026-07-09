@@ -76,6 +76,7 @@ export default defineConfig({
       // Dialog size is chosen with responsive objects ({ base, md }) passed as a
       // runtime prop, so generate the breakpoint-prefixed variants too.
       dialog: [{ size: ["*"], responsive: true }],
+      drawer: ["*"],
     },
   },
 });
