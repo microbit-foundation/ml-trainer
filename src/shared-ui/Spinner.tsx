@@ -29,23 +29,26 @@ export const Spinner = ({
     aria-label={ariaLabel}
     aria-hidden={ariaLabel ? undefined : true}
     className={cx(
-      css({
-        display: "inline-block",
-        borderWidth: "2px",
-        borderStyle: "solid",
-        borderColor: "currentColor",
-        borderBottomColor: "transparent",
-        borderLeftColor: "transparent",
-        borderRadius: "full",
-        animation: "spin 0.45s linear infinite",
-        "@media (prefers-reduced-motion: reduce)": {
-          animationDuration: "1.5s",
+      // Single css() call so caller overrides of base properties (e.g. width)
+      // are deduped at merge time rather than racing on stylesheet order.
+      css(
+        {
+          display: "inline-block",
+          borderWidth: "2px",
+          borderStyle: "solid",
+          borderColor: "currentColor",
+          borderBottomColor: "transparent",
+          borderLeftColor: "transparent",
+          borderRadius: "full",
+          animation: "spin 0.45s linear infinite",
+          "@media (prefers-reduced-motion: reduce)": {
+            animationDuration: "1.5s",
+          },
+          width: size === "sm" ? "1rem" : "1.5rem",
+          height: size === "sm" ? "1rem" : "1.5rem",
         },
-      }),
-      size === "sm"
-        ? css({ width: "1rem", height: "1rem" })
-        : css({ width: "1.5rem", height: "1.5rem" }),
-      cssProp ? css(cssProp) : undefined,
+        cssProp
+      ),
       className
     )}
   />

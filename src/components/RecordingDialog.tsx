@@ -9,15 +9,14 @@ import {
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  Progress,
+  ProgressBar,
   Text,
+  token,
   useToast,
   VStack,
-} from "@chakra-ui/react";
+} from "../shared-ui";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
@@ -186,12 +185,10 @@ const RecordingDialog = ({
       onError() {
         handleCleanup();
         toast({
-          position: "top",
           duration: 5_000,
           title: intl.formatMessage({
             id: "disconnected-during-recording",
           }),
-          variant: "subtle",
           status: "error",
         });
       },
@@ -268,81 +265,87 @@ const RecordingDialog = ({
 
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={handleOnClose}
       size={{ base: "full", md: "lg" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader pb={0}>
-            {recordingsToCapture > 1 ? (
-              <FormattedMessage
-                id="recording-data-for-numbered"
-                values={{
-                  action: actionName,
-                  sample: currentSampleNumber,
-                  numSamples: recordingsToCapture,
-                }}
-              />
-            ) : (
-              <FormattedMessage
-                id="recording-data-for"
-                values={{ action: actionName }}
-              />
-            )}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody py={8}>
-            <VStack justifyContent="center" gap={5}>
-              <VStack h="20" alignItems="center" justifyContent="center">
-                <Text
-                  fontSize={
-                    recordingStatus === RecordingStatus.Countdown
+      <ModalHeader css={{ pb: 0 }}>
+        {recordingsToCapture > 1 ? (
+          <FormattedMessage
+            id="recording-data-for-numbered"
+            values={{
+              action: actionName,
+              sample: currentSampleNumber,
+              numSamples: recordingsToCapture,
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            id="recording-data-for"
+            values={{ action: actionName }}
+          />
+        )}
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody css={{ py: 8 }}>
+        <VStack justifyContent="center" gap={5}>
+          <VStack h="20" alignItems="center" justifyContent="center">
+            <Text
+              textAlign="center"
+              fontWeight="bold"
+              color="brand.500"
+              role="timer"
+              aria-live="assertive"
+              // The size steps through countdown-stage values, so it can't be
+              // statically extracted — resolve the token at runtime instead.
+              style={{
+                fontSize: token(
+                  `fontSizes.${
+                    (recordingStatus === RecordingStatus.Countdown
                       ? countdownStages[countdownStageIndex].fontSize
-                      : "5xl"
-                  }
-                  textAlign="center"
-                  fontWeight="bold"
-                  color="brand.500"
-                  role="timer"
-                  aria-live="assertive"
-                >
-                  {recordingText}
-                </Text>
-              </VStack>
-              <Progress
-                alignSelf="center"
-                w="280px"
-                h="24px"
-                colorScheme="red"
-                borderRadius="xl"
-                value={progress}
-              />
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="center" pb={7} pt={2}>
-            <Button
-              variant="warning"
-              width="fit-content"
-              onClick={handleOnClose}
-              disabled={recordingStatus === RecordingStatus.Done}
-              opacity={recordingStatus === RecordingStatus.Done ? 0.5 : 1}
+                      : undefined) ?? "5xl"
+                  }` as Parameters<typeof token>[0]
+                ),
+              }}
             >
-              <FormattedMessage
-                id={
-                  recordingsToCapture > 1
-                    ? "stop-recording-action"
-                    : "cancel-recording-action"
-                }
-              />
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+              {recordingText}
+            </Text>
+          </VStack>
+          <ProgressBar
+            value={progress}
+            aria-label={intl.formatMessage({ id: "recording" })}
+            css={{
+              alignSelf: "center",
+              width: "280px",
+              height: "24px",
+              borderRadius: "xl",
+            }}
+            barCss={{ bg: "red.500" }}
+          />
+        </VStack>
+      </ModalBody>
+      <ModalFooter css={{ justifyContent: "center", pb: 7, pt: 2 }}>
+        <Button
+          variant="warning"
+          css={{
+            width: "fit-content",
+            opacity: recordingStatus === RecordingStatus.Done ? 0.5 : 1,
+          }}
+          onPress={handleOnClose}
+          isDisabled={recordingStatus === RecordingStatus.Done}
+        >
+          <FormattedMessage
+            id={
+              recordingsToCapture > 1
+                ? "stop-recording-action"
+                : "cancel-recording-action"
+            }
+          />
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

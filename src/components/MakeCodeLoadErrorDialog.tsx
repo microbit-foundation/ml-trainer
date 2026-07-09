@@ -8,13 +8,11 @@ import {
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "../shared-ui";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
@@ -29,52 +27,47 @@ const MakeCodeLoadErrorDialog = () => {
   const { appNameFull } = useDeployment();
   return (
     <Modal
-      motionPreset="none"
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="makecode-load-error-dialog-title" />
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack textAlign="left" w="100%">
-              <Text w="100%">
-                <FormattedMessage
-                  id="makecode-load-error-dialog-body"
-                  values={{ appNameFull }}
-                />
-              </Text>
-            </VStack>
-          </ModalBody>
-          <ModalFooter>
-            <ModalFooterContent
-              leftContent={
-                <ExternalLink
-                  textId="learn-about-firewall-requirements-action"
-                  href="https://support.microbit.org/support/solutions/articles/19000030385-firewall-requirements-for-micro-bit-editors-and-websites"
-                />
-              }
-            >
-              <Button onClick={onClose} variant="secondary" size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button
-                onClick={() => window.location.reload()}
-                variant="primary"
-                size="lg"
-              >
-                <FormattedMessage id="reload-action" />
-              </Button>
-            </ModalFooterContent>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id="makecode-load-error-dialog-title" />
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <VStack textAlign="left" w="100%">
+          <Text w="100%">
+            <FormattedMessage
+              id="makecode-load-error-dialog-body"
+              values={{ appNameFull }}
+            />
+          </Text>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <ModalFooterContent
+          leftContent={
+            <ExternalLink
+              textId="learn-about-firewall-requirements-action"
+              href="https://support.microbit.org/support/solutions/articles/19000030385-firewall-requirements-for-micro-bit-editors-and-websites"
+            />
+          }
+        >
+          <Button onPress={onClose} variant="secondary" size="lg">
+            <FormattedMessage id="cancel-action" />
+          </Button>
+          <Button
+            onPress={() => window.location.reload()}
+            variant="primary"
+            size="lg"
+          >
+            <FormattedMessage id="reload-action" />
+          </Button>
+        </ModalFooterContent>
+      </ModalFooter>
     </Modal>
   );
 };

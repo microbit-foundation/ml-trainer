@@ -31,6 +31,7 @@ import { heading } from "../../shared-ui/Heading.recipe";
 import { input } from "../../shared-ui/Input.recipe";
 import { menu } from "../../shared-ui/Menu.recipe";
 import { slider } from "../../shared-ui/Slider.recipe";
+import { switchRecipe } from "../../shared-ui/Switch.recipe";
 import { dialog } from "../../shared-ui/Modal.recipe";
 import { field } from "../../shared-ui/TextField.recipe";
 
@@ -191,6 +192,7 @@ export const ossPreset = definePreset({
       field,
       menu,
       slider,
+      switchRecipe,
     },
   },
   // Widen the interaction conditions so the Chakra-shaped recipe/style objects

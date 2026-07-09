@@ -6,13 +6,11 @@
 import {
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 import LoadingAnimation from "./LoadingAnimation";
 
@@ -24,30 +22,25 @@ export interface LoadingDialogProps {
 const LoadingDialog = ({ headingId, isOpen }: LoadingDialogProps) => {
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={() => {}}
       size={{ base: "full", md: "3xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id={headingId} />
-          </ModalHeader>
-          <ModalBody>
-            <VStack gap={5} width="100%">
-              <Text>
-                <FormattedMessage id="connecting" />
-              </Text>
-              <LoadingAnimation />
-            </VStack>
-          </ModalBody>
-          <ModalFooter />
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id={headingId} />
+      </ModalHeader>
+      <ModalBody>
+        <VStack gap={5} width="100%">
+          <Text>
+            <FormattedMessage id="connecting" />
+          </Text>
+          <LoadingAnimation />
+        </VStack>
+      </ModalBody>
+      <ModalFooter />
     </Modal>
   );
 };

@@ -1,4 +1,4 @@
-import { Modal, ModalContent, ModalOverlay, Spinner } from "@chakra-ui/react";
+import { Modal, Spinner } from "../shared-ui";
 import { useIntl } from "react-intl";
 
 interface LoadingOverlayProps {
@@ -12,30 +12,29 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
   return (
     <Modal
       isOpen={loading}
-      closeOnEsc={false}
-      closeOnOverlayClick={false}
+      isKeyboardDismissDisabled
+      isDismissable={false}
       onClose={doNothing}
       isCentered
-      preserveScrollBarGap={false}
+      contentCss={{
+        background: "transparent",
+        boxShadow: "none",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
-      <ModalOverlay />
-      <ModalContent
-        bgColor="transparent"
-        boxShadow="none"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Spinner
-          aria-label={intl.formatMessage({ id: "loading" })}
-          thickness="16px"
-          speed="2s"
-          emptyColor="whitesmoke"
-          color="brand.600"
-          h="166px"
-          w="166px"
-        />
-      </ModalContent>
+      <Spinner
+        aria-label={intl.formatMessage({ id: "loading" })}
+        css={{
+          width: "166px",
+          height: "166px",
+          borderWidth: "16px",
+          color: "brand.600",
+          borderBottomColor: "whitesmoke",
+          borderLeftColor: "whitesmoke",
+          animationDuration: "2s",
+        }}
+      />
     </Modal>
   );
 };

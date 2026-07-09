@@ -116,6 +116,11 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
    dimensions over utility overrides — variants are generated via `staticCss` and
    don't depend on call-site extraction. This bit the action-bar menu triggers:
    the button silently fell back to `size:md` (40px), shrinking the focus ring.
+   The same applies to **computed prop values** (`rowSpan={n + 1}`,
+   `` w={`${x}px`} ``, `` w={`calc(...)`} ``): no CSS is generated, and it can even
+   *look* fine if another call site happens to emit the identical class. Use
+   an inline `style` for computed values, and after porting a file, grep it
+   for style props whose value is not a literal.
 
 ## How to run / verify
 
@@ -386,11 +391,55 @@ Process rules learned the hard way:
    Deferred within the flow: `BluetoothPatternInput` (301 lines of
    recently-reworked screen-reader-accessible radio machinery, #926 — its
    own pass).
-   Chunk 2 (next): Recording, progress dialogs (needs a ProgressBar
-   primitive), Save*/Download*/Loading*, Welcome/About/Settings/Feedback/
-   TrainModel*, Tour, ImportError, NotCreateAiHex, MakeCodeLoadError,
-   IncompatibleEditorDevice — then EditableName, ProjectPreview, the
-   tour/animation components.
+   Chunk 2 ✅: all remaining self-contained dialogs — Recording, the
+   progress dialogs (DownloadProgress/TrainingModelProgress/Save/Loading/
+   LoadingOverlay), Welcome/About/Settings/Feedback, the three help dialogs
+   (SaveHelp/DownloadHelp/TrainModelHelp), TrainModelInsufficientData,
+   TrainingError, ImportError, NotCreateAiHex, MakeCodeLoadError,
+   IncompatibleEditorDevice, ConnectFirst, EditCodeDialog and
+   SelectFormControl (label + NativeSelect + inline chevron svg).
+   shared-ui additions: `ProgressBar` (RAC, Chakra md Progress track; fill
+   colour via `barCss`), `Switch` (`Switch.recipe.ts`, Chakra md/blue),
+   Modal `isKeyboardDismissDisabled` (closeOnEsc={false}), `contentCss`
+   (ModalContent style overrides, e.g. LoadingOverlay's transparent box)
+   and `aria-label` (dialogs without a ModalHeader: About, Feedback,
+   LoadingOverlay). Chakra's `useClipboard`/`useDisclosure` dropped for
+   navigator.clipboard + useState at the call sites. Notable:
+   - **Same-property overrides across separate `css()` calls race on
+     stylesheet order** (gotcha #8 is real, not theoretical): Spinner's
+     `w/h` and ProgressBar's fill `bg`/radius overrides silently lost to
+     the base styles because the base's utility classes happened to be
+     emitted later. Both now merge base + caller css into a *single*
+     `css(base, cssProp)` call (the Tooltip pattern). Prefer that shape for
+     any shared-ui primitive that takes style overrides.
+   - **Panda's extractor does pick up custom-named object-literal JSX props**
+     (`barCss`, `contentCss`) — verified with a sentinel-value probe, since
+     coincidental classes from other call sites can mask a miss.
+   - **Panda's `AspectRatio` pattern positions its child via a `&>*`
+     selector that a still-Chakra child's own `position` style can beat**
+     (Emotion injects later; Chakra's own AspectRatio used a
+     higher-specificity selector). Symptom: the ::before padding spacer
+     stacks above an in-flow child (SettingsDialog graph preview gap). Use
+     the native `aspectRatio` css property when the child is still
+     Chakra-styled.
+   - **Chakra initial-focus hacks are obsolete**: react-aria focuses the
+     dialog element itself on open (verified: `section.dialog__inner` is
+     the active element), so SettingsDialog's focus-the-heading workaround
+     (stopping the first <select> opening its picker on mobile) was
+     dropped rather than ported; no `initialFocusRef` on shared-ui Modal.
+   - RecordingDialog's countdown font size steps through per-stage values,
+     so it's an inline `style` with a runtime `token()` lookup (gotcha #9).
+   - Toast diffs accepted as before: no per-call `position`/`variant`
+     (RecordingDialog's disconnect toast).
+   - Verified against live: Welcome, Settings, About, Feedback,
+     InsufficientData, SaveHelp (probe script pattern below); Feedback is
+     pixel-identical, others match. About's version table wraps locally —
+     content-related (longer dev version string), not a style diff.
+   Deferred to their own passes: `BluetoothPatternInput` (#926), **Tour**
+   (`src/pages/Tour.tsx` + `TourOverlay.tsx` — Chakra `usePopper`
+   positioning + spotlight clip-path overlay; structurally different from
+   the other dialogs), EditableName, ProjectPreview, the animation
+   components.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.
 6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs

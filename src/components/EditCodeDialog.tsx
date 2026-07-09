@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Flex } from "@chakra-ui/react";
+import { Flex } from "../shared-ui";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { forwardRef, memo, useEffect, useRef } from "react";
 import { useStore } from "../store";
@@ -56,7 +56,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         top={isOpen ? undefined : "-150vh"}
         visibility={isOpen ? "visible" : "hidden"}
         position={isOpen ? undefined : "absolute"}
-        sx={{
+        css={{
           paddingTop: "env(safe-area-inset-top)",
           paddingBottom: "env(safe-area-inset-bottom)",
           paddingLeft:

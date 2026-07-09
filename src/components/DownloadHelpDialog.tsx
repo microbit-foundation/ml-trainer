@@ -9,12 +9,10 @@ import {
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
-} from "@chakra-ui/react";
+} from "../shared-ui";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
@@ -37,49 +35,41 @@ const DownloadHelpDialog = ({
   }, [onNext, isSkipNextTime]);
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       onClose={onClose}
       size={{ base: "full", md: "xl" }}
       isCentered
       {...rest}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="download-project-intro-title" />
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>
-              <FormattedMessage
-                id="download-project-intro-description"
-                values={{ appNameFull }}
-              />
-            </Text>
-          </ModalBody>
-          <ModalFooter>
-            <ModalFooterContent
-              leftContent={
-                <Checkbox
-                  isChecked={isSkipNextTime}
-                  onChange={(e) => setSkipNextTime(e.target.checked)}
-                >
-                  <FormattedMessage id="dont-show-again" />
-                </Checkbox>
-              }
-            >
-              <Button variant="secondary" onClick={onClose} size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button variant="primary" onClick={handleOnNext} size="lg">
-                <FormattedMessage id="next-action" />
-              </Button>
-            </ModalFooterContent>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id="download-project-intro-title" />
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <Text>
+          <FormattedMessage
+            id="download-project-intro-description"
+            values={{ appNameFull }}
+          />
+        </Text>
+      </ModalBody>
+      <ModalFooter>
+        <ModalFooterContent
+          leftContent={
+            <Checkbox isSelected={isSkipNextTime} onChange={setSkipNextTime}>
+              <FormattedMessage id="dont-show-again" />
+            </Checkbox>
+          }
+        >
+          <Button variant="secondary" onPress={onClose} size="lg">
+            <FormattedMessage id="cancel-action" />
+          </Button>
+          <Button variant="primary" onPress={handleOnNext} size="lg">
+            <FormattedMessage id="next-action" />
+          </Button>
+        </ModalFooterContent>
+      </ModalFooter>
     </Modal>
   );
 };

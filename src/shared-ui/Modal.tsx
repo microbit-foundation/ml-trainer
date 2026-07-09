@@ -48,6 +48,10 @@ export interface ModalProps {
   isDismissable?: boolean;
   /** Disable the enter/exit transitions (Chakra's motionPreset="none"). */
   motionless?: boolean;
+  /** Prevent Escape closing the dialog (Chakra's closeOnEsc={false}). */
+  isKeyboardDismissDisabled?: boolean;
+  /** Style overrides for the dialog box (Chakra's ModalContent props). */
+  contentCss?: SystemStyleObject;
   /**
    * Use "alertdialog" for confirmations that interrupt the user (Chakra's
    * AlertDialog).
@@ -65,6 +69,11 @@ export interface ModalProps {
    * focused when it opened. Matches Chakra's `finalFocusRef`.
    */
   finalFocusRef?: RefObject<HTMLElement>;
+  /**
+   * Accessible name for dialogs without a ModalHeader (which otherwise
+   * provides the label).
+   */
+  "aria-label"?: string;
   children: ReactNode;
 }
 
@@ -79,10 +88,13 @@ export const Modal = ({
   size,
   isDismissable = true,
   motionless,
+  isKeyboardDismissDisabled,
+  contentCss,
   role,
   isCentered,
   onCloseComplete,
   finalFocusRef,
+  "aria-label": ariaLabel,
   children,
 }: ModalProps) => {
   const slots = dialog({ size, centered: isCentered });
@@ -110,11 +122,18 @@ export const Modal = ({
         }
       }}
       isDismissable={isDismissable}
+      isKeyboardDismissDisabled={isKeyboardDismissDisabled}
       className={cx(slots.overlay, motionlessClass)}
     >
       <UnmountCallback callback={handleUnmount} />
-      <RACModal className={cx(slots.content, motionlessClass)}>
-        <Dialog role={role} className={slots.inner}>
+      <RACModal
+        className={cx(
+          slots.content,
+          motionlessClass,
+          contentCss ? css(contentCss) : undefined
+        )}
+      >
+        <Dialog role={role} aria-label={ariaLabel} className={slots.inner}>
           <SlotContext.Provider value={{ slots, onClose }}>
             {children}
           </SlotContext.Provider>
