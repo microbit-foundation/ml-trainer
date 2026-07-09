@@ -19,6 +19,7 @@ import {
   UserConfig,
   defineConfig,
   loadEnv,
+  searchForWorkspaceRoot,
 } from "vite";
 import svgr from "vite-plugin-svgr";
 import { configDefaults } from "vitest/config";
@@ -122,6 +123,15 @@ const createServer = (mode: string): ServerOptions => {
   const commonEnv = loadEnv(mode, process.cwd(), "");
   const options = {
     port: 5173,
+    fs: {
+      // The theme package may be installed as a symlink to a sibling
+      // checkout, so its assets (e.g. brand fonts) resolve to real paths
+      // outside the project root that Vite's default allow list rejects.
+      allow: [
+        searchForWorkspaceRoot(process.cwd()),
+        ...(themePackageExternal ? [fs.realpathSync(external)] : []),
+      ],
+    },
     proxy: {
       "/microbit-org-proxy/": {
         target: "https://microbit.org/",

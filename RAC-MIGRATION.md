@@ -155,7 +155,10 @@ disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
   not a contained screen; migrate bottom-up.
 - **Private preset consumption** is a local symlink — needs a real story
   (publish the `panda-preset` export, or a documented `npm link`/`file:` dep)
-  before the team/CI can build the branded app.
+  before the team/CI can build the branded app. The dev server's `fs.allow`
+  includes the theme package's realpath (vite.config.ts) because with a
+  symlink the brand font/image assets resolve outside the project root and
+  Vite would otherwise 403 them — dev-only, builds are unaffected.
 
 ## Next steps (recommended order)
 1. ✅ **Settings + Help `Menu` → RAC** — done. shared-ui `Menu` (`MenuTrigger`/
