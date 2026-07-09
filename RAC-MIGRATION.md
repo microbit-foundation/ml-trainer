@@ -353,7 +353,26 @@ Process rules learned the hard way:
    - Border shorthand + separate `borderColor` in one css object is
      order-dependent (`border-top: 3px solid` implies currentColor); use
      width/style longhands with `borderColor`.
-1. **Pages**: TestingModelPage, then the dialog flows.
+1. ✅ **TestingModelPage** — done (page remainder, `TestingModelTable`,
+   `ActionCertaintyCard`, `PercentageMeter`/`PercentageDisplay`,
+   `CodeViewCard`/`CodeViewDefaultBlockCard`/`CodeViewDefaultBlock`,
+   `ButtonWithLoading`). New shared-ui: `Slider` (`Slider.recipe.ts`; RAC
+   Slider with track/filledTrack/thumb slots and a `mark` shown on
+   focus-within, Chakra md styling) and `Spinner` (border-based, sizes
+   sm/md). `ButtonWithLoading` rebuilt on shared-ui Button + Spinner and
+   keeps the `onClick` prop name so its four still-Chakra dialog consumers
+   are untouched. New `usePrevious` hook replaces Chakra's.
+   Verified Chakra-build vs Panda-build (this page is unreachable on live
+   without a device): a temporary spec on the e2e mock fixtures screenshots
+   the page before/after `git stash` — a working preview of the fidelity
+   harness. Accepted diffs: the slider thumb shows its focus ring where
+   Chakra's was invisible (same react-aria focus-visible class of diff as
+   ConfirmDialog), ~3px internal shift in the certainty card, and the
+   MakeCode loading skeleton is an opacity pulse rather than Chakra's
+   shimmer.
+1. **Dialog flows**: Recording, TrainModelFlow, Welcome, Connect*, Settings,
+   About, feedback etc. — the last Chakra surfaces besides EditableName,
+   ProjectPreview and the tour/animation components.
 5. **Brand-diff** (see gotcha #6) — catalogue all OSS/private theme divergences
    and token-drive them up front.
 6. **Fidelity harness**: a Playwright visual-regression pass (Chakra build vs

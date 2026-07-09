@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, StackProps, useToken } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
+import { HStack, token } from "../shared-ui";
 import { useStore } from "../store";
 
-interface PercentageMeterProps extends StackProps {
+interface PercentageMeterProps {
   actionId: string;
   meterBarWidthPx: number;
 }
@@ -20,10 +20,8 @@ const PercentageMeter = ({
   const numTicks = 9;
 
   const meterRef = useRef<HTMLDivElement>(null);
-  const [triggeredColor, defaultColor] = useToken("colors", [
-    "brand2.500",
-    "gray.600",
-  ]);
+  const triggeredColor = token("colors.brand2.500");
+  const defaultColor = token("colors.gray.600");
 
   useEffect(
     () =>
@@ -48,17 +46,11 @@ const PercentageMeter = ({
       w={`${meterBarWidthPx}px`}
       h={height}
       rounded="full"
-      bgColor="gray.200"
+      bg="gray.200"
       overflow="hidden"
       position="relative"
     >
-      <HStack
-        ref={meterRef}
-        w={0}
-        h={height}
-        rounded="full"
-        bgColor="gray.600"
-      />
+      <HStack ref={meterRef} w={0} h={height} rounded="full" bg="gray.600" />
       <HStack
         display="inline-flex"
         w="full"
@@ -74,7 +66,7 @@ const PercentageMeter = ({
             .map((_, i) => (
               <HStack
                 key={i}
-                bgColor={i === 0 || i === numTicks + 1 ? undefined : "white"}
+                bg={i === 0 || i === numTicks + 1 ? undefined : "white"}
                 w={0.5}
                 h={height}
               />

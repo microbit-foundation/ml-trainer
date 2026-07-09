@@ -4,15 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  GridProps,
-  Icon,
-  VStack,
-} from "@chakra-ui/react";
 import { MakeCodeRenderBlocksProvider } from "@microbit/makecode-embed/react";
 import { useRef } from "react";
 import { RiArrowRightLine } from "react-icons/ri";
@@ -27,17 +18,8 @@ import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
-import { css } from "../shared-ui";
+import { Box, css, Flex, Grid, GridItem, Icon, VStack } from "../shared-ui";
 import { useResizeObserverContentRect } from "../hooks/use-resize-observer";
-
-const blockCardMinWidth = "400px";
-const gap = 3;
-
-const gridCommonProps: Partial<GridProps> = {
-  gridTemplateColumns: `290px 360px 40px minmax(${blockCardMinWidth}, 1fr)`,
-  gap,
-  w: "100%",
-};
 
 const headings = [
   {
@@ -101,10 +83,12 @@ const TestingModelTable = () => {
             ref={gridAreaRef}
           >
             <Grid
-              {...gridCommonProps}
+              gridTemplateColumns="290px 360px 40px minmax(400px, 1fr)"
+              gap={3}
+              w="100%"
               py={2}
               px={5}
-              autoRows="max-content"
+              gridAutoRows="max-content"
               h="fit-content"
               alignSelf="start"
             >
@@ -145,15 +129,14 @@ const TestingModelTable = () => {
                     <VStack justifyContent="center" h="full">
                       <Icon
                         as={RiArrowRightLine}
-                        boxSize={10}
-                        color="gray.600"
+                        css={{ width: 10, height: 10, color: "gray.600" }}
                       />
                     </VStack>
                     {!projectEdited && (
                       <GridItem position="relative" w="100%">
                         <CodeViewDefaultBlockCard
                           action={action}
-                          position="absolute"
+                          className={css({ position: "absolute" })}
                         />
                       </GridItem>
                     )}
@@ -171,7 +154,7 @@ const TestingModelTable = () => {
                           parentRef={gridAreaRef}
                           project={project}
                           // To remove extra gap for extra row.
-                          mb={gap}
+                          className={css({ mb: 3 })}
                         />
                       </GridItem>
                     )}

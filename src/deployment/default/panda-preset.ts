@@ -30,6 +30,7 @@ import { drawer } from "../../shared-ui/Drawer.recipe";
 import { heading } from "../../shared-ui/Heading.recipe";
 import { input } from "../../shared-ui/Input.recipe";
 import { menu } from "../../shared-ui/Menu.recipe";
+import { slider } from "../../shared-ui/Slider.recipe";
 import { dialog } from "../../shared-ui/Modal.recipe";
 import { field } from "../../shared-ui/TextField.recipe";
 
@@ -73,6 +74,15 @@ export const ossPreset = definePreset({
       spin3d: {
         "0%": { transform: "rotate3d(0, 1, 0, 0deg)" },
         "100%": { transform: "rotate3d(0, 1, 0, 360deg)" },
+      },
+      spin: {
+        "0%": { transform: "rotate(0deg)" },
+        "100%": { transform: "rotate(360deg)" },
+      },
+      // Loading line placeholder (CodeViewCard).
+      skeletonPulse: {
+        "0%": { opacity: 1 },
+        "100%": { opacity: 0.4 },
       },
       // Highlight for a freshly added recording (ActionDataSamplesCard).
       recordingFlash: {
@@ -180,6 +190,7 @@ export const ossPreset = definePreset({
       drawer,
       field,
       menu,
+      slider,
     },
   },
   // Widen the interaction conditions so the Chakra-shaped recipe/style objects

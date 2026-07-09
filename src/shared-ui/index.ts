@@ -19,6 +19,8 @@ export * from "./Input";
 export * from "./InputGroup";
 export * from "./LinkBox";
 export * from "./NativeSelect";
+export * from "./Slider";
+export * from "./Spinner";
 export * from "./Text";
 export * from "./TextField";
 export * from "./Heading";

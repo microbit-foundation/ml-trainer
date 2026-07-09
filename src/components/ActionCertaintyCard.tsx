@@ -3,25 +3,21 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { useCallback } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   Card,
   CardBody,
+  cx,
+  css,
   HStack,
   Slider,
-  SliderFilledTrack,
-  SliderMark,
-  SliderThumb,
-  SliderTrack,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from "../shared-ui";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
-
-const markClass = "CertaintyThresholdGridItem--mark";
 
 interface ActionCertaintyCardProps {
   requiredConfidence?: number;
@@ -48,31 +44,38 @@ const ActionCertaintyCard = ({
   const sliderValue = requiredConfidence * 100;
   return (
     <Card
-      py={2}
-      px={4}
-      h="120px"
-      display="flex"
-      flexDirection="row"
-      width="fit-content"
-      borderWidth={1}
-      borderColor="transparent"
-      className={tourElClassname.certaintyThreshold}
-      opacity={disabled ? 0.5 : undefined}
-      pointerEvents={disabled ? "none" : undefined}
+      className={cx(
+        tourElClassname.certaintyThreshold,
+        css({
+          py: 2,
+          px: 4,
+          h: "120px",
+          display: "flex",
+          flexDirection: "row",
+          width: "fit-content",
+          borderWidth: "1px",
+          borderStyle: "solid",
+          borderColor: "transparent",
+        }),
+        disabled ? css({ opacity: 0.5, pointerEvents: "none" }) : undefined
+      )}
     >
       <CardBody
-        display="flex"
-        flexDirection="column"
-        p={1}
-        gap={1}
-        justifyContent="center"
+        css={{
+          display: "flex",
+          flexDirection: "column",
+          px: 1,
+          py: 1,
+          gap: 1,
+          justifyContent: "center",
+        }}
       >
         <HStack w="100%" gap={5}>
           <PercentageMeter meterBarWidthPx={barWidth} actionId={actionId} />
           <PercentageDisplay actionName={actionName} actionId={actionId} />
         </HStack>
-        <VStack alignItems="left" gap={1}>
-          <Text fontSize="sm" textColor="gray.600">
+        <VStack alignItems="flex-start" gap={1}>
+          <Text fontSize="sm" color="gray.600">
             <FormattedMessage id="recognition-point-label" />
           </Text>
           <Slider
@@ -80,35 +83,24 @@ const ActionCertaintyCard = ({
             aria-label={intl.formatMessage({
               id: "recognition-point-label",
             })}
-            _focusWithin={{
-              [`.${markClass}`]: {
-                display: "block",
-              },
-            }}
             value={sliderValue}
-            w={`${barWidth}px`}
-          >
-            <SliderMark
-              display="none" // Overriden by the class on hover
-              className={markClass}
-              bg="gray.600"
-              borderRadius="sm"
-              color="white"
-              fontSize="xs"
-              ml={-2}
-              mt={-9}
-              padding="2px 4px"
-              textAlign="center"
-              value={sliderValue}
-              zIndex={2}
-            >
-              {sliderValue.toFixed(0)}%
-            </SliderMark>
-            <SliderTrack h="8px" rounded="full">
-              <SliderFilledTrack bg="gray.600" />
-            </SliderTrack>
-            <SliderThumb bg="gray.600" />
-          </Slider>
+            css={{ w: "240px" }}
+            trackCss={{ h: "8px", rounded: "full" }}
+            filledTrackCss={{ bg: "gray.600" }}
+            thumbCss={{ bg: "gray.600" }}
+            mark={`${sliderValue.toFixed(0)}%`}
+            markCss={{
+              bg: "gray.600",
+              borderRadius: "sm",
+              color: "white",
+              fontSize: "xs",
+              ml: -2,
+              mt: -9,
+              padding: "2px 4px",
+              textAlign: "center",
+              zIndex: 2,
+            }}
+          />
         </VStack>
       </CardBody>
     </Card>
