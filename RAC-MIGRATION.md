@@ -332,11 +332,34 @@ Consolidated for review time; all deliberate:
    404 page link computed styles identical to live; welcome-dialog pause
    link renders; drawer header strip byte-identical before/after the
    AppLogo port.
-4. **Animation trees** (~26 files, volume over risk): `HowItWorksAnimation/*`,
-   `PairingModeAnimation/*`, `PlugMicrobitAnimation`, `LoadingAnimation`,
-   `ArrowOne`/`ArrowTwo`, `AnimationProvider`. Remember gotcha #10: as each
-   file drops Emotion, drop it from `panda.config.ts`'s `exclude` list too —
-   that list should be empty when this pass ends.
+4. ✅ **Animation trees** — done (~30 files); **Emotion is gone from the
+   codebase** and `panda.config.ts`'s `exclude` list is empty. Key moves:
+   - All ~30 animation keyframes now live in the preset. Panda emits every
+     preset keyframe unconditionally (sentinel-verified), so keyframes
+     referenced only from runtime inline styles are safe.
+   - **Runtime-parameterised Emotion keyframes → static keyframes over CSS
+     custom properties**: Gauge's colour-parameterised segments
+     (`gaugeSegment1..7` + `--gauge-*` vars), Signal's computed travel
+     offset/per-dot opacities (`signalTravel`/`signalSettle` + `--signal-*`
+     vars), GraphLines' breakpoint-dependent scroll (`waveScroll` +
+     `--wave-window`). The vars are set as inline styles per instance.
+   - New shared-ui `Svg` (styled svg, Chakra Icon base sizing) for
+     custom-path icons; wrapper icon components take `css`/`style` props
+     rather than forwarding style props (gotcha #9).
+   - All `withPlayState(...)` animation shorthands are inline styles.
+     CodeBlocks' per-breakpoint keyframe uses extracted
+     `animationName: { base, sm }` + uniform longhands inline.
+   - Verified by Chakra-build vs Panda-build stash-compare (live runs an
+     older release with different animations, so live comparison is
+     misleading here): welcome animation at a paused checkpoint, the
+     connect-cable plug animation, and the native-flow reset-press
+     animation (android flag + mockDevice cookie) all match frame-for-frame.
+   - **Open eyeball item**: the A/B-hold pairing variant's button-label
+     fill-up. The Chakra code interpolated a raw token name into a
+     `linear-gradient`, which Chakra doesn't resolve — the fill was likely
+     invisible. The port uses the resolved colour, so the fill now shows.
+     Kept as a fix (matches evident intent); check it when the A/B-hold
+     path (`PairingModeAnimation pairingMethod`) is next exercised.
 5. **Tour** (`src/pages/Tour.tsx` + `TourOverlay.tsx` + `tours.tsx` content):
    needs a positioning decision — RAC `Popover` with an external
    `triggerRef` pointing at the spotlighted element is the idiomatic

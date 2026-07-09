@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps, useToken } from "@chakra-ui/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
+import { SystemStyleObject, Svg, token } from "../../shared-ui";
 import { icons } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
 
@@ -51,8 +51,11 @@ const clearGridSequence = [
 
 const bluetoothPattern = "0010000110101101011111111";
 
-interface MicrobitBoardFrontProps extends IconProps {
+interface MicrobitBoardFrontProps {
+  /** A resolved CSS colour (not a token name). */
   buttonStrokeColor?: string;
+  /** Sizing/positioning from the call site, merged as one literal. */
+  css?: SystemStyleObject;
 }
 
 export interface MicrobitBoardFrontRef {
@@ -71,17 +74,15 @@ export const MicrobitBoardFront = forwardRef<
   MicrobitBoardFrontRef,
   MicrobitBoardFrontProps
 >(function MicrobitBoard(
-  { buttonStrokeColor = "transparent", ...props }: MicrobitBoardFrontProps,
+  { buttonStrokeColor = "transparent", css: cssProp }: MicrobitBoardFrontProps,
   ref
 ) {
   const { delayInSec } = useAnimation();
   const [ledPattern, setLedPattern] = useState<string>(icons.off);
-  const [litLedColor, unlitLedColor] = useToken("colors", [
-    "pink.500",
-    "gray.500",
-  ]);
+  const litLedColor = token("colors.pink.500");
+  const unlitLedColor = token("colors.gray.500");
 
-  const [buttonStrokeFill] = useToken("colors", [buttonStrokeColor]);
+  const buttonStrokeFill = buttonStrokeColor;
 
   useImperativeHandle(
     ref,
@@ -127,7 +128,7 @@ export const MicrobitBoardFront = forwardRef<
     [delayInSec]
   );
   return (
-    <Icon viewBox="0 0 181 146" fill="none" {...props}>
+    <Svg viewBox="0 0 181 146" fill="none" css={cssProp}>
       {/* Card outline */}
       <path
         d="M166.284 2.70146L14.4969 2.40504C7.95522 2.39482 2.64013 7.68947 2.62991 14.2311L2.40504 130.928C2.39482 137.47 7.68947 142.785 14.2311 142.795H19.3929C21.4883 139.555 25.8323 138.614 29.0827 140.72C29.9311 141.262 30.6466 141.987 31.1883 142.836L51.8149 142.877C53.9103 139.626 58.2544 138.686 61.5047 140.792C62.3531 141.333 63.0686 142.059 63.6103 142.907L84.237 142.948C86.3323 139.698 90.6764 138.758 93.9268 140.863C94.7751 141.405 95.4906 142.131 96.0324 142.979L116.659 143.02C118.754 139.769 123.098 138.829 126.349 140.935C127.197 141.476 127.913 142.202 128.454 143.05L149.081 143.091C151.176 139.841 155.52 138.901 158.771 141.006C159.619 141.548 160.335 142.274 160.876 143.122H166.048C172.59 143.142 177.905 137.848 177.915 131.306L178.14 14.6093C178.15 8.06766 172.856 2.75257 166.314 2.74235"
@@ -251,6 +252,6 @@ export const MicrobitBoardFront = forwardRef<
           fill={parseInt(ledPattern[i]) ? litLedColor : unlitLedColor}
         />
       ))}
-    </Icon>
+    </Svg>
   );
 });

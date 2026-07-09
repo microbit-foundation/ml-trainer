@@ -3,25 +3,19 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps, Stack } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { useIntl } from "react-intl";
+import { Stack, Svg, SystemStyleObject } from "../../shared-ui";
 import StepTickPill, { StepTickPillRef } from "./StepTickPill";
 
-const inactiveColor = { base: "gray.700", sm: "gray.700", md: "gray.500" };
-const activeColor = "brand2.500";
-
 type ArrowState = "hidden" | "active" | "inactive";
-const arrowColors: Record<ArrowState, object | string> = {
-  hidden: "transparent",
-  active: { base: "active", sm: "active", md: activeColor },
-  inactive: inactiveColor,
-};
 
-const commonStepTickPillProps = {
-  inactiveColor,
-  activeColor,
-};
 export interface StepFlowRef {
   setStep(stepNum: 1 | 2 | 3 | 4 | 5, state: "active" | "completed"): void;
   setTraining(): void;
@@ -108,73 +102,110 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-1" })}
         ref={stepRefs.current[0]}
-        {...commonStepTickPillProps}
       />
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-2" })}
         ref={stepRefs.current[1]}
-        {...commonStepTickPillProps}
       />
       {/* Arrows for md / lg screen sizes */}
       <ArrowIcon
-        display={{ base: "none", sm: "none", md: "block" }}
-        position="absolute"
-        left="44%"
-        width="3em"
-        top="30%"
-        color={arrowColors[arrowState]}
+        css={{
+          display: { base: "none", sm: "none", md: "block" },
+          position: "absolute",
+          left: "44%",
+          width: "3em",
+          top: "30%",
+          // Faithful to Chakra incl. the bogus base "active" colour (the
+          // browser drops it and the arrow inherits the text colour below md).
+          color:
+            arrowState === "hidden"
+              ? "transparent"
+              : arrowState === "active"
+              ? { base: "active", md: "brand2.500" }
+              : { base: "gray.700", md: "gray.500" },
+        }}
       />
       <ArrowIcon
-        display={{ base: "none", sm: "none", md: "block" }}
-        position="absolute"
-        left="44%"
-        width="3em"
-        bottom="-22%"
-        transform="rotate(180deg)"
-        color={arrowColors[arrowState]}
+        css={{
+          display: { base: "none", sm: "none", md: "block" },
+          position: "absolute",
+          left: "44%",
+          width: "3em",
+          bottom: "-22%",
+          transform: "rotate(180deg)",
+          // Faithful to Chakra incl. the bogus base "active" colour (the
+          // browser drops it and the arrow inherits the text colour below md).
+          color:
+            arrowState === "hidden"
+              ? "transparent"
+              : arrowState === "active"
+              ? { base: "active", md: "brand2.500" }
+              : { base: "gray.700", md: "gray.500" },
+        }}
       />
       {/* Arrows for base / sm screen sizes */}
       <ArrowIcon
-        display={{ sm: "block", md: "none" }}
-        position="absolute"
-        zIndex={1}
-        top="32%"
-        left="-2em"
-        width="2em"
-        transform="rotate(-90deg)"
-        color={arrowColors[arrowState]}
+        css={{
+          display: { sm: "block", md: "none" },
+          position: "absolute",
+          zIndex: 1,
+          top: "32%",
+          left: "-2em",
+          width: "2em",
+          transform: "rotate(-90deg)",
+          // Faithful to Chakra incl. the bogus base "active" colour (the
+          // browser drops it and the arrow inherits the text colour below md).
+          color:
+            arrowState === "hidden"
+              ? "transparent"
+              : arrowState === "active"
+              ? { base: "active", md: "brand2.500" }
+              : { base: "gray.700", md: "gray.500" },
+        }}
       />
       <ArrowIcon
-        display={{ sm: "block", md: "none" }}
-        position="absolute"
-        zIndex={1}
-        top="32%"
-        right="-2em"
-        width="2em"
-        transform="rotate(90deg)"
-        color={arrowColors[arrowState]}
+        css={{
+          display: { sm: "block", md: "none" },
+          position: "absolute",
+          zIndex: 1,
+          top: "32%",
+          right: "-2em",
+          width: "2em",
+          transform: "rotate(90deg)",
+          // Faithful to Chakra incl. the bogus base "active" colour (the
+          // browser drops it and the arrow inherits the text colour below md).
+          color:
+            arrowState === "hidden"
+              ? "transparent"
+              : arrowState === "active"
+              ? { base: "active", md: "brand2.500" }
+              : { base: "gray.700", md: "gray.500" },
+        }}
       />
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-3" })}
         ref={stepRefs.current[2]}
-        {...commonStepTickPillProps}
       />
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-4" })}
         ref={stepRefs.current[3]}
-        {...commonStepTickPillProps}
       />
       <StepTickPill
         text={intl.formatMessage({ id: "animation-step-5" })}
         ref={stepRefs.current[4]}
-        {...commonStepTickPillProps}
       />
     </Stack>
   );
 });
 
-const ArrowIcon = (props: IconProps) => (
-  <Icon viewBox="0 0 68 22" fill="none" {...props}>
+const ArrowIcon = ({
+  css: cssProp,
+  style,
+}: {
+  css?: SystemStyleObject;
+  style?: CSSProperties;
+}) => (
+  <Svg viewBox="0 0 68 22" fill="none" css={cssProp} style={style}>
     <g>
       <path
         d="M3.06134 18.999C11.0932 9.67987 21.9073 3.99902 33.8763 3.99902C45.8453 3.99902 56.1345 9.42456 64.0613 18.2969"
@@ -191,7 +222,7 @@ const ArrowIcon = (props: IconProps) => (
         strokeLinejoin="round"
       />
     </g>
-  </Icon>
+  </Svg>
 );
 
 export default StepFlow;

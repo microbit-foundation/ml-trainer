@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Text, useToken } from "@chakra-ui/react";
+import { Box, Text, token } from "../shared-ui";
 
 const ArrowTwo = () => {
-  const [brand500] = useToken("colors", ["brand2.500"]);
+  const brand500 = token("colors.brand2.500");
   return (
     <svg
       width="244"

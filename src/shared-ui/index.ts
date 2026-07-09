@@ -22,6 +22,7 @@ export * from "./NativeSelect";
 export * from "./ProgressBar";
 export * from "./Slider";
 export * from "./Spinner";
+export * from "./Svg";
 export * from "./Switch";
 export * from "./Text";
 export * from "./TextField";

@@ -3,20 +3,21 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps } from "@chakra-ui/react";
+import { CSSProperties } from "react";
+import { Svg, SystemStyleObject } from "../../shared-ui";
 
-interface HeartLedIconProps extends IconProps {
-  size?: string;
+interface HeartLedIconProps {
+  /** Per-instance style overrides, merged after the base. */
+  css?: SystemStyleObject;
+  style?: CSSProperties;
 }
 
-const HeartLedIcon = ({ size, ...props }: HeartLedIconProps) => {
+const HeartLedIcon = ({ css: cssProp, style }: HeartLedIconProps) => {
   return (
-    <Icon
+    <Svg
       viewBox="0 0 23 22"
-      color="brand2.500"
-      width={size}
-      height={size}
-      {...props}
+      css={{ color: "brand2.500", ...cssProp }}
+      style={style}
     >
       <path
         d="M5.70002 0.599609H8.50002C8.70002 0.599609 8.80002 0.799609 8.80002 0.899609V3.69961C8.80002 3.89961 8.60002 3.99961 8.50002 3.99961H5.70002C5.50002 3.99961 5.40002 3.79961 5.40002 3.69961V0.999609C5.40002 0.799609 5.60002 0.699609 5.70002 0.699609"
@@ -82,7 +83,7 @@ const HeartLedIcon = ({ size, ...props }: HeartLedIconProps) => {
         d="M9.89997 17.9004H12.7C12.9 17.9004 13 18.1004 13 18.2004V21.0004C13 21.2004 12.8 21.3004 12.7 21.3004H9.89997C9.69997 21.3004 9.59998 21.1004 9.59998 21.0004V18.2004C9.59998 18.0004 9.79997 17.9004 9.89997 17.9004Z"
         fill="currentColor"
       />
-    </Icon>
+    </Svg>
   );
 };
 

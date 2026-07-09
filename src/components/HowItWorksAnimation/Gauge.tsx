@@ -3,14 +3,22 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, HStack, StackProps } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
-import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { Box, HStack } from "../../shared-ui";
 import { useAnimation } from "../AnimationProvider";
 
 export const totalDuration = 2;
 
-export interface GaugeProps extends StackProps {
+// The preset's gaugeSegment1..7 keyframes hold the timing profiles; only the
+// colours vary per instance, so they come in via CSS custom properties.
+const segmentCount = 7;
+
+export interface GaugeProps {
   empty?: string;
   filled?: string;
   filledDark?: string;
@@ -21,79 +29,12 @@ export interface GaugeRef {
   reset(): void;
 }
 
-const filledDarkPct = "75%";
-export const buildIconColorKeyframes = (from: string, to: string) => {
-  return keyframes({
-    "0%": { color: from },
-    "74%": { color: from },
-    [filledDarkPct]: { color: to },
-    "100%": { color: to },
-  });
-};
-function buildKeyframes(empty: string, filled: string, filledDark: string) {
-  return [
-    keyframes({
-      "0%": { background: empty },
-      "6.8%": { background: filled },
-      "71.2%": { background: filled },
-      [filledDarkPct]: { background: filledDark },
-      "100%": { background: filledDark },
-    }),
-    keyframes({
-      "0%": { background: empty },
-      "15.6%": { background: empty },
-      "22.4%": { background: filled },
-      "71.2%": { background: filled },
-      [filledDarkPct]: { background: filledDark },
-      "100%": { background: filledDark },
-    }),
-    keyframes({
-      "0%": { background: empty },
-      "24.4%": { background: empty },
-      "31.2%": { background: filled },
-      "71.2%": { background: filled },
-      [filledDarkPct]: { background: filledDark },
-      "100%": { background: filledDark },
-    }),
-    keyframes({
-      "0%": { background: empty },
-      "33.2%": { background: empty },
-      "42.4%": { background: filled },
-      "51.2%": { background: empty },
-      "60%": { background: filled },
-      "71.2%": { background: filled },
-      [filledDarkPct]: { background: filledDark },
-      "100%": { background: filledDark },
-    }),
-    keyframes({
-      "0%": { background: empty },
-      [filledDarkPct]: { background: empty },
-      "76%": { background: filledDark },
-      "100%": { background: filledDark },
-    }),
-    keyframes({
-      "0%": { background: empty },
-      "90%": { background: empty },
-      "100%": { background: filledDark },
-    }),
-    keyframes({
-      "0%": { background: empty },
-      "100%": { background: empty },
-    }),
-  ];
-}
-
 const Gauge = forwardRef<GaugeRef, GaugeProps>(function Gauge(
-  { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78", ...props },
+  { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78" },
   ref
 ) {
   const { delayInSec, withPlayState } = useAnimation();
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const segmentKeyframes = useMemo(
-    () => buildKeyframes(empty, filled, filledDark),
-    [empty, filled, filledDark]
-  );
 
   useImperativeHandle(
     ref,
@@ -110,18 +51,27 @@ const Gauge = forwardRef<GaugeRef, GaugeProps>(function Gauge(
   );
 
   return (
-    <HStack gap="0.1em" {...props}>
-      {segmentKeyframes.map((kf, i) => (
+    <HStack gap="0.1em">
+      {Array.from({ length: segmentCount }, (_, i) => (
         <Box
           key={i}
           w={{ base: "0.32em", sm: "0.5em" }}
           h={{ base: "0.4em", sm: "0.66em" }}
-          background={empty}
-          animation={
-            isPlaying ? withPlayState(`${kf} ${totalDuration}s`) : undefined
+          borderTopRightRadius={i === segmentCount - 1 ? "100%" : undefined}
+          borderBottomRightRadius={i === segmentCount - 1 ? "100%" : undefined}
+          borderTopLeftRadius={i === 0 ? "100%" : undefined}
+          borderBottomLeftRadius={i === 0 ? "100%" : undefined}
+          style={
+            {
+              background: empty,
+              "--gauge-empty": empty,
+              "--gauge-filled": filled,
+              "--gauge-filled-dark": filledDark,
+              animation: isPlaying
+                ? withPlayState(`gaugeSegment${i + 1} ${totalDuration}s`)
+                : undefined,
+            } as CSSProperties
           }
-          roundedRight={i === segmentKeyframes.length - 1 ? "100%" : undefined}
-          roundedLeft={i === 0 ? "100%" : undefined}
         />
       ))}
     </HStack>

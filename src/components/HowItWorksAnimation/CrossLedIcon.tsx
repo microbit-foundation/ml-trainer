@@ -3,20 +3,21 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps } from "@chakra-ui/react";
+import { CSSProperties } from "react";
+import { Svg, SystemStyleObject } from "../../shared-ui";
 
-interface CrossLedIconProps extends IconProps {
-  size?: string;
+interface CrossLedIconProps {
+  /** Per-instance style overrides, merged after the base. */
+  css?: SystemStyleObject;
+  style?: CSSProperties;
 }
 
-const CrossLedIcon = ({ size, ...props }: CrossLedIconProps) => {
+const CrossLedIcon = ({ css: cssProp, style }: CrossLedIconProps) => {
   return (
-    <Icon
+    <Svg
       viewBox="0 0 23 22"
-      color="brand2.500"
-      width={size}
-      height={size}
-      {...props}
+      css={{ color: "brand2.500", ...cssProp }}
+      style={style}
     >
       <path
         d="M5.70002 5H8.50002C8.70002 5 8.80002 5.2 8.80002 5.3V8.1C8.80002 8.3 8.60002 8.4 8.50002 8.4H5.70002C5.50002 8.4 5.40002 8.2 5.40002 8.1V5.3C5.40002 5.1 5.60002 5 5.70002 5Z"
@@ -54,7 +55,7 @@ const CrossLedIcon = ({ size, ...props }: CrossLedIconProps) => {
         d="M1.3 17.9004H4.1C4.3 17.9004 4.4 18.1004 4.4 18.2004V21.0004C4.4 21.2004 4.2 21.3004 4.1 21.3004H1.3C1.1 21.3004 1 21.1004 1 21.0004V18.2004C1 18.0004 1.2 17.9004 1.3 17.9004Z"
         fill="currentColor"
       />
-    </Icon>
+    </Svg>
   );
 };
 

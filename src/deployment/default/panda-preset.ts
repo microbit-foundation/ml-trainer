@@ -65,6 +65,171 @@ export const ossPreset = definePreset({
     // Ported from the Emotion keyframes in components/Emoji.tsx; reference as
     // e.g. `animation: "tada 1s ease-in-out"`.
     keyframes: {
+      // ── Animation-tree keyframes (HowItWorks/PairingMode/PlugMicrobit etc.).
+      // Runtime-parameterised values (colours, offsets) come in via CSS custom
+      // properties set as inline styles at the call site; percentages and
+      // property sets are fixed.
+      fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+      fadeOut: { from: { opacity: 1 }, to: { opacity: 0 } },
+      // css-loaders "load7" three-dot loader (LoadingAnimation).
+      load7: {
+        "0%, 80%, 100%": { boxShadow: "0 2.5em 0 -1.3em" },
+        "40%": { boxShadow: "0 2.5em 0 0" },
+      },
+      arrowMove: {
+        "0%": { transform: "translateX(100%)" },
+        "100%": { transform: "translateX(-100%)" },
+      },
+      // Shared by Arrow's stars and MicrobitOnWrist's background icons.
+      sparkle: {
+        "0%, 100%": { transform: "scale(0.8)", opacity: 0 },
+        "50%": { transform: "scale(1)", opacity: 1 },
+      },
+      codeBlockBase: {
+        "0%": { left: "100%", top: "80%", transform: "rotate(-30deg)" },
+        "100%": { left: "10%", top: "17%", transform: "rotate(0deg)" },
+      },
+      codeBlockSm: {
+        "0%": { left: "100%", top: "80%", transform: "rotate(-30deg)" },
+        "100%": { left: "8%", top: "13%", transform: "rotate(0deg)" },
+      },
+      wristWave: {
+        "0%": { transform: "rotate(12deg)" },
+        "25%": { transform: "rotate(-10deg)" },
+        "50%": { transform: "rotate(10deg)" },
+        "75%": { transform: "rotate(-7deg)" },
+        "100%": { transform: "rotate(12deg)" },
+      },
+      wristBob: {
+        "0%": { transform: "translateY(0px)" },
+        "25%": { transform: "translateY(-20px)" },
+        "50%": { transform: "translateY(0px)" },
+        "75%": { transform: "translateY(-20px)" },
+        "100%": { transform: "translateY(0px)" },
+      },
+      trainingProgress: {
+        "0%": { width: "10%" },
+        "90%": { width: "100%" },
+        "100%": { width: "100%" },
+      },
+      // Gauge segments: colours via --gauge-empty/--gauge-filled/
+      // --gauge-filled-dark; one keyframe per segment timing profile.
+      gaugeSegment1: {
+        "0%": { background: "var(--gauge-empty)" },
+        "6.8%": { background: "var(--gauge-filled)" },
+        "71.2%": { background: "var(--gauge-filled)" },
+        "75%": { background: "var(--gauge-filled-dark)" },
+        "100%": { background: "var(--gauge-filled-dark)" },
+      },
+      gaugeSegment2: {
+        "0%": { background: "var(--gauge-empty)" },
+        "15.6%": { background: "var(--gauge-empty)" },
+        "22.4%": { background: "var(--gauge-filled)" },
+        "71.2%": { background: "var(--gauge-filled)" },
+        "75%": { background: "var(--gauge-filled-dark)" },
+        "100%": { background: "var(--gauge-filled-dark)" },
+      },
+      gaugeSegment3: {
+        "0%": { background: "var(--gauge-empty)" },
+        "24.4%": { background: "var(--gauge-empty)" },
+        "31.2%": { background: "var(--gauge-filled)" },
+        "71.2%": { background: "var(--gauge-filled)" },
+        "75%": { background: "var(--gauge-filled-dark)" },
+        "100%": { background: "var(--gauge-filled-dark)" },
+      },
+      gaugeSegment4: {
+        "0%": { background: "var(--gauge-empty)" },
+        "33.2%": { background: "var(--gauge-empty)" },
+        "42.4%": { background: "var(--gauge-filled)" },
+        "51.2%": { background: "var(--gauge-empty)" },
+        "60%": { background: "var(--gauge-filled)" },
+        "71.2%": { background: "var(--gauge-filled)" },
+        "75%": { background: "var(--gauge-filled-dark)" },
+        "100%": { background: "var(--gauge-filled-dark)" },
+      },
+      gaugeSegment5: {
+        "0%": { background: "var(--gauge-empty)" },
+        "75%": { background: "var(--gauge-empty)" },
+        "76%": { background: "var(--gauge-filled-dark)" },
+        "100%": { background: "var(--gauge-filled-dark)" },
+      },
+      gaugeSegment6: {
+        "0%": { background: "var(--gauge-empty)" },
+        "90%": { background: "var(--gauge-empty)" },
+        "100%": { background: "var(--gauge-filled-dark)" },
+      },
+      gaugeSegment7: {
+        "0%": { background: "var(--gauge-empty)" },
+        "100%": { background: "var(--gauge-empty)" },
+      },
+      gaugeIconColor: {
+        "0%": { color: "var(--gauge-icon-from)" },
+        "74%": { color: "var(--gauge-icon-from)" },
+        "75%": { color: "var(--gauge-icon-to)" },
+        "100%": { color: "var(--gauge-icon-to)" },
+      },
+      signalEnter: {
+        "0%": { opacity: 0, transform: "translate(0, 20px)" },
+        "100%": { opacity: 1, transform: "translate(0, 0)" },
+      },
+      // Travel offset via --signal-travel-offset (a px length).
+      signalTravel: {
+        "0%": {
+          transform: "translateX(calc(var(--signal-travel-offset) * -1))",
+        },
+        "38.46%": { transform: "translateX(var(--signal-travel-offset))" },
+        "76.92%": {
+          transform: "translateX(calc(var(--signal-travel-offset) * -1))",
+        },
+        "100%": { transform: "translateX(0px)" },
+      },
+      signalSettle: {
+        "0%": { opacity: "var(--signal-travel-opacity)" },
+        "100%": { opacity: "var(--signal-settled-opacity)" },
+      },
+      // Scrolls one 177px wave tile; window width via --wave-window.
+      waveScroll: {
+        from: { transform: "translateX(calc(var(--wave-window) - 177px))" },
+        to: { transform: "translateX(0)" },
+      },
+      plugIn: {
+        "0%": { transform: "translate(-52%, -35%)" },
+        "25%, 100%": { transform: "translate(-52%, 25%)" },
+      },
+      plugGlowOn: {
+        "0%, 30%": { opacity: 0 },
+        "40%, 100%": { opacity: 1 },
+      },
+      unplug: {
+        "0%, 10%": { transform: "translate(-52%, 25%)" },
+        "50%, 100%": { transform: "translate(-52%, -35%)" },
+      },
+      plugGlowOff: {
+        "0%, 8%": { opacity: 1 },
+        "10%, 100%": { opacity: 0 },
+      },
+      handMoveIn: {
+        "0%": { right: "-50%", top: "25%", opacity: 0 },
+        "10%": { opacity: 1 },
+        "100%": { right: "-17.5%", top: "5%", opacity: 1 },
+      },
+      handPressDown: {
+        from: { right: "-17.5%", top: "5%" },
+        to: { right: "-15%", top: "5%" },
+      },
+      handPressUp: {
+        from: { right: "-15%", top: "5%" },
+        to: { right: "-17.5%", top: "5%" },
+      },
+      textBoxFillUp: {
+        "75%": { backgroundSize: "100% 0%" },
+        "100%": { backgroundSize: "100% 100%" },
+      },
+      lineScaleUp: {
+        "0%": { transform: "scaleY(0)" },
+        "75%": { transform: "scaleY(1.02)" },
+        "100%": { transform: "scaleY(1.02)" },
+      },
       tada: {
         "0%": { transform: "scale(1) rotate(0deg)" },
         "10%, 20%": { transform: "scale(0.95) rotate(-3deg)" },

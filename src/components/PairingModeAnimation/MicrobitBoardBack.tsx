@@ -3,21 +3,24 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps, useToken } from "@chakra-ui/react";
+import { SystemStyleObject, Svg } from "../../shared-ui";
 
 export interface MicrobitBoardBackRef {}
 
-interface MicrobitBoardBackProps extends IconProps {
+interface MicrobitBoardBackProps {
+  /** A resolved CSS colour (not a token name). */
   resetButtonStrokeColor?: string;
+  /** Sizing/positioning from the call site, merged as one literal. */
+  css?: SystemStyleObject;
 }
 
 export const MicrobitBoardBack = ({
   resetButtonStrokeColor = "transparent",
-  ...props
+  css: cssProp,
 }: MicrobitBoardBackProps) => {
-  const [resetButtonStrokeFill] = useToken("colors", [resetButtonStrokeColor]);
+  const resetButtonStrokeFill = resetButtonStrokeColor;
   return (
-    <Icon viewBox="0 0 194 157" fill="none" {...props}>
+    <Svg viewBox="0 0 194 157" fill="none" css={cssProp}>
       {/* Card outline */}
       <path
         d="M177.376 3.97228L16.1031 3.93439C12.7648 3.93365 9.56297 5.25905 7.20192 7.61902C4.84087 9.979 3.51401 13.1802 3.51322 16.5185L3.48336 140.501C3.48287 142.155 3.80801 143.792 4.44022 145.319C5.07243 146.846 5.99932 148.234 7.16796 149.404C8.3366 150.573 9.72411 151.5 11.2512 152.133C12.7784 152.766 14.4152 153.092 16.0683 153.092L21.5545 153.097C22.229 152.048 23.1562 151.185 24.251 150.587C25.3459 149.99 26.5733 149.677 27.8206 149.677C29.0679 149.677 30.2952 149.991 31.3897 150.589C32.4843 151.187 33.411 152.051 34.0849 153.1L55.9964 153.105C56.6707 152.056 57.5978 151.193 58.6926 150.595C59.7875 149.997 61.0149 149.684 62.2623 149.684C63.5098 149.684 64.7371 149.998 65.8317 150.596C66.9263 151.195 67.8531 152.058 68.5269 153.108L90.4384 153.113C91.1129 152.064 92.0401 151.201 93.135 150.603C94.2298 150.006 95.4573 149.693 96.7046 149.693C97.9519 149.693 99.1791 150.007 100.274 150.605C101.368 151.203 102.295 152.067 102.969 153.116L124.879 153.122C125.553 152.072 126.48 151.209 127.575 150.611C128.67 150.014 129.897 149.7 131.144 149.701C132.392 149.701 133.619 150.014 134.714 150.612C135.808 151.21 136.735 152.074 137.409 153.123L159.321 153.129C159.995 152.08 160.922 151.217 162.017 150.62C163.112 150.022 164.339 149.709 165.586 149.709C166.833 149.71 168.06 150.023 169.155 150.621C170.249 151.219 171.176 152.082 171.85 153.132L177.34 153.134C180.679 153.135 183.881 151.809 186.242 149.45C188.604 147.09 189.931 143.888 189.932 140.55L189.961 16.5622C189.962 13.2237 188.636 10.0216 186.276 7.66037C183.916 5.29914 180.715 3.97217 177.376 3.97137"
@@ -184,6 +187,6 @@ export const MicrobitBoardBack = ({
         strokeWidth="4.06"
         strokeMiterlimit="10"
       />
-    </Icon>
+    </Svg>
   );
 };

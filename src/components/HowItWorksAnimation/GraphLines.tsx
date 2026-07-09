@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  CSSProperties,
   forwardRef,
-  useCallback,
   useImperativeHandle,
   useMemo,
   useState,
 } from "react";
-import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
+import { Box, Flex, Svg, useBreakpointValue } from "../../shared-ui";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
 import { useAnimation } from "../AnimationProvider";
@@ -116,20 +115,12 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
     [delayInSec]
   );
 
-  const waveScroll = useCallback(
-    (visibleWindowWidth: number) =>
-      keyframes`
-    from { transform: translateX(${-tileWidth + visibleWindowWidth}px); }
-    to   { transform: translateX(0); }
-  `,
-    []
-  );
   const paths = motionPaths[motion];
 
   return (
     <Flex
       opacity={visible ? 1 : 0}
-      transition={`opacity ${fadeDuration}s ease-out`}
+      style={{ transition: `opacity ${fadeDuration}s ease-out` }}
       direction="column"
       align="center"
       justify="center"
@@ -137,27 +128,31 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
     >
       <Box position="relative" zIndex={1}>
         <Box
-          width={`${visibleWindowWidth}px`}
-          height={`${height}px`}
           overflow="hidden"
+          style={{
+            width: `${visibleWindowWidth}px`,
+            height: `${height}px`,
+          }}
         >
           <Flex
-            animation={withPlayState(
-              `${waveScroll(
-                visibleWindowWidth
-              )} ${animationDuration}s linear infinite`
-            )}
+            // The preset's waveScroll keyframe reads the visible window width
+            // from --wave-window (tile width is fixed at 177px).
+            style={
+              {
+                "--wave-window": `${visibleWindowWidth}px`,
+                animation: withPlayState(
+                  `waveScroll ${animationDuration}s linear infinite`
+                ),
+              } as CSSProperties
+            }
           >
             {[0, 1].map((copy) => (
-              <Box
-                as="svg"
+              <Svg
                 key={copy}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox={viewBox}
-                width={`${tileWidth}px`}
-                height={`${height}px`}
-                display="block"
-                flexShrink={0}
+                css={{ display: "block", flexShrink: 0 }}
+                style={{ width: `${tileWidth}px`, height: `${height}px` }}
                 preserveAspectRatio="none"
               >
                 {waves.map((wave) => (
@@ -172,7 +167,7 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
                     strokeWidth={2}
                   />
                 ))}
-              </Box>
+              </Svg>
             ))}
           </Flex>
         </Box>

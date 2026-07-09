@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps, StackProps, VStack, Heading } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
+import { CSSProperties, ReactNode } from "react";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { Heading, SystemStyleObject, Svg, VStack } from "../../shared-ui";
 import { useAnimation } from "../AnimationProvider";
 import { MicrobitBoardBack } from "./MicrobitBoardBack";
 
@@ -28,8 +28,11 @@ const durations = {
 
 type HandState = "hidden" | "moving" | "ready" | "pressDown" | "pressUp";
 
-interface HandConfig extends IconProps {
+interface HandConfig {
+  position: CSSProperties;
   animation?: {
+    // A preset keyframe name (see panda-preset.ts); the positional values in
+    // handPos are duplicated there.
     kf: string;
     duration: number;
   };
@@ -37,30 +40,25 @@ interface HandConfig extends IconProps {
 
 const handConfig: Record<HandState, HandConfig> = {
   moving: {
-    ...handPos.hidden,
-    opacity: 0,
+    position: { ...handPos.hidden, opacity: 0 },
     animation: {
-      kf: keyframes({
-        "0%": { ...handPos.hidden, opacity: 0 },
-        "10%": { opacity: 1 },
-        "100%": { ...handPos.ready, opacity: 1 },
-      }),
+      kf: "handMoveIn",
       duration: durations.move,
     },
   },
-  hidden: { ...handPos.hidden, opacity: 0 },
-  ready: { ...handPos.ready },
+  hidden: { position: { ...handPos.hidden, opacity: 0 } },
+  ready: { position: { ...handPos.ready } },
   pressDown: {
-    ...handPos.ready,
+    position: { ...handPos.ready },
     animation: {
-      kf: keyframes({ from: handPos.ready, to: handPos.press }),
+      kf: "handPressDown",
       duration: durations.press,
     },
   },
   pressUp: {
-    ...handPos.ready,
+    position: { ...handPos.ready },
     animation: {
-      kf: keyframes({ from: handPos.press, to: handPos.ready }),
+      kf: "handPressUp",
       duration: durations.press,
     },
   },
@@ -70,29 +68,30 @@ export interface ResetPressedMicrobitBoardRef {
   playPressed(count?: number): Promise<void>;
   reset(): void;
 }
-interface ResetPressedMicrobitBoardProps extends StackProps {
+interface ResetPressedMicrobitBoardProps {
+  /** A resolved CSS colour (not a token name). */
   activeColor: string;
+  /** Sizing from the call site, merged as one literal. */
+  css?: SystemStyleObject;
 }
 
 const ResetPressedMicrobitBoard = forwardRef<
   ResetPressedMicrobitBoardRef,
   ResetPressedMicrobitBoardProps
->(function ResetHighlightedMicrobitBoard({ activeColor, ...props }, ref) {
+>(function ResetHighlightedMicrobitBoard({ activeColor, css: cssProp }, ref) {
   const { delayInSec, withPlayState } = useAnimation();
   const [showButtonOutline, setShowButtonOutline] = useState<boolean>(false);
   const [showGlowLines, setShowGlowLines] = useState<boolean>(false);
   const [handState, setHandState] = useState<HandState>("hidden");
   const [count, setCount] = useState<number | undefined>(undefined);
 
-  const getHandProps = useCallback(
-    (state: HandState): IconProps => {
-      const cfg = handConfig[state];
+  const getHandStyle = useCallback(
+    (state: HandState): CSSProperties => {
+      const { animation, position } = handConfig[state];
       return {
-        ...cfg,
-        animation: cfg.animation
-          ? withPlayState(
-              `${cfg.animation.kf} ${cfg.animation.duration}s forwards`
-            )
+        ...position,
+        animation: animation
+          ? withPlayState(`${animation.kf} ${animation.duration}s forwards`)
           : undefined,
       };
     },
@@ -142,44 +141,54 @@ const ResetPressedMicrobitBoard = forwardRef<
   );
 
   return (
-    <VStack position="relative" {...props}>
+    <VStack position="relative" css={cssProp}>
       {count && (
         <Heading
           variant="marketing"
           position="absolute"
           fontWeight="bold"
           fontSize="xl"
-          color={activeColor}
           right="0"
           top="-30%"
+          style={{ color: activeColor }}
         >
           {count}
         </Heading>
       )}
       <GlowLines
-        position="absolute"
-        boxSize="50%"
-        right="7%"
-        top="-14%"
-        color={activeColor}
-        opacity={showGlowLines ? 1 : 0}
+        css={{
+          position: "absolute",
+          width: "50%",
+          height: "50%",
+          right: "7%",
+          top: "-14%",
+        }}
+        style={{
+          color: activeColor,
+          opacity: showGlowLines ? 1 : 0,
+        }}
       />
       <MicrobitBoardBack
-        boxSize="100%"
+        css={{ width: "100%", height: "100%" }}
         resetButtonStrokeColor={showButtonOutline ? activeColor : "transparent"}
       />
       <PointingHand
-        position="absolute"
-        boxSize="50%"
-        {...getHandProps(handState)}
+        css={{ position: "absolute", width: "50%", height: "50%" }}
+        style={getHandStyle(handState)}
       />
     </VStack>
   );
 });
 
-const GlowLines = (props: IconProps) => {
+interface HandSvgProps {
+  css?: SystemStyleObject;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+const GlowLines = ({ css: cssProp, style }: HandSvgProps) => {
   return (
-    <Icon viewBox="0 0 79 79" fill="none" {...props}>
+    <Svg viewBox="0 0 79 79" fill="none" css={cssProp} style={style}>
       <path
         d="M62.5439 29.8635L76.3897 24.0897"
         stroke="currentColor"
@@ -229,13 +238,13 @@ const GlowLines = (props: IconProps) => {
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
-    </Icon>
+    </Svg>
   );
 };
 
-const PointingHand = (props: IconProps) => {
+const PointingHand = ({ css: cssProp, style }: HandSvgProps) => {
   return (
-    <Icon viewBox="0 0 110 95" fill="none" {...props}>
+    <Svg viewBox="0 0 110 95" fill="none" css={cssProp} style={style}>
       <path
         d="M77.8407 5.85202L95.9213 24.2288C103.234 31.786 107.264 41.9264 107.135 52.4415C107.006 62.9566 102.727 72.9948 95.2311 80.3701C87.735 87.7453 77.6286 91.8602 67.1128 91.8186C56.5969 91.7769 46.5234 87.5822 39.086 80.1479L36.1055 77.1185C34.6367 75.6257 33.4763 73.8582 32.6906 71.917C31.905 69.9758 31.5093 67.8988 31.5263 65.8046C31.5433 63.7105 31.9727 61.6402 32.7898 59.712C33.6069 57.7838 34.7958 56.0354 36.2887 54.5667L28.4136 46.5617"
         fill="white"
@@ -299,7 +308,7 @@ const PointingHand = (props: IconProps) => {
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
-    </Icon>
+    </Svg>
   );
 };
 

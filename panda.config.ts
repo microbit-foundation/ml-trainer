@@ -21,25 +21,10 @@ try {
   brandPreset = undefined;
 }
 
-// Files still authored with Emotion's `css`/`keyframes` (from @chakra-ui/react's
-// Emotion dependency). Panda's static extractor matches `css(...)` calls and
-// chokes on Emotion's, emitting empty-rule parse errors. Exclude them while they
-// remain on Emotion; drop entries here as each is migrated to Panda. See plan:
-// "Coexistence & kill-switch".
-const emotionFiles = [
-  "./src/utils/animations.ts",
-  "./src/components/LoadingAnimation.tsx",
-  "./src/components/HowItWorksAnimation/Arrow.tsx",
-  "./src/components/HowItWorksAnimation/ProgressBar.tsx",
-  "./src/components/HowItWorksAnimation/Gauge.tsx",
-  "./src/components/HowItWorksAnimation/CodeBlocks.tsx",
-  "./src/components/HowItWorksAnimation/GraphLines.tsx",
-  "./src/components/HowItWorksAnimation/MicrobitOnWrist.tsx",
-  "./src/components/HowItWorksAnimation/Signal.tsx",
-  "./src/components/PairingModeAnimation/ResetPressedMicrobitBoard.tsx",
-  "./src/components/PairingModeAnimation/ABLabelledMicrobitBoard.tsx",
-  "./src/components/PlugMicrobitAnimation/index.tsx",
-];
+// Nothing is authored with Emotion any more; the exclude list (which kept
+// Emotion `css`/`keyframes` files away from Panda's extractor) is empty and
+// goes away entirely at the kill-switch.
+const emotionFiles: string[] = [];
 
 export default defineConfig({
   // Chakra still injects its own CSS reset while both stacks coexist, so we

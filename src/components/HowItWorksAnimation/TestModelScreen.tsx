@@ -3,19 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridItem, useToken } from "@chakra-ui/react";
 import {
+  CSSProperties,
   forwardRef,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from "react";
-import Gauge, {
-  GaugeRef,
-  buildIconColorKeyframes,
-  totalDuration,
-} from "./Gauge";
+import { Grid, GridItem, token } from "../../shared-ui";
+import Gauge, { GaugeRef, totalDuration } from "./Gauge";
 import CrossLedIcon from "./CrossLedIcon";
 import HeartLedIcon from "./HeartLedIcon";
 import { useAnimation } from "../AnimationProvider";
@@ -28,20 +24,18 @@ export interface TestModelScreenRef {
 }
 
 export const testModeldurationInSec = totalDuration;
-const iconSize = { base: "1em", sm: "1.25em", md: "1.5em" };
 const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
   _,
   ref
 ) {
-  const [empty, filled, filledDark] = useToken("colors", [
-    "gray.200",
-    "gray.600",
-    "brand2.500",
-  ]);
-  const colorChange = useMemo(
-    () => buildIconColorKeyframes(filled, filledDark),
-    [filled, filledDark]
-  );
+  const empty = token("colors.gray.200");
+  const filled = token("colors.gray.600");
+  const filledDark = token("colors.brand2.500");
+  // The preset's gaugeIconColor keyframe reads the colours from these vars.
+  const iconColorAnimation: CSSProperties = {
+    "--gauge-icon-from": filled,
+    "--gauge-icon-to": filledDark,
+  } as CSSProperties;
 
   const [playing, setPlaying] = useState<"heart" | "cross" | false>(false);
   const [visible, setVisible] = useState<boolean>(false);
@@ -75,10 +69,10 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
 
   return (
     <Grid
-      templateColumns={{
-        base: `${iconSize.base} 1fr`,
-        sm: `${iconSize.sm} 1fr`,
-        md: `${iconSize.md} 1fr`,
+      gridTemplateColumns={{
+        base: "1em 1fr",
+        sm: "1.25em 1fr",
+        md: "1.5em 1fr",
       }}
       columnGap={2}
       rowGap={{ sm: 1, md: 3 }}
@@ -87,14 +81,18 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
     >
       <GridItem w="auto">
         <HeartLedIcon
-          width={iconSize}
-          height={iconSize}
-          color="gray.600"
-          animation={
-            playing === "heart"
-              ? withPlayState(`${colorChange} ${totalDuration}s`)
-              : undefined
-          }
+          css={{
+            width: { base: "1em", sm: "1.25em", md: "1.5em" },
+            height: { base: "1em", sm: "1.25em", md: "1.5em" },
+            color: "gray.600",
+          }}
+          style={{
+            ...iconColorAnimation,
+            animation:
+              playing === "heart"
+                ? withPlayState(`gaugeIconColor ${totalDuration}s`)
+                : undefined,
+          }}
         />
       </GridItem>
       <GridItem>
@@ -107,14 +105,18 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
       </GridItem>
       <GridItem>
         <CrossLedIcon
-          width={iconSize}
-          height={iconSize}
-          color="gray.600"
-          animation={
-            playing === "cross"
-              ? withPlayState(`${colorChange} ${totalDuration}s`)
-              : undefined
-          }
+          css={{
+            width: { base: "1em", sm: "1.25em", md: "1.5em" },
+            height: { base: "1em", sm: "1.25em", md: "1.5em" },
+            color: "gray.600",
+          }}
+          style={{
+            ...iconColorAnimation,
+            animation:
+              playing === "cross"
+                ? withPlayState(`gaugeIconColor ${totalDuration}s`)
+                : undefined,
+          }}
         />
       </GridItem>
       <GridItem>
