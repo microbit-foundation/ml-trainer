@@ -396,6 +396,11 @@ export const ossPreset = definePreset({
     "button, [role='button']": {
       cursor: "pointer",
     },
+    // Panda's preflight balance-wraps headings; Chakra didn't, and balanced
+    // multi-line headings break at different points (mobile/translations).
+    "h1, h2, h3, h4, h5, h6": {
+      textWrap: "wrap",
+    },
   },
   // Widen the interaction conditions so the Chakra-shaped recipe/style objects
   // (`_hover`/`_active`/`_focusVisible`/`_disabled`) also respond to

@@ -17,6 +17,5 @@ export const Divider = styled("hr", {
     borderColor: "gray.200",
     opacity: 0.6,
     width: "100%",
-    margin: 0,
   },
 });
