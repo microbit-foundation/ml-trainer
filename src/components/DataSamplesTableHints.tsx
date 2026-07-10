@@ -22,6 +22,7 @@ import moveMicrobitImage from "../images/move-microbit.svg";
 import { Action } from "../model";
 import Emoji, { animations, EmojiAi } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
+import StraightArrow from "./StraightArrow";
 import UpCurveArrow from "./UpCurveArrow";
 
 export const NameFirstActionHint = () => {
@@ -401,12 +402,17 @@ export const MoveMicrobitHint = () => {
 export const TrainHint = () => {
   return (
     <HStack
-      m={0}
       position="absolute"
-      right={0}
+      right={{ md: "unset", base: 0 }}
+      left={{ base: "unset", md: 0 }}
       spacing={0}
       zIndex={2}
-      transform="translate(-80px, -85px)"
+      transform={{
+        base: "translate(-80px, -85px)",
+        md: "translate(-100%, 2px)",
+      }}
+      w="fit-content"
+      pointerEvents="none"
     >
       <HStack>
         <Box
@@ -415,6 +421,7 @@ export const TrainHint = () => {
           transform="translate(-50px, 0)"
           w="calc(100% + 50px)"
           h="120%"
+          display={{ base: "block", md: "none" }}
         />
         <EmojiAi boxSize={20} pb={3} animation={animations.spin} zIndex={3} />
         <VisuallyHidden>
@@ -422,7 +429,7 @@ export const TrainHint = () => {
             <FormattedMessage id="train-hint-label" />
           </Text>
         </VisuallyHidden>
-        <Text textAlign="center" zIndex={3} aria-hidden>
+        <Text textAlign="center" zIndex={3} aria-hidden w="max-content">
           <FormattedMessage
             id="train-hint"
             values={{
@@ -436,10 +443,19 @@ export const TrainHint = () => {
           />
         </Text>
         <EmojiArrow
+          display={{ base: "block", md: "none" }}
           mt={8}
           transform="rotate(-120deg) scaleY(-1)"
           transformOrigin="center"
           color="brand.500"
+        />
+        <StraightArrow
+          boxSize={10}
+          display={{ base: "none", md: "block" }}
+          // transform="scale(0.8, 0.8) rotate(160deg) translate(10px, -20px)"
+          transformOrigin="center"
+          color="brand.500"
+          mr="2"
         />
       </HStack>
     </HStack>
