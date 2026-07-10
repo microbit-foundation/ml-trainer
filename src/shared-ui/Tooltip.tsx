@@ -28,8 +28,15 @@ const tooltipBase: SystemStyleObject = {
   zIndex: "tooltip",
 };
 
+// RAC positions the arrow but leaves orienting the glyph to us; it stamps the
+// resolved side on the wrapper as data-placement. The svg is square with the
+// triangle in the half nearest the tooltip (tip at centre), so rotating about
+// the centre keeps it abutting the box on every side — no translation needed.
 const arrowStyle = css({
   "& svg": { display: "block", fill: "gray.700" },
+  "&[data-placement='bottom'] svg": { transform: "rotate(180deg)" },
+  "&[data-placement='right'] svg": { transform: "rotate(90deg)" },
+  "&[data-placement='left'] svg": { transform: "rotate(-90deg)" },
 });
 
 export interface TooltipProps {
@@ -81,8 +88,11 @@ export const Tooltip = ({
     >
       {hasArrow && (
         <OverlayArrow className={arrowStyle}>
-          <svg width={8} height={8} viewBox="0 0 8 8">
-            <path d="M0 0 L4 4 L8 0" />
+          {/* Chakra's arrow is an 8px square rotated 45°: a ~11.3 x 5.7
+              triangle. Drawn in the top half of a square viewBox (see
+              arrowStyle). */}
+          <svg width={11.314} height={11.314} viewBox="0 0 12 12">
+            <path d="M0 0 L6 6 L12 0" />
           </svg>
         </OverlayArrow>
       )}
