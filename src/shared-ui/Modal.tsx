@@ -11,6 +11,7 @@ import {
   Modal as RACModal,
   ModalOverlay,
 } from "react-aria-components";
+import { useIntl } from "react-intl";
 import { css, cx } from "styled-system/css";
 import { dialog } from "styled-system/recipes";
 import { ConditionalValue, SystemStyleObject } from "styled-system/types";
@@ -215,7 +216,7 @@ export const ModalFooter = ({
 };
 
 export interface ModalCloseButtonProps {
-  /** Accessible name; defaults to "Close" matching Chakra's CloseButton. */
+  /** Accessible name; defaults to the localized "close-action" message. */
   "aria-label"?: string;
 }
 
@@ -224,12 +225,13 @@ export interface ModalCloseButtonProps {
  * ModalCloseButton at its default md size). Closes via the Modal's onClose.
  */
 export const ModalCloseButton = ({
-  "aria-label": ariaLabel = "Close",
+  "aria-label": ariaLabel,
 }: ModalCloseButtonProps) => {
+  const intl = useIntl();
   const { slots, onClose } = useDialog();
   return (
     <RACButton
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? intl.formatMessage({ id: "close-action" })}
       onPress={onClose}
       className={cx(
         slots.closeTrigger,

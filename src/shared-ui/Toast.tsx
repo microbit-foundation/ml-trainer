@@ -10,6 +10,7 @@ import {
   UNSTABLE_ToastQueue as RACToastQueue,
   UNSTABLE_ToastRegion as RACToastRegion,
 } from "react-aria-components";
+import { useIntl } from "react-intl";
 import { IconType } from "react-icons/lib";
 import {
   RiAlertFill,
@@ -94,65 +95,69 @@ const statusIcon: Record<ToastStatus, IconType> = {
 };
 
 /**
- * Mount once near the app root. Renders the live region that announces and
- * displays queued toasts.
+ * Mount once near the app root, inside the IntlProvider (the close button's
+ * label is localized). Renders the live region that announces and displays
+ * queued toasts.
  */
-export const ToastProvider = () => (
-  <RACToastRegion queue={toastQueue} className={regionStyle}>
-    {({ toast }) => (
-      <RACToast
-        toast={toast}
-        className={toastStyle({ status: toast.content.status })}
-      >
-        <Icon
-          as={statusIcon[toast.content.status ?? "info"]}
-          css={{ fontSize: "1.25rem", flexShrink: 0 }}
-          aria-hidden
-        />
-        <RACToastContent>
-          {toast.content.title && (
-            <Text fontWeight="bold">{toast.content.title}</Text>
+export const ToastProvider = () => {
+  const intl = useIntl();
+  return (
+    <RACToastRegion queue={toastQueue} className={regionStyle}>
+      {({ toast }) => (
+        <RACToast
+          toast={toast}
+          className={toastStyle({ status: toast.content.status })}
+        >
+          <Icon
+            as={statusIcon[toast.content.status ?? "info"]}
+            css={{ fontSize: "1.25rem", flexShrink: 0 }}
+            aria-hidden
+          />
+          <RACToastContent>
+            {toast.content.title && (
+              <Text fontWeight="bold">{toast.content.title}</Text>
+            )}
+            {toast.content.description && (
+              <Box css={{ mt: "1" }}>{toast.content.description}</Box>
+            )}
+          </RACToastContent>
+          {toast.content.isClosable && (
+            <Button
+              slot="close"
+              variant="unstyled"
+              aria-label={intl.formatMessage({ id: "close-action" })}
+              css={{
+                // A sized box with the glyph centred (like Chakra's CloseButton)
+                // gives padding around the X and a hover affordance.
+                position: "absolute",
+                top: "1",
+                insetEnd: "1",
+                color: "white",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                // Chakra toast uses CloseButton size="sm": 24px box, 2xs glyph.
+                width: "6",
+                height: "6",
+                minHeight: "0",
+                minWidth: "0",
+                padding: "0",
+                fontSize: "2xs",
+                borderRadius: "md",
+                // Chakra's CloseButton hover is a subtle dark overlay (blackAlpha)
+                // in light mode, not a bright highlight.
+                _hover: { bg: "blackAlpha.100" },
+                _active: { bg: "blackAlpha.200" },
+              }}
+            >
+              <CloseIcon />
+            </Button>
           )}
-          {toast.content.description && (
-            <Box css={{ mt: "1" }}>{toast.content.description}</Box>
-          )}
-        </RACToastContent>
-        {toast.content.isClosable && (
-          <Button
-            slot="close"
-            variant="unstyled"
-            aria-label="Close"
-            css={{
-              // A sized box with the glyph centred (like Chakra's CloseButton)
-              // gives padding around the X and a hover affordance.
-              position: "absolute",
-              top: "1",
-              insetEnd: "1",
-              color: "white",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              // Chakra toast uses CloseButton size="sm": 24px box, 2xs glyph.
-              width: "6",
-              height: "6",
-              minHeight: "0",
-              minWidth: "0",
-              padding: "0",
-              fontSize: "2xs",
-              borderRadius: "md",
-              // Chakra's CloseButton hover is a subtle dark overlay (blackAlpha)
-              // in light mode, not a bright highlight.
-              _hover: { bg: "blackAlpha.100" },
-              _active: { bg: "blackAlpha.200" },
-            }}
-          >
-            <CloseIcon />
-          </Button>
-        )}
-      </RACToast>
-    )}
-  </RACToastRegion>
-);
+        </RACToast>
+      )}
+    </RACToastRegion>
+  );
+};
 
 export interface ToastOptions extends ToastContent {
   /**

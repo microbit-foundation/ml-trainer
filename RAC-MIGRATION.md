@@ -546,8 +546,10 @@ is mostly *factoring*, not rework — with the following inventory.
 - `Menu.tsx` imports `@capacitor/core` and `../back-button` (Android
   back-button closes the open menu). Invert: an optional overlay-dismissal
   context the app installs — dialogs/drawers likely want the same hook.
-- Hardcoded English: `ModalCloseButton` / Toast close default
-  `aria-label="Close"`. Require the label or adopt RAC's localized strings.
+- i18n: `ModalCloseButton` and the toast close button default to the
+  localized `close-action` message via `useIntl`, so shared-ui depends on
+  react-intl and an app message id. At extraction: require the label, take
+  a message map, or adopt RAC's localized-strings mechanism.
 
 ### App decisions living in shared code (move to app/brand presets)
 - Button recipe: `led`, `record`, `recordOutline`, `language` (+ the
@@ -599,6 +601,48 @@ NumberInput. Don't build speculatively — run a **Chakra-usage census across
 the target apps** (grep `@chakra-ui/react` imports + resolved-theme diffs,
 like the brand audit) to define the v1 surface and decide which ml-trainer
 variants generalise.
+
+### Pre-extraction accessibility tasks (July 2026 shared-ui a11y review)
+The review's Chakra-parity *regressions* are fixed (Spinner required label +
+`speed`/reduced-motion, distinct warning toast glyph, localized close
+labels — see the react-intl coupling under Blockers). What remains is
+inherited Chakra weakness worth fixing once in the library rather than
+reproducing per app:
+- **Forced-colors focus rings (the big one).** Every focus indicator is the
+  Chakra-ported `outline: none` + `boxShadow: outline` (button recipe base,
+  Link, CloseButton, ModalCloseButton, checkbox control, switch track,
+  slider thumb, input recipe). Forced-colors mode strips box-shadows and
+  honours `outline: none`, so keyboard focus is invisible app-wide. Add
+  `outline: 2px solid transparent; outline-offset: 2px` alongside the
+  shadow (forced-colors overrides outline-color to a visible system
+  colour) — once via the preset's widened `focusVisible` condition plus the
+  `data-focus-visible` recipe blocks. While there, check Switch state under
+  `forced-colors: active`: track/thumb are background-coloured spans that
+  flatten to the same colour.
+- **NativeSelect**: bake the dropdown chevron in (`appearance: none`
+  removes the native one; SelectFormControl re-adds it per call site,
+  SortInput suppresses it as it did under Chakra — make suppression the
+  opt-in, not the default).
+- **Toast**: status is conveyed by colour plus an `aria-hidden` icon only —
+  surface it non-visually (e.g. visually hidden status text) as part of the
+  planned slot-recipe/semantic-token rework above. Also guard the API
+  footgun that a toast with no `duration` and no `isClosable` is permanent
+  and undismissable.
+- **Modal/Drawer naming**: nothing enforces a Modal accessible name
+  (`aria-label` is optional on the promise of a ModalHeader) — enforce
+  one-of at the API level. Wire DrawerHeader as a title slot so drawers
+  with visible text headers are labelled by them (ml-trainer's drawer
+  header is logo-only, hence the required `aria-label` today).
+- **Slider**: expose RAC's `getValueLabel`/`formatOptions` (screen readers
+  currently hear bare numbers, no unit) and reconsider the focus-only
+  `mark` reveal — pointer users adjusting the slider never see the value.
+- **Icon**: default `aria-hidden` when unlabelled and set `role="img"` when
+  labelled (a bare svg `aria-label` is unreliably announced); CloseIcon is
+  the template. Covers MenuItem's icon slot too.
+- Component-default choices to revisit deliberately at extraction: Link
+  underlines only on hover (colour-only differentiation for in-prose links,
+  WCAG 1.4.1) and Tooltip's global `delay={0}` (Chakra-parity override of
+  RAC's ~1500ms warmup).
 
 ## Key files
 - `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/fidelity.mjs`

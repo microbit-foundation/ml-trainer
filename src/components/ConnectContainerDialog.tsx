@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import {
   Button,
   Modal,
@@ -37,7 +37,6 @@ const ConnectContainerDialog = ({
   additionalActions,
   children,
 }: ConnectContainerDialogProps) => {
-  const intl = useIntl();
   return (
     <Modal
       isDismissable={false}
@@ -50,9 +49,7 @@ const ConnectContainerDialog = ({
       <ModalHeader level={2}>
         <FormattedMessage id={headingId} />
       </ModalHeader>
-      <ModalCloseButton
-        aria-label={intl.formatMessage({ id: "close-action" })}
-      />
+      <ModalCloseButton />
       <ModalBody>
         <VStack width="100%" alignItems="stretch">
           {children}

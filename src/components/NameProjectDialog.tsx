@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useProjectName } from "../hooks/project-hooks";
 import { validateProjectName } from "../project-utils";
 import {
@@ -47,7 +47,6 @@ export const NameProjectDialog = ({
   helperText = <FormattedMessage id="name-used-when" />,
   confirmText = <FormattedMessage id="confirm-save-action" />,
 }: NameProjectDialogProps) => {
-  const intl = useIntl();
   const initialName = useProjectName();
   const [name, setName] = useState<string>(projectName ?? initialName);
   const isValid = validateProjectName(name);
@@ -82,9 +81,7 @@ export const NameProjectDialog = ({
       onCloseComplete={onCloseComplete}
     >
       <ModalHeader>{heading}</ModalHeader>
-      <ModalCloseButton
-        aria-label={intl.formatMessage({ id: "close-action" })}
-      />
+      <ModalCloseButton />
       <ModalBody>
         <form onSubmit={handleSubmit}>
           <TextField

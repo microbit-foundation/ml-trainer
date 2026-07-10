@@ -105,9 +105,10 @@ const Providers = ({ children }: ProviderLayoutProps) => {
   const { ConsentProvider } = deployment.compliance;
   return (
     <React.StrictMode>
-      <ToastProvider />
       <LoggingProvider value={logging}>
         <TranslationProvider>
+          {/* Inside TranslationProvider: the toast close button label is localized. */}
+          <ToastProvider />
           <ConsentProvider>
             <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
               <DataConnectionEventProvider>
