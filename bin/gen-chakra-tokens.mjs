@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 // Snapshot the Chakra default theme foundation scales into Panda token format.
-// Run with `node bin/gen-chakra-tokens.mjs`; output is committed as
-// src/deployment/default/chakra-tokens.ts so the OSS Panda preset matches
-// Chakra exactly and stays correct once @chakra-ui/theme is removed.
+// Output is committed as src/deployment/default/chakra-tokens.ts so the OSS
+// Panda preset matches Chakra v2 exactly. Chakra is no longer a dependency;
+// kept for provenance — to re-run, `npm i --no-save @chakra-ui/theme` first.
 import { theme } from "@chakra-ui/theme";
 import { writeFileSync } from "node:fs";
 
@@ -18,7 +18,8 @@ const toTokens = (obj) => {
     // Stringify leaves: Panda types most token categories as string-valued, and
     // CSS accepts the string form of every numeric value (e.g. zIndex "1400",
     // fontWeight "600", lineHeight "1.2").
-    out[k] = v !== null && typeof v === "object" ? toTokens(v) : { value: String(v) };
+    out[k] =
+      v !== null && typeof v === "object" ? toTokens(v) : { value: String(v) };
   }
   return out;
 };

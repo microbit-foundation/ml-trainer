@@ -1,14 +1,13 @@
 # Chakra → react-aria-components + Panda CSS migration
 
-Status: **every component is ported — nothing renders through Chakra any
-more.** The only remaining `@chakra-ui` imports are kill-switch material:
-`ChakraProvider` in `App.tsx`, one `BoxProps` type in `deployment/index.ts`,
-and the OSS Chakra theme files that get deleted. Remaining work: the
-**fidelity harness** (next up — design agreed and detailed in "Remaining
-work" #7; a first step was started and deliberately reverted, see there),
-then the **kill-switch**, then **private preset consumption**. This doc is
-the handover for continuing in a new session; per-chunk history lives in
-git.
+Status: **Chakra, Emotion and framer-motion are gone** — the kill-switch
+(#8) is done, verified by the fidelity harness against the pre-flip commit
+(17/18 states pixel-identical; one accepted 1px sub-pixel diff, see #8).
+Remaining work: **private preset consumption** (#9) — now urgent, since
+`npm install` deletes the local symlink (see #9). The private package repo
+(`../ml-trainer-microbit`) has uncommitted changes that must land in
+lockstep with this branch. This doc is the handover for continuing in a new
+session; per-chunk history lives in git.
 
 ## Goal
 
@@ -25,16 +24,21 @@ the OSS default theme is a washed-out grey and hides real issues.
 ## Architecture
 
 ### Styling: Panda, build-time, no PostCSS
-Chakra swaps a runtime theme via `ChakraProvider`; Panda generates CSS at build
-time from `panda.config.ts`. Vite uses the LightningCSS transformer (PostCSS
-disabled), so Panda runs via its **CLI**, not the PostCSS plugin:
-- `npm run panda` → `panda codegen` (generates `styled-system/`) + `panda cssgen`
-  (writes `src/styled-system.css`) + `bin/unlayer-panda.mjs` (see gotcha #1).
-- `npm run panda:watch` → `bin/panda-dev.mjs` (watch + unlayer on each rebuild).
+Panda generates CSS at build time from `panda.config.ts`. Vite uses the
+LightningCSS transformer (PostCSS disabled), so Panda runs via its **CLI**,
+not the PostCSS plugin:
+- `npm run panda` → `panda codegen` (generates `styled-system/`) + `panda
+  cssgen` (writes `src/styled-system.css`).
+- `npm run panda:watch` → `panda cssgen --watch` (config edits are picked
+  up; only new files in `styled-system/` need a one-shot `npm run panda`).
 - Wired into `build`, `predev`, `postinstall`. `styled-system/` and
   `src/styled-system.css` are generated and git-ignored.
-- `main.tsx` imports `./styled-system.css`. `styled-system/*` is aliased in both
+- `main.tsx` imports `./layers.css` (declares the document-wide layer order,
+  including the `vendor` layer for third-party CSS — see gotcha #1) then
+  `./styled-system.css`. `styled-system/*` is aliased in both
   `tsconfig.json` (paths) and `vite.config.ts`.
+- `preflight: true`; Chakra-reset behaviours Panda's preflight lacks are in
+  the preset's `globalCss` (see #8).
 
 ### Tokens & the OSS/private preset split
 - `bin/gen-chakra-tokens.mjs` snapshots the **exact** Chakra v2 default token
@@ -87,12 +91,17 @@ primitive that accepts style overrides must merge them into a *single*
 
 ## Hard-won patterns / gotchas (READ before continuing)
 
-1. **CSS layer conflict (the big one).** Chakra/Emotion inject *unlayered* CSS;
-   Panda emits into `@layer`, and unlayered CSS always beats layered regardless
-   of specificity — so Chakra's reset `:where(*){border-width:0}` silently kills
-   Panda component borders/padding. Fix: `bin/unlayer-panda.mjs` strips the
-   `@layer` wrappers from the generated CSS during coexistence. **Temporary** —
-   remove and set `preflight: true` once Chakra is gone (kill-switch).
+1. **CSS layer conflict (the big one).** Unlayered CSS always beats layered
+   CSS regardless of specificity. During coexistence Chakra/Emotion were
+   unlayered (fixed then by `bin/unlayer-panda.mjs`, deleted at the
+   kill-switch). The rule now applies to **third-party stylesheets**: any
+   unlayered vendor CSS beats every Panda rule — Swiper's `.swiper-slide {
+   width: 100% }` collapsed the home carousels this way. Fix: import vendor
+   stylesheets into the `vendor` cascade layer (`@import "..." layer(vendor)`
+   — see `Carousel/swiper.css`), which `src/layers.css` orders between
+   Panda's `reset` and `base` layers so vendor CSS beats the preflight but
+   loses to app styling (the Chakra-era cascade shape). Any future
+   third-party CSS import must do the same.
 2. **RAC interaction states.** The preset widens Panda's `hover`/`active`/
    `focusVisible`/`disabled` conditions to also match RAC's `data-*` attributes,
    so Chakra-shaped `_hover`/`_active` style objects work unchanged on RAC.
@@ -458,17 +467,43 @@ Consolidated for review time; all deliberate:
      CI-gating (image baselines are font-rendering sensitive; if
      CI-gating later, run in the pinned Playwright container from
      build.yml).
-8. **Kill-switch**: remove `ChakraProvider`/`BrandConfig.chakraTheme`,
-   delete `src/deployment/default/{theme,colors,components/*}.ts`, unpick
-   the last type-only import (`deployment/index.ts` `BoxProps`; `model.ts`
-   was already done in the Tour pass), set `preflight: true`, delete
-   `bin/unlayer-panda.mjs`/`bin/panda-dev.mjs` + the (already empty)
-   `exclude` list, drop Chakra/Emotion/framer-motion deps, and delete
-   `bin/diff-chakra-themes.mjs`. **Chakra's global body styles
-   (font/colour/bg/line-height from its theme `styles.global`) currently
-   style the app — add the equivalent `globalCss` to the Panda preset as
-   part of this flip** and let the fidelity harness confirm it. Full
-   fidelity-harness + e2e pass across the flip commit.
+8. ✅ **Kill-switch** — done. `ChakraProvider` removed; OSS Chakra theme
+   files (`theme`/`colors`/`fonts`/`radii`/`shadows`/`components/*`) and
+   `bin/{unlayer-panda,panda-dev,diff-chakra-themes}.mjs` deleted;
+   `preflight: true`; Chakra/Emotion/framer-motion/`@chakra-ui/cli` deps
+   and the `theme` scripts dropped (`bin/gen-chakra-tokens.mjs` kept for
+   provenance; needs `npm i --no-save @chakra-ui/theme` to re-run).
+   `BrandConfig` lost `chakraTheme`; logos are typed `LogoProps` (`h`,
+   `color`) and render plain SVG with inline styles — brand packages are
+   outside Panda's extraction scope. **The private package changed in
+   lockstep** (chakraTheme/theme files removed, logos ported) — its repo
+   has the matching uncommitted changes. Findings from the flip:
+   - The preset's `globalCss` carries what ChakraProvider used to inject:
+     theme `styles.global` (body font/colour/bg/line-height/transition,
+     placeholder + border colours) **plus the Chakra-reset behaviours
+     Panda's preflight lacks**: body `font-feature-settings: "kern"`, html
+     `text-rendering: optimizeLegibility` (without these, glyph kerning
+     shifts text page-wide), `touch-action: manipulation`, global
+     `word-wrap: break-word`, body `position/min-height`, and `button,
+     [role=button] { cursor: pointer }` (human-caught — **the screenshot
+     harness can't see cursor, focus order, or selection behaviour**).
+   - Swiper needed the `vendor` layer (gotcha #1's new form).
+   - Verified: unit + full e2e green, branded build + preview eyeballed,
+     fidelity vs the pre-flip commit **17/18 states pixel-identical**.
+     Accepted diff: the About-dialog version table renders its rows
+     ~0.7px shorter (sub-pixel line-box rounding; computed styles are
+     identical), shifting the caption/Copy button 1px.
+   - **Cross-boundary fidelity runs need paired sibling-package versions**:
+     the baseline resolves the *current* private dist through the shared
+     node_modules symlink, so after the private package dropped
+     `chakraTheme` the baseline's `ChakraProvider theme={undefined}` fell
+     back to the Chakra default theme (system font stack — every state
+     diffed). Method that worked: stash the private repo, rebuild its old
+     dist, run the harness for its baseline half; pop/rebuild, clean panda
+     regen, then run the compare half manually (`FIDELITY=1 E2E_PORT=5199
+     FIDELITY_NO_WEBSERVER=1 npx playwright test --project=fidelity`).
+     Also: the baseline ref imports Chakra, so `npm i --no-save` the
+     dropped deps first; plain `npm install` restores pristine state.
 9. **Private preset consumption** — replace the local symlink with a real
    mechanism (publish the `panda-preset` export or a documented
    `file:`/`npm link` story) so team/CI can build the branded app. Gates

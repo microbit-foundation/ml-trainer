@@ -4,8 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ChakraProvider } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { createBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
 import { createRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
@@ -107,20 +105,18 @@ const Providers = ({ children }: ProviderLayoutProps) => {
   const { ConsentProvider } = deployment.compliance;
   return (
     <React.StrictMode>
-      <ChakraProvider theme={deployment.chakraTheme}>
-        <ToastProvider />
-        <LoggingProvider value={logging}>
-          <TranslationProvider>
-            <ConsentProvider>
-              <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
-                <DataConnectionEventProvider>
-                  <BufferedDataProvider>{children}</BufferedDataProvider>
-                </DataConnectionEventProvider>
-              </ConnectionsProvider>
-            </ConsentProvider>
-          </TranslationProvider>
-        </LoggingProvider>
-      </ChakraProvider>
+      <ToastProvider />
+      <LoggingProvider value={logging}>
+        <TranslationProvider>
+          <ConsentProvider>
+            <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
+              <DataConnectionEventProvider>
+                <BufferedDataProvider>{children}</BufferedDataProvider>
+              </DataConnectionEventProvider>
+            </ConnectionsProvider>
+          </ConsentProvider>
+        </TranslationProvider>
+      </LoggingProvider>
     </React.StrictMode>
   );
 };

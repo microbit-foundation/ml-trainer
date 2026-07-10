@@ -360,6 +360,43 @@ export const ossPreset = definePreset({
       switchRecipe,
     },
   },
+  // What ChakraProvider used to inject and Panda's preflight doesn't cover:
+  // the theme's styles.global (body text/background defaults, global
+  // border/placeholder colours) plus the parts of Chakra's CSS reset that
+  // Panda's has no equivalent for — kerning/text-rendering (their absence
+  // shifts glyphs page-wide), word-wrap and touch-action. Token references
+  // resolve against this preset, so the values track any brand overrides
+  // exactly as they did under Chakra's runtime theme.
+  globalCss: {
+    html: {
+      textRendering: "optimizeLegibility",
+      touchAction: "manipulation",
+    },
+    body: {
+      position: "relative",
+      minHeight: "100%",
+      fontFeatureSettings: '"kern"',
+      fontFamily: "body",
+      color: "gray.800",
+      bg: "white",
+      transitionProperty: "background-color",
+      transitionDuration: "normal",
+      lineHeight: "base",
+    },
+    "*::placeholder": {
+      color: "gray.500",
+    },
+    "*, *::before, *::after": {
+      borderColor: "gray.200",
+      wordWrap: "break-word",
+    },
+    // Panda's preflight, unlike Chakra's reset, doesn't set the pointer
+    // cursor on buttons. Recipes' disabled states (cursor: not-allowed)
+    // override this from the higher recipes layer.
+    "button, [role='button']": {
+      cursor: "pointer",
+    },
+  },
   // Widen the interaction conditions so the Chakra-shaped recipe/style objects
   // (`_hover`/`_active`/`_focusVisible`/`_disabled`) also respond to
   // react-aria-components' data attributes, not just native pseudo-classes.

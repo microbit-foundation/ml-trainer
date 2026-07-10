@@ -3,26 +3,29 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps, Text, VStack } from "@chakra-ui/react";
-import { BrandConfigFactory } from "..";
-import theme from "./theme";
+import { BrandConfigFactory, LogoProps } from "..";
 
 const defaultBrandFactory: BrandConfigFactory = () => ({
-  chakraTheme: theme,
   appNameFull: "ml-trainer",
   appNameShort: "ml-trainer",
   product: "ml-trainer",
-  AppLogo: (props: BoxProps) => {
+  // Inline styles rather than Panda: the private brand package is resolved
+  // from node_modules, outside Panda's extraction scope, so logo components
+  // keep to plain elements on both sides.
+  AppLogo: ({ h }: LogoProps) => {
     return (
-      <VStack
-        color="white"
-        fontWeight="bold"
-        justifyContent="center"
-        alignItems="center"
-        {...props}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: h,
+          color: "white",
+          fontWeight: "bold",
+        }}
       >
-        <Text>ml-trainer</Text>
-      </VStack>
+        <span>ml-trainer</span>
+      </div>
     );
   },
   OrgLogo: undefined,

@@ -1,0 +1,16 @@
+/*
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Swiper's stylesheets, imported into the `vendor` cascade layer (see
+ * src/layers.css). Left unlayered they would beat every layered Panda rule
+ * on shared properties regardless of specificity — e.g. Swiper's
+ * `.swiper-slide { width: 100% }` overriding the carousel's `width: unset`,
+ * collapsing the layout.
+ */
+@import "swiper/css" layer(vendor);
+@import "swiper/css/a11y" layer(vendor);
+@import "swiper/css/autoplay" layer(vendor);
+@import "swiper/css/navigation" layer(vendor);
+@import "swiper/css/pagination" layer(vendor);

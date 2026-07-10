@@ -6,11 +6,7 @@
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import { Swiper as SwiperClass } from "swiper";
-import "swiper/css";
-import "swiper/css/a11y";
-import "swiper/css/autoplay";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import "./swiper.css";
 import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import { css, cx } from "../../shared-ui";

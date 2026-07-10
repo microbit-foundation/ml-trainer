@@ -6,6 +6,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { mlWorker } from "./ml-worker-client";
+import "./layers.css";
 import "./styled-system.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
