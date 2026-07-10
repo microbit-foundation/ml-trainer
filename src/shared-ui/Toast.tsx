@@ -12,6 +12,7 @@ import {
 } from "react-aria-components";
 import { IconType } from "react-icons/lib";
 import {
+  RiAlertFill,
   RiCheckboxCircleFill,
   RiErrorWarningFill,
   RiInformationFill,
@@ -82,11 +83,13 @@ const regionStyle = css({
 });
 
 // Status icon matching Chakra's AlertIcon (filled glyphs, coloured by the
-// toast foreground = white here).
+// toast foreground = white here). Warning is a triangle, error a circle, as
+// in Chakra — the glyph must distinguish them because the colours alone
+// don't reliably (and the icon is the only non-text status signal).
 const statusIcon: Record<ToastStatus, IconType> = {
   info: RiInformationFill,
   success: RiCheckboxCircleFill,
-  warning: RiErrorWarningFill,
+  warning: RiAlertFill,
   error: RiErrorWarningFill,
 };
 

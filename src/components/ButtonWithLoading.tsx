@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, ReactNode } from "react";
+import { useIntl } from "react-intl";
 import { flags } from "../flags";
 import { Button, ButtonProps, css, Spinner } from "../shared-ui";
 
@@ -27,6 +28,7 @@ export const ButtonWithLoading = forwardRef<
   { isLoading, isDisabled, onClick, children, ...props },
   ref
 ) {
+  const intl = useIntl();
   // Workaround to avoid error caused by DOM changes when doing in-context
   // translations.
   const showSpinner = isLoading && !flags.translate;
@@ -54,7 +56,10 @@ export const ButtonWithLoading = forwardRef<
               justifyContent: "center",
             })}
           >
-            <Spinner size="sm" />
+            <Spinner
+              size="sm"
+              aria-label={intl.formatMessage({ id: "loading" })}
+            />
           </span>
         )}
         <span className={showSpinner ? css({ opacity: 0 }) : undefined}>

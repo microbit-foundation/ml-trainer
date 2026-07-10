@@ -25,6 +25,7 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
     >
       <Spinner
         aria-label={intl.formatMessage({ id: "loading" })}
+        speed="2s"
         css={{
           width: "166px",
           height: "166px",
@@ -32,7 +33,6 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
           color: "brand.600",
           borderBottomColor: "whitesmoke",
           borderLeftColor: "whitesmoke",
-          animationDuration: "2s",
         }}
       />
     </Modal>

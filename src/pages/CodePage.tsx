@@ -69,6 +69,7 @@ const CodePage = () => {
         <VStack h="100%" justifyContent="center">
           <Spinner
             aria-label={intl.formatMessage({ id: "loading" })}
+            speed="2s"
             css={{
               width: "166px",
               height: "166px",
@@ -76,7 +77,6 @@ const CodePage = () => {
               color: "brand.600",
               borderBottomColor: "whitesmoke",
               borderLeftColor: "whitesmoke",
-              animationDuration: "2s",
             }}
           />
         </VStack>
