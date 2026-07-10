@@ -30,6 +30,7 @@ import {
   SameOrDifferentChoice,
 } from "./download-flow/download-types";
 import { flags } from "./flags";
+import { getHint } from "./hints";
 import { LoadAction } from "./hooks/project-hooks";
 import { createPromise, PromiseInfo } from "./hooks/use-promise-ref";
 import { Logging } from "./logging/logging";
@@ -2149,58 +2150,6 @@ const getActionsFromProject = (project: MakeCodeProject): ActionData[] => {
   return migrateLegacyActionDataAndAssignNewIds(
     dataset.data as OldActionData[] | ActionData[]
   );
-};
-
-const getHint = (
-  actions: ActionData[],
-  suppressTrainAndAddActionHint: boolean
-): DataSamplesPageHint => {
-  const sufficientDataForTraining = hasSufficientDataForTraining(actions);
-
-  // We don't let you have zero. If you have > 2 you've seen it all before.
-  if (actions.length === 0 || actions.length > 2) {
-    if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
-      return { type: "train" };
-    }
-    return null;
-  }
-  const lastActionIdx = actions.length - 1;
-  const lastAction = actions[lastActionIdx];
-
-  const firstUnnamedActionIdx = actions.findIndex(
-    (a) => a.name.length === 0 && a.recordings.length === 0
-  );
-  if (firstUnnamedActionIdx > -1 && firstUnnamedActionIdx !== lastActionIdx) {
-    return { type: "name-action-short", actionIdx: firstUnnamedActionIdx };
-  }
-  if (lastAction.name.length === 0) {
-    return {
-      type:
-        lastAction.recordings.length === 0
-          ? "name-action"
-          : "name-action-with-samples",
-      actionIdx: lastActionIdx,
-    };
-  }
-  const firstNoRecordingsActionIdx = actions.findIndex(
-    (a) => a.recordings.length === 0
-  );
-  if (firstNoRecordingsActionIdx > -1) {
-    return {
-      type: "record-action",
-      actionIdx: firstNoRecordingsActionIdx,
-    };
-  }
-  if (lastAction.recordings.length < 3) {
-    return { type: "record-more-action" };
-  }
-  if (lastActionIdx === 0 && !suppressTrainAndAddActionHint) {
-    return { type: "add-action" };
-  }
-  if (sufficientDataForTraining && !suppressTrainAndAddActionHint) {
-    return { type: "train" };
-  }
-  return null;
 };
 
 const projectInHexIsEdited = (project: MakeCodeProject): boolean => {
