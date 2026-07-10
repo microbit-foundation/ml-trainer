@@ -13,6 +13,17 @@ export const getAbsoluteFilePath = (filePathFromProjectRoot: string) => {
 };
 
 /**
+ * Base URL of the app under test, with trailing slash.
+ * E2E_PORT lets alternative harnesses (e.g. the fidelity runner) point the
+ * page objects at their own server without colliding with a dev server on
+ * the default port.
+ */
+export const appUrl = (): string =>
+  `http://localhost:${process.env.E2E_PORT ?? "5173"}${
+    process.env.CI ? process.env.BASE_URL : "/"
+  }`;
+
+/**
  * The modal dialog, excluding menu popovers. react-aria-components popovers
  * (menus etc.) also have role="dialog" (briefly still present while animating
  * out), so a bare getByRole("dialog") can be ambiguous. Both Chakra and

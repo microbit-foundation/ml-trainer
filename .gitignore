@@ -24,6 +24,7 @@
 /src/.DS_Store
 /playwright-report/
 /test-results/
+/.fidelity/
 /ml4f-output/
 /android/app/src/main/assets/public
 /ios/App/App/public

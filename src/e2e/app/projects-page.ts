@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, Locator, type Page } from "@playwright/test";
-import { modalDialog } from "./shared";
+import { appUrl, modalDialog } from "./shared";
 
 export class ProjectsPage {
   private url: string;
@@ -14,9 +14,7 @@ export class ProjectsPage {
   private selectionToolbar: Locator;
 
   constructor(public readonly page: Page) {
-    this.url = `http://localhost:5173${
-      process.env.CI ? process.env.BASE_URL : "/"
-    }projects`;
+    this.url = `${appUrl()}projects`;
     this.heading = this.page.getByRole("heading", { name: "Projects" });
     this.searchInput = this.page.getByRole("textbox", { name: "Search" });
     this.homeButton = this.page.getByRole("button", { name: "Home page" });

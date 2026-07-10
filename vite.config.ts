@@ -83,6 +83,13 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
 
   return {
     base: process.env.BASE_URL ?? "/",
+    // The fidelity harness (bin/fidelity.mjs) symlinks node_modules into a
+    // baseline worktree, so the default node_modules/.vite dep cache would
+    // be shared with (and can be invalidated under) a concurrently running
+    // dev server. It sets VITE_CACHE_DIR to keep its servers isolated.
+    ...(process.env.VITE_CACHE_DIR
+      ? { cacheDir: process.env.VITE_CACHE_DIR }
+      : {}),
     plugins: [viteEjsPlugin(strings), react(), svgr()],
     assetsInclude: ["**/*.hex"],
     define: {

@@ -6,7 +6,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import { expect, Locator, type Page } from "@playwright/test";
-import { Navbar } from "./shared";
+import { appUrl, Navbar } from "./shared";
 import { ConnectionDialogs } from "./connection-dialogs";
 import { TrainModelDialog } from "./train-model-dialog";
 
@@ -22,9 +22,7 @@ export class DataSamplesPage {
   public welcomeDialog: WelcomeDialog;
 
   constructor(public readonly page: Page) {
-    this.url = `http://localhost:5173${
-      process.env.CI ? process.env.BASE_URL : "/"
-    }data-samples`;
+    this.url = `${appUrl()}data-samples`;
     this.navbar = new Navbar(page);
     this.heading = this.page.getByRole("heading", { name: "Data samples" });
     this.welcomeDialog = new WelcomeDialog(page);

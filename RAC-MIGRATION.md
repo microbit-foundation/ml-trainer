@@ -400,64 +400,64 @@ Consolidated for review time; all deliberate:
    "click the selected option again" interactions on RAC radios. A real
    screen-reader pass (VoiceOver) on device is still worth doing when the
    native flow is next tested by hand.
-7. **Fidelity harness** (next up — design agreed, build it before the
-   kill-switch). Why: the kill-switch is a *global* change — `preflight:
-   true` swaps the CSS reset on every element; removing `ChakraProvider`
-   also removes Chakra's global body styles (font/colour/bg — **Panda does
-   not currently own these**, a known gap the harness must catch); deleting
-   the unlayer shim puts Panda back inside `@layer`, changing how it
-   competes with *unlayered* third-party CSS (Swiper, MakeCode embed, brand
-   `fonts.css`). Per-component review can't cover that; a whole-app
-   screenshot diff can. Agreed design:
-   - **State catalogue** `src/e2e/fidelity.spec.ts` in its own Playwright
-     project (`--project=fidelity`; add `testIgnore` for it to the default
-     chromium project). ~30–50 `toHaveScreenshot()` states reusing the
-     existing page objects + mock fixtures, which can reach everything:
-     home empty/with-project, projects page (+selection/menus), data
-     samples empty/connected/with-recordings (import
-     `test-data/dataset.json`), the full connect-flow dialogs incl. the
-     pattern input, train-help → testing-model page (a real model trains
-     via `trainModelDialog.train()`), settings/about/language dialogs,
-     drawer, the Connect tour steps (auto-appears after mock connect), at
-     1324/900/390 widths.
-   - **Determinism**: project-level `expect.toHaveScreenshot` defaults
-     `{ animations: "disabled" }` plus `page.emulateMedia({ reducedMotion:
-     "reduce" })` (our reduced-motion handling pauses the welcome
-     animation via `startPausedIfReducedMotion`); `mask` the LiveGraph
-     canvas in connected states; no clock-freezing needed — projects are
-     created fresh each run so relative "last edited" labels are stable.
-     Skip the Feedback dialog (external freshdesk iframe).
-   - **Baseline runner** `bin/fidelity.mjs` (+ `npm run fidelity`): given a
-     git ref, `git worktree add` (detached, in a temp dir), **symlink
-     node_modules into it**, run `npm run panda` there (clean per-side
-     regen — the stale-preset gotcha), start `vite dev --port 5199
-     --strictPort` from the worktree, run the spec with
-     `--update-snapshots`; then serve the working tree on the same port
-     and run the spec in compare mode → Playwright's HTML report gives the
-     side-by-side diffs. Snapshots land in a git-ignored dir
-     (`snapshotPathTemplate` → `.fidelity/`); baselines are per-run
-     artefacts, never committed.
-   - **Plumbing prerequisites**: (a) the seven e2e page objects hardcode
-     `http://localhost:5173` — add an `appUrl` helper (e.g. in
-     `src/e2e/app/shared.ts`) reading `process.env.E2E_PORT ?? "5173"` and
-     swap the call sites, so the harness runs on :5199 and never collides
-     with a locally running dev server (a mechanical version of this edit
-     was started and **deliberately reverted** at a pause point — redo it
-     properly with the helper + imports); (b) `playwright.config.ts` needs
-     the fidelity project and a `FIDELITY_NO_WEBSERVER=1` escape so the
-     runner manages servers itself instead of the config's webServer.
-   - **What it buys**: the kill-switch reviewed as N image diffs instead of
-     click-around-everything; standing protection for Panda version bumps
-     (extractor changes are this migration's silent-failure class); run it
-     twice (brand linked / OSS) for brand-split coverage nobody eyeballs;
-     and a visual-diff artefact for the eventual PR to main. Keep it
-     on-demand, not CI-gating (image baselines are font-rendering
-     sensitive; if CI-gating later, run in the pinned Playwright container
-     from build.yml).
-   - The TestingModelPage stash-compare spec and this branch's many
-     throwaway probes are the prototypes; prefer the **worktree** over
-     `git stash` for the baseline (no touching the working tree, and the
-     stash dance bit us twice with wrong-cwd pops).
+7. ✅ **Fidelity harness** — done, self-tested (working tree vs HEAD →
+   zero diffs). Usage: `npm run fidelity [-- <ref>]` (default HEAD) runs
+   `src/e2e/fidelity.spec.ts` (`--project=fidelity`) twice — baseline ref
+   in a temp detached worktree (node_modules symlinked, Panda regenerated
+   via `predev`, dev server on :5199), then the working tree — and the
+   Playwright HTML report (`npx playwright show-report`) has the
+   side-by-side diffs. ~43 screenshot states: home/projects/data-samples/
+   testing-model at 1324/900/390, dialogs (new-project, how-it-works,
+   settings, language, about, train-help), menus (settings, help, card,
+   data actions), selection toolbar, delete confirm, the full web-Bluetooth
+   connect flow incl. pattern input, the 3 Connect tour steps, connected
+   state, drawer. Implementation notes beyond the agreed design:
+   - **Determinism required stubbing in-page randomness**: a
+     `context.addInitScript` in the spec replaces `Math.random` (seeded
+     PRNG — mockUsb's random device id drives the suggested Bluetooth
+     pattern) and `crypto.getRandomValues`/`crypto.randomUUID`. Without
+     it, imports regenerate action/recording **uuids whose IndexedDB key
+     order drives visible order** (card subtitles flipped "active,
+     inactive"/"inactive, active"; recording previews shuffled within a
+     row). Seeding alone is NOT enough for the uuids — async interleaving
+     under load shifts how many random calls land between two `uuid()`
+     calls, flipping their relative order (caught when the suite ran
+     alongside the chromium project) — so `getRandomValues` writes a
+     **monotonic per-call prefix** into the leading bytes: later uuids
+     always sort after earlier ones, i.e. visible order == creation
+     order, load-independent. (Chart.js previews were already
+     `animation: false`; the reducedMotion context option pauses the
+     welcome/how-it-works animation as designed.) Only `#smoothie-chart`
+     (LiveGraph) is masked.
+   - Screenshot assertions are `expect.soft` so one diff doesn't hide
+     later states in the same flow.
+   - **Cold dev servers flake**: first visits pay vite's on-demand
+     compile (a training-navigation timeout and a blank-page render on
+     the fresh worktree server). The fidelity project has `timeout:
+     60_000, retries: 1` — the retry runs against a warm server.
+   - `vite.config.ts` honours `VITE_CACHE_DIR` (set per side by the
+     runner) so the worktree's server — whose default cache would resolve
+     *through the node_modules symlink* into the shared
+     `node_modules/.vite` — can't invalidate a concurrently running dev
+     server's deps, and the two sides can't cross-contaminate.
+   - The spec always runs from the **working tree** (both sides): only
+     the app server differs, so the state list is identical across sides.
+     Consequence: page-object/locator changes can't invalidate old
+     baselines, but app changes that rename UI strings the spec relies on
+     need the spec updated in the same tree.
+   - `appUrl()` in `src/e2e/app/shared.ts` (reads `E2E_PORT`, default
+     5173) replaced the hardcoded URLs in the seven page objects;
+     `FIDELITY_NO_WEBSERVER=1` skips the config webServer;
+     `snapshotPathTemplate` → `.fidelity/snapshots/` (git-ignored). The
+     fidelity project only exists in the config when `FIDELITY=1` (the
+     runner sets it) so a plain `playwright test` doesn't compare against
+     stale baselines; ad-hoc spec runs are
+     `FIDELITY=1 npx playwright test --project=fidelity`.
+   - Still to do as part of the kill-switch review: run it twice (brand
+     linked / OSS) for brand-split coverage. Keep it on-demand, not
+     CI-gating (image baselines are font-rendering sensitive; if
+     CI-gating later, run in the pinned Playwright container from
+     build.yml).
 8. **Kill-switch**: remove `ChakraProvider`/`BrandConfig.chakraTheme`,
    delete `src/deployment/default/{theme,colors,components/*}.ts`, unpick
    the last type-only import (`deployment/index.ts` `BoxProps`; `model.ts`
