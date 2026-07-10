@@ -519,13 +519,95 @@ hack, arrow-key navigation, and built-in multi-selection that would replace
 the projects page's checkbox + skip-to-toolbar wiring. Doesn't fit the
 Swiper-managed home carousel DOM; best tried on the projects page grid.
 
+## Library extraction (medium-term plan + review findings)
+
+Intent: extract `src/shared-ui/` as a design-system library and migrate the
+other Chakra UI sibling apps onto it via the same Chakra → RAC/Panda path,
+with minimal visual impact per app. A full review of shared-ui against that
+goal (July 2026, post-kill-switch) found the architecture sound — extraction
+is mostly *factoring*, not rework — with the following inventory.
+
+### Why the architecture already fits
+- The Chakra-v2 token snapshot + Chakra-ported recipes make the library
+  effectively "Chakra v2's design language on RAC/Panda": any sibling app's
+  Chakra theme is expressible as a preset over the same base, exactly as the
+  CreateAI brand preset works today.
+- Config recipes are preset-extensible (`theme.extend.recipes.*`) and
+  call-site-overridable via layer order — the app/brand extension mechanism
+  already exists and is proven.
+- `system.ts` is the single import seam; components are otherwise clean of
+  app dependencies (react-aria-components + react-icons only), with the
+  exceptions below.
+- The migration kit transfers per app: `bin/gen-chakra-tokens.mjs`, the
+  resolved-theme differ (deleted at the kill-switch; in git at `4c012bd4`),
+  and the fidelity-harness pattern.
+
+### Blockers (hard app couplings)
+- `Menu.tsx` imports `@capacitor/core` and `../back-button` (Android
+  back-button closes the open menu). Invert: an optional overlay-dismissal
+  context the app installs — dialogs/drawers likely want the same hook.
+- Hardcoded English: `ModalCloseButton` / Toast close default
+  `aria-label="Close"`. Require the label or adopt RAC's localized strings.
+
+### App decisions living in shared code (move to app/brand presets)
+- Button recipe: `led`, `record`, `recordOutline`, `language` (+ the
+  `languageText` semantic tokens), `toolbar`, `secondary-disabled` (a state
+  as a variant) are ml-trainer vocabulary. Library core: `primary/
+  secondary/ghost/link/plain/unstyled` + sizes. `defaultVariants:
+  secondary` is also an app choice (Chakra's default is solid).
+- Modal's `full` size bakes in the Capacitor shell: safe-area insets, the
+  `brand2.500` status-bar gradient "matching ActionBar",
+  `--window-controls-left`. Decouple via a semantic token (`statusBarBg`)
+  or app-side recipe extension.
+- Toast is the least library-ready: inline `cva` (invisible to brand
+  presets), info/success/warning all teal (only error differs), single
+  fixed top-centre region, `update()` re-animates. Needs the slot-recipe
+  treatment + status colours as semantic tokens.
+- Tooltip/Spinner/ProgressBar/CloseButton colours are component-inline
+  (deliberate, for the single-`css()` merge rule) — lift the colour
+  decisions to semantic tokens even if structural CSS stays inline.
+- `useBreakpointValue` duplicates the breakpoint scale as literals; derive
+  from `token("breakpoints.*")` instead.
+
+### Packaging decisions (make at extraction time)
+- **The `styled-system` import problem**: components import the per-app
+  generated `styled-system/*`. Panda's library pattern: ship the package as
+  source, consumers add it to `include`, and `importMap` resolves the
+  library's styled-system imports onto the consumer's outdir.
+- **Move `staticCss` from `panda.config.ts` into the library preset**
+  (presets can carry it) or every consumer silently loses runtime-prop
+  variants — this migration's signature failure class.
+- **Split the preset**: `src/deployment/default/panda-preset.ts` mixes
+  (a) library concerns — Chakra token base, recipe registrations, RAC
+  condition widening, the `globalCss` Chakra-reset-parity block (kern,
+  cursor, text-wrap…; every migrated app needs these); (b) app concerns —
+  the ~30 animation keyframes, the `shortHeight` condition (a homepage
+  breakpoint), gray overrides; (c) brand concerns (already separate).
+  Extraction = factoring (a) out.
+- The `layers.css` `vendor`-layer convention and the brand semantic-token
+  contract (`brand`/`brand2` ramps, `radii.button`, `display` font,
+  `outline*` shadows, `languageText`-style extension points) become
+  documented parts of the library's consumption setup.
+- Peer deps: react, react-aria-components, react-icons; `@pandacss/dev` at
+  dev/build time. No Capacitor.
+
+### Surface gaps — measure before building
+Known narrowings: Divider is horizontal-only; Menu lacks sections/checkable
+items/submenus; no shared Radio/RadioGroup (BluetoothPatternInput uses RAC
+raw); no Tabs/Accordion/Popover-as-primitive/non-native Select/Textarea/
+NumberInput. Don't build speculatively — run a **Chakra-usage census across
+the target apps** (grep `@chakra-ui/react` imports + resolved-theme diffs,
+like the brand audit) to define the v1 surface and decide which ml-trainer
+variants generalise.
+
 ## Key files
-- `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/unlayer-panda.mjs`,
-  `bin/panda-dev.mjs`
+- `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/fidelity.mjs`
 - `src/deployment/default/{panda-preset,chakra-tokens}.ts`
+- `src/layers.css` (cascade layer order incl. `vendor`),
+  `src/components/Carousel/swiper.css`
 - `src/shared-ui/**` (components + colocated `*.recipe.ts`)
-- `src/e2e/app/shared.ts` (`modalDialog()` helper)
-- `src/App.tsx` (`ToastProvider` mounted, `ChakraProvider` retained until the
-  kill-switch)
+- `src/e2e/app/shared.ts` (`modalDialog()`/`appUrl()` helpers),
+  `src/e2e/fidelity.spec.ts`
+- `src/App.tsx` (`ToastProvider` mounted)
 - Private: `../ml-trainer-microbit/src/panda-preset.ts`, its `package.json`
   (`./panda-preset` export)
