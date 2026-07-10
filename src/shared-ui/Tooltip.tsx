@@ -4,13 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactElement, ReactNode } from "react";
-import {
-  OverlayArrow,
-  Tooltip as RACTooltip,
-  TooltipTrigger,
-} from "react-aria-components";
+import { Tooltip as RACTooltip, TooltipTrigger } from "react-aria-components";
 import { css } from "styled-system/css";
 import { SystemStyleObject } from "styled-system/types";
+import { PopoverArrow } from "./PopoverArrow";
 
 // Base as an object (not a precomputed class) so a caller's `css` override is
 // merged into a single css() call — Panda then dedupes conflicting utilities
@@ -27,17 +24,6 @@ const tooltipBase: SystemStyleObject = {
   maxW: "xs",
   zIndex: "tooltip",
 };
-
-// RAC positions the arrow but leaves orienting the glyph to us; it stamps the
-// resolved side on the wrapper as data-placement. The svg is square with the
-// triangle in the half nearest the tooltip (tip at centre), so rotating about
-// the centre keeps it abutting the box on every side — no translation needed.
-const arrowStyle = css({
-  "& svg": { display: "block", fill: "gray.700" },
-  "&[data-placement='bottom'] svg": { transform: "rotate(180deg)" },
-  "&[data-placement='right'] svg": { transform: "rotate(90deg)" },
-  "&[data-placement='left'] svg": { transform: "rotate(-90deg)" },
-});
 
 export interface TooltipProps {
   /** Tooltip body. */
@@ -86,16 +72,7 @@ export const Tooltip = ({
       offset={hasArrow ? 8 : 4}
       className={css({ ...tooltipBase, ...cssProp })}
     >
-      {hasArrow && (
-        <OverlayArrow className={arrowStyle}>
-          {/* Chakra's arrow is an 8px square rotated 45°: a ~11.3 x 5.7
-              triangle. Drawn in the top half of a square viewBox (see
-              arrowStyle). */}
-          <svg width={11.314} height={11.314} viewBox="0 0 12 12">
-            <path d="M0 0 L6 6 L12 0" />
-          </svg>
-        </OverlayArrow>
-      )}
+      {hasArrow && <PopoverArrow css={{ "& svg": { fill: "gray.700" } }} />}
       {content}
     </RACTooltip>
   </TooltipTrigger>

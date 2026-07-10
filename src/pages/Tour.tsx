@@ -4,11 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useCallback, useRef } from "react";
-import {
-  Dialog,
-  OverlayArrow,
-  Popover as RACPopover,
-} from "react-aria-components";
+import { Dialog, Popover as RACPopover } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
@@ -18,6 +14,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  PopoverArrow,
 } from "../shared-ui";
 import { useStore } from "../store";
 import TourOverlay from "./TourOverlay";
@@ -180,28 +177,8 @@ const Tour = () => {
         }
         className={css({ zIndex: "modal" })}
       >
-        <OverlayArrow>
-          {/* Chakra's popper arrow: white, shadowless. Rotated per side via
-              the placement attribute react-aria sets on the wrapper. */}
-          <svg
-            width={16}
-            height={8}
-            viewBox="0 0 16 8"
-            className={css({
-              display: "block",
-              fill: "white",
-              "[data-placement='top'] &": { transform: "rotate(180deg)" },
-              "[data-placement='left'] &": {
-                transform: "rotate(90deg) translateY(4px)",
-              },
-              "[data-placement='right'] &": {
-                transform: "rotate(-90deg) translateY(4px)",
-              },
-            })}
-          >
-            <path d="M0 8 L8 0 L16 8" />
-          </svg>
-        </OverlayArrow>
+        {/* Chakra's popper arrow: white, shadowless, 16px base. */}
+        <PopoverArrow size={16} css={{ "& svg": { fill: "white" } }} />
         <Dialog className={popoverDialogClass}>
           <div className={popoverHeaderClass}>{step.title}</div>
           <div className={popoverBodyClass}>{step.content}</div>

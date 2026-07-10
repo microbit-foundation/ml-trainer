@@ -36,6 +36,7 @@ export * from "./Drawer";
 export * from "./List";
 export * from "./Menu";
 export * from "./Modal";
+export * from "./PopoverArrow";
 export * from "./Tooltip";
 export * from "./Toast";
 export * from "./VisuallyHidden";
