@@ -211,7 +211,6 @@ const ProjectRow = () => {
             </Heading>
             {!isNativePlatform() && (
               <ClickableTooltip
-                isFocusable
                 hasArrow
                 placement={tooltipPlacement}
                 label={
