@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { matchLanguage } from "./settings";
+import { getDefaultLanguage, matchLanguage } from "./settings";
 
 describe("matchLanguage", () => {
   it("matches locales to supported languages", () => {
@@ -49,5 +49,37 @@ describe("matchLanguage", () => {
     // Fallback to English
     expect(matchLanguage(["xyz"])).toBe("en");
     expect(matchLanguage([])).toBe("en");
+  });
+});
+
+describe("getDefaultLanguage", () => {
+  it("matches OS languages against all languages on web", () => {
+    expect(getDefaultLanguage(null, ["ja"], false)).toBe("ja");
+    expect(getDefaultLanguage(null, ["de"], false)).toBe("de");
+  });
+  it("prefers the URL parameter on web", () => {
+    expect(getDefaultLanguage("ja", ["fr"], false)).toBe("ja");
+    expect(getDefaultLanguage("xyz", ["fr"], false)).toBe("fr");
+  });
+  it("auto-selects only fully supported languages on native", () => {
+    expect(getDefaultLanguage(null, ["fr-CA"], true)).toBe("fr");
+    expect(getDefaultLanguage(null, ["es-MX"], true)).toBe("es-ES");
+    // Partially supported languages fall back to English
+    expect(getDefaultLanguage(null, ["ja"], true)).toBe("en");
+    expect(getDefaultLanguage(null, ["de"], true)).toBe("en");
+    // ...but later fully supported preferences still win
+    expect(getDefaultLanguage(null, ["de", "fr"], true)).toBe("fr");
+  });
+  it("treats the URL parameter as another preference on native", () => {
+    expect(getDefaultLanguage("fr", ["en"], true)).toBe("fr");
+    expect(getDefaultLanguage("fr", ["nl"], true)).toBe("fr");
+    // A partially supported language via the URL falls through to the OS
+    // languages, then English
+    expect(getDefaultLanguage("ja", ["nl"], true)).toBe("nl");
+    expect(getDefaultLanguage("ja", ["en"], true)).toBe("en");
+  });
+  it("ignores an invalid URL parameter on native", () => {
+    expect(getDefaultLanguage("xyz", ["nl"], true)).toBe("nl");
+    expect(getDefaultLanguage("xyz", ["ja"], true)).toBe("en");
   });
 });
