@@ -13,6 +13,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useBreakpointValue,
   usePopper,
   useToken,
 } from "@chakra-ui/react";
@@ -34,7 +35,12 @@ const Tour = () => {
   const tourBack = useStore((s) => s.tourBack);
   const tourComplete = useStore((s) => s.tourComplete);
   const isOpen = !!tourState;
-  const enabled = isOpen && !!step?.selector;
+  // On small screens there isn't room to anchor the popover next to the
+  // highlighted element without it being clipped out of view, so fall back to
+  // a centered dialog. The spotlight overlay still highlights the relevant
+  // element, so the step remains clear.
+  const isSmallScreen = useBreakpointValue({ base: true, md: false });
+  const anchored = isOpen && !!step?.selector && !isSmallScreen;
   const spotlightPadding = step?.spotlightStyle?.padding ?? 5;
   const {
     getArrowProps,
@@ -43,7 +49,7 @@ const Tour = () => {
     referenceRef,
     update,
   } = usePopper({
-    enabled,
+    enabled: anchored,
     placement: step?.placement ?? undefined,
     gutter:
       gutterDefault + (step?.spotlightStyle?.paddingTop ?? spotlightPadding),
@@ -78,7 +84,7 @@ const Tour = () => {
   const isLastStep = index === steps.length - 1;
 
   const popperProps = getPopperProps();
-  const contentProps = enabled ? popperProps : { ref: popperProps.ref };
+  const contentProps = anchored ? popperProps : { ref: popperProps.ref };
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -109,8 +115,13 @@ const Tour = () => {
       ) : (
         <ModalOverlay />
       )}
-      <ModalContent {...contentProps} motionProps={{}} boxShadow="none">
-        {step.selector && (
+      <ModalContent
+        {...contentProps}
+        motionProps={{}}
+        boxShadow="none"
+        maxW={isSmallScreen ? "calc(100vw - 2rem)" : undefined}
+      >
+        {anchored && (
           <Box
             {...getArrowProps()}
             className="chakra-popover__arrow-positioner"
@@ -127,7 +138,7 @@ const Tour = () => {
           </Box>
         )}
         <ModalHeader>{step.title}</ModalHeader>
-        <ModalBody maxW="md">{step.content}</ModalBody>
+        <ModalBody maxW={{ base: "full", md: "md" }}>{step.content}</ModalBody>
         <ModalFooter>
           <HStack justifyContent="space-between" p={0} w="full">
             {!isLastStep ? (
