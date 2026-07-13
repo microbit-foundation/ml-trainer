@@ -103,7 +103,7 @@
     "@microbit/capacitor-community-nordic-dfu": "^8.0.0-microbit.1",
     "@microbit/capacitor-sqlite-vanilla": "^0.1.0",
     "@microbit/makecode-embed": "^0.0.0-noproject.76",
-    "@microbit/microbit-connection": "^1.0.0-beta.2",
+    "@microbit/microbit-connection": "^1.0.0",
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/ml4f": "^2.0.0-beta.0",
     "@microbit/smoothie": "^1.37.0-microbit.2",
