@@ -181,7 +181,14 @@ primitive that accepts style overrides must merge them into a *single*
     from a menu. e2e page objects use the `modalDialog()` helper
     (`src/e2e/app/shared.ts`), which scopes to `<section>` — both Chakra and
     shared-ui modals render on a section; popovers are divs.
-14. **react-aria's focus defaults replace Chakra-era hacks — don't port them.**
+14. **`<Focusable>` stamps `tabIndex=0` on its child** (unless
+    `excludeFromTabOrder`), so wrapping a container that holds a real
+    `<button>` creates a second tab stop — and a supposedly non-focusable
+    trigger becomes one. When the child manages its own focus/open state,
+    skip `Focusable` and anchor the overlay with an explicit ref instead
+    (shared-ui `Tooltip` takes `triggerRef` for this; RAC `Tooltip`
+    supports it natively — see ClickableTooltip).
+15. **react-aria's focus defaults replace Chakra-era hacks — don't port them.**
     RAC focuses the dialog element itself on open (verified:
     `section.dialog__inner` is the active element), so initial-focus
     workarounds like SettingsDialog's focus-the-heading (stopping the first

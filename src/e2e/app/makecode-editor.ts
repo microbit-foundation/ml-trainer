@@ -28,13 +28,13 @@ export class MakeCodeEditor {
 
   async switchToJavaScript() {
     await this.iframe
-      .getByRole("option", { name: "Convert code to JavaScript" })
+      .getByRole("button", { name: "Convert code to JavaScript" })
       .click();
   }
 
   async switchToBlocks() {
     await this.iframe
-      .getByRole("option", { name: "Convert code to Blocks" })
+      .getByRole("button", { name: "Convert code to Blocks" })
       .click();
   }
 
@@ -51,9 +51,12 @@ export class MakeCodeEditor {
   }
 
   async clickDownload() {
-    // MakeCode in portrait tablet has a "Download" button with just a more verbose title attribute (no real accessible label)
+    // The accessible name is longer in MakeCode's compact layout.
+    // Anchored to avoid the adjacent "Download options" button.
     await this.iframe
-      .getByRole("menuitem", { name: /^Download( your code|$)/ })
+      .getByRole("button", {
+        name: /^Download( your code to the micro:bit)?$/,
+      })
       .click();
     return new DownloadDialogs(this.page);
   }

@@ -6,6 +6,7 @@
  */
 import { match } from "@formatjs/intl-localematcher";
 import { DataSamplesView, TourTriggerName } from "./model";
+import { isNativePlatform } from "./platform";
 
 type Translation = "preview" | boolean;
 
@@ -281,8 +282,9 @@ export const getMakeCodeLang = (languageId: string): string =>
 /**
  * Languages with UI translations covering the native (iOS/Android) app's
  * additional strings. Other languages still appear in the picker on native,
- * but as 'partially supported' — missing strings fall back to English. Add
- * ids here as translations land.
+ * but as 'partially supported' — missing strings fall back to English —
+ * and are never auto-selected on first run. Add ids here as translations
+ * land.
  */
 export const nativeLanguageIds = ["en", "en-US", "nl", "fr", "pl", "es-ES"];
 
@@ -298,26 +300,58 @@ const isValidLanguageId = (langId: string): boolean => {
   }
 };
 
+// match() returns its default verbatim when nothing matches so a sentinel
+// lets us distinguish no-match from a real match of the default language.
+const noMatch = "x-no-match";
+
+const matchOrUndefined = (
+  requestedLanguages: readonly string[],
+  languageIds: string[]
+): string | undefined => {
+  const matched = match(
+    requestedLanguages.filter(isValidLanguageId),
+    languageIds,
+    noMatch
+  );
+  return matched === noMatch ? undefined : matched;
+};
+
 /**
  * Match the user's preferred languages (from browser/OS) to supported languages.
  */
 export const matchLanguage = (requestedLanguages: readonly string[]): string =>
-  match(
-    requestedLanguages.filter(isValidLanguageId),
-    supportedLanguageIds,
-    defaultLanguageId
-  );
+  matchOrUndefined(requestedLanguages, supportedLanguageIds) ??
+  defaultLanguageId;
 
 /**
- * Get the initial language, checking URL parameter first, then OS/browser preference.
+ * Get the initial language, checking URL parameter first, then OS/browser
+ * preference.
+ *
+ * On native, languages are only auto-selected if fully supported
+ * ({@link nativeLanguageIds}); for others we stay in English so the user
+ * makes an informed choice via the language dialog, which explains the
+ * level of support. The URL parameter (typically the site language passed
+ * along when following a link from microbit.org) is a hint rather than an
+ * explicit choice, so gets the same treatment.
+ *
+ * Parameters default from the environment and exist for testing.
  */
-export const getDefaultLanguage = (): string => {
-  const searchParams = new URLSearchParams(window.location.search);
-  const l = searchParams.get("l");
-  const requestedLanguages = l
-    ? [l, ...navigator.languages]
-    : navigator.languages;
-  return matchLanguage(requestedLanguages);
+export const getDefaultLanguage = (
+  languageParam: string | null = new URLSearchParams(
+    window.location.search
+  ).get("l"),
+  osLanguages: readonly string[] = navigator.languages,
+  native: boolean = isNativePlatform()
+): string => {
+  const requestedLanguages = languageParam
+    ? [languageParam, ...osLanguages]
+    : osLanguages;
+  if (!native) {
+    return matchLanguage(requestedLanguages);
+  }
+  return (
+    matchOrUndefined(requestedLanguages, nativeLanguageIds) ?? defaultLanguageId
+  );
 };
 
 export const defaultSettings: Settings = {

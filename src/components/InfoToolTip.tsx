@@ -24,7 +24,6 @@ const InfoToolTip = ({
   const { appNameFull } = useDeployment();
   return (
     <ClickableTooltip
-      isFocusable
       titleId={titleId}
       hasArrow
       placement={placement}

@@ -15,6 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
   PopoverArrow,
+  useBreakpointValue,
 } from "../shared-ui";
 import { useStore } from "../store";
 import TourOverlay from "./TourOverlay";
@@ -49,6 +50,12 @@ const Tour = () => {
   const tourBack = useStore((s) => s.tourBack);
   const tourComplete = useStore((s) => s.tourComplete);
   const isOpen = !!tourState;
+  // On small screens there isn't room to anchor the popover next to the
+  // highlighted element without it being clipped out of view, so fall back to
+  // a centered dialog. The spotlight overlay still highlights the relevant
+  // element, so the step remains clear.
+  const isSmallScreen = useBreakpointValue({ base: true, md: false });
+  const anchored = !!step?.selector && !isSmallScreen;
   const spotlightPadding = step?.spotlightStyle?.padding ?? 5;
 
   // The spotlighted element the popover anchors to. Assigned during render so
@@ -127,13 +134,17 @@ const Tour = () => {
   // backdrops flashes; TourOverlay dims (and spotlights) instead.
   const useTourOverlay = Boolean(step.selector) || steps.length > 1;
 
-  if (!step.selector) {
+  if (!anchored) {
     return (
       <>
         {useTourOverlay && (
           <TourOverlay
             referenceRef={anchorRef as React.MutableRefObject<HTMLElement>}
             padding={spotlightPadding}
+            paddingTop={step.spotlightStyle?.paddingTop}
+            paddingBottom={step.spotlightStyle?.paddingBottom}
+            paddingRight={step.spotlightStyle?.paddingRight}
+            paddingLeft={step.spotlightStyle?.paddingLeft}
           />
         )}
         <Modal
@@ -142,12 +153,17 @@ const Tour = () => {
           isDismissable={false}
           isCentered
           size={step.modalSize}
+          contentCss={
+            isSmallScreen ? { maxW: "calc(100vw - 2rem)" } : undefined
+          }
           overlayCss={
             useTourOverlay ? { background: "transparent" } : undefined
           }
         >
           <ModalHeader>{step.title}</ModalHeader>
-          <ModalBody css={{ maxW: "md" }}>{step.content}</ModalBody>
+          <ModalBody css={{ maxW: { base: "full", md: "md" } }}>
+            {step.content}
+          </ModalBody>
           <ModalFooter>{footer}</ModalFooter>
         </Modal>
       </>

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, RefObject } from "react";
 import { Tooltip as RACTooltip, TooltipTrigger } from "react-aria-components";
 import { css } from "styled-system/css";
 import { SystemStyleObject } from "styled-system/types";
@@ -46,6 +46,11 @@ export interface TooltipProps {
   hasArrow?: boolean;
   /** Controlled open state (otherwise hover/focus driven). */
   isOpen?: boolean;
+  /**
+   * Anchor element for positioning, when the child cannot register itself as
+   * the trigger (i.e. it is not a RAC component or `Focusable`).
+   */
+  triggerRef?: RefObject<HTMLElement | null>;
   /** Hover open delay in ms (RAC default ~1500; pass 0 for instant). */
   delay?: number;
   css?: SystemStyleObject;
@@ -54,7 +59,8 @@ export interface TooltipProps {
 /**
  * Tooltip — react-aria-components TooltipTrigger + Tooltip, styled to match
  * Chakra's dark tooltip. The child must be a focusable element so the tooltip
- * is reachable by keyboard (RAC requirement).
+ * is reachable by keyboard (RAC requirement), unless `triggerRef` provides
+ * the anchor and the caller manages open state and keyboard access itself.
  */
 export const Tooltip = ({
   content,
@@ -62,12 +68,14 @@ export const Tooltip = ({
   placement = "top",
   hasArrow,
   isOpen,
+  triggerRef,
   delay = 0,
   css: cssProp,
 }: TooltipProps) => (
   <TooltipTrigger isOpen={isOpen} delay={delay} closeDelay={0}>
     {children}
     <RACTooltip
+      triggerRef={triggerRef}
       placement={placement}
       offset={hasArrow ? 8 : 4}
       className={css({ ...tooltipBase, ...cssProp })}

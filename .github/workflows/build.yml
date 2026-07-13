@@ -56,7 +56,8 @@ jobs:
         with:
           args: npx playwright test
       - name: Store reports
-        if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA') && failure()
+        # cancelled() so we get the report when e2e overruns the job timeout
+        if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA') && (failure() || cancelled())
         uses: actions/upload-artifact@v7
         with:
           name: playwright-report

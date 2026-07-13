@@ -195,7 +195,7 @@ export const getTour = (
               <FormattedMessageStepContent id="tour-trainModel-makeCodeBlocks-content" />
             ),
             selector: classSelector(tourElClassname.makeCodeCodeView),
-            placement: "left",
+            placement: "bottom",
           },
           {
             title: <FormattedMessage id="edit-in-makecode-action" />,
