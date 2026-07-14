@@ -28,7 +28,14 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
       <div
         ref={ref}
         className={cx(
-          css({ display: "inline-flex", alignItems: "center" }),
+          css({
+            display: "inline-flex",
+            alignItems: "center",
+            // Buttons are position: relative, so without this an attached
+            // sibling paints over the focused button's focus-ring shadow
+            // (Chakra's Button applied zIndex 1 on focus when grouped).
+            "& > *": { _focus: { zIndex: 1 } },
+          }),
           isAttached
             ? css({
                 gap: 0,
