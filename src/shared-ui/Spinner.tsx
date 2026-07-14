@@ -55,7 +55,7 @@ export const Spinner = ({
           // The duration rides a variable so the reduced-motion slow-down
           // scales with a per-instance `speed` rather than fighting it.
           animation: "spin var(--spinner-speed, 0.45s) linear infinite",
-          "@media (prefers-reduced-motion: reduce)": {
+          _motionReduce: {
             animationDuration: "calc(var(--spinner-speed, 0.45s) * 3.33)",
           },
           width: size === "sm" ? "1rem" : "1.5rem",

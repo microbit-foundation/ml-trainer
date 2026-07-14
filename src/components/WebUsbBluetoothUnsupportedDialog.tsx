@@ -46,7 +46,7 @@ const WebUsbBluetoothUnsupportedDialog = ({
           </Text>
         </VStack>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "end" }}>
+      <ModalFooter>
         <HStack gap={5}>
           <Button onPress={onClose} variant="primary" size="lg">
             <FormattedMessage id="close-action" />

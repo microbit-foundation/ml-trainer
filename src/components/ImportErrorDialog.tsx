@@ -42,7 +42,7 @@ const ImportErrorDialog = ({
           />
         </Text>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "flex-end" }}>
+      <ModalFooter>
         <Button variant="primary" onPress={onClose}>
           <FormattedMessage id="close-action" />
         </Button>

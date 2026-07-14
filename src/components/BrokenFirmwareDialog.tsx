@@ -92,7 +92,7 @@ const BrokenFirmwareDialog = ({
           </Text>
         </VStack>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "end" }}>
+      <ModalFooter>
         <HStack gap={5}>
           <Button onPress={onClose} variant="secondary" size="lg">
             <FormattedMessage id="cancel-action" />

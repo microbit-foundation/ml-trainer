@@ -20,6 +20,7 @@ import {
   Flex,
   Grid,
   HStack,
+  Slide,
   Stack,
   Text,
   useBreakpointValue,
@@ -399,26 +400,7 @@ const ProjectsPage = () => {
           </Box>
         </VStack>
       </DefaultPageLayout>
-      {/* Chakra Slide equivalent: fixed bottom sheet, translated offscreen
-          when there is no selection. */}
-      <div
-        className={cx(
-          css({
-            position: "fixed",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 10,
-            transitionProperty: "transform",
-            transitionDuration: "0.25s",
-            transitionTimingFunction: "cubic-bezier(0, 0, 0.2, 1)",
-            "@media (prefers-reduced-motion: reduce)": { transition: "none" },
-          }),
-          hasSelection
-            ? css({ transform: "translateY(0)" })
-            : css({ transform: "translateY(100%)" })
-        )}
-      >
+      <Slide isOpen={hasSelection} css={{ zIndex: 10 }}>
         <Flex
           justifyContent="center"
           display={{ base: "flex", lg: "none" }}
@@ -440,7 +422,7 @@ const ProjectsPage = () => {
             size="lg"
           />
         </Flex>
-      </div>
+      </Slide>
     </>
   );
 };

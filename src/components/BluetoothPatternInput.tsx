@@ -296,7 +296,7 @@ const PatternLedOption = ({
                   : undefined,
                 opacity: isHighlighted && isOn ? 0.25 : 1,
               }),
-              isFocusVisible ? css({ boxShadow: "outline" }) : undefined
+              isFocusVisible ? css({ focusShadow: "outline" }) : undefined
             )}
           />
         )}

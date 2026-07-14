@@ -76,7 +76,7 @@ See `index.ts` for the full export list. Highlights: `Button` (+`ButtonGroup`,
 `IconButton`, `LinkOverlayButton`), `Modal` (+ header/body/footer/close-button
 slots), `Drawer`, `Menu`, `Tooltip`, `Toast` (+`ToastProvider`/`useToast`),
 form primitives (`TextField`, `Input`, `InputGroup`, `NativeSelect`,
-`Checkbox`, `Switch`, `Slider`), `ProgressBar`, `Spinner`, `Card`,
+`Checkbox`, `Switch`, `Slider`), `Slide`, `ProgressBar`, `Spinner`, `Card`,
 `LinkBox`/`LinkOverlay`, typography (`Text`/`Heading`/`Link`), `Icon`/
 `CloseIcon`/`CloseButton`, `Divider`, `List`, `Image`, `useBreakpointValue`,
 and `system.ts` (re-exports Panda `css`/`cva`/`sva`/`cx`/`token` + jsx patterns
@@ -87,7 +87,13 @@ props use object syntax `{ base, md }`.
 Conventions: shared-ui components take a `css` prop / recipe variants;
 call-site `css()` is for page layout and true one-offs only. A shared-ui
 primitive that accepts style overrides must merge them into a *single*
-`css(base, cssProp)` call (gotcha #8).
+`css(base, cssProp)` call (gotcha #8). Focus rings are the preset's
+`focusShadow` utility (`_focusVisible: { focusShadow:
+"outline" | "outlineDark" | "outlineLight" }` — emits the shadow token plus
+a transparent outline for forced-colors modes; named to dodge preset-base's
+`focusRing`), not hand-written `boxShadow: "outline"`. Reduced-motion
+styling uses the `_motionReduce` condition, never a raw
+`@media (prefers-reduced-motion: reduce)` key.
 
 ## Hard-won patterns / gotchas (READ before continuing)
 
@@ -615,17 +621,16 @@ The review's Chakra-parity *regressions* are fixed (Spinner required label +
 labels — see the react-intl coupling under Blockers). What remains is
 inherited Chakra weakness worth fixing once in the library rather than
 reproducing per app:
-- **Forced-colors focus rings (the big one).** Every focus indicator is the
-  Chakra-ported `outline: none` + `boxShadow: outline` (button recipe base,
-  Link, CloseButton, ModalCloseButton, checkbox control, switch track,
-  slider thumb, input recipe). Forced-colors mode strips box-shadows and
-  honours `outline: none`, so keyboard focus is invisible app-wide. Add
-  `outline: 2px solid transparent; outline-offset: 2px` alongside the
-  shadow (forced-colors overrides outline-color to a visible system
-  colour) — once via the preset's widened `focusVisible` condition plus the
-  `data-focus-visible` recipe blocks. While there, check Switch state under
-  `forced-colors: active`: track/thumb are background-coloured spans that
-  flatten to the same colour.
+- **Forced-colors focus rings (the big one).** Partially done (July 2026):
+  the preset's `focusShadow` utility adds `outline: 2px solid transparent;
+  outline-offset: 2px` alongside the shadow (forced-colors overrides
+  outline-color to a visible system colour), and all ~15 *inline* call
+  sites now use it. Still to do: the *recipes* still hand-write
+  `outline: none` + `boxShadow: outline` (button recipe base, Link,
+  CloseButton, ModalCloseButton, checkbox control, switch track, slider
+  thumb, input recipe) — move them onto `focusShadow`. While there, check
+  Switch state under `forced-colors: active`: track/thumb are
+  background-coloured spans that flatten to the same colour.
 - **NativeSelect**: bake the dropdown chevron in (`appearance: none`
   removes the native one; SelectFormControl re-adds it per call site,
   SortInput suppresses it as it did under Chakra — make suppression the
@@ -650,6 +655,42 @@ reproducing per app:
   underlines only on hover (colour-only differentiation for in-prose links,
   WCAG 1.4.1) and Tooltip's global `delay={0}` (Chakra-parity override of
   RAC's ~1500ms warmup).
+
+### Colour audit (July 2026) — actionable findings
+Review of non-brand, non-greyscale colours across shared-ui and the app
+(graph/data-viz colours deliberately out of scope). All pre-date the
+migration.
+
+Likely mistakes, fix when next touched:
+- `RecordingFingerprint.tsx` hardcodes `#007DBC` — the *private*
+  `brand.500` — in OSS source, so OSS builds don't match their own brand
+  (`#3182ce`) and a rebrand wouldn't move it. It feeds
+  `calculateGradientColor` at runtime, so fix with a runtime
+  `token("colors.brand.500")` lookup (the RecordingDialog countdown
+  pattern), not a style prop.
+- `icons/ChevronLeftIcon.tsx`/`ChevronRightIcon.tsx` default to
+  `stroke="#556C84"`, an off-palette slate blue — and the default is live:
+  SwiperCarouselButtons never passes `stroke`. Use a gray token or
+  `currentColor`.
+- `NativeBluetoothPairingLostDialog.tsx` colours its inline info icon
+  `blue.500` — ambiguous intent. As written the private preset's
+  blue-ramp override recolours it; if it depicts the iOS Settings "ⓘ"
+  glyph it should be a fixed system blue, if it's brand it should say
+  `brand.500`. Decide either way.
+
+shared-ui Chakra-`colorScheme` literals to convert to semantic tokens at
+library extraction (today they read as brand only because the private
+preset overrides whole ramps — the `languageText` precedent is the shape):
+- `blue.500`/`blue.600`: Checkbox and Switch checked state, Input focus
+  border, Slider filled track, ProgressBar bar. The last two are near-dead
+  defaults — every current call site overrides them (slider → `gray.600`,
+  bars → `brand2.500`/`red.500`).
+- `red.*`: Button destructive variants, TextField/Input error states,
+  Toast error. `red` is not in the private override set so both builds
+  match today, but semantically these are "error/danger" tokens.
+- Toast `teal.800` statuses — already covered by the Toast slot-recipe
+  rework above; note `teal` *is* a brand-overridden ramp, so branded
+  toasts recolour by ramp side-effect today.
 
 ## Key files
 - `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/fidelity.mjs`

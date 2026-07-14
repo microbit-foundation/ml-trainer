@@ -88,7 +88,7 @@ const UnsupportedMicrobitDialog = ({
           </Text>
         </VStack>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "end" }}>
+      <ModalFooter>
         <HStack gap={5}>
           {isBluetoothSupported ? (
             <Button onPress={onStartBluetoothClick} variant="primary" size="lg">

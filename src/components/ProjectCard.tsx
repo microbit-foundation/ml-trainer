@@ -121,7 +121,7 @@ const ProjectCard = ({
                 textAlign: "left",
                 fontSize: "xl",
                 truncate: true,
-                _focusVisible: { boxShadow: "outline", outline: "none" },
+                _focusVisible: { focusShadow: "outline" },
               }}
             >
               {name}

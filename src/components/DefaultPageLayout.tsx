@@ -257,7 +257,7 @@ const DefaultPageLayout = ({
                         color: "white",
                         fontSize: "xl",
                         _focusVisible: {
-                          boxShadow: "outlineDark",
+                          focusShadow: "outlineDark",
                         },
                       }}
                     >
@@ -273,7 +273,7 @@ const DefaultPageLayout = ({
                         display: useTabletLayout ? "inline-flex" : "none",
                         color: "white",
                         _focusVisible: {
-                          boxShadow: "outlineDark",
+                          focusShadow: "outlineDark",
                         },
                       }}
                     >
@@ -304,7 +304,7 @@ const DefaultPageLayout = ({
                         display: useTabletLayout ? "none" : "inline-flex",
                         outline: "none",
                         _focusVisible: {
-                          boxShadow: "outlineDark",
+                          focusShadow: "outlineDark",
                           borderRadius: "md",
                         },
                       })}
@@ -335,7 +335,7 @@ const DefaultPageLayout = ({
                         display: useTabletLayout ? "inline-flex" : "none",
                         color: "white",
                         _focusVisible: {
-                          boxShadow: "outlineDark",
+                          focusShadow: "outlineDark",
                         },
                       }}
                     >
@@ -436,7 +436,7 @@ export const HomeToolbarItem = () => {
       css={{
         color: "white",
         _focusVisible: {
-          boxShadow: "outlineDark",
+          focusShadow: "outlineDark",
         },
       }}
     >

@@ -294,7 +294,7 @@ const NavItem = ({ icon, onClick, children }: NavItemProps) => (
         textAlign: "left",
         outline: "none",
         _hover: { bg: "gray.100" },
-        _focusVisible: { boxShadow: "outline" },
+        _focusVisible: { focusShadow: "outline" },
       })}
       onClick={onClick}
     >
@@ -370,7 +370,7 @@ const FooterButton = ({ onClick, children }: FooterButtonProps) => (
       px: 1,
       outline: "none",
       _hover: { textDecoration: "underline" },
-      _focusVisible: { boxShadow: "outline" },
+      _focusVisible: { focusShadow: "outline" },
     })}
   >
     {children}

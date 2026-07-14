@@ -20,6 +20,7 @@ export * from "./InputGroup";
 export * from "./LinkBox";
 export * from "./NativeSelect";
 export * from "./ProgressBar";
+export * from "./Slide";
 export * from "./Slider";
 export * from "./Spinner";
 export * from "./Svg";

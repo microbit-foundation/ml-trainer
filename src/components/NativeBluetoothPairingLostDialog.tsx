@@ -85,7 +85,7 @@ const NativeBluetoothPairingLostDialog = ({
           </VStack>
         </VStack>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "end" }}>
+      <ModalFooter>
         <HStack gap={5}>
           <Button onPress={onClose} variant="secondary" size="lg">
             <FormattedMessage id="cancel-action" />

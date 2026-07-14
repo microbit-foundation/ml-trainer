@@ -38,7 +38,7 @@ export const menu = defineSlotRecipe({
       transition: "opacity 0.1s ease-out, transform 0.1s ease-out",
       "&[data-entering]": { opacity: 0, transform: "scale(0.95)" },
       "&[data-exiting]": { opacity: 0, transform: "scale(0.95)" },
-      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+      _motionReduce: { transition: "none" },
     },
     list: {
       outline: "none",

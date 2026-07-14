@@ -127,7 +127,7 @@ const EditableName = ({
           ? {
               ...previewButtonBase,
               pl: 0,
-              _focusVisible: { boxShadow: "outline" },
+              _focusVisible: { focusShadow: "outline" },
             }
           : {
               ...previewButtonBase,

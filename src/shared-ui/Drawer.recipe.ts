@@ -32,7 +32,7 @@ export const drawer = defineSlotRecipe({
       transition: "opacity 0.2s ease-out",
       "&[data-entering]": { opacity: 0 },
       "&[data-exiting]": { opacity: 0 },
-      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+      _motionReduce: { transition: "none" },
     },
     content: {
       position: "fixed",
@@ -53,7 +53,7 @@ export const drawer = defineSlotRecipe({
       "&[data-exiting]": {
         transition: "transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
       },
-      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+      _motionReduce: { transition: "none" },
     },
     inner: {
       outline: "none",

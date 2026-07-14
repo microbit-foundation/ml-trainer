@@ -402,6 +402,24 @@ export const ossPreset = definePreset({
       textWrap: "wrap",
     },
   },
+  utilities: {
+    extend: {
+      // The app-wide focus indicator, usually inside `_focusVisible`. Values
+      // are the outline* shadow token names. The transparent outline is for
+      // forced-colors modes, which strip box-shadows but recolour outlines to
+      // a visible system colour. (Named to avoid preset-base's outline-based
+      // `focusRing` utility, whose values would break this transform.)
+      focusShadow: {
+        className: "focus-shadow",
+        values: ["outline", "outlineDark", "outlineLight"],
+        transform: (value: string, { token }) => ({
+          outline: "2px solid transparent",
+          outlineOffset: "2px",
+          boxShadow: token(`shadows.${value}`),
+        }),
+      },
+    },
+  },
   // Widen the interaction conditions so the Chakra-shaped recipe/style objects
   // (`_hover`/`_active`/`_focusVisible`/`_disabled`) also respond to
   // react-aria-components' data attributes, not just native pseudo-classes.

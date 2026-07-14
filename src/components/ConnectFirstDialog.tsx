@@ -58,7 +58,7 @@ const ConnectFirstDialog = ({
           <FormattedMessage id={explanationTextId} />
         </Text>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "flex-end" }}>
+      <ModalFooter>
         <ButtonWithLoading
           variant="primary"
           onClick={handleConnect}

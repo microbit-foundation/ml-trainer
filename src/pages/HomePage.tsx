@@ -245,7 +245,7 @@ const ViewAllProjectsLink = () => {
         py: 1,
         textDecoration: "none",
         _hover: { textDecoration: "underline" },
-        _focusVisible: { boxShadow: "outline", outline: "none" },
+        _focusVisible: { focusShadow: "outline" },
       })}
     >
       <FormattedMessage id="view-all-projects" />
@@ -294,10 +294,7 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
               css={{
                 h: 8,
                 fontSize: "xl",
-                _focusVisible: {
-                  boxShadow: "outlineLight",
-                  outline: "none",
-                },
+                _focusVisible: { focusShadow: "outlineLight" },
               }}
             >
               <FormattedMessage id={textId} />

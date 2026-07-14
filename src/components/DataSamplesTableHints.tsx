@@ -25,7 +25,7 @@ import UpCurveArrow from "./UpCurveArrow";
 
 const spinAnimation = css({
   animation: "spin3d 2s",
-  "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+  _motionReduce: { animation: "none" },
 });
 
 export const NameFirstActionHint = () => {
@@ -302,7 +302,7 @@ export const MoveMicrobitHint = () => {
           // Keyframes match moveMicrobitHintTimeoutInSec (28s).
           css={{
             animation: "microbitWobble 28s",
-            "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+            _motionReduce: { animation: "none" },
           }}
         >
           <Image src={moveMicrobitImage} aria-hidden />

@@ -256,7 +256,7 @@ const DataSamplesPage = () => {
                       hasSufficientData && !isRecordingDialogOpen
                         ? css({
                             animation: "tada 1s ease-in-out",
-                            "@media (prefers-reduced-motion: reduce)": {
+                            _motionReduce: {
                               animation: "none",
                             },
                           })

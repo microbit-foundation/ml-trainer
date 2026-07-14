@@ -63,7 +63,7 @@ const LedIconPicker = ({
           borderRadius: "2px",
           cursor: "pointer",
           outline: "none",
-          _focusVisible: { boxShadow: "outline" },
+          _focusVisible: { focusShadow: "outline" },
         })}
       >
         {children}

@@ -37,7 +37,7 @@ const TrainModelInsufficientDataDialog = ({
           <FormattedMessage id="insufficient-data-body" />
         </Text>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "flex-end" }}>
+      <ModalFooter>
         <Button variant="primary" onPress={onClose}>
           <FormattedMessage id="close-action" />
         </Button>

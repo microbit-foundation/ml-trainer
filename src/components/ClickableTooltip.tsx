@@ -62,7 +62,7 @@ const triggerStyle = css({
   cursor: "pointer",
   borderRadius: "50%",
   outline: "none",
-  _focusVisible: { boxShadow: "outline" },
+  _focusVisible: { focusShadow: "outline" },
 });
 
 const ClickableTooltip = ({

@@ -118,7 +118,7 @@ const IncompatibleEditorDevice = ({
           </VStack>
         </VStack>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "end" }}>
+      <ModalFooter>
         <HStack gap={5}>
           <Button onPress={onBack ?? onClose} variant="secondary" size="lg">
             <FormattedMessage id={onBack ? "back-action" : "cancel-action"} />

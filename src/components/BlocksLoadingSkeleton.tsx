@@ -16,7 +16,7 @@ const BlocksLoadingSkeleton = () => (
         className={css({
           bg: "gray.200",
           animation: "skeletonPulse 0.8s linear infinite alternate",
-          "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+          _motionReduce: { animation: "none" },
         })}
       />
     ))}

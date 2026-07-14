@@ -62,7 +62,7 @@ export const dialog = defineSlotRecipe({
       transition: "opacity 0.2s ease-out",
       "&[data-entering]": { opacity: 0 },
       "&[data-exiting]": { opacity: 0 },
-      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+      _motionReduce: { transition: "none" },
     },
     content: {
       position: "relative",
@@ -78,7 +78,7 @@ export const dialog = defineSlotRecipe({
       transition: "opacity 0.2s ease-out, transform 0.2s ease-out",
       "&[data-entering]": { opacity: 0, transform: "scale(0.95)" },
       "&[data-exiting]": { opacity: 0, transform: "scale(0.95)" },
-      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+      _motionReduce: { transition: "none" },
     },
     inner: {
       outline: "none",

@@ -37,7 +37,7 @@ const NotCreateAiHexImportDialog = ({
           <FormattedMessage id="not-create-ai-hex-import-dialog-content" />
         </Text>
       </ModalBody>
-      <ModalFooter css={{ justifyContent: "flex-end" }}>
+      <ModalFooter>
         <Button variant="primary" onPress={onClose}>
           <FormattedMessage id="close-action" />
         </Button>
