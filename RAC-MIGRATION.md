@@ -615,6 +615,234 @@ the target apps** (grep `@chakra-ui/react` imports + resolved-theme diffs,
 like the brand audit) to define the v1 surface and decide which ml-trainer
 variants generalise.
 
+### Census: python-editor-v3 (July 2026)
+First target-app census (`../python-editor-v3` + private
+`../python-editor-v3-microbit`). Same bones: Chakra v2.10, react-intl,
+react-icons, Playwright, and the identical `deployment/default` +
+`theme-package` vite-alias split with a `DeploymentConfig.chakraTheme`
+field (so the kill-switch shape — theme moves build-time, `chakraTheme`
+dropped from the config — transfers directly). ~157 tsx files, 127 Chakra
+import statements.
+
+**Brand contract validated, with striking convergences**: OSS default is
+`brand = gray` plus the same `gray.10`/`gray.25` additions (`#fcfcfc`/
+`#f5f6f8`), `radii.button: 2rem`, Helvetica heading/body fonts, and a
+`language` button variant that exists *only* in the private theme — the
+`languageText` semantic-token precedent applies verbatim. Divergence:
+default button variant is `withDefaultVariant(outline)` (ml-trainer:
+secondary), and the private theme adds `withDefaultColorScheme("brand")` —
+library recipes' `defaultVariants` must be preset-overridable per app.
+
+**The split is NOT token-clean like ml-trainer's.** The private theme
+structurally extends component configs: adds `outline` (colorScheme-
+conditional colours), `unstyled`, `language` button variants and a
+`baseStyle` radius; recolours the Alert `toast` variant per status
+(`blimpTeal.700` success/info, `code.error` otherwise); Container
+`sidebar-header` bg (OSS black → `brand.500`); the sidebar Tabs variant's
+background is a brand **linear-gradient** (OSS: black); private-only
+Tooltip config. Also full custom `gray` ramp (not just 10/25) and extra
+ramps (`purple`, `teal`, `blimpTeal`). **Intent: converge these to shared
+structure driven by semantic tokens rather than private-preset recipe
+extensions** — changing the OSS theme is acceptable where it simplifies
+(e.g. define `outline`/`language`/`unstyled` button variants once with
+`languageText`-style tokens; `sidebarHeaderBg`-type tokens for the
+sidebar-header/Tabs backgrounds — a semantic token can hold the private
+gradient, OSS flat black; toast status colours fold into the planned
+Toast status tokens). Recipe extension stays the escape hatch, not the
+plan. A resolved-theme diff (the `4c012bd4` differ) is a prerequisite,
+and matters more here than it did for ml-trainer.
+
+**New generalisation categories ml-trainer didn't surface**:
+- **Tokens consumed outside React as raw CSS vars**: CodeMirror's
+  highlightStyle/themeExtensions hardcode `var(--chakra-colors-code-*)`,
+  `var(--chakra-fonts-code)`; XTerm/Simulator/CodeMirrorView use
+  `useToken` at runtime. The library needs a documented stable CSS-variable
+  contract (Panda var naming/prefix) plus the runtime `token()` story.
+- **App token namespaces**: `code.*` (syntax colours + `code.error`) lives
+  in both OSS and private themes — token categories beyond the Chakra
+  scales are part of the app-preset contract, not an anomaly.
+- **Toast**: uses per-call `position`; every call site is "top" except
+  XTerm's multi-line-paste info toast at "bottom-right"
+  (`src/serial/XTerm.tsx` — also untranslated), which is plausibly
+  deliberate — near the terminal, where the user's attention is at that
+  moment. Whether the shared Toast grows region placement or that call
+  site changes is a decision for the python-editor migration. The custom
+  Alert `variant: "toast"` is "restyle solid Alert" — covered by the
+  planned Toast slot-recipe/status-token rework.
+- Imperative promise-based dialog layer (`use-dialogs`' `Dialogs` class +
+  ProgressDialog) renders controlled Modals with no trigger — fine on RAC
+  Modal, but keep controlled `isOpen` a first-class library API.
+- `zIndex.ts` numeric constants calibrated against third-party stacking
+  (xterm layers, Chakra's 1500 overlay scale) — needs a library z-index
+  token scale.
+- 29 files import `BoxProps` and forward style props through plain
+  wrappers — gotcha #9's biggest hazard class; budget a `css`-prop
+  conversion sweep in any migration.
+
+**Surface demand (census counts)**: overwhelmingly within shared-ui's
+existing surface (Text/Box/stacks/Button/IconButton/Modal family/Menu/
+Tooltip/Link/Icon/Image/Input/Divider/List/Spinner/Progress/
+VisuallyHidden). Real gaps this app needs, by usage: **Collapse + Fade**
+(~14 files, docs sidebar — our only transition primitive is Slide, and
+their Slide is the same framer-motion component we already ported);
+**Tabs** (one site but it's the app chrome, heavily brand-divergent);
+Menu checkable items + divider (`MenuOptionGroup`/`MenuItemOption`,
+`MenuDivider`); AlertDialog semantics for ConfirmDialog (RAC `role=
+"alertdialog"` + initial-focus-on-least-destructive over shared Modal);
+Table family (×3), NumberInput, Kbd, Code, Tag, Portal-as-primitive (×7),
+FormControl+FormErrorMessage error slot, InputLeft/RightElement; hooks
+`useMediaQuery` (raw queries incl. height-based — cf. `shortHeight`),
+`usePrevious`, `useClipboard`, `useToken`, `usePrefersReducedMotion`.
+**Not needed**: Drawer, Card, Accordion, Popover-as-API, colour mode,
+Chakra Heading (they compose Text). Fidelity-harness pattern transfers
+(Playwright already in place) but has more to mask: CodeMirror, xterm,
+the simulator iframe.
+
+### Census: data-microbit-org (July 2026)
+Second target-app census (`../data-microbit-org`). Fully private repo —
+no OSS/theme-package split; brand assets (GT Walsheim/Helvetica Now font
+files, real ramps) are committed in-repo. Chakra v2.10, react-intl,
+react-icons, react-router, Playwright, Sentry; no direct Emotion or
+framer-motion imports anywhere (~70 tsx files). **Multi-root**: three
+apps in one repo (the hosted Data Upload Tool, plus two modes of the
+MY_DATA.HTML page that runs from the micro:bit's USB mass-storage over
+`file:`), each mounting its own `ChakraProvider` over one shared theme.
+New deployment category for the library: styling must work in a
+`file:`-served page, not just a hosted SPA. Mechanics (bootstrap-
+template.js): the device HTM loads a hosted `dl.js` which injects one
+static `<link rel="stylesheet">` plus the vite-plugin-legacy SystemJS
+bundle (`file:` can't run module scripts, so the legacy path is always
+taken). **CSS application is origin-independent, so no styling feature
+is lost per se** — and the single-static-stylesheet model is exactly
+Panda's output shape (an improvement on Chakra, whose Emotion styles
+are injected at runtime by the legacy JS bundle). Two things to verify
+per migration: (1) **`@layer` support against the page's real browser
+matrix** — a non-supporting browser drops *all* layered rules, and our
+architecture leans on cascade layers; the legacy-JS path is forced by
+`file:`, not by old browsers, so the matrix is probably fine, but check
+before flipping; (2) font fetches from a `file:` page (`Origin: null`)
+are cross-origin CORS requests — already true today so presumably
+handled on the asset host, but keep in mind if assets move.
+
+**Colours**: the six brand ramps are byte-identical to ml-trainer's
+private preset (`purple`/`teal`/`blue`/`pink`/`orange`; their `green` ==
+our `brand2` green) — but with **no `brand`/`brand2` aliasing**: palette
+names are used directly, and the button system is **black/white**
+(`primary` black bg, `secondary` black 2px outline — also the default
+variant, `ghost` blackAlpha hovers) rather than brand-coloured. This is
+the brand-neutral end of the spectrum and strengthens semantic
+button-colour tokens over baked colorSchemes. Chakra's default `red` is
+kept for form errors by explicit comment — supports the planned
+"error/danger" semantic tokens. Toast Alert variant recolours
+`teal.800` (success/info) / `red.600` — near-identical to ml-trainer's
+toast colours and the same `variant: "toast"` pattern as python-editor;
+the planned Toast slot-recipe/status-token rework covers all three apps.
+Colour-audit-class hexes: Heading `label`/`subtitle` variants hardcode
+`#cd0365` (pink.500), `brandGrey #e5e5e5` constant for the full-screen
+ActionBar. Two data-viz palettes exported as constants from the theme
+dir (brand 500s + a brighter legacy set) — graph colours stay out of
+scope as in our audit, but they're theme-adjacent here.
+
+**The cross-app vocabulary is real.** `radii.button: 2rem` (3/3 apps),
+`shadows.outline`+`outlineDark` (same names as our preset),
+`withDefaultVariant(secondary)` (same as ml-trainer; python-editor:
+outline — per-app `defaultVariants` confirmed needed), a `language`
+button variant in all three apps (grey/black here, brand.500 in
+python-editor private — `languageText` tokens generalise), plus
+`toolbar`, `sidebar`, `zoom`, `unstyled` variants shared with
+python-editor, and an **ActionBar** component with a `full-screen`
+variant (cf. our Modal `full`/ActionBar coupling). Implication: several
+variants our extraction review classed as "ml-trainer vocabulary" are
+actually foundation-wide vocabulary — consider a **three-layer split**:
+library core (Chakra parity) / micro:bit foundation preset (brand ramps,
+`language`/`toolbar` variants, toast styling, display font) / per-app.
+
+**Surface demand**: almost entirely within shared-ui (Modal family is
+the heaviest use; Menu+MenuDivider, full FormControl/Label/Helper/Error,
+Input+Group+RightElement, native Select, Checkbox+CheckboxGroup, Table,
+AlertDialog, LinkBox/LinkOverlay, SimpleGrid, AspectRatio, Tooltip,
+VisuallyHidden; hooks useClipboard/useInterval/useMediaQuery/
+usePrevious). Low-frequency new items: **Breadcrumb** (×2), **Stepper**
+(×1), **Avatar** (×1, custom size), **Mark** (×1), Radio/RadioGroup
+(×1), Fade (×2). Decide v1 inclusion when aggregating censuses — none
+look load-bearing. `BoxProps` forwarding: 10 files (smaller gotcha-#9
+sweep than python-editor's 29). Toasts are all top-positioned with Ri
+icon glyphs — fits our Toast surface as-is.
+
+**Third-party styling seams** (new failure class): `react-select`
+(AsyncSelect for school lookup) injects its own **Emotion styles at
+runtime** — unlayered CSS-in-JS beats every Panda layer, and the
+`vendor` cascade-layer convention only covers static stylesheet imports.
+**Intent: replace it with a library combobox** (RAC ComboBox) rather
+than accommodate it. Feature inventory (SchoolSelect.tsx) all maps:
+async `loadOptions` with app-side debounce + min-3-chars gate, custom
+two-column option rendering (school/postcode), three i18n'd empty-state
+messages, loading message, placeholder, single-select — the async/
+debounce/message logic is app code that transfers, and RAC ComboBox
+(+`useAsyncList`) covers the rest. Today's instance is *unthemed*
+default react-select, so a shared combobox also improves visual
+consistency and a11y. Plotly is styled via a raw stylesheet of id-scoped
+`!important` overrides plus a data-table CSS file — vendor-layer
+candidates, but the `!important`s suggest specificity fights to
+untangle.
+
+### Census: classroom (July 2026)
+Third target-app census (`../classroom`). Private-only like
+data-microbit-org; Chakra v2.10, react-intl, react-icons, react-router,
+Sentry, Playwright, vite (+legacy plugin); ~116 tsx files; no direct
+Emotion or framer-motion imports. The theme is plainly the
+**ancestor/sibling of data-microbit-org's**: identical Heading
+`label`/`subtitle` variants (same hardcoded `#cd0365`), Avatar `2md`
+size, Text sizes, Tooltip fontSize, `shadows.outline`/`outlineDark`,
+`radii.button: 2rem`, `withDefaultVariant(secondary)`, and the same
+button vocabulary (`unstyled`/`zoom`/`secondary`/`ghost`/`primary`/
+`toolbar`/`sidebar`/`language` + a classroom-only `active`). The
+cross-app tallies are now **4/4** (incl. ml-trainer) for
+`radii.button`, the outline shadow names, and the `language` variant —
+the foundation-preset layer is no longer a hypothesis.
+
+**Colours**: `brand` is python-editor's misaligned purple scale +
+`blimpTeal` (matches python-editor-private, *not* data-microbit-org's
+tint/shade ramps — the two palette generations coexist across the
+family). Biggest colour-audit surface of the four apps: ~40 loose named
+rgba constants in `theme/constants/colors.ts` (`brandGrey` — "elsewhere
+known as brandWhite (!)" — `brandSlate`, `brandDodgerBlueTwo`, …) used
+directly in components and even inside theme variants (Input
+`classroom` uses `brandPinkishGrey`). Prime semantic-token conversion
+material. **Latent bug found**: the Alert `toast` variant was copied
+from python-editor including `bg: "code.error"`, but classroom's theme
+defines no `code` colours — error/warning toasts silently fall back to
+the solid variant's status colour.
+
+**Already half-migrated in spirit**: react-aria v3 + react-stately
+hooks power the class-roster **GridList** (`useGridList`/
+`useGridListItem` with selection in ClassList/StudentItem) and a
+listbox in SendCodeDialog. The GridList collection pattern we parked
+for ml-trainer's projects page is already proven in-family, and these
+hand-rolled hook usages become straight RAC components.
+
+**react-select is load-bearing here** (unlike data-microbit-org): 4
+sites including two *common wrappers* — `SelectDropdown` (full custom
+`StylesConfig`, `#cd0365` selected state, Focusable forwardRef) and
+`SelectWithIcon` — plus student join and CodeView. Replacement is the
+same RAC route, and the two wrappers sketch the shared Select/ComboBox
+API. Embeds are familiar territory: `@microbit/makecode-embed`,
+`@microbit/python-editor-embed`, `react-code-view` with SkeletonText
+loading states (cf. ml-trainer's CodeViewCard/BlocksLoadingSkeleton).
+
+**Surface demand**: the heaviest Modal user of the four apps (20
+Modal/15 header-footer-close sets), Menu incl. checkable
+`MenuOptionGroup`/`MenuItemOption` + `MenuDivider`, AlertDialog,
+FormControl/Label, Table, Progress, Collapse, Fade, Radio, Portal.
+Low-frequency new items: Avatar+`AvatarBadge`, `SkeletonText`, `Wrap`,
+`useFormControlContext` (×1 each). Toasts: all `position: "top"`,
+`variant: "toast"` — fits the shared Toast as-is. `BoxProps`
+forwarding: 12 files. Dead tooling note: `styleguide.config.js`
+(react-styleguidist) requires `react-scripts`, no longer a dependency —
+the component catalogue is stale, prior art only. Fonts are declared
+without fallback stacks ("GT Walsheim"/"Helvetica Now") — minor fix at
+migration.
+
 ### Pre-extraction accessibility tasks (July 2026 shared-ui a11y review)
 The review's Chakra-parity *regressions* are fixed (Spinner required label +
 `speed`/reduced-motion, distinct warning toast glyph, localized close
