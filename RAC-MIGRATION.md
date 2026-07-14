@@ -920,6 +920,132 @@ preset overrides whole ramps — the `languageText` precedent is the shape):
   rework above; note `teal` *is* a brand-overridden ramp, so branded
   toasts recolour by ramp side-effect today.
 
+### Extraction & family-migration plan (July 2026, post-census)
+Sequenced plan to bring all four apps onto shared-ui. Each phase gates
+the next; within a phase, items are parallelisable. The censuses above
+are the evidence base; the a11y/colour/packaging subsections are inputs.
+
+**Phase 0 — land ml-trainer.** Finish private preset consumption (#9),
+merge this branch with the private package in lockstep. Everything else
+builds on a merged, branded ml-trainer.
+
+**Phase 1 — make shared-ui library-ready in place** (still in this
+repo; every step fidelity-verified zero-diff):
+- Resolve the two Blockers: overlay-dismissal context (inverts the
+  Capacitor/back-button coupling out of `Menu.tsx`) and the i18n
+  close-label strategy.
+- **Three-way preset split** (the census-validated shape): library core
+  (Chakra token base, recipes, RAC condition widening, Chakra-reset
+  `globalCss`, `staticCss`) / **micro:bit foundation preset** (brand
+  ramps, `display` font, `radii.button`, `outline*` shadows,
+  `language`/`toolbar`-class variants, toast styling) / app preset
+  (keyframes, `shortHeight`, gray overrides). The foundation layer is
+  where the 4/4 vocabulary lands.
+- Toast slot-recipe + status semantic tokens (covers all four apps'
+  `variant: "toast"`), plus the a11y items (non-visual status,
+  undismissable-toast guard).
+- Semantic-token conversions from the colour audit + census intents:
+  checked/focus/filled `blue.*` → component tokens, `red.*` →
+  error/danger tokens, `statusBarBg` for Modal `full`/ActionBar (note
+  data-microbit-org's `brandGrey` ActionBar — same slot).
+- Pre-extraction a11y list (recipes onto `focusShadow`, NativeSelect
+  chevron, Modal naming enforcement, Slider value labels, Icon
+  aria-hidden defaults).
+- Define the **stable CSS-var contract** (Panda prefix/naming as
+  documented API) + the runtime `token()` pattern — python-editor's
+  CodeMirror/xterm depend on it.
+- `useBreakpointValue` from `token("breakpoints.*")`.
+
+**Phase 2 — extract.** Library ships as **source** with `importMap`
+(see Packaging decisions); peer deps react/RAC/react-icons. Two
+packages: the OSS library, and one **private foundation-preset package**
+consolidating what today is scattered across the per-app `*-microbit`
+theme halves (ramps, GT Walsheim/Helvetica Now font files, semantic
+token values). Decide then whether thin per-app private presets remain
+(ml-trainer's CreateAI ramps suggest yes, as extensions of the
+foundation package). ml-trainer becomes the first consumer — fidelity
+zero-diff proves the packaging. Document the consumption setup:
+`layers.css` order + `vendor` layer, brand semantic-token contract,
+the staticCss-in-preset requirement, clean-regen rule for external
+preset changes.
+
+**Phase 3 — v1 surface**, built in the library. Policy: anything that
+is a *clearly core* design-system component goes into shared-ui even
+with a single current consumer — family-wide consistency is a goal in
+itself, and app-local builds create exactly the divergence we're
+retiring. Only genuinely app-flavoured pieces stay app-side.
+- **Select/ComboBox** (retires react-select family-wide; classroom's
+  `SelectDropdown`/`SelectWithIcon` wrappers sketch the API; RAC
+  ComboBox + `useAsyncList` for the async case).
+- **Collapse + Fade** transition primitives (python-editor ~14 files;
+  classroom/data one-offs).
+- **Tabs** (core; the recipe lives in the library, python-editor's
+  branded sidebar variant is preset-side styling).
+- Menu: checkable items (`MenuOptionGroup`/`MenuItemOption` — RAC has
+  selection natively), sections, separator.
+- Modal: `role="alertdialog"` mode + least-destructive initial focus
+  (every app has a ConfirmDialog).
+- Radio/RadioGroup promoted from BluetoothPatternInput's raw RAC usage;
+  **GridList** promoted from classroom's hand-rolled hooks (also the
+  parked ml-trainer projects-page item).
+- Table, TextField error slot (`FormErrorMessage` parity), input
+  adornments (`InputLeftElement`/`RightElement`), Portal-as-primitive,
+  Skeleton/SkeletonText, Breadcrumb, Avatar (classroom + data),
+  NumberInput; the cheap typography wrappers (Kbd/Code/Tag/Mark) as
+  first needed.
+- Hook set: `useMediaQuery`, `usePrevious`, `useClipboard`,
+  `usePrefersReducedMotion`.
+- Stays app-side: classroom's `active` button variant, Stepper (single
+  point-in-time teacher flow), app chrome compositions (ActionBar
+  stays an app component over shared primitives + `statusBarBg`-family
+  tokens).
+
+**Phase 4 — app migrations.** Priority: **python-editor and classroom
+are what matter**; data-microbit-org can trail by months (nextgen was
+a point-in-time event, MY_DATA is a tiny surface) and no longer gates
+or sequences anything.
+1. **classroom** first (moderate size, no OSS split, heaviest Modal
+   user = good stress test) — now the consumer that proves the
+   packaging/consumption story outside ml-trainer, and it exercises
+   the new core components early (Select/ComboBox, GridList, Menu
+   checkable items). Includes: react-select wrappers → shared
+   Select/ComboBox; hand-rolled `useGridList`/listbox hooks → RAC
+   components; the ~40 rgba constants → tokens; fixes the `code.error`
+   toast bug. **Decision needed up front**: adopt the foundation
+   preset's modern ramps (visual change, needs sign-off) or keep the
+   legacy misaligned `brand` scale as an app-preset override.
+2. **python-editor-v3** (largest; OSS/private split). Pre-work can
+   start any time *while still on Chakra*, in parallel with classroom:
+   converge the private theme's structural extensions onto semantic
+   tokens per the census intent, using the resolved-theme differ. The
+   migration proper adds: Tabs adoption (library recipe + preset
+   variant), CodeMirror/xterm onto the CSS-var contract, xterm CSS
+   into the `vendor` layer, the 29-file BoxProps sweep, a z-index
+   token scale, and the paste-toast placement decision.
+3. **data-microbit-org** — whenever convenient; by then the library
+   is mature and the surface is fully covered, so it's cheap. Its
+   census's two entry checks (`@layer` vs the MY_DATA browser matrix,
+   font CORS) move to the start of its migration and are an abort
+   criterion for that app only.
+
+**Per-app playbook** (the kit, from ml-trainer's run): census (done
+above) → resolved-theme diff where a split exists (`4c012bd4`) → Panda
++ preset stack + `layers.css` → **coexistence** (Chakra and Panda side
+by side; revive `bin/unlayer-panda.mjs` from git — deleted at our
+kill-switch — since Emotion is unlayered) → port component-by-component
+against a fidelity harness (Playwright is already in every app; mask
+CodeMirror/xterm/simulator/plotly/embeds) → animations → kill-switch →
+where a brand split exists, run fidelity on both sides. Budget the
+gotcha-#9 style-prop sweep explicitly per app (29/10/12 BoxProps files
+respectively).
+
+**Decisions to front-load** (block later phases if unmade): palette
+generation reconciliation (classroom); one foundation package vs
+per-app private packages; the `statusBarBg`-family semantic tokens
+(three apps have an ActionBar-shaped thing); python-editor OSS-theme
+simplification appetite (agreed in principle — scope it per component
+during pre-work).
+
 ## Key files
 - `panda.config.ts`, `bin/gen-chakra-tokens.mjs`, `bin/fidelity.mjs`
 - `src/deployment/default/{panda-preset,chakra-tokens}.ts`
