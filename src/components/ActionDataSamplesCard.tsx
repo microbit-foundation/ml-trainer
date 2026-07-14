@@ -368,8 +368,6 @@ const DataSample = ({
   view: DataSamplesView;
   hasClose?: boolean;
 }) => {
-  // State, not a ref: the portal target must trigger a re-render once mounted.
-  const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const hasGraph =
     view === DataSamplesView.Graph ||
     view === DataSamplesView.GraphAndDataFeatures;
@@ -384,34 +382,32 @@ const DataSample = ({
     <HStack
       key={recording.id}
       position="relative"
-      ref={setTarget}
       gap={hasFingerprint && hasGraph ? 2 : 0}
     >
-      {hasClose &&
-        target &&
-        createPortal(
-          <CloseButton
-            size="sm"
-            aria-label={intl.formatMessage(
-              {
-                id: "delete-recording-aria",
-              },
-              {
-                sample: numRecordings - recordingIndex,
-                numSamples: numRecordings,
-                action: actionName,
-              }
-            )}
-            onClick={handleDelete}
-            expandHitArea
-            css={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-            }}
-          />,
-          target
-        )}
+      {hasClose && (
+        <CloseButton
+          size="sm"
+          aria-label={intl.formatMessage(
+            {
+              id: "delete-recording-aria",
+            },
+            {
+              sample: numRecordings - recordingIndex,
+              numSamples: numRecordings,
+              action: actionName,
+            }
+          )}
+          onClick={handleDelete}
+          expandHitArea
+          css={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            // Paint above the graph/fingerprint siblings that follow it.
+            zIndex: 1,
+          }}
+        />
+      )}
       {hasGraph && (
         <RecordingGraph
           data={recording.data}
