@@ -1,13 +1,16 @@
 # Chakra → react-aria-components + Panda CSS migration
 
-Status: **Chakra, Emotion and framer-motion are gone** — the kill-switch
-(#8) is done, verified by the fidelity harness against the pre-flip commit
-(17/18 states pixel-identical; one accepted 1px sub-pixel diff, see #8).
-Remaining work: **private preset consumption** (#9) — now urgent, since
-`npm install` deletes the local symlink (see #9). The private package repo
-(`../ml-trainer-microbit`) has uncommitted changes that must land in
-lockstep with this branch. This doc is the handover for continuing in a new
-session; per-chunk history lives in git.
+Status: **migration complete on this branch.** Chakra, Emotion and
+framer-motion are gone — the kill-switch (#8) is verified by the fidelity
+harness against the pre-flip commit (17/18 states pixel-identical; one
+accepted 1px sub-pixel diff, see #8) — and **private preset consumption
+(#9) is done**: CI installs the theme package at the version pinned in
+`workflow-config.json` (currently `0.2.0-experiment.rai.130`, published
+from `../ml-trainer-microbit`'s matching `experiment-rai` branch, where
+its changes are committed). Remaining: merge both repos' branches, then
+re-publish the theme package from its main line and bump
+`workflow-config.json` again. This doc is the handover for continuing in
+a new session; per-chunk history lives in git.
 
 ## Goal
 
@@ -489,8 +492,9 @@ Consolidated for review time; all deliberate:
    `BrandConfig` lost `chakraTheme`; logos are typed `LogoProps` (`h`,
    `color`) and render plain SVG with inline styles — brand packages are
    outside Panda's extraction scope. **The private package changed in
-   lockstep** (chakraTheme/theme files removed, logos ported) — its repo
-   has the matching uncommitted changes. Findings from the flip:
+   lockstep** (chakraTheme/theme files removed, logos ported) — committed
+   on its `experiment-rai` branch and published (see #9). Findings from
+   the flip:
    - The preset's `globalCss` carries what ChakraProvider used to inject:
      theme `styles.global` (body font/colour/bg/line-height/transition,
      placeholder + border colours) **plus the Chakra-reset behaviours
@@ -517,14 +521,18 @@ Consolidated for review time; all deliberate:
      FIDELITY_NO_WEBSERVER=1 npx playwright test --project=fidelity`).
      Also: the baseline ref imports Chakra, so `npm i --no-save` the
      dropped deps first; plain `npm install` restores pristine state.
-9. **Private preset consumption** — replace the local symlink with a real
-   mechanism (publish the `panda-preset` export or a documented
-   `file:`/`npm link` story) so team/CI can build the branded app. Gates
-   merging; independent of the passes above, can run in parallel. Note the
-   dev server's `fs.allow` includes the theme package's realpath
-   (vite.config.ts) because with a symlink the brand font/image assets
-   resolve outside the project root and Vite would otherwise 403 them —
-   dev-only, builds are unaffected.
+9. ✅ **Private preset consumption** — done via the established
+   theme-package mechanism: the private repo's changes are committed on
+   its `experiment-rai` branch and published as
+   `0.2.0-experiment.rai.130`; `workflow-config.json` pins that version
+   and the CI workflows `npm install --no-save` it (build.yml,
+   android-build.yml, ios-build.yml). Follow-up when this branch merges:
+   merge the private branch too, publish from its main line, bump
+   `workflow-config.json`. Note the dev server's `fs.allow` includes the
+   theme package's realpath (vite.config.ts) because with a symlinked/
+   linked package the brand font/image assets resolve outside the project
+   root and Vite would otherwise 403 them — dev-only, builds are
+   unaffected.
 
 Parked beyond the migration (deliberate UX change, not parity): card
 collections as RAC `GridList` — whole-item press targets without the overlay
@@ -925,9 +933,11 @@ Sequenced plan to bring all four apps onto shared-ui. Each phase gates
 the next; within a phase, items are parallelisable. The censuses above
 are the evidence base; the a11y/colour/packaging subsections are inputs.
 
-**Phase 0 — land ml-trainer.** Finish private preset consumption (#9),
-merge this branch with the private package in lockstep. Everything else
-builds on a merged, branded ml-trainer.
+**Phase 0 — land ml-trainer.** #9 is done (branch-published theme
+package pinned via `workflow-config.json`); what remains is merging
+both repos' `experiment-rai` branches, then re-publishing the theme
+package from its main line and bumping the pin. Everything else builds
+on a merged, branded ml-trainer.
 
 **Phase 1 — make shared-ui library-ready in place** (still in this
 repo; every step fidelity-verified zero-diff):
