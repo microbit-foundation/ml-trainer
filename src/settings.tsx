@@ -21,6 +21,8 @@ export interface Language {
 }
 
 // Tag new languages with `preview: true` to enable for beta only.
+// Adding a new language? Ensure the project links work, or add a temporary
+// redirect on microbit.org to fallback on not having a language path.
 export const allLanguages: Language[] = [
   {
     id: "en",
