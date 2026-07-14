@@ -99,9 +99,14 @@ const ActionDataSamplesCard = ({
                   top: -2,
                   right: -2,
                   borderRadius: "full",
-                  bgColor: "white",
+                  bg: "white",
                   borderColor: "blackAlpha.500",
                   boxShadow: "sm",
+                  // Solid hover/active: this button floats over the card
+                  // edge, so the default translucent hover lets the content
+                  // beneath show through it.
+                  _hover: { bg: "gray.100" },
+                  _active: { bg: "gray.200" },
                 }}
               />
             }

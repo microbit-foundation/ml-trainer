@@ -38,40 +38,44 @@ export const CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>(
         ref={ref}
         type="button"
         className={cx(
-          css({
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            position: "relative",
-            cursor: "pointer",
-            bg: "transparent",
-            border: "none",
-            color: "inherit",
-            outline: "none",
-            borderRadius: "md",
-            transitionProperty: "background-color, box-shadow",
-            transitionDuration: "normal",
-            _hover: { bg: "blackAlpha.100" },
-            _active: { bg: "blackAlpha.200" },
-            _focusVisible: { focusShadow: "outline" },
-          }),
-          size === "sm"
-            ? css({ width: "6", height: "6", fontSize: "2xs" })
-            : css({ width: "8", height: "8", fontSize: "xs" }),
-          expandHitArea
-            ? css({
-                _after: {
-                  position: "absolute",
-                  top: -2,
-                  right: -2,
-                  bottom: -2,
-                  left: -2,
-                  content: '""',
-                },
-              })
-            : undefined,
-          cssProp ? css(cssProp) : undefined,
+          // A single css() call so per-instance overrides of base properties
+          // (e.g. borderRadius) merge rather than racing on stylesheet order.
+          css(
+            {
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              position: "relative",
+              cursor: "pointer",
+              bg: "transparent",
+              border: "none",
+              color: "inherit",
+              outline: "none",
+              borderRadius: "md",
+              transitionProperty: "background-color, box-shadow",
+              transitionDuration: "normal",
+              _hover: { bg: "blackAlpha.100" },
+              _active: { bg: "blackAlpha.200" },
+              _focusVisible: { focusShadow: "outline" },
+            },
+            size === "sm"
+              ? { width: "6", height: "6", fontSize: "2xs" }
+              : { width: "8", height: "8", fontSize: "xs" },
+            expandHitArea
+              ? {
+                  _after: {
+                    position: "absolute",
+                    top: -2,
+                    right: -2,
+                    bottom: -2,
+                    left: -2,
+                    content: '""',
+                  },
+                }
+              : undefined,
+            cssProp
+          ),
           className
         )}
         {...rest}
