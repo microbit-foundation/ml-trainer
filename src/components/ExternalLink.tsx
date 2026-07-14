@@ -3,16 +3,22 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { button } from "styled-system/recipes";
-import { css, cx, Link } from "../shared-ui";
+import { css, cx, Icon, Link } from "../shared-ui";
 
 interface ExternalLinkProps {
   textId: string;
   href: string;
+  /**
+   * Text size matching the footer's button size — lg alongside the usual
+   * size="lg" dialog buttons, md alongside md ones (e.g. LanguageDialog).
+   */
+  size?: "md" | "lg";
 }
 
-const ExternalLink = ({ textId, href }: ExternalLinkProps) => {
+const ExternalLink = ({ textId, href, size = "lg" }: ExternalLinkProps) => {
   return (
     <Link
       className={cx(
@@ -20,7 +26,7 @@ const ExternalLink = ({ textId, href }: ExternalLinkProps) => {
         css({
           display: "flex",
           gap: 1,
-          fontSize: "lg",
+          fontSize: size === "md" ? "md" : "lg",
           alignItems: "center",
           // The button recipe centres content, which shows when the link is
           // a full-width block (mid-dialog) rather than shrink-wrapped.
@@ -33,28 +39,7 @@ const ExternalLink = ({ textId, href }: ExternalLinkProps) => {
       rel="noopener"
     >
       <FormattedMessage id={textId} />
-      {/* Chakra's ExternalLinkIcon glyph (MIT). */}
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden
-        className={css({
-          width: "1em",
-          height: "1em",
-          display: "inline-block",
-          flexShrink: 0,
-        })}
-      >
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeWidth="2"
-        >
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-          <path d="M15 3h6v6" />
-          <path d="M10 14L21 3" />
-        </g>
-      </svg>
+      <Icon as={RiExternalLinkLine} aria-hidden />
     </Link>
   );
 };

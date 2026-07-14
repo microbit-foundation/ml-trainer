@@ -111,6 +111,7 @@ export const LanguageDialog = ({ isOpen, onClose }: LanguageDialogProps) => {
               <ExternalLink
                 textId="help-translate"
                 href={deployment.translationLink}
+                size="md"
               />
             )
           }

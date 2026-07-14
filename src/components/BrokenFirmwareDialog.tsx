@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Icon,
   Button,
   Modal,
   ModalBody,
@@ -13,7 +14,7 @@ import {
   VStack,
 } from "../shared-ui";
 import { ReactNode } from "react";
-import ExternalLink from "./ExternalLink";
+import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import Link from "./Link";
 import { useDeployment } from "../deployment";
@@ -66,10 +67,27 @@ const BrokenFirmwareDialog = ({
             />
           </Text>
           <Text w="100%">
-            <ExternalLink
-              textId="connect-troubleshoot"
+            <Link
+              color="brand.600"
+              textDecoration="underline"
               href={supportLinks.troubleshooting}
-            />
+              target="_blank"
+              rel="noopener"
+              display="flex"
+              flexDirection="row"
+              gap={1}
+            >
+              <FormattedMessage id="connect-troubleshoot" />
+              <Icon
+                as={RiExternalLinkLine}
+                css={{
+                  width: 5,
+                  height: 5,
+                  color: "brand.600",
+                  position: "relative",
+                }}
+              />
+            </Link>
           </Text>
         </VStack>
       </ModalBody>
