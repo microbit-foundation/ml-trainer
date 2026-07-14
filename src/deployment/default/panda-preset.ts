@@ -401,6 +401,11 @@ export const ossPreset = definePreset({
     "h1, h2, h3, h4, h5, h6": {
       textWrap: "wrap",
     },
+    // Panda's preflight styles ::selection; Chakra's reset didn't. Restore
+    // the browser's native highlight painting.
+    "::selection": {
+      backgroundColor: "revert",
+    },
   },
   utilities: {
     extend: {

@@ -199,7 +199,6 @@ const EditableName = ({
                 void handleSubmit();
               }}
               css={{
-                bg: "transparent",
                 color: "inherit",
                 pl: variant === "drawer" ? 3 : 10,
                 _focusVisible: {
