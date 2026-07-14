@@ -5,16 +5,8 @@
  */
 import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  Card,
-  CardBody,
-  cx,
-  css,
-  HStack,
-  Slider,
-  Text,
-  VStack,
-} from "../shared-ui";
+import { CardBody, cx, css, HStack, Slider, Text, VStack } from "../shared-ui";
+import RowCard from "./RowCard";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
@@ -43,20 +35,10 @@ const ActionCertaintyCard = ({
   );
   const sliderValue = requiredConfidence * 100;
   return (
-    <Card
+    <RowCard
+      css={{ px: 4, width: "fit-content" }}
       className={cx(
         tourElClassname.certaintyThreshold,
-        css({
-          py: 2,
-          px: 4,
-          h: "120px",
-          display: "flex",
-          flexDirection: "row",
-          width: "fit-content",
-          borderWidth: "1px",
-          borderStyle: "solid",
-          borderColor: "transparent",
-        }),
         disabled ? css({ opacity: 0.5, pointerEvents: "none" }) : undefined
       )}
     >
@@ -103,7 +85,7 @@ const ActionCertaintyCard = ({
           />
         </VStack>
       </CardBody>
-    </Card>
+    </RowCard>
   );
 };
 

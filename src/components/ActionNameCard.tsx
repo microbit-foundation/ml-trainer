@@ -8,7 +8,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { Action } from "../model";
 import {
-  Card,
   CardBody,
   CloseButton,
   css,
@@ -18,6 +17,7 @@ import {
   useBreakpointValue,
   useToast,
 } from "../shared-ui";
+import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import { MakeCodeIcon } from "../utils/icons";
@@ -136,24 +136,14 @@ const ActionNameCard = ({
   );
 
   return (
-    <Card
+    <RowCard
       variant={
         viewMode === ActionCardNameViewMode.Preview ? "outline" : undefined
       }
       onClick={onSelectRow}
+      selected={selected}
       className={cx(
         tourElClassname.dataSamplesActionCard,
-        css({
-          px: 2,
-          py: 2,
-          h: "120px",
-          display: "flex",
-          borderWidth: "1px",
-          borderStyle: "solid",
-        }),
-        selected
-          ? css({ borderColor: "brand.500" })
-          : css({ borderColor: "transparent" }),
         disabled ? css({ opacity: 0.5 }) : undefined
       )}
     >
@@ -165,19 +155,12 @@ const ActionNameCard = ({
             { id: "delete-action-aria" },
             { action: localName }
           )}
+          expandHitArea
           css={{
             position: "absolute",
             right: 1,
             top: 1,
             borderRadius: "sm",
-            _after: {
-              position: "absolute",
-              top: -2,
-              right: -2,
-              bottom: -2,
-              left: -2,
-              content: '""',
-            },
           }}
         />
       )}
@@ -240,7 +223,7 @@ const ActionNameCard = ({
           />
         </HStack>
       </CardBody>
-    </Card>
+    </RowCard>
   );
 };
 

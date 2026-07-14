@@ -22,6 +22,9 @@ const ExternalLink = ({ textId, href }: ExternalLinkProps) => {
           gap: 1,
           fontSize: "lg",
           alignItems: "center",
+          // The button recipe centres content, which shows when the link is
+          // a full-width block (mid-dialog) rather than shrink-wrapped.
+          justifyContent: "flex-start",
           flexDirection: "row",
         })
       )}

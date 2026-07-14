@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   ListItem,
   Modal,
   ModalBody,
@@ -63,14 +62,12 @@ const ResetToBluetoothModeTroubleshootDialog = ({
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <HStack gap={5}>
-          <Button onPress={onClose} variant="secondary" size="lg">
-            <FormattedMessage id="cancel-action" />
-          </Button>
-          <Button onPress={onTryAgain} variant="primary" size="lg">
-            <FormattedMessage id="try-again-action" />
-          </Button>
-        </HStack>
+        <Button onPress={onClose} variant="secondary" size="lg">
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <Button onPress={onTryAgain} variant="primary" size="lg">
+          <FormattedMessage id="try-again-action" />
+        </Button>
       </ModalFooter>
     </Modal>
   );

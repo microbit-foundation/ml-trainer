@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   Modal,
   ModalBody,
   ModalFooter,
@@ -47,11 +46,9 @@ const WebUsbBluetoothUnsupportedDialog = ({
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <HStack gap={5}>
-          <Button onPress={onClose} variant="primary" size="lg">
-            <FormattedMessage id="close-action" />
-          </Button>
-        </HStack>
+        <Button onPress={onClose} variant="primary" size="lg">
+          <FormattedMessage id="close-action" />
+        </Button>
       </ModalFooter>
     </Modal>
   );

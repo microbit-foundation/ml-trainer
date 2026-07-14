@@ -10,13 +10,8 @@ import {
   useState,
   useMemo,
 } from "react";
-import {
-  Box,
-  HStack,
-  Svg,
-  SystemStyleObject,
-  useBreakpointValue,
-} from "../../shared-ui";
+import { Box, HStack, useBreakpointValue } from "../../shared-ui";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 
 export interface SignalRef {
@@ -258,22 +253,15 @@ const Signal = forwardRef<SignalRef>(function Signal(_, ref) {
   );
 });
 
-const SignalIcon = ({
-  css: cssProp,
-  style,
-}: {
-  css?: SystemStyleObject;
-  style?: CSSProperties;
-}) => (
-  <Svg
+const SignalIcon = (props: AnimationIconProps) => (
+  <AnimationIcon
     viewBox="0 0 23.27 23.27"
-    css={{
+    baseCss={{
       color: "brand2.500",
       width: { base: "1.5em", sm: "2em", md: "1.5em" },
       height: { base: "1.5em", sm: "2em", md: "1.5em" },
-      ...cssProp,
     }}
-    style={style}
+    {...props}
   >
     <path
       fill="currentColor"
@@ -287,7 +275,7 @@ const SignalIcon = ({
       fill="currentColor"
       d="M21.77,23.27c-.83,0-1.5-.67-1.5-1.5C20.27,11.42,11.85,3,1.5,3c-.83,0-1.5-.67-1.5-1.5S.67,0,1.5,0c12.01,0,21.77,9.77,21.77,21.77,0,.83-.67,1.5-1.5,1.5Z"
     />
-  </Svg>
+  </AnimationIcon>
 );
 
 export default Signal;

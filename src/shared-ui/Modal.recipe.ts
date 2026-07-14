@@ -100,6 +100,9 @@ export const dialog = defineSlotRecipe({
       display: "flex",
       alignItems: "center",
       justifyContent: "flex-end",
+      // Chakra had no footer gap (call sites wrapped buttons in HStacks);
+      // baked in as the house style. Override via css for tighter layouts.
+      gap: "5",
       flexShrink: 0,
     },
     closeTrigger: { position: "absolute", top: "2", insetEnd: "3" },

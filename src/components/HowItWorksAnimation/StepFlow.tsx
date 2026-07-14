@@ -3,15 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CSSProperties,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import { Stack, Svg, SystemStyleObject } from "../../shared-ui";
+import { Stack } from "../../shared-ui";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import StepTickPill, { StepTickPillRef } from "./StepTickPill";
 
 type ArrowState = "hidden" | "active" | "inactive";
@@ -198,14 +193,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
   );
 });
 
-const ArrowIcon = ({
-  css: cssProp,
-  style,
-}: {
-  css?: SystemStyleObject;
-  style?: CSSProperties;
-}) => (
-  <Svg viewBox="0 0 68 22" fill="none" css={cssProp} style={style}>
+const ArrowIcon = (props: AnimationIconProps) => (
+  <AnimationIcon viewBox="0 0 68 22" baseCss={{ fill: "none" }} {...props}>
     <g>
       <path
         d="M3.06134 18.999C11.0932 9.67987 21.9073 3.99902 33.8763 3.99902C45.8453 3.99902 56.1345 9.42456 64.0613 18.2969"
@@ -222,7 +211,7 @@ const ArrowIcon = ({
         strokeLinejoin="round"
       />
     </g>
-  </Svg>
+  </AnimationIcon>
 );
 
 export default StepFlow;

@@ -9,7 +9,8 @@ import {
   forwardRef,
   useState,
 } from "react";
-import { Box, Svg, SystemStyleObject } from "../../shared-ui";
+import { Box, SystemStyleObject } from "../../shared-ui";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 
 export interface CodeBlockRef {
@@ -84,13 +85,8 @@ const CodeBlock = forwardRef<CodeBlockRef, CodeBlockProps>(function CodeBlock(
   );
 });
 
-interface BlockIconProps {
-  css?: SystemStyleObject;
-  style?: CSSProperties;
-}
-
-const OuterCodeBlock = ({ css: cssProp, style }: BlockIconProps) => (
-  <Svg viewBox="0 0 210 145.3" fill="none" css={cssProp} style={style}>
+const OuterCodeBlock = (props: AnimationIconProps) => (
+  <AnimationIcon viewBox="0 0 210 145.3" baseCss={{ fill: "none" }} {...props}>
     <path
       d="M206.5,26.5V10c0-3.6-2.9-6.5-6.5-6.5H10c-3.6,0-6.5,2.9-6.5,6.5v125.3c0,3.6,2.9,6.5,6.5,6.5h189.9c3.6,0,6.5-2.9,6.5-6.5v-15.1c0-3.6-2.9-6.5-6.5-6.5l-112.5-.3c-.3,0-.3,0-.4.2l-7.5,9.1c-1.7,1.9-3.9,2.9-6.2,2.9h-19.9c-2.3,0-4.5-1-6.1-2.9l-7.5-9.1c0-.2-.2-.3-.6-.3h-10.7c-2.1,0-4.1-.8-5.6-2.3-1.5-1.7-2.3-3.6-2.3-5.6l.2-58.8c0-2,.9-4.1,2.3-5.6,1.6-1.5,3.6-2.3,5.6-2.3h10.7c2.5,0,4.8,1.1,6.1,3l7.4,9.1c.1.2.3.3.8.4h19.7c.2,0,.4,0,.6-.3l7.5-9.1c1.6-1.8,3.8-2.9,6.1-2.9l112.3.2c3.6,0,6.5-2.9,6.5-6.5v-5.8Z"
       fill="white"
@@ -98,11 +94,11 @@ const OuterCodeBlock = ({ css: cssProp, style }: BlockIconProps) => (
       strokeWidth="7"
       strokeMiterlimit="10"
     />
-  </Svg>
+  </AnimationIcon>
 );
 
-const InnerCodeBlock = ({ css: cssProp, style }: BlockIconProps) => (
-  <Svg viewBox="0 0 170.8 94" fill="none" css={cssProp} style={style}>
+const InnerCodeBlock = (props: AnimationIconProps) => (
+  <AnimationIcon viewBox="0 0 170.8 94" baseCss={{ fill: "none" }} {...props}>
     {/* Outline shape */}
     <path
       d="M56.2,90.5h-19.9c-2.3,0-4.5-1-6.1-2.9l-7.5-9.1c-.1-.2-.2-.3-.6-.3h-10.7c-2.1,0-4.1-.8-5.6-2.3-1.5-1.7-2.3-3.6-2.3-5.6l.2-58.8c0-2,.9-4.1,2.3-5.6,1.7-1.5,3.6-2.3,5.6-2.3h10.7c2.5,0,4.8,1.1,6.1,3l7.4,9.1c.1.2.3.3.8.4h19.7c.2,0,.4,0,.6-.3l7.5-9.1c1.6-1.8,3.8-2.9,6.1-2.9l88.7.2c4.4,0,7.9,3.6,7.9,7.9v58.7c-.1,2-1,4.1-2.5,5.6-1.6,1.5-3.6,2.3-5.6,2.3l-88.8-.2c-.3,0-.3,0-.4.2l-7.5,9.1c-1.7,1.9-3.9,2.9-6.2,2.9h0Z"
@@ -176,7 +172,7 @@ const InnerCodeBlock = ({ css: cssProp, style }: BlockIconProps) => (
       fill="currentColor"
       d="M120,54.9h6.1c.4,0,.7.3.7.7v6.1c0,.4-.3.7-.7.7h-6.1c-.4,0-.7-.3-.7-.7v-6.1c0-.4.3-.7.7-.7"
     />
-  </Svg>
+  </AnimationIcon>
 );
 
 export default CodeBlock;

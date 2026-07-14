@@ -12,7 +12,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Card,
   CardBody,
   CloseButton,
   css,
@@ -25,6 +24,7 @@ import {
   Text,
   VStack,
 } from "../shared-ui";
+import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
@@ -93,6 +93,7 @@ const ActionDataSamplesCard = ({
                   }
                 )}
                 onClick={() => deleteActionRecording(value.id, recording.id)}
+                expandHitArea
                 css={{
                   position: "absolute",
                   top: -2,
@@ -101,14 +102,6 @@ const ActionDataSamplesCard = ({
                   bgColor: "white",
                   borderColor: "blackAlpha.500",
                   boxShadow: "sm",
-                  _after: {
-                    position: "absolute",
-                    top: -2,
-                    right: -2,
-                    bottom: -2,
-                    left: -2,
-                    content: '""',
-                  },
                 }}
               />
             }
@@ -206,26 +199,13 @@ const DataSamplesRowCard = forwardRef<HTMLDivElement, DataSamplesRowCardProps>(
     ref
   ) {
     return (
-      <Card
+      <RowCard
         ref={ref}
         onClick={onSelectRow}
         variant={variant}
-        className={cx(
-          css({
-            px: 2,
-            py: 2,
-            h: "120px",
-            display: "flex",
-            flexDirection: "row",
-            width: "fit-content",
-            borderWidth: "1px",
-            borderStyle: "solid",
-          }),
-          selected
-            ? css({ borderColor: "brand.500" })
-            : css({ borderColor: "transparent" }),
-          className
-        )}
+        selected={selected}
+        css={{ width: "fit-content" }}
+        className={className}
       >
         <CardBody
           css={{
@@ -238,7 +218,7 @@ const DataSamplesRowCard = forwardRef<HTMLDivElement, DataSamplesRowCardProps>(
         >
           {children}
         </CardBody>
-      </Card>
+      </RowCard>
     );
   }
 );
@@ -418,18 +398,11 @@ const DataSample = ({
               }
             )}
             onClick={handleDelete}
+            expandHitArea
             css={{
               position: "absolute",
               top: 0,
               right: 0,
-              _after: {
-                position: "absolute",
-                top: -2,
-                right: -2,
-                bottom: -2,
-                left: -2,
-                content: '""',
-              },
             }}
           />,
           target

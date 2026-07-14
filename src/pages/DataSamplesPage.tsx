@@ -42,6 +42,7 @@ import {
   useSettings,
   useStore,
 } from "../store";
+import PageActionBar from "../components/PageActionBar";
 import { tourElClassname } from "../tours";
 import { createHomePageUrl, createTestingModelPageUrl } from "../urls";
 
@@ -208,21 +209,11 @@ const DataSamplesPage = () => {
         backUrl={createHomePageUrl()}
         bottomContent={
           <>
-            <HStack
-              role="region"
+            <PageActionBar
               aria-label={intl.formatMessage({
                 id: "data-samples-actions-region",
               })}
-              justifyContent="space-between"
-              px={5}
-              py={2}
-              w="full"
-              borderBottomWidth="3px"
-              borderTopWidth="3px"
-              borderStyle="solid"
-              borderColor="gray.200"
-              alignItems="center"
-              position="relative"
+              css={{ position: "relative" }}
             >
               <HStack gap={2} alignItems="center">
                 <Button
@@ -275,7 +266,7 @@ const DataSamplesPage = () => {
               {dataSamplesHint?.type === "move-microbit" && (
                 <MoveMicrobitHint />
               )}
-            </HStack>
+            </PageActionBar>
             <LiveGraphPanel
               disconnectedTextId="connect-to-record"
               showDisconnectedOverlay={!isDialogOpen}

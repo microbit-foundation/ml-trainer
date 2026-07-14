@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, Image, Link, Text, VStack } from "../shared-ui";
-import { RiExternalLinkLine } from "react-icons/ri";
+import { Image, Text, VStack } from "../shared-ui";
+import ExternalLink from "./ExternalLink";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
 import microbitConnectedImage from "../images/stylised-microbit-connected.svg";
@@ -22,27 +22,10 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
       <VStack gap={5} width="100%">
         <Text alignSelf="left" width="100%">
           <FormattedMessage id="connect-battery-subtitle" />
-          <Link
-            color="brand.600"
-            textDecoration="underline"
+          <ExternalLink
+            textId="connect-battery-link"
             href={supportLinks.wearable}
-            target="_blank"
-            rel="noopener"
-            display="flex"
-            flexDirection="row"
-            gap={1}
-          >
-            <FormattedMessage id="connect-battery-link" />
-            <Icon
-              as={RiExternalLinkLine}
-              css={{
-                width: 5,
-                height: 5,
-                color: "brand.600",
-                position: "relative",
-              }}
-            />
-          </Link>
+          />
         </Text>
         <Image
           height="229px"

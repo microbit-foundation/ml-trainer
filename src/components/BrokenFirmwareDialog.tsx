@@ -5,8 +5,6 @@
  */
 import {
   Button,
-  HStack,
-  Icon,
   Modal,
   ModalBody,
   ModalFooter,
@@ -15,7 +13,7 @@ import {
   VStack,
 } from "../shared-ui";
 import { ReactNode } from "react";
-import { RiExternalLinkLine } from "react-icons/ri";
+import ExternalLink from "./ExternalLink";
 import { FormattedMessage } from "react-intl";
 import Link from "./Link";
 import { useDeployment } from "../deployment";
@@ -68,39 +66,20 @@ const BrokenFirmwareDialog = ({
             />
           </Text>
           <Text w="100%">
-            <Link
-              color="brand.600"
-              textDecoration="underline"
+            <ExternalLink
+              textId="connect-troubleshoot"
               href={supportLinks.troubleshooting}
-              target="_blank"
-              rel="noopener"
-              display="flex"
-              flexDirection="row"
-              gap={1}
-            >
-              <FormattedMessage id="connect-troubleshoot" />
-              <Icon
-                as={RiExternalLinkLine}
-                css={{
-                  width: 5,
-                  height: 5,
-                  color: "brand.600",
-                  position: "relative",
-                }}
-              />
-            </Link>
+            />
           </Text>
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <HStack gap={5}>
-          <Button onPress={onClose} variant="secondary" size="lg">
-            <FormattedMessage id="cancel-action" />
-          </Button>
-          <Button onPress={onTryAgain} variant="primary" size="lg">
-            <FormattedMessage id="try-again-action" />
-          </Button>
-        </HStack>
+        <Button onPress={onClose} variant="secondary" size="lg">
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <Button onPress={onTryAgain} variant="primary" size="lg">
+          <FormattedMessage id="try-again-action" />
+        </Button>
       </ModalFooter>
     </Modal>
   );

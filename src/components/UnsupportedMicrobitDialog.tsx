@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   Modal,
   ModalBody,
   ModalFooter,
@@ -89,17 +88,15 @@ const UnsupportedMicrobitDialog = ({
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <HStack gap={5}>
-          {isBluetoothSupported ? (
-            <Button onPress={onStartBluetoothClick} variant="primary" size="lg">
-              <FormattedMessage id="connect-with-web-bluetooth" />
-            </Button>
-          ) : (
-            <Button onPress={onClose} variant="primary" size="lg">
-              <FormattedMessage id="close-action" />
-            </Button>
-          )}
-        </HStack>
+        {isBluetoothSupported ? (
+          <Button onPress={onStartBluetoothClick} variant="primary" size="lg">
+            <FormattedMessage id="connect-with-web-bluetooth" />
+          </Button>
+        ) : (
+          <Button onPress={onClose} variant="primary" size="lg">
+            <FormattedMessage id="close-action" />
+          </Button>
+        )}
       </ModalFooter>
     </Modal>
   );

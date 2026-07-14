@@ -22,7 +22,6 @@ import { useProject } from "../hooks/project-hooks";
 import {
   ButtonGroup,
   Flex,
-  HStack,
   Icon,
   MenuItem,
   MenuList,
@@ -32,6 +31,7 @@ import { useBoardVersion } from "../hooks/use-board-version";
 import { usePrevious } from "../hooks/use-previous";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { projectSessionStorage } from "../session-storage";
+import PageActionBar from "../components/PageActionBar";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import {
@@ -138,20 +138,11 @@ const TestingModelPage = () => {
       backLabelId="back-to-data-samples-action"
       bottomContent={
         <>
-          <HStack
-            role="region"
+          <PageActionBar
             aria-label={intl.formatMessage({
               id: "testing-model-actions-region",
             })}
-            justifyContent="right"
-            px={5}
-            py={2}
-            w="full"
-            borderBottomWidth="3px"
-            borderTopWidth="3px"
-            borderStyle="solid"
-            borderColor="gray.200"
-            alignItems="center"
+            justify="right"
           >
             <ButtonGroup isAttached>
               <ButtonWithLoading
@@ -186,7 +177,7 @@ const TestingModelPage = () => {
                 </MenuList>
               </MenuTrigger>
             </ButtonGroup>
-          </HStack>
+          </PageActionBar>
           <LiveGraphPanel
             showPredictedAction
             disconnectedTextId="connect-to-test-model"

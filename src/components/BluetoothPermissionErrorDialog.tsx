@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   Modal,
   ModalBody,
   ModalFooter,
@@ -96,19 +95,17 @@ const PermissionErrorDialog = ({
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <HStack gap={5}>
-          <Button onPress={onClose} variant="secondary" size="lg">
-            <FormattedMessage id="cancel-action" />
-          </Button>
-          <ButtonWithLoading
-            onClick={onTryAgain}
-            variant="primary"
-            size="lg"
-            isLoading={showLoading}
-          >
-            <FormattedMessage id="try-again-action" />
-          </ButtonWithLoading>
-        </HStack>
+        <Button onPress={onClose} variant="secondary" size="lg">
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <ButtonWithLoading
+          onClick={onTryAgain}
+          variant="primary"
+          size="lg"
+          isLoading={showLoading}
+        >
+          <FormattedMessage id="try-again-action" />
+        </ButtonWithLoading>
       </ModalFooter>
     </Modal>
   );

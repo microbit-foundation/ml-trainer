@@ -5,7 +5,6 @@
  */
 import {
   Button,
-  HStack,
   Link,
   Modal,
   ModalBody,
@@ -119,21 +118,19 @@ const IncompatibleEditorDevice = ({
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <HStack gap={5}>
-          <Button onPress={onBack ?? onClose} variant="secondary" size="lg">
-            <FormattedMessage id={onBack ? "back-action" : "cancel-action"} />
-          </Button>
-          <ButtonWithLoading
-            onClick={onNext ?? onClose}
-            variant={onNext ? "primary" : "secondary"}
-            size="lg"
-            isLoading={onNextLoading}
-          >
-            <FormattedMessage
-              id={onNext ? "continue-makecode-action" : "cancel-action"}
-            />
-          </ButtonWithLoading>
-        </HStack>
+        <Button onPress={onBack ?? onClose} variant="secondary" size="lg">
+          <FormattedMessage id={onBack ? "back-action" : "cancel-action"} />
+        </Button>
+        <ButtonWithLoading
+          onClick={onNext ?? onClose}
+          variant={onNext ? "primary" : "secondary"}
+          size="lg"
+          isLoading={onNextLoading}
+        >
+          <FormattedMessage
+            id={onNext ? "continue-makecode-action" : "cancel-action"}
+          />
+        </ButtonWithLoading>
       </ModalFooter>
     </Modal>
   );

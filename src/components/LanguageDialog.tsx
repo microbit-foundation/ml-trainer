@@ -8,10 +8,10 @@ import {
   RiCheckboxBlankLine,
   RiCheckboxLine,
   RiErrorWarningLine,
-  RiExternalLinkLine,
 } from "react-icons/ri";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { deployment, useDeployment } from "../deployment";
+import ExternalLink from "./ExternalLink";
 import { flags } from "../flags";
 import { isNativePlatform } from "../platform";
 import { allLanguages, Language, nativeLanguageIds } from "../settings";
@@ -21,7 +21,6 @@ import {
   Grid,
   HStack,
   Icon,
-  Link,
   List,
   ListItem,
   Modal,
@@ -108,16 +107,12 @@ export const LanguageDialog = ({ isOpen, onClose }: LanguageDialogProps) => {
       <ModalFooter>
         <ModalFooterContent
           leftContent={
-            <Link
-              pl={1}
-              href={deployment.translationLink}
-              target="_blank"
-              rel="noopener"
-              color="brand.500"
-            >
-              <FormattedMessage id="help-translate" />{" "}
-              <Icon as={RiExternalLinkLine} />
-            </Link>
+            deployment.translationLink !== undefined && (
+              <ExternalLink
+                textId="help-translate"
+                href={deployment.translationLink}
+              />
+            )
           }
         >
           <Button variant="primary" onPress={onClose}>

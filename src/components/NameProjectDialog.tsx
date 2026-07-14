@@ -100,14 +100,13 @@ export const NameProjectDialog = ({
           />
         </form>
       </ModalBody>
-      <ModalFooter>
+      <ModalFooter css={{ gap: 3 }}>
         <Button onPress={onClose}>
           <FormattedMessage id="cancel-action" />
         </Button>
         <Button
           variant="primary"
           onPress={() => onSave(name)}
-          css={{ ml: 3 }}
           isDisabled={!isValid}
         >
           {confirmText}

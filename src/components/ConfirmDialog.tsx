@@ -53,12 +53,12 @@ export const ConfirmDialog = ({
         {heading}
       </ModalHeader>
       <ModalBody>{body}</ModalBody>
-      <ModalFooter>
+      <ModalFooter css={{ gap: 3 }}>
         {/* Least-destructive action gets initial focus (AlertDialog pattern). */}
         <Button autoFocus onPress={onCancel}>
           {cancelText}
         </Button>
-        <Button variant="warningSolid" onPress={onConfirm} css={{ ml: 3 }}>
+        <Button variant="warningSolid" onPress={onConfirm}>
           {confirmText}
         </Button>
       </ModalFooter>

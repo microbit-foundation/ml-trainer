@@ -3,13 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CSSProperties,
-  forwardRef,
-  useImperativeHandle,
-  useState,
-} from "react";
-import { Box, HStack, Svg, SystemStyleObject, VStack } from "../../shared-ui";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import { Box, HStack, Svg, VStack } from "../../shared-ui";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 
 const starIconConfigs = [
@@ -113,24 +109,17 @@ const Arrow = forwardRef<ArrowRef>(function Arrow(_, ref) {
   );
 });
 
-const StarIcon = ({
-  css: cssProp,
-  style,
-}: {
-  css?: SystemStyleObject;
-  style?: CSSProperties;
-}) => (
-  <Svg
+const StarIcon = (props: AnimationIconProps) => (
+  <AnimationIcon
     viewBox="0 0 33 47"
-    fill="none"
-    css={{ color: "brand.500", ...cssProp }}
-    style={style}
+    baseCss={{ fill: "none", color: "brand.500" }}
+    {...props}
   >
     <path
       d="M32.6 23.1C32.6 23.4 32 24.1 28.3 24.6C24.8 25 20.4 26.1 18.3 37.9C18.3 37.9 17.6 46.1 16.3 46.1C15.1 46.1 14.3 37.9 14.3 37.9C12.3 26.1 7.9 25 4.3 24.6C0.6 24.2 0.1 23.4 0 23.1C0 22.7 0.6 22 4.3 21.5C7.8 21.1 12.2 20 14.3 8.2C14.4 8.2 15.1 0 16.3 0C17.5 0 18.3 8.2 18.3 8.2C20.3 20 24.7 21.1 28.3 21.5C32 21.9 32.5 22.7 32.6 23V23.1Z"
       fill="currentColor"
     />
-  </Svg>
+  </AnimationIcon>
 );
 
 export default Arrow;
