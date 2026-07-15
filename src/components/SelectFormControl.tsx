@@ -38,37 +38,18 @@ const SelectFormControl = <T extends string>({
       <label htmlFor={id} className={css({ flex: "1 1 auto" })}>
         {label}
       </label>
-      <span className={css({ position: "relative", display: "inline-flex" })}>
-        <NativeSelect
-          id={id}
-          onChange={handleChange}
-          css={{ width: "28ch", paddingRight: "8" }}
-          value={value}
-        >
-          {options.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </NativeSelect>
-        {/* Chakra Select's chevron. */}
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden
-          className={css({
-            position: "absolute",
-            right: "2",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "5",
-            height: "5",
-            pointerEvents: "none",
-            fill: "currentColor",
-          })}
-        >
-          <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-        </svg>
-      </span>
+      <NativeSelect
+        id={id}
+        onChange={handleChange}
+        css={{ width: "28ch" }}
+        value={value}
+      >
+        {options.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </NativeSelect>
     </Flex>
   );
 };

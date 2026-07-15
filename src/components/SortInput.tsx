@@ -32,6 +32,9 @@ const SortInput = ({
         value={value}
         onChange={onSelectChange}
         aria-label={intl.formatMessage({ id: "sort-select-label" })}
+        // Matches the Chakra-era look; the adjacent sort-order button keeps
+        // the control from reading as a plain text field.
+        hideChevron
         disabled={hasSearchQuery}
         // flex/minW let the select shrink below its longest option when space
         // is tight, clipping the text like Chakra's Select did.

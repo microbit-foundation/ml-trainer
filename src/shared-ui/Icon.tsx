@@ -22,12 +22,17 @@ export interface IconProps {
  * base styles. `fill: currentColor` means the glyph follows the surrounding
  * text colour (set `css={{ color: ... }}` to override), so it inherits colour
  * like Chakra's icons rather than defaulting to black.
+ *
+ * Unlabelled icons are treated as decorative and hidden from assistive tech;
+ * a labelled icon gets `role="img"` (a bare svg aria-label is unreliably
+ * announced without it).
  */
 export const Icon = ({
   as: As,
   css: cssProp,
   className,
-  ...aria
+  "aria-label": ariaLabel,
+  "aria-hidden": ariaHidden,
 }: IconProps) => (
   <As
     className={cx(
@@ -42,6 +47,9 @@ export const Icon = ({
       }),
       className
     )}
-    {...aria}
+    focusable="false"
+    aria-label={ariaLabel}
+    aria-hidden={ariaHidden ?? (ariaLabel ? undefined : true)}
+    role={ariaLabel ? "img" : undefined}
   />
 );
