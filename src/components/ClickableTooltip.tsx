@@ -156,6 +156,9 @@ const ClickableTooltip = ({
             type="button"
             {...nameProps}
             className={cx("focusable-tooltip", triggerStyle)}
+            // Out of the tab order while the surrounding UI is disabled.
+            tabIndex={isDisabled ? -1 : undefined}
+            aria-disabled={isDisabled || undefined}
             onClick={handleClick}
             onPointerDown={handlePointerDown}
             onFocus={handleFocus}

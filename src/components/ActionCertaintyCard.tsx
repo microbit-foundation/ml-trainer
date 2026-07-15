@@ -66,8 +66,16 @@ const ActionCertaintyCard = ({
               id: "recognition-point-label",
             })}
             value={sliderValue}
-            css={{ w: "240px" }}
-            trackCss={{ h: "8px", rounded: "full" }}
+            isDisabled={disabled}
+            // The card already conveys the disabled state (dimmed with
+            // pointer-events off), so suppress the recipe's disabled
+            // restyle rather than stacking the two.
+            css={{ w: "240px", "&[data-disabled]": { opacity: 1 } }}
+            trackCss={{
+              h: "8px",
+              rounded: "full",
+              "[data-disabled] &": { bg: "gray.200" },
+            }}
             filledTrackCss={{ bg: "gray.600" }}
             thumbCss={{ bg: "gray.600" }}
             mark={`${sliderValue.toFixed(0)}%`}

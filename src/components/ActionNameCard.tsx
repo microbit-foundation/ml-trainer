@@ -190,6 +190,7 @@ const ActionNameCard = ({
             id={actionNameInputId(value)}
             autoFocus={isDesktop && localName.length === 0}
             readOnly={viewMode !== ActionCardNameViewMode.Editable}
+            tabIndex={disabled ? -1 : undefined}
             value={localName}
             maxLength={18}
             css={
