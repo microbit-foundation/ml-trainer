@@ -18,6 +18,6 @@ export const Link = styled("a", {
       "background-color, border-color, color, fill, stroke, opacity, box-shadow, transform",
     transitionDuration: "normal",
     _hover: { textDecoration: "underline" },
-    _focusVisible: { boxShadow: "outline" },
+    _focusVisible: { focusShadow: "outline" },
   },
 });

@@ -435,6 +435,9 @@ export const ossPreset = definePreset({
       // shortScreenHeightBreakpoint, which Panda's extractor couldn't resolve
       // across files.
       shortHeight: "@media (max-height: 800px)",
+      // High-contrast/forced-palette modes (e.g. Windows High Contrast), which
+      // strip author backgrounds and box-shadows.
+      forcedColors: "@media (forced-colors: active)",
     },
   },
 });

@@ -76,7 +76,7 @@ export const slider = defineSlotRecipe({
       },
       transform: "translate(-50%, -50%)",
       "&[data-focus-visible]": {
-        boxShadow: "outline",
+        focusShadow: "outline",
       },
       "&[data-disabled]": {
         bg: "gray.300",

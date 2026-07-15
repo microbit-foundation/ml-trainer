@@ -44,7 +44,7 @@ export const button = defineRecipe({
     verticalAlign: "middle",
     outline: "none",
     _focusVisible: {
-      boxShadow: "outline",
+      focusShadow: "outline",
     },
     _disabled: {
       opacity: 0.4,
@@ -162,7 +162,7 @@ export const button = defineRecipe({
         bg: "white",
         _hover: { bg: "whiteAlpha.900", _disabled: { bg: "white" } },
         _active: { bg: "whiteAlpha.800" },
-        _focusVisible: { boxShadow: "outlineDark" },
+        _focusVisible: { focusShadow: "outlineDark" },
       },
       language: {
         borderWidth: "2px",

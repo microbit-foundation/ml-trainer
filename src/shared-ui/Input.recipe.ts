@@ -49,6 +49,11 @@ export const input = defineRecipe({
       zIndex: 1,
       borderColor: "blue.500",
       boxShadow: "0 0 0 1px token(colors.blue.500)",
+      // Focus indicator for forced-colors modes, which strip the box-shadow
+      // and force the border colour (the focusShadow utility's technique; the
+      // ring here is the 1px border tint, not an outline* shadow token).
+      outline: "2px solid transparent",
+      outlineOffset: "2px",
     },
     "&:is(:disabled, [data-disabled])": {
       opacity: 0.4,

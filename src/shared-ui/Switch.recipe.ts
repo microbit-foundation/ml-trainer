@@ -44,9 +44,17 @@ export const switchRecipe = defineSlotRecipe({
         bg: "blue.500",
       },
       "&[data-focus-visible]": {
-        boxShadow: "outline",
+        focusShadow: "outline",
       },
       "&[data-disabled]": { opacity: 0.4 },
+      // Forced-colors modes strip author backgrounds, flattening track and
+      // thumb to the same colour; a border keeps the track visible and the
+      // system SelectedItem pair conveys on/off.
+      _forcedColors: {
+        borderWidth: "1px",
+        borderStyle: "solid",
+        "&[data-selected]": { bg: "SelectedItem" },
+      },
     },
     thumb: {
       bg: "white",
@@ -57,6 +65,10 @@ export const switchRecipe = defineSlotRecipe({
       height: "4",
       "&[data-selected]": {
         transform: "translateX(0.875rem)",
+      },
+      _forcedColors: {
+        bg: "ButtonText",
+        "&[data-selected]": { bg: "SelectedItemText" },
       },
     },
     label: {

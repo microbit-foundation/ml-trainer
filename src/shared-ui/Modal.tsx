@@ -77,7 +77,9 @@ export interface ModalProps {
   finalFocusRef?: RefObject<HTMLElement>;
   /**
    * Accessible name for dialogs without a ModalHeader (which otherwise
-   * provides the label).
+   * provides the label). One of the two is required — react-aria warns in
+   * dev builds when a dialog has neither. An explicit `aria-label` wins
+   * over a ModalHeader.
    */
   "aria-label"?: string;
   children: ReactNode;
@@ -252,7 +254,7 @@ export const ModalCloseButton = ({
           transitionDuration: "normal",
           _hover: { bg: "blackAlpha.100" },
           _active: { bg: "blackAlpha.200" },
-          _focusVisible: { boxShadow: "outline" },
+          _focusVisible: { focusShadow: "outline" },
         })
       )}
     >
