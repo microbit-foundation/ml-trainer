@@ -201,6 +201,12 @@ const EditableName = ({
               css={{
                 color: "inherit",
                 pl: variant === "drawer" ? 3 : 10,
+                // The global selection colour is too faint to see on the
+                // toolbar's dark field.
+                _selection:
+                  variant === "drawer"
+                    ? undefined
+                    : { bg: "rgba(0, 115, 255, 0.6)" },
                 _focusVisible: {
                   boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.5)",
                 },
