@@ -4,15 +4,16 @@
  * SPDX-License-Identifier: MIT
  */
 import { useEffect, useState } from "react";
+import { token } from "styled-system/tokens";
 
-// Min-width breakpoints, matching the token scale in the Panda preset (Chakra
-// defaults). Kept local so shared-ui has no dependency on the deployment theme.
+// Min-width breakpoints from the preset's token scale (runtime lookup so the
+// hook tracks any preset override rather than duplicating the values).
 const BREAKPOINTS = {
-  sm: "30em",
-  md: "48em",
-  lg: "62em",
-  xl: "80em",
-  "2xl": "96em",
+  sm: token("breakpoints.sm"),
+  md: token("breakpoints.md"),
+  lg: token("breakpoints.lg"),
+  xl: token("breakpoints.xl"),
+  "2xl": token("breakpoints.2xl"),
 } as const;
 
 type Breakpoint = "base" | keyof typeof BREAKPOINTS;
