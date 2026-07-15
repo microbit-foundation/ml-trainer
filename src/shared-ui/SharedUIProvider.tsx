@@ -13,6 +13,16 @@ import { createContext, ReactNode, useContext, useMemo } from "react";
 export interface SharedUIStrings {
   /** Accessible label for close buttons (dialogs, toasts). */
   close: string;
+  /**
+   * Screen-reader-only announcements of a toast's status, which is otherwise
+   * conveyed by colour and icon alone.
+   */
+  toastStatuses: {
+    info: string;
+    success: string;
+    warning: string;
+    error: string;
+  };
 }
 
 /**

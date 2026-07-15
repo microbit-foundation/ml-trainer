@@ -34,6 +34,7 @@ import { slider } from "../../shared-ui/Slider.recipe";
 import { switchRecipe } from "../../shared-ui/Switch.recipe";
 import { dialog } from "../../shared-ui/Modal.recipe";
 import { field } from "../../shared-ui/TextField.recipe";
+import { toast } from "../../shared-ui/Toast.recipe";
 
 // gray overrides from the original Chakra theme (components/../colors.ts):
 // adds the very-light 10/25 stops and replaces 500/600.
@@ -342,6 +343,12 @@ export const ossPreset = definePreset({
       colors: {
         languageText: { value: "{colors.brand2.500}" },
         languageTextHover: { value: "{colors.brand2.600}" },
+        // Toast status colours: the Chakra-era toast Alert restyle (teal for
+        // every status except error) shared across the app family.
+        toastInfoBg: { value: "{colors.teal.800}" },
+        toastSuccessBg: { value: "{colors.teal.800}" },
+        toastWarningBg: { value: "{colors.teal.800}" },
+        toastErrorBg: { value: "{colors.red.600}" },
       },
     },
     recipes: {
@@ -358,6 +365,7 @@ export const ossPreset = definePreset({
       menu,
       slider,
       switchRecipe,
+      toast,
     },
   },
   // What ChakraProvider used to inject and Panda's preflight doesn't cover:

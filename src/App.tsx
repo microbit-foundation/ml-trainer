@@ -110,7 +110,15 @@ const radioBridge = isMockDeviceMode()
 const SharedUIConfig = ({ children }: ProviderLayoutProps) => {
   const intl = useIntl();
   const strings = useMemo(
-    () => ({ close: intl.formatMessage({ id: "close-action" }) }),
+    () => ({
+      close: intl.formatMessage({ id: "close-action" }),
+      toastStatuses: {
+        info: intl.formatMessage({ id: "toast-status-info" }),
+        success: intl.formatMessage({ id: "toast-status-success" }),
+        warning: intl.formatMessage({ id: "toast-status-warning" }),
+        error: intl.formatMessage({ id: "toast-status-error" }),
+      },
+    }),
     [intl]
   );
   return (

@@ -3619,6 +3619,30 @@
       "value": "幾秒前"
     }
   ],
+  "toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
+    }
+  ],
   "tour-action": [
     {
       "type": 0,

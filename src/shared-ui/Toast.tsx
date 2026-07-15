@@ -5,6 +5,7 @@
  */
 import { ReactNode, useMemo } from "react";
 import {
+  Button as RACButton,
   UNSTABLE_Toast as RACToast,
   UNSTABLE_ToastContent as RACToastContent,
   UNSTABLE_ToastQueue as RACToastQueue,
@@ -17,13 +18,11 @@ import {
   RiErrorWarningFill,
   RiInformationFill,
 } from "react-icons/ri";
-import { css, cva } from "styled-system/css";
-import { Box } from "styled-system/jsx";
-import { Button } from "./Button";
+import { toast as toastRecipe } from "styled-system/recipes";
 import { CloseIcon } from "./CloseIcon";
 import { Icon } from "./Icon";
 import { useSharedUIStrings } from "./SharedUIProvider";
-import { Text } from "./Text";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 export type ToastStatus = "info" | "success" | "warning" | "error";
 
@@ -43,50 +42,11 @@ export const toastQueue = new RACToastQueue<ToastContent>({
   maxVisibleToasts: 5,
 });
 
-const toastStyle = cva({
-  base: {
-    position: "relative",
-    display: "flex",
-    alignItems: "flex-start",
-    gap: "3",
-    p: "4",
-    // Leave room for the absolutely-positioned close button plus breathing space
-    // so its hover area never overlaps the title text (24px button at 4px inset
-    // spans ~4-28px from the right; content stops at 40px for a ~12px gap).
-    paddingRight: "10",
-    borderRadius: "md",
-    boxShadow: "lg",
-    color: "white",
-    maxW: "sm",
-    pointerEvents: "auto",
-  },
-  variants: {
-    status: {
-      info: { bg: "teal.800" },
-      success: { bg: "teal.800" },
-      warning: { bg: "teal.800" },
-      error: { bg: "red.600" },
-    },
-  },
-  defaultVariants: { status: "info" },
-});
-
-const regionStyle = css({
-  position: "fixed",
-  top: "4",
-  left: "50%",
-  transform: "translateX(-50%)",
-  zIndex: "toast",
-  display: "flex",
-  flexDirection: "column",
-  gap: "2",
-  pointerEvents: "none",
-});
-
 // Status icon matching Chakra's AlertIcon (filled glyphs, coloured by the
 // toast foreground = white here). Warning is a triangle, error a circle, as
 // in Chakra — the glyph must distinguish them because the colours alone
-// don't reliably (and the icon is the only non-text status signal).
+// don't reliably. The icon is decorative; the status is announced via the
+// visually hidden status text.
 const statusIcon: Record<ToastStatus, IconType> = {
   info: RiInformationFill,
   success: RiCheckboxCircleFill,
@@ -96,65 +56,44 @@ const statusIcon: Record<ToastStatus, IconType> = {
 
 /**
  * Mount once near the app root, inside the SharedUIProvider (the close
- * button's label comes from its strings). Renders the live region that
- * announces and displays queued toasts.
+ * button's label and the status announcements come from its strings).
+ * Renders the live region that announces and displays queued toasts.
  */
 export const ToastProvider = () => {
   const strings = useSharedUIStrings();
+  const slots = toastRecipe();
   return (
-    <RACToastRegion queue={toastQueue} className={regionStyle}>
-      {({ toast }) => (
-        <RACToast
-          toast={toast}
-          className={toastStyle({ status: toast.content.status })}
-        >
-          <Icon
-            as={statusIcon[toast.content.status ?? "info"]}
-            css={{ fontSize: "1.25rem", flexShrink: 0 }}
-            aria-hidden
-          />
-          <RACToastContent>
-            {toast.content.title && (
-              <Text fontWeight="bold">{toast.content.title}</Text>
+    <RACToastRegion queue={toastQueue} className={slots.region}>
+      {({ toast }) => {
+        const status = toast.content.status ?? "info";
+        return (
+          <RACToast toast={toast} className={toastRecipe({ status }).root}>
+            <Icon as={statusIcon[status]} className={slots.icon} aria-hidden />
+            <RACToastContent>
+              {/* Colour and icon are the only visible status signals; say it
+                  for assistive tech too. */}
+              <VisuallyHidden>{strings.toastStatuses[status]} </VisuallyHidden>
+              {toast.content.title && (
+                <p className={slots.title}>{toast.content.title}</p>
+              )}
+              {toast.content.description && (
+                <div className={slots.description}>
+                  {toast.content.description}
+                </div>
+              )}
+            </RACToastContent>
+            {toast.content.isClosable && (
+              <RACButton
+                slot="close"
+                aria-label={strings.close}
+                className={slots.closeButton}
+              >
+                <CloseIcon />
+              </RACButton>
             )}
-            {toast.content.description && (
-              <Box css={{ mt: "1" }}>{toast.content.description}</Box>
-            )}
-          </RACToastContent>
-          {toast.content.isClosable && (
-            <Button
-              slot="close"
-              variant="unstyled"
-              aria-label={strings.close}
-              css={{
-                // A sized box with the glyph centred (like Chakra's CloseButton)
-                // gives padding around the X and a hover affordance.
-                position: "absolute",
-                top: "1",
-                insetEnd: "1",
-                color: "white",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                // Chakra toast uses CloseButton size="sm": 24px box, 2xs glyph.
-                width: "6",
-                height: "6",
-                minHeight: "0",
-                minWidth: "0",
-                padding: "0",
-                fontSize: "2xs",
-                borderRadius: "md",
-                // Chakra's CloseButton hover is a subtle dark overlay (blackAlpha)
-                // in light mode, not a bright highlight.
-                _hover: { bg: "blackAlpha.100" },
-                _active: { bg: "blackAlpha.200" },
-              }}
-            >
-              <CloseIcon />
-            </Button>
-          )}
-        </RACToast>
-      )}
+          </RACToast>
+        );
+      }}
     </RACToastRegion>
   );
 };
@@ -198,7 +137,15 @@ export const useToast = (): ToastFn =>
         return;
       }
       toastQueue.add(
-        { id, title, description, status, isClosable },
+        {
+          id,
+          title,
+          description,
+          status,
+          // A toast that never times out must be dismissable or it is
+          // permanent and unremovable; force the close button on.
+          isClosable: isClosable || duration == null,
+        },
         { timeout: duration ?? undefined }
       );
     };

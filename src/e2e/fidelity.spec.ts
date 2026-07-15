@@ -173,7 +173,14 @@ test.describe("fidelity desktop states", () => {
     await page.getByRole("button", { name: "Settings actions menu" }).click();
     await page.getByRole("menuitem", { name: "Language" }).click();
     await screenshot(page, "language-dialog");
-    await page.keyboard.press("Escape");
+    // Choosing a partially supported language closes the dialog and fires the
+    // info toast. Welsh has no UI translation so the app stays in English.
+    await page.getByTestId("cy").click();
+    const toast = page.getByText("Language not fully supported");
+    await expect(toast).toBeVisible();
+    await screenshot(page, "language-toast");
+    await page.getByRole("button", { name: "Close" }).click();
+    await expect(toast).not.toBeVisible();
 
     await page.getByRole("button", { name: "Help" }).click();
     await expect(page.getByRole("menu")).toBeVisible();

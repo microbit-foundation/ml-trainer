@@ -50,6 +50,8 @@ export default defineConfig({
       card: ["*"],
       dialog: [{ size: ["*"], responsive: true }, { centered: ["*"] }],
       drawer: ["*"],
+      // Toast status is chosen at runtime from the toast content.
+      toast: ["*"],
     },
   },
 });
