@@ -11,11 +11,11 @@ import {
   Modal as RACModal,
   ModalOverlay,
 } from "react-aria-components";
-import { useIntl } from "react-intl";
 import { css, cx } from "styled-system/css";
 import { dialog } from "styled-system/recipes";
 import { ConditionalValue, SystemStyleObject } from "styled-system/types";
 import { CloseIcon } from "./CloseIcon";
+import { useSharedUIStrings } from "./SharedUIProvider";
 import { UnmountCallback } from "./UnmountCallback";
 
 type DialogSlots = ReturnType<typeof dialog>;
@@ -218,7 +218,7 @@ export const ModalFooter = ({
 };
 
 export interface ModalCloseButtonProps {
-  /** Accessible name; defaults to the localized "close-action" message. */
+  /** Accessible name; defaults to the SharedUIProvider's close label. */
   "aria-label"?: string;
 }
 
@@ -229,11 +229,11 @@ export interface ModalCloseButtonProps {
 export const ModalCloseButton = ({
   "aria-label": ariaLabel,
 }: ModalCloseButtonProps) => {
-  const intl = useIntl();
+  const strings = useSharedUIStrings();
   const { slots, onClose } = useDialog();
   return (
     <RACButton
-      aria-label={ariaLabel ?? intl.formatMessage({ id: "close-action" })}
+      aria-label={ariaLabel ?? strings.close}
       onPress={onClose}
       className={cx(
         slots.closeTrigger,

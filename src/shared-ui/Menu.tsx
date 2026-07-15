@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Capacitor } from "@capacitor/core";
 import { ReactNode, useCallback, useState } from "react";
 import {
   Menu as RACMenu,
@@ -17,9 +16,7 @@ import {
 import { css, cx } from "styled-system/css";
 import { menu } from "styled-system/recipes";
 import { SystemStyleObject } from "styled-system/types";
-import { setActiveMenuClose } from "../back-button";
-
-const isNative = Capacitor.isNativePlatform();
+import { useOverlayCloseRegistrar } from "./SharedUIProvider";
 
 export interface MenuTriggerProps {
   /** Called when the menu opens. */
@@ -35,35 +32,36 @@ export interface MenuTriggerProps {
  * trigger (e.g. a Button); the second is a `MenuList`. RAC returns focus to the
  * trigger when the menu closes.
  *
- * On native platforms it runs controlled so the Android back button can close
- * the menu via the {@link setActiveMenuClose} registry (only one menu is open at
- * a time). On desktop browsers it's an uncontrolled pass-through.
+ * When the app installs an overlay-close registrar (e.g. so the Android back
+ * button can close the menu), the trigger runs controlled and registers its
+ * close function while open. Otherwise it's an uncontrolled pass-through.
  */
 export const MenuTrigger = ({
   onOpen,
   onClose,
   children,
 }: MenuTriggerProps) => {
+  const registerClose = useOverlayCloseRegistrar();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
       setIsOpen(open);
       if (open) {
-        setActiveMenuClose(() => {
+        registerClose?.(() => {
           setIsOpen(false);
-          setActiveMenuClose(null);
+          registerClose(null);
         });
         onOpen?.();
       } else {
-        setActiveMenuClose(null);
+        registerClose?.(null);
         onClose?.();
       }
     },
-    [onOpen, onClose]
+    [registerClose, onOpen, onClose]
   );
 
-  if (!isNative) {
+  if (!registerClose) {
     return (
       <RACMenuTrigger
         onOpenChange={(open) => (open ? onOpen?.() : onClose?.())}

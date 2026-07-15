@@ -38,6 +38,7 @@ export * from "./List";
 export * from "./Menu";
 export * from "./Modal";
 export * from "./PopoverArrow";
+export * from "./SharedUIProvider";
 export * from "./Tooltip";
 export * from "./Toast";
 export * from "./VisuallyHidden";

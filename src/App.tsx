@@ -20,8 +20,9 @@ import {
   useNavigate,
   useRouteError,
 } from "react-router-dom";
+import { Capacitor } from "@capacitor/core";
 import "theme-package/fonts/fonts.css";
-import { useNativeBackButton } from "./back-button";
+import { setActiveMenuClose, useNativeBackButton } from "./back-button";
 import {
   broadcastChannel,
   BroadcastChannelData,
@@ -33,7 +34,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
-import { ToastProvider, useToast } from "./shared-ui";
+import { SharedUIProvider, ToastProvider, useToast } from "./shared-ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
@@ -100,6 +101,30 @@ const radioBridge = isMockDeviceMode()
   ? new MockRadioBridgeConnection(usb)
   : createRadioBridgeConnection(usb, { logging });
 
+/**
+ * shared-ui's installation point: localized strings from the app catalogue,
+ * and — on native platforms — the registry the Android back button handler
+ * uses to close an open menu. Lives inside TranslationProvider so the strings
+ * re-resolve on locale change.
+ */
+const SharedUIConfig = ({ children }: ProviderLayoutProps) => {
+  const intl = useIntl();
+  const strings = useMemo(
+    () => ({ close: intl.formatMessage({ id: "close-action" }) }),
+    [intl]
+  );
+  return (
+    <SharedUIProvider
+      strings={strings}
+      overlayCloseRegistrar={
+        Capacitor.isNativePlatform() ? setActiveMenuClose : undefined
+      }
+    >
+      {children}
+    </SharedUIProvider>
+  );
+};
+
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
   const { ConsentProvider } = deployment.compliance;
@@ -107,15 +132,16 @@ const Providers = ({ children }: ProviderLayoutProps) => {
     <React.StrictMode>
       <LoggingProvider value={logging}>
         <TranslationProvider>
-          {/* Inside TranslationProvider: the toast close button label is localized. */}
-          <ToastProvider />
-          <ConsentProvider>
-            <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
-              <DataConnectionEventProvider>
-                <BufferedDataProvider>{children}</BufferedDataProvider>
-              </DataConnectionEventProvider>
-            </ConnectionsProvider>
-          </ConsentProvider>
+          <SharedUIConfig>
+            <ToastProvider />
+            <ConsentProvider>
+              <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
+                <DataConnectionEventProvider>
+                  <BufferedDataProvider>{children}</BufferedDataProvider>
+                </DataConnectionEventProvider>
+              </ConnectionsProvider>
+            </ConsentProvider>
+          </SharedUIConfig>
         </TranslationProvider>
       </LoggingProvider>
     </React.StrictMode>

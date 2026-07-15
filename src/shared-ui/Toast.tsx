@@ -10,7 +10,6 @@ import {
   UNSTABLE_ToastQueue as RACToastQueue,
   UNSTABLE_ToastRegion as RACToastRegion,
 } from "react-aria-components";
-import { useIntl } from "react-intl";
 import { IconType } from "react-icons/lib";
 import {
   RiAlertFill,
@@ -23,6 +22,7 @@ import { Box } from "styled-system/jsx";
 import { Button } from "./Button";
 import { CloseIcon } from "./CloseIcon";
 import { Icon } from "./Icon";
+import { useSharedUIStrings } from "./SharedUIProvider";
 import { Text } from "./Text";
 
 export type ToastStatus = "info" | "success" | "warning" | "error";
@@ -95,12 +95,12 @@ const statusIcon: Record<ToastStatus, IconType> = {
 };
 
 /**
- * Mount once near the app root, inside the IntlProvider (the close button's
- * label is localized). Renders the live region that announces and displays
- * queued toasts.
+ * Mount once near the app root, inside the SharedUIProvider (the close
+ * button's label comes from its strings). Renders the live region that
+ * announces and displays queued toasts.
  */
 export const ToastProvider = () => {
-  const intl = useIntl();
+  const strings = useSharedUIStrings();
   return (
     <RACToastRegion queue={toastQueue} className={regionStyle}>
       {({ toast }) => (
@@ -125,7 +125,7 @@ export const ToastProvider = () => {
             <Button
               slot="close"
               variant="unstyled"
-              aria-label={intl.formatMessage({ id: "close-action" })}
+              aria-label={strings.close}
               css={{
                 // A sized box with the glyph centred (like Chakra's CloseButton)
                 // gives padding around the X and a hover affordance.
