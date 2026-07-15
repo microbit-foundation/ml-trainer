@@ -4,7 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { createContext, ReactNode, useContext } from "react";
-import { Dialog, Modal as RACModal, ModalOverlay } from "react-aria-components";
+import {
+  Dialog,
+  Heading as RACHeading,
+  Modal as RACModal,
+  ModalOverlay,
+} from "react-aria-components";
 import { css, cx } from "styled-system/css";
 import { drawer, DrawerVariantProps } from "styled-system/recipes";
 import { SystemStyleObject } from "styled-system/types";
@@ -25,10 +30,11 @@ export interface DrawerProps extends DrawerVariantProps {
   /** Allow closing by clicking the backdrop / pressing Escape (default true). */
   isDismissable?: boolean;
   /**
-   * Accessible name for the dialog. Required as the drawer has no title
-   * heading slot.
+   * Accessible name for the dialog. Required unless the drawer contains a
+   * `DrawerTitle`, which then labels it (react-aria warns in dev builds when
+   * neither is present). An explicit `aria-label` wins over a `DrawerTitle`.
    */
-  "aria-label": string;
+  "aria-label"?: string;
   children: ReactNode;
 }
 
@@ -92,6 +98,29 @@ export const DrawerHeader = ({
     </div>
   );
 };
+
+/**
+ * DrawerTitle — a heading that labels the drawer dialog (react-aria's title
+ * slot). Use inside DrawerHeader when the drawer has a visible text title;
+ * DrawerHeader itself stays a layout element so it can hold non-heading
+ * content (logos, close buttons).
+ */
+export const DrawerTitle = ({
+  children,
+  css: cssProp,
+  className,
+  level,
+}: SlotProps & {
+  /** Heading element level (default 2, like react-aria). */ level?: number;
+}) => (
+  <RACHeading
+    slot="title"
+    level={level}
+    className={cssProp || className ? cx(css(cssProp), className) : undefined}
+  >
+    {children}
+  </RACHeading>
+);
 
 export const DrawerBody = ({
   children,

@@ -67,6 +67,12 @@ const ActionCertaintyCard = ({
             })}
             value={sliderValue}
             isDisabled={disabled}
+            // Announce the value with its unit, matching the visible mark.
+            formatOptions={{
+              style: "unit",
+              unit: "percent",
+              maximumFractionDigits: 0,
+            }}
             // The card already conveys the disabled state (dimmed with
             // pointer-events off), so suppress the recipe's disabled
             // restyle rather than stacking the two.

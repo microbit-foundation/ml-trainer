@@ -20,6 +20,12 @@ export interface SliderProps {
   maxValue?: number;
   "aria-label": string;
   isDisabled?: boolean;
+  /**
+   * Number format for the value announced to assistive tech (e.g.
+   * `{ style: "unit", unit: "percent" }` so units are heard, not bare
+   * numbers).
+   */
+  formatOptions?: Intl.NumberFormatOptions;
   /** Per-instance style overrides, merged after the recipe. */
   css?: SystemStyleObject;
   trackCss?: SystemStyleObject;
@@ -44,6 +50,7 @@ export const Slider = ({
   maxValue = 100,
   "aria-label": ariaLabel,
   isDisabled,
+  formatOptions,
   css: cssProp,
   trackCss,
   filledTrackCss,
@@ -61,6 +68,7 @@ export const Slider = ({
       maxValue={maxValue}
       aria-label={ariaLabel}
       isDisabled={isDisabled}
+      formatOptions={formatOptions}
       className={cx(slots.root, cssProp ? css(cssProp) : undefined)}
     >
       {mark && (
