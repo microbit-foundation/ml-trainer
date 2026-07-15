@@ -206,6 +206,16 @@ styling uses the `_motionReduce` condition, never a raw
     react-aria's usePress cancels presses outside the button's bounding rect,
     so Chakra's LinkOverlay-over-Button pattern needs a plain `<button>` +
     `position: static` — encapsulated with rationale in `LinkOverlayButton`.
+16. **Panda's preflight styles `::selection` (Chakra's reset didn't), and
+    native selection painting cannot be restored by CSS in every engine**:
+    `background-color: revert` works in Chromium only; in Firefox and WebKit
+    the reverted value computes to transparent (selections turn invisible),
+    and `Highlight`/`HighlightText` matches native only in Firefox
+    (engine-probed, July 2026). So live with the preflight's faint blue and
+    override per-surface where it's illegible — e.g. `_selection` on
+    EditableName's dark toolbar input. Emitting no rule at all would need a
+    patch-package strip of the preflight (tried, worked, judged too
+    heavyweight).
 
 ## How to run / verify
 
