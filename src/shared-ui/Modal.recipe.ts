@@ -15,7 +15,7 @@ import { defineSlotRecipe } from "@pandacss/dev";
  * shared-ui Modal, which maps the slots onto react-aria-components'
  * ModalOverlay / Modal / Dialog.
  *
- * Registered in `src/deployment/default/panda-preset.ts`.
+ * Registered in the shared-ui core preset (panda-preset.ts).
  */
 // Appearance of a normal (non-full) modal box. Restated by every non-full size
 // variant so that, when `size` is responsive (e.g. { base: "full", md: "4xl" }),

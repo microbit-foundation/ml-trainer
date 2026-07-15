@@ -15,7 +15,7 @@ import { defineSlotRecipe } from "@pandacss/dev";
  * this with `_focusWithin` + a class); the reveal lives here so call sites
  * only style the mark's look.
  *
- * Registered in `src/deployment/default/panda-preset.ts`. No variants, so it
+ * Registered in the shared-ui core preset (panda-preset.ts). No variants, so it
  * needs no `staticCss` entry.
  */
 export const slider = defineSlotRecipe({

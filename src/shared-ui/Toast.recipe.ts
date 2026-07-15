@@ -11,9 +11,9 @@ import { defineSlotRecipe } from "@pandacss/dev";
  * `toast*Bg` semantic tokens so brand presets can retune them without
  * touching the recipe.
  *
- * Registered in `src/deployment/default/panda-preset.ts`. The status variant
- * is chosen at runtime from the toast content, so it needs the `staticCss`
- * entry in panda.config.ts.
+ * Registered in the shared-ui core preset (panda-preset.ts). The status variant
+ * is chosen at runtime from the toast content, so it needs the preset's
+ * `staticCss` entry.
  */
 export const toast = defineSlotRecipe({
   className: "toast",

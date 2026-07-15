@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 // Snapshot the Chakra default theme foundation scales into Panda token format.
-// Output is committed as src/deployment/default/chakra-tokens.ts so the OSS
+// Output is committed as src/shared-ui/chakra-tokens.ts so the OSS
 // Panda preset matches Chakra v2 exactly. Chakra is no longer a dependency;
 // kept for provenance — to re-run, `npm i --no-save @chakra-ui/theme` first.
 import { theme } from "@chakra-ui/theme";
@@ -75,7 +75,7 @@ export const breakpoints = ${j(breakpoints)} as const;
 `;
 
 const outPath = new URL(
-  "../src/deployment/default/chakra-tokens.ts",
+  "../src/shared-ui/chakra-tokens.ts",
   import.meta.url
 );
 writeFileSync(outPath, body);

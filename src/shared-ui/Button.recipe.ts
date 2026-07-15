@@ -19,11 +19,14 @@ const transitionCommon =
  * objects work unchanged on RAC's <Button>.
  *
  * A config recipe (not a component cva): styles land in the `recipes` layer so
- * call sites can override with plain style props, and presets could extend the
- * variants if brands ever diverge structurally. Today brand divergence is
- * token-driven (see the `languageText` semantic tokens in the preset).
+ * call sites can override with plain style props, and presets extend the
+ * variants. This file holds the core variant set; the micro:bit foundation
+ * preset merges in the family-wide `language`/`toolbar` variants and the app
+ * preset its `led`/`record*`/`secondary-disabled` vocabulary. Brand
+ * divergence within a variant is token-driven (see the `languageText`
+ * semantic tokens).
  *
- * Registered in `src/deployment/default/panda-preset.ts`.
+ * Registered in the shared-ui core preset (panda-preset.ts).
  */
 export const button = defineRecipe({
   className: "btn",
@@ -97,15 +100,6 @@ export const button = defineRecipe({
         _hover: { borderColor: "brand.600" },
         _active: { bg: "brand.50", borderColor: "brand.700" },
       },
-      led: {
-        borderWidth: "2px",
-        borderRadius: "5px",
-        borderColor: "brand2.500",
-        color: "brand2.700",
-        bg: "transparent",
-        _hover: { cursor: "pointer", borderColor: "brand2.500" },
-        _active: { bg: "brand2.500", borderColor: "brand2.500" },
-      },
       ghost: {
         color: "black",
         bg: "transparent",
@@ -126,20 +120,6 @@ export const button = defineRecipe({
         _hover: { bg: "brand.600", _disabled: { bg: "brand.500" } },
         _active: { bg: "brand.700" },
       },
-      recordOutline: {
-        borderWidth: "1px",
-        borderColor: "red.500",
-        color: "red.500",
-        bg: "transparent",
-        _hover: { bg: "red.50" },
-        _active: { borderColor: "red.600", color: "red.600", bg: "red.100" },
-      },
-      record: {
-        color: "white",
-        bg: "red.500",
-        _hover: { bg: "red.600", _disabled: { bg: "red.500" } },
-        _active: { bg: "red.700" },
-      },
       warning: {
         borderWidth: "2px",
         borderColor: "danger.500",
@@ -157,26 +137,6 @@ export const button = defineRecipe({
         bg: "danger.500",
         _hover: { bg: "danger.600", _disabled: { bg: "danger.500" } },
         _active: { bg: "danger.700" },
-      },
-      toolbar: {
-        color: "black",
-        bg: "white",
-        _hover: { bg: "whiteAlpha.900", _disabled: { bg: "white" } },
-        _active: { bg: "whiteAlpha.800" },
-        _focusVisible: { focusShadow: "outlineDark" },
-      },
-      language: {
-        borderWidth: "2px",
-        borderColor: "gray.200",
-        color: "languageText",
-        _hover: { color: "languageTextHover", bg: "gray.100" },
-      },
-      "secondary-disabled": {
-        borderWidth: "2px",
-        borderColor: "brand.500",
-        color: "brand.700",
-        bg: "transparent",
-        opacity: "0.4",
       },
     },
   },

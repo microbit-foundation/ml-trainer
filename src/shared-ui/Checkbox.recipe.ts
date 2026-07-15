@@ -14,7 +14,7 @@ import { defineSlotRecipe } from "@pandacss/dev";
  * State styling keys off data attributes stamped on the control by the
  * shared-ui Checkbox (react-aria provides the state via render props).
  *
- * Registered in `src/deployment/default/panda-preset.ts`. No variants, so it
+ * Registered in the shared-ui core preset (panda-preset.ts). No variants, so it
  * needs no `staticCss` entry.
  */
 export const checkbox = defineSlotRecipe({

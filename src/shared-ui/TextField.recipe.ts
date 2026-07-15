@@ -11,7 +11,7 @@ import { defineSlotRecipe } from "@pandacss/dev";
  * maps the slots onto react-aria-components' TextField/Label/Text/FieldError;
  * the input itself is styled by the `input` recipe (Input.recipe.ts).
  *
- * Registered in `src/deployment/default/panda-preset.ts`. No variants, so it
+ * Registered in the shared-ui core preset (panda-preset.ts). No variants, so it
  * needs no `staticCss` entry.
  */
 export const field = defineSlotRecipe({
