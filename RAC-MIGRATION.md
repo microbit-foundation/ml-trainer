@@ -558,6 +558,39 @@ with minimal visual impact per app. A full review of shared-ui against that
 goal (July 2026, post-kill-switch) found the architecture sound — extraction
 is mostly *factoring*, not rework — with the following inventory.
 
+### Direction: a monorepo spanning design-system → app-level packages
+
+Agreed July 2026: the extraction target is a **workspace monorepo** holding a
+spectrum of packages, from design-system-y (primitives, foundation preset,
+migration/dev tooling) up to app-level common pieces — the sibling apps share
+whole UX territories beyond components, e.g. micro:bit connection flows,
+which differ per app but share UI elements and dialogs. Not an initial goal
+(the design system extracts first), but it shapes decisions made at
+extraction time:
+
+- **Start as a monorepo even with one package** — converting later churns
+  every consumer; it also gives the migration kit (token snapshotter,
+  resolved-theme differ, fidelity-harness pattern) a home as a tools package.
+- **Pick the i18n mechanism for the end state**: app-level packages are
+  dense with translated strings, so "require the label as a prop" doesn't
+  scale — per-package message catalogs with namespaced ids feeding each
+  app's formatjs pipeline (or equivalent) should be chosen up front.
+- **The ship-as-source/importMap styling setup is a repo-wide convention**,
+  documented once for any package that styles anything; `staticCss` moves
+  into the preset (non-negotiable with multiple consumers).
+- **Explicit dependency direction**: app-level packages may depend on the
+  design system and domain libraries (device connection, Capacitor);
+  design-system packages on neither. The planned inversions (e.g. the
+  overlay-dismissal context) are the installation seams. Brand presets stay
+  in private sibling repos consuming the documented preset contract; the
+  monorepo is OSS.
+
+First app-level candidates: **animations, illustrations, and error-scenario
+handling** from the connection flows — leafy visual pieces, not flow
+orchestration/state machines, which would freeze the wrong seams if
+extracted early. To be kicked off with a **separate census** of the four
+apps' connection UIs, same method as the Chakra censuses below.
+
 ### Why the architecture already fits
 - The Chakra-v2 token snapshot + Chakra-ported recipes make the library
   effectively "Chakra v2's design language on RAC/Panda": any sibling app's
