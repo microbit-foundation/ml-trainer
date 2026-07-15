@@ -348,7 +348,30 @@ export const ossPreset = definePreset({
         toastInfoBg: { value: "{colors.teal.800}" },
         toastSuccessBg: { value: "{colors.teal.800}" },
         toastWarningBg: { value: "{colors.teal.800}" },
-        toastErrorBg: { value: "{colors.red.600}" },
+        toastErrorBg: { value: "{colors.danger.600}" },
+        // Checked/focus states of form controls (Chakra's default blue
+        // colorScheme). Checkbox/Switch checked backgrounds, Input focus
+        // border, and the Slider/ProgressBar fills (the last two are
+        // near-dead defaults - current call sites override them).
+        controlCheckedBg: { value: "{colors.blue.500}" },
+        controlCheckedHoverBg: { value: "{colors.blue.600}" },
+        focusBorder: { value: "{colors.blue.500}" },
+        sliderFilledTrack: { value: "{colors.blue.500}" },
+        progressFilledTrack: { value: "{colors.blue.500}" },
+        // Error/destructive ramp (Chakra red). Destructive button variants,
+        // field error states and the error toast; the record* button
+        // variants deliberately stay on red.* (recording vocabulary, not
+        // danger).
+        danger: {
+          50: { value: "{colors.red.50}" },
+          100: { value: "{colors.red.100}" },
+          500: { value: "{colors.red.500}" },
+          600: { value: "{colors.red.600}" },
+          700: { value: "{colors.red.700}" },
+        },
+        // The native app's status-bar area colour, shared by the ActionBar
+        // and the full-size dialog's safe-area gradient.
+        statusBarBg: { value: "{colors.brand2.500}" },
       },
     },
     recipes: {

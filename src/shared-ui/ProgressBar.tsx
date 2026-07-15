@@ -47,7 +47,11 @@ export const ProgressBar = ({
     {({ percentage }) => (
       <div
         className={css(
-          { height: "100%", bg: "blue.500", transition: "width 0.2s" },
+          {
+            height: "100%",
+            bg: "progressFilledTrack",
+            transition: "width 0.2s",
+          },
           barCss
         )}
         style={{ width: `${percentage ?? 0}%` }}

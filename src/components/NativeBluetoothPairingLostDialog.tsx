@@ -66,7 +66,9 @@ const NativeBluetoothPairingLostDialog = ({
                           width: "1.2em",
                           height: "1.2em",
                           verticalAlign: "text-bottom",
-                          color: "blue.500",
+                          // Depicts the ⓘ button in iOS Settings' Bluetooth
+                          // list, so iOS system blue - not a brand ramp.
+                          color: "#007AFF",
                         }}
                         aria-label={String(chunks)}
                       />

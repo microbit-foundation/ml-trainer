@@ -13,7 +13,6 @@ interface CarouselButtonProps {
   /** Which edge of the carousel the button is pinned to. */
   side: "left" | "right";
   onClick?: () => void;
-  stroke?: string;
   "aria-hidden"?: boolean;
 }
 
@@ -23,7 +22,7 @@ interface CarouselButtonProps {
  * card box shadows, hence the -8px).
  */
 const CarouselButton = React.forwardRef(function CarouselButton(
-  { direction, side, onClick, stroke, ...rest }: CarouselButtonProps,
+  { direction, side, onClick, ...rest }: CarouselButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
   return (
@@ -39,6 +38,9 @@ const CarouselButton = React.forwardRef(function CarouselButton(
           border: "none",
           borderRadius: 0,
           bg: "rgba(245, 245, 245, 0.5)",
+          // Chakra-era chevron slate; off-palette, kept pending a design
+          // pass (the icons themselves follow currentColor).
+          color: "#556C84",
           cursor: "pointer",
           transition: "background-color 0.2s ease",
           w: "60px",
@@ -68,11 +70,7 @@ const CarouselButton = React.forwardRef(function CarouselButton(
       onClick={onClick}
       {...rest}
     >
-      {direction === "left" ? (
-        <ChevronLeftIcon stroke={stroke} />
-      ) : (
-        <ChevronRightIcon stroke={stroke} />
-      )}
+      {direction === "left" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
     </button>
   );
 });

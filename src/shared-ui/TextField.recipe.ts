@@ -34,7 +34,7 @@ export const field = defineSlotRecipe({
     },
     requiredIndicator: {
       marginStart: "1",
-      color: "red.500",
+      color: "danger.500",
     },
     helperText: {
       mt: "2",
@@ -48,7 +48,7 @@ export const field = defineSlotRecipe({
       mt: "2",
       fontSize: "sm",
       lineHeight: "normal",
-      color: "red.500",
+      color: "danger.500",
     },
   },
 });

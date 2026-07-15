@@ -44,10 +44,13 @@ export const checkbox = defineSlotRecipe({
       color: "white",
       bg: "white",
       "&[data-selected]": {
-        bg: "blue.500",
-        borderColor: "blue.500",
+        bg: "controlCheckedBg",
+        borderColor: "controlCheckedBg",
         color: "white",
-        _hover: { bg: "blue.600", borderColor: "blue.600" },
+        _hover: {
+          bg: "controlCheckedHoverBg",
+          borderColor: "controlCheckedHoverBg",
+        },
       },
       "&[data-focus-visible]": {
         focusShadow: "outline",

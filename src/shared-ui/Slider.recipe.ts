@@ -54,7 +54,7 @@ export const slider = defineSlotRecipe({
       top: 0,
       left: 0,
       height: "100%",
-      bg: "blue.500",
+      bg: "sliderFilledTrack",
     },
     thumb: {
       position: "absolute",

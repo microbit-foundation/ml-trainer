@@ -42,13 +42,13 @@ export const input = defineRecipe({
     color: "inherit",
     _hover: { borderColor: "gray.300" },
     "&[data-invalid], &:user-invalid": {
-      borderColor: "red.500",
-      boxShadow: "0 0 0 1px token(colors.red.500)",
+      borderColor: "danger.500",
+      boxShadow: "0 0 0 1px token(colors.danger.500)",
     },
     "&:is(:focus-visible, [data-focused])": {
       zIndex: 1,
-      borderColor: "blue.500",
-      boxShadow: "0 0 0 1px token(colors.blue.500)",
+      borderColor: "focusBorder",
+      boxShadow: "0 0 0 1px token(colors.focusBorder)",
       // Focus indicator for forced-colors modes, which strip the box-shadow
       // and force the border colour (the focusShadow utility's technique; the
       // ring here is the 1px border tint, not an outline* shadow token).

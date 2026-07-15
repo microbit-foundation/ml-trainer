@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import React, { ComponentProps } from "react";
-import { Box, Text } from "../shared-ui";
+import { Box, Text, token } from "../shared-ui";
 import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";
@@ -58,7 +58,8 @@ const RecordingFingerprint = ({
             w="100%"
             style={{
               backgroundColor: calculateGradientColor(
-                "#007DBC",
+                // Runtime lookup: the value feeds colour math, not CSS.
+                token("colors.brand.500"),
                 dataFeatures[k]
               ),
             }}

@@ -142,20 +142,21 @@ export const button = defineRecipe({
       },
       warning: {
         borderWidth: "2px",
-        borderColor: "red.500",
-        color: "red.500",
+        borderColor: "danger.500",
+        color: "danger.500",
         bg: "transparent",
-        _hover: { borderColor: "red.600" },
-        _active: { bg: "red.50", borderColor: "red.500" },
+        _hover: { borderColor: "danger.600" },
+        _active: { bg: "danger.50", borderColor: "danger.500" },
       },
       // Chakra's built-in solid + red colorScheme (destructive confirm
       // buttons). Same values as `record` today, but a separate variant so
-      // recording UI and destructive actions can diverge.
+      // recording UI and destructive actions can diverge - hence danger
+      // tokens here, red.* literals there.
       warningSolid: {
         color: "white",
-        bg: "red.500",
-        _hover: { bg: "red.600", _disabled: { bg: "red.500" } },
-        _active: { bg: "red.700" },
+        bg: "danger.500",
+        _hover: { bg: "danger.600", _disabled: { bg: "danger.500" } },
+        _active: { bg: "danger.700" },
       },
       toolbar: {
         color: "black",

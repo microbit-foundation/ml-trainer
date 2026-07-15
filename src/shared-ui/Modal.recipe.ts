@@ -139,7 +139,7 @@ export const dialog = defineSlotRecipe({
           paddingRight: "env(safe-area-inset-right)",
           // brand colour in the status-bar area, white below (matches ActionBar)
           background:
-            "linear-gradient(to bottom, token(colors.brand2.500) env(safe-area-inset-top), white env(safe-area-inset-top))",
+            "linear-gradient(to bottom, token(colors.statusBarBg) env(safe-area-inset-top), white env(safe-area-inset-top))",
         },
         header: {
           pl: "calc(var(--window-controls-left, 0px) + token(spacing.6))",

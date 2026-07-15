@@ -41,7 +41,7 @@ export const switchRecipe = defineSlotRecipe({
       transitionDuration: "fast",
       bg: "gray.300",
       "&[data-selected]": {
-        bg: "blue.500",
+        bg: "controlCheckedBg",
       },
       "&[data-focus-visible]": {
         focusShadow: "outline",

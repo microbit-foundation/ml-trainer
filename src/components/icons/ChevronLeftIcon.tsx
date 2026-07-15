@@ -8,7 +8,7 @@ type Props = {
 const ChevronLeftIcon = ({
   className = "",
   fill = "none",
-  stroke = "#556C84",
+  stroke = "currentColor",
   strokeWidth = 1.5,
 }: Props) => (
   <svg viewBox="0 0 12.5 25" className={className}>

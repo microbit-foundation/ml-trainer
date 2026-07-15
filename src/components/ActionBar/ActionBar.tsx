@@ -33,7 +33,7 @@ const ActionBar = ({
     <VStack
       as="header"
       gap={0}
-      bg="brand2.500"
+      bg="statusBarBg"
       css={{ "--inset-top": "env(safe-area-inset-top)" }}
       {...rest}
     >
