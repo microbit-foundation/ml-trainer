@@ -1038,11 +1038,25 @@ still works via preset staticCss, so a wrong path shows up only as
 broken non-recipe styling — in npm workspaces the hoisted package isn't
 under the app's `node_modules`, hence the demo includes
 `../../packages/ui/src` while standalone consumers use
-`./node_modules/@microbit/ui/src`. Remaining for Phase 2: point this
-repo at the packages (delete `src/shared-ui` + `microbit-preset.ts`,
-dev via `file:`/link, CI pin like the theme package) and prove it with
-a fidelity zero-diff run; set up npm publishing (NPM_TOKEN, GitHub repo
-for `../ui`) and the translation pipeline for the package catalog.
+`./node_modules/@microbit/ui/src`.
+
+*The consumption flip is done too* — this repo consumes `@microbit/ui`
+(local `node_modules/@microbit/ui` symlink to `../ui/packages/ui`, like
+the theme package's link workflow), `src/shared-ui`/`microbit-preset.ts`
+deleted, **fidelity vs the pre-flip commit: no visual differences**.
+Symlink-consumption wiring worth knowing: vite `resolve.dedupe`
+(react/react-dom/RAC/react-icons/react-intl) and tsconfig `paths`
+pinning `react`/`react-dom` types, because the linked package's files
+resolve bare imports through the *sibling's* node_modules (duplicate
+React breaks hooks/contexts; duplicate csstype breaks CSSProperties);
+`fs.allow` gains the symlink realpath. TranslationProvider aliases the
+package's `ui.*` message ids to the app's existing translated messages
+(`withSharedUiMessages`) so all locales keep working until the package
+ships its own catalogs. Remaining for Phase 2: GitHub repo + npm
+publishing for `../ui` (NPM_TOKEN; then CI pin here like the theme
+package — the symlink is dev-only and a fresh `npm i`/CI has no
+`@microbit/ui` until then), and the translation pipeline for the
+package catalog (then drop the alias map).
 
 **Phase 3 — v1 surface**, built in the library. Policy: anything that
 is a *clearly core* design-system component goes into shared-ui even
@@ -1122,17 +1136,20 @@ simplification appetite (agreed in principle — scope it per component
 during pre-work).
 
 ## Key files
-- `panda.config.ts` (preset stack), `bin/gen-chakra-tokens.mjs`,
+- `panda.config.ts` (preset stack + `@microbit/ui` source include),
   `bin/fidelity.mjs`
-- `src/shared-ui/panda-preset.ts` (core preset + staticCss),
-  `src/shared-ui/chakra-tokens.ts` (generated snapshot),
-  `src/shared-ui/README.md` (consumption setup + CSS-var contract)
-- `src/deployment/default/{microbit-preset,panda-preset}.ts` (foundation /
-  app presets)
+- **`../ui` monorepo**: `packages/ui/src/` (components + colocated
+  `*.recipe.ts`, `panda-preset.ts` core preset + staticCss,
+  `microbit-preset.ts` foundation preset, `chakra-tokens.ts` generated
+  snapshot, `SharedUIProvider.tsx` overlay-close seam,
+  `lang/ui.en.json` + `messages.ts`), `packages/ui/README.md`
+  (consumption setup + CSS-var contract), `apps/demo` (reference
+  consumer), `bin/gen-chakra-tokens.mjs`
+- `src/deployment/default/panda-preset.ts` (app preset)
 - `src/layers.css` (cascade layer order incl. `vendor`),
   `src/components/Carousel/swiper.css`
-- `src/shared-ui/**` (components + colocated `*.recipe.ts`;
-  `SharedUIProvider.tsx` is the app-installation seam)
+- `src/messages/TranslationProvider.tsx` (`withSharedUiMessages` id
+  aliases)
 - `src/e2e/app/shared.ts` (`modalDialog()`/`appUrl()` helpers),
   `src/e2e/fidelity.spec.ts`
 - `src/App.tsx` (`SharedUIConfig` + `ToastProvider` mounted)
