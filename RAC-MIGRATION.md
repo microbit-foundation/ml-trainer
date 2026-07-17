@@ -1005,6 +1005,45 @@ zero-diff proves the packaging. Document the consumption setup:
 the staticCss-in-preset requirement, clean-regen rule for external
 preset changes.
 
+*Status (July 2026): the monorepo exists* — `../ui`, npm workspaces,
+mirroring microbit-connection's conventions, committed on `main`.
+Decisions taken: extract from this branch without waiting for Phase 0;
+one package, **`@microbit/ui`** (components + presets + generated
+`chakra-tokens`, exports `./panda-preset`, `./microbit-preset`,
+`./chakra-tokens`, `./messages`) — the foundation preset was briefly a
+separate `@microbit/ui-theme` package but a one-file package every app
+consumes anyway didn't earn a second version/publish surface, so it's
+a subpath export (split back out if it grows independent concerns);
+thin per-app private brand presets stay for now; **react-intl from the
+start** (namespaced `ui.*` ids with inline English `defaultMessage`, so
+English needs no catalog merge; `lang/ui.en.json` is the source and
+`@microbit/ui/messages` exports compiled catalogs) — `SharedUIProvider`
+now carries only the overlay-close registrar and is optional. Ship-as-
+source works without `importMap`: consumers add the package source to
+Panda `include` and alias `styled-system` (tsconfig + bundler) as we
+already do; `apps/demo` in the monorepo is the reference consumer and
+CI build target, verified interactive/styled by headless Playwright.
+Direction noted for after the family migration (not yet): treat the
+Chakra token snapshot as a **malleable base** — it is a parity
+constraint only while Chakra apps remain the comparison point; once
+everything is migrated, evolving the scales/values in place is fair
+game.
+Two new gotchas found: (1) Panda extracts *utility-named props with
+literal values from any capitalized JSX component* (partially
+contradicting gotcha #9's AppLogo observation), so Tooltip's `content`
+prop emitted a broken CSS `content` rule — renamed to `label` (Chakra's
+name; fold the call-site rename into the consumption diff); (2) an
+`include` glob that matches nothing fails silently and recipe styling
+still works via preset staticCss, so a wrong path shows up only as
+broken non-recipe styling — in npm workspaces the hoisted package isn't
+under the app's `node_modules`, hence the demo includes
+`../../packages/ui/src` while standalone consumers use
+`./node_modules/@microbit/ui/src`. Remaining for Phase 2: point this
+repo at the packages (delete `src/shared-ui` + `microbit-preset.ts`,
+dev via `file:`/link, CI pin like the theme package) and prove it with
+a fidelity zero-diff run; set up npm publishing (NPM_TOKEN, GitHub repo
+for `../ui`) and the translation pipeline for the package catalog.
+
 **Phase 3 — v1 surface**, built in the library. Policy: anything that
 is a *clearly core* design-system component goes into shared-ui even
 with a single current consumer — family-wide consistency is a goal in
