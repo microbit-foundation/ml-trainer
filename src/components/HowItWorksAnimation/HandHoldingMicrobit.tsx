@@ -9,7 +9,7 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { Svg, SystemStyleObject, token } from "../../shared-ui";
+import { Svg, SystemStyleObject, token } from "@microbit/ui";
 import { icons, Off } from "../../utils/icons";
 
 interface HandHoldingMicrobitProps {

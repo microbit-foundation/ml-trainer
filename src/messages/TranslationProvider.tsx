@@ -27,6 +27,31 @@ async function loadLocaleData(locale: string) {
 
 type Messages = Record<string, string> | Record<string, MessageFormatElement[]>;
 
+// @microbit/ui's components look up messages by ui.*-namespaced ids. Until
+// the package ships its own translated catalogs, alias them to this app's
+// existing (translated) messages so every locale keeps working; without an
+// entry react-intl falls back to the package's inline English.
+const sharedUiMessageAliases: Record<string, string> = {
+  "ui.close-action": "close-action",
+  "ui.toast-status-error": "toast-status-error",
+  "ui.toast-status-info": "toast-status-info",
+  "ui.toast-status-success": "toast-status-success",
+  "ui.toast-status-warning": "toast-status-warning",
+};
+
+const withSharedUiMessages = (messages: Messages): Messages => {
+  const result = { ...messages } as Record<
+    string,
+    string | MessageFormatElement[]
+  >;
+  for (const [id, appId] of Object.entries(sharedUiMessageAliases)) {
+    if (messages[appId]) {
+      result[id] = messages[appId];
+    }
+  }
+  return result as Messages;
+};
+
 interface TranslationProviderProps {
   children: ReactNode;
 }
@@ -40,7 +65,11 @@ const TranslationProvider = ({ children }: TranslationProviderProps) => {
   const [messages, setMessages] = useState<Messages | undefined>();
   useEffect(() => {
     const load = async () => {
-      setMessages(await retryAsyncLoad(() => loadLocaleData(languageId)));
+      setMessages(
+        withSharedUiMessages(
+          await retryAsyncLoad(() => loadLocaleData(languageId))
+        )
+      );
     };
     void load();
   }, [languageId]);

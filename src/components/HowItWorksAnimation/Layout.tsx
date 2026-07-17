@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode, forwardRef, useImperativeHandle, useState } from "react";
-import { HStack, Stack } from "../../shared-ui";
+import { HStack, Stack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
 interface LayoutProps {

@@ -16,7 +16,7 @@ import {
   Input,
   useBreakpointValue,
   useToast,
-} from "../shared-ui";
+} from "@microbit/ui";
 import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";

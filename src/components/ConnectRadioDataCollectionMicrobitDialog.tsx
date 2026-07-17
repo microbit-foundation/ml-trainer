@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, Image, Text, VStack } from "../shared-ui";
+import { HStack, Image, Text, VStack } from "@microbit/ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import microbitOnWrist from "../images/stylised-microbit-on-wrist.svg";
 import { AnimationProvider } from "./AnimationProvider";

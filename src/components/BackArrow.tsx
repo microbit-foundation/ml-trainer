@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css } from "../shared-ui";
+import { css } from "@microbit/ui";
 
 /** Back arrow glyph, sized like an icon (1em, currentColor). */
 const BackArrow = () => (

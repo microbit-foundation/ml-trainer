@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Text, token } from "../shared-ui";
+import { Box, Text, token } from "@microbit/ui";
 
 const ArrowTwo = () => {
   const brand500 = token("colors.brand2.500");

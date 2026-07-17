@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Grid, GridItem, token } from "../../shared-ui";
+import { Grid, GridItem, token } from "@microbit/ui";
 import Gauge, { GaugeRef, totalDuration } from "./Gauge";
 import CrossLedIcon from "./CrossLedIcon";
 import HeartLedIcon from "./HeartLedIcon";

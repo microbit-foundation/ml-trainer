@@ -5,7 +5,7 @@
  */
 import { useCallback, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
-import { Text, token, VisuallyHidden } from "../shared-ui";
+import { Text, token, VisuallyHidden } from "@microbit/ui";
 import { useStore } from "../store";
 
 interface PercentageDisplayProps {

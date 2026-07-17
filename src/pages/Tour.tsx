@@ -16,7 +16,7 @@ import {
   ModalHeader,
   PopoverArrow,
   useBreakpointValue,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useStore } from "../store";
 import TourOverlay from "./TourOverlay";
 

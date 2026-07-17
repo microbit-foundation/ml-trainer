@@ -26,7 +26,7 @@ import {
   MenuItem,
   MenuList,
   MenuTrigger,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useBoardVersion } from "../hooks/use-board-version";
 import { usePrevious } from "../hooks/use-previous";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";

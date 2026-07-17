@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { Button, Text, VStack } from "../shared-ui";
+import { Button, Text, VStack } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { isPublicFacingStage } from "../environment";
 import ErrorPage from "./ErrorPage";

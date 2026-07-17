@@ -1,4 +1,4 @@
-import { css, cx } from "../shared-ui";
+import { css, cx } from "@microbit/ui";
 
 interface EmojiArrowProps {
   /** One call site sizes the arrow like UpCurveArrow. */

@@ -13,7 +13,7 @@ import {
   ProgressBar,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ProgressStage } from "@microbit/microbit-connection";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";

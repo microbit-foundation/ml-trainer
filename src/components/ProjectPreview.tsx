@@ -21,7 +21,7 @@ import {
   SystemStyleObject,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ButtonWithLoading } from "../components/ButtonWithLoading";
 import { ActionData } from "../model";
 import DataSamplesTableRow from "./DataSamplesTableRow";

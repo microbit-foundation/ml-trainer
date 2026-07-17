@@ -13,7 +13,7 @@ import {
   Text,
   UnorderedList,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { DataConnectionStep } from "../data-connection-flow";
 import { useDeployment } from "../deployment";

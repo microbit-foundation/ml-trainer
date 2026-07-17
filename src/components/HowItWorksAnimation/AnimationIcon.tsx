@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CSSProperties, ReactNode } from "react";
-import { Svg, SystemStyleObject } from "../../shared-ui";
+import { Svg, SystemStyleObject } from "@microbit/ui";
 
 /**
  * The props every glyph built on AnimationIcon exposes.

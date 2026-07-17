@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, ReactNode } from "react";
-import { IconButton } from "../../shared-ui";
+import { IconButton } from "@microbit/ui";
 
 interface ActionBarMenuButtonProps {
   "aria-label": string;

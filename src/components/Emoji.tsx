@@ -1,4 +1,4 @@
-import { css, cx } from "../shared-ui";
+import { css, cx } from "@microbit/ui";
 
 type Eye = "round" | "tick" | "heart";
 

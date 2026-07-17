@@ -7,7 +7,7 @@ import { useCallback } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataSamplesView } from "../model";
-import { Icon, MenuItem } from "../shared-ui";
+import { Icon, MenuItem } from "@microbit/ui";
 import { useStore } from "../store";
 
 const ViewDataFeaturesMenuItem = () => {

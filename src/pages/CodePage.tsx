@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useEffect, useRef, useState } from "react";
-import { Spinner, VStack } from "../shared-ui";
+import { Spinner, VStack } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DownloadDialogs from "../components/DownloadDialogs";

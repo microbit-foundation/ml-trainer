@@ -33,7 +33,7 @@ import {
   Tooltip,
   useToast,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useStore } from "../store";
 import ModalFooterContent from "./ModalFooterContent";
 
@@ -183,7 +183,7 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
               hasArrow
               placement="top"
               css={{ px: 3, py: 3 }}
-              content={
+              label={
                 <Stack>
                   <Text fontWeight="bold">
                     <FormattedMessage id="language-toast-title" />

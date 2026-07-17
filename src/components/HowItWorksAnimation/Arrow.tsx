@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Box, HStack, Svg, VStack } from "../../shared-ui";
+import { Box, HStack, Svg, VStack } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 

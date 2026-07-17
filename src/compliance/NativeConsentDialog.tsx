@@ -14,7 +14,7 @@ import {
   ModalHeader,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 interface NativeConsentDialogProps {
   isOpen: boolean;

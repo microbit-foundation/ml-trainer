@@ -5,7 +5,7 @@
  */
 import { IoMdGlobe } from "react-icons/io";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Icon, MenuItem } from "../shared-ui";
+import { Icon, MenuItem } from "@microbit/ui";
 
 interface LanguageMenuItemProps {
   onOpen: () => void;

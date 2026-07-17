@@ -8,7 +8,7 @@
  * Copyright (c) 2014, Luke Haas
  * SPDX-License-Identifier: MIT
  */
-import { Box, HStack } from "../shared-ui";
+import { Box, HStack } from "@microbit/ui";
 
 const LoadingAnimation = () => {
   return (

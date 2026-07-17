@@ -5,7 +5,7 @@
  */
 import { forwardRef } from "react";
 import { MdMoreVert } from "react-icons/md";
-import { Icon, IconButton, IconButtonProps } from "../shared-ui";
+import { Icon, IconButton, IconButtonProps } from "@microbit/ui";
 
 /**
  * The "more options" half of an attached split button. Use as the trigger

@@ -11,7 +11,7 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ProjectNameDialogReason } from "../project-utils";
-import { Button, ButtonGroup, Icon, IconButton } from "../shared-ui";
+import { Button, ButtonGroup, Icon, IconButton } from "@microbit/ui";
 
 interface ProjectsToolbarProps {
   selectedProjectIds: string[];

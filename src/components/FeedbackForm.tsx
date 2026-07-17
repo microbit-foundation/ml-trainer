@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Modal, ModalBody, ModalCloseButton } from "../shared-ui";
+import { Modal, ModalBody, ModalCloseButton } from "@microbit/ui";
 import { useEffect, useRef } from "react";
 
 interface FeedbackFormProps {

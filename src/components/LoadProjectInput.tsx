@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { css } from "../shared-ui";
+import { css } from "@microbit/ui";
 import { LoadAction, useProject } from "../hooks/project-hooks";
 import { isAndroid } from "../platform";
 

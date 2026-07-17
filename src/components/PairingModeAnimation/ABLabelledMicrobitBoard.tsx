@@ -22,7 +22,7 @@ import {
   Text,
   token,
   VStack,
-} from "../../shared-ui";
+} from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
 export interface ABLabelledMicrobitBoardRef {

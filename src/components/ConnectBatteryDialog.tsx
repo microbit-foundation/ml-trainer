@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, Image, Link, Text, VStack } from "../shared-ui";
+import { Icon, Image, Link, Text, VStack } from "@microbit/ui";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";

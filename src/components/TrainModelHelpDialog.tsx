@@ -12,7 +12,7 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ComponentProps, useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";

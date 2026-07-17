@@ -10,7 +10,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Box, Flex, Svg, useBreakpointValue } from "../../shared-ui";
+import { Box, Flex, Svg, useBreakpointValue } from "@microbit/ui";
 import { useGraphColors } from "../../hooks/use-graph-colors";
 import { useSettings } from "../../store";
 import { useAnimation } from "../AnimationProvider";

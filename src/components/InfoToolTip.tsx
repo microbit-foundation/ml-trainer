@@ -6,7 +6,7 @@
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
-import { Icon, Text, TooltipProps, VStack } from "../shared-ui";
+import { Icon, Text, TooltipProps, VStack } from "@microbit/ui";
 import ClickableTooltip from "./ClickableTooltip";
 
 export interface InfoToolTipProps {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Box } from "../../shared-ui";
+import { Box } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
 export interface ProgressBarRef {

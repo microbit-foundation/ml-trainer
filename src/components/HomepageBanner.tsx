@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { button } from "styled-system/recipes";
 import bannerBackground from "theme-package/images/banner-background.svg";
 import { useDeployment } from "../deployment";
-import { css, cx, Heading, HStack, Text, VStack } from "../shared-ui";
+import { css, cx, Heading, HStack, Text, VStack } from "@microbit/ui";
 import { useSettings } from "../store";
 import { learnMoreUrl } from "../utils/external-links";
 

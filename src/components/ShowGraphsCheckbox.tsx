@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Checkbox } from "../shared-ui";
+import { Checkbox } from "@microbit/ui";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { DataSamplesView } from "../model";

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode, useCallback, useState } from "react";
-import { Box, Center } from "../shared-ui";
+import { Box, Center } from "@microbit/ui";
 import { RiFolderOpenLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 

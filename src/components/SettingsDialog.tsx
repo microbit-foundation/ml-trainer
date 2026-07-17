@@ -15,7 +15,7 @@ import {
   Switch,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useDeployment } from "../deployment";
 import { isNativePlatform } from "../platform";
 import {

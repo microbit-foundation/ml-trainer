@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useElementSize } from "../hooks/use-element-size";
-import { HStack } from "../shared-ui";
+import { HStack } from "@microbit/ui";
 import { AccelerometerData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";

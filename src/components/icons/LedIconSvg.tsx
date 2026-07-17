@@ -6,7 +6,7 @@
 import { icons, LedIconType } from "../../utils/icons";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { token } from "../../shared-ui";
+import { token } from "@microbit/ui";
 
 interface LedIconSvg {
   icon: LedIconType;

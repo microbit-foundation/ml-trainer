@@ -5,7 +5,7 @@
  */
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Heading, HStack } from "../../shared-ui";
+import { Box, Heading, HStack } from "@microbit/ui";
 import NewPageCarousel from "./NewPageCarousel";
 
 interface CarouselRowProps {

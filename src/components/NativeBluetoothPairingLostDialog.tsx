@@ -14,7 +14,7 @@ import {
   OrderedList,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 

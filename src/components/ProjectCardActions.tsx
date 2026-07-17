@@ -18,7 +18,7 @@ import {
   MenuList,
   MenuTrigger,
   VisuallyHidden,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 interface ProjectCardMenuProps {
   id: string;

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { SwiperClass } from "swiper/react";
-import { css } from "../../shared-ui";
+import { css } from "@microbit/ui";
 import SwiperCarousel from "./SwiperCarousel";
 
 const slow = 3000;

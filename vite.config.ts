@@ -120,8 +120,22 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     resolve: {
       alias: {
         "theme-package": themePackageAlias,
+        // Also resolves the styled-system/* imports inside @microbit/ui's
+        // shipped source onto this app's generated output (Panda's
+        // ship-as-source library pattern).
         "styled-system": path.resolve(__dirname, "styled-system"),
       },
+      // @microbit/ui may be installed as a symlink to a sibling checkout;
+      // its files then resolve bare imports through the sibling's own
+      // node_modules, which would load second copies of these (breaking
+      // React hooks and react-aria's context sharing).
+      dedupe: [
+        "react",
+        "react-dom",
+        "react-aria-components",
+        "react-icons",
+        "react-intl",
+      ],
     },
   };
 });
@@ -131,12 +145,13 @@ const createServer = (mode: string): ServerOptions => {
   const options = {
     port: 5173,
     fs: {
-      // The theme package may be installed as a symlink to a sibling
-      // checkout, so its assets (e.g. brand fonts) resolve to real paths
-      // outside the project root that Vite's default allow list rejects.
+      // The theme package and @microbit/ui may be installed as symlinks to
+      // sibling checkouts, so their files resolve to real paths outside the
+      // project root that Vite's default allow list rejects.
       allow: [
         searchForWorkspaceRoot(process.cwd()),
         ...(themePackageExternal ? [fs.realpathSync(external)] : []),
+        fs.realpathSync("node_modules/@microbit/ui"),
       ],
     },
     proxy: {

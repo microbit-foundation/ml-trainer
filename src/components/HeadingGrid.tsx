@@ -5,7 +5,7 @@
  */
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { Grid, GridItem, HStack, Text } from "../shared-ui";
+import { Grid, GridItem, HStack, Text } from "@microbit/ui";
 import InfoToolTip from "./InfoToolTip";
 
 interface HeadingGridProps {

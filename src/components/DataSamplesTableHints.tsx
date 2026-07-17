@@ -18,7 +18,7 @@ import {
   Text,
   VisuallyHidden,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import Emoji, { EmojiAi } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import UpCurveArrow from "./UpCurveArrow";

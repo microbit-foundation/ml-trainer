@@ -11,7 +11,7 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ComponentProps } from "react";
 import { FormattedMessage } from "react-intl";
 

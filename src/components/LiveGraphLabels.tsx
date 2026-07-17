@@ -9,7 +9,7 @@ import { AccelerometerData } from "@microbit/microbit-connection";
 import React, { useCallback, useMemo, useRef } from "react";
 import { RiArrowDropLeftFill } from "react-icons/ri";
 import { useAccelerometerListener } from "../hooks/use-accelerometer-listener";
-import { Box, Icon, Text } from "../shared-ui";
+import { Box, Icon, Text } from "@microbit/ui";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { getLabelHeights } from "../live-graph-label-config";
 import { useSettings } from "../store";

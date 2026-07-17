@@ -22,7 +22,7 @@ import {
   ModalFooter,
   ModalHeader,
   TextField,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 interface NameProjectDialogProps {
   finalFocusRef?: React.RefObject<HTMLElement>;

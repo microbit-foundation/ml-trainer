@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ProgressBar,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface DownloadingDialogProps {

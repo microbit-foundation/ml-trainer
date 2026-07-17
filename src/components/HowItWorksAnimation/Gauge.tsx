@@ -9,7 +9,7 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { Box, HStack } from "../../shared-ui";
+import { Box, HStack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
 export const totalDuration = 2;

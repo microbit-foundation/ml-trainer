@@ -5,7 +5,7 @@
  */
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { MenuList, MenuTrigger } from "../shared-ui";
+import { MenuList, MenuTrigger } from "@microbit/ui";
 import { ActionBarMenuButton } from "./ActionBar/ActionBarMenuButton";
 import LanguageMenuItem from "./LanguageMenuItem";
 import SettingsMenuItem from "./SettingsMenuItem";

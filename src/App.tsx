@@ -34,7 +34,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
-import { SharedUIProvider, ToastProvider, useToast } from "./shared-ui";
+import { SharedUIProvider, ToastProvider, useToast } from "@microbit/ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
@@ -102,36 +102,19 @@ const radioBridge = isMockDeviceMode()
   : createRadioBridgeConnection(usb, { logging });
 
 /**
- * shared-ui's installation point: localized strings from the app catalogue,
- * and — on native platforms — the registry the Android back button handler
- * uses to close an open menu. Lives inside TranslationProvider so the strings
- * re-resolve on locale change.
+ * shared-ui's installation point: on native platforms, the registry the
+ * Android back button handler uses to close an open menu. Its localized
+ * strings are react-intl messages (see TranslationProvider's ui.* mapping).
  */
-const SharedUIConfig = ({ children }: ProviderLayoutProps) => {
-  const intl = useIntl();
-  const strings = useMemo(
-    () => ({
-      close: intl.formatMessage({ id: "close-action" }),
-      toastStatuses: {
-        info: intl.formatMessage({ id: "toast-status-info" }),
-        success: intl.formatMessage({ id: "toast-status-success" }),
-        warning: intl.formatMessage({ id: "toast-status-warning" }),
-        error: intl.formatMessage({ id: "toast-status-error" }),
-      },
-    }),
-    [intl]
-  );
-  return (
-    <SharedUIProvider
-      strings={strings}
-      overlayCloseRegistrar={
-        Capacitor.isNativePlatform() ? setActiveMenuClose : undefined
-      }
-    >
-      {children}
-    </SharedUIProvider>
-  );
-};
+const SharedUIConfig = ({ children }: ProviderLayoutProps) => (
+  <SharedUIProvider
+    overlayCloseRegistrar={
+      Capacitor.isNativePlatform() ? setActiveMenuClose : undefined
+    }
+  >
+    {children}
+  </SharedUIProvider>
+);
 
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();

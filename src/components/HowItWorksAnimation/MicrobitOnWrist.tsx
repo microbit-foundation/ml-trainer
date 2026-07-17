@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Stack, Svg, token } from "../../shared-ui";
+import { Stack, Svg, token } from "@microbit/ui";
 import { icons, LedIconType, Off } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
 import CrossLedIcon from "./CrossLedIcon";

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Grid, GridItem, Image, Text, VStack } from "../shared-ui";
+import { Grid, GridItem, Image, Text, VStack } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import batteryPackImage from "../images/stylised-battery-pack.svg";
 import microbitImage from "../images/stylised-microbit-black.svg";

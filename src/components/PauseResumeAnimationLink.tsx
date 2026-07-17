@@ -1,6 +1,6 @@
 import { RiPlayFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { Icon } from "../shared-ui";
+import { Icon } from "@microbit/ui";
 import { useAnimation } from "./AnimationProvider";
 import DialogFooterLink from "./DialogFooterLink";
 import PauseIcon from "./icons/PauseIcon";

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Grid, Heading, HStack, VStack } from "../../shared-ui";
+import { Grid, Heading, HStack, VStack } from "@microbit/ui";
 import Tick from "./Tick";
 
 interface StepTickPillProps {

@@ -14,7 +14,7 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { ActionData, DataSamplesPageHint } from "../model";
 import { isIOS } from "../platform";
-import { css, Grid, HStack, Text } from "../shared-ui";
+import { css, Grid, HStack, Text } from "@microbit/ui";
 import { useStore } from "../store";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { actionNameInputId } from "./ActionNameCard";

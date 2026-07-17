@@ -17,7 +17,7 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { dataConnectionTypeToAnalyticsTransport } from "../logging/step-tracking";
 import { TrainModelDialogStage } from "../model";
-import { Button, css, cx, HStack, Image, Text, VStack } from "../shared-ui";
+import { Button, css, cx, HStack, Image, Text, VStack } from "@microbit/ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import AlertIcon from "./AlertIcon";

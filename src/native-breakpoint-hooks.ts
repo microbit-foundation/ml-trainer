@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { isNativePlatform } from "./platform";
-import { useBreakpointValue } from "./shared-ui";
+import { useBreakpointValue } from "@microbit/ui";
 
 /**
  * On native platforms, use the tablet breakpoint even when the viewport is

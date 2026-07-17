@@ -5,7 +5,7 @@
  */
 import { RiArrowDownLine, RiArrowUpLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { ButtonGroup, Icon, IconButton, NativeSelect } from "../shared-ui";
+import { ButtonGroup, Icon, IconButton, NativeSelect } from "@microbit/ui";
 
 interface SortInputProps {
   value: string;

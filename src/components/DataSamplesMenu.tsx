@@ -23,7 +23,7 @@ import {
   MenuTrigger,
   Text,
   useToast,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
 import { ConfirmDialog } from "./ConfirmDialog";

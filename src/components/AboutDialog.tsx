@@ -23,7 +23,7 @@ import {
   Text,
   VisuallyHidden,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useDeployment } from "../deployment";
 import aarhusLogo from "../images/aulogo_uk_var2_blue.png";
 import microbitHeartImage from "../images/microbit-heart.png";

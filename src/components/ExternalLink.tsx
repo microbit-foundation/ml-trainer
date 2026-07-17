@@ -6,7 +6,7 @@
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { button } from "styled-system/recipes";
-import { css, cx, Icon, Link } from "../shared-ui";
+import { css, cx, Icon, Link } from "@microbit/ui";
 
 interface ExternalLinkProps {
   textId: string;

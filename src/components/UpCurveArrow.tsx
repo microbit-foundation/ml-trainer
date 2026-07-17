@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css, cx } from "../shared-ui";
+import { css, cx } from "@microbit/ui";
 
 interface UpCurveArrowProps {
   className?: string;

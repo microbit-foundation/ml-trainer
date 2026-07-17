@@ -13,7 +13,7 @@ import {
   LinkBox,
   LinkOverlay,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 interface ResourceCardProps {
   aspectRatio?: number;

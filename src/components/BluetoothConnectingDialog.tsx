@@ -10,7 +10,7 @@ import {
   ModalHeader,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ProgressStage } from "@microbit/microbit-connection";
 import { FormattedMessage } from "react-intl";
 import { isNativePlatform } from "../platform";

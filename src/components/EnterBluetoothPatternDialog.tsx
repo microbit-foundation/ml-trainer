@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Text, VisuallyHidden, VStack } from "../shared-ui";
+import { Text, VisuallyHidden, VStack } from "@microbit/ui";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { blank } from "../bt-pattern-utils";

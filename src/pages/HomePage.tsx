@@ -49,7 +49,7 @@ import {
   Text,
   useBreakpointValue,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import {
   loadProjectAndModelFromStorage,
   useSettings,

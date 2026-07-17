@@ -13,7 +13,7 @@ import {
   registerables,
 } from "chart.js";
 import { ComponentProps, useEffect, useRef } from "react";
-import { Box } from "../shared-ui";
+import { Box } from "@microbit/ui";
 import { useGraphColors } from "../hooks/use-graph-colors";
 import { useGraphLineStyles } from "../hooks/use-graph-line-styles";
 import { XYZData } from "../model";

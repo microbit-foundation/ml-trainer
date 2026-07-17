@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { Box, Flex, HStack } from "../shared-ui";
+import { Box, Flex, HStack } from "@microbit/ui";
 
 interface ModalFooterContentProps {
   /**

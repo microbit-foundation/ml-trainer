@@ -16,7 +16,7 @@ import {
   token,
   useToast,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";

@@ -11,7 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 export interface ConfirmDialogProps {
   isOpen: boolean;

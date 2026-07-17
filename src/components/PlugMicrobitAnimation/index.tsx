@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, css, Image } from "../../shared-ui";
+import { Box, css, Image } from "@microbit/ui";
 import connectorImage from "../../images/micro-usb-connector.png";
 import microbitImage from "../../images/microbit.png";
 import { useAnimation } from "../AnimationProvider";

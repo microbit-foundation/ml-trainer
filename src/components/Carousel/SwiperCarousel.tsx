@@ -9,7 +9,7 @@ import { Swiper as SwiperClass } from "swiper";
 import "./swiper.css";
 import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
-import { css, cx } from "../../shared-ui";
+import { css, cx } from "@microbit/ui";
 import SwiperCarouselButtons from "./SwiperCarouselButtons";
 
 interface SwiperCarouselProps extends SwiperProps {

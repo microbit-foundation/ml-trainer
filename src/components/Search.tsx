@@ -13,7 +13,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 interface SearchProps {
   query: string;

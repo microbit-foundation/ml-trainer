@@ -13,7 +13,7 @@ import {
   ModalFooter,
   ModalHeader,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import ModalFooterContent from "./ModalFooterContent";
 
 export interface ConnectContainerDialogProps {

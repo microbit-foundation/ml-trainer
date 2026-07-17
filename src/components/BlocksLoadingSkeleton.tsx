@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, css, VStack } from "../shared-ui";
+import { Box, css, VStack } from "@microbit/ui";
 
 /** Pulsing line placeholder standing in for Chakra's SkeletonText. */
 const BlocksLoadingSkeleton = () => (

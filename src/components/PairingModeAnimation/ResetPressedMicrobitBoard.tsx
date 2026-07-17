@@ -5,7 +5,7 @@
  */
 import { CSSProperties, ReactNode } from "react";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { Heading, SystemStyleObject, Svg, VStack } from "../../shared-ui";
+import { Heading, SystemStyleObject, Svg, VStack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 import { MicrobitBoardBack } from "./MicrobitBoardBack";
 

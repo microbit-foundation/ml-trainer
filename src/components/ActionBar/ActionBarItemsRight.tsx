@@ -7,7 +7,7 @@ import { ReactNode, useMemo } from "react";
 import { useLocation } from "react-router";
 import { keyboardShortcuts, useShortcut } from "../../keyboard-shortcut-hooks";
 import { useNativeTabletBreakpoint } from "../../native-breakpoint-hooks";
-import { HStack } from "../../shared-ui";
+import { HStack } from "@microbit/ui";
 import { useStore } from "../../store";
 import AboutDialog from "../AboutDialog";
 import ConnectFirstDialog from "../ConnectFirstDialog";

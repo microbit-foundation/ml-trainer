@@ -9,7 +9,7 @@ import {
   forwardRef,
   useState,
 } from "react";
-import { Box, SystemStyleObject } from "../../shared-ui";
+import { Box, SystemStyleObject } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 

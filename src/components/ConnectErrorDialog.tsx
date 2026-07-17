@@ -14,7 +14,7 @@ import {
   Text,
   UnorderedList,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
 import ExternalLink from "./ExternalLink";

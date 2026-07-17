@@ -10,7 +10,7 @@ import {
   MakeCodeProject,
 } from "@microbit/makecode-embed/react";
 import { memo, useLayoutEffect, useRef, useState } from "react";
-import { Box, Card, VStack } from "../shared-ui";
+import { Box, Card, VStack } from "@microbit/ui";
 import BlocksLoadingSkeleton from "./BlocksLoadingSkeleton";
 import { tourElClassname } from "../tours";
 

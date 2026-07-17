@@ -6,7 +6,7 @@
 import { App as CapacitorApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { Encoding, Filesystem } from "@capacitor/filesystem";
-import { useToast } from "../shared-ui";
+import { useToast } from "@microbit/ui";
 import {
   EditorWorkspaceSaveRequest,
   MakeCodeFrameDriver,

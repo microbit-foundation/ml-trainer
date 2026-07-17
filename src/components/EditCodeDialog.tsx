@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Flex } from "../shared-ui";
+import { Flex } from "@microbit/ui";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { forwardRef, memo, useEffect, useRef } from "react";
 import { useStore } from "../store";

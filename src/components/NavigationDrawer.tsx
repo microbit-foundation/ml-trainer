@@ -36,7 +36,7 @@ import {
   ListItem,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";

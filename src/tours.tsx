@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, Icon, Image, Stack, Text } from "./shared-ui";
+import { HStack, Icon, Image, Stack, Text } from "@microbit/ui";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import makecodeBackImage from "./images/makecode-back.png";

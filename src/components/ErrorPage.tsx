@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { Heading, VStack } from "../shared-ui";
+import { Heading, VStack } from "@microbit/ui";
 
 type Props = { title: string; children: ReactNode };
 

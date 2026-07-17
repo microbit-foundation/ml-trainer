@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";

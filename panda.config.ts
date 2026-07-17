@@ -1,6 +1,6 @@
+import { sharedUiPreset } from "@microbit/ui/panda-preset";
+import { microbitPreset } from "@microbit/ui/microbit-preset";
 import { defineConfig } from "@pandacss/dev";
-import { sharedUiPreset } from "./src/shared-ui/panda-preset";
-import { microbitPreset } from "./src/deployment/default/microbit-preset";
 import { appPreset } from "./src/deployment/default/panda-preset";
 
 // Optionally pull in the private brand preset, mirroring the `theme-package`
@@ -45,6 +45,14 @@ export default defineConfig({
     appPreset,
     ...(brandPreset ? [brandPreset] : []),
   ],
-  include: ["./src/**/*.{ts,tsx}"],
+  include: [
+    "./src/**/*.{ts,tsx}",
+    // @microbit/ui ships as source; include it so Panda extracts the styles
+    // its components use. Beware: a glob that matches nothing fails silently,
+    // and recipe styling still works via the preset's staticCss, so a wrong
+    // path shows up only as broken non-recipe styling (unsized icons,
+    // collapsed fields).
+    "./node_modules/@microbit/ui/src/**/*.{ts,tsx}",
+  ],
   outdir: "styled-system",
 });

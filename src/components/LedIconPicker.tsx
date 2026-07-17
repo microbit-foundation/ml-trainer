@@ -14,7 +14,7 @@ import {
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import { button } from "styled-system/recipes";
-import { css, cx, Grid, IconButton } from "../shared-ui";
+import { css, cx, Grid, IconButton } from "@microbit/ui";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
 import LedIconSvg from "./icons/LedIconSvg";
 

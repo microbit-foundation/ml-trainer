@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Image, Text, VStack } from "../shared-ui";
+import { Button, Image, Text, VStack } from "@microbit/ui";
 import Bowser from "bowser";
 import { ReactNode, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef } from "react";
-import { Card, CardProps, css, cx } from "../shared-ui";
+import { Card, CardProps, css, cx } from "@microbit/ui";
 import { SystemStyleObject } from "styled-system/types";
 
 export interface RowCardProps extends Omit<CardProps, "css"> {

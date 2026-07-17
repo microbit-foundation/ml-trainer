@@ -5,7 +5,7 @@
  */
 import { MutableRefObject, RefObject, useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { css } from "../shared-ui";
+import { css } from "@microbit/ui";
 
 interface TourOverlayProps extends SpotlightStyle {
   referenceRef: MutableRefObject<HTMLElement | undefined>;

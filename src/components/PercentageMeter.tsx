@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useEffect, useRef } from "react";
-import { HStack, token } from "../shared-ui";
+import { HStack, token } from "@microbit/ui";
 import { useStore } from "../store";
 
 interface PercentageMeterProps {

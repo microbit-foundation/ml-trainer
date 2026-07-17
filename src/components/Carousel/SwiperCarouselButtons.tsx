@@ -6,7 +6,7 @@
 import { useEffect, useRef } from "react";
 import { useSwiper } from "swiper/react";
 import { isNativePlatform } from "../../platform";
-import { css, cx } from "../../shared-ui";
+import { css, cx } from "@microbit/ui";
 import CarouselButton from "./CarouselButton";
 
 const SwiperCarouselButtons = () => {

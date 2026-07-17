@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { Grid, GridItem, HStack } from "../../shared-ui";
+import { Grid, GridItem, HStack } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 import HeartLedIcon from "./HeartLedIcon";

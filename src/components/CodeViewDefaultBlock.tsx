@@ -5,7 +5,7 @@
  */
 import { FormattedMessage, useIntl } from "react-intl";
 import { MakeCodeIcon, makecodeIcons } from "../utils/icons";
-import { Box } from "../shared-ui";
+import { Box } from "@microbit/ui";
 interface CodeViewDefaultBlockProps {
   actionName: string;
   icon: MakeCodeIcon;

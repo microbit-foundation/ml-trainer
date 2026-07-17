@@ -24,7 +24,7 @@ import {
   SystemStyleObject,
   Text,
   Tooltip,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 
@@ -219,7 +219,7 @@ const EditableName = ({
               previewButton
             ) : (
               <Tooltip
-                content={intl.formatMessage({ id: "project-name-tooltip" })}
+                label={intl.formatMessage({ id: "project-name-tooltip" })}
                 hasArrow
                 placement="bottom"
               >

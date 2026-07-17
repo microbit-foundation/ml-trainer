@@ -18,7 +18,7 @@ import {
   Svg,
   SystemStyleObject,
   VStack,
-} from "../../shared-ui";
+} from "@microbit/ui";
 import ProgressBar, { ProgressBarRef } from "./ProgressBar";
 import DataSamplesCollection, {
   DataSamplesCollectionRef,

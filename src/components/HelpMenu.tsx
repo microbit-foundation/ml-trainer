@@ -5,7 +5,7 @@
  */
 import { RiQuestionLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
-import { MenuList, MenuTrigger } from "../shared-ui";
+import { MenuList, MenuTrigger } from "@microbit/ui";
 import { TourTrigger } from "../model";
 import { ActionBarMenuButton } from "./ActionBar/ActionBarMenuButton";
 import HelpMenuItems from "./HelpMenuItems";

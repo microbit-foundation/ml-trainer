@@ -13,7 +13,7 @@ import {
   ModalHeader,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useProject } from "../hooks/project-hooks";

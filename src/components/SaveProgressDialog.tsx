@@ -10,7 +10,7 @@ import {
   ModalHeader,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { useStore } from "../store";
 import { SaveType } from "../model";

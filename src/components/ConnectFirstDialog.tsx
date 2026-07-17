@@ -10,7 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDataConnectionActions } from "../data-connection-flow";

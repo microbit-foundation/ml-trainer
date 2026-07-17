@@ -25,7 +25,7 @@ import {
   Text,
   useBreakpointValue,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";

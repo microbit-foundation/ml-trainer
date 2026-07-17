@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { SystemStyleObject, Svg } from "../../shared-ui";
+import { SystemStyleObject, Svg } from "@microbit/ui";
 
 export interface MicrobitBoardBackRef {}
 

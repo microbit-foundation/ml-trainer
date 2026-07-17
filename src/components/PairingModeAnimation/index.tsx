@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useEffect, useRef } from "react";
-import { Stack, token, VisuallyHidden } from "../../shared-ui";
+import { Stack, token, VisuallyHidden } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { BluetoothPairingMethod } from "../../data-connection-flow/data-connection-types";
 import { useAnimation } from "../AnimationProvider";

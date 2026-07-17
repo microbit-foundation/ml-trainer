@@ -16,7 +16,7 @@ import {
   LinkOverlayButton,
   Stack,
   Text,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";

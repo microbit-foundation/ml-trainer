@@ -10,7 +10,7 @@ import {
   useState,
   useMemo,
 } from "react";
-import { Box, HStack, useBreakpointValue } from "../../shared-ui";
+import { Box, HStack, useBreakpointValue } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { HStack, VisuallyHidden, VStack } from "../../shared-ui";
+import { HStack, VisuallyHidden, VStack } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { useAnimation } from "../AnimationProvider";
 import Arrow, { ArrowRef } from "./Arrow";

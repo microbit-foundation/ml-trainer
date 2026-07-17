@@ -36,7 +36,7 @@ import {
   MenuList,
   MenuTrigger,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";

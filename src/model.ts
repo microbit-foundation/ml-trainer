@@ -7,7 +7,7 @@
 import { ReactNode } from "react";
 import type * as tf from "@tensorflow/tfjs";
 import { SpotlightStyle } from "./pages/TourOverlay";
-import { ModalSize } from "./shared-ui";
+import { ModalSize } from "@microbit/ui";
 import { MakeCodeIcon } from "./utils/icons";
 
 /**

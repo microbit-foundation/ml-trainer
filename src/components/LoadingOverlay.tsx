@@ -1,4 +1,4 @@
-import { Modal, Spinner } from "../shared-ui";
+import { Modal, Spinner } from "@microbit/ui";
 import { useIntl } from "react-intl";
 
 interface LoadingOverlayProps {

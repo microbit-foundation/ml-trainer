@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { Box, BoxProps, HStack, HstackProps, VStack } from "../../shared-ui";
+import { Box, BoxProps, HStack, HstackProps, VStack } from "@microbit/ui";
 
 export interface ActionBarProps extends BoxProps {
   itemsLeft?: ReactNode;

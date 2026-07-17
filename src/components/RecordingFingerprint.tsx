@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import React, { ComponentProps } from "react";
-import { Box, Text, token } from "../shared-ui";
+import { Box, Text, token } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";

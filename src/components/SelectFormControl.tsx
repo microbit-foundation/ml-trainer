@@ -5,7 +5,7 @@
  */
 import { ReactNode, useCallback } from "react";
 import { IntlShape } from "react-intl";
-import { css, Flex, NativeSelect } from "../shared-ui";
+import { css, Flex, NativeSelect } from "@microbit/ui";
 
 export interface SelectOptionValue<T> {
   value: T;

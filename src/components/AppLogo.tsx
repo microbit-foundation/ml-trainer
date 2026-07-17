@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css, HStack, SystemStyleObject } from "../shared-ui";
+import { css, HStack, SystemStyleObject } from "@microbit/ui";
 import { useDeployment } from "../deployment";
 
 interface AppLogoProps {

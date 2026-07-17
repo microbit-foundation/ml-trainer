@@ -30,7 +30,7 @@ import {
   Text,
   VisuallyHidden,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 
 interface BluetoothPatternInputProps {
   onChange?: (name: string) => void;

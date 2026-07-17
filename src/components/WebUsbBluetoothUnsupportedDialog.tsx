@@ -11,7 +11,7 @@ import {
   ModalHeader,
   Text,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 
 interface WebUsbBluetoothUnsupportedDialogProps {

@@ -8,7 +8,7 @@ import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
 } from "react-router-dom";
-import { styled } from "../shared-ui";
+import { styled } from "@microbit/ui";
 
 // Adapter to deal with to vs href.
 type RouterLinkAdaptedProps = Omit<RouterLinkProps, "to"> & { href: string };

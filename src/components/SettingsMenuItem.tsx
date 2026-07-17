@@ -5,7 +5,7 @@
  */
 import { RiListSettingsLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Icon, MenuItem } from "../shared-ui";
+import { Icon, MenuItem } from "@microbit/ui";
 
 interface SettingsMenuItemProps {
   onOpen: () => void;

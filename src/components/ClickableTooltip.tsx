@@ -13,7 +13,7 @@ import {
   useState,
 } from "react";
 import { useIntl } from "react-intl";
-import { css, cx, Tooltip, TooltipProps, VisuallyHidden } from "../shared-ui";
+import { css, cx, Tooltip, TooltipProps, VisuallyHidden } from "@microbit/ui";
 
 interface ClickableTooltipProps {
   children: ReactElement;
@@ -139,7 +139,7 @@ const ClickableTooltip = ({
 
   return (
     <Tooltip
-      content={isButton ? <div aria-hidden={true}>{label}</div> : label}
+      label={isButton ? <div aria-hidden={true}>{label}</div> : label}
       placement={placement}
       hasArrow={hasArrow}
       isOpen={isOpen && !isDisabled}

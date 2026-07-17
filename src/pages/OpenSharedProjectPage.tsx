@@ -13,7 +13,7 @@ import {
   Text,
   VisuallyHidden,
   VStack,
-} from "../shared-ui";
+} from "@microbit/ui";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { HStack, SystemStyleObject } from "../shared-ui";
+import { HStack, SystemStyleObject } from "@microbit/ui";
 
 interface PageActionBarProps {
   /** Accessible name for the region (jump target for AT users). */

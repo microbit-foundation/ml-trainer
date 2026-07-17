@@ -16,7 +16,13 @@
 
     /* Panda CSS generated output, imported as styled-system/* */
     "paths": {
-      "styled-system/*": ["./styled-system/*"]
+      "styled-system/*": ["./styled-system/*"],
+      /* @microbit/ui may be a symlink to a sibling checkout, whose files
+         would otherwise resolve React's types from the sibling's own
+         node_modules — a second @types/react/csstype copy that makes
+         CSSProperties structurally incompatible. */
+      "react": ["./node_modules/@types/react"],
+      "react-dom": ["./node_modules/@types/react-dom"]
     },
 
     /* Linting */

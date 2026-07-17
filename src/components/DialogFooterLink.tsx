@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { Button } from "../shared-ui";
+import { Button } from "@microbit/ui";
 
 interface DialogFooterLinkProps {
   onClick?: () => void;

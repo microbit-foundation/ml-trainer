@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalProps,
   Text,
-} from "../shared-ui";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 
 const NotCreateAiHexImportDialog = ({

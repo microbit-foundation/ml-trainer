@@ -5,7 +5,7 @@
  */
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import { Stack } from "../../shared-ui";
+import { Stack } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import StepTickPill, { StepTickPillRef } from "./StepTickPill";
 

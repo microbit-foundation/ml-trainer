@@ -16,7 +16,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useDataConnected } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { TourTrigger } from "../model";
-import { Icon, MenuDivider, MenuItem } from "../shared-ui";
+import { Icon, MenuDivider, MenuItem } from "@microbit/ui";
 import { useStore } from "../store";
 import { createDataSamplesPageUrl, createTestingModelPageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import React from "react";
-import { css, cx } from "../../shared-ui";
+import { css, cx } from "@microbit/ui";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 
