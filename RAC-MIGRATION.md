@@ -1008,21 +1008,35 @@ preset changes.
 *Status (July 2026): the monorepo exists* — `../ui`, npm workspaces,
 mirroring microbit-connection's conventions, committed on `main`.
 Decisions taken: extract from this branch without waiting for Phase 0;
-one package, **`@microbit/ui`** (components + presets + generated
-`chakra-tokens`, exports `./panda-preset`, `./microbit-preset`,
-`./chakra-tokens`, `./messages`) — the foundation preset was briefly a
-separate `@microbit/ui-theme` package but a one-file package every app
-consumes anyway didn't earn a second version/publish surface, so it's
-a subpath export (split back out if it grows independent concerns);
-thin per-app private brand presets stay for now; **react-intl from the
+one package, **`@microbit/ui`** (components + preset + generated
+`chakra-tokens`, exports `./base-preset`, `./chakra-tokens`,
+`./messages`). **Preset naming settled on a single `base-preset`**: the
+in-repo core+foundation+app three-way split collapsed to one **base
+preset** — the complete brand-independent design system *plus* the OSS
+default brand values (brand/brand2 ramps + display font). Rationale:
+"foundation/micro:bit-brand" now names only the *private* branded
+presets (not in this repo); a separate OSS/foundation preset had no
+unique consumer (every branded build overrode it, an OSS build gets the
+defaults from base), so the stack is just `base [+ app] [+ private
+brand]`. The base preset alone is a complete, working OSS-look design
+system; a private preset merged last overrides the brand token values.
+(No non-micro:bit consumers are planned, so the Chakra-core-vs-vocabulary
+distinction wasn't worth a separate layer — re-splittable later.) The
+per-repo app preset (`src/deployment/default/panda-preset.ts`) keeps
+ml-trainer's led/record/secondary-disabled vocabulary + animations.
+Thin per-app private brand presets stay for now; **react-intl from the
 start** (namespaced `ui.*` ids with inline English `defaultMessage`, so
 English needs no catalog merge; `lang/ui.en.json` is the source and
 `@microbit/ui/messages` exports compiled catalogs) — `SharedUIProvider`
 now carries only the overlay-close registrar and is optional. Ship-as-
 source works without `importMap`: consumers add the package source to
 Panda `include` and alias `styled-system` (tsconfig + bundler) as we
-already do; `apps/demo` in the monorepo is the reference consumer and
-CI build target, verified interactive/styled by headless Playwright.
+already do. **Storybook** (not a demo app) is the component harness,
+in `packages/ui` (config `.storybook/`, stories `packages/ui/stories/`),
+using the base preset alone (OSS look); it's the CI build target.
+Branded Storybook is deferred until the private presets consolidate into
+a sibling package, where an optional guarded private preset would wire
+in.
 Direction noted for after the family migration (not yet): treat the
 Chakra token snapshot as a **malleable base** — it is a parity
 constraint only while Chakra apps remain the comparison point; once
@@ -1143,17 +1157,19 @@ during pre-work).
 - `panda.config.ts` (preset stack + `@microbit/ui` source include),
   `bin/fidelity.mjs`
 - **`../ui` monorepo**: `packages/ui/src/` (components + colocated
-  `*.recipe.ts`, `panda-preset.ts` core preset + staticCss,
-  `microbit-preset.ts` foundation preset, `chakra-tokens.ts` generated
-  snapshot, `SharedUIProvider.tsx` overlay-close seam,
-  `lang/ui.en.json` + `messages.ts`), `packages/ui/README.md`
-  (consumption setup + CSS-var contract), `apps/demo` (reference
-  consumer), `bin/gen-chakra-tokens.mjs`
-- `src/deployment/default/panda-preset.ts` (app preset)
+  `*.recipe.ts`, `base-preset.ts` the single preset — brand-independent
+  system + OSS default brand + staticCss, `chakra-tokens.ts` generated
+  snapshot, `SharedUIProvider.tsx` overlay-close seam, `lang/` +
+  `messages.ts`), `packages/ui/README.md` (consumption setup + CSS-var
+  contract), `packages/ui/.storybook/` + `packages/ui/stories/`
+  (component harness / CI build target), `bin/gen-chakra-tokens.mjs`,
+  `bin/{update-translations,tidy-lang,i18n-packages}.cjs`
+- `src/deployment/default/panda-preset.ts` (app preset:
+  led/record/secondary-disabled + animations)
 - `src/layers.css` (cascade layer order incl. `vendor`),
   `src/components/Carousel/swiper.css`
-- `src/messages/TranslationProvider.tsx` (`withSharedUiMessages` id
-  aliases)
+- `src/messages/TranslationProvider.tsx` (`withSharedUiMessages` merges
+  the package's shipped `ui.*` catalog)
 - `src/e2e/app/shared.ts` (`modalDialog()`/`appUrl()` helpers),
   `src/e2e/fidelity.spec.ts`
 - `src/App.tsx` (`SharedUIConfig` + `ToastProvider` mounted)
