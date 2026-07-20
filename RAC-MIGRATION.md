@@ -1079,10 +1079,16 @@ compile-time merge is the pattern for future package catalogs
 anywhere: components carry inline `defaultMessage` (`uiMessage`, still
 at `@microbit/ui/messages`). No Crowdin wiring for the package yet —
 new strings need every `lang/*.json` edited, then app-side recompile.
-Remaining for Phase 2: GitHub repo + npm publishing for `../ui`
-(NPM_TOKEN; then CI pin here like the theme package — the symlink is
-dev-only and a fresh `npm i`/CI has no `@microbit/ui` until then), and
-Crowdin (or equivalent) for the package catalog.
+*Publishing is done*: the monorepo lives at
+github.com/microbit-foundation/ui and its build workflow publishes
+`@microbit/ui` to npm on release creation (public package, version
+stamped from the release tag). This app depends on an exact-pinned
+version like any other dependency — no CI pin mechanism needed, and a
+fresh `npm i` just works. For local package development, symlink
+`node_modules/@microbit/ui` to `../ui/packages/ui` (then clean-regen
+Panda — external preset changes aren't detected incrementally — and
+restart the dev server); `npm i` restores the registry version.
+Remaining for Phase 2: Crowdin (or equivalent) for the package catalog.
 
 **Phase 3 — v1 surface**, built in the library. Policy: anything that
 is a *clearly core* design-system component goes into shared-ui even
