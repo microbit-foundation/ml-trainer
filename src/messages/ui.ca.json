@@ -3935,6 +3935,36 @@
       "value": "Torna-ho a provar"
     }
   ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "Tanca "
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
+    }
+  ],
   "unknown": [
     {
       "type": 0,

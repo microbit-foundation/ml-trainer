@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { messages as uiMessages } from "@microbit/ui/messages";
 import { inContextTranslationLangId, useSettings } from "../store";
 import { IntlProvider, MessageFormatElement } from "react-intl";
 import { ReactNode, useEffect, useState } from "react";
@@ -28,15 +27,6 @@ async function loadLocaleData(locale: string) {
 
 type Messages = Record<string, string> | Record<string, MessageFormatElement[]>;
 
-// @microbit/ui's components look up messages by ui.*-namespaced ids from the
-// catalogs the package ships; merge the active locale's catalog (English
-// fallback) under the app's own messages.
-const withSharedUiMessages = (locale: string, messages: Messages): Messages =>
-  ({
-    ...(uiMessages[locale.toLowerCase()] ?? uiMessages.en),
-    ...messages,
-  }) as Messages;
-
 interface TranslationProviderProps {
   children: ReactNode;
 }
@@ -50,12 +40,7 @@ const TranslationProvider = ({ children }: TranslationProviderProps) => {
   const [messages, setMessages] = useState<Messages | undefined>();
   useEffect(() => {
     const load = async () => {
-      setMessages(
-        withSharedUiMessages(
-          languageId,
-          await retryAsyncLoad(() => loadLocaleData(languageId))
-        )
-      );
+      setMessages(await retryAsyncLoad(() => loadLocaleData(languageId)));
     };
     void load();
   }, [languageId]);

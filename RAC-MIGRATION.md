@@ -1064,13 +1064,21 @@ pinning `react`/`react-dom` types, because the linked package's files
 resolve bare imports through the *sibling's* node_modules (duplicate
 React breaks hooks/contexts; duplicate csstype breaks CSSProperties);
 `fs.allow` gains the symlink realpath. **The package ships translated
-catalogs** (ml-trainer-pipeline shape: `lang/ui.<locale>.json` source,
-12 locales seeded from this app's translations, compiled with formatjs
-`--ast` into committed `src/messages/` bundles, exported at
-`@microbit/ui/messages` keyed by lowercase locale id); this app's
-TranslationProvider merges the active locale's catalog under its own
-messages (`withSharedUiMessages`). No Crowdin wiring for the package
-yet — new strings need every `lang/*.json` edited + recompile.
+catalogs as source** (`lang/ui.<locale>.json`, formatjs extracted
+format, 12 locales seeded from this app's translations, exported at
+`@microbit/ui/lang/*`); this app's `i18n:compile`
+(`bin/compile-lang.mjs`) compiles each locale's app + package catalogs
+together into `src/messages/`, so package strings ride the existing
+lazy per-locale chunks. This replaced an earlier eager
+`@microbit/ui/messages` catalog-of-all-locales export merged at runtime
+— fine at 5 messages but the wrong shape for string-dense packages,
+where every visitor would download every locale in the main chunk; the
+compile-time merge is the pattern for future package catalogs
+(`ui.*`-style namespaced ids can't collide with app ids, and formatjs
+`compile` accepts multiple input files). English still needs no catalog
+anywhere: components carry inline `defaultMessage` (`uiMessage`, still
+at `@microbit/ui/messages`). No Crowdin wiring for the package yet —
+new strings need every `lang/*.json` edited, then app-side recompile.
 Remaining for Phase 2: GitHub repo + npm publishing for `../ui`
 (NPM_TOKEN; then CI pin here like the theme package — the symlink is
 dev-only and a fresh `npm i`/CI has no `@microbit/ui` until then), and
@@ -1168,8 +1176,8 @@ during pre-work).
   led/record/secondary-disabled + animations)
 - `src/layers.css` (cascade layer order incl. `vendor`),
   `src/components/Carousel/swiper.css`
-- `src/messages/TranslationProvider.tsx` (`withSharedUiMessages` merges
-  the package's shipped `ui.*` catalog)
+- `bin/compile-lang.mjs` (compiles app + package `lang/` catalogs
+  together into `src/messages/`)
 - `src/e2e/app/shared.ts` (`modalDialog()`/`appUrl()` helpers),
   `src/e2e/fidelity.spec.ts`
 - `src/App.tsx` (`SharedUIConfig` + `ToastProvider` mounted)

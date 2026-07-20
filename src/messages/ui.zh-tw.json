@@ -3961,6 +3961,36 @@
       "value": "重試一次"
     }
   ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "關閉"
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
+    }
+  ],
   "unknown": [
     {
       "type": 0,

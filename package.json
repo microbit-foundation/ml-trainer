@@ -43,7 +43,7 @@
     "test:e2e:headless": "playwright test",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --noEmit --watch",
-    "i18n:compile": "node bin/tidy-lang.cjs && formatjs compile-folder --ast lang src/messages",
+    "i18n:compile": "node bin/tidy-lang.cjs && node bin/compile-lang.mjs",
     "ml4f-output": "vitest ml4f-output --run",
     "new-translations": "node bin/new-translations.js"
   },

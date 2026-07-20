@@ -21,6 +21,8 @@ To add or amend UI strings:
 1. Edit `lang/ui.en.json` (and `lang/ui.en-us.json` — we maintain the en-US copy manually).
 2. Run `find lang -type f -not -name 'ui.en.json' -not -name 'ui.en-us.json' | while read n; do git checkout main -- $n; done && npm run i18n:compile` to update `src/messages/` via formatjs and ensure that outdated text of new message is not preserved in non-English translation bundles as we iterate on the text.
 
+The compile also merges `@microbit/ui`'s shipped `lang/` catalogs into each locale's output, so `ui.*`-prefixed messages in `src/messages/` are expected and don't come from this repo's `lang/`.
+
 ## Vitest
 
 To run a subset of unit tests, pass a file pattern directly (not `--testPathPattern`):
