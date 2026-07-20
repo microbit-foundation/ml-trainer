@@ -1,5 +1,4 @@
-import { sharedUiPreset } from "@microbit/ui/panda-preset";
-import { microbitPreset } from "@microbit/ui/microbit-preset";
+import { basePreset } from "@microbit/ui/base-preset";
 import { defineConfig } from "@pandacss/dev";
 import { appPreset } from "./src/deployment/default/panda-preset";
 
@@ -34,14 +33,14 @@ export default defineConfig({
   // full token system (ported from Chakra). preset-base still provides the
   // utilities.
   eject: true,
-  // Later presets override earlier ones: the shared-ui core (Chakra design
-  // language + recipes, future library), the micro:bit foundation vocabulary
-  // (family-wide tokens/variants), this app's own preset, then the optional
-  // private brand preset. staticCss lives in the core preset.
+  // Later presets override earlier ones: @microbit/ui's base preset (the
+  // complete design system + recipes, with OSS default brand values), this
+  // app's own preset, then the optional private brand preset which overrides
+  // the OSS default brand values (brand/brand2 ramps + display font).
+  // staticCss lives in the base preset.
   presets: [
     "@pandacss/preset-base",
-    sharedUiPreset,
-    microbitPreset,
+    basePreset,
     appPreset,
     ...(brandPreset ? [brandPreset] : []),
   ],
