@@ -1049,14 +1049,18 @@ Symlink-consumption wiring worth knowing: vite `resolve.dedupe`
 pinning `react`/`react-dom` types, because the linked package's files
 resolve bare imports through the *sibling's* node_modules (duplicate
 React breaks hooks/contexts; duplicate csstype breaks CSSProperties);
-`fs.allow` gains the symlink realpath. TranslationProvider aliases the
-package's `ui.*` message ids to the app's existing translated messages
-(`withSharedUiMessages`) so all locales keep working until the package
-ships its own catalogs. Remaining for Phase 2: GitHub repo + npm
-publishing for `../ui` (NPM_TOKEN; then CI pin here like the theme
-package — the symlink is dev-only and a fresh `npm i`/CI has no
-`@microbit/ui` until then), and the translation pipeline for the
-package catalog (then drop the alias map).
+`fs.allow` gains the symlink realpath. **The package ships translated
+catalogs** (ml-trainer-pipeline shape: `lang/ui.<locale>.json` source,
+12 locales seeded from this app's translations, compiled with formatjs
+`--ast` into committed `src/messages/` bundles, exported at
+`@microbit/ui/messages` keyed by lowercase locale id); this app's
+TranslationProvider merges the active locale's catalog under its own
+messages (`withSharedUiMessages`). No Crowdin wiring for the package
+yet — new strings need every `lang/*.json` edited + recompile.
+Remaining for Phase 2: GitHub repo + npm publishing for `../ui`
+(NPM_TOKEN; then CI pin here like the theme package — the symlink is
+dev-only and a fresh `npm i`/CI has no `@microbit/ui` until then), and
+Crowdin (or equivalent) for the package catalog.
 
 **Phase 3 — v1 surface**, built in the library. Policy: anything that
 is a *clearly core* design-system component goes into shared-ui even
