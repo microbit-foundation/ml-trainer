@@ -21,7 +21,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
-import { forwardRef, ReactNode, useCallback, useRef } from "react";
+import {
+  forwardRef,
+  MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useRef,
+} from "react";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataSamplesView, ActionData, RecordingData } from "../model";
@@ -369,9 +375,16 @@ const DataSample = ({
     view === DataSamplesView.DataFeatures ||
     view === DataSamplesView.GraphAndDataFeatures;
   const intl = useIntl();
-  const handleDelete = useCallback(() => {
-    onDelete(actionId, recording.id);
-  }, [actionId, onDelete, recording.id]);
+  const handleDelete: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (e) => {
+      // Prevent the default action on this click to stop iOS/iPadOS from
+      // treating a double tap on the close button as a double-tap-to-zoom
+      // gesture, which could otherwise leave the app stuck zoomed in (#942).
+      e.preventDefault();
+      onDelete(actionId, recording.id);
+    },
+    [actionId, onDelete, recording.id]
+  );
   return (
     <HStack
       key={recording.id}
