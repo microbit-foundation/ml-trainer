@@ -4,25 +4,31 @@
  * SPDX-License-Identifier: MIT
  *
  * PostCSS runs because vite.config.ts uses Vite's default CSS transformer
- * rather than lightningcss (which disables PostCSS). lightningcss is kept only
- * as the minifier. Two transforms make Panda's output work on Safari <15.4:
+ * rather than lightningcss (which disables PostCSS); lightningcss is kept only
+ * as the minifier.
  *
- * 1. expand-logical-shorthands (below) — Safari 14.x silently drops logical
+ * Plugins, in order:
+ *
+ * 1. @pandacss/dev/postcss — generates Panda's CSS into the cascade-layer
+ *    declaration in src/layers.css at build time (replaces the old `panda
+ *    cssgen` CLI step). `panda codegen` still runs up front for the
+ *    styled-system/* helpers.
+ *
+ * The other two make that output work on Safari <15.4 and are TEMPORARY — drop
+ * them, and the safari14.1 floor in vite.config.ts, once support rises past
+ * those browsers:
+ *
+ * 2. expand-logical-shorthands (below) — Safari 14.x silently drops logical
  *    *shorthands* whose value contains var(): `padding-inline: var(--spacing-2)`
- *    applies nothing, even though `padding-inline: 10px` and
- *    `padding-inline-start: var(--spacing-2)` both work. Panda emits these
- *    shorthands for its px/py/mx/my utilities, so the bug removes most spacing.
- *    Expanding each into its -start/-end longhands sidesteps it while staying
- *    logical (so RTL still flips correctly). lightningcss does not downlevel
- *    logical properties at any browserslist target, so this has to be explicit.
+ *    applies nothing, even though a literal value or `padding-inline-start:
+ *    var(...)` both work. Panda emits these for its px/py/mx/my utilities, so
+ *    the bug removes most spacing. Expand each into its -start/-end longhands,
+ *    kept logical so RTL still flips. lightningcss does not downlevel logical
+ *    properties, so this must be explicit. (Replace with
+ *    @microbit/ui/postcss-legacy-safari once a version shipping it is published.)
  *
- * 2. @csstools/postcss-cascade-layers — Panda wraps all output in @layer, which
- *    Safari <15.4 drops wholesale, leaving the app unstyled. Flatten @layer
- *    into :not(#\#) specificity fallbacks. Vite runs this per CSS module;
- *    Panda's generated styled-system.css is self-contained (carries its own
- *    layer-order statement) so flattening it is correct, and the app's
- *    cross-file `vendor` layer (Swiper) is inlined by Vite before PostCSS so it
- *    flattens too.
+ * 3. @csstools/postcss-cascade-layers — Safari <15.4 drops @layer wholesale;
+ *    flatten it into :not(#\#) specificity fallbacks.
  */
 
 // Logical shorthands whose value is `<start> <end>` (one value applies to
@@ -91,6 +97,7 @@ expandLogicalShorthands.postcss = true;
 
 module.exports = {
   plugins: [
+    require("@pandacss/dev/postcss")(),
     expandLogicalShorthands(),
     require("@csstools/postcss-cascade-layers"),
   ],
