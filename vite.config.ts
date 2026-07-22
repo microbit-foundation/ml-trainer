@@ -98,7 +98,13 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       ),
     },
     css: {
-      transformer: "lightningcss",
+      // Use Vite's default PostCSS transformer (see postcss.config.cjs) so
+      // Panda's @layer output can be flattened into specificity-based
+      // fallbacks for browsers without cascade-layer support (Safari <15.4).
+      // The lightningcss transformer would disable PostCSS entirely and does
+      // not itself downlevel @layer, so unsupported browsers would get no
+      // library styling at all. lightningcss is retained purely as the
+      // minifier below; it reads these targets for prefixing at minify time.
       lightningcss: {
         targets: browserslistToTargets(browserslist()),
       },
