@@ -6,9 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 import react from "@vitejs/plugin-react";
-import browserslist from "browserslist";
 import ejs from "ejs";
-import { browserslistToTargets } from "lightningcss";
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -68,6 +66,17 @@ const viteEjsPlugin = (data: ejs.Data): Plugin => {
   };
 };
 
+// Browser-support floor (esbuild/lightningcss target syntax) for JS
+// (build.target) and CSS (build.cssTarget). Keep in sync with the
+// "browserslist" field in package.json.
+const BUILD_TARGETS = [
+  "chrome90",
+  "edge90",
+  "firefox88",
+  "safari14.1",
+  "ios14.5",
+];
+
 export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const strings: TemplateStrings = themePackageExternal
     ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
@@ -97,14 +106,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         process.env.npm_package_version
       ),
     },
-    css: {
-      transformer: "lightningcss",
-      lightningcss: {
-        targets: browserslistToTargets(browserslist()),
-      },
-    },
     build: {
-      target: "es2017",
+      target: BUILD_TARGETS,
+      cssTarget: BUILD_TARGETS,
       cssMinify: "lightningcss",
       rollupOptions: {
         input: "index.html",

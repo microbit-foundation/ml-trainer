@@ -4,6 +4,15 @@
   "private": true,
   "type": "module",
   "license": "MIT",
+  "//browserslist": "Keep in sync with BUILD_TARGETS in vite.config.ts, which is what the build actually uses.",
+  "browserslist": [
+    "safari >= 14.1",
+    "ios_saf >= 14.5",
+    "chrome >= 90",
+    "edge >= 90",
+    "firefox >= 88",
+    "not dead"
+  ],
   "allowScripts": {
     "aws-sdk": false,
     "better-sqlite3@12.6.2": true,
@@ -24,8 +33,7 @@
     "cap:sync:dev": "cross-env CAP_LOCAL_DEV=1 npx cap sync",
     "ci": "npm run test && npm run lint && npm run build && npx prettier --check src",
     "deploy": "website-deploy-aws",
-    "panda": "panda codegen && panda cssgen --outfile src/styled-system.css",
-    "panda:watch": "panda cssgen --watch --outfile src/styled-system.css",
+    "panda": "panda codegen",
     "predev": "npm run panda",
     "dev": "cross-env VITE_VERSION=$npm_package_version vite",
     "dev:apps": "cross-env VITE_BUILD_MODE=apps VITE_VERSION=$npm_package_version vite --host",
@@ -49,6 +57,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^8.0.0",
+    "@csstools/postcss-cascade-layers": "^6.0.0",
     "@formatjs/cli": "^6.2.7",
     "@pandacss/dev": "^1.11.4",
     "@playwright/test": "1.58.2",
@@ -105,7 +114,7 @@
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/ml4f": "^2.0.0-beta.0",
     "@microbit/smoothie": "^1.37.0-microbit.2",
-    "@microbit/ui": "0.1.0-alpha.3",
+    "@microbit/ui": "0.1.0-alpha.4",
     "@sentry/capacitor": "^4.0.0",
     "@tensorflow/tfjs": "^4.20.0",
     "@tensorflow/tfjs-backend-wasm": "^4.20.0",
