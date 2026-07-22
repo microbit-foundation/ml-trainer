@@ -111,6 +111,12 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     },
     build: {
       target: "es2017",
+      // CSS support floor for the lightningcss minifier. Without this it
+      // inherits build.target ("es2017" → ~Safari 11), which makes lightningcss
+      // downlevel logical properties into fragile :lang()-based physical rules.
+      // Safari 14.1+ supports logical longhands natively, so pin the CSS floor
+      // there to ship clean, RTL-correct logical output.
+      cssTarget: "safari14.1",
       cssMinify: "lightningcss",
       rollupOptions: {
         input: "index.html",
