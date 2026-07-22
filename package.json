@@ -4,6 +4,15 @@
   "private": true,
   "type": "module",
   "license": "MIT",
+  "//browserslist": "Keep in sync with BUILD_TARGETS in vite.config.ts, which is what the build actually uses.",
+  "browserslist": [
+    "safari >= 14.1",
+    "ios_saf >= 14.5",
+    "chrome >= 90",
+    "edge >= 90",
+    "firefox >= 88",
+    "not dead"
+  ],
   "allowScripts": {
     "aws-sdk": false,
     "better-sqlite3@12.6.2": true,

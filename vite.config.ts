@@ -6,9 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 import react from "@vitejs/plugin-react";
-import browserslist from "browserslist";
 import ejs from "ejs";
-import { browserslistToTargets } from "lightningcss";
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -68,6 +66,17 @@ const viteEjsPlugin = (data: ejs.Data): Plugin => {
   };
 };
 
+// Browser-support floor (esbuild/lightningcss target syntax) for JS
+// (build.target) and CSS (build.cssTarget). Keep in sync with the
+// "browserslist" field in package.json.
+const BUILD_TARGETS = [
+  "chrome90",
+  "edge90",
+  "firefox88",
+  "safari14.1",
+  "ios14.5",
+];
+
 export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const strings: TemplateStrings = themePackageExternal
     ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
@@ -97,26 +106,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         process.env.npm_package_version
       ),
     },
-    css: {
-      // Use Vite's default PostCSS transformer (see postcss.config.cjs) so
-      // Panda's @layer output can be flattened into specificity-based
-      // fallbacks for browsers without cascade-layer support (Safari <15.4).
-      // The lightningcss transformer would disable PostCSS entirely and does
-      // not itself downlevel @layer, so unsupported browsers would get no
-      // library styling at all. lightningcss is retained purely as the
-      // minifier below; it reads these targets for prefixing at minify time.
-      lightningcss: {
-        targets: browserslistToTargets(browserslist()),
-      },
-    },
     build: {
-      target: "es2017",
-      // CSS support floor for the lightningcss minifier. Without this it
-      // inherits build.target ("es2017" → ~Safari 11), which makes lightningcss
-      // downlevel logical properties into fragile :lang()-based physical rules.
-      // Safari 14.1+ supports logical longhands natively, so pin the CSS floor
-      // there to ship clean, RTL-correct logical output.
-      cssTarget: "safari14.1",
+      target: BUILD_TARGETS,
+      cssTarget: BUILD_TARGETS,
       cssMinify: "lightningcss",
       rollupOptions: {
         input: "index.html",
