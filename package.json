@@ -114,7 +114,7 @@
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/ml4f": "^2.0.0-beta.0",
     "@microbit/smoothie": "^1.37.0-microbit.2",
-    "@microbit/ui": "0.1.0-alpha.3",
+    "@microbit/ui": "0.1.0-alpha.4",
     "@sentry/capacitor": "^4.0.0",
     "@tensorflow/tfjs": "^4.20.0",
     "@tensorflow/tfjs-backend-wasm": "^4.20.0",
