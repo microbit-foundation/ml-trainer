@@ -11,6 +11,5 @@
  */
 @import "swiper/css" layer(vendor);
 @import "swiper/css/a11y" layer(vendor);
-@import "swiper/css/autoplay" layer(vendor);
 @import "swiper/css/navigation" layer(vendor);
 @import "swiper/css/pagination" layer(vendor);
