@@ -14,9 +14,11 @@
  *    cssgen` CLI step). `panda codegen` still runs up front for the
  *    styled-system/* helpers.
  *
- * The other two make that output work on Safari <15.4 and are TEMPORARY — drop
- * them, and the safari14.1 floor in vite.config.ts, once support rises past
- * those browsers:
+ * The other two make that output work on Safari <15.4. They run in production
+ * builds only: dev browsers don't need the downleveling, and the flattened
+ * @layer output makes devtools CSS tracing painful. They are also TEMPORARY —
+ * drop them, and the safari14.1 floor in vite.config.ts, once support rises
+ * past those browsers:
  *
  * 2. expandLogicalShorthands (@microbit/ui/postcss-legacy-safari) — Safari 14.x
  *    silently drops logical *shorthands* whose value contains var()
@@ -31,10 +33,11 @@ const {
   expandLogicalShorthands,
 } = require("@microbit/ui/postcss-legacy-safari");
 
-module.exports = {
+module.exports = (ctx) => ({
   plugins: [
     require("@pandacss/dev/postcss")(),
-    expandLogicalShorthands(),
-    require("@csstools/postcss-cascade-layers"),
+    ...(ctx.env === "production"
+      ? [expandLogicalShorthands(), require("@csstools/postcss-cascade-layers")]
+      : []),
   ],
-};
+});
