@@ -7,7 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var windowControlsObserver: WindowControlsObserver?
-    private var viewportZoomObservation: NSKeyValueObservation?
+    private var didInstallViewportZoomScript = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -51,30 +51,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// left untouched so the website keeps pinch-to-zoom for accessibility;
     /// native users retain the iOS system Zoom (Accessibility) feature.
     private func setupViewportZoomWorkaround(webView: WKWebView) {
-        disableViewportZoom(on: webView)
-        guard viewportZoomObservation == nil else { return }
-        // The viewport meta is reset when the page reloads, so re-apply.
-        viewportZoomObservation = webView.observe(\.isLoading) { [weak self] wv, _ in
-            if !wv.isLoading {
-                self?.disableViewportZoom(on: wv)
-            }
-        }
-    }
+        guard !didInstallViewportZoomScript else { return }
+        didInstallViewportZoomScript = true
 
-    private func disableViewportZoom(on webView: WKWebView) {
         let js = """
-        (function() {
-          var v = document.querySelector('meta[name=viewport]');
-          if (!v) { return; }
+        var v = document.querySelector('meta[name=viewport]');
+        if (v) {
           var c = v.getAttribute('content') || '';
           if (!/user-scalable/.test(c)) {
             v.setAttribute('content', c + ', user-scalable=no');
           }
-        })();
-        """
-        DispatchQueue.main.async {
-            webView.evaluateJavaScript(js, completionHandler: nil)
         }
+        """
+        // Re-applies on every future navigation/reload.
+        let script = WKUserScript(
+            source: js,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+        webView.configuration.userContentController.addUserScript(script)
+        // The current page has already started loading by the time we run, so
+        // apply once directly too.
+        webView.evaluateJavaScript(js, completionHandler: nil)
     }
 
     /// Adds an invisible view that tracks the iPadOS 26 window-controls
