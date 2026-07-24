@@ -1277,15 +1277,19 @@ const createMlStore = (logging: Logging) => {
               trainModelDialogStage: TrainModelDialogStage.Help,
             });
           } else {
-            await trainModel();
-            callback?.();
-            // Push the trainModelDialogStage change to the back of the event queue so it happens
-            // after navigation changes.
-            setTimeout(
-              () =>
-                set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
-              0
-            );
+            const success = await trainModel();
+            // On failure, the stage is already TrainingError, so leave that
+            // dialog up rather than navigating away and closing it.
+            if (success) {
+              callback?.();
+              // Push the trainModelDialogStage change to the back of the event queue so it happens
+              // after navigation changes.
+              setTimeout(
+                () =>
+                  set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
+                0
+              );
+            }
           }
         },
 
@@ -1303,44 +1307,52 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
-          const trainingResult = await trainModel(
-            actions,
-            dataWindow,
-            (trainModelProgress) =>
-              set({ trainModelProgress }, false, "trainModelProgress")
-          );
-          const model = trainingResult.error ? undefined : trainingResult.model;
-          const updatedProject = updateProject(
-            project,
-            projectEdited,
-            actions,
-            model,
-            dataWindow
-          );
-          const timestamp = Date.now();
-          set(
-            {
+          try {
+            const trainingResult = await trainModel(
+              actions,
+              dataWindow,
+              (trainModelProgress) =>
+                set({ trainModelProgress }, false, "trainModelProgress")
+            );
+            const model = trainingResult.error
+              ? undefined
+              : trainingResult.model;
+            const updatedProject = updateProject(
+              project,
+              projectEdited,
+              actions,
               model,
-              trainModelDialogStage: model
-                ? TrainModelDialogStage.TrainingInProgress
-                : TrainModelDialogStage.TrainingError,
-              timestamp,
-              ...updatedProject,
-            },
-            false,
-            actionName
-          );
-          await storageWriteWithErrHandling(() =>
-            storage.updateMakeCodeProject(
-              id,
+              dataWindow
+            );
+            const timestamp = Date.now();
+            set(
               {
-                project: updatedProject.project,
-                projectEdited: updatedProject.projectEdited,
+                model,
+                trainModelDialogStage: model
+                  ? TrainModelDialogStage.TrainingInProgress
+                  : TrainModelDialogStage.TrainingError,
+                timestamp,
+                ...updatedProject,
               },
-              timestamp
-            )
-          );
-          return !trainingResult.error;
+              false,
+              actionName
+            );
+            await storageWriteWithErrHandling(() =>
+              storage.updateMakeCodeProject(
+                id,
+                {
+                  project: updatedProject.project,
+                  projectEdited: updatedProject.projectEdited,
+                },
+                timestamp
+              )
+            );
+            return !trainingResult.error;
+          } catch (e) {
+            logging.error("Model training failed", e);
+            set({ trainModelDialogStage: TrainModelDialogStage.TrainingError });
+            return false;
+          }
         },
 
         removeModel(): void {
