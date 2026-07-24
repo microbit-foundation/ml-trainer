@@ -7,6 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var windowControlsObserver: WindowControlsObserver?
+    private var didInstallViewportZoomScript = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -38,6 +39,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         webView.layoutIfNeeded()
 
         setupWindowControlsObserver(webView: webView)
+        setupViewportZoomWorkaround(webView: webView)
+    }
+
+    /// Disables web-content zoom (double-tap and pinch) in the native app by
+    /// injecting `user-scalable=no` into the viewport meta tag.
+    ///
+    /// Works around an iPadOS WKWebView bug where double-tapping a data
+    /// sample's close button can leave the app zoomed in with no easy way to
+    /// zoom back out (#942). The shared `index.html` viewport is deliberately
+    /// left untouched so the website keeps pinch-to-zoom for accessibility;
+    /// native users retain the iOS system Zoom (Accessibility) feature.
+    private func setupViewportZoomWorkaround(webView: WKWebView) {
+        guard !didInstallViewportZoomScript else { return }
+        didInstallViewportZoomScript = true
+
+        let js = """
+        var v = document.querySelector('meta[name=viewport]');
+        if (v) {
+          var c = v.getAttribute('content') || '';
+          if (!/user-scalable/.test(c)) {
+            v.setAttribute('content', c + ', user-scalable=no');
+          }
+        }
+        """
+        // Re-applies on every future navigation/reload.
+        let script = WKUserScript(
+            source: js,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+        webView.configuration.userContentController.addUserScript(script)
+        // The current page has already started loading by the time we run, so
+        // apply once directly too.
+        webView.evaluateJavaScript(js, completionHandler: nil)
     }
 
     /// Adds an invisible view that tracks the iPadOS 26 window-controls
