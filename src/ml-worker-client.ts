@@ -17,12 +17,6 @@ export interface WorkerTrainResult {
   machineCode: Uint8Array;
 }
 
-/**
- * If the worker sends no message at all for this long during a model
- * operation — not even a training-progress tick — it's treated as hung
- * (e.g. suspended or killed by the OS while the app is backgrounded) and the
- * request fails so the UI can recover instead of waiting forever.
- */
 const workerInactivityTimeoutMs = 60000;
 
 interface PendingRequest {
