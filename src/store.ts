@@ -1314,6 +1314,12 @@ const createMlStore = (logging: Logging) => {
               (trainModelProgress) =>
                 set({ trainModelProgress }, false, "trainModelProgress")
             );
+            if (trainingResult.error) {
+              logging.error(
+                "Model training failed",
+                new Error(`Model training failed: ${trainingResult.reason}`)
+              );
+            }
             const model = trainingResult.error
               ? undefined
               : trainingResult.model;
