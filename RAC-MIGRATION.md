@@ -1,19 +1,131 @@
 # Chakra → react-aria-components + Panda CSS migration
 
-Status: **migration complete on this branch; extraction Phase 1 done too.**
-Chakra, Emotion and framer-motion are gone — the kill-switch (#8) is
-verified by the fidelity harness against the pre-flip commit (17/18 states
-pixel-identical; one accepted 1px sub-pixel diff, see #8) — and **private
-preset consumption (#9) is done**: CI installs the theme package at the
-version pinned in `workflow-config.json` (currently
-`0.2.0-experiment.rai.130`, published from `../ml-trainer-microbit`'s
-matching `experiment-rai` branch, where its changes are committed).
-**Phase 1 of the extraction plan (July 2026) is complete** — see "Extraction
-& family-migration plan" for the per-item state; every step was
-fidelity-verified zero-diff. Remaining before Phase 2: merge both repos'
-branches (Phase 0), then re-publish the theme package from its main line
-and bump `workflow-config.json` again. This doc is the handover for
-continuing in a new session; per-chunk history lives in git.
+Status: **complete.** The migration (Chakra, Emotion and framer-motion are
+gone), the library extraction, and the consumption flip are all done: this
+app consumes **`@microbit/ui`** (the `../ui` monorepo), with its app preset
+in `src/deployment/default/panda-preset.ts` and the private CreateAI brand
+preset in `../ml-trainer-microbit` (branch-published, pinned via
+`workflow-config.json`).
+
+The reusable method has moved out of this doc into the **migration
+playbook** at `../ui/docs/migration-playbook.md` — the per-app sequence,
+the gotcha catalog (numbering preserved: #1–#16 from this migration,
+#17–#18 from the extraction), the fidelity/verification recipes, the kit
+scripts (`../ui/bin/`), and the family roadmap including the classroom and
+data-microbit-org censuses. The python-editor-v3 census moved to that
+repo's own `RAC-MIGRATION.md`. Consumption setup lives in
+`../ui/packages/ui/README.md`. Everything under "Archive" below is the
+frozen record of this app's migration and extraction; per-chunk history
+lives in git.
+
+## Open items
+
+- **Land the branch (extraction plan Phase 0)**: merge this repo's and
+  `../ml-trainer-microbit`'s `experiment-rai` branches, republish the
+  theme package from its main line, and bump `workflow-config.json`.
+- **Crowdin (or equivalent) for the `@microbit/ui` catalogs** — new
+  package strings currently require editing every
+  `../ui/packages/ui/lang/*.json` by hand, then this app's
+  `npm run i18n:compile`.
+- **Projects-page GridList** (parked; a deliberate UX change, not
+  parity): RAC `GridList` for card collections — whole-item press
+  targets without the overlay hack, arrow-key navigation, and built-in
+  multi-selection replacing the checkbox + skip-to-toolbar wiring.
+  Doesn't fit the Swiper-managed home carousel DOM; best tried on the
+  projects page grid. GridList is also on the library roadmap
+  (classroom's hand-rolled version promotes first).
+- **A/B-hold pairing fill-up**: the ported button-label fill now renders
+  visibly (the Chakra code interpolated an unresolved token name into a
+  `linear-gradient`, so it was likely invisible); eyeball it when
+  `PairingModeAnimation`'s A/B-hold path is next exercised.
+- **VoiceOver pass** on BluetoothPatternInput when the native flow is
+  next tested by hand.
+
+## How to run / verify
+
+- **Branded build locally**: build the sibling `ml-trainer-microbit`
+  package (`npm run build` there → `dist/panda-preset.js`) and make it
+  resolvable as `node_modules/@microbit-foundation/ml-trainer-microbit`
+  (e.g. a symlink or `npm link`). With it present, vite's `theme-package`
+  alias and `panda.config.ts` both resolve CreateAI branding; without it
+  you get the OSS default. CI installs it at the version pinned in
+  `workflow-config.json`.
+- **Local `@microbit/ui` development**: symlink
+  `node_modules/@microbit/ui` to `../ui/packages/ui`; a plain `npm i`
+  restores the registry version.
+- **After changing or (re)linking either sibling package, do a _clean_
+  Panda regen**: `rm -rf styled-system && npm run panda` (or `panda
+codegen --clean`). Incremental codegen does not detect changes in an
+  _external_ preset dependency — brand token values silently stay stale.
+  Restart the dev server too; the `theme-package` alias resolves at
+  server start.
+- `npm run build` then `npm run preview` → http://localhost:4173, and
+  compare against the live branded deployment
+  (https://createai.microbit.org/).
+- **Fidelity harness**: `npm run fidelity [-- <ref>]` (default HEAD)
+  screenshot-diffs ~43 app states between a baseline ref and the working
+  tree; view via `npx playwright show-report`. Implementation:
+  `bin/fidelity.mjs` + `src/e2e/fidelity.spec.ts`; the pattern and its
+  determinism tricks are documented in the playbook. Runs against
+  pre-flip refs need paired sibling-package versions — see "Remaining
+  work" #8 in the archive.
+- `npm test`, `npm run test:e2e:headless`, `npm run typecheck`,
+  `npm run lint`.
+- E2e suite notes: run the full suite only on a stable tree — editing
+  source or regenerating Panda output mid-run invalidates modules and
+  produces bogus timeout failures, and a new react-aria entry-point
+  import makes the first run after it flaky-slow. The radio reconnection
+  specs are flaky under full parallel load on some machines (reproduced
+  on unmodified main) — rerun the failing spec in isolation before
+  suspecting a regression.
+
+## Accepted differences from Chakra
+
+Consolidated for review time; all deliberate:
+
+- react-aria shows focus rings after mouse interaction in places Chakra hid
+  them (ConfirmDialog's auto-focused Cancel, the slider thumb).
+- Dialogs open with focus on the dialog element itself (announces the title;
+  a11y improvement) rather than the first focusable control.
+- Toast: single top-centre region; no per-call `position`/`variant`
+  (`id`-dedup is supported). Repeat Android saves within the timeout can stack.
+  `toast.update()` re-adds the toast, so it re-animates and restarts any
+  timeout (Chakra updated in place).
+- MakeCode loading skeleton is an opacity pulse rather than Chakra's shimmer;
+  ~3px internal shift in the certainty card.
+- Toast is built on RAC's `UNSTABLE_Toast*` API (functional; the surface is
+  small and contained behind `Toast.tsx`).
+
+## Key files
+
+- `panda.config.ts` (preset stack + `@microbit/ui` source include),
+  `bin/fidelity.mjs`
+- **`../ui` monorepo**: `docs/migration-playbook.md` (method, gotchas,
+  family roadmap), `packages/ui/` (components + colocated recipes +
+  `base-preset.ts`; `README.md` = consumption setup + CSS-var contract),
+  `bin/` (migration kit: `diff-chakra-themes.mjs`, `unlayer-panda.mjs`,
+  `panda-dev.mjs`, `gen-chakra-tokens.mjs`)
+- `src/deployment/default/panda-preset.ts` (app preset:
+  led/record/secondary-disabled vocabulary + animations)
+- `src/layers.css` (cascade layer order incl. `vendor`),
+  `src/components/Carousel/swiper.css`
+- `bin/compile-lang.mjs` (compiles app + package `lang/` catalogs
+  together into `src/messages/`)
+- `src/e2e/app/shared.ts` (`modalDialog()`/`appUrl()` helpers),
+  `src/e2e/fidelity.spec.ts`
+- `src/App.tsx` (`SharedUIConfig` + `ToastProvider` mounted)
+- Private: `../ml-trainer-microbit/src/panda-preset.ts`, its
+  `package.json` (`./panda-preset` export)
+
+---
+
+# Archive — migration & extraction record (July 2026)
+
+The frozen record of how this app got here; not maintained. Sections that
+became reusable method live in the playbook instead (the gotcha catalog,
+the visual-comparison workflow and fidelity pattern, the sibling-app
+censuses, roadmap phases 3–4, and the per-app sequence). Gotcha numbers
+referenced below resolve against the playbook's catalog.
 
 ## Goal
 
@@ -30,7 +142,9 @@ the OSS default theme is a washed-out grey and hides real issues.
 ## Architecture
 
 ### Styling: Panda, build-time, no PostCSS
+
 Panda generates CSS at build time from `panda.config.ts`:
+
 - `npm run panda` → `panda codegen` generates the `styled-system/` helpers
   (needed before `tsc`); wired into `build`, `predev`, `postinstall`.
 - The CSS is generated by `@pandacss/dev/postcss` (see `postcss.config.cjs`),
@@ -47,6 +161,7 @@ Panda generates CSS at build time from `panda.config.ts`:
   the preset's `globalCss` (see #8).
 
 ### Tokens & the preset stack (post Phase-1 split)
+
 - `bin/gen-chakra-tokens.mjs` snapshots the **exact** Chakra v2 default token
   scales from `@chakra-ui/theme` into `src/shared-ui/chakra-tokens.ts`
   (committed, generated — do not hand-edit; ignored by lint). This decouples the
@@ -71,8 +186,8 @@ Panda generates CSS at build time from `panda.config.ts`:
     animation keyframes (minus `spin`, which Spinner owns in core), `gray`
     500/600 overrides, the `shortHeight` condition, and the app button
     vocabulary (`led`/`record`/`recordOutline`/`secondary-disabled`).
-  The split regenerated byte-equivalent CSS (ordering-only diffs) and was
-  fidelity-verified.
+    The split regenerated byte-equivalent CSS (ordering-only diffs) and was
+    fidelity-verified.
 - `src/shared-ui/*.recipe.ts` = config recipes colocated with their components
   (`button`, `heading`, `input`, and the slot recipes `dialog`, `drawer`,
   `menu`, `card`, `checkbox`, `field`, `slider`, `switchRecipe`, `toast`).
@@ -91,12 +206,13 @@ Panda generates CSS at build time from `panda.config.ts`:
   (`brand`/`brand2`/`purple`/`teal`/`blue`/`pink`/`orange`) and the `display`
   font (GT Walsheim). Exported via the package's `./panda-preset` entry.
 - `panda.config.ts` merges them: `presets: ["@pandacss/preset-base",
-  sharedUiPreset, microbitPreset, appPreset, brandPreset?]` with `eject: true`
+sharedUiPreset, microbitPreset, appPreset, brandPreset?]` with `eject: true`
   (drops Panda's default theme; keeps base utilities). `brandPreset` is
   resolved with `require(...)` guarded by try/catch — the build-time
   equivalent of the `theme-package` vite alias swap.
 
 ### shared-ui (`src/shared-ui/`)
+
 See `index.ts` for the full export list. Highlights: `Button` (+`ButtonGroup`,
 `IconButton`, `LinkOverlayButton`), `Modal` (+ header/body/footer/close-button
 slots), `Drawer`, `Menu`, `Tooltip`, `Toast` (+`ToastProvider`/`useToast`),
@@ -111,7 +227,7 @@ props use object syntax `{ base, md }`.
 
 Conventions: shared-ui components take a `css` prop / recipe variants;
 call-site `css()` is for page layout and true one-offs only. A shared-ui
-primitive that accepts style overrides must merge them into a *single*
+primitive that accepts style overrides must merge them into a _single_
 `css(base, cssProp)` call (gotcha #8). Focus rings are the preset's
 `focusShadow` utility (`_focusVisible: { focusShadow:
 "outline" | "outlineDark" | "outlineLight" }` — emits the shadow token plus
@@ -120,228 +236,27 @@ a transparent outline for forced-colors modes; named to dodge preset-base's
 styling uses the `_motionReduce` condition, never a raw
 `@media (prefers-reduced-motion: reduce)` key.
 
-## Hard-won patterns / gotchas (READ before continuing)
+## Hard-won patterns / gotchas
 
-1. **CSS layer conflict (the big one).** Unlayered CSS always beats layered
-   CSS regardless of specificity. During coexistence Chakra/Emotion were
-   unlayered (fixed then by `bin/unlayer-panda.mjs`, deleted at the
-   kill-switch). The rule now applies to **third-party stylesheets**: any
-   unlayered vendor CSS beats every Panda rule — Swiper's `.swiper-slide {
-   width: 100% }` collapsed the home carousels this way. Fix: import vendor
-   stylesheets into the `vendor` cascade layer (`@import "..." layer(vendor)`
-   — see `Carousel/swiper.css`), which `src/layers.css` orders between
-   Panda's `reset` and `base` layers so vendor CSS beats the preflight but
-   loses to app styling (the Chakra-era cascade shape). Any future
-   third-party CSS import must do the same.
-2. **RAC interaction states.** The preset widens Panda's `hover`/`active`/
-   `focusVisible`/`disabled` conditions to also match RAC's `data-*` attributes,
-   so Chakra-shaped `_hover`/`_active` style objects work unchanged on RAC.
-3. **`staticCss` for recipe variants.** shared-ui forwards `variant`/`size` as
-   runtime props, so Panda's static analysis can't see which variants are used.
-   `panda.config.ts` `staticCss` generates all recipe variants; the `dialog`
-   size uses `responsive: true` because it's chosen via `{ base, md }` objects.
-4. **Responsive recipe variants must be symmetric.** Panda applies the
-   base-breakpoint variant's CSS unconditionally; if `full` sets more props than
-   `4xl`, they leak into desktop. Every non-full dialog size restates the box
-   props (`dialogBox`) so the larger breakpoint fully overrides `full`.
-5. **`brand2` = Chakra's *unmodified* gray** in OSS (not the locally overridden
-   `gray` whose 500 is the light brand grey). Getting this wrong made card text
-   near-invisible.
-6. **OSS vs private divergence → semantic tokens.** The only structural button
-   difference is the `language` variant (OSS grey `brand2`, private blue `brand`).
-   Driven by semantic tokens `languageText`/`languageTextHover` overridden in the
-   private preset — keeps the recipe shared. The `marketing` heading font is the
-   same idea via the `display` font token. The full audit is "Remaining work" #1.
-7. **Icons inherit `currentColor`.** Don't pass `fill` to react-icons (it
-   overrides their default `fill="currentColor"` → black). `Icon`/`CloseIcon` set
-   `fill: currentColor` in CSS.
-8. **Atomic overrides: same-property conflicts across separate `css()` calls
-   race on stylesheet order** — cx'ing a base class with an override class does
-   NOT mean the override wins; the winner is whichever atomic rule happens to be
-   emitted later (this silently shrank LoadingOverlay's 166px spinner to 24px
-   and turned progress-bar fills Chakra-blue). Merge base + overrides into a
-   *single* `css(base, cssProp)` call so conflicts resolve at merge time (see
-   `Tooltip`/`Spinner`/`ProgressBar`). Related: longhand beats shorthand across
-   calls; and a border shorthand plus separate `borderColor` in one object is
-   order-dependent (`border-top: 3px solid` implies currentColor) — use
-   width/style longhands with `borderColor`.
-9. **Styles must be literals at the JSX/`css()` site.** Panda's static extractor
-   only reads `css` prop object literals and `css()` call literals where they
-   appear — it does *not* follow an object returned from a helper function. A
-   helper like `const fooCss = () => ({ h: 12, ... })` used as `css={fooCss()}`
-   silently generates *no* CSS for those tokens (unless the same class happens to
-   be emitted elsewhere), and it fails quietly — no error, just missing styles,
-   so you only catch it by measuring. To share trigger/element styling, wrap it
-   in a **component** with an inline `css` literal (see `ActionBarMenuButton`),
-   not a style-object helper. Prefer recipe variants (e.g. `size="lg"`) for
-   dimensions over utility overrides — variants are generated via `staticCss` and
-   don't depend on call-site extraction. The same applies to **computed prop
-   values** (`rowSpan={n + 1}`, `` w={`${x}px`} ``, `` w={`calc(...)`} ``): no
-   CSS is generated, and it can even *look* fine if another call site happens to
-   emit the identical class. Use an inline `style` (with a runtime `token()`
-   lookup for token values — see RecordingDialog's countdown), and after porting
-   a file, grep it for style props whose value is not a literal. What *does*
-   work: same-file consts, ternaries of literals, literal arithmetic
-   (`ratio={30 / 25}`), custom-named object-literal JSX props (`barCss`,
-   `contentCss` — sentinel-verified), and style props on components created
-   with the `styled()` factory, cross-file (`Link`). What does NOT work:
-   forwarding style props through a *plain* wrapper component
-   (`<AppLogo transform="...">` generated no CSS) — give such wrappers a
-   `css` prop instead. Coincidental classes from other call sites can mask a
-   miss, so verify against the generated CSS, not the rendered page.
-10. **Removing Emotion from a file isn't enough — also remove it from
-    `panda.config.ts`'s `exclude` list**, or Panda silently skips extraction for
-    the whole file — class names are applied but no CSS rules exist for them
-    (found when a hint svg rendered at 0x0: `w_16 h_16` in the class attribute,
-    no matching rules in styled-system.css).
-11. **Panda's `AspectRatio` pattern positions its child via a `&>*` selector
-    that a still-Chakra child's own `position` style beats** (Emotion injects
-    later at equal specificity; Chakra's own AspectRatio used a
-    higher-specificity `& > *:not(style)`). Symptom: the ::before padding
-    spacer stacks above an in-flow child (was a big gap over SettingsDialog's
-    graph preview). Use the native `aspectRatio` css property instead when the
-    child is still Chakra-styled — arguably the better permanent form anyway;
-    the pattern's padding hack predates browser `aspect-ratio` support.
-12. **RAC popovers unmount on close** (Chakra kept the list mounted), so a
-    hidden file input must live *outside* a menu or its change event is dropped
-    mid-pick — `DataSamplesMenu` renders `LoadProjectInput` as a sibling and
-    the item calls `chooseFile` via ref.
-13. **RAC popovers have `role="dialog"`** (menus included, and they linger
-    briefly with `data-exiting` while animating out), so a bare Playwright
-    `getByRole("dialog")` can hit strict-mode ambiguity when a dialog opens
-    from a menu. e2e page objects use the `modalDialog()` helper
-    (`src/e2e/app/shared.ts`), which scopes to `<section>` — both Chakra and
-    shared-ui modals render on a section; popovers are divs.
-14. **`<Focusable>` stamps `tabIndex=0` on its child** (unless
-    `excludeFromTabOrder`), so wrapping a container that holds a real
-    `<button>` creates a second tab stop — and a supposedly non-focusable
-    trigger becomes one. When the child manages its own focus/open state,
-    skip `Focusable` and anchor the overlay with an explicit ref instead
-    (shared-ui `Tooltip` takes `triggerRef` for this; RAC `Tooltip`
-    supports it natively — see ClickableTooltip).
-15. **react-aria's focus defaults replace Chakra-era hacks — don't port them.**
-    RAC focuses the dialog element itself on open (verified:
-    `section.dialog__inner` is the active element), so initial-focus
-    workarounds like SettingsDialog's focus-the-heading (stopping the first
-    `<select>` opening its picker on mobile) were dropped, and LanguageDialog's
-    restore-focus hack too (RAC restores focus to the trigger on close). Also:
-    react-aria's usePress cancels presses outside the button's bounding rect,
-    so Chakra's LinkOverlay-over-Button pattern needs a plain `<button>` +
-    `position: static` — encapsulated with rationale in `LinkOverlayButton`.
-16. **Panda's preflight styles `::selection` (Chakra's reset didn't), and
-    native selection painting cannot be restored by CSS in every engine**:
-    `background-color: revert` works in Chromium only; in Firefox and WebKit
-    the reverted value computes to transparent (selections turn invisible),
-    and `Highlight`/`HighlightText` matches native only in Firefox
-    (engine-probed, July 2026). So live with the preflight's faint blue and
-    override per-surface where it's illegible — e.g. `_selection` on
-    EditableName's dark toolbar input. Emitting no rule at all would need a
-    patch-package strip of the preflight (tried, worked, judged too
-    heavyweight).
+Moved to the playbook's gotcha catalog
+(`../ui/docs/migration-playbook.md`), numbering preserved — #1–#16
+originated here.
 
-## How to run / verify
+## How it was verified
 
-- **Branded build locally**: build the sibling `ml-trainer-microbit` package
-  (`npm run build` there → produces `dist/panda-preset.js`) and make it
-  resolvable from `node_modules/@microbit-foundation/ml-trainer-microbit`
-  (e.g. `npm link`). With it present, vite's `theme-package` alias and
-  `panda.config.ts` both resolve CreateAI branding; without it you get the OSS
-  default. (Currently a local symlink — see "Remaining work" #9.)
-- **After changing the private preset (or (re)linking it), do a *clean* Panda
-  regen**: `rm -rf styled-system && npm run panda` (or
-  `panda codegen --clean`). Incremental `panda codegen` does not detect changes
-  in an *external* preset dependency, so it keeps stale (OSS) token values even
-  though the config loads the new preset — the brand colours silently stay OSS
-  (e.g. `brand2.500` grey `#718096` instead of green `#00a000`, `brand.500`
-  `#3182ce` instead of `#007dbc`). A fresh checkout is unaffected (empty
-  `styled-system/` → full gen). Vite's `theme-package` alias resolves at
-  dev-server start, so also restart the dev server after (re)linking.
-- `npm run build` then `npm run preview` → http://localhost:4173, then compare
-  against the live deployment (see Goal).
-- Chakra v2 is the parity source of truth for stock component styles
-  (Button/Modal/Alert/CloseButton bases) — check `@chakra-ui/theme` and
-  `@chakra-ui/components` in node_modules (or the Chakra v2 repo).
-- `npm test`, `npm run test:e2e:headless`, `npm run typecheck`, `npm run lint`
-  all green at this checkpoint.
-
-### Visual comparison workflow (what has worked well)
-
-Each ported screen is verified by driving the **local branded preview**
-(`npm run build && npm run preview` → :4173) and the **live Chakra deployment**
-through an *identical* scripted flow with headless Playwright, then eyeballing
-the screenshot pairs. Throwaway scripts, parameterised on
-`(baseUrl, outPrefix)` so the same file captures both sides:
-
-```js
-import { createRequire } from "node:module";
-const require = createRequire("<repo>/package.json"); // resolves @playwright/test
-const { chromium } = require("@playwright/test");
-const [url, outPrefix] = process.argv.slice(2);
-const page = await (await chromium.launch()).newPage({
-  viewport: { width: 1324, height: 745 }, // plus 900/390 for tablet/mobile states
-});
-process.on("uncaughtException", async (e) => {   // screenshot on failure
-  console.error("FAILED:", e.message.split("\n")[0]);
-  await page.screenshot({ path: `${outPrefix}-error.png` });
-  process.exit(1);
-});
-```
-
-Flow notes that save time:
-- **Cookie banner**: pre-seed the `MBCC` cookie instead of clicking through it
-  (see `src/e2e/app/home-page.ts` for the exact value) — works on localhost and
-  live.
-- Headless Chrome negotiates **en-US**, so match text with locale-agnostic
-  regexes (`/colou?r/`), and expect the app's actual strings (check
-  `src/messages/ui.en.json`), not what you'd guess.
-- Reach real states, not just landing pages: create projects via the UI, name
-  actions, open menus/dialogs/pickers, select checkboxes
-  (`.click({ force: true })` — the input is visually hidden behind the styled
-  control in both stacks), focus tooltips, resize the viewport for
-  tablet/mobile variants. Screenshot each state on both sides.
-- Beyond screenshots, `page.evaluate` probes settle disputes pixels can't:
-  computed styles, element sizes, `document.activeElement` (focus behaviour),
-  and canvas `getImageData` painted-pixel counts (LiveGraph). When local and
-  live disagree, probe *both* and diff the numbers.
-- Watch `pageerror`/console in the probe scripts — a blank screenshot usually
-  means a crash or suspended tree, not a style bug (a `pageerror` also caught
-  AboutDialog's unhandled clipboard rejection).
-
-Process rules learned the hard way:
-- **Run the full e2e suite only on a stable tree.** The Playwright webServer is
-  a vite dev server; editing source (or regenerating Panda output) mid-run
-  invalidates modules / re-optimises deps and produces bogus timeout failures.
-  A new react-aria entry-point import also triggers a one-off dep
-  re-optimisation — expect the first run after such a change to be flaky-slow.
-- The radio reconnection specs are flaky under full parallel load on some
-  machines (reproduced on unmodified main); rerun the failing spec in
-  isolation before suspecting the migration.
-- The loop catches real bugs (banner breakpoint, helper-text line-height,
-  seam radii, missing extraction, border colour, LiveGraph timing, the
-  Spinner/ProgressBar override races, the AspectRatio gap) — don't skip it.
-  Formalising it is "Remaining work" #7.
-
-## Accepted differences from Chakra
-
-Consolidated for review time; all deliberate:
-- react-aria shows focus rings after mouse interaction in places Chakra hid
-  them (ConfirmDialog's auto-focused Cancel, the slider thumb).
-- Dialogs open with focus on the dialog element itself (announces the title;
-  a11y improvement) rather than the first focusable control.
-- Toast: single top-centre region; no per-call `position`/`variant`
-  (`id`-dedup is supported). Repeat Android saves within the timeout can stack.
-  `toast.update()` re-adds the toast, so it re-animates and restarts any
-  timeout (Chakra updated in place).
-- MakeCode loading skeleton is an opacity pulse rather than Chakra's shimmer;
-  ~3px internal shift in the certainty card.
-- Toast is built on RAC's `UNSTABLE_Toast*` API (functional; the surface is
-  small and contained behind `Toast.tsx`).
+The per-screen visual-comparison workflow (identical scripted Playwright
+flows against the local branded preview and the live deployment, plus
+`page.evaluate` probes) and the process rules it taught moved to the
+playbook. The loop caught real bugs throughout: banner breakpoint,
+helper-text line-height, seam radii, missing extraction, border colour,
+LiveGraph timing, the Spinner/ProgressBar override races, the AspectRatio
+gap.
 
 ## Remaining work (agreed order)
 
 1. ✅ **Brand-diff audit** (see gotcha #6) — done; **no uncovered
    divergences**. `bin/diff-chakra-themes.mjs` (delete at kill-switch) diffs
-   the *resolved* OSS vs private Chakra themes — source text is quote-style
+   the _resolved_ OSS vs private Chakra themes — source text is quote-style
    noise — with both bundled via esbuild (packages external) so they share
    this repo's hoisted Chakra, as vite's alias does at runtime; style-config
    functions are evaluated against the same base theme so ramp-driven
@@ -353,7 +268,7 @@ Consolidated for review time; all deliberate:
    structural diffs, all already token-driven: the `language` button colour
    (`languageText`), its hover (`languageTextHover` — private encodes
    "no hover change" as hover==rest, matching the private Chakra theme's
-   *absent* `_hover.color`), and the private-only `marketing` heading variant
+   _absent_ `_hover.color`), and the private-only `marketing` heading variant
    (`display` font). fonts/radii/shadows are byte-identical across sides;
    `withDefaultVariant` and defaultProps diff clean. Rerun the script after
    any theme or preset change while Chakra remains.
@@ -448,8 +363,8 @@ Consolidated for review time; all deliberate:
    contract, and pixels. The hard-won part is the **reactivate** affordance
    (clicking the checked topmost lit LED turns it off — radios fire no
    change event for that): RAC's press handling swallows the click before
-   React's synthetic handlers see it, and worse, react-aria *re-selects the
-   pressed value against current state* after any handler that runs
+   React's synthetic handlers see it, and worse, react-aria _re-selects the
+   pressed value against current state_ after any handler that runs
    earlier in the dispatch, silently reverting it. The fix is a native
    capture listener on the option wrapper that defers the reactivate write
    by a tick so it lands after react-aria's press processing (see the
@@ -491,10 +406,10 @@ Consolidated for review time; all deliberate:
    - **Cold dev servers flake**: first visits pay vite's on-demand
      compile (a training-navigation timeout and a blank-page render on
      the fresh worktree server). The fidelity project has `timeout:
-     60_000, retries: 1` — the retry runs against a warm server.
+60_000, retries: 1` — the retry runs against a warm server.
    - `vite.config.ts` honours `VITE_CACHE_DIR` (set per side by the
      runner) so the worktree's server — whose default cache would resolve
-     *through the node_modules symlink* into the shared
+     _through the node_modules symlink_ into the shared
      `node_modules/.vite` — can't invalidate a concurrently running dev
      server's deps, and the two sides can't cross-contaminate.
    - The spec always runs from the **working tree** (both sides): only
@@ -502,8 +417,7 @@ Consolidated for review time; all deliberate:
      Consequence: page-object/locator changes can't invalidate old
      baselines, but app changes that rename UI strings the spec relies on
      need the spec updated in the same tree.
-   - `appUrl()` in `src/e2e/app/shared.ts` (reads `E2E_PORT`, default
-     5173) replaced the hardcoded URLs in the seven page objects;
+   - `appUrl()` in `src/e2e/app/shared.ts` (reads `E2E_PORT`, default 5173) replaced the hardcoded URLs in the seven page objects;
      `FIDELITY_NO_WEBSERVER=1` skips the config webServer;
      `snapshotPathTemplate` → `.fidelity/snapshots/` (git-ignored). The
      fidelity project only exists in the config when `FIDELITY=1` (the
@@ -534,7 +448,7 @@ Consolidated for review time; all deliberate:
      `text-rendering: optimizeLegibility` (without these, glyph kerning
      shifts text page-wide), `touch-action: manipulation`, global
      `word-wrap: break-word`, body `position/min-height`, and `button,
-     [role=button] { cursor: pointer }` (human-caught — **the screenshot
+[role=button] { cursor: pointer }` (human-caught — **the screenshot
      harness can't see cursor, focus order, or selection behaviour**).
    - Swiper needed the `vendor` layer (gotcha #1's new form).
    - Verified: unit + full e2e green, branded build + preview eyeballed,
@@ -543,14 +457,14 @@ Consolidated for review time; all deliberate:
      ~0.7px shorter (sub-pixel line-box rounding; computed styles are
      identical), shifting the caption/Copy button 1px.
    - **Cross-boundary fidelity runs need paired sibling-package versions**:
-     the baseline resolves the *current* private dist through the shared
+     the baseline resolves the _current_ private dist through the shared
      node_modules symlink, so after the private package dropped
      `chakraTheme` the baseline's `ChakraProvider theme={undefined}` fell
      back to the Chakra default theme (system font stack — every state
      diffed). Method that worked: stash the private repo, rebuild its old
      dist, run the harness for its baseline half; pop/rebuild, clean panda
      regen, then run the compare half manually (`FIDELITY=1 E2E_PORT=5199
-     FIDELITY_NO_WEBSERVER=1 npx playwright test --project=fidelity`).
+FIDELITY_NO_WEBSERVER=1 npx playwright test --project=fidelity`).
      Also: the baseline ref imports Chakra, so `npm i --no-save` the
      dropped deps first; plain `npm install` restores pristine state.
 9. ✅ **Private preset consumption** — done via the established
@@ -566,19 +480,13 @@ Consolidated for review time; all deliberate:
    root and Vite would otherwise 403 them — dev-only, builds are
    unaffected.
 
-Parked beyond the migration (deliberate UX change, not parity): card
-collections as RAC `GridList` — whole-item press targets without the overlay
-hack, arrow-key navigation, and built-in multi-selection that would replace
-the projects page's checkbox + skip-to-toolbar wiring. Doesn't fit the
-Swiper-managed home carousel DOM; best tried on the projects page grid.
-
 ## Library extraction (medium-term plan + review findings)
 
 Intent: extract `src/shared-ui/` as a design-system library and migrate the
 other Chakra UI sibling apps onto it via the same Chakra → RAC/Panda path,
 with minimal visual impact per app. A full review of shared-ui against that
 goal (July 2026, post-kill-switch) found the architecture sound — extraction
-is mostly *factoring*, not rework — with the following inventory.
+is mostly _factoring_, not rework — with the following inventory.
 
 ### Direction: a monorepo spanning design-system → app-level packages
 
@@ -614,6 +522,7 @@ extracted early. To be kicked off with a **separate census** of the four
 apps' connection UIs, same method as the Chakra censuses below.
 
 ### Why the architecture already fits
+
 - The Chakra-v2 token snapshot + Chakra-ported recipes make the library
   effectively "Chakra v2's design language on RAC/Panda": any sibling app's
   Chakra theme is expressible as a preset over the same base, exactly as the
@@ -629,8 +538,10 @@ apps' connection UIs, same method as the Chakra censuses below.
   and the fidelity-harness pattern.
 
 ### Blockers (hard app couplings) — ✅ resolved (Phase 1)
+
 Both inverted behind `SharedUIProvider` (`src/shared-ui/SharedUIProvider.tsx`;
 installed by `SharedUIConfig` in App.tsx):
+
 - Menu no longer imports Capacitor or `../back-button`; the app passes
   `setActiveMenuClose` as the optional `overlayCloseRegistrar` on native
   platforms and MenuTrigger runs controlled only when a registrar exists.
@@ -641,11 +552,12 @@ installed by `SharedUIConfig` in App.tsx):
   react-intl dependency left.
 
 ### App decisions living in shared code (move to app/brand presets)
+
 - Button recipe: `led`, `record`, `recordOutline`, `language` (+ the
   `languageText` semantic tokens), `toolbar`, `secondary-disabled` (a state
   as a variant) are ml-trainer vocabulary. Library core: `primary/
-  secondary/ghost/link/plain/unstyled` + sizes. `defaultVariants:
-  secondary` is also an app choice (Chakra's default is solid).
+secondary/ghost/link/plain/unstyled` + sizes. `defaultVariants:
+secondary` is also an app choice (Chakra's default is solid).
 - Modal's `full` size bakes in the Capacitor shell: safe-area insets, the
   `brand2.500` status-bar gradient "matching ActionBar",
   `--window-controls-left`. Decouple via a semantic token (`statusBarBg`)
@@ -661,6 +573,7 @@ installed by `SharedUIConfig` in App.tsx):
   from `token("breakpoints.*")` instead.
 
 ### Packaging decisions (make at extraction time)
+
 - **The `styled-system` import problem**: components import the per-app
   generated `styled-system/*`. Panda's library pattern: ship the package as
   source, consumers add it to `include`, and `importMap` resolves the
@@ -680,6 +593,7 @@ installed by `SharedUIConfig` in App.tsx):
   dev/build time. No Capacitor.
 
 ### Surface gaps — measure before building
+
 Known narrowings: Divider is horizontal-only; Menu lacks sections/checkable
 items/submenus; no shared Radio/RadioGroup (BluetoothPatternInput uses RAC
 raw); no Tabs/Accordion/Popover-as-primitive/non-native Select/Textarea/
@@ -688,235 +602,18 @@ the target apps** (grep `@chakra-ui/react` imports + resolved-theme diffs,
 like the brand audit) to define the v1 surface and decide which ml-trainer
 variants generalise.
 
-### Census: python-editor-v3 (July 2026)
-First target-app census (`../python-editor-v3` + private
-`../python-editor-v3-microbit`). Same bones: Chakra v2.10, react-intl,
-react-icons, Playwright, and the identical `deployment/default` +
-`theme-package` vite-alias split with a `DeploymentConfig.chakraTheme`
-field (so the kill-switch shape — theme moves build-time, `chakraTheme`
-dropped from the config — transfers directly). ~157 tsx files, 127 Chakra
-import statements.
+### Censuses: python-editor-v3, data-microbit-org, classroom
 
-**Brand contract validated, with striking convergences**: OSS default is
-`brand = gray` plus the same `gray.10`/`gray.25` additions (`#fcfcfc`/
-`#f5f6f8`), `radii.button: 2rem`, Helvetica heading/body fonts, and a
-`language` button variant that exists *only* in the private theme — the
-`languageText` semantic-token precedent applies verbatim. Divergence:
-default button variant is `withDefaultVariant(outline)` (ml-trainer:
-secondary), and the private theme adds `withDefaultColorScheme("brand")` —
-library recipes' `defaultVariants` must be preset-overridable per app.
-
-**The split is NOT token-clean like ml-trainer's.** The private theme
-structurally extends component configs: adds `outline` (colorScheme-
-conditional colours), `unstyled`, `language` button variants and a
-`baseStyle` radius; recolours the Alert `toast` variant per status
-(`blimpTeal.700` success/info, `code.error` otherwise); Container
-`sidebar-header` bg (OSS black → `brand.500`); the sidebar Tabs variant's
-background is a brand **linear-gradient** (OSS: black); private-only
-Tooltip config. Also full custom `gray` ramp (not just 10/25) and extra
-ramps (`purple`, `teal`, `blimpTeal`). **Intent: converge these to shared
-structure driven by semantic tokens rather than private-preset recipe
-extensions** — changing the OSS theme is acceptable where it simplifies
-(e.g. define `outline`/`language`/`unstyled` button variants once with
-`languageText`-style tokens; `sidebarHeaderBg`-type tokens for the
-sidebar-header/Tabs backgrounds — a semantic token can hold the private
-gradient, OSS flat black; toast status colours fold into the planned
-Toast status tokens). Recipe extension stays the escape hatch, not the
-plan. A resolved-theme diff (the `4c012bd4` differ) is a prerequisite,
-and matters more here than it did for ml-trainer.
-
-**New generalisation categories ml-trainer didn't surface**:
-- **Tokens consumed outside React as raw CSS vars**: CodeMirror's
-  highlightStyle/themeExtensions hardcode `var(--chakra-colors-code-*)`,
-  `var(--chakra-fonts-code)`; XTerm/Simulator/CodeMirrorView use
-  `useToken` at runtime. The library needs a documented stable CSS-variable
-  contract (Panda var naming/prefix) plus the runtime `token()` story.
-- **App token namespaces**: `code.*` (syntax colours + `code.error`) lives
-  in both OSS and private themes — token categories beyond the Chakra
-  scales are part of the app-preset contract, not an anomaly.
-- **Toast**: uses per-call `position`; every call site is "top" except
-  XTerm's multi-line-paste info toast at "bottom-right"
-  (`src/serial/XTerm.tsx` — also untranslated), which is plausibly
-  deliberate — near the terminal, where the user's attention is at that
-  moment. Whether the shared Toast grows region placement or that call
-  site changes is a decision for the python-editor migration. The custom
-  Alert `variant: "toast"` is "restyle solid Alert" — covered by the
-  planned Toast slot-recipe/status-token rework.
-- Imperative promise-based dialog layer (`use-dialogs`' `Dialogs` class +
-  ProgressDialog) renders controlled Modals with no trigger — fine on RAC
-  Modal, but keep controlled `isOpen` a first-class library API.
-- `zIndex.ts` numeric constants calibrated against third-party stacking
-  (xterm layers, Chakra's 1500 overlay scale) — needs a library z-index
-  token scale.
-- 29 files import `BoxProps` and forward style props through plain
-  wrappers — gotcha #9's biggest hazard class; budget a `css`-prop
-  conversion sweep in any migration.
-
-**Surface demand (census counts)**: overwhelmingly within shared-ui's
-existing surface (Text/Box/stacks/Button/IconButton/Modal family/Menu/
-Tooltip/Link/Icon/Image/Input/Divider/List/Spinner/Progress/
-VisuallyHidden). Real gaps this app needs, by usage: **Collapse + Fade**
-(~14 files, docs sidebar — our only transition primitive is Slide, and
-their Slide is the same framer-motion component we already ported);
-**Tabs** (one site but it's the app chrome, heavily brand-divergent);
-Menu checkable items + divider (`MenuOptionGroup`/`MenuItemOption`,
-`MenuDivider`); AlertDialog semantics for ConfirmDialog (RAC `role=
-"alertdialog"` + initial-focus-on-least-destructive over shared Modal);
-Table family (×3), NumberInput, Kbd, Code, Tag, Portal-as-primitive (×7),
-FormControl+FormErrorMessage error slot, InputLeft/RightElement; hooks
-`useMediaQuery` (raw queries incl. height-based — cf. `shortHeight`),
-`usePrevious`, `useClipboard`, `useToken`, `usePrefersReducedMotion`.
-**Not needed**: Drawer, Card, Accordion, Popover-as-API, colour mode,
-Chakra Heading (they compose Text). Fidelity-harness pattern transfers
-(Playwright already in place) but has more to mask: CodeMirror, xterm,
-the simulator iframe.
-
-### Census: data-microbit-org (July 2026)
-Second target-app census (`../data-microbit-org`). Fully private repo —
-no OSS/theme-package split; brand assets (GT Walsheim/Helvetica Now font
-files, real ramps) are committed in-repo. Chakra v2.10, react-intl,
-react-icons, react-router, Playwright, Sentry; no direct Emotion or
-framer-motion imports anywhere (~70 tsx files). **Multi-root**: three
-apps in one repo (the hosted Data Upload Tool, plus two modes of the
-MY_DATA.HTML page that runs from the micro:bit's USB mass-storage over
-`file:`), each mounting its own `ChakraProvider` over one shared theme.
-New deployment category for the library: styling must work in a
-`file:`-served page, not just a hosted SPA. Mechanics (bootstrap-
-template.js): the device HTM loads a hosted `dl.js` which injects one
-static `<link rel="stylesheet">` plus the vite-plugin-legacy SystemJS
-bundle (`file:` can't run module scripts, so the legacy path is always
-taken). **CSS application is origin-independent, so no styling feature
-is lost per se** — and the single-static-stylesheet model is exactly
-Panda's output shape (an improvement on Chakra, whose Emotion styles
-are injected at runtime by the legacy JS bundle). Two things to verify
-per migration: (1) **`@layer` support against the page's real browser
-matrix** — a non-supporting browser drops *all* layered rules, and our
-architecture leans on cascade layers; the legacy-JS path is forced by
-`file:`, not by old browsers, so the matrix is probably fine, but check
-before flipping; (2) font fetches from a `file:` page (`Origin: null`)
-are cross-origin CORS requests — already true today so presumably
-handled on the asset host, but keep in mind if assets move.
-
-**Colours**: the six brand ramps are byte-identical to ml-trainer's
-private preset (`purple`/`teal`/`blue`/`pink`/`orange`; their `green` ==
-our `brand2` green) — but with **no `brand`/`brand2` aliasing**: palette
-names are used directly, and the button system is **black/white**
-(`primary` black bg, `secondary` black 2px outline — also the default
-variant, `ghost` blackAlpha hovers) rather than brand-coloured. This is
-the brand-neutral end of the spectrum and strengthens semantic
-button-colour tokens over baked colorSchemes. Chakra's default `red` is
-kept for form errors by explicit comment — supports the planned
-"error/danger" semantic tokens. Toast Alert variant recolours
-`teal.800` (success/info) / `red.600` — near-identical to ml-trainer's
-toast colours and the same `variant: "toast"` pattern as python-editor;
-the planned Toast slot-recipe/status-token rework covers all three apps.
-Colour-audit-class hexes: Heading `label`/`subtitle` variants hardcode
-`#cd0365` (pink.500), `brandGrey #e5e5e5` constant for the full-screen
-ActionBar. Two data-viz palettes exported as constants from the theme
-dir (brand 500s + a brighter legacy set) — graph colours stay out of
-scope as in our audit, but they're theme-adjacent here.
-
-**The cross-app vocabulary is real.** `radii.button: 2rem` (3/3 apps),
-`shadows.outline`+`outlineDark` (same names as our preset),
-`withDefaultVariant(secondary)` (same as ml-trainer; python-editor:
-outline — per-app `defaultVariants` confirmed needed), a `language`
-button variant in all three apps (grey/black here, brand.500 in
-python-editor private — `languageText` tokens generalise), plus
-`toolbar`, `sidebar`, `zoom`, `unstyled` variants shared with
-python-editor, and an **ActionBar** component with a `full-screen`
-variant (cf. our Modal `full`/ActionBar coupling). Implication: several
-variants our extraction review classed as "ml-trainer vocabulary" are
-actually foundation-wide vocabulary — consider a **three-layer split**:
-library core (Chakra parity) / micro:bit foundation preset (brand ramps,
-`language`/`toolbar` variants, toast styling, display font) / per-app.
-
-**Surface demand**: almost entirely within shared-ui (Modal family is
-the heaviest use; Menu+MenuDivider, full FormControl/Label/Helper/Error,
-Input+Group+RightElement, native Select, Checkbox+CheckboxGroup, Table,
-AlertDialog, LinkBox/LinkOverlay, SimpleGrid, AspectRatio, Tooltip,
-VisuallyHidden; hooks useClipboard/useInterval/useMediaQuery/
-usePrevious). Low-frequency new items: **Breadcrumb** (×2), **Stepper**
-(×1), **Avatar** (×1, custom size), **Mark** (×1), Radio/RadioGroup
-(×1), Fade (×2). Decide v1 inclusion when aggregating censuses — none
-look load-bearing. `BoxProps` forwarding: 10 files (smaller gotcha-#9
-sweep than python-editor's 29). Toasts are all top-positioned with Ri
-icon glyphs — fits our Toast surface as-is.
-
-**Third-party styling seams** (new failure class): `react-select`
-(AsyncSelect for school lookup) injects its own **Emotion styles at
-runtime** — unlayered CSS-in-JS beats every Panda layer, and the
-`vendor` cascade-layer convention only covers static stylesheet imports.
-**Intent: replace it with a library combobox** (RAC ComboBox) rather
-than accommodate it. Feature inventory (SchoolSelect.tsx) all maps:
-async `loadOptions` with app-side debounce + min-3-chars gate, custom
-two-column option rendering (school/postcode), three i18n'd empty-state
-messages, loading message, placeholder, single-select — the async/
-debounce/message logic is app code that transfers, and RAC ComboBox
-(+`useAsyncList`) covers the rest. Today's instance is *unthemed*
-default react-select, so a shared combobox also improves visual
-consistency and a11y. Plotly is styled via a raw stylesheet of id-scoped
-`!important` overrides plus a data-table CSS file — vendor-layer
-candidates, but the `!important`s suggest specificity fights to
-untangle.
-
-### Census: classroom (July 2026)
-Third target-app census (`../classroom`). Private-only like
-data-microbit-org; Chakra v2.10, react-intl, react-icons, react-router,
-Sentry, Playwright, vite (+legacy plugin); ~116 tsx files; no direct
-Emotion or framer-motion imports. The theme is plainly the
-**ancestor/sibling of data-microbit-org's**: identical Heading
-`label`/`subtitle` variants (same hardcoded `#cd0365`), Avatar `2md`
-size, Text sizes, Tooltip fontSize, `shadows.outline`/`outlineDark`,
-`radii.button: 2rem`, `withDefaultVariant(secondary)`, and the same
-button vocabulary (`unstyled`/`zoom`/`secondary`/`ghost`/`primary`/
-`toolbar`/`sidebar`/`language` + a classroom-only `active`). The
-cross-app tallies are now **4/4** (incl. ml-trainer) for
-`radii.button`, the outline shadow names, and the `language` variant —
-the foundation-preset layer is no longer a hypothesis.
-
-**Colours**: `brand` is python-editor's misaligned purple scale +
-`blimpTeal` (matches python-editor-private, *not* data-microbit-org's
-tint/shade ramps — the two palette generations coexist across the
-family). Biggest colour-audit surface of the four apps: ~40 loose named
-rgba constants in `theme/constants/colors.ts` (`brandGrey` — "elsewhere
-known as brandWhite (!)" — `brandSlate`, `brandDodgerBlueTwo`, …) used
-directly in components and even inside theme variants (Input
-`classroom` uses `brandPinkishGrey`). Prime semantic-token conversion
-material. **Latent bug found**: the Alert `toast` variant was copied
-from python-editor including `bg: "code.error"`, but classroom's theme
-defines no `code` colours — error/warning toasts silently fall back to
-the solid variant's status colour.
-
-**Already half-migrated in spirit**: react-aria v3 + react-stately
-hooks power the class-roster **GridList** (`useGridList`/
-`useGridListItem` with selection in ClassList/StudentItem) and a
-listbox in SendCodeDialog. The GridList collection pattern we parked
-for ml-trainer's projects page is already proven in-family, and these
-hand-rolled hook usages become straight RAC components.
-
-**react-select is load-bearing here** (unlike data-microbit-org): 4
-sites including two *common wrappers* — `SelectDropdown` (full custom
-`StylesConfig`, `#cd0365` selected state, Focusable forwardRef) and
-`SelectWithIcon` — plus student join and CodeView. Replacement is the
-same RAC route, and the two wrappers sketch the shared Select/ComboBox
-API. Embeds are familiar territory: `@microbit/makecode-embed`,
-`@microbit/python-editor-embed`, `react-code-view` with SkeletonText
-loading states (cf. ml-trainer's CodeViewCard/BlocksLoadingSkeleton).
-
-**Surface demand**: the heaviest Modal user of the four apps (20
-Modal/15 header-footer-close sets), Menu incl. checkable
-`MenuOptionGroup`/`MenuItemOption` + `MenuDivider`, AlertDialog,
-FormControl/Label, Table, Progress, Collapse, Fade, Radio, Portal.
-Low-frequency new items: Avatar+`AvatarBadge`, `SkeletonText`, `Wrap`,
-`useFormControlContext` (×1 each). Toasts: all `position: "top"`,
-`variant: "toast"` — fits the shared Toast as-is. `BoxProps`
-forwarding: 12 files. Dead tooling note: `styleguide.config.js`
-(react-styleguidist) requires `react-scripts`, no longer a dependency —
-the component catalogue is stale, prior art only. Fonts are declared
-without fallback stacks ("GT Walsheim"/"Helvetica Now") — minor fix at
-migration.
+Taken here in July 2026; moved out. The python-editor-v3 census lives in
+that repo's `RAC-MIGRATION.md`; the data-microbit-org and classroom
+censuses live in the playbook's family roadmap. Their family-wide
+conclusions (the 4/4 cross-app vocabulary — `radii.button: 2rem`, the
+`outline*` shadow names, the `language` button variant; per-app
+`defaultVariants`; the two coexisting palette generations) are folded into
+the playbook and the base preset's design.
 
 ### Pre-extraction accessibility tasks — ✅ done (Phase 1)
+
 All items shipped; see the Phase 1 entry in the plan below for the
 implementation notes (focusShadow in recipes + Switch forced-colors,
 NativeSelect chevron, Toast status announcement + undismissable guard,
@@ -929,6 +626,7 @@ of RAC's ~1500ms warmup), and Modal naming stays runtime-enforced
 knowable.
 
 ### Colour audit (July 2026) — actionable findings
+
 Review of non-brand, non-greyscale colours across shared-ui and the app
 (graph/data-viz colours deliberately out of scope). All pre-date the
 migration.
@@ -938,12 +636,13 @@ the three "likely mistakes" (RecordingFingerprint's hardcoded private
 brand hex → runtime token lookup; the chevrons' off-palette slate default
 → `currentColor` with the slate pinned at CarouselButton pending a design
 pass; the pairing-lost ⓘ → fixed iOS system blue) and the
-`blue.*`/`red.*`/toast-teal semantic-token conversions. Note `teal` *is* a
+`blue.*`/`red.*`/toast-teal semantic-token conversions. Note `teal` _is_ a
 brand-overridden ramp, so branded toasts recolour by ramp side-effect —
 unchanged behaviour, now via `toast*Bg` indirection. Graph/data-viz
 colours stay out of scope.
 
 ### Extraction & family-migration plan (July 2026, post-census)
+
 Sequenced plan to bring all four apps onto shared-ui. Each phase gates
 the next; within a phase, items are parallelisable. The censuses above
 are the evidence base; the a11y/colour/packaging subsections are inputs.
@@ -954,9 +653,9 @@ both repos' `experiment-rai` branches, then re-publishing the theme
 package from its main line and bumping the pin. Everything else builds
 on a merged, branded ml-trainer.
 
-**Phase 1 — make shared-ui library-ready in place** — ✅ **done (July
-2026)**; every step fidelity-verified zero-diff. What shipped, with
+**Phase 1 — make shared-ui library-ready in place** — ✅ **done (July 2026)**; every step fidelity-verified zero-diff. What shipped, with
 deviations from the plan noted:
+
 - ✅ Both Blockers via `SharedUIProvider` (see the Blockers section).
 - ✅ **Three-way preset split** as designed (see "Tokens & the preset
   stack"). Extras beyond the plan: the app button vocabulary
@@ -969,7 +668,7 @@ deviations from the plan noted:
   a persistent toast forces its close button on. The fidelity spec
   gained a `language-toast` state to lock the pixels.
 - ✅ Semantic-token conversions: `controlCheckedBg`/`controlCheckedHoverBg`/
-  `focusBorder`/`sliderFilledTrack`/`progressFilledTrack` (blue.*),
+  `focusBorder`/`sliderFilledTrack`/`progressFilledTrack` (blue.\*),
   `danger.50/100/500/600/700` (warning button variants, field errors,
   toast error), `statusBarBg` (ActionBar + Modal `full` gradient).
   Colour-audit "likely mistakes" fixed too: RecordingFingerprint seeds
@@ -1005,16 +704,16 @@ zero-diff proves the packaging. Document the consumption setup:
 the staticCss-in-preset requirement, clean-regen rule for external
 preset changes.
 
-*Status (July 2026): the monorepo exists* — `../ui`, npm workspaces,
+_Status (July 2026): the monorepo exists_ — `../ui`, npm workspaces,
 mirroring microbit-connection's conventions, committed on `main`.
 Decisions taken: extract from this branch without waiting for Phase 0;
 one package, **`@microbit/ui`** (components + preset + generated
 `chakra-tokens`, exports `./base-preset`, `./chakra-tokens`,
 `./messages`). **Preset naming settled on a single `base-preset`**: the
 in-repo core+foundation+app three-way split collapsed to one **base
-preset** — the complete brand-independent design system *plus* the OSS
+preset** — the complete brand-independent design system _plus_ the OSS
 default brand values (brand/brand2 ramps + display font). Rationale:
-"foundation/micro:bit-brand" now names only the *private* branded
+"foundation/micro:bit-brand" now names only the _private_ branded
 presets (not in this repo); a separate OSS/foundation preset had no
 unique consumer (every branded build overrode it, an OSS build gets the
 defaults from base), so the stack is just `base [+ app] [+ private
@@ -1042,8 +741,8 @@ Chakra token snapshot as a **malleable base** — it is a parity
 constraint only while Chakra apps remain the comparison point; once
 everything is migrated, evolving the scales/values in place is fair
 game.
-Two new gotchas found: (1) Panda extracts *utility-named props with
-literal values from any capitalized JSX component* (partially
+Two new gotchas found: (1) Panda extracts _utility-named props with
+literal values from any capitalized JSX component_ (partially
 contradicting gotcha #9's AppLogo observation), so Tooltip's `content`
 prop emitted a broken CSS `content` rule — renamed to `label` (Chakra's
 name; fold the call-site rename into the consumption diff); (2) an
@@ -1054,14 +753,14 @@ under the app's `node_modules`, hence the demo includes
 `../../packages/ui/src` while standalone consumers use
 `./node_modules/@microbit/ui/src`.
 
-*The consumption flip is done too* — this repo consumes `@microbit/ui`
+_The consumption flip is done too_ — this repo consumes `@microbit/ui`
 (local `node_modules/@microbit/ui` symlink to `../ui/packages/ui`, like
 the theme package's link workflow), `src/shared-ui`/`microbit-preset.ts`
 deleted, **fidelity vs the pre-flip commit: no visual differences**.
 Symlink-consumption wiring worth knowing: vite `resolve.dedupe`
 (react/react-dom/RAC/react-icons/react-intl) and tsconfig `paths`
 pinning `react`/`react-dom` types, because the linked package's files
-resolve bare imports through the *sibling's* node_modules (duplicate
+resolve bare imports through the _sibling's_ node_modules (duplicate
 React breaks hooks/contexts; duplicate csstype breaks CSSProperties);
 `fs.allow` gains the symlink realpath. **The package ships translated
 catalogs as source** (`lang/ui.<locale>.json`, formatjs extracted
@@ -1079,7 +778,7 @@ compile-time merge is the pattern for future package catalogs
 anywhere: components carry inline `defaultMessage` (`uiMessage`, still
 at `@microbit/ui/messages`). No Crowdin wiring for the package yet —
 new strings need every `lang/*.json` edited, then app-side recompile.
-*Publishing is done*: the monorepo lives at
+_Publishing is done_: the monorepo lives at
 github.com/microbit-foundation/ui and its build workflow publishes
 `@microbit/ui` to npm on release creation (public package, version
 stamped from the release tag). This app depends on an exact-pinned
@@ -1090,102 +789,6 @@ Panda — external preset changes aren't detected incrementally — and
 restart the dev server); `npm i` restores the registry version.
 Remaining for Phase 2: Crowdin (or equivalent) for the package catalog.
 
-**Phase 3 — v1 surface**, built in the library. Policy: anything that
-is a *clearly core* design-system component goes into shared-ui even
-with a single current consumer — family-wide consistency is a goal in
-itself, and app-local builds create exactly the divergence we're
-retiring. Only genuinely app-flavoured pieces stay app-side.
-- **Select/ComboBox** (retires react-select family-wide; classroom's
-  `SelectDropdown`/`SelectWithIcon` wrappers sketch the API; RAC
-  ComboBox + `useAsyncList` for the async case).
-- **Collapse + Fade** transition primitives (python-editor ~14 files;
-  classroom/data one-offs).
-- **Tabs** (core; the recipe lives in the library, python-editor's
-  branded sidebar variant is preset-side styling).
-- Menu: checkable items (`MenuOptionGroup`/`MenuItemOption` — RAC has
-  selection natively), sections, separator.
-- Modal: `role="alertdialog"` mode + least-destructive initial focus
-  (every app has a ConfirmDialog).
-- Radio/RadioGroup promoted from BluetoothPatternInput's raw RAC usage;
-  **GridList** promoted from classroom's hand-rolled hooks (also the
-  parked ml-trainer projects-page item).
-- Table, TextField error slot (`FormErrorMessage` parity), input
-  adornments (`InputLeftElement`/`RightElement`), Portal-as-primitive,
-  Skeleton/SkeletonText, Breadcrumb, Avatar (classroom + data),
-  NumberInput; the cheap typography wrappers (Kbd/Code/Tag/Mark) as
-  first needed.
-- Hook set: `useMediaQuery`, `usePrevious`, `useClipboard`,
-  `usePrefersReducedMotion`.
-- Stays app-side: classroom's `active` button variant, Stepper (single
-  point-in-time teacher flow), app chrome compositions (ActionBar
-  stays an app component over shared primitives + `statusBarBg`-family
-  tokens).
-
-**Phase 4 — app migrations.** Priority: **python-editor and classroom
-are what matter**; data-microbit-org can trail by months (nextgen was
-a point-in-time event, MY_DATA is a tiny surface) and no longer gates
-or sequences anything.
-1. **classroom** first (moderate size, no OSS split, heaviest Modal
-   user = good stress test) — now the consumer that proves the
-   packaging/consumption story outside ml-trainer, and it exercises
-   the new core components early (Select/ComboBox, GridList, Menu
-   checkable items). Includes: react-select wrappers → shared
-   Select/ComboBox; hand-rolled `useGridList`/listbox hooks → RAC
-   components; the ~40 rgba constants → tokens; fixes the `code.error`
-   toast bug. **Decision needed up front**: adopt the foundation
-   preset's modern ramps (visual change, needs sign-off) or keep the
-   legacy misaligned `brand` scale as an app-preset override.
-2. **python-editor-v3** (largest; OSS/private split). Pre-work can
-   start any time *while still on Chakra*, in parallel with classroom:
-   converge the private theme's structural extensions onto semantic
-   tokens per the census intent, using the resolved-theme differ. The
-   migration proper adds: Tabs adoption (library recipe + preset
-   variant), CodeMirror/xterm onto the CSS-var contract, xterm CSS
-   into the `vendor` layer, the 29-file BoxProps sweep, a z-index
-   token scale, and the paste-toast placement decision.
-3. **data-microbit-org** — whenever convenient; by then the library
-   is mature and the surface is fully covered, so it's cheap. Its
-   census's two entry checks (`@layer` vs the MY_DATA browser matrix,
-   font CORS) move to the start of its migration and are an abort
-   criterion for that app only.
-
-**Per-app playbook** (the kit, from ml-trainer's run): census (done
-above) → resolved-theme diff where a split exists (`4c012bd4`) → Panda
-+ preset stack + `layers.css` → **coexistence** (Chakra and Panda side
-by side; revive `bin/unlayer-panda.mjs` from git — deleted at our
-kill-switch — since Emotion is unlayered) → port component-by-component
-against a fidelity harness (Playwright is already in every app; mask
-CodeMirror/xterm/simulator/plotly/embeds) → animations → kill-switch →
-where a brand split exists, run fidelity on both sides. Budget the
-gotcha-#9 style-prop sweep explicitly per app (29/10/12 BoxProps files
-respectively).
-
-**Decisions to front-load** (block later phases if unmade): palette
-generation reconciliation (classroom); one foundation package vs
-per-app private packages; the `statusBarBg`-family semantic tokens
-(three apps have an ActionBar-shaped thing); python-editor OSS-theme
-simplification appetite (agreed in principle — scope it per component
-during pre-work).
-
-## Key files
-- `panda.config.ts` (preset stack + `@microbit/ui` source include),
-  `bin/fidelity.mjs`
-- **`../ui` monorepo**: `packages/ui/src/` (components + colocated
-  `*.recipe.ts`, `base-preset.ts` the single preset — brand-independent
-  system + OSS default brand + staticCss, `chakra-tokens.ts` generated
-  snapshot, `SharedUIProvider.tsx` overlay-close seam, `lang/` +
-  `messages.ts`), `packages/ui/README.md` (consumption setup + CSS-var
-  contract), `packages/ui/.storybook/` + `packages/ui/stories/`
-  (component harness / CI build target), `bin/gen-chakra-tokens.mjs`,
-  `bin/{update-translations,tidy-lang,i18n-packages}.cjs`
-- `src/deployment/default/panda-preset.ts` (app preset:
-  led/record/secondary-disabled + animations)
-- `src/layers.css` (cascade layer order incl. `vendor`),
-  `src/components/Carousel/swiper.css`
-- `bin/compile-lang.mjs` (compiles app + package `lang/` catalogs
-  together into `src/messages/`)
-- `src/e2e/app/shared.ts` (`modalDialog()`/`appUrl()` helpers),
-  `src/e2e/fidelity.spec.ts`
-- `src/App.tsx` (`SharedUIConfig` + `ToastProvider` mounted)
-- Private: `../ml-trainer-microbit/src/panda-preset.ts`, its `package.json`
-  (`./panda-preset` export)
+**Phases 3–4** (v1 surface, app migration order), the **per-app
+playbook**, and the **decisions to front-load** moved to the playbook's
+family roadmap.
