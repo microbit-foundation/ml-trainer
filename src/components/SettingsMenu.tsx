@@ -3,18 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  IconButton,
-  MenuButton,
-  MenuList,
-  Portal,
-} from "@chakra-ui/react";
-import { useRef } from "react";
 import { RiSettings2Line } from "react-icons/ri";
 import { useIntl } from "react-intl";
+import { MenuList, MenuTrigger } from "@microbit/ui";
+import { ActionBarMenuButton } from "./ActionBar/ActionBarMenuButton";
 import LanguageMenuItem from "./LanguageMenuItem";
-import Menu from "./Menu";
 import SettingsMenuItem from "./SettingsMenuItem";
 
 interface SettingsMenuProps {
@@ -29,35 +22,18 @@ const SettingsMenu = ({
   onSettingsDialogOpen,
 }: SettingsMenuProps) => {
   const intl = useIntl();
-  const settingsMenuRef = useRef(null);
-  const containerRef = useRef(null);
   return (
-    <Box ref={containerRef}>
-      <Menu>
-        <MenuButton
-          ref={settingsMenuRef}
-          as={IconButton}
-          aria-label={intl.formatMessage({ id: "settings-menu-action" })}
-          size="lg"
-          fontSize="2xl"
-          color="white"
-          icon={<RiSettings2Line size={24} />}
-          variant="plain"
-          isRound
-          h={12}
-          w={12}
-          _focusVisible={{
-            boxShadow: "outlineDark",
-          }}
-        />
-        <Portal containerRef={containerRef}>
-          <MenuList>
-            <LanguageMenuItem onOpen={onLanguageDialogOpen} />
-            <SettingsMenuItem onOpen={onSettingsDialogOpen} />
-          </MenuList>
-        </Portal>
-      </Menu>
-    </Box>
+    <MenuTrigger>
+      <ActionBarMenuButton
+        aria-label={intl.formatMessage({ id: "settings-menu-action" })}
+      >
+        <RiSettings2Line size={24} />
+      </ActionBarMenuButton>
+      <MenuList>
+        <LanguageMenuItem onOpen={onLanguageDialogOpen} />
+        <SettingsMenuItem onOpen={onSettingsDialogOpen} />
+      </MenuList>
+    </MenuTrigger>
   );
 };
 

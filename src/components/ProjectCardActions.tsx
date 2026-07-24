@@ -1,14 +1,3 @@
-import {
-  Button,
-  Checkbox,
-  HStack,
-  IconButton,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Portal,
-  VisuallyHidden,
-} from "@chakra-ui/react";
 import { RefObject, useCallback, useRef } from "react";
 import { MdMoreVert } from "react-icons/md";
 import {
@@ -19,7 +8,17 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ProjectNameDialogReason } from "../project-utils";
-import Menu from "./Menu";
+import {
+  Button,
+  Checkbox,
+  HStack,
+  Icon,
+  IconButton,
+  MenuItem,
+  MenuList,
+  MenuTrigger,
+  VisuallyHidden,
+} from "@microbit/ui";
 
 interface ProjectCardMenuProps {
   id: string;
@@ -48,7 +47,7 @@ const ProjectCardActions = ({
   onSkipToToolbar,
 }: ProjectCardMenuProps) => {
   const intl = useIntl();
-  const menuButtonRef = useRef(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const handleRenameProject = useCallback(
     (id: string) => {
       setFinalFocusRef(menuButtonRef);
@@ -83,17 +82,20 @@ const ProjectCardActions = ({
     >
       {onSelected && (
         <Checkbox
-          p={5}
-          isChecked={isSelected}
+          isSelected={isSelected ?? false}
           onChange={() => onSelected(id)}
-          color="brand.600"
-          zIndex={1}
-          borderColor="gray.600"
-          _hover={{
-            backgroundColor: "blackAlpha.50",
+          css={{
+            px: 5,
+            py: 5,
+            color: "brand.600",
+            zIndex: 1,
+            borderColor: "gray.600",
+            _hover: {
+              backgroundColor: "blackAlpha.50",
+            },
+            borderBottomRightRadius: "md",
+            h: "60px",
           }}
-          borderBottomRightRadius="md"
-          h="60px"
         >
           <VisuallyHidden>
             <FormattedMessage id="select-project-action" values={{ name }} />
@@ -102,78 +104,86 @@ const ProjectCardActions = ({
       )}
       {onSkipToToolbar && (
         <Button
-          tabIndex={isSelected ? 0 : -1}
-          onClick={onSkipToToolbar}
-          zIndex={3}
-          position="absolute"
-          left="50%"
-          top={1}
-          transform="translateX(-50%)"
+          excludeFromTabOrder={!isSelected}
+          onPress={onSkipToToolbar}
           size="xs"
           variant="primary"
-          opacity={0}
-          pointerEvents="none"
-          _focusVisible={{
-            opacity: 1,
-            pointerEvents: "auto",
-            boxShadow:
-              "0 0 0 2px white, 0 0 0 4px var(--chakra-colors-brand-500)",
+          css={{
+            zIndex: 3,
+            position: "absolute",
+            left: "50%",
+            top: 1,
+            transform: "translateX(-50%)",
+            opacity: 0,
+            pointerEvents: "none",
+            _focusVisible: {
+              opacity: 1,
+              pointerEvents: "auto",
+              boxShadow: "0 0 0 2px white, 0 0 0 4px token(colors.brand.500)",
+            },
           }}
         >
           <FormattedMessage id="project-skip-to-toolbar" />
         </Button>
       )}
-      <Menu>
-        <MenuButton
+      <MenuTrigger>
+        <IconButton
           ref={menuButtonRef}
-          zIndex={1}
-          as={IconButton}
           aria-label={intl.formatMessage(
             { id: "project-menu-action" },
             { name }
           )}
-          p={5}
-          h="100%"
-          borderRadius={0}
-          borderBottomLeftRadius="md"
-          fontSize="xl"
           variant="ghost"
-          icon={<MdMoreVert />}
-          color="grey.800"
-          ml="auto"
-        />
-        <Portal>
-          <MenuList zIndex={1}>
-            <MenuItem
-              icon={<RiFolderOpenLine />}
-              onClick={() => onOpenProject(id)}
-            >
-              <FormattedMessage id="open-project-action" />
-            </MenuItem>
-            <MenuItem
-              icon={<RiEdit2Line />}
-              onClick={() => handleRenameProject(id)}
-            >
-              <FormattedMessage id="rename-project-action" />
-            </MenuItem>
-            <MenuItem
-              icon={<RiFileCopyLine />}
-              onClick={() => handleDuplicateProject(id)}
-            >
-              <FormattedMessage id="duplicate-project-action" />
-            </MenuItem>
-            <MenuItem
-              icon={<RiDeleteBin2Line />}
-              onClick={() => handleDeleteProject(id)}
-            >
-              <FormattedMessage
-                id="delete-project-action"
-                values={{ count: 1 }}
-              />
-            </MenuItem>
-          </MenuList>
-        </Portal>
-      </Menu>
+          css={{
+            zIndex: 1,
+            px: 5,
+            py: 5,
+            h: "100%",
+            borderRadius: 0,
+            borderBottomLeftRadius: "md",
+            fontSize: "xl",
+            ml: "auto",
+          }}
+        >
+          <Icon as={MdMoreVert} />
+        </IconButton>
+        <MenuList>
+          <MenuItem
+            icon={<Icon as={RiFolderOpenLine} />}
+            onAction={() => onOpenProject(id)}
+            textValue={intl.formatMessage({ id: "open-project-action" })}
+          >
+            <FormattedMessage id="open-project-action" />
+          </MenuItem>
+          <MenuItem
+            icon={<Icon as={RiEdit2Line} />}
+            onAction={() => handleRenameProject(id)}
+            textValue={intl.formatMessage({ id: "rename-project-action" })}
+          >
+            <FormattedMessage id="rename-project-action" />
+          </MenuItem>
+          <MenuItem
+            icon={<Icon as={RiFileCopyLine} />}
+            onAction={() => handleDuplicateProject(id)}
+            textValue={intl.formatMessage({ id: "duplicate-project-action" })}
+          >
+            <FormattedMessage id="duplicate-project-action" />
+          </MenuItem>
+          <MenuItem
+            icon={<Icon as={RiDeleteBin2Line} />}
+            onAction={() => handleDeleteProject(id)}
+            textValue={intl.formatMessage(
+              { id: "delete-project-action" },
+              { count: 1 }
+            )}
+          >
+            <FormattedMessage
+              id="delete-project-action"
+              values={{ count: 1 }}
+            />
+          </MenuItem>
+        </MenuList>
+      </MenuTrigger>
     </HStack>
   );
 };

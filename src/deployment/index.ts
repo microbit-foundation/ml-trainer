@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps } from "@chakra-ui/react";
 import React, { ComponentType, ReactNode, useContext } from "react";
 import { createNativeCompliance } from "../compliance/native";
 import { createWebCompliance } from "../compliance/web";
@@ -17,6 +16,21 @@ import { ConsoleLogging } from "./default/logging";
 
 // This is configured via a vite alias, defaulting to ./default
 import { default as df } from "theme-package";
+
+/**
+ * Props the app passes to the brand logo components. Brand packages render
+ * plain SVG (they're outside Panda's extraction scope, so no style props).
+ */
+export interface LogoProps {
+  /**
+   * CSS height, e.g. "19px".
+   */
+  h?: string;
+  /**
+   * CSS color; the logos draw in currentColor.
+   */
+  color?: string;
+}
 
 /**
  * Brand-and-content config supplied by the (optionally private) theme
@@ -43,12 +57,9 @@ export interface BrandConfig {
    * runtime.
    */
   ogDescription?: string;
-  AppLogo: ComponentType<BoxProps>;
-  OrgLogo?: ComponentType<BoxProps>;
+  AppLogo: ComponentType<LogoProps>;
+  OrgLogo?: ComponentType<LogoProps>;
   welcomeVideoYouTubeId?: string;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  chakraTheme: any;
 
   supportLinks: {
     main: string;

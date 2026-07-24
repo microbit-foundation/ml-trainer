@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { CSSProperties } from "react";
 import {
   forwardRef,
   useCallback,
@@ -17,12 +18,11 @@ import {
 import {
   Box,
   HStack,
-  StackProps,
+  SystemStyleObject,
   Text,
-  TextProps,
+  token,
   VStack,
-} from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
+} from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
 export interface ABLabelledMicrobitBoardRef {
@@ -31,16 +31,19 @@ export interface ABLabelledMicrobitBoardRef {
   reset(): void;
 }
 
-interface ABLabelledMicrobitBoardProps extends StackProps {
+interface ABLabelledMicrobitBoardProps {
+  /** A resolved CSS colour (not a token name). */
   activeColor: string;
+  /** Sizing from the call site, merged as one literal. */
+  css?: SystemStyleObject;
 }
 
-const inactiveColor = "gray.500";
+const inactiveColor = token("colors.gray.500");
 
 const ABLabelledMicrobitBoard = forwardRef<
   ABLabelledMicrobitBoardRef,
   ABLabelledMicrobitBoardProps
->(function ABLabelledMicrobitBoard({ activeColor, ...props }, ref) {
+>(function ABLabelledMicrobitBoard({ activeColor, css: cssProp }, ref) {
   const microbitBoardFrontRef = useRef<MicrobitBoardFrontRef>(null);
   const buttonLabelARef = useRef<ButtonLabelRef>(null);
   const buttonLabelBRef = useRef<ButtonLabelRef>(null);
@@ -77,17 +80,17 @@ const ABLabelledMicrobitBoard = forwardRef<
   );
 
   return (
-    <VStack position="relative" {...props}>
+    <VStack position="relative" css={cssProp}>
       <HStack justifyContent="space-between" w="100%">
         <ButtonLabel text="A" ref={buttonLabelARef} activeColor={activeColor} />
-        <Text fontWeight="bold" fontSize="xl" color={plusTextColor}>
+        <Text fontWeight="bold" fontSize="xl" style={{ color: plusTextColor }}>
           +
         </Text>
         <ButtonLabel text="B" ref={buttonLabelBRef} activeColor={activeColor} />
       </HStack>
       <MicrobitBoardFront
         ref={microbitBoardFrontRef}
-        boxSize="100%"
+        css={{ width: "100%", height: "100%" }}
         buttonStrokeColor={ABButtonOutlineColor}
       />
     </VStack>
@@ -96,6 +99,7 @@ const ABLabelledMicrobitBoard = forwardRef<
 
 interface ButtonLabelProps {
   text: string;
+  /** A resolved CSS colour (not a token name). */
   activeColor: string;
 }
 
@@ -104,17 +108,6 @@ interface ButtonLabelRef {
   reset(): void;
 }
 
-const textBoxFillUp = keyframes`
-  75% { background-size: 100% 0%; }
-  100%   { background-size: 100% 100%; }
-`;
-
-const lineScaleUp = keyframes`
-  0%   { transform: scaleY(0); }
-  75%  { transform: scaleY(1.02); }
-  100% { transform: scaleY(1.02); }
-`;
-
 const buttonLabelFillDuration = 0.75; // sec
 
 const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
@@ -122,15 +115,18 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
     const { delayInSec, withPlayState, prefersReducedMotion } = useAnimation();
     const [playing, setPlaying] = useState<boolean>(false);
 
-    const buttonLabelAnimationProps = useCallback(
-      (keyframes: string): TextProps => {
+    // Fill effect: a bottom-anchored gradient in the active colour grows via
+    // the preset's textBoxFillUp/lineScaleUp keyframes. Colour and play state
+    // are runtime values, so the whole lot is an inline style.
+    const buttonLabelAnimationStyle = useCallback(
+      (keyframeName: string): CSSProperties => {
         return {
           backgroundImage: `linear-gradient(to top, ${activeColor}, ${activeColor})`,
           backgroundRepeat: "no-repeat",
           backgroundPosition: "bottom",
           backgroundSize: "100% 0%",
           animation: withPlayState(
-            `${keyframes} ${buttonLabelFillDuration}s ease-in-out forwards`
+            `${keyframeName} ${buttonLabelFillDuration}s ease-in-out forwards`
           ),
         };
       },
@@ -157,14 +153,15 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           px="3%"
           py="5%"
           textAlign="center"
-          backgroundColor={
-            prefersReducedMotion && playing ? activeColor : inactiveColor
-          }
           borderRadius="0.5rem"
           fontWeight="bold"
           fontSize="lg"
-          textColor="white"
-          {...(playing ? buttonLabelAnimationProps(textBoxFillUp) : {})}
+          color="white"
+          style={{
+            backgroundColor:
+              prefersReducedMotion && playing ? activeColor : inactiveColor,
+            ...(playing ? buttonLabelAnimationStyle("textBoxFillUp") : {}),
+          }}
         >
           {text}
         </Text>
@@ -174,7 +171,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           w="15%"
           h="190%"
           left="42.5%"
-          backgroundColor={inactiveColor}
+          style={{ backgroundColor: inactiveColor }}
         />
         <Box
           position="absolute"
@@ -183,11 +180,12 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           h="191%"
           left="42.5%"
           transformOrigin="bottom"
-          transform={
-            prefersReducedMotion && playing ? "scaleY(1)" : "scaleY(0)"
-          }
-          backgroundColor={activeColor}
-          {...(playing ? buttonLabelAnimationProps(lineScaleUp) : {})}
+          style={{
+            transform:
+              prefersReducedMotion && playing ? "scaleY(1)" : "scaleY(0)",
+            backgroundColor: activeColor,
+            ...(playing ? buttonLabelAnimationStyle("lineScaleUp") : {}),
+          }}
         />
       </Box>
     );

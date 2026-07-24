@@ -4,18 +4,16 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  HStack,
-  Icon,
-  IconProps,
-  StackProps,
-  Box,
-  useBreakpointValue,
-} from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
-import { useImperativeHandle, forwardRef, useState, useMemo } from "react";
+  CSSProperties,
+  useImperativeHandle,
+  forwardRef,
+  useState,
+  useMemo,
+} from "react";
+import { Box, HStack, useBreakpointValue } from "@microbit/ui";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
 
-interface SignalProps extends StackProps {}
 export interface SignalRef {
   playConnecting(): Promise<void>;
   playConnected(): Promise<void>;
@@ -82,17 +80,11 @@ const getSettledOpacity = (i: number, total: number): number => {
   return settledEdgeOpacity[fromEdge] ?? 1;
 };
 
-// ─── Keyframes (gap-independent) ─────────────────────────────────────────────
-const keyframeSignalEnter = `${keyframes({
-  "0%": { opacity: 0, transform: "translate(0, 20px)" },
-  "100%": { opacity: 1, transform: "translate(0, 0)" },
-})} ${signalFadeInDuration}s ease-in-out forwards`;
+// ─── Keyframes (gap-independent; registered in the preset) ──────────────────
+const keyframeSignalEnter = `signalEnter ${signalFadeInDuration}s ease-in-out forwards`;
 
 // ─── Component ───────────────────────────────────────────────────────────────
-const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
-  { ...props }: SignalProps,
-  ref
-) {
+const Signal = forwardRef<SignalRef>(function Signal(_, ref) {
   const { delayInSec, withPlayState } = useAnimation();
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(false);
@@ -125,30 +117,16 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
     [signalGap, travelDotsWidth, dotGap, edgePadding]
   );
 
-  // Per-dot opacities — recalculated when totalNumDots changes
+  // Per-dot opacities — recalculated when totalNumDots changes. The settle
+  // animation is the preset's signalSettle keyframe with the opacities fed in
+  // via CSS custom properties.
   const dotOpacities = useMemo(
     () =>
-      Array.from({ length: totalNumDots }, (_, i) => {
-        const travelOpacity = getTravelOpacity(i, totalNumDots);
-        const settledOpacity = getSettledOpacity(i, totalNumDots);
-        const settleAnimation = `${keyframes({
-          "0%": { opacity: travelOpacity },
-          "100%": { opacity: settledOpacity },
-        })} ${dotSettleDuration}s ease-in-out forwards`;
-        return { travelOpacity, settledOpacity, settleAnimation };
-      }),
+      Array.from({ length: totalNumDots }, (_, i) => ({
+        travelOpacity: getTravelOpacity(i, totalNumDots),
+        settledOpacity: getSettledOpacity(i, totalNumDots),
+      })),
     [totalNumDots]
-  );
-
-  const keyframeTravellingDots = useMemo(
-    () =>
-      keyframes({
-        "0%": { transform: `translateX(-${travelOffset}px)` },
-        "38.46%": { transform: `translateX(${travelOffset}px)` },
-        "76.92%": { transform: `translateX(-${travelOffset}px)` },
-        "100%": { transform: `translateX(0px)` },
-      }),
-    [travelOffset]
   );
 
   useImperativeHandle(
@@ -187,16 +165,18 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
   return (
     <HStack
       alignItems="center"
-      gap={`${signalGap}px`}
       position="relative"
       opacity={visible ? 1 : 0}
       transition="opacity 0.3s ease"
-      {...props}
+      style={{ gap: `${signalGap}px` }}
     >
       <SignalIcon
-        animation={
-          phase === "entering" ? withPlayState(keyframeSignalEnter) : undefined
-        }
+        style={{
+          animation:
+            phase === "entering"
+              ? withPlayState(keyframeSignalEnter)
+              : undefined,
+        }}
       />
 
       {/* Dot layer — centred over the gap between the signal icons */}
@@ -206,66 +186,81 @@ const Signal = forwardRef<SignalRef, SignalProps>(function Signal(
         top="50%"
         transform="translate(-50%, -50%)"
         pointerEvents="none"
-        width={`${signalGap}px`}
-        height={`${dotSize}px`}
         display="flex"
         alignItems="center"
         justifyContent="center"
+        style={{ width: `${signalGap}px`, height: `${dotSize}px` }}
       >
         {dotsVisible && (
           <Box
             position="absolute"
             display="flex"
             alignItems="center"
-            gap={`${dotGap}px`}
-            animation={
-              phase !== "settled"
-                ? withPlayState(
-                    `${keyframeTravellingDots} ${dotTravelDuration}s cubic-bezier(0.45, 0, 0.55, 1) forwards`
-                  )
-                : undefined
-            }
-            transform={
-              phase !== "settled" ? `translateX(-${travelOffset}px)` : undefined
+            style={
+              {
+                gap: `${dotGap}px`,
+                "--signal-travel-offset": `${travelOffset}px`,
+                animation:
+                  phase !== "settled"
+                    ? withPlayState(
+                        `signalTravel ${dotTravelDuration}s cubic-bezier(0.45, 0, 0.55, 1) forwards`
+                      )
+                    : undefined,
+                transform:
+                  phase !== "settled"
+                    ? `translateX(-${travelOffset}px)`
+                    : undefined,
+              } as CSSProperties
             }
           >
-            {dotOpacities.map(
-              ({ travelOpacity, settledOpacity, settleAnimation }, i) => (
-                <Box
-                  key={i}
-                  borderRadius="full"
-                  bg="brand2.500"
-                  width={`${dotSize}px`}
-                  height={`${dotSize}px`}
-                  flexShrink={0}
-                  opacity={phase === "settled" ? settledOpacity : travelOpacity}
-                  animation={
-                    phase === "settling"
-                      ? withPlayState(settleAnimation)
-                      : undefined
-                  }
-                />
-              )
-            )}
+            {dotOpacities.map(({ travelOpacity, settledOpacity }, i) => (
+              <Box
+                key={i}
+                borderRadius="full"
+                bg="brand2.500"
+                flexShrink={0}
+                style={
+                  {
+                    width: `${dotSize}px`,
+                    height: `${dotSize}px`,
+                    opacity:
+                      phase === "settled" ? settledOpacity : travelOpacity,
+                    "--signal-travel-opacity": travelOpacity,
+                    "--signal-settled-opacity": settledOpacity,
+                    animation:
+                      phase === "settling"
+                        ? withPlayState(
+                            `signalSettle ${dotSettleDuration}s ease-in-out forwards`
+                          )
+                        : undefined,
+                  } as CSSProperties
+                }
+              />
+            ))}
           </Box>
         )}
       </Box>
 
       <SignalIcon
-        animation={
-          phase === "entering" ? withPlayState(keyframeSignalEnter) : undefined
-        }
+        style={{
+          animation:
+            phase === "entering"
+              ? withPlayState(keyframeSignalEnter)
+              : undefined,
+        }}
       />
     </HStack>
   );
 });
 
-const SignalIcon = ({ ...props }: IconProps) => (
-  <Icon
+const SignalIcon = (props: AnimationIconProps) => (
+  <AnimationIcon
     viewBox="0 0 23.27 23.27"
-    color="brand2.500"
-    width={{ base: "1.5em", sm: "2em", md: "1.5em" }}
-    height={{ base: "1.5em", sm: "2em", md: "1.5em" }}
+    baseCss={{
+      color: "brand2.500",
+      width: { base: "1.5em", sm: "2em", md: "1.5em" },
+      height: { base: "1.5em", sm: "2em", md: "1.5em" },
+    }}
     {...props}
   >
     <path
@@ -280,7 +275,7 @@ const SignalIcon = ({ ...props }: IconProps) => (
       fill="currentColor"
       d="M21.77,23.27c-.83,0-1.5-.67-1.5-1.5C20.27,11.42,11.85,3,1.5,3c-.83,0-1.5-.67-1.5-1.5S.67,0,1.5,0c12.01,0,21.77,9.77,21.77,21.77,0,.83-.67,1.5-1.5,1.5Z"
     />
-  </Icon>
+  </AnimationIcon>
 );
 
 export default Signal;

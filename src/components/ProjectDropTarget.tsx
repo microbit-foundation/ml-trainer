@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps } from "@chakra-ui/react";
 import { useCallback } from "react";
 import FileDropTarget from "./FileDropTarget";
 import { useProject } from "../hooks/project-hooks";
 
-interface ProjectDropTargetProps extends BoxProps {
+interface ProjectDropTargetProps {
   children: React.ReactElement;
   isEnabled: boolean;
 }

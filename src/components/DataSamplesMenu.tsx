@@ -3,19 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { isAndroid } from "../platform";
-import {
-  Icon,
-  IconButton,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  Portal,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { MdMoreVert } from "react-icons/md";
 import {
   RiDeleteBin2Line,
@@ -25,11 +13,21 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { useProjectIsUntitled } from "../hooks/project-hooks";
 import { useLogging } from "../logging/logging-hooks";
+import { isAndroid } from "../platform";
+import {
+  Icon,
+  IconButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  MenuTrigger,
+  Text,
+  useToast,
+} from "@microbit/ui";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
 import { ConfirmDialog } from "./ConfirmDialog";
-import LoadProjectMenuItem from "./LoadProjectMenuItem";
-import Menu from "./Menu";
+import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
 
@@ -50,6 +48,7 @@ const DataSamplesMenu = () => {
   const isUntitled = useProjectIsUntitled();
   const setProjectName = useStore((s) => s.setProjectName);
   const toast = useToast();
+  const loadProjectInputRef = useRef<LoadProjectInputRef>(null);
 
   const download = useCallback(async () => {
     logging.event({
@@ -64,8 +63,6 @@ const DataSamplesMenu = () => {
       // Android saves to Downloads with no browser feedback;
       // iOS share sheet provides its own; web has the browser download bar.
       toast({
-        id: "save-complete",
-        position: "top",
         duration: 5_000,
         title: intl.formatMessage({ id: "saving-dataset-toast-title" }),
         status: "info",
@@ -121,39 +118,50 @@ const DataSamplesMenu = () => {
         onConfirm={handleDeleteAllActions}
         onCancel={closeDialog}
       />
-      <Menu>
-        <MenuButton
-          as={IconButton}
+      <MenuTrigger>
+        <IconButton
           aria-label={intl.formatMessage({
             id: "data-actions-menu",
           })}
-          color="gray.800"
           variant="ghost"
-          icon={<Icon as={MdMoreVert} boxSize={7} />}
           isRound
-        />
-        <Portal>
-          <MenuList>
-            <LoadProjectMenuItem icon={<RiUpload2Line />} accept=".json">
-              <FormattedMessage id="import-data-samples-action" />
-            </LoadProjectMenuItem>
-            <MenuItem
-              icon={<RiDownload2Line />}
-              onClick={handleDownloadDataset}
-            >
-              <FormattedMessage id="download-data-samples-action" />
-            </MenuItem>
-            <MenuItem
-              icon={<RiDeleteBin2Line />}
-              onClick={deleteAllActionsDialogOnOpen}
-            >
-              <FormattedMessage id="delete-data-samples-action" />
-            </MenuItem>
-            <MenuDivider />
-            <ViewDataFeaturesMenuItem />
-          </MenuList>
-        </Portal>
-      </Menu>
+          css={{ color: "gray.800" }}
+        >
+          <Icon as={MdMoreVert} css={{ width: 7, height: 7 }} />
+        </IconButton>
+        <MenuList>
+          <MenuItem
+            icon={<Icon as={RiUpload2Line} />}
+            onAction={() =>
+              loadProjectInputRef.current?.chooseFile("replaceActions")
+            }
+            textValue={intl.formatMessage({ id: "import-data-samples-action" })}
+          >
+            <FormattedMessage id="import-data-samples-action" />
+          </MenuItem>
+          <MenuItem
+            icon={<Icon as={RiDownload2Line} />}
+            onAction={handleDownloadDataset}
+            textValue={intl.formatMessage({
+              id: "download-data-samples-action",
+            })}
+          >
+            <FormattedMessage id="download-data-samples-action" />
+          </MenuItem>
+          <MenuItem
+            icon={<Icon as={RiDeleteBin2Line} />}
+            onAction={deleteAllActionsDialogOnOpen}
+            textValue={intl.formatMessage({ id: "delete-data-samples-action" })}
+          >
+            <FormattedMessage id="delete-data-samples-action" />
+          </MenuItem>
+          <MenuDivider />
+          <ViewDataFeaturesMenuItem />
+        </MenuList>
+      </MenuTrigger>
+      {/* Outside the menu: the RAC popover unmounts on close, which would
+          drop the file input's change event mid-pick. */}
+      <LoadProjectInput ref={loadProjectInputRef} accept=".json" />
     </>
   );
 };

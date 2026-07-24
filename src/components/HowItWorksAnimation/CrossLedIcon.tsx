@@ -3,19 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps } from "@chakra-ui/react";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 
-interface CrossLedIconProps extends IconProps {
-  size?: string;
-}
-
-const CrossLedIcon = ({ size, ...props }: CrossLedIconProps) => {
+const CrossLedIcon = (props: AnimationIconProps) => {
   return (
-    <Icon
+    <AnimationIcon
       viewBox="0 0 23 22"
-      color="brand2.500"
-      width={size}
-      height={size}
+      baseCss={{ color: "brand2.500" }}
       {...props}
     >
       <path
@@ -54,7 +48,7 @@ const CrossLedIcon = ({ size, ...props }: CrossLedIconProps) => {
         d="M1.3 17.9004H4.1C4.3 17.9004 4.4 18.1004 4.4 18.2004V21.0004C4.4 21.2004 4.2 21.3004 4.1 21.3004H1.3C1.1 21.3004 1 21.1004 1 21.0004V18.2004C1 18.0004 1.2 17.9004 1.3 17.9004Z"
         fill="currentColor"
       />
-    </Icon>
+    </AnimationIcon>
   );
 };
 

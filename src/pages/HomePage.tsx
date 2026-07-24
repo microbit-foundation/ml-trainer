@@ -4,20 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Button,
-  Card,
-  CardBody,
-  Heading,
-  HStack,
-  Icon,
-  IconButton,
-  LinkBox,
-  LinkOverlay,
-  Text,
-  useBreakpointValue,
-  VStack,
-} from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
@@ -29,7 +15,7 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
-import { ButtonWithLoading } from "../components/ButtonWithLoading";
+import { Link as RouterLink } from "react-router-dom";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
@@ -39,7 +25,6 @@ import DefaultPageLayout, {
 import { createHelpCards } from "../components/HelpCards";
 import HomepageBanner from "../components/HomepageBanner";
 import { createLessonCards } from "../components/LessonCards";
-import Link from "../components/Link";
 import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
@@ -50,7 +35,21 @@ import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
 import { isNativePlatform } from "../platform";
 import { untitledProjectName } from "../project-utils";
-import { shortScreenHeightBreakpoint } from "../responsive";
+import {
+  Button,
+  Card,
+  CardBody,
+  css,
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  LinkBox,
+  LinkOverlayButton,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from "@microbit/ui";
 import {
   loadProjectAndModelFromStorage,
   useSettings,
@@ -205,8 +204,8 @@ const ProjectRow = () => {
         }
         containerMessageId="my-projects-row-carousel"
         titleElement={
-          <HStack spacing={3}>
-            <Heading as="h2" size="lg">
+          <HStack gap={3}>
+            <Heading size="lg">
               <FormattedMessage id="my-projects-row-title" />
             </Heading>
             {!isNativePlatform() && (
@@ -214,19 +213,17 @@ const ProjectRow = () => {
                 hasArrow
                 placement={tooltipPlacement}
                 label={
-                  <VStack
-                    textAlign="left"
-                    alignContent="left"
-                    alignItems="left"
-                    m={3}
-                  >
+                  <VStack textAlign="left" alignItems="flex-start" m={3}>
                     <Text>
                       <FormattedMessage id="project-storage-tooltip" />
                     </Text>
                   </VStack>
                 }
               >
-                <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+                <Icon
+                  as={RiInformationLine}
+                  css={{ opacity: 0.7, width: 5, height: 5 }}
+                />
               </ClickableTooltip>
             )}
           </HStack>
@@ -238,17 +235,21 @@ const ProjectRow = () => {
 
 const ViewAllProjectsLink = () => {
   return (
-    <Link
-      href={createProjectsPageUrl()}
-      color="brand.700"
-      fontWeight="semibold"
-      borderRadius="md"
-      px={2}
-      py={1}
-      _focusVisible={{ boxShadow: "outline", outline: "none" }}
+    <RouterLink
+      to={createProjectsPageUrl()}
+      className={css({
+        color: "brand.700",
+        fontWeight: "semibold",
+        borderRadius: "md",
+        px: 2,
+        py: 1,
+        textDecoration: "none",
+        _hover: { textDecoration: "underline" },
+        _focusVisible: { focusShadow: "outline" },
+      })}
     >
       <FormattedMessage id="view-all-projects" />
-    </Link>
+    </RouterLink>
   );
 };
 
@@ -262,36 +263,42 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
   return (
     <LinkBox h="100%" display="flex">
       <Card
-        flexGrow={1}
-        overflow="hidden"
-        minH="233px"
-        sx={{ [shortScreenHeightBreakpoint]: { minH: "160px" } }}
+        css={{
+          flexGrow: 1,
+          overflow: "hidden",
+          minH: "233px",
+          _shortHeight: { minH: "160px" },
+        }}
       >
         <CardBody
-          display="flex"
-          backgroundColor="brand.500"
-          color="white"
-          sx={{ [shortScreenHeightBreakpoint]: { p: 3 } }}
+          css={{
+            display: "flex",
+            backgroundColor: "brand.500",
+            color: "white",
+            _shortHeight: { p: 3 },
+          }}
         >
-          <VStack h="100%" w="100%" spacing={0} justifyContent="space-evenly">
+          <VStack h="100%" w="100%" gap={0} justifyContent="space-evenly">
             <VStack>
               <Icon
                 as={icon}
-                h={20}
-                w={20}
-                sx={{ [shortScreenHeightBreakpoint]: { h: 10, w: 10 } }}
+                css={{
+                  width: 20,
+                  height: 20,
+                  _shortHeight: { width: 10, height: 10 },
+                }}
               />
             </VStack>
-            <LinkOverlay
-              as={Button}
-              h={8}
-              fontSize="xl"
+            <LinkOverlayButton
               onClick={onClick}
-              variant="unstyled"
-              _focusVisible={{ boxShadow: "outlineLight", outline: "none" }}
+              css={{
+                h: 8,
+                fontSize: "xl",
+                _focusVisible: { focusShadow: "outlineLight" },
+              }}
             >
               <FormattedMessage id={textId} />
-            </LinkOverlay>
+            </LinkOverlayButton>
           </VStack>
         </CardBody>
       </Card>
@@ -356,19 +363,20 @@ const ImportProjectButton = () => {
     <>
       <LoadProjectInput ref={loadProjectRef} accept=".json,.hex" />
       <IconButton
-        icon={<RiUpload2Line />}
-        onClick={handleContinueSessionFromFile}
-        aria-label={intl.formatMessage({ id: "import-file-action" })}
         variant="ghost"
-        display={{ base: "inline-flex", sm: "none" }}
-      />
-      <ButtonWithLoading
-        leftIcon={<RiUpload2Line />}
-        onClick={handleContinueSessionFromFile}
-        display={{ base: "none", sm: "inline-flex" }}
+        aria-label={intl.formatMessage({ id: "import-file-action" })}
+        onPress={handleContinueSessionFromFile}
+        css={{ display: { base: "inline-flex", sm: "none" } }}
+      >
+        <Icon as={RiUpload2Line} />
+      </IconButton>
+      <Button
+        leftIcon={<Icon as={RiUpload2Line} />}
+        onPress={handleContinueSessionFromFile}
+        css={{ display: { base: "none", sm: "inline-flex" } }}
       >
         <FormattedMessage id="import-file-action" />
-      </ButtonWithLoading>
+      </Button>
     </>
   );
 };

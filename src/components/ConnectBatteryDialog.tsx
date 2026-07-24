@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, Image, Link, Text, VStack } from "@chakra-ui/react";
+import { Icon, Image, Link, Text, VStack } from "@microbit/ui";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
@@ -35,9 +35,12 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
             <FormattedMessage id="connect-battery-link" />
             <Icon
               as={RiExternalLinkLine}
-              boxSize={5}
-              color="brand.600"
-              position="relative"
+              css={{
+                width: 5,
+                height: 5,
+                color: "brand.600",
+                position: "relative",
+              }}
             />
           </Link>
         </Text>

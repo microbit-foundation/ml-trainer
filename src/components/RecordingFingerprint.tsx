@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps, Grid, GridItem, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { ComponentProps } from "react";
+import { Box, Text, token } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { applyFilters } from "../ml";
 import { XYZData } from "../model";
@@ -12,7 +12,7 @@ import { useStore } from "../store";
 import { calculateGradientColor } from "../utils/gradient-calculator";
 import ClickableTooltip from "./ClickableTooltip";
 
-interface RecordingFingerprintProps extends BoxProps {
+interface RecordingFingerprintProps extends ComponentProps<typeof Box> {
   data: XYZData;
   size: "sm" | "md";
 }
@@ -26,15 +26,19 @@ const RecordingFingerprint = ({
   const dataFeatures = applyFilters(data, dataWindow, { normalize: true });
 
   return (
-    <Grid
-      w={`${size === "md" ? 158 : 92}px`}
+    <Box
+      display="grid"
+      w={size === "md" ? "158px" : "92px"}
       h="100%"
       position="relative"
       borderRadius="md"
       borderWidth={1}
       borderColor="gray.200"
       overflow="hidden"
-      templateColumns={`repeat(${Object.keys(dataFeatures).length}, 1fr)`}
+      // Column count follows the data, so it can't be statically extracted.
+      style={{
+        gridTemplateColumns: `repeat(${Object.keys(dataFeatures).length}, 1fr)`,
+      }}
       {...rest}
     >
       {Object.keys(dataFeatures).map((k) => (
@@ -42,7 +46,7 @@ const RecordingFingerprint = ({
           // Temporary escape hatch from being a tab stop until an
           // accessible solution is implemented.
           visualOnly
-          placement="end-end"
+          placement="right bottom"
           key={k}
           label={
             <Text p={3}>
@@ -50,13 +54,19 @@ const RecordingFingerprint = ({
             </Text>
           }
         >
-          <GridItem
+          <Box
             w="100%"
-            backgroundColor={calculateGradientColor("#007DBC", dataFeatures[k])}
+            style={{
+              backgroundColor: calculateGradientColor(
+                // Runtime lookup: the value feeds colour math, not CSS.
+                token("colors.brand.500"),
+                dataFeatures[k]
+              ),
+            }}
           />
         </ClickableTooltip>
       ))}
-    </Grid>
+    </Box>
   );
 };
 

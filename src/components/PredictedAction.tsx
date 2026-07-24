@@ -3,16 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  HStack,
-  Text,
-  TextProps,
-  VisuallyHidden,
-  VStack,
-} from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { css, HStack, Text, VisuallyHidden, VStack } from "@microbit/ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";
@@ -38,15 +32,6 @@ const PredictedAction = () => {
     setLiveRegionEstimatedActionDebounced(estimatedAction);
   }, [setLiveRegionEstimatedActionDebounced, estimatedAction]);
 
-  const commonEstimatedActionProps: TextProps = {
-    size: "md",
-    fontWeight: "bold",
-    color: predictionDetected ? "brand2.600" : "gray.600",
-    isTruncated: true,
-    textAlign: "center",
-    w: `${predictedActionDisplayWidth}px`,
-  };
-
   return (
     <VStack
       className={tourElClassname.estimatedAction}
@@ -67,7 +52,7 @@ const PredictedAction = () => {
         />
       </VisuallyHidden>
       <HStack justifyContent="flex-start" w="100%" gap={2} pr={2} mb={3}>
-        <Text size="md" fontWeight="bold" alignSelf="start">
+        <Text fontWeight="bold" alignSelf="start">
           <FormattedMessage id="estimated-action-label" />
         </Text>
         <InfoToolTip
@@ -79,20 +64,41 @@ const PredictedAction = () => {
         <LedIcon icon={estimatedIcon} size="70px" colorScheme="brand2" />
       </VStack>
       {/* Display workaround for in-context translation error caused by DOM change. */}
-      <Text
-        {...commonEstimatedActionProps}
-        display={estimatedAction ? "block" : "none"}
+      <EstimatedActionText
+        detected={!!predictionDetected}
+        visible={!!estimatedAction}
       >
         {estimatedAction}
-      </Text>
-      <Text
-        {...commonEstimatedActionProps}
-        display={estimatedAction ? "none" : "block"}
+      </EstimatedActionText>
+      <EstimatedActionText
+        detected={!!predictionDetected}
+        visible={!estimatedAction}
       >
         <FormattedMessage id="unknown" />
-      </Text>
+      </EstimatedActionText>
     </VStack>
   );
 };
+
+const EstimatedActionText = ({
+  detected,
+  visible,
+  children,
+}: {
+  detected: boolean;
+  visible: boolean;
+  children: React.ReactNode;
+}) => (
+  <Text
+    fontWeight="bold"
+    truncate
+    textAlign="center"
+    w="180px"
+    className={css({ display: visible ? "block" : "none" })}
+    color={detected ? "brand2.600" : "gray.600"}
+  >
+    {children}
+  </Text>
+);
 
 export default PredictedAction;

@@ -6,9 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 import react from "@vitejs/plugin-react";
-import browserslist from "browserslist";
 import ejs from "ejs";
-import { browserslistToTargets } from "lightningcss";
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -19,6 +17,7 @@ import {
   UserConfig,
   defineConfig,
   loadEnv,
+  searchForWorkspaceRoot,
 } from "vite";
 import svgr from "vite-plugin-svgr";
 import { configDefaults } from "vitest/config";
@@ -67,6 +66,17 @@ const viteEjsPlugin = (data: ejs.Data): Plugin => {
   };
 };
 
+// Browser-support floor (esbuild/lightningcss target syntax) for JS
+// (build.target) and CSS (build.cssTarget). Keep in sync with the
+// "browserslist" field in package.json.
+const BUILD_TARGETS = [
+  "chrome90",
+  "edge90",
+  "firefox88",
+  "safari14.1",
+  "ios14.5",
+];
+
 export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const strings: TemplateStrings = themePackageExternal
     ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
@@ -82,6 +92,13 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
 
   return {
     base: process.env.BASE_URL ?? "/",
+    // The fidelity harness (bin/fidelity.mjs) symlinks node_modules into a
+    // baseline worktree, so the default node_modules/.vite dep cache would
+    // be shared with (and can be invalidated under) a concurrently running
+    // dev server. It sets VITE_CACHE_DIR to keep its servers isolated.
+    ...(process.env.VITE_CACHE_DIR
+      ? { cacheDir: process.env.VITE_CACHE_DIR }
+      : {}),
     plugins: [viteEjsPlugin(strings), react(), svgr()],
     assetsInclude: ["**/*.hex"],
     define: {
@@ -89,14 +106,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         process.env.npm_package_version
       ),
     },
-    css: {
-      transformer: "lightningcss",
-      lightningcss: {
-        targets: browserslistToTargets(browserslist()),
-      },
-    },
     build: {
-      target: "es2017",
+      target: BUILD_TARGETS,
+      cssTarget: BUILD_TARGETS,
       cssMinify: "lightningcss",
       rollupOptions: {
         input: "index.html",
@@ -112,7 +124,22 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     resolve: {
       alias: {
         "theme-package": themePackageAlias,
+        // Also resolves the styled-system/* imports inside @microbit/ui's
+        // shipped source onto this app's generated output (Panda's
+        // ship-as-source library pattern).
+        "styled-system": path.resolve(__dirname, "styled-system"),
       },
+      // @microbit/ui may be installed as a symlink to a sibling checkout;
+      // its files then resolve bare imports through the sibling's own
+      // node_modules, which would load second copies of these (breaking
+      // React hooks and react-aria's context sharing).
+      dedupe: [
+        "react",
+        "react-dom",
+        "react-aria-components",
+        "react-icons",
+        "react-intl",
+      ],
     },
   };
 });
@@ -121,6 +148,16 @@ const createServer = (mode: string): ServerOptions => {
   const commonEnv = loadEnv(mode, process.cwd(), "");
   const options = {
     port: 5173,
+    fs: {
+      // The theme package and @microbit/ui may be installed as symlinks to
+      // sibling checkouts, so their files resolve to real paths outside the
+      // project root that Vite's default allow list rejects.
+      allow: [
+        searchForWorkspaceRoot(process.cwd()),
+        ...(themePackageExternal ? [fs.realpathSync(external)] : []),
+        fs.realpathSync("node_modules/@microbit/ui"),
+      ],
+    },
     proxy: {
       "/microbit-org-proxy/": {
         target: "https://microbit.org/",

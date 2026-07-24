@@ -3,23 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Box,
-  Divider,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  HStack,
-  Link,
-  List,
-  ListIcon,
-  ListItem,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { ReactNode, useCallback, useRef } from "react";
+import { IconType } from "react-icons/lib";
 import { IoMdGlobe } from "react-icons/io";
 import {
   RiDownload2Line,
@@ -30,13 +15,28 @@ import {
   RiListSettingsLine,
   RiShareLine,
 } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useDataConnected } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { useProject } from "../hooks/project-hooks";
 import { SaveType, TourTrigger } from "../model";
 import { isAndroid, isIOS, isNativePlatform } from "../platform";
+import {
+  Box,
+  css,
+  Divider,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  HStack,
+  Icon,
+  Link,
+  List,
+  ListItem,
+  Text,
+  VStack,
+} from "@microbit/ui";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";
@@ -58,6 +58,7 @@ const NavigationDrawer = ({
   showProjectName,
   tourTrigger,
 }: NavigationDrawerProps) => {
+  const intl = useIntl();
   const navigate = useNavigate();
   const deployment = useDeployment();
   const { saveHex } = useProject();
@@ -131,150 +132,133 @@ const NavigationDrawer = ({
       onClose={onClose}
       onCloseComplete={handleCloseComplete}
       placement={placement}
-      preserveScrollBarGap={false}
+      aria-label={intl.formatMessage({ id: "main-menu" })}
     >
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerHeader bgColor="brand2.500" p={0}>
-          <Box h="max(0px, calc(env(safe-area-inset-top) - 12px))" />
-          <HStack h="64px" px={4} alignItems="center">
-            <AppLogo transform="scale(0.85)" transformOrigin="left" />
-          </HStack>
-        </DrawerHeader>
-        <DrawerBody px={0} py={0}>
-          <VStack align="stretch" spacing={0} h="100%">
-            {showProjectName && (
-              <Box display={{ base: "block", md: "none" }}>
-                <Box
-                  px={4}
-                  py={3}
-                  bgColor="gray.100"
-                  cursor="pointer"
-                  _hover={{ bgColor: "gray.200" }}
-                  onClick={() => onEditRef.current?.()}
-                >
-                  <Text fontSize="xs" color="gray.700" mb={1}>
-                    <FormattedMessage id="project-label" />
-                  </Text>
-                  <EditableName variant="drawer" onEditRef={onEditRef} />
-                </Box>
-                <Divider borderColor="gray.300" />
-              </Box>
-            )}
-            {/* Project actions (only on project pages) */}
-            {showProjectName && (
-              <>
-                <NavSection>
-                  {canShare && (
-                    <NavItem icon={RiShareLine} onClick={handleShare}>
-                      <FormattedMessage id="share-action" />
-                    </NavItem>
-                  )}
-                  {!shareOnly && (
-                    <NavItem icon={RiDownload2Line} onClick={handleSave}>
-                      <FormattedMessage
-                        id={
-                          isAndroid() ? "save-to-files-action" : "save-action"
-                        }
-                      />
-                    </NavItem>
-                  )}
-                </NavSection>
-
-                <Divider borderColor="gray.300" />
-              </>
-            )}
-
-            {/* Global */}
-            <NavSection>
-              <NavItem icon={RiHome2Line} onClick={handleHome}>
-                <FormattedMessage id="home-action" />
-              </NavItem>
-              <NavItem icon={IoMdGlobe} onClick={handleLanguage}>
-                <FormattedMessage id="language" />
-              </NavItem>
-              <NavItem icon={RiListSettingsLine} onClick={handleSettings}>
-                <FormattedMessage id="settings" />
-              </NavItem>
-            </NavSection>
-
-            <Divider borderColor="gray.300" />
-
-            {/* Help & support */}
-            <NavSection>
-              <NavLink href={userGuideUrl()} onClick={onClose}>
-                <FormattedMessage id="user-guide" />
-              </NavLink>
-              {tourTrigger && (
-                <NavItem icon={RiFlag2Line} onClick={handleTour}>
-                  <FormattedMessage id="tour-action" />
-                </NavItem>
-              )}
-              {deployment.supportLinks.main && (
-                <NavLink href={deployment.supportLinks.main} onClick={onClose}>
-                  <FormattedMessage id="help-support" />
-                </NavLink>
-              )}
-              {deployment.accessibilityLink && (
-                <NavLink href={deployment.accessibilityLink} onClick={onClose}>
-                  <FormattedMessage id="accessibility" />
-                </NavLink>
-              )}
-              {deployment.supportLinks.main && (
-                <NavItem icon={RiFeedbackLine} onClick={handleFeedback}>
-                  <FormattedMessage id="feedback" />
-                </NavItem>
-              )}
-            </NavSection>
-
-            <Box flex={1} />
-
-            {/* Footer */}
-            <VStack px={4} py={3} spacing={2} align="start">
-              <Divider borderColor="gray.300" />
-              <HStack spacing={1} flexWrap="wrap" pt={1}>
-                {deployment.termsOfUseLink && (
-                  <FooterLink href={deployment.termsOfUseLink}>
-                    <FormattedMessage id="terms" />
-                  </FooterLink>
-                )}
-                {deployment.privacyPolicyLink && (
-                  <FooterLink href={deployment.privacyPolicyLink}>
-                    <FormattedMessage id="privacy" />
-                  </FooterLink>
-                )}
-                {deployment.compliance.manageCookies && (
-                  <Text
-                    as="button"
-                    fontSize="xs"
-                    color="gray.600"
-                    onClick={() => {
-                      onClose();
-                      deployment.compliance.manageCookies?.();
-                    }}
-                    _hover={{ textDecoration: "underline" }}
-                    _focusVisible={{ boxShadow: "outline", outline: "none" }}
-                    px={1}
-                  >
-                    <FormattedMessage id="cookies-action" />
-                  </Text>
-                )}
-                <Text
-                  as="button"
-                  fontSize="xs"
-                  color="gray.600"
-                  onClick={handleAbout}
-                  _hover={{ textDecoration: "underline" }}
-                  _focusVisible={{ boxShadow: "outline", outline: "none" }}
-                  px={1}
-                >
-                  <FormattedMessage id="about" />
+      <DrawerHeader css={{ bg: "brand2.500", px: 0, py: 0 }}>
+        <Box h="max(0px, calc(env(safe-area-inset-top) - 12px))" />
+        <HStack h="64px" px={4} alignItems="center">
+          <AppLogo
+            css={{ transform: "scale(0.85)", transformOrigin: "left" }}
+          />
+        </HStack>
+      </DrawerHeader>
+      <DrawerBody css={{ px: 0, py: 0 }}>
+        <VStack alignItems="stretch" gap={0} h="100%">
+          {showProjectName && (
+            <Box display={{ base: "block", md: "none" }}>
+              <Box
+                px={4}
+                py={3}
+                bg="gray.100"
+                cursor="pointer"
+                _hover={{ bg: "gray.200" }}
+                onClick={() => onEditRef.current?.()}
+              >
+                <Text fontSize="xs" color="gray.700" mb={1}>
+                  <FormattedMessage id="project-label" />
                 </Text>
-              </HStack>
-            </VStack>
+                <EditableName variant="drawer" onEditRef={onEditRef} />
+              </Box>
+              <Divider borderColor="gray.300" />
+            </Box>
+          )}
+          {/* Project actions (only on project pages) */}
+          {showProjectName && (
+            <>
+              <NavSection>
+                {canShare && (
+                  <NavItem icon={RiShareLine} onClick={handleShare}>
+                    <FormattedMessage id="share-action" />
+                  </NavItem>
+                )}
+                {!shareOnly && (
+                  <NavItem icon={RiDownload2Line} onClick={handleSave}>
+                    <FormattedMessage
+                      id={isAndroid() ? "save-to-files-action" : "save-action"}
+                    />
+                  </NavItem>
+                )}
+              </NavSection>
+
+              <Divider borderColor="gray.300" />
+            </>
+          )}
+
+          {/* Global */}
+          <NavSection>
+            <NavItem icon={RiHome2Line} onClick={handleHome}>
+              <FormattedMessage id="home-action" />
+            </NavItem>
+            <NavItem icon={IoMdGlobe} onClick={handleLanguage}>
+              <FormattedMessage id="language" />
+            </NavItem>
+            <NavItem icon={RiListSettingsLine} onClick={handleSettings}>
+              <FormattedMessage id="settings" />
+            </NavItem>
+          </NavSection>
+
+          <Divider borderColor="gray.300" />
+
+          {/* Help & support */}
+          <NavSection>
+            <NavLink href={userGuideUrl()} onClick={onClose}>
+              <FormattedMessage id="user-guide" />
+            </NavLink>
+            {tourTrigger && (
+              <NavItem icon={RiFlag2Line} onClick={handleTour}>
+                <FormattedMessage id="tour-action" />
+              </NavItem>
+            )}
+            {deployment.supportLinks.main && (
+              <NavLink href={deployment.supportLinks.main} onClick={onClose}>
+                <FormattedMessage id="help-support" />
+              </NavLink>
+            )}
+            {deployment.accessibilityLink && (
+              <NavLink href={deployment.accessibilityLink} onClick={onClose}>
+                <FormattedMessage id="accessibility" />
+              </NavLink>
+            )}
+            {deployment.supportLinks.main && (
+              <NavItem icon={RiFeedbackLine} onClick={handleFeedback}>
+                <FormattedMessage id="feedback" />
+              </NavItem>
+            )}
+          </NavSection>
+
+          <Box flex={1} />
+
+          {/* Footer */}
+          <VStack px={4} py={3} gap={2} alignItems="start">
+            <Divider borderColor="gray.300" />
+            <HStack gap={1} flexWrap="wrap" pt={1}>
+              {deployment.termsOfUseLink && (
+                <FooterLink href={deployment.termsOfUseLink}>
+                  <FormattedMessage id="terms" />
+                </FooterLink>
+              )}
+              {deployment.privacyPolicyLink && (
+                <FooterLink href={deployment.privacyPolicyLink}>
+                  <FormattedMessage id="privacy" />
+                </FooterLink>
+              )}
+              {deployment.compliance.manageCookies && (
+                <FooterButton
+                  onClick={() => {
+                    onClose();
+                    deployment.compliance.manageCookies?.();
+                  }}
+                >
+                  <FormattedMessage id="cookies-action" />
+                </FooterButton>
+              )}
+              <FooterButton onClick={handleAbout}>
+                <FormattedMessage id="about" />
+              </FooterButton>
+            </HStack>
           </VStack>
-        </DrawerBody>
-      </DrawerContent>
+        </VStack>
+      </DrawerBody>
     </Drawer>
   );
 };
@@ -284,33 +268,39 @@ interface NavSectionProps {
 }
 
 const NavSection = ({ children }: NavSectionProps) => (
-  <List spacing={0} py={2}>
-    {children}
-  </List>
+  <List py={2}>{children}</List>
 );
 
 interface NavItemProps {
-  icon: React.ComponentType;
+  icon: IconType;
   onClick: () => void;
   children: ReactNode;
 }
 
 const NavItem = ({ icon, onClick, children }: NavItemProps) => (
-  <ListItem
-    as="button"
-    display="flex"
-    alignItems="center"
-    w="100%"
-    px={4}
-    py={2.5}
-    cursor="pointer"
-    _hover={{ bg: "gray.100" }}
-    _focusVisible={{ boxShadow: "outline", outline: "none" }}
-    onClick={onClick}
-    textAlign="left"
-  >
-    <ListIcon as={icon} boxSize={5} mr={3} />
-    {children}
+  <ListItem>
+    <button
+      className={css({
+        display: "flex",
+        alignItems: "center",
+        w: "100%",
+        px: 4,
+        py: 2.5,
+        cursor: "pointer",
+        bg: "transparent",
+        border: "none",
+        font: "inherit",
+        color: "inherit",
+        textAlign: "left",
+        outline: "none",
+        _hover: { bg: "gray.100" },
+        _focusVisible: { focusShadow: "outline" },
+      })}
+      onClick={onClick}
+    >
+      <Icon as={icon} css={{ width: 5, height: 5, marginRight: 3 }} />
+      {children}
+    </button>
   </ListItem>
 );
 
@@ -321,23 +311,26 @@ interface NavLinkProps {
 }
 
 const NavLink = ({ href, onClick, children }: NavLinkProps) => (
-  <ListItem
-    as="a"
-    display="flex"
-    alignItems="center"
-    w="100%"
-    px={4}
-    py={2.5}
-    cursor="pointer"
-    _hover={{ bg: "gray.100" }}
-    _focusVisible={{ boxShadow: "outline", outline: "none" }}
-    href={href}
-    target="_blank"
-    rel="noopener"
-    onClick={onClick}
-  >
-    <ListIcon as={RiExternalLinkLine} boxSize={5} mr={3} />
-    {children}
+  <ListItem>
+    <Link
+      display="flex"
+      alignItems="center"
+      w="100%"
+      px={4}
+      py={2.5}
+      color="inherit"
+      _hover={{ bg: "gray.100", textDecoration: "none" }}
+      href={href}
+      target="_blank"
+      rel="noopener"
+      onClick={onClick}
+    >
+      <Icon
+        as={RiExternalLinkLine}
+        css={{ width: 5, height: 5, marginRight: 3 }}
+      />
+      {children}
+    </Link>
   </ListItem>
 );
 
@@ -353,12 +346,35 @@ const FooterLink = ({ href, children }: FooterLinkProps) => (
     rel="noopener"
     fontSize="xs"
     color="gray.600"
-    _hover={{ textDecoration: "underline" }}
-    _focusVisible={{ boxShadow: "outline", outline: "none" }}
     px={1}
   >
     {children}
   </Link>
+);
+
+interface FooterButtonProps {
+  onClick: () => void;
+  children: ReactNode;
+}
+
+const FooterButton = ({ onClick, children }: FooterButtonProps) => (
+  <button
+    onClick={onClick}
+    className={css({
+      fontSize: "xs",
+      color: "gray.600",
+      bg: "transparent",
+      border: "none",
+      font: "inherit",
+      cursor: "pointer",
+      px: 1,
+      outline: "none",
+      _hover: { textDecoration: "underline" },
+      _focusVisible: { focusShadow: "outline" },
+    })}
+  >
+    {children}
+  </button>
 );
 
 export default NavigationDrawer;

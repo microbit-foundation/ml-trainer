@@ -6,13 +6,11 @@
 import {
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { ProgressStage } from "@microbit/microbit-connection";
 import { FormattedMessage } from "react-intl";
 import { isNativePlatform } from "../platform";
@@ -46,40 +44,35 @@ const BluetoothConnectingDialog = ({
   }
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={noop}
       size={{ base: "full", md: "3xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
+      <ModalHeader>
+        <FormattedMessage
+          id={getLegacyTextIdIfNeeded({
+            legacyId: "connect-bluetooth-heading",
+            id: "connecting-data-collection-microbit-heading",
+          })}
+        />
+      </ModalHeader>
+      <ModalBody>
+        <VStack width="100%" gap={5} alignItems="center">
+          <Text textAlign="center">
             <FormattedMessage
               id={getLegacyTextIdIfNeeded({
-                legacyId: "connect-bluetooth-heading",
-                id: "connecting-data-collection-microbit-heading",
+                legacyId: "connecting",
+                id: "downloading-stage-connecting",
               })}
             />
-          </ModalHeader>
-          <ModalBody>
-            <VStack width="100%" gap={5} alignItems="center">
-              <Text textAlign="center">
-                <FormattedMessage
-                  id={getLegacyTextIdIfNeeded({
-                    legacyId: "connecting",
-                    id: "downloading-stage-connecting",
-                  })}
-                />
-              </Text>
-              <LoadingAnimation />
-            </VStack>
-          </ModalBody>
-          <ModalFooter />
-        </ModalContent>
-      </ModalOverlay>
+          </Text>
+          <LoadingAnimation />
+        </VStack>
+      </ModalBody>
+      <ModalFooter />
     </Modal>
   );
 };

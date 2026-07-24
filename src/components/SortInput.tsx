@@ -1,18 +1,20 @@
-import {
-  ButtonGroup,
-  ButtonGroupProps,
-  IconButton,
-  Select,
-} from "@chakra-ui/react";
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { RiArrowDownLine, RiArrowUpLine } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
+import { ButtonGroup, Icon, IconButton, NativeSelect } from "@microbit/ui";
 
-interface SortInputProps extends ButtonGroupProps {
+interface SortInputProps {
   value: string;
   onSelectChange: React.ChangeEventHandler<HTMLSelectElement>;
   order: "desc" | "asc";
   toggleOrder: () => void;
   hasSearchQuery: boolean;
+  /** Extra classes for the root (e.g. a `css(...)` result from the caller). */
+  className?: string;
 }
 
 const SortInput = ({
@@ -21,50 +23,39 @@ const SortInput = ({
   order,
   toggleOrder,
   hasSearchQuery,
-  ...rest
+  className,
 }: SortInputProps) => {
   const intl = useIntl();
   return (
-    <ButtonGroup isAttached {...rest}>
-      <Select
+    <ButtonGroup isAttached css={{ minW: 0 }} className={className}>
+      <NativeSelect
         value={value}
         onChange={onSelectChange}
         aria-label={intl.formatMessage({ id: "sort-select-label" })}
-        fontSize="lg"
-        background="white"
-        icon={<span />}
-        borderBottomRightRadius={0}
-        borderTopRightRadius={0}
-        _focus={{
-          zIndex: 1,
-        }}
-        isDisabled={hasSearchQuery}
+        // Matches the Chakra-era look; the adjacent sort-order button keeps
+        // the control from reading as a plain text field.
+        hideChevron
+        disabled={hasSearchQuery}
+        // flex/minW let the select shrink below its longest option when space
+        // is tight, clipping the text like Chakra's Select did.
+        css={{ fontSize: "lg", background: "white", flex: 1, minW: 0 }}
       >
         {hasSearchQuery ? (
           <option value="relevance">
-            <FormattedMessage id="sort-option-relevance" />
+            {intl.formatMessage({ id: "sort-option-relevance" })}
           </option>
         ) : (
           <>
             <option value="name">
-              <FormattedMessage id="sort-option-name" />
+              {intl.formatMessage({ id: "sort-option-name" })}
             </option>
             <option value="timestamp">
-              <FormattedMessage id="sort-option-last-modified" />
+              {intl.formatMessage({ id: "sort-option-last-modified" })}
             </option>
           </>
         )}
-      </Select>
+      </NativeSelect>
       <IconButton
-        borderBottomLeftRadius={0}
-        borderTopLeftRadius={0}
-        borderBottomRightRadius="md"
-        borderTopRightRadius="md"
-        background="white"
-        fontSize="2xl"
-        isRound={false}
-        border="1px"
-        borderColor="inherit"
         variant="ghost"
         aria-label={intl.formatMessage({
           id: hasSearchQuery
@@ -73,19 +64,29 @@ const SortInput = ({
             ? "sort-order-ascending-label"
             : "sort-order-descending-label",
         })}
-        color="#838383"
-        onClick={toggleOrder}
+        onPress={toggleOrder}
         isDisabled={hasSearchQuery}
-        icon={
-          hasSearchQuery ? (
-            <RiArrowDownLine />
-          ) : order === "asc" ? (
-            <RiArrowUpLine />
-          ) : (
-            <RiArrowDownLine />
-          )
-        }
-      />
+        css={{
+          background: "white",
+          fontSize: "2xl",
+          border: "1px solid",
+          borderColor: "gray.200",
+          color: "#838383",
+          // Square off the recipe's pill radius; the attached group squares
+          // the inner edge, this handles the outer one.
+          borderRadius: "md",
+        }}
+      >
+        <Icon
+          as={
+            hasSearchQuery
+              ? RiArrowDownLine
+              : order === "asc"
+              ? RiArrowUpLine
+              : RiArrowDownLine
+          }
+        />
+      </IconButton>
     </ButtonGroup>
   );
 };

@@ -3,11 +3,23 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps } from "@chakra-ui/react";
+import { css, SystemStyleObject } from "@microbit/ui";
 
-const StraightArrow = (props: IconProps) => {
+interface StraightArrowProps {
+  /**
+   * Merged into a single css() call so call-site overrides (e.g. size)
+   * reliably win over the base styles.
+   */
+  css?: SystemStyleObject;
+}
+
+const StraightArrow = ({ css: cssProp }: StraightArrowProps) => {
   return (
-    <Icon viewBox="0 0 90 36" w="88px" h="36px" aria-hidden {...props}>
+    <svg
+      viewBox="0 0 90 36"
+      aria-hidden
+      className={css({ w: "88px", h: "36px", flexShrink: 0 }, cssProp)}
+    >
       <path
         d="M4.58415 18.4756H84.7559"
         fill="none"
@@ -24,7 +36,7 @@ const StraightArrow = (props: IconProps) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </Icon>
+    </svg>
   );
 };
 

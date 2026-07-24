@@ -3,13 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
-} from "@chakra-ui/react";
+import { Modal, ModalBody, ModalCloseButton } from "@microbit/ui";
 import { useEffect, useRef } from "react";
 
 interface FeedbackFormProps {
@@ -52,24 +46,19 @@ const FeedbackForm = ({
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
-            <iframe
-              ref={iframeRef}
-              title="Feedback"
-              src="https://form.jotform.com/242763044737359"
-              frameBorder="0"
-              height="620px"
-              width="100%"
-              scrolling="no"
-            />
-          </ModalBody>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalCloseButton />
+      <ModalBody>
+        <iframe
+          ref={iframeRef}
+          title="Feedback"
+          src="https://form.jotform.com/242763044737359"
+          frameBorder="0"
+          height="620px"
+          width="100%"
+          scrolling="no"
+        />
+      </ModalBody>
     </Modal>
   );
 };

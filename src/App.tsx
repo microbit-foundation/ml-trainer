@@ -4,8 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ChakraProvider, useToast } from "@chakra-ui/react";
 import { MakeCodeFrameDriver } from "@microbit/makecode-embed/react";
 import { createBluetoothConnection } from "@microbit/microbit-connection/bluetooth";
 import { createRadioBridgeConnection } from "@microbit/microbit-connection/radio-bridge";
@@ -22,8 +20,9 @@ import {
   useNavigate,
   useRouteError,
 } from "react-router-dom";
+import { Capacitor } from "@capacitor/core";
 import "theme-package/fonts/fonts.css";
-import { useNativeBackButton } from "./back-button";
+import { setActiveMenuClose, useNativeBackButton } from "./back-button";
 import {
   broadcastChannel,
   BroadcastChannelData,
@@ -35,6 +34,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
 import LoadingOverlay from "./components/LoadingOverlay";
 import NotFound from "./components/NotFound";
+import { SharedUIProvider, ToastProvider, useToast } from "@microbit/ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
@@ -101,14 +101,30 @@ const radioBridge = isMockDeviceMode()
   ? new MockRadioBridgeConnection(usb)
   : createRadioBridgeConnection(usb, { logging });
 
+/**
+ * shared-ui's installation point: on native platforms, the registry the
+ * Android back button handler uses to close an open menu. Its localized
+ * strings are react-intl messages (see TranslationProvider's ui.* mapping).
+ */
+const SharedUIConfig = ({ children }: ProviderLayoutProps) => (
+  <SharedUIProvider
+    overlayCloseRegistrar={
+      Capacitor.isNativePlatform() ? setActiveMenuClose : undefined
+    }
+  >
+    {children}
+  </SharedUIProvider>
+);
+
 const Providers = ({ children }: ProviderLayoutProps) => {
   const deployment = useDeployment();
   const { ConsentProvider } = deployment.compliance;
   return (
     <React.StrictMode>
-      <ChakraProvider theme={deployment.chakraTheme}>
-        <LoggingProvider value={logging}>
-          <TranslationProvider>
+      <LoggingProvider value={logging}>
+        <TranslationProvider>
+          <SharedUIConfig>
+            <ToastProvider />
             <ConsentProvider>
               <ConnectionsProvider {...{ usb, bluetooth, radioBridge }}>
                 <DataConnectionEventProvider>
@@ -116,9 +132,9 @@ const Providers = ({ children }: ProviderLayoutProps) => {
                 </DataConnectionEventProvider>
               </ConnectionsProvider>
             </ConsentProvider>
-          </TranslationProvider>
-        </LoggingProvider>
-      </ChakraProvider>
+          </SharedUIConfig>
+        </TranslationProvider>
+      </LoggingProvider>
     </React.StrictMode>
   );
 };
@@ -160,7 +176,6 @@ const Layout = () => {
           // Side effects of loading a project, which MakeCode notifies us of.
           navigate(createDataSamplesPageUrl());
           toast({
-            position: "top",
             duration: 5_000,
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
@@ -203,10 +218,8 @@ const Layout = () => {
     })();
     const toastOptions = {
       id: "storage-error",
-      position: "top" as const,
       duration: null,
       isClosable: true,
-      variant: "toast",
       status: "error" as const,
       ...messages,
     };

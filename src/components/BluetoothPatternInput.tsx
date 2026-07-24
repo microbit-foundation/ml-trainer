@@ -3,17 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  Box,
-  HStack,
-  Text,
-  useRadio,
-  useRadioGroup,
-  UseRadioProps,
-  VisuallyHidden,
-  VStack,
-} from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+  Radio as RACRadio,
+  RadioGroup as RACRadioGroup,
+} from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   generateMatrix,
@@ -28,6 +22,15 @@ import {
   microbitNameToBluetoothPattern,
   microbitPatternToName,
 } from "../bt-pattern-utils";
+import {
+  Box,
+  css,
+  cx,
+  HStack,
+  Text,
+  VisuallyHidden,
+  VStack,
+} from "@microbit/ui";
 
 interface BluetoothPatternInputProps {
   onChange?: (name: string) => void;
@@ -101,7 +104,7 @@ const BluetoothPatternInput = ({
         );
       })}
       {nativePlatform && !isEditable && (
-        <VisuallyHidden>
+        <VisuallyHidden as="div">
           <Text>
             <FormattedMessage
               id="connect-pattern-label"
@@ -159,27 +162,26 @@ const PatternColumn = ({
   // column is empty (a not-yet-entered column).
   const topLitRowIdx = numLit > 0 ? matrixDim - numLit : -1;
 
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: `bluetooth-pattern-column-${colIdx}`,
-    value: numLit > 0 ? topLitRowIdx.toString() : "",
-    onChange: (value: string) => onSelect(colIdx, parseInt(value)),
-  });
-
   return (
-    <VStack
-      gap={cellGap}
-      {...getRootProps()}
-      role="radiogroup"
+    <RACRadioGroup
+      value={numLit > 0 ? topLitRowIdx.toString() : null}
+      onChange={(value: string) => onSelect(colIdx, parseInt(value))}
       aria-label={intl.formatMessage(
         { id: "connect-pattern-input-label" },
         { colNum }
       )}
-      aria-invalid={invalid || undefined}
+      isInvalid={invalid}
+      className={css({
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 1.5,
+      })}
     >
       {cells.map((isOn, rowIdx) => (
         <PatternLedOption
           key={rowIdx}
-          {...getRadioProps({ value: rowIdx.toString() })}
+          value={rowIdx.toString()}
           isOn={isOn}
           isHighlighted={highlighted[rowIdx]}
           label={
@@ -209,11 +211,12 @@ const PatternColumn = ({
           {letter}
         </Text>
       )}
-    </VStack>
+    </RACRadioGroup>
   );
 };
 
-interface PatternLedOptionProps extends UseRadioProps {
+interface PatternLedOptionProps {
+  value: string;
   isOn: boolean;
   isHighlighted: boolean;
   label: string;
@@ -224,6 +227,7 @@ interface PatternLedOptionProps extends UseRadioProps {
 }
 
 const PatternLedOption = ({
+  value,
   isOn,
   isHighlighted,
   label,
@@ -231,43 +235,73 @@ const PatternLedOption = ({
   onMouseEnter,
   onMouseLeave,
   onReactivate,
-  ...radioProps
 }: PatternLedOptionProps) => {
-  const { getInputProps, getRadioProps } = useRadio(radioProps);
-  const input = getInputProps();
-  const box = getRadioProps();
+  // Selecting the already-checked option (the topmost lit LED) turns it off.
+  // Radios fire no change event for that and react-aria's press handling
+  // swallows the click before React's synthetic handlers see it, so listen
+  // natively on the wrapper. The write is deferred a tick: react-aria's press
+  // re-selects the pressed radio *after* this listener (its handler runs when
+  // the click reaches the React root), which would otherwise revert the
+  // change. onReactivate is only wired on the currently-checked option, so
+  // selection clicks don't trigger it; keyboard activation of a checked radio
+  // also fires a click, matching the Chakra behaviour.
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const onReactivateRef = useRef(onReactivate);
+  onReactivateRef.current = onReactivate;
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) {
+      return;
+    }
+    const listener = () => {
+      if (onReactivateRef.current) {
+        setTimeout(() => onReactivateRef.current?.(), 0);
+      }
+    };
+    el.addEventListener("click", listener, true);
+    return () => el.removeEventListener("click", listener, true);
+  }, []);
   return (
-    <Box
-      as="label"
+    <div
+      ref={wrapperRef}
       data-testid={testId}
-      w={cellSize}
-      h={cellSize}
-      cursor="pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      className={css({ width: cellSize, height: cellSize })}
     >
-      <input
-        {...input}
+      <RACRadio
+        value={value}
         aria-label={label}
-        onClick={(e) => {
-          input.onClick?.(e);
-          onReactivate?.();
-        }}
-      />
-      <Box
-        {...box}
-        w="100%"
-        h="100%"
-        borderRadius={5}
-        bgColor={isOn ? "brand2.500" : "gray.300"}
-        borderWidth={isHighlighted && !isOn ? 3 : 0}
-        borderColor={
-          isHighlighted ? (isOn ? "white" : "brand2.500") : undefined
-        }
-        opacity={isHighlighted && isOn ? 0.25 : 1}
-        _focusVisible={{ boxShadow: "outline" }}
-      />
-    </Box>
+        className={css({
+          display: "block",
+          width: "100%",
+          height: "100%",
+          cursor: "pointer",
+        })}
+      >
+        {({ isFocusVisible }) => (
+          <div
+            className={cx(
+              css({
+                width: "100%",
+                height: "100%",
+                borderRadius: 5,
+                bgColor: isOn ? "brand2.500" : "gray.300",
+                borderStyle: "solid",
+                borderWidth: isHighlighted && !isOn ? 3 : 0,
+                borderColor: isHighlighted
+                  ? isOn
+                    ? "white"
+                    : "brand2.500"
+                  : undefined,
+                opacity: isHighlighted && isOn ? 0.25 : 1,
+              }),
+              isFocusVisible ? css({ focusShadow: "outline" }) : undefined
+            )}
+          />
+        )}
+      </RACRadio>
+    </div>
   );
 };
 

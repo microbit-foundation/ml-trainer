@@ -3,26 +3,33 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, Text, TooltipProps, VStack } from "@chakra-ui/react";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
+import { Icon, Text, TooltipProps, VStack } from "@microbit/ui";
 import ClickableTooltip from "./ClickableTooltip";
 
-export interface InfoToolTipProps extends Omit<TooltipProps, "children"> {
+export interface InfoToolTipProps {
   titleId: string;
   descriptionId: string;
+  placement?: TooltipProps["placement"];
+  isDisabled?: boolean;
 }
-const InfoToolTip = ({ titleId, descriptionId, ...rest }: InfoToolTipProps) => {
+const InfoToolTip = ({
+  titleId,
+  descriptionId,
+  placement = "right",
+  isDisabled,
+}: InfoToolTipProps) => {
   const { appNameFull } = useDeployment();
   return (
     <ClickableTooltip
       titleId={titleId}
       hasArrow
-      placement="right"
-      {...rest}
+      placement={placement}
+      isDisabled={isDisabled}
       label={
-        <VStack textAlign="left" alignContent="left" alignItems="left" m={3}>
+        <VStack textAlign="left" alignItems="flex-start" m={3}>
           <Text fontWeight="bold">
             <FormattedMessage id={titleId} />
           </Text>
@@ -32,7 +39,10 @@ const InfoToolTip = ({ titleId, descriptionId, ...rest }: InfoToolTipProps) => {
         </VStack>
       }
     >
-      <Icon opacity={0.7} h={5} w={5} as={RiInformationLine} />
+      <Icon
+        as={RiInformationLine}
+        css={{ opacity: 0.7, width: 5, height: 5 }}
+      />
     </ClickableTooltip>
   );
 };

@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useBreakpointValue } from "@chakra-ui/react";
 import { isNativePlatform } from "./platform";
+import { useBreakpointValue } from "@microbit/ui";
 
 /**
  * On native platforms, use the tablet breakpoint even when the viewport is

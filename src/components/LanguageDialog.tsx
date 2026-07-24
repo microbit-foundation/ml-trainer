@@ -3,56 +3,49 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  BoxProps,
-  Button,
-  HStack,
-  Icon,
-  Link,
-  List,
-  ListItem,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  SimpleGrid,
-  Stack,
-  Text,
-  Tooltip,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback } from "react";
 import {
   RiCheckboxBlankLine,
   RiCheckboxLine,
   RiErrorWarningLine,
-  RiExternalLinkLine,
 } from "react-icons/ri";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { deployment, useDeployment } from "../deployment";
+import ExternalLink from "./ExternalLink";
 import { flags } from "../flags";
 import { isNativePlatform } from "../platform";
 import { allLanguages, Language, nativeLanguageIds } from "../settings";
+import {
+  Box,
+  Button,
+  Grid,
+  HStack,
+  Icon,
+  List,
+  ListItem,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Stack,
+  SystemStyleObject,
+  Text,
+  Tooltip,
+  useToast,
+  VStack,
+} from "@microbit/ui";
 import { useStore } from "../store";
 import ModalFooterContent from "./ModalFooterContent";
 
 interface LanguageDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
 /**
  * Language setting dialog.
  */
-export const LanguageDialog = ({
-  isOpen,
-  onClose,
-  finalFocusRef,
-}: LanguageDialogProps) => {
+export const LanguageDialog = ({ isOpen, onClose }: LanguageDialogProps) => {
   const setLanguage = useStore((s) => s.setLanguage);
   const handleChooseLanguage = useCallback(
     async (languageId: string) => {
@@ -66,82 +59,68 @@ export const LanguageDialog = ({
     (l) => !fullySupported(l)
   );
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      size={{ base: "full", md: "4xl" }}
-      scrollBehavior="outside"
-      finalFocusRef={finalFocusRef}
-      preserveScrollBarGap={false}
-    >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader fontSize="lg" fontWeight="bold">
-            <FormattedMessage id="language" />
-          </ModalHeader>
-          <ModalBody>
-            <VStack spacing={3} width="100%">
-              <Text
-                as="h2"
-                fontSize="md"
-                fontWeight="bold"
-                textAlign="left"
-                width="100%"
-              >
-                <FormattedMessage id="language-fully-supported-heading" />
-              </Text>
-              <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
-                {fullySupportedLanguages.map((language) => (
-                  <LanguageCard
-                    key={language.id}
-                    language={language}
-                    onChooseLanguage={handleChooseLanguage}
-                  />
-                ))}
-              </SimpleGrid>
-              <Text
-                marginTop="1em"
-                as="h2"
-                fontSize="md"
-                fontWeight="bold"
-                textAlign="left"
-                width="100%"
-              >
-                <FormattedMessage id="language-partially-supported-heading" />
-              </Text>
-              <SimpleGrid width="100%" columns={[1, 2, 3]} spacing={4}>
-                {partiallySupportedLanguages.map((language) => (
-                  <LanguageCard
-                    key={language.id}
-                    language={language}
-                    onChooseLanguage={handleChooseLanguage}
-                  />
-                ))}
-              </SimpleGrid>
-            </VStack>
-          </ModalBody>
-          <ModalFooter>
-            <ModalFooterContent
-              leftContent={
-                <Link
-                  pl={1}
-                  href={deployment.translationLink}
-                  target="_blank"
-                  rel="noopener"
-                  color="brand.500"
-                >
-                  <FormattedMessage id="help-translate" />{" "}
-                  <Icon as={RiExternalLinkLine} />
-                </Link>
-              }
-            >
-              <Button variant="primary" onClick={onClose}>
-                <FormattedMessage id="close-action" />
-              </Button>
-            </ModalFooterContent>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+    <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", md: "4xl" }}>
+      <ModalHeader css={{ fontSize: "lg", fontWeight: "bold" }}>
+        <FormattedMessage id="language" />
+      </ModalHeader>
+      <ModalBody>
+        <VStack gap={3} width="100%">
+          <Text
+            as="h2"
+            fontSize="md"
+            fontWeight="bold"
+            textAlign="left"
+            width="100%"
+          >
+            <FormattedMessage id="language-fully-supported-heading" />
+          </Text>
+          <Grid width="100%" columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
+            {fullySupportedLanguages.map((language) => (
+              <LanguageCard
+                key={language.id}
+                language={language}
+                onChooseLanguage={handleChooseLanguage}
+              />
+            ))}
+          </Grid>
+          <Text
+            marginTop="1em"
+            as="h2"
+            fontSize="md"
+            fontWeight="bold"
+            textAlign="left"
+            width="100%"
+          >
+            <FormattedMessage id="language-partially-supported-heading" />
+          </Text>
+          <Grid width="100%" columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
+            {partiallySupportedLanguages.map((language) => (
+              <LanguageCard
+                key={language.id}
+                language={language}
+                onChooseLanguage={handleChooseLanguage}
+              />
+            ))}
+          </Grid>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <ModalFooterContent
+          leftContent={
+            deployment.translationLink !== undefined && (
+              <ExternalLink
+                textId="help-translate"
+                href={deployment.translationLink}
+                size="md"
+              />
+            )
+          }
+        >
+          <Button variant="primary" onPress={onClose}>
+            <FormattedMessage id="close-action" />
+          </Button>
+        </ModalFooterContent>
+      </ModalFooter>
     </Modal>
   );
 };
@@ -153,56 +132,57 @@ interface LanguageCardProps {
 
 const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
   const intl = useIntl();
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const tooltipRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
-  const handleLanguageSelect = useCallback(
-    (e: React.MouseEvent) => {
-      if (e.target !== tooltipRef.current) {
-        onChooseLanguage(language.id);
-        if (!fullySupported(language)) {
-          toast({
-            title: intl.formatMessage({ id: "language-toast-title" }),
-            description: (
-              <SupportStatement language={language} intl={intl} mt={2} />
-            ),
-            status: "info",
-            duration: 5_000,
-            isClosable: true,
-            position: "top",
-            variant: "toast",
-          });
-        }
-      }
-    },
-    [intl, language, onChooseLanguage, toast]
-  );
-  const handleTooltipClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setTooltipOpen(true);
-  }, []);
+  const supported = fullySupported(language);
+  const handleSelect = useCallback(() => {
+    onChooseLanguage(language.id);
+    if (!fullySupported(language)) {
+      toast({
+        title: intl.formatMessage({ id: "language-toast-title" }),
+        description: <SupportStatement language={language} intl={intl} />,
+        status: "info",
+        duration: 5_000,
+        isClosable: true,
+      });
+    }
+  }, [intl, language, onChooseLanguage, toast]);
+
+  // The selection button covers the whole card; the visible content sits above
+  // it, and the warning tooltip trigger is a sibling. react-aria-components
+  // disallows nesting a focusable tooltip trigger inside a button, so we use
+  // this overlay pattern to keep the tooltip anchored on the warning icon.
   return (
-    <Button
-      py={4}
-      px={5}
-      variant="language"
-      alignItems="stretch"
-      borderRadius="xl"
-      onClick={handleLanguageSelect}
-      height="auto"
-      data-testid={language.id}
-    >
-      <VStack alignItems="flex-start" w="100%">
-        <Text fontSize="xl" fontWeight="semibold">
+    <Box position="relative" w="100%">
+      <Button
+        variant="language"
+        aria-label={language.name}
+        onPress={handleSelect}
+        data-testid={language.id}
+        css={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          borderRadius: "xl",
+        }}
+      />
+      <VStack
+        alignItems="flex-start"
+        w="100%"
+        css={{ position: "relative", pointerEvents: "none", py: 4, px: 5 }}
+      >
+        <Text fontSize="xl" fontWeight="semibold" color="languageText">
           {language.name}
         </Text>
         <HStack w="100%" justifyContent="space-between">
           <Text fontWeight="normal" fontSize="sm" color="gray.700">
             {language.enName}
           </Text>
-          {!fullySupported(language) && (
+          {!supported && (
             <Tooltip
-              p={3}
+              hasArrow
+              placement="top"
+              css={{ px: 3, py: 3 }}
               label={
                 <Stack>
                   <Text fontWeight="bold">
@@ -211,24 +191,35 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
                   <SupportStatement language={language} intl={intl} />
                 </Stack>
               }
-              hasArrow
-              placement="top-start"
-              isOpen={tooltipOpen}
-              ref={tooltipRef}
             >
-              <Text
-                as="span"
-                onMouseEnter={() => setTooltipOpen(true)}
-                onMouseLeave={() => setTooltipOpen(false)}
-                onClick={handleTooltipClick}
+              <Button
+                variant="unstyled"
+                aria-label={intl.formatMessage({ id: "language-toast-title" })}
+                css={{
+                  pointerEvents: "auto",
+                  color: "gray.400",
+                  cursor: "default",
+                  // Shrink tightly to the icon: fixes partial-card height (the
+                  // default md size would force h10) and makes the focus ring an
+                  // even square around the glyph rather than a tall rectangle.
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  lineHeight: "1",
+                  height: "auto",
+                  minHeight: "0",
+                  minWidth: "0",
+                  padding: "0",
+                  borderRadius: "base",
+                }}
               >
-                <RiErrorWarningLine fill="#A0AEC0" />
-              </Text>
+                <Icon as={RiErrorWarningLine} />
+              </Button>
             </Tooltip>
           )}
         </HStack>
       </VStack>
-    </Button>
+    </Box>
   );
 };
 
@@ -246,19 +237,16 @@ const fullySupported = (language: Language): boolean => {
   return uiSupported(language) === true && language.makeCode;
 };
 
-interface SupportStatementProps extends BoxProps {
+interface SupportStatementProps {
   language: Language;
   intl: IntlShape;
+  css?: SystemStyleObject;
 }
 
-const SupportStatement = ({
-  language,
-  intl,
-  ...rest
-}: SupportStatementProps) => {
+const SupportStatement = ({ language, intl, css }: SupportStatementProps) => {
   const { appNameFull } = useDeployment();
   return (
-    <Text {...rest}>
+    <Text css={css}>
       <Text as="div" pb={1}>
         {intl.formatMessage({ id: "language-supported-for" })}
       </Text>
@@ -286,8 +274,7 @@ const SupportedListItem = ({
   return (
     <ListItem>
       <Icon
-        fontSize="1.2em"
-        verticalAlign="middle"
+        css={{ fontSize: "1.2em", verticalAlign: "middle" }}
         as={supported ? RiCheckboxLine : RiCheckboxBlankLine}
         aria-label={intl.formatMessage({
           id: supported

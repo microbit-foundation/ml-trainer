@@ -4,10 +4,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { PlacementWithLogical, ThemingProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import type * as tf from "@tensorflow/tfjs";
 import { SpotlightStyle } from "./pages/TourOverlay";
+import { ModalSize } from "@microbit/ui";
 import { MakeCodeIcon } from "./utils/icons";
 
 /**
@@ -170,8 +170,10 @@ export interface TourStep {
   title: ReactNode;
   content: ReactNode;
   spotlightStyle?: SpotlightStyle;
-  modalSize?: ThemingProps<"Modal">["size"];
-  placement?: PlacementWithLogical;
+  /** Only used for steps without a selector (rendered as a centred modal). */
+  modalSize?: ModalSize;
+  /** Popover placement relative to the spotlighted element. */
+  placement?: "top" | "bottom" | "left" | "right";
 }
 
 export interface TourState {

@@ -5,6 +5,7 @@
  */
 import { expect, type Page } from "@playwright/test";
 import { DownloadDialogs } from "./download-dialogs";
+import { appUrl } from "./shared";
 
 export class MakeCodeEditor {
   constructor(public readonly page: Page) {}
@@ -14,9 +15,7 @@ export class MakeCodeEditor {
   }
 
   expectUrl() {
-    const url = `http://localhost:5173${
-      process.env.CI ? process.env.BASE_URL : "/"
-    }code`;
+    const url = `${appUrl()}code`;
     expect(this.page.url()).toEqual(url);
   }
 

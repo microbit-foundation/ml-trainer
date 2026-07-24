@@ -3619,6 +3619,30 @@
       "value": "幾秒前"
     }
   ],
+  "toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
+    }
+  ],
   "tour-action": [
     {
       "type": 0,
@@ -3935,6 +3959,36 @@
     {
       "type": 0,
       "value": "重試一次"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "關閉"
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
     }
   ],
   "unknown": [

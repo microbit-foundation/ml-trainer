@@ -1959,6 +1959,22 @@
     "defaultMessage": "몇 초 전",
     "description": "The last edit time of a project"
   },
+  "toast-status-error": {
+    "defaultMessage": "Error",
+    "description": "Announced by screen readers before an error notification"
+  },
+  "toast-status-info": {
+    "defaultMessage": "Information",
+    "description": "Announced by screen readers before an informational notification"
+  },
+  "toast-status-success": {
+    "defaultMessage": "Success",
+    "description": "Announced by screen readers before a success notification"
+  },
+  "toast-status-warning": {
+    "defaultMessage": "Warning",
+    "description": "Announced by screen readers before a warning notification"
+  },
   "tour-action": {
     "defaultMessage": "투어",
     "description": "Button label that starts a tour of the app's features"

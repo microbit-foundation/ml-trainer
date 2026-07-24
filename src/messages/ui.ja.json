@@ -3547,6 +3547,30 @@
       "value": "数秒前"
     }
   ],
+  "toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
+    }
+  ],
   "tour-action": [
     {
       "type": 0,
@@ -3863,6 +3887,36 @@
     {
       "type": 0,
       "value": "もう一度やり直す"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "閉じる"
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
     }
   ],
   "unknown": [

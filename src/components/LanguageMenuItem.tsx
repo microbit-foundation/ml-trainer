@@ -3,17 +3,22 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, MenuItem } from "@chakra-ui/react";
 import { IoMdGlobe } from "react-icons/io";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Icon, MenuItem } from "@microbit/ui";
 
 interface LanguageMenuItemProps {
   onOpen: () => void;
 }
 
 const LanguageMenuItem = ({ onOpen }: LanguageMenuItemProps) => {
+  const intl = useIntl();
   return (
-    <MenuItem icon={<Icon h={5} w={5} as={IoMdGlobe} />} onClick={onOpen}>
+    <MenuItem
+      icon={<Icon as={IoMdGlobe} css={{ h: 5, w: 5 }} />}
+      onAction={onOpen}
+      textValue={intl.formatMessage({ id: "language" })}
+    >
       <FormattedMessage id="language" />
     </MenuItem>
   );

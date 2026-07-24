@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { BoxProps, Text, useToken, VisuallyHidden } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef } from "react";
-import { useStore } from "../store";
 import { useIntl } from "react-intl";
+import { Text, token, VisuallyHidden } from "@microbit/ui";
+import { useStore } from "../store";
 
-interface PercentageDisplayProps extends BoxProps {
+interface PercentageDisplayProps {
   actionId: string;
   actionName: string;
 }
@@ -16,16 +16,13 @@ interface PercentageDisplayProps extends BoxProps {
 const PercentageDisplay = ({
   actionId,
   actionName,
-  ...rest
 }: PercentageDisplayProps) => {
   const intl = useIntl();
 
   const textRef = useRef<HTMLParagraphElement>(null);
   const accessibleTextRef = useRef<HTMLParagraphElement>(null);
-  const [triggeredColor, defaultColor] = useToken("colors", [
-    "brand2.500",
-    "gray.600",
-  ]);
+  const triggeredColor = token("colors.brand2.500");
+  const defaultColor = token("colors.gray.600");
 
   const getAriaLabel = useCallback(
     (currentConfidence: string) =>
@@ -70,14 +67,13 @@ const PercentageDisplay = ({
       </VisuallyHidden>
       <Text
         ref={textRef}
-        bgColor="gray.600"
+        bg="gray.600"
         color="white"
         rounded="md"
         textAlign="center"
         fontSize="xl"
         w="60px"
         aria-hidden={true}
-        {...rest}
       >
         0%
       </Text>

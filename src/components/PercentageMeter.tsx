@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, StackProps, useToken } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
+import { HStack, token } from "@microbit/ui";
 import { useStore } from "../store";
 
-interface PercentageMeterProps extends StackProps {
+interface PercentageMeterProps {
   actionId: string;
   meterBarWidthPx: number;
 }
@@ -16,14 +16,11 @@ const PercentageMeter = ({
   actionId,
   meterBarWidthPx,
 }: PercentageMeterProps) => {
-  const height = 3;
   const numTicks = 9;
 
   const meterRef = useRef<HTMLDivElement>(null);
-  const [triggeredColor, defaultColor] = useToken("colors", [
-    "brand2.500",
-    "gray.600",
-  ]);
+  const triggeredColor = token("colors.brand2.500");
+  const defaultColor = token("colors.gray.600");
 
   useEffect(
     () =>
@@ -45,24 +42,19 @@ const PercentageMeter = ({
 
   return (
     <HStack
-      w={`${meterBarWidthPx}px`}
-      h={height}
+      h={3}
       rounded="full"
-      bgColor="gray.200"
+      bg="gray.200"
       overflow="hidden"
       position="relative"
+      // Prop-driven width; inline style (Panda can't extract computed values).
+      style={{ width: `${meterBarWidthPx}px` }}
     >
-      <HStack
-        ref={meterRef}
-        w={0}
-        h={height}
-        rounded="full"
-        bgColor="gray.600"
-      />
+      <HStack ref={meterRef} w={0} h={3} rounded="full" bg="gray.600" />
       <HStack
         display="inline-flex"
         w="full"
-        h={height}
+        h={3}
         position="absolute"
         justifyContent="space-between"
       >
@@ -74,9 +66,9 @@ const PercentageMeter = ({
             .map((_, i) => (
               <HStack
                 key={i}
-                bgColor={i === 0 || i === numTicks + 1 ? undefined : "white"}
+                bg={i === 0 || i === numTicks + 1 ? undefined : "white"}
                 w={0.5}
-                h={height}
+                h={3}
               />
             ))
         }

@@ -3,16 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
+import { Box } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
-
-const progressBar = keyframes({
-  "0%": { width: "10%" },
-  "90%": { width: "100%" },
-  "100%": { width: "100%" },
-});
 
 export interface ProgressBarRef {
   play(duration?: number): Promise<void>;
@@ -42,19 +35,21 @@ const ProgressBar = forwardRef<ProgressBarRef>(function ProgressBar(_, ref) {
     <Box
       height="0.75em"
       width="5em"
-      rounded="full"
+      borderRadius="full"
       background="gray.500"
       position="relative"
     >
       <Box
         position="absolute"
         height="100%"
-        rounded="full"
+        borderRadius="full"
         zIndex={1}
         background="brand2.500"
-        animation={withPlayState(
-          `${progressBar} ${durationInSecs}s ease-in-out forwards`
-        )}
+        style={{
+          animation: withPlayState(
+            `trainingProgress ${durationInSecs}s ease-in-out forwards`
+          ),
+        }}
         bottom={0}
         display="block"
         left={0}

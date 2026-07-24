@@ -8,44 +8,34 @@
  * Copyright (c) 2014, Luke Haas
  * SPDX-License-Identifier: MIT
  */
-import { Box, HStack } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
-
-const load7 = keyframes`
-  0%, 80%, 100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
-  }
-`;
-
-const dotStyles = {
-  borderRadius: "50%",
-  width: "25px",
-  height: "25px",
-  animationFillMode: "both",
-  animation: `${load7} 1.8s infinite ease-in-out`,
-};
+import { Box, HStack } from "@microbit/ui";
 
 const LoadingAnimation = () => {
   return (
     <HStack justifyContent="center" width="100%" h={25} position="relative">
       <Box
-        color="brand2.500"
-        fontSize="10px"
-        position="absolute"
-        top="-25px"
-        textIndent="-9999em"
-        transform="translateZ(0)"
-        sx={{
-          ...dotStyles,
+        css={{
+          color: "brand2.500",
+          fontSize: "10px",
+          position: "absolute",
+          top: "-25px",
+          textIndent: "-9999em",
+          transform: "translateZ(0)",
+          borderRadius: "50%",
+          width: "25px",
+          height: "25px",
+          animationFillMode: "both",
+          animation: "load7 1.8s infinite ease-in-out",
           animationDelay: "-0.16s",
           "&::before, &::after": {
             content: '""',
             position: "absolute",
             top: 0,
-            ...dotStyles,
+            borderRadius: "50%",
+            width: "25px",
+            height: "25px",
+            animationFillMode: "both",
+            animation: "load7 1.8s infinite ease-in-out",
           },
           "&::before": {
             left: "-3.5em",

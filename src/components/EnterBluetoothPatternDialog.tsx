@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Text, VisuallyHidden, VStack } from "@chakra-ui/react";
+import { Text, VisuallyHidden, VStack } from "@microbit/ui";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { blank } from "../bt-pattern-utils";
@@ -81,7 +81,7 @@ const EnterBluetoothPatternDialog = ({
             microbitName={value}
           />
           <VStack>
-            <Text textColor="red" opacity={showInvalid ? 1 : 0} aria-hidden>
+            <Text color="red" opacity={showInvalid ? 1 : 0} aria-hidden>
               <FormattedMessage id="connect-bluetooth-invalid-pattern" />
             </Text>
             <VisuallyHidden role="alert">

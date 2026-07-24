@@ -3,25 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  Card,
-  CardBody,
-  HStack,
-  Slider,
-  SliderFilledTrack,
-  SliderMark,
-  SliderThumb,
-  SliderTrack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { CardBody, cx, css, HStack, Slider, Text, VStack } from "@microbit/ui";
+import RowCard from "./RowCard";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";
 import PercentageMeter from "./PercentageMeter";
-
-const markClass = "CertaintyThresholdGridItem--mark";
 
 interface ActionCertaintyCardProps {
   requiredConfidence?: number;
@@ -47,32 +35,29 @@ const ActionCertaintyCard = ({
   );
   const sliderValue = requiredConfidence * 100;
   return (
-    <Card
-      py={2}
-      px={4}
-      h="120px"
-      display="flex"
-      flexDirection="row"
-      width="fit-content"
-      borderWidth={1}
-      borderColor="transparent"
-      className={tourElClassname.certaintyThreshold}
-      opacity={disabled ? 0.5 : undefined}
-      pointerEvents={disabled ? "none" : undefined}
+    <RowCard
+      css={{ px: 4, width: "fit-content" }}
+      className={cx(
+        tourElClassname.certaintyThreshold,
+        disabled ? css({ opacity: 0.5, pointerEvents: "none" }) : undefined
+      )}
     >
       <CardBody
-        display="flex"
-        flexDirection="column"
-        p={1}
-        gap={1}
-        justifyContent="center"
+        css={{
+          display: "flex",
+          flexDirection: "column",
+          px: 1,
+          py: 1,
+          gap: 1,
+          justifyContent: "center",
+        }}
       >
         <HStack w="100%" gap={5}>
           <PercentageMeter meterBarWidthPx={barWidth} actionId={actionId} />
           <PercentageDisplay actionName={actionName} actionId={actionId} />
         </HStack>
-        <VStack alignItems="left" gap={1}>
-          <Text fontSize="sm" textColor="gray.600">
+        <VStack alignItems="flex-start" gap={1}>
+          <Text fontSize="sm" color="gray.600">
             <FormattedMessage id="recognition-point-label" />
           </Text>
           <Slider
@@ -80,38 +65,41 @@ const ActionCertaintyCard = ({
             aria-label={intl.formatMessage({
               id: "recognition-point-label",
             })}
-            _focusWithin={{
-              [`.${markClass}`]: {
-                display: "block",
-              },
-            }}
             value={sliderValue}
-            w={`${barWidth}px`}
-          >
-            <SliderMark
-              display="none" // Overriden by the class on hover
-              className={markClass}
-              bg="gray.600"
-              borderRadius="sm"
-              color="white"
-              fontSize="xs"
-              ml={-2}
-              mt={-9}
-              padding="2px 4px"
-              textAlign="center"
-              value={sliderValue}
-              zIndex={2}
-            >
-              {sliderValue.toFixed(0)}%
-            </SliderMark>
-            <SliderTrack h="8px" rounded="full">
-              <SliderFilledTrack bg="gray.600" />
-            </SliderTrack>
-            <SliderThumb bg="gray.600" />
-          </Slider>
+            isDisabled={disabled}
+            // Announce the value with its unit, matching the visible mark.
+            formatOptions={{
+              style: "unit",
+              unit: "percent",
+              maximumFractionDigits: 0,
+            }}
+            // The card already conveys the disabled state (dimmed with
+            // pointer-events off), so suppress the recipe's disabled
+            // restyle rather than stacking the two.
+            css={{ w: "240px", "&[data-disabled]": { opacity: 1 } }}
+            trackCss={{
+              h: "8px",
+              rounded: "full",
+              "[data-disabled] &": { bg: "gray.200" },
+            }}
+            filledTrackCss={{ bg: "gray.600" }}
+            thumbCss={{ bg: "gray.600" }}
+            mark={`${sliderValue.toFixed(0)}%`}
+            markCss={{
+              bg: "gray.600",
+              borderRadius: "sm",
+              color: "white",
+              fontSize: "xs",
+              ml: -2,
+              mt: -9,
+              padding: "2px 4px",
+              textAlign: "center",
+              zIndex: 2,
+            }}
+          />
         </VStack>
       </CardBody>
-    </Card>
+    </RowCard>
   );
 };
 

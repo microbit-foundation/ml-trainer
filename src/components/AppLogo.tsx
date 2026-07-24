@@ -3,14 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Divider, HStack, StackProps } from "@chakra-ui/react";
+import { css, HStack, SystemStyleObject } from "@microbit/ui";
 import { useDeployment } from "../deployment";
 
-interface AppLogoProps extends StackProps {
+interface AppLogoProps {
+  /** Divider tint. */
   color?: string;
+  /** Per-instance style overrides (transform etc.), merged last. */
+  css?: SystemStyleObject;
 }
 
-const AppLogo = ({ color = "#FFF", ...props }: AppLogoProps) => {
+const AppLogo = ({ color = "#FFF", css: cssProp }: AppLogoProps) => {
   const { AppLogo, OrgLogo } = useDeployment();
   return (
     <HStack
@@ -19,17 +22,21 @@ const AppLogo = ({ color = "#FFF", ...props }: AppLogoProps) => {
       transform="scale(0.93)"
       transformOrigin="left"
       color="white"
-      {...props}
+      css={cssProp}
     >
       {OrgLogo && (
         <>
           <OrgLogo />
-          <Divider
+          {/* Chakra's vertical Divider with borderWidth 1px (so ~2px wide). */}
+          <div
             aria-hidden
-            borderColor={color}
-            orientation="vertical"
-            h="33px"
-            borderWidth="1px"
+            className={css({
+              borderWidth: "1px",
+              borderStyle: "solid",
+              opacity: 0.6,
+              height: "33px",
+            })}
+            style={{ borderColor: color }}
           />
         </>
       )}

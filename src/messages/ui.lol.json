@@ -3481,6 +3481,30 @@
       "value": "crwdns369413:0crwdne369413:0"
     }
   ],
+  "toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
+    }
+  ],
   "tour-action": [
     {
       "type": 0,
@@ -3753,6 +3777,36 @@
     {
       "type": 0,
       "value": "crwdns363448:0crwdne363448:0"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "crwdns362700:0crwdne362700:0"
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
     }
   ],
   "unknown": [

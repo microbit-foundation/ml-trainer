@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Stack, VisuallyHidden } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
+import { Stack, token, VisuallyHidden } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { BluetoothPairingMethod } from "../../data-connection-flow/data-connection-types";
 import { useAnimation } from "../AnimationProvider";
@@ -81,8 +81,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   return (
     <>
       <VisuallyHidden>
-        <Box
-          as="img"
+        <img
           alt={intl.formatMessage({ id: "animation-bluetooth-mode-label" })}
         />
       </VisuallyHidden>
@@ -95,26 +94,29 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         }}
         justifyContent="center"
         gap={{ base: 10, md: "1rem" }}
-        alignItems={isTripleReset ? "center" : { base: "center", md: "end" }}
+        alignItems={{ base: "center", md: isTripleReset ? "center" : "end" }}
         minH={{ base: "auto", md: "200px" }}
         userSelect="none"
       >
         {isTripleReset ? (
           <MicrobitBoardFront
-            boxSize={{ base: "50%", md: "25%" }}
+            css={{
+              width: { base: "50%", md: "25%" },
+              height: { base: "50%", md: "25%" },
+            }}
             ref={microbitBoardFrontRef}
           />
         ) : (
           <ABLabelledMicrobitBoard
-            activeColor="brand2.500"
+            activeColor={token("colors.brand2.500")}
             ref={microbitABBoardFrontRef}
-            w={{ base: "50%", md: "25%" }}
+            css={{ width: { base: "50%", md: "25%" } }}
           />
         )}
         <ResetPressedMicrobitBoard
-          activeColor="brand2.500"
+          activeColor={token("colors.brand2.500")}
           ref={microbitBoardBackRef}
-          w={{ base: "50%", md: "25%" }}
+          css={{ width: { base: "50%", md: "25%" } }}
         />
       </Stack>
     </>

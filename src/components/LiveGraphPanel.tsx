@@ -4,17 +4,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  BoxProps,
-  Button,
-  HStack,
-  Icon,
-  Image,
-  Portal,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { useCallback, useRef } from "react";
+import { useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   DataConnectionStep,
@@ -26,6 +17,7 @@ import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { useLogging } from "../logging/logging-hooks";
 import { dataConnectionTypeToAnalyticsTransport } from "../logging/step-tracking";
 import { TrainModelDialogStage } from "../model";
+import { Button, css, cx, HStack, Image, Text, VStack } from "@microbit/ui";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import AlertIcon from "./AlertIcon";
@@ -55,7 +47,8 @@ const LiveGraphPanel = ({
   );
   const isConnected = dataConnection.step === DataConnectionStep.Connected;
   const isReconnecting = dataConnection.isReconnecting;
-  const parentPortalRef = useRef(null);
+  // State, not a ref: the portal target must trigger a re-render once mounted.
+  const [portalTarget, setPortalTarget] = useState<HTMLDivElement | null>(null);
   const logging = useLogging();
 
   // Show disconnected state when not connected, not reconnecting, and don't distract from dialogs.
@@ -89,9 +82,9 @@ const LiveGraphPanel = ({
       role="region"
       aria-label={intl.formatMessage({ id: "data-connection-region" })}
       position="relative"
-      h={160}
+      h="160px"
       width="100%"
-      bgColor="white"
+      bg="white"
       className={tourElClassname.liveGraph}
     >
       {isDisconnected && showDisconnectedOverlay && (
@@ -106,7 +99,7 @@ const LiveGraphPanel = ({
           bg={{ base: "white", md: "unset" }}
         >
           <MicrobitWarningIllustration
-            display={{ base: "none", sm: "block" }}
+            className={css({ display: { base: "none", sm: "block" } })}
           />
           <VStack gap={3} alignItems="self-start">
             <Text fontWeight="bold">
@@ -117,7 +110,7 @@ const LiveGraphPanel = ({
             </Text>
             <Button
               variant="primary"
-              onClick={handleConnectOrReconnect}
+              onPress={handleConnectOrReconnect}
               aria-label={intl.formatMessage({ id: "connect-action-aria" })}
             >
               <FormattedMessage id="connect-action" />
@@ -126,52 +119,57 @@ const LiveGraphPanel = ({
         </HStack>
       )}
       <HStack
-        ref={parentPortalRef}
-        pointerEvents={isDisconnected ? "none" : undefined}
-        opacity={isDisconnected ? 0.2 : undefined}
+        ref={setPortalTarget}
+        className={cx(
+          isDisconnected
+            ? css({ pointerEvents: "none", opacity: 0.2 })
+            : undefined
+        )}
       >
-        <Portal containerRef={parentPortalRef}>
-          <HStack
-            position="absolute"
-            top={0}
-            left={0}
-            right={0}
-            px={5}
-            py={2.5}
-            w={`calc(100% - ${
-              showPredictedAction ? `${predictedActionDisplayWidth}px` : "0"
-            })`}
-          >
-            <HStack gap={4}>
-              <HStack gap={2}>
-                <Text fontWeight="bold">
-                  <FormattedMessage id="live-data-graph" />
-                </Text>
-                <InfoToolTip
-                  titleId="live-graph"
-                  descriptionId="live-graph-tooltip"
-                  isDisabled={isDisconnected}
-                />
+        {portalTarget &&
+          createPortal(
+            <HStack
+              position="absolute"
+              top={0}
+              left={0}
+              right={0}
+              px={5}
+              py={2.5}
+              w={`calc(100% - ${
+                showPredictedAction ? `${predictedActionDisplayWidth}px` : "0"
+              })`}
+            >
+              <HStack gap={4}>
+                <HStack gap={2}>
+                  <Text fontWeight="bold">
+                    <FormattedMessage id="live-data-graph" />
+                  </Text>
+                  <InfoToolTip
+                    titleId="live-graph"
+                    descriptionId="live-graph-tooltip"
+                    isDisabled={isDisconnected}
+                  />
+                </HStack>
+                {isConnected && (
+                  <Button
+                    variant="secondary"
+                    size="xs"
+                    onPress={handleDisconnect}
+                    css={{ backgroundColor: "white" }}
+                  >
+                    <FormattedMessage id="disconnect-action" />
+                  </Button>
+                )}
+                {isReconnecting && (
+                  <Text bg="white" fontWeight="bold">
+                    <FormattedMessage id="reconnecting" />
+                  </Text>
+                )}
               </HStack>
-              {isConnected && (
-                <Button
-                  backgroundColor="white"
-                  variant="secondary"
-                  size="xs"
-                  onClick={handleDisconnect}
-                >
-                  <FormattedMessage id="disconnect-action" />
-                </Button>
-              )}
-              {isReconnecting && (
-                <Text bg="white" fontWeight="bold">
-                  <FormattedMessage id="reconnecting" />
-                </Text>
-              )}
-            </HStack>
-          </HStack>
-        </Portal>
-        <HStack position="absolute" width="100%" height="100%" spacing={0}>
+            </HStack>,
+            portalTarget
+          )}
+        <HStack position="absolute" width="100%" height="100%" gap={0}>
           <LiveGraph paused={isTraining} />
           {showPredictedAction && <PredictedAction />}
         </HStack>
@@ -180,16 +178,17 @@ const LiveGraphPanel = ({
   );
 };
 
-const MicrobitWarningIllustration = (props: BoxProps) => (
-  <HStack position="relative" aria-hidden {...props}>
+const MicrobitWarningIllustration = ({ className }: { className?: string }) => (
+  <HStack position="relative" aria-hidden className={className}>
     <Image src={microbitImage} objectFit="contain" boxSize="120px" bottom={0} />
-    <Icon
-      as={AlertIcon}
-      position="absolute"
-      top={-1}
-      fill="#ffde21"
-      right={-5}
-      boxSize="55px"
+    <AlertIcon
+      className={css({
+        position: "absolute",
+        top: -1,
+        right: -5,
+        boxSize: "55px",
+        fill: "#ffde21",
+      })}
     />
   </HStack>
 );

@@ -3,26 +3,19 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { useCallback, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
-  AspectRatio,
+  Box,
   Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  HStack,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Switch,
   Text,
-  useDisclosure,
   VStack,
-} from "@chakra-ui/react";
-import { useCallback, useMemo, useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from "@microbit/ui";
 import { useDeployment } from "../deployment";
 import { isNativePlatform } from "../platform";
 import {
@@ -43,6 +36,8 @@ interface SettingsDialogProps {
   finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
+const helperTextCss = { mt: 2, fontSize: "sm", color: "gray.600" } as const;
+
 export const SettingsDialog = ({
   isOpen,
   onClose,
@@ -55,14 +50,13 @@ export const SettingsDialog = ({
   // active surface; the web build defers to the shared-assets cookie
   // modal accessed via the nav-drawer "Manage cookies" link.
   const showAnalyticsToggle = isNativePlatform();
-  // Focus the heading rather than the first form control on open. Otherwise
-  // the graph colour scheme <select> takes focus and on mobile that opens its
-  // picker as soon as the dialog appears.
-  const initialFocusRef = useRef<HTMLHeadingElement>(null);
-  const resetConfirmDialog = useDisclosure();
+  // Unlike Chakra, react-aria focuses the dialog itself on open (not the
+  // first form control), so no initial-focus hack is needed to stop the
+  // first <select> opening its picker on mobile.
+  const [isResetConfirmOpen, setResetConfirmOpen] = useState(false);
   const handleResetToDefault = useCallback(() => {
-    resetConfirmDialog.onOpen();
-  }, [resetConfirmDialog]);
+    setResetConfirmOpen(true);
+  }, []);
 
   const confirmResetToDefault = useCallback(() => {
     setSettings({
@@ -73,9 +67,8 @@ export const SettingsDialog = ({
       // "Restore defaults" so users aren't re-prompted unexpectedly.
       analyticsConsent: settings.analyticsConsent,
     });
-    resetConfirmDialog.onClose();
+    setResetConfirmOpen(false);
   }, [
-    resetConfirmDialog,
     setSettings,
     settings.analyticsConsent,
     settings.languageId,
@@ -110,130 +103,121 @@ export const SettingsDialog = ({
         body={intl.formatMessage({
           id: "restore-defaults-confirm-body",
         })}
-        isOpen={resetConfirmDialog.isOpen}
+        isOpen={isResetConfirmOpen}
         onConfirm={confirmResetToDefault}
         confirmText={intl.formatMessage({
           id: "restore-defaults-confirm-action",
         })}
-        onCancel={resetConfirmDialog.onClose}
+        onCancel={() => setResetConfirmOpen(false)}
       />
       <Modal
         isOpen={isOpen}
         onClose={onClose}
         size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
-        initialFocusRef={initialFocusRef}
-        preserveScrollBarGap={false}
       >
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader
-              ref={initialFocusRef}
-              tabIndex={-1}
-              _focus={{ outline: "none", boxShadow: "none" }}
-              fontSize="lg"
-              fontWeight="bold"
-            >
-              <FormattedMessage id="settings" />
-            </ModalHeader>
-            <ModalBody>
-              <VStack alignItems="flex-start" spacing={5}>
-                <SelectFormControl
-                  id="graphLineColors"
-                  label={intl.formatMessage({ id: "graph-color-scheme" })}
-                  options={options.graphColorScheme}
-                  value={settings.graphColorScheme}
-                  onChange={(graphColorScheme) =>
-                    setSettings({
-                      ...settings,
-                      graphColorScheme,
-                    })
-                  }
+        <ModalHeader css={{ fontSize: "lg", fontWeight: "bold" }}>
+          <FormattedMessage id="settings" />
+        </ModalHeader>
+        <ModalBody>
+          <VStack alignItems="flex-start" gap={5}>
+            <SelectFormControl
+              id="graphLineColors"
+              label={intl.formatMessage({ id: "graph-color-scheme" })}
+              options={options.graphColorScheme}
+              value={settings.graphColorScheme}
+              onChange={(graphColorScheme) =>
+                setSettings({
+                  ...settings,
+                  graphColorScheme,
+                })
+              }
+            />
+            <SelectFormControl
+              id="graphLineScheme"
+              label={intl.formatMessage({ id: "graph-line-scheme" })}
+              options={options.graphLineScheme}
+              value={settings.graphLineScheme}
+              onChange={(graphLineScheme) =>
+                setSettings({
+                  ...settings,
+                  graphLineScheme,
+                })
+              }
+            />
+            <SelectFormControl
+              id="graphLineWeight"
+              label={intl.formatMessage({ id: "graph-line-weight" })}
+              options={options.graphLineWeight}
+              value={settings.graphLineWeight}
+              onChange={(graphLineWeight) =>
+                setSettings({
+                  ...settings,
+                  graphLineWeight,
+                })
+              }
+            />
+            <VStack alignItems="flex-start" w="full">
+              <Text>
+                <FormattedMessage id="graph-preview" />
+              </Text>
+              {/* Native aspect-ratio rather than the AspectRatio pattern: the
+                  pattern's `&>*` child selector loses to the (still-Chakra)
+                  RecordingGraph's own position style, leaving its padding
+                  spacer above an in-flow child. */}
+              <Box w="full" css={{ aspectRatio: "526 / 92" }}>
+                <RecordingGraph
+                  responsive
+                  data={previewGraphData}
+                  role="img"
+                  w="full"
+                  aria-label={intl.formatMessage({
+                    id: "recording-graph-label",
+                  })}
                 />
-                <SelectFormControl
-                  id="graphLineScheme"
-                  label={intl.formatMessage({ id: "graph-line-scheme" })}
-                  options={options.graphLineScheme}
-                  value={settings.graphLineScheme}
-                  onChange={(graphLineScheme) =>
+              </Box>
+            </VStack>
+            {showAnalyticsToggle && (
+              <Box w="full">
+                <Switch
+                  isSelected={settings.analyticsConsent === "granted"}
+                  onChange={(granted) => {
                     setSettings({
-                      ...settings,
-                      graphLineScheme,
-                    })
-                  }
-                />
-                <SelectFormControl
-                  id="graphLineWeight"
-                  label={intl.formatMessage({ id: "graph-line-weight" })}
-                  options={options.graphLineWeight}
-                  value={settings.graphLineWeight}
-                  onChange={(graphLineWeight) =>
-                    setSettings({
-                      ...settings,
-                      graphLineWeight,
-                    })
-                  }
-                />
-                <VStack alignItems="flex-start" w="full">
-                  <Text>
-                    <FormattedMessage id="graph-preview" />
-                  </Text>
-                  <AspectRatio ratio={526 / 92} w="full">
-                    <RecordingGraph
-                      responsive
-                      data={previewGraphData}
-                      role="img"
-                      w="full"
-                      aria-label={intl.formatMessage({
-                        id: "recording-graph-label",
-                      })}
-                    />
-                  </AspectRatio>
-                </VStack>
-                {showAnalyticsToggle && (
-                  <FormControl>
-                    <HStack justify="space-between" align="center">
-                      <FormLabel
-                        htmlFor="analyticsConsent"
-                        mb={0}
-                        fontWeight="normal"
-                      >
-                        <FormattedMessage id="analytics-consent-setting-label" />
-                      </FormLabel>
-                      <Switch
-                        id="analyticsConsent"
-                        isChecked={settings.analyticsConsent === "granted"}
-                        onChange={(e) => {
-                          const granted = e.target.checked;
-                          setSettings({
-                            analyticsConsent: granted ? "granted" : "denied",
-                          });
-                          logging.setConsent(granted);
-                        }}
-                      />
-                    </HStack>
-                    <FormHelperText lineHeight="base">
-                      <FormattedMessage id="analytics-consent-setting-helper" />
-                    </FormHelperText>
-                  </FormControl>
-                )}
-                <FormControl>
-                  <Button variant="link" onClick={handleResetToDefault}>
-                    <FormattedMessage id="restore-defaults-action" />
-                  </Button>
-                  <FormHelperText>
-                    <FormattedMessage id="restore-defaults-helper" />
-                  </FormHelperText>
-                </FormControl>
-              </VStack>
-            </ModalBody>
-            <ModalFooter>
-              <Button variant="primary" onClick={onClose}>
-                <FormattedMessage id="close-action" />
+                      analyticsConsent: granted ? "granted" : "denied",
+                    });
+                    logging.setConsent(granted);
+                  }}
+                  // Label left, switch right (Chakra FormLabel + Switch row);
+                  // zero the label-after-track indent the recipe adds.
+                  css={{
+                    width: "100%",
+                    flexDirection: "row-reverse",
+                    justifyContent: "space-between",
+                    "& .switch__label": { marginStart: 0 },
+                  }}
+                >
+                  <FormattedMessage id="analytics-consent-setting-label" />
+                </Switch>
+                <Text css={{ ...helperTextCss, lineHeight: "base" }}>
+                  <FormattedMessage id="analytics-consent-setting-helper" />
+                </Text>
+              </Box>
+            )}
+            <Box w="full">
+              <Button variant="link" onPress={handleResetToDefault}>
+                <FormattedMessage id="restore-defaults-action" />
               </Button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
+              <Text css={helperTextCss}>
+                <FormattedMessage id="restore-defaults-helper" />
+              </Text>
+            </Box>
+          </VStack>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="primary" onPress={onClose}>
+            <FormattedMessage id="close-action" />
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

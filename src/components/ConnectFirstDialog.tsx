@@ -7,12 +7,10 @@ import {
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDataConnectionActions } from "../data-connection-flow";
@@ -43,37 +41,32 @@ const ConnectFirstDialog = ({
   });
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       size="md"
       isCentered
       onClose={handleClose}
       isOpen={isOpen}
       {...rest}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="microbit-not-connected" />
-          </ModalHeader>
-          <ModalBody>
-            <ModalCloseButton />
-            <Text>
-              <FormattedMessage id={explanationTextId} />
-            </Text>
-          </ModalBody>
-          <ModalFooter justifyContent="flex-end">
-            <ButtonWithLoading
-              variant="primary"
-              onClick={handleConnect}
-              isLoading={isConnecting}
-            >
-              <FormattedMessage id="connect-action" />
-            </ButtonWithLoading>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id="microbit-not-connected" />
+      </ModalHeader>
+      <ModalBody>
+        <ModalCloseButton />
+        <Text>
+          <FormattedMessage id={explanationTextId} />
+        </Text>
+      </ModalBody>
+      <ModalFooter>
+        <ButtonWithLoading
+          variant="primary"
+          onClick={handleConnect}
+          isLoading={isConnecting}
+        >
+          <FormattedMessage id="connect-action" />
+        </ButtonWithLoading>
+      </ModalFooter>
     </Modal>
   );
 };

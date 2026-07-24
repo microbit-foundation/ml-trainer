@@ -3,10 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { useCallback, useState, ReactNode } from "react";
+import { RiFileCopy2Line, RiGithubFill } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   AspectRatio,
   Box,
   Button,
+  css,
+  Grid,
   HStack,
   Icon,
   Image,
@@ -14,23 +19,11 @@ import {
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
-  ModalOverlay,
-  SimpleGrid,
-  Table,
-  TableCaption,
-  Tbody,
-  Td,
   Text,
-  Tr,
-  useClipboard,
   VisuallyHidden,
   VStack,
-} from "@chakra-ui/react";
-import { ReactNode } from "react";
-import { RiFileCopy2Line, RiGithubFill } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
+} from "@microbit/ui";
 import { useDeployment } from "../deployment";
 import aarhusLogo from "../images/aulogo_uk_var2_blue.png";
 import microbitHeartImage from "../images/microbit-heart.png";
@@ -58,7 +51,17 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
     .map((x) => `${x.name} ${x.value}`)
     .join("\n");
 
-  const { hasCopied, onCopy } = useClipboard(clipboardVersion);
+  const [hasCopied, setHasCopied] = useState(false);
+  const onCopy = useCallback(() => {
+    navigator.clipboard.writeText(clipboardVersion).then(
+      () => {
+        setHasCopied(true);
+        setTimeout(() => setHasCopied(false), 1500);
+      },
+      // E.g. permission denied; give no feedback, like Chakra's useClipboard.
+      () => {}
+    );
+  }, [clipboardVersion]);
   const intl = useIntl();
   return (
     <Modal
@@ -66,105 +69,118 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalBody>
-            <ModalCloseButton />
-            <VStack spacing={8} pl={5} pr={5} pt={5}>
-              <HStack justifyContent="center" gap={8}>
-                {OrgLogo && <OrgLogo fill="#000" color="black" height={55} />}
+      <ModalBody>
+        <ModalCloseButton />
+        <VStack gap={8} pl={5} pr={5} pt={5}>
+          <HStack justifyContent="center" gap={8}>
+            {OrgLogo && <OrgLogo color="black" h="55px" />}
+            <Image
+              src={aarhusLogo}
+              h="55px"
+              alt={intl.formatMessage({ id: "aarhus-university-alt" })}
+            />
+          </HStack>
+          <Text textAlign="center">
+            <FormattedMessage
+              id="about-dialog-title"
+              values={{
+                link: (chunks: ReactNode) => (
+                  <Link
+                    color="brand.600"
+                    textDecoration="underline"
+                    href="https://cctd.au.dk/"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {chunks}
+                  </Link>
+                ),
+              }}
+            />
+          </Text>
+          <Grid columns={{ base: 1, md: 2 }} gap={8}>
+            <Box>
+              <AspectRatio
+                ml="auto"
+                mr="auto"
+                ratio={690 / 562}
+                maxWidth="388px"
+              >
                 <Image
-                  src={aarhusLogo}
-                  h="55px"
-                  alt={intl.formatMessage({ id: "aarhus-university-alt" })}
+                  src={microbitHeartImage}
+                  alt={intl.formatMessage({ id: "about-dialog-alt" })}
                 />
-              </HStack>
-              <Text textAlign="center">
-                <FormattedMessage
-                  id="about-dialog-title"
-                  values={{
-                    link: (chunks: ReactNode) => (
-                      <Link
-                        color="brand.600"
-                        textDecoration="underline"
-                        href="https://cctd.au.dk/"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {chunks}
-                      </Link>
-                    ),
-                  }}
-                />
-              </Text>
-              <SimpleGrid columns={[1, 1, 2, 2]} spacing={8}>
-                <Box>
-                  <AspectRatio
-                    ml="auto"
-                    mr="auto"
-                    ratio={690 / 562}
-                    maxWidth={[388, 388, null, null]}
-                  >
-                    <Image
-                      src={microbitHeartImage}
-                      alt={intl.formatMessage({ id: "about-dialog-alt" })}
-                    />
-                  </AspectRatio>
-                </Box>
-                <VStack alignItems="center" justifyContent="center" spacing={4}>
-                  <Table size="sm" sx={{ fontVariantNumeric: "unset" }}>
-                    <Tbody>
-                      {versionInfo.map((v) => (
-                        <Tr key={v.name}>
-                          <Td>{v.name}</Td>
-                          <Td>{v.value}</Td>
-                          <Td padding={0}>
-                            {/* Move padding so we get a reasonable click target. */}
-                            <Link
-                              display="block"
-                              pl={4}
-                              pr={4}
-                              pt={2}
-                              pb={2}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href={v.href}
-                            >
-                              <Icon as={RiGithubFill} />
-                              <VisuallyHidden>GitHub</VisuallyHidden>
-                            </Link>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                    <TableCaption color="gray.800" placement="top">
-                      <FormattedMessage id="software-versions" />
-                    </TableCaption>
-                  </Table>
-                  <Button
-                    leftIcon={<RiFileCopy2Line />}
-                    onClick={onCopy}
-                    size="md"
-                  >
-                    <FormattedMessage
-                      id={hasCopied ? "copied" : "copy-action"}
-                    />
-                  </Button>
-                </VStack>
-              </SimpleGrid>
+              </AspectRatio>
+            </Box>
+            <VStack alignItems="center" justifyContent="center" gap={4}>
+              {/* One-off Chakra-style table (size sm); not worth a primitive
+                  for a single two-cell layout. */}
+              <table className={css({ borderCollapse: "collapse" })}>
+                <caption
+                  className={css({
+                    captionSide: "top",
+                    mt: 4,
+                    px: 4,
+                    py: 2,
+                    fontSize: "xs",
+                    fontFamily: "heading",
+                    fontWeight: "medium",
+                    textAlign: "center",
+                    color: "gray.800",
+                  })}
+                >
+                  <FormattedMessage id="software-versions" />
+                </caption>
+                <tbody>
+                  {versionInfo.map((v) => (
+                    <tr key={v.name}>
+                      <td className={css(aboutTableCell)}>{v.name}</td>
+                      <td className={css(aboutTableCell)}>{v.value}</td>
+                      <td className={css(aboutTableCell, { padding: 0 })}>
+                        {/* Move padding so we get a reasonable click target. */}
+                        <Link
+                          display="block"
+                          pl={4}
+                          pr={4}
+                          pt={2}
+                          pb={2}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={v.href}
+                        >
+                          <Icon as={RiGithubFill} />
+                          <VisuallyHidden>GitHub</VisuallyHidden>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <Button leftIcon={<RiFileCopy2Line />} onPress={onCopy} size="md">
+                <FormattedMessage id={hasCopied ? "copied" : "copy-action"} />
+              </Button>
             </VStack>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose} variant="primary" size="lg">
-              <FormattedMessage id="close-action" />
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+          </Grid>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <Button onPress={onClose} variant="primary" size="lg">
+          <FormattedMessage id="close-action" />
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };
+
+const aboutTableCell = {
+  px: 4,
+  py: 2,
+  fontSize: "sm",
+  lineHeight: 4,
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderColor: "gray.100",
+} as const;
 
 export default AboutDialog;

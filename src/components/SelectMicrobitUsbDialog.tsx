@@ -11,7 +11,7 @@ import {
   ListItem,
   Text,
   VisuallyHidden,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import selectMicrobitImage from "../images/select-microbit-web-usb.png";
 import ConnectContainerDialog, {
@@ -66,8 +66,10 @@ const SelectMicrobitUsbDialog = ({ ...props }: SelectMicrobitDialogProps) => {
           position="absolute"
           left="490px"
           top="68px"
+          display="flex"
+          flexDirection="column"
           alignItems="flex-start"
-          spacing={2}
+          gap={2}
         >
           <ListItem>
             <Flex alignItems="center" height="72px">

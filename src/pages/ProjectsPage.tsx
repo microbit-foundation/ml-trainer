@@ -1,15 +1,3 @@
-import {
-  Box,
-  Container,
-  Flex,
-  HStack,
-  SimpleGrid,
-  Slide,
-  Stack,
-  Text,
-  useBreakpointValue,
-  VStack,
-} from "@chakra-ui/react";
 import orderBy from "lodash.orderby";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -25,6 +13,19 @@ import Search from "../components/Search";
 import SortInput from "../components/SortInput";
 import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
+import {
+  Box,
+  css,
+  cx,
+  Flex,
+  Grid,
+  HStack,
+  Slide,
+  Stack,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from "@microbit/ui";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
@@ -308,7 +309,9 @@ const ProjectsPage = () => {
         backLabelId="home-action"
       >
         <VStack as="main" alignItems="center" flexGrow={1}>
-          <Container
+          <Box
+            w="100%"
+            mx="auto"
             maxW="1180px"
             alignItems="stretch"
             p={4}
@@ -322,8 +325,7 @@ const ProjectsPage = () => {
                 query={query}
                 onChange={handleQueryChange}
                 onClear={handleQueryClear}
-                maxW="30ch"
-                my="1px"
+                className={css({ maxW: "30ch", my: "1px" })}
               />
               {hasSelection && (
                 <Box
@@ -344,22 +346,29 @@ const ProjectsPage = () => {
                 </Box>
               )}
               <SortInput
-                display={
-                  hasSelection ? { base: "flex", lg: "none" } : undefined
-                }
+                className={cx(
+                  css({ marginLeft: "auto" }),
+                  hasSelection
+                    ? css({ display: { base: "flex", lg: "none" } })
+                    : undefined
+                )}
                 value={orderByField}
                 onSelectChange={handleOrderByFieldChange}
                 order={orderByDirection}
                 toggleOrder={toggleOrderByDirection}
-                marginLeft="auto"
                 hasSearchQuery={!!query}
               />
             </HStack>
             {processedProjects.length > 0 ? (
-              <SimpleGrid
+              <Grid
                 mt={3}
-                spacing={3}
-                columns={[1, 2, 3, 4]}
+                gap={3}
+                gridTemplateColumns={{
+                  base: "repeat(1, minmax(0, 1fr))",
+                  sm: "repeat(2, minmax(0, 1fr))",
+                  md: "repeat(3, minmax(0, 1fr))",
+                  lg: "repeat(4, minmax(0, 1fr))",
+                }}
                 pb={hasSelection ? { base: 16, lg: 0 } : 0}
               >
                 {processedProjects.map((projectData) => (
@@ -375,7 +384,7 @@ const ProjectsPage = () => {
                     onSkipToToolbar={handleSkipToToolbar}
                   />
                 ))}
-              </SimpleGrid>
+              </Grid>
             ) : (
               <Stack
                 justifyContent="center"
@@ -388,17 +397,17 @@ const ProjectsPage = () => {
                 </Text>
               </Stack>
             )}
-          </Container>
+          </Box>
         </VStack>
       </DefaultPageLayout>
-      <Slide direction="bottom" in={hasSelection} style={{ zIndex: 10 }}>
+      <Slide isOpen={hasSelection} css={{ zIndex: 10 }}>
         <Flex
           justifyContent="center"
           display={{ base: "flex", lg: "none" }}
           ref={mobileToolbarRef}
           bg="white"
-          shadow="0 -2px 8px rgba(0,0,0,0.1)"
-          borderTopWidth="1px"
+          boxShadow="0 -2px 8px rgba(0,0,0,0.1)"
+          borderTop="1px solid"
           borderColor="gray.200"
           py={2}
           px={4}
@@ -411,7 +420,6 @@ const ProjectsPage = () => {
             isAttached={false}
             iconOnly={mobileIconOnly}
             size="lg"
-            sx={{}}
           />
         </Flex>
       </Slide>

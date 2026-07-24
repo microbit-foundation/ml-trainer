@@ -4,15 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  ButtonGroup,
-  Flex,
-  HStack,
-  MenuItem,
-  MenuList,
-  Portal,
-  usePrevious,
-} from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,14 +15,23 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import Menu from "../components/Menu";
 import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
+import {
+  ButtonGroup,
+  Flex,
+  Icon,
+  MenuItem,
+  MenuList,
+  MenuTrigger,
+} from "@microbit/ui";
 import { useBoardVersion } from "../hooks/use-board-version";
+import { usePrevious } from "../hooks/use-previous";
 import { keyboardShortcuts, useShortcut } from "../keyboard-shortcut-hooks";
 import { projectSessionStorage } from "../session-storage";
+import PageActionBar from "../components/PageActionBar";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import {
@@ -138,53 +138,46 @@ const TestingModelPage = () => {
       backLabelId="back-to-data-samples-action"
       bottomContent={
         <>
-          <HStack
-            role="region"
+          <PageActionBar
             aria-label={intl.formatMessage({
               id: "testing-model-actions-region",
             })}
-            justifyContent="right"
-            px={5}
-            py={2}
-            w="full"
-            borderBottomWidth={3}
-            borderTopWidth={3}
-            borderColor="gray.200"
-            alignItems="center"
+            justify="right"
           >
-            <Menu>
-              <ButtonGroup isAttached>
-                <ButtonWithLoading
-                  ref={editButtonRef}
-                  variant="primary"
-                  onClick={maybeOpenEditor}
-                  className={tourElClassname.editInMakeCodeButton}
-                  isLoading={
-                    editorLoading && !isIncompatibleEditorDeviceDialogOpen
-                  }
-                >
-                  <FormattedMessage id="edit-in-makecode-action" />
-                </ButtonWithLoading>
+            <ButtonGroup isAttached>
+              <ButtonWithLoading
+                ref={editButtonRef}
+                variant="primary"
+                onClick={maybeOpenEditor}
+                className={tourElClassname.editInMakeCodeButton}
+                isLoading={
+                  editorLoading && !isIncompatibleEditorDeviceDialogOpen
+                }
+              >
+                <FormattedMessage id="edit-in-makecode-action" />
+              </ButtonWithLoading>
+              <MenuTrigger>
                 <MoreMenuButton
                   variant="primary"
                   aria-label={intl.formatMessage({
                     id: "more-edit-in-makecode-options",
                   })}
                 />
-                <Portal>
-                  <MenuList>
-                    <MenuItem
-                      icon={<RiDeleteBin2Line />}
-                      onClick={resetProject}
-                      isDisabled={!projectEdited}
-                    >
-                      <FormattedMessage id="reset-to-default-action" />
-                    </MenuItem>
-                  </MenuList>
-                </Portal>
-              </ButtonGroup>
-            </Menu>
-          </HStack>
+                <MenuList>
+                  <MenuItem
+                    icon={<Icon as={RiDeleteBin2Line} />}
+                    onAction={resetProject}
+                    isDisabled={!projectEdited}
+                    textValue={intl.formatMessage({
+                      id: "reset-to-default-action",
+                    })}
+                  >
+                    <FormattedMessage id="reset-to-default-action" />
+                  </MenuItem>
+                </MenuList>
+              </MenuTrigger>
+            </ButtonGroup>
+          </PageActionBar>
           <LiveGraphPanel
             showPredictedAction
             disconnectedTextId="connect-to-test-model"

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Text, VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@microbit/ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
 import { AnimationProvider } from "./AnimationProvider";

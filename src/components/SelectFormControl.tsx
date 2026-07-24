@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
 import { IntlShape } from "react-intl";
+import { css, Flex, NativeSelect } from "@microbit/ui";
 
 export interface SelectOptionValue<T> {
   value: T;
@@ -34,15 +34,14 @@ const SelectFormControl = <T extends string>({
   );
 
   return (
-    <FormControl display="flex" alignItems="center">
-      <FormLabel htmlFor={id} mb="0" fontWeight="normal" flex="1 1 auto">
+    <Flex alignItems="center" width="100%">
+      <label htmlFor={id} className={css({ flex: "1 1 auto" })}>
         {label}
-      </FormLabel>
-      <Select
+      </label>
+      <NativeSelect
         id={id}
-        variant="outline"
         onChange={handleChange}
-        width="28ch"
+        css={{ width: "28ch" }}
         value={value}
       >
         {options.map(({ value, label }) => (
@@ -50,8 +49,8 @@ const SelectFormControl = <T extends string>({
             {label}
           </option>
         ))}
-      </Select>
-    </FormControl>
+      </NativeSelect>
+    </Flex>
   );
 };
 

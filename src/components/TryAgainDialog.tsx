@@ -5,18 +5,15 @@
  */
 import {
   Button,
-  HStack,
   ListItem,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   UnorderedList,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { DataConnectionStep } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
@@ -113,38 +110,31 @@ const TryAgainDialog = ({
   const config = configs[type];
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "3xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id={config.headingId} />
-          </ModalHeader>
-          <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <VStack gap={5} textAlign="left" w="100%">
-                {config.children}
-              </VStack>
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="end">
-            <HStack gap={5}>
-              <Button onClick={onClose} variant="secondary" size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button onClick={onTryAgain} variant="primary" size="lg">
-                <FormattedMessage id="try-again-action" />
-              </Button>
-            </HStack>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id={config.headingId} />
+      </ModalHeader>
+      <ModalBody>
+        <VStack width="100%" alignItems="left" gap={5}>
+          <VStack gap={5} textAlign="left" w="100%">
+            {config.children}
+          </VStack>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <Button onPress={onClose} variant="secondary" size="lg">
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <Button onPress={onTryAgain} variant="primary" size="lg">
+          <FormattedMessage id="try-again-action" />
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

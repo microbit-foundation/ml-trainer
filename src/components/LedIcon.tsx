@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AspectRatio, Box, HStack, useToken, VStack } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
 import { forwardRef, memo, useImperativeHandle, useRef } from "react";
-import { icons, LedIconType } from "../utils/icons";
 import { useIntl } from "react-intl";
+import { AspectRatio, Box, css, cx, HStack, token, VStack } from "@microbit/ui";
+import { icons, LedIconType } from "../utils/icons";
 
 export interface LedIconHandle {
   /**
@@ -28,10 +27,11 @@ const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
     const iconData = icons[icon];
     const intl = useIntl();
     const vstackRef = useRef<HTMLDivElement>(null);
-    const [activeColor, offColor] = useToken("colors", [
-      `${colorScheme}.500`,
-      "gray.600",
-    ]);
+    // Runtime token lookup (the colour scheme is dynamic).
+    const activeColor = token(
+      `colors.${colorScheme}.500` as Parameters<typeof token>[0]
+    );
+    const offColor = token("colors.gray.600");
 
     useImperativeHandle(
       ref,
@@ -48,18 +48,22 @@ const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
 
     return (
       <AspectRatio
-        width={size}
-        height={size}
         ratio={1}
         role="img"
         aria-label={intl.formatMessage({
           id: `led-icon-option-${icon.toLowerCase()}`,
         })}
+        // Spacing-scale number (0.25rem units) or CSS length; dynamic, so an
+        // inline style.
+        style={{
+          width: typeof size === "number" ? `${size * 0.25}rem` : size,
+          height: typeof size === "number" ? `${size * 0.25}rem` : size,
+        }}
       >
         <VStack
           w="100%"
           h="100%"
-          spacing={0.5}
+          gap={0.5}
           ref={vstackRef}
           style={
             {
@@ -82,51 +86,33 @@ const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
   }
 );
 
-const turnOn = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
-`;
-
-const turnOff = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.8);
-  }
-  100% {
-    transform: scale(1);
-  }
-`;
-
 interface LedIconRowProps {
   data: string;
 }
 
 const LedIconRow = ({ data }: LedIconRowProps) => {
-  const turnOnAnimation = `${turnOn} 200ms ease`;
-  const turnOffAnimation = `${turnOff} 200ms ease`;
-
   return (
-    <HStack w="100%" h="100%" spacing={0.5}>
+    <HStack w="100%" h="100%" gap={0.5}>
       {Array.from(Array(5)).map((_, idx) => (
         <Box
           h="100%"
           w="100%"
           key={idx}
-          bgColor={data[idx] === "1" ? "var(--led-color)" : "gray.200"}
           borderRadius="sm"
           transitionTimingFunction="ease"
           transitionProperty="background-color"
           transitionDuration="200ms"
-          animation={data[idx] === "1" ? turnOnAnimation : turnOffAnimation}
+          className={cx(
+            data[idx] === "1"
+              ? css({
+                  bgColor: "var(--led-color)",
+                  animation: "ledTurnOn 200ms ease",
+                })
+              : css({
+                  bgColor: "gray.200",
+                  animation: "ledTurnOff 200ms ease",
+                })
+          )}
         />
       ))}
     </HStack>

@@ -4,20 +4,25 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Box,
-  Button,
-  Flex,
-  Tooltip,
-  TooltipProps,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { ReactNode, useCallback, useId, useRef } from "react";
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import { useIntl } from "react-intl";
+import { css, cx, Tooltip, TooltipProps, VisuallyHidden } from "@microbit/ui";
 
-interface ClickableTooltipProps extends Omit<TooltipProps, "label"> {
-  children: ReactNode;
-  titleId?: string;
+interface ClickableTooltipProps {
+  children: ReactElement;
+  /** Tooltip body. */
   label: ReactNode;
+  placement?: TooltipProps["placement"];
+  hasArrow?: boolean;
+  titleId?: string;
+  isDisabled?: boolean;
   /**
    * Render the tooltip as visual-only: a non-focusable trigger that
    * shows the tooltip on hover/click not keyboard reachable. This is a
@@ -27,36 +32,52 @@ interface ClickableTooltipProps extends Omit<TooltipProps, "label"> {
   visualOnly?: boolean;
 }
 
-// Chakra Tooltip doesn't support triggering on mobile/tablets:
-// https://github.com/chakra-ui/chakra-ui/issues/2691
+// Tooltip that also opens on click/tap (unlike hover-only tooltips, this
+// works on mobile/tablets) and on keyboard focus.
 //
 // Touch screen readers (iPadOS VoiceOver / Android TalkBack) never open the
 // tooltip, and even when opened its text is only associated with the trigger
-// while open (via aria-describedby that Chakra sets on its cloned child). So the
-// text is unreachable on tablets. For the default "button" trigger we instead
-// expose the same text on an always-present node referenced from the button, so
-// it is part of the trigger's accessible name/description regardless of the
-// visual tooltip's open state.
+// while open. So the text is unreachable on tablets. For the default "button"
+// trigger we instead expose the same text on an always-present visually
+// hidden node referenced from the button, so it is part of the trigger's
+// accessible name/description regardless of the visual tooltip's open state.
+// The visible tooltip is aria-hidden to avoid double announcement.
 //
 // A real <button> is focusable and operable (Enter/Space) on every platform,
-// rather than a role="button" span with none of the behaviour. Chakra clones
-// the outer <Flex> wrapper (which it needs for positioning); that wrapper is a
-// nameless, roleless span, so Chakra stamping its own aria-describedby/handlers
-// onto it is inert to assistive tech.
+// rather than a role="button" span with none of the behaviour.
 //
 // The visualOnly prop opts out of all of the above (see its doc comment).
 
+const triggerStyle = css({
+  display: "flex",
+  alignItems: "stretch",
+  justifyContent: "center",
+  w: "100%",
+  h: "100%",
+  minW: 0,
+  p: 0,
+  bg: "transparent",
+  border: "none",
+  color: "inherit",
+  cursor: "pointer",
+  borderRadius: "50%",
+  outline: "none",
+  _focusVisible: { focusShadow: "outline" },
+});
+
 const ClickableTooltip = ({
   children,
+  label,
+  placement,
+  hasArrow,
   titleId,
+  isDisabled,
   visualOnly = false,
-  label: tooltipLabel,
-  ...rest
 }: ClickableTooltipProps) => {
   const isButton = !visualOnly;
-  const disclosure = useDisclosure();
+  const [isOpen, setOpen] = useState(false);
   const intl = useIntl();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const descriptionId = useId();
   // Distinguishes keyboard focus (should open) from pointer-driven focus (a
   // tap/click, which toggles via onClick instead — otherwise a tap would open
@@ -69,44 +90,47 @@ const ClickableTooltip = ({
     if (
       focussedTooltips.every((tooltip) => tooltip !== document.activeElement)
     ) {
-      disclosure.onOpen();
+      setOpen(true);
     }
-  }, [disclosure]);
+  }, []);
   const handleMouseLeave = useCallback(() => {
     // Keep it open while focus is inside the trigger.
     if (!ref.current?.contains(document.activeElement)) {
-      disclosure.onClose();
+      setOpen(false);
     }
-  }, [disclosure]);
+  }, []);
   const handlePointerDown = useCallback(() => {
     pointerDownRef.current = true;
   }, []);
   const handleFocus = useCallback(() => {
     if (!pointerDownRef.current) {
-      disclosure.onOpen();
+      setOpen(true);
     }
     pointerDownRef.current = false;
-  }, [disclosure]);
+  }, []);
   const handleBlur = useCallback(() => {
     pointerDownRef.current = false;
-    disclosure.onClose();
-  }, [disclosure]);
+    setOpen(false);
+  }, []);
   const handleClick = useCallback(() => {
     pointerDownRef.current = false;
-    disclosure.onToggle();
-  }, [disclosure]);
-  const handleKeydown = useCallback(
-    (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    setOpen((open) => !open);
+  }, []);
+  // Close on Escape wherever focus is, like Chakra's closeOnEsc.
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    const listener = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        disclosure.onClose();
+        setOpen(false);
       }
-    },
-    [disclosure]
-  );
+    };
+    document.addEventListener("keydown", listener);
+    return () => document.removeEventListener("keydown", listener);
+  }, [isOpen]);
 
-  const nameProps = !isButton
-    ? {}
-    : titleId
+  const nameProps = titleId
     ? {
         "aria-label": intl.formatMessage({ id: `${titleId}-tooltip-aria` }),
         "aria-describedby": descriptionId,
@@ -115,50 +139,48 @@ const ClickableTooltip = ({
 
   return (
     <Tooltip
-      isOpen={disclosure.isOpen}
-      label={
-        isButton ? <Box aria-hidden={true}>{tooltipLabel}</Box> : tooltipLabel
-      }
-      {...rest}
-      closeOnEsc={true}
+      label={isButton ? <div aria-hidden={true}>{label}</div> : label}
+      placement={placement}
+      hasArrow={hasArrow}
+      isOpen={isOpen && !isDisabled}
+      triggerRef={ref}
     >
-      <Flex
-        as="span"
+      <span
         ref={ref}
+        className={css({ display: "flex" })}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <Button
-          as={isButton ? "button" : "span"}
-          {...nameProps}
-          variant="unstyled"
-          className={isButton ? "focusable-tooltip" : undefined}
-          onClick={handleClick}
-          onPointerDown={handlePointerDown}
-          onFocus={isButton ? handleFocus : undefined}
-          onBlur={isButton ? handleBlur : undefined}
-          onKeyDown={handleKeydown}
-          display="flex"
-          alignItems="stretch"
-          justifyContent="center"
-          w="100%"
-          h="100%"
-          minW={0}
-          cursor="pointer"
-          borderRadius="50%"
-          _focusVisible={{
-            boxShadow: "outline",
-            outline: "none",
-          }}
-        >
-          {children}
-        </Button>
-        {isButton && (
-          <Box id={descriptionId} aria-hidden={true} srOnly>
-            {tooltipLabel}
-          </Box>
+        {isButton ? (
+          <button
+            type="button"
+            {...nameProps}
+            className={cx("focusable-tooltip", triggerStyle)}
+            // Out of the tab order while the surrounding UI is disabled.
+            tabIndex={isDisabled ? -1 : undefined}
+            aria-disabled={isDisabled || undefined}
+            onClick={handleClick}
+            onPointerDown={handlePointerDown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          >
+            {children}
+          </button>
+        ) : (
+          <span
+            className={triggerStyle}
+            onClick={handleClick}
+            onPointerDown={handlePointerDown}
+          >
+            {children}
+          </span>
         )}
-      </Flex>
+        {isButton && (
+          <VisuallyHidden as="div" id={descriptionId} aria-hidden={true}>
+            {label}
+          </VisuallyHidden>
+        )}
+      </span>
     </Tooltip>
   );
 };
