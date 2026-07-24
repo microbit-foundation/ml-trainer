@@ -84,19 +84,19 @@
     "description": "Home page resource card title"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "Allow analytics",
+    "defaultMessage": "Permitir análise",
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads.",
+    "defaultMessage": "Gostaríamos de coletar dados anônimos sobre como você usa o aplicativo para nos ajudar a melhorá-lo. Não compartilhamos dados pessoais nem usamos anúncios de terceiros.",
     "description": "Body of the analytics consent dialog explaining the optional analytics collection"
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "You can change this in Settings later.",
+    "defaultMessage": "Você pode alterar isso nas Configurações mais tarde.",
     "description": "Reassurance line on the analytics consent dialog about reversibility"
   },
   "analytics-consent-decline-action": {
-    "defaultMessage": "No thanks",
+    "defaultMessage": "Não, obrigado",
     "description": "Decline button on the analytics consent dialog"
   },
   "analytics-consent-learn-more": {
@@ -116,7 +116,7 @@
     "description": "Title of the first-run analytics consent dialog on mobile"
   },
   "animation-bluetooth-mode-label": {
-    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode.",
+    "defaultMessage": "Animação demonstrando como redefinir para o modo Bluetooth.",
     "description": "Aria label for animation"
   },
   "animation-label": {
@@ -168,23 +168,23 @@
     "description": "Blocks preview heading text"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "Please turn on Bluetooth and try again.",
+    "defaultMessage": "Ative o Bluetooth e tente novamente.",
     "description": "Body text for Bluetooth disabled error dialog"
   },
   "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetooth is turned off",
+    "defaultMessage": "O Bluetooth está desativado",
     "description": "Heading for Bluetooth disabled error dialog"
   },
   "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
+    "defaultMessage": "{appNameShort} usa Bluetooth para se conectar ao seu micro:bit. Ative a permissão de Dispositivos próximos nas <link>configurações do {appNameShort}</link>.",
     "description": "Body text for Bluetooth permission denied error dialog on Android"
   },
   "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
+    "defaultMessage": "{appNameShort} usa Bluetooth para se conectar ao seu micro:bit. Ative o acesso ao Bluetooth nas <link>configurações do {appNameShort}</link>.",
     "description": "Body text for Bluetooth permission denied error dialog on iOS"
   },
   "bluetooth-permission-denied-heading": {
-    "defaultMessage": "Bluetooth permission required",
+    "defaultMessage": "Permissão de Bluetooth necessária",
     "description": "Heading for Bluetooth permission denied error dialog"
   },
   "bluetooth-unsupported-advice": {
@@ -272,7 +272,7 @@
     "description": "Confirm and save action label"
   },
   "confirm-share-action": {
-    "defaultMessage": "Confirm and share",
+    "defaultMessage": "Confirmar e compartilhar",
     "description": "Confirm and share action label"
   },
   "connect-action": {
@@ -304,7 +304,7 @@
     "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
   },
   "connect-bluetooth-enabled": {
-    "defaultMessage": "Bluetooth enabled",
+    "defaultMessage": "Bluetooth ativado",
     "description": "Label indicating Bluetooth needs to be enabled"
   },
   "connect-bluetooth-heading": {
@@ -352,7 +352,7 @@
     "description": "Project download instructions"
   },
   "connect-cannot-see-pattern": {
-    "defaultMessage": "I do not see a pattern",
+    "defaultMessage": "Não vejo um padrão",
     "description": "Link to troubleshooting not seeing Bluetooth pattern"
   },
   "connect-computer": {
@@ -400,23 +400,23 @@
     "description": "Label for cable icon in list of requirements"
   },
   "connect-native-change-pattern": {
-    "defaultMessage": "My pattern is different",
+    "defaultMessage": "Meu padrão é diferente",
     "description": "Change Bluetooth pattern link"
   },
   "connect-native-pattern-heading": {
-    "defaultMessage": "Confirm this pattern matches your micro:bit",
+    "defaultMessage": "Confirme que este padrão corresponde ao seu micro:bit",
     "description": "Native Bluetooth pattern dialog heading"
   },
   "connect-native-pattern-subtitle": {
-    "defaultMessage": "If needed, change the pattern below to match.",
+    "defaultMessage": "Se necessário, altere o padrão abaixo para corresponder.",
     "description": "Native Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-battery-check": {
-    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on.",
+    "defaultMessage": "Conecte o conjunto de pilhas e verifique se a luz na parte de trás do micro:bit está acesa.",
     "description": "Instruction to check the micro:bit is powered on via the battery pack"
   },
   "connect-native-start-heading": {
-    "defaultMessage": "Connect micro:bit battery pack",
+    "defaultMessage": "Conectar o conjunto de pilhas do micro:bit",
     "description": "Connection dialog heading"
   },
   "connect-pattern-heading": {
@@ -428,7 +428,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-label": {
-    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
+    "defaultMessage": "O número de LEDs acesos em cada coluna da tela do micro:bit, da esquerda para a direita, é {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} e {numLedsOnCol5}.",
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-led-option-label": {
@@ -544,15 +544,15 @@
     "description": "Troubleshooting heading"
   },
   "connect-try-another-way": {
-    "defaultMessage": "Try another way",
+    "defaultMessage": "Tentar de outra forma",
     "description": "Link to alternative connection method"
   },
   "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "Não consegue entrar no modo Bluetooth?",
     "description": "Link to troubleshooting entering Bluetooth mode"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "Não consegue entrar no modo Bluetooth?",
     "description": "Unable to enter Bluetooth mode dialog heading"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
@@ -560,11 +560,11 @@
     "description": "Heading for list of things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "defaultMessage": "Desconecte e reconecte o micro:bit à fonte de energia.",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
+    "defaultMessage": "Se o seu micro:bit mostrar um ícone “+”, conecte o micro:bit a um computador com um cabo USB e baixe um programa simples. Desemparelhe/Esqueça o micro:bit no aplicativo Configurações antes de tentar novamente.",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
@@ -580,7 +580,7 @@
     "description": "Text shown while waiting for bluetooth/radio connection"
   },
   "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit",
+    "defaultMessage": "Conectando ao micro:bit de coleta de dados",
     "description": "Connection dialogs"
   },
   "continue-makecode-action": {
@@ -800,7 +800,7 @@
     "description": "Progress text"
   },
   "downloading-data-collection-microbit-header": {
-    "defaultMessage": "Downloading data collection program to micro:bit",
+    "defaultMessage": "Baixando o programa de coleta de dados para o micro:bit",
     "description": "Progress text"
   },
   "downloading-header": {
@@ -812,23 +812,23 @@
     "description": "Progress text"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "Choose ‘Pair’ if asked",
+    "defaultMessage": "Escolha “Parear” se solicitado",
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "Connecting to micro:bit…",
+    "defaultMessage": "Conectando ao micro:bit…",
     "description": "Progress text during connection stage of flashing"
   },
   "downloading-stage-finding-device": {
-    "defaultMessage": "Finding micro:bit…",
+    "defaultMessage": "Encontrando o micro:bit…",
     "description": "Progress text during device discovery stage of flashing"
   },
   "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
+    "defaultMessage": "Não interaja com o micro:bit antes que o download seja concluído.",
     "description": "Progress text during native flashing stage"
   },
   "downloading-stage-resetting-device": {
-    "defaultMessage": "Waiting for micro:bit to reboot...",
+    "defaultMessage": "Aguardando o micro:bit reiniciar...",
     "description": "Progress text when rebooting micro:bit before flashing"
   },
   "downloading-subtitle": {
@@ -1328,11 +1328,11 @@
     "description": "Aria label for loading spinner"
   },
   "location-disabled-body": {
-    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
+    "defaultMessage": "Os serviços de localização são necessários para Bluetooth neste dispositivo. Ative os serviços de localização em <link>Configurações</link> e tente novamente.",
     "description": "Body text for location disabled error dialog (Android only)"
   },
   "location-disabled-heading": {
-    "defaultMessage": "Location services required",
+    "defaultMessage": "Serviços de localização necessários",
     "description": "Heading for location disabled error dialog (Android only)"
   },
   "main-menu": {
@@ -1360,7 +1360,7 @@
     "description": "Title of MakeCode load error dialog"
   },
   "microbit-name-label": {
-    "defaultMessage": "micro:bit name: {name}",
+    "defaultMessage": "nome do micro:bit: {name}",
     "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
@@ -1404,47 +1404,47 @@
     "description": "Text under project name field"
   },
   "native-bluetooth-error-body": {
-    "defaultMessage": "The connection to the micro:bit failed.",
+    "defaultMessage": "A conexão com o micro:bit falhou.",
     "description": "Body text for native Bluetooth connection error dialog"
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:",
+    "defaultMessage": "Verifique se:",
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {
-    "defaultMessage": "the micro:bit is close to this device",
+    "defaultMessage": "o micro:bit está próximo deste dispositivo",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-mode": {
-    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "defaultMessage": "o micro:bit está no modo Bluetooth (mostrando o padrão de pareamento)",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "the pattern you entered is correct",
+    "defaultMessage": "o padrão que você inseriu está correto",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "defaultMessage": "Esqueça este dispositivo nas configurações de Bluetooth e tente novamente.",
     "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "defaultMessage": "Acesse Bluetooth no aplicativo Configurações",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "defaultMessage": "Toque no ícone <infoIcon>informações</infoIcon> ao lado do dispositivo BBC micro:bit",
     "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
   },
   "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "Tap ‘Forget This Device’",
+    "defaultMessage": "Toque em “Esquecer este dispositivo”",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "Return to this app to try again",
+    "defaultMessage": "Volte para este aplicativo para tentar novamente",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-heading": {
-    "defaultMessage": "Could not connect to micro:bit",
+    "defaultMessage": "Não foi possível conectar ao micro:bit",
     "description": "Heading for native Bluetooth connection error dialog"
   },
   "new-project-setup-title": {
@@ -1708,15 +1708,15 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
+    "defaultMessage": "Segure A+B e pressione RESET. Continue segurando A+B até o ícone do Bluetooth aparecer.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Reset to Bluetooth mode",
+    "defaultMessage": "Redefinir para o modo Bluetooth",
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times.",
+    "defaultMessage": "Pressione RESET três vezes.",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {
@@ -1760,11 +1760,11 @@
     "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
   },
   "save-to-files-action": {
-    "defaultMessage": "Save to Files",
+    "defaultMessage": "Salvar em Arquivos",
     "description": "Label for action that saves the project to the device file system on Android"
   },
   "saving-dataset-toast-title": {
-    "defaultMessage": "Your data samples have been downloaded",
+    "defaultMessage": "Suas amostras de dados foram baixadas",
     "description": "Notification after a dataset has been downloaded"
   },
   "saving-description": {
@@ -1816,27 +1816,27 @@
     "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-file-description": {
-    "defaultMessage": "{appNameFull} project: {name}",
+    "defaultMessage": "Projeto do {appNameFull}: {name}",
     "description": "Label for a hex file with app name context"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "Share project as a hex file",
+    "defaultMessage": "Compartilhar projeto como arquivo hex",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "defaultMessage": "O arquivo hex contém suas ações, amostras de dados e seu projeto do MakeCode. Abra-o no {appNameFull} para continuar trabalhando.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "share-named-file": {
-    "defaultMessage": "Share {name}",
+    "defaultMessage": "Compartilhar {name}",
     "description": "Label for sharing a named file"
   },
   "sharing-description": {
-    "defaultMessage": "Your project will be ready to share soon.",
+    "defaultMessage": "Seu projeto estará pronto para compartilhar em breve.",
     "description": "Sharing progress dialog text for mobile"
   },
   "sharing-title": {
-    "defaultMessage": "Sharing…",
+    "defaultMessage": "Compartilhando…",
     "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
@@ -1908,19 +1908,19 @@
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
   "storage-error-device-other": {
-    "defaultMessage": "Failed to save your project to device storage",
+    "defaultMessage": "Falha ao salvar seu projeto no armazenamento do dispositivo",
     "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
-    "defaultMessage": "Failed to save your project to browser storage",
+    "defaultMessage": "Falha ao salvar seu projeto no armazenamento do navegador",
     "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
   },
   "storage-error-quota-description": {
-    "defaultMessage": "Your project edit may not be saved.",
+    "defaultMessage": "Sua edição do projeto pode não ser salva.",
     "description": "Toast description when browser storage quota is exceeded"
   },
   "storage-error-quota-title": {
-    "defaultMessage": "Browser storage full",
+    "defaultMessage": "Armazenamento do navegador cheio",
     "description": "Toast title when browser storage quota is exceeded"
   },
   "support-request": {

@@ -188,25 +188,25 @@
   "analytics-consent-allow-action": [
     {
       "type": 0,
-      "value": "Allow analytics"
+      "value": "Permitir análise"
     }
   ],
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
+      "value": "Gostaríamos de coletar dados anônimos sobre como você usa o aplicativo para nos ajudar a melhorá-lo. Não compartilhamos dados pessoais nem usamos anúncios de terceiros."
     }
   ],
   "analytics-consent-change-later": [
     {
       "type": 0,
-      "value": "You can change this in Settings later."
+      "value": "Você pode alterar isso nas Configurações mais tarde."
     }
   ],
   "analytics-consent-decline-action": [
     {
       "type": 0,
-      "value": "No thanks"
+      "value": "Não, obrigado"
     }
   ],
   "analytics-consent-learn-more": [
@@ -240,7 +240,7 @@
   "animation-bluetooth-mode-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating how to reset to Bluetooth mode."
+      "value": "Animação demonstrando como redefinir para o modo Bluetooth."
     }
   ],
   "animation-label": [
@@ -318,13 +318,13 @@
   "bluetooth-disabled-body": [
     {
       "type": 0,
-      "value": "Please turn on Bluetooth and try again."
+      "value": "Ative o Bluetooth e tente novamente."
     }
   ],
   "bluetooth-disabled-heading": [
     {
       "type": 0,
-      "value": "Bluetooth is turned off"
+      "value": "O Bluetooth está desativado"
     }
   ],
   "bluetooth-permission-denied-body-android": [
@@ -334,17 +334,17 @@
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
+      "value": " usa Bluetooth para se conectar ao seu micro:bit. Ative a permissão de Dispositivos próximos nas "
     },
     {
       "children": [
         {
-          "type": 1,
-          "value": "appNameShort"
+          "type": 0,
+          "value": "configurações do "
         },
         {
-          "type": 0,
-          "value": " settings"
+          "type": 1,
+          "value": "appNameShort"
         }
       ],
       "type": 8,
@@ -362,17 +362,17 @@
     },
     {
       "type": 0,
-      "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
+      "value": " usa Bluetooth para se conectar ao seu micro:bit. Ative o acesso ao Bluetooth nas "
     },
     {
       "children": [
         {
-          "type": 1,
-          "value": "appNameShort"
+          "type": 0,
+          "value": "configurações do "
         },
         {
-          "type": 0,
-          "value": " settings"
+          "type": 1,
+          "value": "appNameShort"
         }
       ],
       "type": 8,
@@ -386,7 +386,7 @@
   "bluetooth-permission-denied-heading": [
     {
       "type": 0,
-      "value": "Bluetooth permission required"
+      "value": "Permissão de Bluetooth necessária"
     }
   ],
   "bluetooth-unsupported-advice": [
@@ -542,7 +542,7 @@
   "confirm-share-action": [
     {
       "type": 0,
-      "value": "Confirm and share"
+      "value": "Confirmar e compartilhar"
     }
   ],
   "connect-action": [
@@ -590,7 +590,7 @@
   "connect-bluetooth-enabled": [
     {
       "type": 0,
-      "value": "Bluetooth enabled"
+      "value": "Bluetooth ativado"
     }
   ],
   "connect-bluetooth-heading": [
@@ -662,7 +662,7 @@
   "connect-cannot-see-pattern": [
     {
       "type": 0,
-      "value": "I do not see a pattern"
+      "value": "Não vejo um padrão"
     }
   ],
   "connect-computer": [
@@ -734,31 +734,31 @@
   "connect-native-change-pattern": [
     {
       "type": 0,
-      "value": "My pattern is different"
+      "value": "Meu padrão é diferente"
     }
   ],
   "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Confirm this pattern matches your micro:bit"
+      "value": "Confirme que este padrão corresponde ao seu micro:bit"
     }
   ],
   "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "If needed, change the pattern below to match."
+      "value": "Se necessário, altere o padrão abaixo para corresponder."
     }
   ],
   "connect-native-start-battery-check": [
     {
       "type": 0,
-      "value": "Connect the battery pack, then check the light on the back of the micro:bit is on."
+      "value": "Conecte o conjunto de pilhas e verifique se a luz na parte de trás do micro:bit está acesa."
     }
   ],
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "Connect micro:bit battery pack"
+      "value": "Conectar o conjunto de pilhas do micro:bit"
     }
   ],
   "connect-pattern-heading": [
@@ -784,7 +784,7 @@
   "connect-pattern-label": [
     {
       "type": 0,
-      "value": "The number of LEDs lit in each column of the micro:bit display, from left to right, are "
+      "value": "O número de LEDs acesos em cada coluna da tela do micro:bit, da esquerda para a direita, é "
     },
     {
       "type": 1,
@@ -816,7 +816,7 @@
     },
     {
       "type": 0,
-      "value": ", and "
+      "value": " e "
     },
     {
       "type": 1,
@@ -1036,19 +1036,19 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Try another way"
+      "value": "Tentar de outra forma"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Não consegue entrar no modo Bluetooth?"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Não consegue entrar no modo Bluetooth?"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
@@ -1060,13 +1060,13 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
     {
       "type": 0,
-      "value": "Disconnect and then reconnect the micro:bit with the power source."
+      "value": "Desconecte e reconecte o micro:bit à fonte de energia."
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
     {
       "type": 0,
-      "value": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
+      "value": "Se o seu micro:bit mostrar um ícone “+”, conecte o micro:bit a um computador com um cabo USB e baixe um programa simples. Desemparelhe/Esqueça o micro:bit no aplicativo Configurações antes de tentar novamente."
     }
   ],
   "connect-with-batteries": [
@@ -1090,7 +1090,7 @@
   "connecting-data-collection-microbit-heading": [
     {
       "type": 0,
-      "value": "Connecting to data collection micro:bit"
+      "value": "Conectando ao micro:bit de coleta de dados"
     }
   ],
   "continue-makecode-action": [
@@ -1516,7 +1516,7 @@
   "downloading-data-collection-microbit-header": [
     {
       "type": 0,
-      "value": "Downloading data collection program to micro:bit"
+      "value": "Baixando o programa de coleta de dados para o micro:bit"
     }
   ],
   "downloading-header": [
@@ -1534,31 +1534,31 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Choose ‘Pair’ if asked"
+      "value": "Escolha “Parear” se solicitado"
     }
   ],
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit…"
+      "value": "Conectando ao micro:bit…"
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit…"
+      "value": "Encontrando o micro:bit…"
     }
   ],
   "downloading-stage-flashing-native": [
     {
       "type": 0,
-      "value": "Please do not interact with the micro:bit before the download is complete."
+      "value": "Não interaja com o micro:bit antes que o download seja concluído."
     }
   ],
   "downloading-stage-resetting-device": [
     {
       "type": 0,
-      "value": "Waiting for micro:bit to reboot..."
+      "value": "Aguardando o micro:bit reiniciar..."
     }
   ],
   "downloading-subtitle": [
@@ -2384,13 +2384,13 @@
   "location-disabled-body": [
     {
       "type": 0,
-      "value": "Location services are required for Bluetooth on this device. Please enable location services in "
+      "value": "Os serviços de localização são necessários para Bluetooth neste dispositivo. Ative os serviços de localização em "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "Settings"
+          "value": "Configurações"
         }
       ],
       "type": 8,
@@ -2398,13 +2398,13 @@
     },
     {
       "type": 0,
-      "value": " and try again."
+      "value": " e tente novamente."
     }
   ],
   "location-disabled-heading": [
     {
       "type": 0,
-      "value": "Location services required"
+      "value": "Serviços de localização necessários"
     }
   ],
   "main-menu": [
@@ -2450,7 +2450,7 @@
   "microbit-name-label": [
     {
       "type": 0,
-      "value": "micro:bit name: "
+      "value": "nome do micro:bit: "
     },
     {
       "type": 1,
@@ -2520,55 +2520,55 @@
   "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "The connection to the micro:bit failed."
+      "value": "A conexão com o micro:bit falhou."
     }
   ],
   "native-bluetooth-error-check": [
     {
       "type": 0,
-      "value": "Please check that:"
+      "value": "Verifique se:"
     }
   ],
   "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "the micro:bit is close to this device"
+      "value": "o micro:bit está próximo deste dispositivo"
     }
   ],
   "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+      "value": "o micro:bit está no modo Bluetooth (mostrando o padrão de pareamento)"
     }
   ],
   "native-bluetooth-error-check-pattern": [
     {
       "type": 0,
-      "value": "the pattern you entered is correct"
+      "value": "o padrão que você inseriu está correto"
     }
   ],
   "native-bluetooth-error-forget-device": [
     {
       "type": 0,
-      "value": "Please forget this device in your Bluetooth settings and try again."
+      "value": "Esqueça este dispositivo nas configurações de Bluetooth e tente novamente."
     }
   ],
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Go to Bluetooth in the Settings app"
+      "value": "Acesse Bluetooth no aplicativo Configurações"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
     {
       "type": 0,
-      "value": "Tap the "
+      "value": "Toque no ícone "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "information"
+          "value": "informações"
         }
       ],
       "type": 8,
@@ -2576,25 +2576,25 @@
     },
     {
       "type": 0,
-      "value": " icon next to the BBC micro:bit device"
+      "value": " ao lado do dispositivo BBC micro:bit"
     }
   ],
   "native-bluetooth-error-forget-device-step-3": [
     {
       "type": 0,
-      "value": "Tap ‘Forget This Device’"
+      "value": "Toque em “Esquecer este dispositivo”"
     }
   ],
   "native-bluetooth-error-forget-device-step-4": [
     {
       "type": 0,
-      "value": "Return to this app to try again"
+      "value": "Volte para este aplicativo para tentar novamente"
     }
   ],
   "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "Could not connect to micro:bit"
+      "value": "Não foi possível conectar ao micro:bit"
     }
   ],
   "new-project-setup-title": [
@@ -3168,19 +3168,19 @@
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears."
+      "value": "Segure A+B e pressione RESET. Continue segurando A+B até o ícone do Bluetooth aparecer."
     }
   ],
   "reset-to-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Reset to Bluetooth mode"
+      "value": "Redefinir para o modo Bluetooth"
     }
   ],
   "reset-to-bluetooth-mode-subtitle": [
     {
       "type": 0,
-      "value": "Press RESET three times."
+      "value": "Pressione RESET três vezes."
     }
   ],
   "reset-to-default-action": [
@@ -3254,13 +3254,13 @@
   "save-to-files-action": [
     {
       "type": 0,
-      "value": "Save to Files"
+      "value": "Salvar em Arquivos"
     }
   ],
   "saving-dataset-toast-title": [
     {
       "type": 0,
-      "value": "Your data samples have been downloaded"
+      "value": "Suas amostras de dados foram baixadas"
     }
   ],
   "saving-description": [
@@ -3357,12 +3357,16 @@
   ],
   "share-file-description": [
     {
+      "type": 0,
+      "value": "Projeto do "
+    },
+    {
       "type": 1,
       "value": "appNameFull"
     },
     {
       "type": 0,
-      "value": " project: "
+      "value": ": "
     },
     {
       "type": 1,
@@ -3372,13 +3376,13 @@
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as a hex file"
+      "value": "Compartilhar projeto como arquivo hex"
     }
   ],
   "share-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+      "value": "O arquivo hex contém suas ações, amostras de dados e seu projeto do MakeCode. Abra-o no "
     },
     {
       "type": 1,
@@ -3386,13 +3390,13 @@
     },
     {
       "type": 0,
-      "value": " to continue working."
+      "value": " para continuar trabalhando."
     }
   ],
   "share-named-file": [
     {
       "type": 0,
-      "value": "Share "
+      "value": "Compartilhar "
     },
     {
       "type": 1,
@@ -3402,13 +3406,13 @@
   "sharing-description": [
     {
       "type": 0,
-      "value": "Your project will be ready to share soon."
+      "value": "Seu projeto estará pronto para compartilhar em breve."
     }
   ],
   "sharing-title": [
     {
       "type": 0,
-      "value": "Sharing…"
+      "value": "Compartilhando…"
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -3516,25 +3520,25 @@
   "storage-error-device-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to device storage"
+      "value": "Falha ao salvar seu projeto no armazenamento do dispositivo"
     }
   ],
   "storage-error-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to browser storage"
+      "value": "Falha ao salvar seu projeto no armazenamento do navegador"
     }
   ],
   "storage-error-quota-description": [
     {
       "type": 0,
-      "value": "Your project edit may not be saved."
+      "value": "Sua edição do projeto pode não ser salva."
     }
   ],
   "storage-error-quota-title": [
     {
       "type": 0,
-      "value": "Browser storage full"
+      "value": "Armazenamento do navegador cheio"
     }
   ],
   "support-request": [

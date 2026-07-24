@@ -127,21 +127,24 @@ Or you can use Homebrew via `brew install fastlane` and drop the `bundle exec` (
 
 Android builds require the signing keystore and passwords via environment variables. iOS builds require Match credentials to fetch certificates.
 
-### App versioning
+## Releases and apps/web versioning
 
-App releases use tags with an `-apps` suffix to distinguish them from web releases on main until we merge the apps work back. The marketing version is derived from the tag with the suffix stripped (store limitation).
+Web and app releases are both made from `main` by creating a GitHub release (the workflows trigger on release creation, not tag pushes). The tag determines what CI does:
 
-When creating an apps tag we target next unreleased minor version, so if main is on v1.2.3:
+- `vX.Y.Z` — web release. The build workflow deploys to production; the app workflows skip it.
+- `vX.Y.Z-apps` — apps release. The iOS and Android workflows build and upload to TestFlight and Google Play; the web deploy skips it. Promotion through the testing tracks to production is managed in the store consoles.
 
-| Stage    | Example tag              | Marketing version | Build number  |
-| -------- | ------------------------ | ----------------- | ------------- |
-| Internal | `v1.3.0-apps.internal.1` | 1.3.0             | CI run number |
-| Beta     | `v1.3.0-apps.beta.1`     | 1.3.0             | CI run number |
-| Public   | `v1.3.0-apps`            | 1.3.0             | CI run number |
+Web and apps share a single version sequence. Take the next unused version for whichever release you're making — a version number must never refer to two different commits.
 
-If main releases a new minor version (e.g., 1.3.0) before apps ships, then we'll bump the next apps version (assuming we've merged main into apps).
+For apps, the marketing version is the tag with the `-apps` suffix stripped (store limitation) and the build number is the CI run number.
 
-If we've merged apps back into main before we get to a public release we can drop the apps suffix.
+Scenarios:
+
+- Web-only release: create a release tagged with the next version, e.g. `v1.5.3`.
+- Apps-only release: as above with the `-apps` suffix, e.g. `v1.5.4-apps`.
+- Both from the same commit: create two releases with the same version, e.g. `v1.6.0` and `v1.6.0-apps`.
+
+Use GitHub's generated release notes as a starting point, but set the "Previous tag" to the last release of the _same channel_ (web or apps) — the default is the most recent release of either channel, which would omit changes that have only shipped to the other channel's users. For web releases, move apps-only changes under their own heading — they're not relevant to web users but worth listing in case they cause a regression.
 
 ## Deployments
 

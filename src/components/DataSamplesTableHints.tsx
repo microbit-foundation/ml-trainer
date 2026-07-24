@@ -21,6 +21,7 @@ import {
 } from "@microbit/ui";
 import Emoji, { EmojiAi } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
+import StraightArrow from "./StraightArrow";
 import UpCurveArrow from "./UpCurveArrow";
 
 const spinAnimation = css({
@@ -318,12 +319,17 @@ export const MoveMicrobitHint = () => {
 export const TrainHint = () => {
   return (
     <HStack
-      m={0}
       position="absolute"
-      right={0}
+      right={{ md: "unset", base: 0 }}
+      left={{ base: "unset", md: 0 }}
       gap={0}
       zIndex={2}
-      transform="translate(-80px, -85px)"
+      transform={{
+        base: "translate(-80px, -85px)",
+        md: "translate(-100%, 2px)",
+      }}
+      w="fit-content"
+      pointerEvents="none"
     >
       <HStack>
         <Box
@@ -332,6 +338,7 @@ export const TrainHint = () => {
           transform="translate(-50px, 0)"
           w="calc(100% + 50px)"
           h="120%"
+          display={{ base: "block", md: "none" }}
         />
         <EmojiAi
           size="20"
@@ -340,7 +347,7 @@ export const TrainHint = () => {
         <VisuallyHidden>
           <FormattedMessage id="train-hint-label" />
         </VisuallyHidden>
-        <Text textAlign="center" zIndex={3} aria-hidden>
+        <Text textAlign="center" zIndex={3} aria-hidden w="max-content">
           <FormattedMessage
             id="train-hint"
             values={{
@@ -355,11 +362,22 @@ export const TrainHint = () => {
         </Text>
         <EmojiArrow
           className={css({
+            display: { base: "block", md: "none" },
             mt: 8,
             transform: "rotate(-120deg) scaleY(-1)",
             transformOrigin: "center",
             color: "brand.500",
           })}
+        />
+        <StraightArrow
+          css={{
+            w: "10",
+            h: "10",
+            display: { base: "none", md: "block" },
+            transformOrigin: "center",
+            color: "brand.500",
+            mr: 2,
+          }}
         />
       </HStack>
     </HStack>

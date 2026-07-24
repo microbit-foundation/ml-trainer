@@ -109,7 +109,7 @@
     "@formatjs/intl-localematcher": "^0.8.0",
     "@microbit/capacitor-community-nordic-dfu": "^8.0.0-microbit.1",
     "@microbit/capacitor-sqlite-vanilla": "^0.1.0",
-    "@microbit/makecode-embed": "^0.0.0-noproject.76",
+    "@microbit/makecode-embed": "^0.6.0",
     "@microbit/microbit-connection": "^1.0.0",
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/ml4f": "^2.0.0-beta.0",

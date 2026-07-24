@@ -816,7 +816,7 @@
     "description": "Progress text when ensuring device is paired before flashing"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "Connectant la micro.bit...",
+    "defaultMessage": "Connectant la micro:bit...",
     "description": "Progress text during connection stage of flashing"
   },
   "downloading-stage-finding-device": {
@@ -1408,7 +1408,7 @@
     "description": "Body text for native Bluetooth connection error dialog"
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "",
+    "defaultMessage": "Please check that:",
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {

@@ -1536,7 +1536,7 @@
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connectant la micro.bit..."
+      "value": "Connectant la micro:bit..."
     }
   ],
   "downloading-stage-finding-device": [
@@ -2506,6 +2506,10 @@
     }
   ],
   "native-bluetooth-error-check": [
+    {
+      "type": 0,
+      "value": "Please check that:"
+    }
   ],
   "native-bluetooth-error-check-distance": [
     {

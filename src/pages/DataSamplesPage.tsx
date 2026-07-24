@@ -229,7 +229,8 @@ const DataSamplesPage = () => {
               {dataSamplesHint?.type === "add-action" && (
                 <AddActionHint action={actions[0]} />
               )}
-              <HStack>
+              <HStack position="relative">
+                {dataSamplesHint?.type === "train" && <TrainHint />}
                 {model ? (
                   <Button
                     onPress={handleNavigateToModel}
@@ -262,7 +263,6 @@ const DataSamplesPage = () => {
                   </Button>
                 )}
               </HStack>
-              {dataSamplesHint?.type === "train" && <TrainHint />}
               {dataSamplesHint?.type === "move-microbit" && (
                 <MoveMicrobitHint />
               )}
