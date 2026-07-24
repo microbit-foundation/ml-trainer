@@ -17,9 +17,23 @@ export interface WorkerTrainResult {
   machineCode: Uint8Array;
 }
 
+/**
+ * If the worker sends no message at all for this long during a model
+ * operation — not even a training-progress tick — it's treated as hung
+ * (e.g. suspended or killed by the OS while the app is backgrounded) and the
+ * request fails so the UI can recover instead of waiting forever.
+ */
+const workerInactivityTimeoutMs = 60000;
+
 interface PendingRequest {
   resolve(response: MlWorkerResponse | undefined): void;
   onProgress?: (value: number) => void;
+  /**
+   * Inactivity timeout, if this request is watchdogged. Reset on every
+   * message (including progress) and cleared when the request settles.
+   */
+  timeoutMs?: number;
+  timer?: ReturnType<typeof setTimeout>;
 }
 
 export class MlWorkerClient {
@@ -86,11 +100,41 @@ export class MlWorkerClient {
       return;
     }
     if (message.kind === "progress") {
+      // The worker is alive and making progress; restart the watchdog.
+      this.resetWatchdog(message.id);
       pending.onProgress?.(message.value);
       return;
     }
+    this.cancelWatchdog(message.id);
     this.pending.delete(message.id);
     pending.resolve(message);
+  }
+
+  /**
+   * Start (or restart) the inactivity watchdog for a request that opted into
+   * one. Any message from the worker restarts the countdown; silence past the
+   * timeout fails the request via handleFatalError.
+   */
+  private resetWatchdog(id: number) {
+    const pending = this.pending.get(id);
+    if (!pending?.timeoutMs) {
+      return;
+    }
+    if (pending.timer !== undefined) {
+      clearTimeout(pending.timer);
+    }
+    pending.timer = setTimeout(
+      () => this.handleFatalError(),
+      pending.timeoutMs
+    );
+  }
+
+  private cancelWatchdog(id: number) {
+    const pending = this.pending.get(id);
+    if (pending?.timer !== undefined) {
+      clearTimeout(pending.timer);
+      pending.timer = undefined;
+    }
   }
 
   /**
@@ -100,6 +144,11 @@ export class MlWorkerClient {
    */
   private handleFatalError() {
     const pending = Array.from(this.pending.values());
+    pending.forEach((p) => {
+      if (p.timer !== undefined) {
+        clearTimeout(p.timer);
+      }
+    });
     this.pending.clear();
     this.worker?.terminate();
     this.worker = undefined;
@@ -109,12 +158,14 @@ export class MlWorkerClient {
   private postRequest(
     createRequest: (id: number) => MlWorkerRequest,
     worker: Worker = this.ensureWorker(),
-    onProgress?: (value: number) => void
+    onProgress?: (value: number) => void,
+    timeoutMs?: number
   ): Promise<MlWorkerResponse | undefined> {
     const id = this.nextRequestId++;
     return new Promise((resolve) => {
-      this.pending.set(id, { resolve, onProgress });
+      this.pending.set(id, { resolve, onProgress, timeoutMs });
       worker.postMessage(createRequest(id));
+      this.resetWatchdog(id);
     });
   }
 
@@ -136,7 +187,8 @@ export class MlWorkerClient {
       const response = await this.postRequest(
         (id) => ({ kind: "train", id, features, labels, options }),
         this.ensureWorker(),
-        onProgress
+        onProgress,
+        workerInactivityTimeoutMs
       );
       if (response?.kind !== "trainComplete") {
         return undefined;
@@ -163,11 +215,12 @@ export class MlWorkerClient {
   ): Promise<{ machineCode: Uint8Array } | undefined> {
     this.modelOpInFlight = true;
     try {
-      const response = await this.postRequest((id) => ({
-        kind: "loadModel",
-        id,
-        artifacts,
-      }));
+      const response = await this.postRequest(
+        (id) => ({ kind: "loadModel", id, artifacts }),
+        this.ensureWorker(),
+        undefined,
+        workerInactivityTimeoutMs
+      );
       if (response?.kind !== "loadModelComplete") {
         return undefined;
       }
