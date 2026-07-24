@@ -2226,20 +2226,46 @@ const storageWithErrHandling = async <T>(
   return value;
 };
 
+const storageWriteTimeoutMs = 15000;
+
+/**
+ * A promise that rejects with {@link message} after {@link ms}, plus a cancel
+ * to clear its timer once the operation it guards has settled (preventing a
+ * late rejection).
+ */
+const rejectAfter = (
+  ms: number,
+  message: string
+): { promise: Promise<never>; cancel: () => void } => {
+  let timer: ReturnType<typeof setTimeout>;
+  const promise = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(message)), ms);
+  });
+  return { promise, cancel: () => clearTimeout(timer) };
+};
+
 /**
  * Like {@link storageWithErrHandling} but sets a storage error in the
  * store (triggering a toast) and swallows the error. Use for
  * fire-and-forget writes where the in-memory state has already been
  * optimistically updated.
+ *
+ * Bounded by {@link storageWriteTimeoutMs}.
  */
 const storageWriteWithErrHandling = async (
   callback: () => Promise<void>,
   broadcastEvent: boolean | "settings" = true
 ) => {
+  const timeout = rejectAfter(storageWriteTimeoutMs, "Storage write timed out");
   try {
-    await storageWithErrHandling(callback, broadcastEvent);
+    await Promise.race([
+      storageWithErrHandling(callback, broadcastEvent),
+      timeout.promise,
+    ]);
   } catch (err) {
     setStorageError(err);
+  } finally {
+    timeout.cancel();
   }
 };
 
