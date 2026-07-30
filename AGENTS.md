@@ -1,5 +1,33 @@
 # AI agent notes
 
+## Styling / branded builds / verification
+
+This app uses react-aria-components + Panda CSS via `@microbit/ui`
+(migrated from Chakra UI, July 2026). **Read the gotcha catalog in
+`../ui/docs/migration-playbook.md` before styling/theming/UI work.**
+
+- **Branded build locally**: build the sibling `../ml-trainer-microbit`
+  package (`npm run build` there → `dist/panda-preset.js`) and make it
+  resolvable as `node_modules/@microbit-foundation/ml-trainer-microbit`
+  (symlink or `npm link`). Without it you get the OSS default. CI installs
+  the version pinned in `workflow-config.json`.
+- **Local `@microbit/ui` development**: symlink `node_modules/@microbit/ui`
+  to `../ui/packages/ui`; a plain `npm i` restores the registry version.
+- **After changing or (re)linking either sibling package, do a _clean_
+  Panda regen**: `rm -rf styled-system && npm run panda`. Incremental
+  codegen doesn't detect external preset changes (playbook gotcha #27).
+  Restart the dev server too.
+- Compare against the live branded deployment:
+  `npm run build && npm run preview` vs https://createai.microbit.org/.
+- **Fidelity harness**: `npm run fidelity [-- <ref>]` screenshot-diffs ~43
+  app states between a baseline ref and the working tree; report via
+  `npx playwright show-report`. Pre-flip refs need paired sibling-package
+  versions — method in the playbook, "Fidelity, both sides".
+- E2e notes: run the full suite only on a stable tree (mid-run source or
+  Panda regen edits invalidate modules → bogus timeouts); the radio
+  reconnection specs are flaky under full parallel load on some machines —
+  rerun a failing spec in isolation before suspecting a regression.
+
 ## Formatting/style
 
 Run `npm run format` to format code with Prettier.
