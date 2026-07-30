@@ -11,3 +11,9 @@
  * were injected last. The other names are Panda's own layers.
  */
 @layer reset, vendor, base, tokens, recipes, utilities;
+
+/* Required since @microbit/ui 0.1.0-alpha.7: Chakra-parity
+ * border-color/word-wrap defaults, kept in the bottom layer so the
+ * production cascade-layer flattening can't boost them above CSS it
+ * doesn't process (playbook gotcha #28). */
+@import "@microbit/ui/reset.css" layer(reset);
