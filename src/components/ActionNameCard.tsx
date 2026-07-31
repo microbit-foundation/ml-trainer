@@ -111,7 +111,6 @@ const ActionNameCard = ({
       if (name.length >= actionNameMaxLength) {
         toast({
           id: toastId,
-          duration: 5_000,
           title: intl.formatMessage(
             { id: "action-length-error" },
             { maxLen: actionNameMaxLength }

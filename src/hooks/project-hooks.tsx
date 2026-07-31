@@ -497,7 +497,6 @@ export const ProjectProvider = ({
           // iOS share sheet provides its own feedback.
           toast({
             id: "save-complete",
-            duration: 5_000,
             title: intl.formatMessage({ id: "saving-toast-title" }),
             status: "info",
           });

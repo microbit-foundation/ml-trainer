@@ -185,7 +185,6 @@ const RecordingDialog = ({
       onError() {
         handleCleanup();
         toast({
-          duration: 5_000,
           title: intl.formatMessage({
             id: "disconnected-during-recording",
           }),

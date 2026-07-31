@@ -141,7 +141,6 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
         title: intl.formatMessage({ id: "language-toast-title" }),
         description: <SupportStatement language={language} intl={intl} />,
         status: "info",
-        duration: 5_000,
         isClosable: true,
       });
     }

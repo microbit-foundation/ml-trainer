@@ -176,7 +176,6 @@ const Layout = () => {
           // Side effects of loading a project, which MakeCode notifies us of.
           navigate(createDataSamplesPageUrl());
           toast({
-            duration: 5_000,
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
           });
@@ -218,8 +217,7 @@ const Layout = () => {
     })();
     const toastOptions = {
       id: "storage-error",
-      duration: null,
-      isClosable: true,
+      persistent: true,
       status: "error" as const,
       ...messages,
     };

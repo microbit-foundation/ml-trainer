@@ -63,7 +63,6 @@ const DataSamplesMenu = () => {
       // Android saves to Downloads with no browser feedback;
       // iOS share sheet provides its own; web has the browser download bar.
       toast({
-        duration: 5_000,
         title: intl.formatMessage({ id: "saving-dataset-toast-title" }),
         status: "info",
       });
