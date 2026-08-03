@@ -14,9 +14,8 @@ export const getAbsoluteFilePath = (filePathFromProjectRoot: string) => {
 
 /**
  * Base URL of the app under test, with trailing slash.
- * E2E_PORT lets alternative harnesses (e.g. the fidelity runner) point the
- * page objects at their own server without colliding with a dev server on
- * the default port.
+ * E2E_PORT points the page objects at a server on another port, so a run can
+ * avoid colliding with a dev server already on the default one.
  */
 export const appUrl = (): string =>
   `http://localhost:${process.env.E2E_PORT ?? "5173"}${

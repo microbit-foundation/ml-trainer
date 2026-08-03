@@ -19,10 +19,6 @@ This app uses react-aria-components + Panda CSS via `@microbit/ui`
   Restart the dev server too.
 - Compare against the live branded deployment:
   `npm run build && npm run preview` vs https://createai.microbit.org/.
-- **Fidelity harness**: `npm run fidelity [-- <ref>]` screenshot-diffs ~43
-  app states between a baseline ref and the working tree; report via
-  `npx playwright show-report`. Pre-flip refs need paired sibling-package
-  versions — method in the playbook, "Fidelity, both sides".
 - E2e notes: run the full suite only on a stable tree (mid-run source or
   Panda regen edits invalidate modules → bogus timeouts); the radio
   reconnection specs are flaky under full parallel load on some machines —
