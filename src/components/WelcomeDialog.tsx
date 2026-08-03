@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,7 +13,7 @@ import {
   Text,
   VStack,
 } from "@microbit/ui";
-import { ComponentProps } from "react";
+
 import { FormattedMessage } from "react-intl";
 import { AnimationProvider } from "./AnimationProvider";
 import { ButtonWithLoading } from "./ButtonWithLoading";
@@ -20,7 +21,7 @@ import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/index";
 import PauseResumeLink from "./PauseResumeAnimationLink";
 
-type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
+type WelcomeDialogProps = Omit<ControlledModalProps, "children">;
 
 const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
   const { handleClose, isConnecting, handleConnect } = useConnectFirst({

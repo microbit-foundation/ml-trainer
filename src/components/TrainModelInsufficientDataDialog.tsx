@@ -5,6 +5,7 @@
  */
 import {
   Button,
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,13 +13,13 @@ import {
   ModalHeader,
   Text,
 } from "@microbit/ui";
-import { ComponentProps } from "react";
+
 import { FormattedMessage } from "react-intl";
 
 const TrainModelInsufficientDataDialog = ({
   onClose,
   ...rest
-}: Omit<ComponentProps<typeof Modal>, "children">) => {
+}: Omit<ControlledModalProps, "children">) => {
   return (
     <Modal
       isDismissable={false}

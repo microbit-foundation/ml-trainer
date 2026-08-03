@@ -5,12 +5,12 @@
  */
 import {
   Button,
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalFooter,
   ModalHeader,
-  ModalProps,
   Text,
 } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
@@ -19,7 +19,7 @@ import { useDeployment } from "../deployment";
 const ImportErrorDialog = ({
   onClose,
   ...props
-}: Omit<ModalProps, "children">) => {
+}: Omit<ControlledModalProps, "children">) => {
   const { appNameFull } = useDeployment();
   return (
     <Modal

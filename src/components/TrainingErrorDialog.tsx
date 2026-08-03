@@ -4,18 +4,20 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalFooter,
   ModalHeader,
-  ModalProps,
   Text,
   VStack,
 } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 
-const TrainingErrorDialog = ({ ...rest }: Omit<ModalProps, "children">) => {
+const TrainingErrorDialog = ({
+  ...rest
+}: Omit<ControlledModalProps, "children">) => {
   return (
     <Modal motionless size="lg" isCentered {...rest}>
       <ModalHeader>

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,7 +12,7 @@ import {
   ModalHeader,
   Text,
 } from "@microbit/ui";
-import { ComponentProps, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDataConnectionActions } from "../data-connection-flow";
 import {
@@ -22,7 +23,7 @@ import { useStore } from "../store";
 import { ButtonWithLoading } from "./ButtonWithLoading";
 
 interface ConnectFirstDialogProps
-  extends Omit<ComponentProps<typeof Modal>, "children"> {
+  extends Omit<ControlledModalProps, "children"> {
   explanationTextId: string;
   onChooseConnect?: () => void;
 }

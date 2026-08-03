@@ -5,12 +5,12 @@
  */
 import {
   Button,
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalFooter,
   ModalHeader,
-  ModalProps,
   Text,
 } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
@@ -18,7 +18,7 @@ import { FormattedMessage } from "react-intl";
 const NotCreateAiHexImportDialog = ({
   onClose,
   ...props
-}: Omit<ModalProps, "children">) => {
+}: Omit<ControlledModalProps, "children">) => {
   return (
     <Modal
       isDismissable={false}
