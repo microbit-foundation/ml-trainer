@@ -25,7 +25,7 @@ const HeadingGrid = ({ headings, className }: HeadingGridProps) => {
       borderBottomStyle="solid"
       borderColor="gray.200"
       zIndex={1}
-      backgroundColor="whitesmoke"
+      backgroundColor="gray.25"
       className={className}
     >
       {headings.map((props, idx) => (

@@ -75,8 +75,8 @@ const CodePage = () => {
               height: "166px",
               borderWidth: "16px",
               color: "brand.600",
-              borderBottomColor: "whitesmoke",
-              borderLeftColor: "whitesmoke",
+              borderBottomColor: "gray.25",
+              borderLeftColor: "gray.25",
             }}
           />
         </VStack>

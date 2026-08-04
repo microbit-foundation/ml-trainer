@@ -15,7 +15,7 @@ const ErrorPage = ({ title, children }: Props) => (
     minH="100vh"
     w="100%"
     alignItems="center"
-    bgColor="whitesmoke"
+    bgColor="gray.25"
   >
     <Heading mt="33vh" as="h1">
       {title}
