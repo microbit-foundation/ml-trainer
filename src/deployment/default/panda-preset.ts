@@ -260,7 +260,13 @@ export const appPreset = definePreset({
           // #647987 is close in character as well as lightness).
           gray: {
             10: { value: "#fbfcfd" },
-            25: { value: "#f1f6f9" },
+            // The panel-tint stop stays neutral in this app: its 25 surfaces
+            // (the bottom action bar, the action-name input fill, the home
+            // footer) were designed against the family's untinted #f5f5f5,
+            // and the blue-tinted value read as stained on the inset fills.
+            // The 25 slot is the family's app-tuned stop (python sets its
+            // own too), so this is a per-app value, not a ramp exception.
+            25: { value: "#f5f5f5" },
             50: { value: "#f6f9fc" },
             100: { value: "#ebf2f6" },
             200: { value: "#dfe8ee" },
