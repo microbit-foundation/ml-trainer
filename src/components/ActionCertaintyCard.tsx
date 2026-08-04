@@ -57,7 +57,7 @@ const ActionCertaintyCard = ({
           <PercentageDisplay actionName={actionName} actionId={actionId} />
         </HStack>
         <VStack alignItems="flex-start" gap={1}>
-          <Text fontSize="sm" color="gray.600">
+          <Text fontSize="sm" color="gray.500">
             <FormattedMessage id="recognition-point-label" />
           </Text>
           <Slider
@@ -82,11 +82,11 @@ const ActionCertaintyCard = ({
               rounded: "full",
               "[data-disabled] &": { bg: "gray.200" },
             }}
-            filledTrackCss={{ bg: "gray.600" }}
-            thumbCss={{ bg: "gray.600" }}
+            filledTrackCss={{ bg: "gray.500" }}
+            thumbCss={{ bg: "gray.500" }}
             mark={`${sliderValue.toFixed(0)}%`}
             markCss={{
-              bg: "gray.600",
+              bg: "gray.500",
               borderRadius: "sm",
               color: "white",
               fontSize: "xs",

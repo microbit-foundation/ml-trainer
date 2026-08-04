@@ -50,12 +50,12 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
                 ? "transparent"
                 : state.active
                 ? "brand2.500"
-                : { base: "gray.700", md: "gray.500" },
+                : { base: "gray.700", md: "gray.200" },
             }}
           />
           <HStack
             backgroundColor={
-              state.active ? "brand2.500" : { base: "gray.700", md: "gray.500" }
+              state.active ? "brand2.500" : { base: "gray.700", md: "gray.200" }
             }
             color="white"
             border="none"
@@ -82,7 +82,7 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
             gridTemplateColumns="1fr 2fr 1fr"
             backgroundColor={state.active ? "brand2.500" : "transparent"}
             color={
-              state.active ? "white" : { base: "gray.700", md: "gray.500" }
+              state.active ? "white" : { base: "gray.700", md: "gray.200" }
             }
             border="none"
             width="100%"
@@ -105,7 +105,7 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
                     ? "transparent"
                     : state.active
                     ? "white"
-                    : { base: "gray.700", md: "gray.500" },
+                    : { base: "gray.700", md: "gray.200" },
                 }}
               />
             </HStack>

@@ -249,15 +249,11 @@ export const appPreset = definePreset({
       },
       tokens: {
         colors: {
-          // gray overrides from the original Chakra theme
-          // (components/../colors.ts): replaces 500/600 (the 10/25 stops are
-          // foundation-wide, see microbit-preset.ts).
-          gray: {
-            // Brand grey
-            500: { value: "#e5e5e5" },
-            // windi css text color
-            600: { value: "#6b7280" },
-          },
+          // No gray overrides: the app converged on the family's neutral
+          // ramp (@microbit/ui docs/gray-ramp.md). The Windi-era patches this
+          // replaces mapped as: 500 #e5e5e5 → gray.200 (near-exact), 600
+          // #6b7280 → gray.500 (near-exact lightness, text-safe) — call
+          // sites were re-pointed accordingly.
         },
       },
       // This app's button vocabulary, merged into the core `button` recipe.

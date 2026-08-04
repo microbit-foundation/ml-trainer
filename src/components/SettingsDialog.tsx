@@ -36,7 +36,7 @@ interface SettingsDialogProps {
   finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
-const helperTextCss = { mt: 2, fontSize: "sm", color: "gray.600" } as const;
+const helperTextCss = { mt: 2, fontSize: "sm", color: "gray.500" } as const;
 
 export const SettingsDialog = ({
   isOpen,
