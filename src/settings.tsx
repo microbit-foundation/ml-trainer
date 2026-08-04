@@ -303,6 +303,7 @@ export const nativeLanguageIds = [
   "fr",
   "pl",
   "es-ES",
+  "pt-BR",
   "vi",
   "lo",
 ];

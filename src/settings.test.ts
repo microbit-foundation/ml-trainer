@@ -64,6 +64,7 @@ describe("getDefaultLanguage", () => {
   it("auto-selects only fully supported languages on native", () => {
     expect(getDefaultLanguage(null, ["fr-CA"], true)).toBe("fr");
     expect(getDefaultLanguage(null, ["es-MX"], true)).toBe("es-ES");
+    expect(getDefaultLanguage(null, ["pt"], true)).toBe("pt-BR");
     // Partially supported languages fall back to English
     expect(getDefaultLanguage(null, ["ja"], true)).toBe("en");
     expect(getDefaultLanguage(null, ["de"], true)).toBe("en");
