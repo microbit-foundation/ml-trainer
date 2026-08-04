@@ -8,9 +8,9 @@ import { definePreset } from "@pandacss/dev";
 /**
  * The ml-trainer app preset: this app's own styling decisions, merged after
  * the shared-ui core preset and the micro:bit foundation preset (see
- * panda.config.ts). Holds the app's animation keyframes, its gray tweaks,
- * the `shortHeight` condition and its button vocabulary; private brand
- * presets merge after this and override ramps/fonts only.
+ * panda.config.ts). Holds the app's animation keyframes, the `shortHeight`
+ * condition and its button vocabulary; private brand presets merge after
+ * this and override ramps/fonts only.
  */
 export const appPreset = definePreset({
   name: "ml-trainer",
@@ -245,39 +245,6 @@ export const appPreset = definePreset({
           "87.5%": { transform: "rotate(-10deg)" },
           "89.29%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(0deg)" },
-        },
-      },
-      tokens: {
-        colors: {
-          // CANDIDATE (gray-ramp spike): this app's per-brand gray ramp,
-          // shared with classroom — hue from the micro:bit brand blue
-          // #2a94d6 (this app's `brand` ramp is blue, so the same undertone
-          // fits), Chakra's chroma curve, every stop luminance-matched to
-          // the family grading in @microbit/ui docs/gray-ramp.md. Replaces
-          // (vs production) Chakra's slate plus the Windi-era patches, whose
-          // call sites were re-pointed: 500 #e5e5e5 → gray.200, 600 #6b7280
-          // → gray.500 (the old value was blue-toned itself, so the tinted
-          // #647987 is close in character as well as lightness).
-          gray: {
-            10: { value: "#fbfcfd" },
-            // The panel-tint stop stays neutral in this app: its 25 surfaces
-            // (the bottom action bar, the action-name input fill, the home
-            // footer) were designed against the family's untinted #f5f5f5,
-            // and the blue-tinted value read as stained on the inset fills.
-            // The 25 slot is the family's app-tuned stop (python sets its
-            // own too), so this is a per-app value, not a ramp exception.
-            25: { value: "#f5f5f5" },
-            50: { value: "#f6f9fc" },
-            100: { value: "#ebf2f6" },
-            200: { value: "#dfe8ee" },
-            300: { value: "#c9d6de" },
-            400: { value: "#7d98a8" },
-            500: { value: "#647987" },
-            600: { value: "#475a65" },
-            700: { value: "#31424e" },
-            800: { value: "#1c272f" },
-            900: { value: "#151b1f" }
-          },
         },
       },
       // This app's button vocabulary, merged into the core `button` recipe.
