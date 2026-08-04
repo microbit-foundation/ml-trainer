@@ -7,17 +7,14 @@ import { inContextTranslationLangId, useSettings } from "../store";
 import { IntlProvider, MessageFormatElement } from "react-intl";
 import { ReactNode, useEffect, useState } from "react";
 import { retryAsyncLoad } from "./chunk-util";
-import { allLanguages } from "../settings";
-import { flags } from "../flags";
+import { allLanguages, isUiEnabled } from "../settings";
 
 async function loadLocaleData(locale: string) {
   const lang = locale.toLowerCase();
-  const languageSetting = allLanguages.find(
-    l => l.id.toLowerCase() === lang
-  );
+  const languageSetting = allLanguages.find(l => l.id.toLowerCase() === lang);
   const importLanguage =
-    (flags.translationPreview && languageSetting?.ui === "preview") ||
-    languageSetting?.ui === true || lang === inContextTranslationLangId;
+    (languageSetting !== undefined && isUiEnabled(languageSetting)) ||
+    lang === inContextTranslationLangId;
   if (importLanguage) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return (await import(`./ui.${lang}.json`)).default as Messages;

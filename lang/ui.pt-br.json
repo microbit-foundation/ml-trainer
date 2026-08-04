@@ -8,7 +8,7 @@
     "description": "Menu item link to view information about app"
   },
   "about-dialog-alt": {
-    "defaultMessage": "Um micro:bit mostrando coração no visor LED",
+    "defaultMessage": "Um micro:bit mostrando um coração no visor LED",
     "description": "Alt text for image in about dialog"
   },
   "about-dialog-title": {
@@ -84,7 +84,7 @@
     "description": "Home page resource card title"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "Permitir análise",
+    "defaultMessage": "Permitir análises",
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
@@ -1120,11 +1120,11 @@
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Auxiliado",
+    "defaultMessage": "Suportado",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "Não auxiliado",
+    "defaultMessage": "Não suportado",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
