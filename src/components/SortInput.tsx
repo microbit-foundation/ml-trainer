@@ -70,8 +70,14 @@ const SortInput = ({
           background: "white",
           fontSize: "2xl",
           border: "1px solid",
-          borderColor: "gray.200",
-          color: "#838383",
+          // This button poses as the second half of the attached select, so
+          // its border must track the input recipe's outline stop (gray.400
+          // since the accessible-outline change) — a mismatch here reads as
+          // a broken control.
+          borderColor: "gray.400",
+          // Was the literal #838383 (~2.9:1); the ramp's text-safe secondary
+          // also clears 3:1 for the direction glyph.
+          color: "gray.500",
           // Square off the recipe's pill radius; the attached group squares
           // the inner edge, this handles the outer one.
           borderRadius: "md",
