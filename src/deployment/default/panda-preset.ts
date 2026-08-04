@@ -249,11 +249,29 @@ export const appPreset = definePreset({
       },
       tokens: {
         colors: {
-          // No gray overrides: the app converged on the family's neutral
-          // ramp (@microbit/ui docs/gray-ramp.md). The Windi-era patches this
-          // replaces mapped as: 500 #e5e5e5 → gray.200 (near-exact), 600
-          // #6b7280 → gray.500 (near-exact lightness, text-safe) — call
-          // sites were re-pointed accordingly.
+          // CANDIDATE (gray-ramp spike): this app's per-brand gray ramp,
+          // shared with classroom — hue from the micro:bit brand blue
+          // #2a94d6 (this app's `brand` ramp is blue, so the same undertone
+          // fits), Chakra's chroma curve, every stop luminance-matched to
+          // the family grading in @microbit/ui docs/gray-ramp.md. Replaces
+          // (vs production) Chakra's slate plus the Windi-era patches, whose
+          // call sites were re-pointed: 500 #e5e5e5 → gray.200, 600 #6b7280
+          // → gray.500 (the old value was blue-toned itself, so the tinted
+          // #647987 is close in character as well as lightness).
+          gray: {
+            10: { value: "#fbfcfd" },
+            25: { value: "#f1f6f9" },
+            50: { value: "#f6f9fc" },
+            100: { value: "#ebf2f6" },
+            200: { value: "#dfe8ee" },
+            300: { value: "#c9d6de" },
+            400: { value: "#7d98a8" },
+            500: { value: "#647987" },
+            600: { value: "#475a65" },
+            700: { value: "#31424e" },
+            800: { value: "#1c272f" },
+            900: { value: "#151b1f" }
+          },
         },
       },
       // This app's button vocabulary, merged into the core `button` recipe.
