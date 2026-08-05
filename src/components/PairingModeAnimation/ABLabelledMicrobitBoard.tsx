@@ -172,7 +172,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           position="absolute"
           top="100%"
           w="15%"
-          h="190%"
+          h="195%"
           left="42.5%"
           backgroundColor={inactiveColor}
         />
@@ -180,7 +180,7 @@ const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
           position="absolute"
           top="100%"
           w="16%"
-          h="191%"
+          h="196%"
           left="42.5%"
           transformOrigin="bottom"
           transform={
