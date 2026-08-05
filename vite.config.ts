@@ -8,6 +8,7 @@
 import react from "@vitejs/plugin-react";
 import ejs from "ejs";
 import fs from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import {
   IndexHtmlTransformContext,
@@ -139,6 +140,19 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
 
 const createServer = (mode: string): ServerOptions => {
   const commonEnv = loadEnv(mode, process.cwd(), "");
+  // Sandboxed environments (Claude's cage) have no direct egress: the
+  // dev-server-side proxy request must itself go via the HTTP proxy.
+  // https-proxy-agent is a transitive dep, hence the lazy resolution; this
+  // is a no-op when HTTPS_PROXY is unset.
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+  const proxyAgent = process.env.HTTPS_PROXY
+    ? {
+        agent: new (createRequire(__filename)(
+          "https-proxy-agent"
+        ).HttpsProxyAgent)(process.env.HTTPS_PROXY),
+      }
+    : undefined;
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
   const options = {
     port: 5173,
     fs: {
@@ -156,6 +170,7 @@ const createServer = (mode: string): ServerOptions => {
         target: "https://microbit.org/",
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/microbit-org-proxy/, ""),
+        ...proxyAgent,
       },
     },
   };
@@ -164,6 +179,7 @@ const createServer = (mode: string): ServerOptions => {
     options.proxy["/api/v1"] = {
       target: commonEnv.API_PROXY,
       changeOrigin: true,
+      ...proxyAgent,
     };
   }
   return options;
