@@ -35,7 +35,7 @@ const headings: GridColumnHeadingItemProps[] = [
     titleId: "data-samples-label",
     descriptionId: "data-samples-tooltip",
     itemsRight: (
-      <HStack position="sticky" right={0} backgroundColor="gray.25" pl={2}>
+      <HStack position="sticky" right={0} backgroundColor="gray.75" pl={2}>
         <ShowGraphsCheckbox />
         <DataSamplesMenu />
       </HStack>

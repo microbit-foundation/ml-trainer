@@ -205,7 +205,7 @@ const ActionNameCard = ({
                 : {
                     truncate: true,
                     border: "none",
-                    bg: "gray.25",
+                    bg: "gray.75",
                     h: 8,
                     px: 3,
                     fontSize: "sm",
