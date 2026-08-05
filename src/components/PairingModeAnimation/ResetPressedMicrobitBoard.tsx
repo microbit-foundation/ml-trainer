@@ -149,12 +149,11 @@ const ResetPressedMicrobitBoard = forwardRef<
           await delayInSec(durations.pressing);
           setShowGlowLines(false);
 
-          // Press up.
+          // Press up. The count stays visible until reset so that the tally of
+          // presses is still on screen alongside the resulting LED pattern.
           setHandState("pressUp");
           await delayInSec(durations.press);
           setHandState("ready");
-
-          setCount(undefined);
         },
 
         reset() {

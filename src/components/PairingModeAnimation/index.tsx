@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Box, Stack, VisuallyHidden } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { BluetoothPairingMethod } from "../../data-connection-flow/data-connection-types";
 import { useAnimation } from "../AnimationProvider";
@@ -26,7 +26,19 @@ interface PairingModeAnimationProps {
 const durations = {
   startPause: 1,
   pause: 0.1,
+  // Hold the finished state so the result can be read before the loop restarts.
+  endPause: 1.5,
 };
+
+/**
+ * For the triple reset method the two boards are the same micro:bit shown from
+ * both sides, so we dim the one that isn't being acted on. This directs
+ * attention from the reset presses to the resulting LED pattern.
+ */
+const inactiveBoardOpacity = 0.35;
+const boardOpacityTransition = "opacity 0.3s";
+
+type ActiveBoard = "back" | "front";
 
 const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const intl = useIntl();
@@ -34,8 +46,10 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const microbitBoardFrontRef = useRef<MicrobitBoardFrontRef>(null);
   const microbitBoardBackRef = useRef<ResetPressedMicrobitBoardRef>(null);
 
-  const { restartAbortController, delayInSec } = useAnimation();
+  const { restartAbortController, delayInSec, prefersReducedMotion } =
+    useAnimation();
   const isTripleReset = pairingMethod === "triple-reset";
+  const [activeBoard, setActiveBoard] = useState<ActiveBoard>("back");
 
   useEffect(() => {
     const run = async () => {
@@ -52,17 +66,22 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
               break;
             }
             case "triple-reset": {
+              setActiveBoard("back");
               await microbitBoardBackRef.current?.playPressed(1);
               await microbitBoardBackRef.current?.playPressed(2);
               await microbitBoardBackRef.current?.playPressed(3);
+              setActiveBoard("front");
               await microbitBoardFrontRef.current?.playBluetoothPattern();
             }
           }
+
+          await delayInSec(durations.endPause);
 
           // Reset all.
           microbitABBoardFrontRef.current?.reset();
           microbitBoardFrontRef.current?.reset();
           microbitBoardBackRef.current?.reset();
+          setActiveBoard("back");
           await delayInSec(durations.pause);
         } catch (e) {
           if (e instanceof DOMException && e.name === "AbortError") {
@@ -106,10 +125,18 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
               handSide="left"
               ref={microbitBoardBackRef}
               w={{ base: "50%", md: "25%" }}
+              opacity={activeBoard === "back" ? 1 : inactiveBoardOpacity}
+              transition={
+                prefersReducedMotion ? undefined : boardOpacityTransition
+              }
             />
             <MicrobitBoardFront
               boxSize={{ base: "50%", md: "25%" }}
               ref={microbitBoardFrontRef}
+              opacity={activeBoard === "front" ? 1 : inactiveBoardOpacity}
+              transition={
+                prefersReducedMotion ? undefined : boardOpacityTransition
+              }
             />
           </>
         ) : (
