@@ -9,13 +9,25 @@ import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useAnimation } from "../AnimationProvider";
 import { MicrobitBoardBack } from "./MicrobitBoardBack";
 
+type HandSide = "left" | "right";
+
 const handPos = {
-  // Start - hand is out of view.
-  hidden: { right: "-50%", top: "25%" },
-  // Ready - hand is ready to press reset button.
-  ready: { right: "-17.5%", top: "5%" },
-  // Press - hand is pressing reset button.
-  press: { right: "-15%", top: "5%" },
+  right: {
+    // Start - hand is out of view.
+    hidden: { right: "-50%", top: "25%" },
+    // Ready - hand is ready to press reset button.
+    ready: { right: "-17.5%", top: "5%" },
+    // Press - hand is pressing reset button.
+    press: { right: "-15%", top: "5%" },
+  },
+  left: {
+    // Start - hand is out of view.
+    hidden: { left: "-50%", top: "25%" },
+    // Ready - hand is ready to press reset button.
+    ready: { left: "25%", top: "10%" },
+    // Press - hand is pressing reset button.
+    press: { left: "27%", top: "10%" },
+  },
 };
 
 // Durations in sec.
@@ -35,35 +47,43 @@ interface HandConfig extends IconProps {
   };
 }
 
-const handConfig: Record<HandState, HandConfig> = {
-  moving: {
-    ...handPos.hidden,
-    opacity: 0,
-    animation: {
-      kf: keyframes({
-        "0%": { ...handPos.hidden, opacity: 0 },
-        "10%": { opacity: 1 },
-        "100%": { ...handPos.ready, opacity: 1 },
-      }),
-      duration: durations.move,
+const createHandConfig = (side: HandSide): Record<HandState, HandConfig> => {
+  const pos = handPos[side];
+  return {
+    moving: {
+      ...pos.hidden,
+      opacity: 0,
+      animation: {
+        kf: keyframes({
+          "0%": { ...pos.hidden, opacity: 0 },
+          "10%": { opacity: 1 },
+          "100%": { ...pos.ready, opacity: 1 },
+        }),
+        duration: durations.move,
+      },
     },
-  },
-  hidden: { ...handPos.hidden, opacity: 0 },
-  ready: { ...handPos.ready },
-  pressDown: {
-    ...handPos.ready,
-    animation: {
-      kf: keyframes({ from: handPos.ready, to: handPos.press }),
-      duration: durations.press,
+    hidden: { ...pos.hidden, opacity: 0 },
+    ready: { ...pos.ready },
+    pressDown: {
+      ...pos.ready,
+      animation: {
+        kf: keyframes({ from: pos.ready, to: pos.press }),
+        duration: durations.press,
+      },
     },
-  },
-  pressUp: {
-    ...handPos.ready,
-    animation: {
-      kf: keyframes({ from: handPos.press, to: handPos.ready }),
-      duration: durations.press,
+    pressUp: {
+      ...pos.ready,
+      animation: {
+        kf: keyframes({ from: pos.press, to: pos.ready }),
+        duration: durations.press,
+      },
     },
-  },
+  };
+};
+
+const handConfig: Record<HandSide, Record<HandState, HandConfig>> = {
+  left: createHandConfig("left"),
+  right: createHandConfig("right"),
 };
 
 export interface ResetPressedMicrobitBoardRef {
@@ -72,12 +92,19 @@ export interface ResetPressedMicrobitBoardRef {
 }
 interface ResetPressedMicrobitBoardProps extends StackProps {
   activeColor: string;
+  /**
+   * Side the hand approaches the board from. Defaults to "right".
+   */
+  handSide?: HandSide;
 }
 
 const ResetPressedMicrobitBoard = forwardRef<
   ResetPressedMicrobitBoardRef,
   ResetPressedMicrobitBoardProps
->(function ResetHighlightedMicrobitBoard({ activeColor, ...props }, ref) {
+>(function ResetHighlightedMicrobitBoard(
+  { activeColor, handSide = "right", ...props },
+  ref
+) {
   const { delayInSec, withPlayState } = useAnimation();
   const [showButtonOutline, setShowButtonOutline] = useState<boolean>(false);
   const [showGlowLines, setShowGlowLines] = useState<boolean>(false);
@@ -86,7 +113,7 @@ const ResetPressedMicrobitBoard = forwardRef<
 
   const getHandProps = useCallback(
     (state: HandState): IconProps => {
-      const cfg = handConfig[state];
+      const cfg = handConfig[handSide][state];
       return {
         ...cfg,
         animation: cfg.animation
@@ -96,7 +123,7 @@ const ResetPressedMicrobitBoard = forwardRef<
           : undefined,
       };
     },
-    [withPlayState]
+    [handSide, withPlayState]
   );
 
   useImperativeHandle(
@@ -171,6 +198,7 @@ const ResetPressedMicrobitBoard = forwardRef<
       <PointingHand
         position="absolute"
         boxSize="50%"
+        transform={handSide === "left" ? "scaleX(-1) rotate(20deg)" : undefined}
         {...getHandProps(handState)}
       />
     </VStack>
