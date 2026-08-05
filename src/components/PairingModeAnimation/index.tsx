@@ -90,7 +90,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         py={3.5}
         aria-hidden
         direction={{
-          base: isTripleReset ? "column-reverse" : "column",
+          base: "column",
           md: "row",
         }}
         justifyContent="center"
