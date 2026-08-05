@@ -247,6 +247,33 @@ export const appPreset = definePreset({
           "100%": { transform: "rotate(0deg)" },
         },
       },
+      tokens: {
+        colors: {
+          // The app's second accent (LED/progress/toggle/status chrome).
+          // OSS default is a deliberately bland gray alias; the private
+          // brand preset overrides the values.
+          brand2: {
+            50: { value: "{colors.gray.50}" },
+            100: { value: "{colors.gray.100}" },
+            200: { value: "{colors.gray.200}" },
+            300: { value: "{colors.gray.300}" },
+            400: { value: "{colors.gray.400}" },
+            500: { value: "{colors.gray.500}" },
+            600: { value: "{colors.gray.600}" },
+            700: { value: "{colors.gray.700}" },
+            800: { value: "{colors.gray.800}" },
+            900: { value: "{colors.gray.900}" },
+          },
+        },
+      },
+      semanticTokens: {
+        colors: {
+          // The native app's status-bar area (the ActionBar and the
+          // full-screen dialog's safe-area gradient) follows the second
+          // accent.
+          statusBarBg: { value: "{colors.brand2.500}" },
+        },
+      },
       // This app's button vocabulary, merged into the core `button` recipe.
       recipes: {
         button: {
