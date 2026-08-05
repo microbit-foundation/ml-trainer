@@ -22,7 +22,7 @@ const handPos = {
   },
   left: {
     // Start - hand is out of view.
-    hidden: { left: "-50%", top: "25%" },
+    hidden: { left: "15%", top: "15%" },
     // Ready - hand is ready to press reset button.
     ready: { left: "25%", top: "10%" },
     // Press - hand is pressing reset button.
