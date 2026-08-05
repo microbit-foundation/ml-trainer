@@ -285,6 +285,12 @@
       "value": "학습 중"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -1775,6 +1781,12 @@
       "value": "이동"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1891,6 +1903,12 @@
     {
       "type": 0,
       "value": "움직임과 micro:bit를 활용한 기계 학습"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [

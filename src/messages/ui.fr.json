@@ -297,6 +297,12 @@
       "value": "Entrainement"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -1807,6 +1813,12 @@
       "value": "Aller"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1927,6 +1939,12 @@
     {
       "type": 0,
       "value": "Apprentissage automatique avec le mouvement et le micro:bit"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [

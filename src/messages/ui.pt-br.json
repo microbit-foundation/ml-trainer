@@ -297,6 +297,12 @@
       "value": "Treinar"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -1811,6 +1817,12 @@
       "value": "Ir"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1931,6 +1943,12 @@
     {
       "type": 0,
       "value": "Aprendizado de máquina com movimento e micro:bit"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [

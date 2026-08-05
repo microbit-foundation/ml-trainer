@@ -155,6 +155,10 @@
     "defaultMessage": "トレーニング",
     "description": "Machine learning training on computer screen of how it works animation"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Download on the App Store",
+    "description": "Alt text for the Apple App Store badge in the homepage footer"
+  },
   "back-action": {
     "defaultMessage": "戻る",
     "description": "Back button text"
@@ -983,6 +987,10 @@
     "defaultMessage": "実行",
     "description": "Go action"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Get it on Google Play",
+    "description": "Alt text for the Google Play badge in the homepage footer"
+  },
   "graph-color-scheme": {
     "defaultMessage": "グラフの配色設定",
     "description": "Graph colour scheme setting label"
@@ -1058,6 +1066,10 @@
   "homepage-banner-subtitle": {
     "defaultMessage": "動作とmicro:bitを使った機械学習",
     "description": "Homepage banner subtitle"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Available on Android tablets and iPads",
+    "description": "Homepage footer text advertising the mobile apps"
   },
   "import-data-samples-action": {
     "defaultMessage": "データサンプルをインポート",
