@@ -58,9 +58,16 @@ const ResetToBluetoothModeDialog = ({
         }
       >
         <VStack gap={5} width="100%">
-          <Text alignSelf="left" width="100%">
-            <FormattedMessage id={subtitleId} />
-          </Text>
+          <VStack width="100%">
+            <Text alignSelf="left" width="100%">
+              <FormattedMessage id={subtitleId} />
+            </Text>
+            {!isTripleReset && (
+              <Text alignSelf="left" width="100%">
+                <FormattedMessage id="reset-to-bluetooth-mode-ab-power-on-subtitle" />
+              </Text>
+            )}
+          </VStack>
           <PairingModeAnimation pairingMethod={pairingMethod} />
         </VStack>
       </ConnectContainerDialog>
