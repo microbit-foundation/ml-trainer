@@ -73,7 +73,11 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Layout(
       {/* Middle */}
       <Stack
         alignItems="center"
-        width={centerLeftDuration ? 0 : undefined}
+        // "0%" not 0: a percentage is treated as auto in the row's intrinsic
+        // width calculation, so the collapsed item still props up the row and
+        // the left stack's 45% resolves against the full-size row (Chakra's
+        // width={0} meant 0%).
+        width={centerLeftDuration ? "0%" : undefined}
         style={{
           transition: centerLeftDuration
             ? `width ${centerLeftDuration}s ease`
@@ -84,7 +88,8 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Layout(
       </Stack>
       {/* Right */}
       <Stack
-        width={centerLeftDuration ? 0 : undefined}
+        // "0%" not 0 — see the middle stack's comment.
+        width={centerLeftDuration ? "0%" : undefined}
         style={{
           transition: centerLeftDuration
             ? `width ${centerLeftDuration}s ease`
