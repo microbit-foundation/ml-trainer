@@ -123,7 +123,7 @@ const OpenSharedProjectPage = () => {
 
 const ErrorPreloading = () => {
   return (
-    <VStack as="main" gap={10} minH="100vh" w="100%" bgColor="whitesmoke">
+    <VStack as="main" gap={10} minH="100vh" w="100%" bgColor="gray.25">
       <Stack maxW="container.md" gap={5}>
         <Heading mt="33vh" as="h1">
           <FormattedMessage id="code-download-error" />

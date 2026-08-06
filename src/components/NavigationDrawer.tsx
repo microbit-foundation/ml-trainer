@@ -345,7 +345,7 @@ const FooterLink = ({ href, children }: FooterLinkProps) => (
     target="_blank"
     rel="noopener"
     fontSize="xs"
-    color="gray.600"
+    color="gray.500"
     px={1}
   >
     {children}
@@ -362,7 +362,7 @@ const FooterButton = ({ onClick, children }: FooterButtonProps) => (
     onClick={onClick}
     className={css({
       fontSize: "xs",
-      color: "gray.600",
+      color: "gray.500",
       bg: "transparent",
       border: "none",
       font: "inherit",

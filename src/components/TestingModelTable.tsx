@@ -130,7 +130,7 @@ const TestingModelTable = () => {
                     <VStack justifyContent="center" h="full">
                       <Icon
                         as={RiArrowRightLine}
-                        css={{ width: 10, height: 10, color: "gray.600" }}
+                        css={{ width: 10, height: 10, color: "gray.500" }}
                       />
                     </VStack>
                     {!projectEdited && (

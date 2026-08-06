@@ -84,7 +84,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
           css={{
             width: { base: "1em", sm: "1.25em", md: "1.5em" },
             height: { base: "1em", sm: "1.25em", md: "1.5em" },
-            color: "gray.600",
+            color: "gray.500",
           }}
           style={{
             ...iconColorAnimation,
@@ -108,7 +108,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
           css={{
             width: { base: "1em", sm: "1.25em", md: "1.5em" },
             height: { base: "1em", sm: "1.25em", md: "1.5em" },
-            color: "gray.600",
+            color: "gray.500",
           }}
           style={{
             ...iconColorAnimation,

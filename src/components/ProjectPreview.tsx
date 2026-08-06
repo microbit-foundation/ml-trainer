@@ -166,7 +166,7 @@ const OpenProjectButton = ({
 
 const previewFrameOuter: SystemStyleObject = {
   p: 2,
-  bg: "whitesmoke",
+  bg: "gray.25",
   borderRadius: "sm",
 };
 

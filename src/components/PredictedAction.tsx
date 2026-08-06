@@ -95,7 +95,7 @@ const EstimatedActionText = ({
     textAlign="center"
     w="180px"
     className={css({ display: visible ? "block" : "none" })}
-    color={detected ? "brand2.600" : "gray.600"}
+    color={detected ? "brand2.600" : "gray.500"}
   >
     {children}
   </Text>

@@ -162,7 +162,7 @@ const DefaultPageLayout = ({
           w="100%"
           alignItems="stretch"
           gap={0}
-          bg="whitesmoke"
+          bg="gray.25"
           overflow="hidden"
           css={{
             // Handle landscape orientation where nav bar moves to side.

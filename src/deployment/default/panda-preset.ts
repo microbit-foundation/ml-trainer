@@ -8,9 +8,9 @@ import { definePreset } from "@pandacss/dev";
 /**
  * The ml-trainer app preset: this app's own styling decisions, merged after
  * the shared-ui core preset and the micro:bit foundation preset (see
- * panda.config.ts). Holds the app's animation keyframes, its gray tweaks,
- * the `shortHeight` condition and its button vocabulary; private brand
- * presets merge after this and override ramps/fonts only.
+ * panda.config.ts). Holds the app's animation keyframes, the `shortHeight`
+ * condition and its button vocabulary; private brand presets merge after
+ * this and override ramps/fonts only.
  */
 export const appPreset = definePreset({
   name: "ml-trainer",
@@ -249,15 +249,29 @@ export const appPreset = definePreset({
       },
       tokens: {
         colors: {
-          // gray overrides from the original Chakra theme
-          // (components/../colors.ts): replaces 500/600 (the 10/25 stops are
-          // foundation-wide, see microbit-preset.ts).
-          gray: {
-            // Brand grey
-            500: { value: "#e5e5e5" },
-            // windi css text color
-            600: { value: "#6b7280" },
+          // The app's second accent (LED/progress/toggle/status chrome).
+          // OSS default is a deliberately bland gray alias; the private
+          // brand preset overrides the values.
+          brand2: {
+            50: { value: "{colors.gray.50}" },
+            100: { value: "{colors.gray.100}" },
+            200: { value: "{colors.gray.200}" },
+            300: { value: "{colors.gray.300}" },
+            400: { value: "{colors.gray.400}" },
+            500: { value: "{colors.gray.500}" },
+            600: { value: "{colors.gray.600}" },
+            700: { value: "{colors.gray.700}" },
+            800: { value: "{colors.gray.800}" },
+            900: { value: "{colors.gray.900}" },
           },
+        },
+      },
+      semanticTokens: {
+        colors: {
+          // The native app's status-bar area (the ActionBar and the
+          // full-screen dialog's safe-area gradient) follows the second
+          // accent.
+          statusBarBg: { value: "{colors.brand2.500}" },
         },
       },
       // This app's button vocabulary, merged into the core `button` recipe.
