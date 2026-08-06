@@ -3,15 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useCallback, useMemo, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { ReactNode, useCallback, useMemo, useState } from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import {
   Box,
   Button,
+  FieldHelperText,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
+  NativeSelectField,
   Switch,
   Text,
   VStack,
@@ -20,15 +22,17 @@ import { useDeployment } from "../deployment";
 import { isNativePlatform } from "../platform";
 import {
   defaultSettings,
+  GraphColorScheme,
   graphColorSchemeOptions,
+  GraphLineScheme,
   graphLineSchemeOptions,
+  GraphLineWeight,
   graphLineWeightOptions,
 } from "../settings";
 import { useSettings } from "../store";
 import { previewGraphData } from "../utils/preview-graph-data";
 import { ConfirmDialog } from "./ConfirmDialog";
 import RecordingGraph from "./RecordingGraph";
-import SelectFormControl, { createOptions } from "./SelectFormControl";
 
 interface SettingsDialogProps {
   isOpen: boolean;
@@ -36,7 +40,23 @@ interface SettingsDialogProps {
   finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
 
-const helperTextCss = { mt: 2, fontSize: "sm", color: "gray.600" } as const;
+/**
+ * Translated <option>s for a settings select.
+ *
+ * @param values Values to create options for.
+ * @param prefix Prefix (no trailing '-') to use for translation keys.
+ * @param intl For translation strings.
+ */
+const createOptions = (
+  values: readonly string[],
+  prefix: string,
+  intl: IntlShape
+): ReactNode =>
+  values.map((value) => (
+    <option key={value} value={value}>
+      {intl.formatMessage({ id: `${prefix}-${value}` })}
+    </option>
+  ));
 
 export const SettingsDialog = ({
   isOpen,
@@ -121,42 +141,51 @@ export const SettingsDialog = ({
         </ModalHeader>
         <ModalBody>
           <VStack alignItems="flex-start" gap={5}>
-            <SelectFormControl
+            <NativeSelectField
               id="graphLineColors"
               label={intl.formatMessage({ id: "graph-color-scheme" })}
-              options={options.graphColorScheme}
+              labelPosition="side"
+              wrapperCss={{ width: "28ch" }}
               value={settings.graphColorScheme}
-              onChange={(graphColorScheme) =>
+              onChange={(e) =>
                 setSettings({
                   ...settings,
-                  graphColorScheme,
+                  graphColorScheme: e.currentTarget.value as GraphColorScheme,
                 })
               }
-            />
-            <SelectFormControl
+            >
+              {options.graphColorScheme}
+            </NativeSelectField>
+            <NativeSelectField
               id="graphLineScheme"
               label={intl.formatMessage({ id: "graph-line-scheme" })}
-              options={options.graphLineScheme}
+              labelPosition="side"
+              wrapperCss={{ width: "28ch" }}
               value={settings.graphLineScheme}
-              onChange={(graphLineScheme) =>
+              onChange={(e) =>
                 setSettings({
                   ...settings,
-                  graphLineScheme,
+                  graphLineScheme: e.currentTarget.value as GraphLineScheme,
                 })
               }
-            />
-            <SelectFormControl
+            >
+              {options.graphLineScheme}
+            </NativeSelectField>
+            <NativeSelectField
               id="graphLineWeight"
               label={intl.formatMessage({ id: "graph-line-weight" })}
-              options={options.graphLineWeight}
+              labelPosition="side"
+              wrapperCss={{ width: "28ch" }}
               value={settings.graphLineWeight}
-              onChange={(graphLineWeight) =>
+              onChange={(e) =>
                 setSettings({
                   ...settings,
-                  graphLineWeight,
+                  graphLineWeight: e.currentTarget.value as GraphLineWeight,
                 })
               }
-            />
+            >
+              {options.graphLineWeight}
+            </NativeSelectField>
             <VStack alignItems="flex-start" w="full">
               <Text>
                 <FormattedMessage id="graph-preview" />
@@ -178,6 +207,9 @@ export const SettingsDialog = ({
               </Box>
             </VStack>
             {showAnalyticsToggle && (
+              // The w-full Box keeps the row spanning the dialog: the VStack
+              // is alignItems flex-start, and Switch's helperText wrapper has
+              // no width of its own.
               <Box w="full">
                 <Switch
                   isSelected={settings.analyticsConsent === "granted"}
@@ -187,29 +219,22 @@ export const SettingsDialog = ({
                     });
                     logging.setConsent(granted);
                   }}
-                  // Label left, switch right (Chakra FormLabel + Switch row);
-                  // zero the label-after-track indent the recipe adds.
-                  css={{
-                    width: "100%",
-                    flexDirection: "row-reverse",
-                    justifyContent: "space-between",
-                    "& .switch__label": { marginStart: 0 },
-                  }}
+                  labelPosition="start"
+                  helperText={
+                    <FormattedMessage id="analytics-consent-setting-helper" />
+                  }
                 >
                   <FormattedMessage id="analytics-consent-setting-label" />
                 </Switch>
-                <Text css={{ ...helperTextCss, lineHeight: "base" }}>
-                  <FormattedMessage id="analytics-consent-setting-helper" />
-                </Text>
               </Box>
             )}
             <Box w="full">
               <Button variant="link" onPress={handleResetToDefault}>
                 <FormattedMessage id="restore-defaults-action" />
               </Button>
-              <Text css={helperTextCss}>
+              <FieldHelperText>
                 <FormattedMessage id="restore-defaults-helper" />
-              </Text>
+              </FieldHelperText>
             </Box>
           </VStack>
         </ModalBody>
