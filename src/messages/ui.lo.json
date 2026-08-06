@@ -2474,7 +2474,7 @@
   "ml.onStart|block": [
     {
       "type": 0,
-      "value": "ໃນ ML ເມື່ອ $event ເລີ່ມຕົ້ນ\n"
+      "value": "ໃນ ML ເມື່ອ $event ເລີ່ມຕົ້ນ"
     }
   ],
   "more-edit-in-makecode-options": [

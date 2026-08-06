@@ -1368,7 +1368,7 @@
     "description": "Live graph disconnected micro:bit status message"
   },
   "ml.onStart|block": {
-    "defaultMessage": "khi ML $event bắt đầu\n",
+    "defaultMessage": "khi $event ML bắt đầu",
     "description": "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation."
   },
   "more-edit-in-makecode-options": {

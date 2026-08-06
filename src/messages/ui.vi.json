@@ -2466,7 +2466,7 @@
   "ml.onStart|block": [
     {
       "type": 0,
-      "value": "khi ML $event bắt đầu\n"
+      "value": "khi $event ML bắt đầu"
     }
   ],
   "more-edit-in-makecode-options": [

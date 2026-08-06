@@ -224,7 +224,7 @@
   "analytics-consent-setting-label": [
     {
       "type": 0,
-      "value": "Compartilhar dados de uso anônimos"
+      "value": "Compartilhar dados anônimos de uso"
     }
   ],
   "analytics-consent-title": [
@@ -318,7 +318,7 @@
   "bluetooth-disabled-body": [
     {
       "type": 0,
-      "value": "Ative o Bluetooth e tente novamente."
+      "value": "Por favor, ative o Bluetooth e tente novamente."
     }
   ],
   "bluetooth-disabled-heading": [
@@ -334,7 +334,7 @@
     },
     {
       "type": 0,
-      "value": " usa Bluetooth para se conectar ao seu micro:bit. Ative a permissão de Dispositivos próximos nas "
+      "value": " usa Bluetooth para se conectar ao seu micro:bit. Ative a permissão de dispositivos próximos nas "
     },
     {
       "children": [
@@ -740,7 +740,7 @@
   "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Confirme que este padrão corresponde ao seu micro:bit"
+      "value": "Confirme que este padrão corresponda ao seu micro:bit"
     }
   ],
   "connect-native-pattern-subtitle": [
@@ -752,7 +752,7 @@
   "connect-native-start-battery-check": [
     {
       "type": 0,
-      "value": "Conecte o conjunto de pilhas e verifique se a luz na parte de trás do micro:bit está acesa."
+      "value": "Conecte o conjunto de pilhas e verifique se a luz na parte traseira do micro:bit está acesa."
     }
   ],
   "connect-native-start-heading": [
@@ -1066,7 +1066,7 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
     {
       "type": 0,
-      "value": "Se o seu micro:bit mostrar um ícone “+”, conecte o micro:bit a um computador com um cabo USB e baixe um programa simples. Desemparelhe/Esqueça o micro:bit no aplicativo Configurações antes de tentar novamente."
+      "value": "Se o seu micro:bit mostrar um ícone “+”, conecte o micro:bit a um computador com um cabo USB e baixe um programa simples. Desemparelhe/esqueça o micro:bit no aplicativo Configurações antes de tentar novamente."
     }
   ],
   "connect-with-batteries": [
@@ -2404,7 +2404,7 @@
   "location-disabled-heading": [
     {
       "type": 0,
-      "value": "Serviços de localização necessários"
+      "value": "Os serviços de localização são necessários"
     }
   ],
   "main-menu": [
@@ -2450,7 +2450,7 @@
   "microbit-name-label": [
     {
       "type": 0,
-      "value": "nome do micro:bit: "
+      "value": "Nome do micro:bit: "
     },
     {
       "type": 1,
@@ -2520,13 +2520,13 @@
   "native-bluetooth-error-body": [
     {
       "type": 0,
-      "value": "A conexão com o micro:bit falhou."
+      "value": "Não foi possível conectar ao micro:bit."
     }
   ],
   "native-bluetooth-error-check": [
     {
       "type": 0,
-      "value": "Verifique se:"
+      "value": "Por favor, verifique se:"
     }
   ],
   "native-bluetooth-error-check-distance": [
@@ -2550,13 +2550,13 @@
   "native-bluetooth-error-forget-device": [
     {
       "type": 0,
-      "value": "Esqueça este dispositivo nas configurações de Bluetooth e tente novamente."
+      "value": "Por favor, esqueça este dispositivo nas configurações de Bluetooth e tente novamente."
     }
   ],
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Acesse Bluetooth no aplicativo Configurações"
+      "value": "Acesse o Bluetooth no aplicativo Configurações"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
@@ -3358,7 +3358,7 @@
   "share-file-description": [
     {
       "type": 0,
-      "value": "Projeto do "
+      "value": "Projeto "
     },
     {
       "type": 1,
@@ -3406,7 +3406,7 @@
   "sharing-description": [
     {
       "type": 0,
-      "value": "Seu projeto estará pronto para compartilhar em breve."
+      "value": "Seu projeto estará pronto para ser compartilhado em breve."
     }
   ],
   "sharing-title": [
@@ -3520,13 +3520,13 @@
   "storage-error-device-other": [
     {
       "type": 0,
-      "value": "Falha ao salvar seu projeto no armazenamento do dispositivo"
+      "value": "Não foi possível salvar seu projeto no armazenamento do dispositivo"
     }
   ],
   "storage-error-other": [
     {
       "type": 0,
-      "value": "Falha ao salvar seu projeto no armazenamento do navegador"
+      "value": "Não foi possível salvar seu projeto no armazenamento do navegador"
     }
   ],
   "storage-error-quota-description": [
