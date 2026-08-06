@@ -22,7 +22,7 @@ const PercentageDisplay = ({
   const textRef = useRef<HTMLParagraphElement>(null);
   const accessibleTextRef = useRef<HTMLParagraphElement>(null);
   const triggeredColor = token("colors.brand2.500");
-  const defaultColor = token("colors.gray.600");
+  const defaultColor = token("colors.gray.500");
 
   const getAriaLabel = useCallback(
     (currentConfidence: string) =>

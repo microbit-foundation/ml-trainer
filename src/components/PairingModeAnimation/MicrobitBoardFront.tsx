@@ -80,7 +80,7 @@ export const MicrobitBoardFront = forwardRef<
   const { delayInSec } = useAnimation();
   const [ledPattern, setLedPattern] = useState<string>(icons.off);
   const litLedColor = token("colors.pink.500");
-  const unlitLedColor = token("colors.gray.500");
+  const unlitLedColor = token("colors.gray.200");
 
   const buttonStrokeFill = buttonStrokeColor;
 

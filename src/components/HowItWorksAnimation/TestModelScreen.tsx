@@ -29,7 +29,7 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
   ref
 ) {
   const empty = token("colors.gray.200");
-  const filled = token("colors.gray.600");
+  const filled = token("colors.gray.500");
   const filledDark = token("colors.brand2.500");
   // The preset's gaugeIconColor keyframe reads the colours from these vars.
   const iconColorAnimation: CSSProperties = {

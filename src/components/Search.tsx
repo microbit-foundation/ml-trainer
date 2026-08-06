@@ -69,7 +69,7 @@ const Search = ({
             css={{
               fontSize: "2xl",
               // Also used for Zoom, move to theme.
-              color: "#838383",
+              color: "gray.500",
             }}
           >
             <Icon as={RiCloseLine} />

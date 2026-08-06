@@ -20,7 +20,7 @@ const PercentageMeter = ({
 
   const meterRef = useRef<HTMLDivElement>(null);
   const triggeredColor = token("colors.brand2.500");
-  const defaultColor = token("colors.gray.600");
+  const defaultColor = token("colors.gray.500");
 
   useEffect(
     () =>
