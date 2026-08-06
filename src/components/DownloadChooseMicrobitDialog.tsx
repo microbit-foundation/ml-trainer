@@ -116,7 +116,7 @@ const RadioCard = ({ id, imgSrc }: RadioCardProps) => {
             }),
             isSelected
               ? css({ borderColor: "brand.600" })
-              : css({ borderColor: "gray.200" }),
+              : css({ borderColor: "gray.400" }),
             isFocusVisible ? css({ focusShadow: "outline" }) : undefined
           )}
         >
@@ -129,7 +129,7 @@ const RadioCard = ({ id, imgSrc }: RadioCardProps) => {
             ) : (
               <Icon
                 as={RiCheckboxBlankLine}
-                css={{ width: 6, height: 6, color: "gray.200" }}
+                css={{ width: 6, height: 6, color: "gray.400" }}
               />
             )}
           </HStack>
