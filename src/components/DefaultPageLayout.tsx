@@ -162,7 +162,7 @@ const DefaultPageLayout = ({
           w="100%"
           alignItems="stretch"
           gap={0}
-          bg="gray.25"
+          bg="whitesmoke"
           overflow="hidden"
           css={{
             // Handle landscape orientation where nav bar moves to side.
@@ -351,7 +351,7 @@ const DefaultPageLayout = ({
             {children}
           </Flex>
           {bottomContent && (
-            <VStack w="full" flexShrink={0} gap={0} bg="gray.25">
+            <VStack w="full" flexShrink={0} gap={0} bg="whitesmoke">
               {bottomContent}
             </VStack>
           )}

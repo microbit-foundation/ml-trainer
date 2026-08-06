@@ -31,8 +31,8 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
           height: "166px",
           borderWidth: "16px",
           color: "brand.600",
-          borderBottomColor: "gray.25",
-          borderLeftColor: "gray.25",
+          borderBottomColor: "whitesmoke",
+          borderLeftColor: "whitesmoke",
         }}
       />
     </Modal>
