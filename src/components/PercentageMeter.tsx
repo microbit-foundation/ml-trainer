@@ -20,7 +20,7 @@ const PercentageMeter = ({
 
   const meterRef = useRef<HTMLDivElement>(null);
   const triggeredColor = token("colors.brand2.500");
-  const defaultColor = token("colors.gray.600");
+  const defaultColor = token("colors.gray.500");
 
   useEffect(
     () =>
@@ -50,7 +50,7 @@ const PercentageMeter = ({
       // Prop-driven width; inline style (Panda can't extract computed values).
       style={{ width: `${meterBarWidthPx}px` }}
     >
-      <HStack ref={meterRef} w={0} h={3} rounded="full" bg="gray.600" />
+      <HStack ref={meterRef} w={0} h={3} rounded="full" bg="gray.500" />
       <HStack
         display="inline-flex"
         w="full"

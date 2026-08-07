@@ -86,7 +86,7 @@ const DataSamplesCollection = forwardRef<DataSamplesCollectionRef>(
             css={{
               width: { base: "1em", sm: "1.25em" },
               height: { base: "1em", sm: "1.25em" },
-              color: "gray.600",
+              color: "gray.500",
             }}
           />
         </GridItem>
@@ -108,7 +108,7 @@ const DataSamplesCollection = forwardRef<DataSamplesCollectionRef>(
             css={{
               width: { base: "1em", sm: "1.25em" },
               height: { base: "1em", sm: "1.25em" },
-              color: "gray.600",
+              color: "gray.500",
             }}
           />
         </GridItem>
@@ -138,7 +138,7 @@ const DataSample1 = (props: AnimationIconProps) => (
       fill: "none",
       width: { base: "1em", sm: "1.25em" },
       height: { base: "1em", sm: "1.25em" },
-      color: "gray.600",
+      color: "gray.500",
     }}
     {...props}
   >
@@ -160,7 +160,7 @@ const DataSample2 = (props: AnimationIconProps) => (
       fill: "none",
       width: { base: "1em", sm: "1.25em" },
       height: { base: "1em", sm: "1.25em" },
-      color: "gray.600",
+      color: "gray.500",
     }}
     {...props}
   >

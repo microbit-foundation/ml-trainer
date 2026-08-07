@@ -51,7 +51,7 @@ export const NativeConsentDialog = ({
           <Text>
             <FormattedMessage id="analytics-consent-analytics" />
           </Text>
-          <Text fontSize="sm" color="gray.600">
+          <Text fontSize="sm" color="gray.500">
             <FormattedMessage id="analytics-consent-change-later" />
             {privacyPolicyLink && (
               <>

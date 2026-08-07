@@ -39,7 +39,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
   ref
 ) {
   const litLedColor = token("colors.pink.500");
-  const unlitLedColor = token("colors.gray.500");
+  const unlitLedColor = token("colors.gray.200");
   const { withPlayState, delayInSec } = useAnimation();
   const [ledPattern, setLedPattern] = useState<string>(Off);
   const [move, setMove] = useState<MoveType>("still");

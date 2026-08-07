@@ -38,7 +38,7 @@ interface ABLabelledMicrobitBoardProps {
   css?: SystemStyleObject;
 }
 
-const inactiveColor = token("colors.gray.500");
+const inactiveColor = token("colors.gray.200");
 
 const ABLabelledMicrobitBoard = forwardRef<
   ABLabelledMicrobitBoardRef,

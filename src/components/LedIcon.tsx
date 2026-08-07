@@ -31,7 +31,7 @@ const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
     const activeColor = token(
       `colors.${colorScheme}.500` as Parameters<typeof token>[0]
     );
-    const offColor = token("colors.gray.600");
+    const offColor = token("colors.gray.500");
 
     useImperativeHandle(
       ref,

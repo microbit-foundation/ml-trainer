@@ -351,7 +351,7 @@ const DefaultPageLayout = ({
             {children}
           </Flex>
           {bottomContent && (
-            <VStack w="full" flexShrink={0} gap={0} bg="gray.25">
+            <VStack w="full" flexShrink={0} gap={0} bg="whitesmoke">
               {bottomContent}
             </VStack>
           )}

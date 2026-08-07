@@ -117,7 +117,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
               ? "transparent"
               : arrowState === "active"
               ? { base: "active", md: "brand2.500" }
-              : { base: "gray.700", md: "gray.500" },
+              : { base: "gray.700", md: "gray.200" },
         }}
       />
       <ArrowIcon
@@ -135,7 +135,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
               ? "transparent"
               : arrowState === "active"
               ? { base: "active", md: "brand2.500" }
-              : { base: "gray.700", md: "gray.500" },
+              : { base: "gray.700", md: "gray.200" },
         }}
       />
       {/* Arrows for base / sm screen sizes */}
@@ -155,7 +155,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
               ? "transparent"
               : arrowState === "active"
               ? { base: "active", md: "brand2.500" }
-              : { base: "gray.700", md: "gray.500" },
+              : { base: "gray.700", md: "gray.200" },
         }}
       />
       <ArrowIcon
@@ -174,7 +174,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
               ? "transparent"
               : arrowState === "active"
               ? { base: "active", md: "brand2.500" }
-              : { base: "gray.700", md: "gray.500" },
+              : { base: "gray.700", md: "gray.200" },
         }}
       />
       <StepTickPill

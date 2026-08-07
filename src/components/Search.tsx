@@ -55,7 +55,7 @@ const Search = ({
           pl: 10,
           pr: 10,
           fontSize: "lg",
-          _placeholder: { color: "gray.600" },
+          _placeholder: { color: "gray.500" },
           borderRadius: "20px",
           background: "white",
         }}
@@ -69,7 +69,7 @@ const Search = ({
             css={{
               fontSize: "2xl",
               // Also used for Zoom, move to theme.
-              color: "#838383",
+              color: "gray.500",
             }}
           >
             <Icon as={RiCloseLine} />

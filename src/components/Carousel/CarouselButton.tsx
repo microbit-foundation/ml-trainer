@@ -38,9 +38,9 @@ const CarouselButton = React.forwardRef(function CarouselButton(
           border: "none",
           borderRadius: 0,
           bg: "rgba(245, 245, 245, 0.5)",
-          // Chakra-era chevron slate; off-palette, kept pending a design
-          // pass (the icons themselves follow currentColor).
-          color: "#556C84",
+          // Was the Chakra-era off-palette slate #556C84 (5.4:1); the
+          // nearest ink stop by lightness (the icons follow currentColor).
+          color: "gray.500",
           cursor: "pointer",
           transition: "background-color 0.2s ease",
           w: "60px",

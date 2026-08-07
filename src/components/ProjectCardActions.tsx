@@ -89,7 +89,7 @@ const ProjectCardActions = ({
             py: 5,
             color: "brand.600",
             zIndex: 1,
-            borderColor: "gray.600",
+            borderColor: "gray.500",
             _hover: {
               backgroundColor: "blackAlpha.50",
             },
