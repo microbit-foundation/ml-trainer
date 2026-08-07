@@ -8,7 +8,7 @@
     "description": "Menu item link to view information about app"
   },
   "about-dialog-alt": {
-    "defaultMessage": "Um micro:bit mostrando coração no visor LED",
+    "defaultMessage": "Um micro:bit mostrando um coração no visor LED",
     "description": "Alt text for image in about dialog"
   },
   "about-dialog-title": {
@@ -84,7 +84,7 @@
     "description": "Home page resource card title"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "Permitir análise",
+    "defaultMessage": "Permitir análises",
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
@@ -108,7 +108,7 @@
     "description": "Helper text for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "Compartilhar dados de uso anônimos",
+    "defaultMessage": "Compartilhar dados anônimos de uso",
     "description": "Label for the analytics consent toggle in the settings dialog"
   },
   "analytics-consent-title": {
@@ -168,7 +168,7 @@
     "description": "Blocks preview heading text"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "Ative o Bluetooth e tente novamente.",
+    "defaultMessage": "Por favor, ative o Bluetooth e tente novamente.",
     "description": "Body text for Bluetooth disabled error dialog"
   },
   "bluetooth-disabled-heading": {
@@ -176,7 +176,7 @@
     "description": "Heading for Bluetooth disabled error dialog"
   },
   "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} usa Bluetooth para se conectar ao seu micro:bit. Ative a permissão de Dispositivos próximos nas <link>configurações do {appNameShort}</link>.",
+    "defaultMessage": "{appNameShort} usa Bluetooth para se conectar ao seu micro:bit. Ative a permissão de dispositivos próximos nas <link>configurações do {appNameShort}</link>.",
     "description": "Body text for Bluetooth permission denied error dialog on Android"
   },
   "bluetooth-permission-denied-body-ios": {
@@ -404,7 +404,7 @@
     "description": "Change Bluetooth pattern link"
   },
   "connect-native-pattern-heading": {
-    "defaultMessage": "Confirme que este padrão corresponde ao seu micro:bit",
+    "defaultMessage": "Confirme que este padrão corresponda ao seu micro:bit",
     "description": "Native Bluetooth pattern dialog heading"
   },
   "connect-native-pattern-subtitle": {
@@ -412,7 +412,7 @@
     "description": "Native Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-battery-check": {
-    "defaultMessage": "Conecte o conjunto de pilhas e verifique se a luz na parte de trás do micro:bit está acesa.",
+    "defaultMessage": "Conecte o conjunto de pilhas e verifique se a luz na parte traseira do micro:bit está acesa.",
     "description": "Instruction to check the micro:bit is powered on via the battery pack"
   },
   "connect-native-start-heading": {
@@ -564,7 +564,7 @@
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "Se o seu micro:bit mostrar um ícone “+”, conecte o micro:bit a um computador com um cabo USB e baixe um programa simples. Desemparelhe/Esqueça o micro:bit no aplicativo Configurações antes de tentar novamente.",
+    "defaultMessage": "Se o seu micro:bit mostrar um ícone “+”, conecte o micro:bit a um computador com um cabo USB e baixe um programa simples. Desemparelhe/esqueça o micro:bit no aplicativo Configurações antes de tentar novamente.",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-with-batteries": {
@@ -1120,11 +1120,11 @@
     "description": "Partially supported languages heading text"
   },
   "language-support-checked": {
-    "defaultMessage": "Auxiliado",
+    "defaultMessage": "Suportado",
     "description": "Aria label for ticked checkbox for language support"
   },
   "language-support-unchecked": {
-    "defaultMessage": "Não auxiliado",
+    "defaultMessage": "Não suportado",
     "description": "Aria label for unticked checkbox for language support"
   },
   "language-supported-for": {
@@ -1332,7 +1332,7 @@
     "description": "Body text for location disabled error dialog (Android only)"
   },
   "location-disabled-heading": {
-    "defaultMessage": "Serviços de localização necessários",
+    "defaultMessage": "Os serviços de localização são necessários",
     "description": "Heading for location disabled error dialog (Android only)"
   },
   "main-menu": {
@@ -1360,7 +1360,7 @@
     "description": "Title of MakeCode load error dialog"
   },
   "microbit-name-label": {
-    "defaultMessage": "nome do micro:bit: {name}",
+    "defaultMessage": "Nome do micro:bit: {name}",
     "description": "Screen reader text for micro:bit name"
   },
   "microbit-not-connected": {
@@ -1404,11 +1404,11 @@
     "description": "Text under project name field"
   },
   "native-bluetooth-error-body": {
-    "defaultMessage": "A conexão com o micro:bit falhou.",
+    "defaultMessage": "Não foi possível conectar ao micro:bit.",
     "description": "Body text for native Bluetooth connection error dialog"
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "Verifique se:",
+    "defaultMessage": "Por favor, verifique se:",
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {
@@ -1424,11 +1424,11 @@
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Esqueça este dispositivo nas configurações de Bluetooth e tente novamente.",
+    "defaultMessage": "Por favor, esqueça este dispositivo nas configurações de Bluetooth e tente novamente.",
     "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Acesse Bluetooth no aplicativo Configurações",
+    "defaultMessage": "Acesse o Bluetooth no aplicativo Configurações",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
@@ -1820,7 +1820,7 @@
     "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-file-description": {
-    "defaultMessage": "Projeto do {appNameFull}: {name}",
+    "defaultMessage": "Projeto {appNameFull}: {name}",
     "description": "Label for a hex file with app name context"
   },
   "share-hex-dialog-heading": {
@@ -1836,7 +1836,7 @@
     "description": "Label for sharing a named file"
   },
   "sharing-description": {
-    "defaultMessage": "Seu projeto estará pronto para compartilhar em breve.",
+    "defaultMessage": "Seu projeto estará pronto para ser compartilhado em breve.",
     "description": "Sharing progress dialog text for mobile"
   },
   "sharing-title": {
@@ -1912,11 +1912,11 @@
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
   "storage-error-device-other": {
-    "defaultMessage": "Falha ao salvar seu projeto no armazenamento do dispositivo",
+    "defaultMessage": "Não foi possível salvar seu projeto no armazenamento do dispositivo",
     "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
-    "defaultMessage": "Falha ao salvar seu projeto no armazenamento do navegador",
+    "defaultMessage": "Não foi possível salvar seu projeto no armazenamento do navegador",
     "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
   },
   "storage-error-quota-description": {

@@ -64,11 +64,18 @@ describe("getDefaultLanguage", () => {
   it("auto-selects only fully supported languages on native", () => {
     expect(getDefaultLanguage(null, ["fr-CA"], true)).toBe("fr");
     expect(getDefaultLanguage(null, ["es-MX"], true)).toBe("es-ES");
+    expect(getDefaultLanguage(null, ["pt"], true)).toBe("pt-BR");
     // Partially supported languages fall back to English
     expect(getDefaultLanguage(null, ["ja"], true)).toBe("en");
     expect(getDefaultLanguage(null, ["de"], true)).toBe("en");
     // ...but later fully supported preferences still win
     expect(getDefaultLanguage(null, ["de", "fr"], true)).toBe("fr");
+  });
+  it("does not auto-select preview languages on native", () => {
+    // vi and lo cover the native strings but their UI translations are
+    // preview-only, so are not enabled outside beta.
+    expect(getDefaultLanguage(null, ["vi"], true)).toBe("en");
+    expect(getDefaultLanguage(null, ["lo"], true)).toBe("en");
   });
   it("treats the URL parameter as another preference on native", () => {
     expect(getDefaultLanguage("fr", ["en"], true)).toBe("fr");

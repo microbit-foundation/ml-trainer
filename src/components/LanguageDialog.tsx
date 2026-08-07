@@ -33,9 +33,13 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { deployment, useDeployment } from "../deployment";
-import { flags } from "../flags";
 import { isNativePlatform } from "../platform";
-import { allLanguages, Language, nativeLanguageIds } from "../settings";
+import {
+  allLanguages,
+  isUiEnabled,
+  Language,
+  nativeLanguageIds,
+} from "../settings";
 import { useStore } from "../store";
 import ModalFooterContent from "./ModalFooterContent";
 
@@ -236,10 +240,7 @@ const uiSupported = (language: Language): boolean => {
   if (isNativePlatform() && !nativeLanguageIds.includes(language.id)) {
     return false;
   }
-  return (
-    language.ui === true ||
-    (language.ui === "preview" && flags.translationPreview)
-  );
+  return isUiEnabled(language);
 };
 
 const fullySupported = (language: Language): boolean => {
