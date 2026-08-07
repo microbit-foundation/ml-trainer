@@ -49,7 +49,6 @@ import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
 import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
 import { isNativePlatform } from "../platform";
-import { untitledProjectName } from "../project-utils";
 import { shortScreenHeightBreakpoint } from "../responsive";
 import {
   loadProjectAndModelFromStorage,
@@ -57,6 +56,7 @@ import {
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
+import { useDefaultProjectName } from "../hooks/project-hooks";
 
 const HomePage = () => {
   const intl = useIntl();
@@ -326,10 +326,12 @@ const NewProjectCard = () => {
     setIsOpen(false);
   }, []);
 
+  const projectName = useDefaultProjectName();
+
   return (
     <>
       <NameProjectDialog
-        projectName={untitledProjectName}
+        projectName={projectName}
         isOpen={isOpen}
         onClose={handleCloseNameDialog}
         onSave={handleNameProjectSave}
