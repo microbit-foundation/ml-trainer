@@ -9,14 +9,14 @@
  * only its serialised artifacts and ml4f machine code.
  */
 import { prepareFeaturesAndLabels } from "./ml";
-import { mlWorker } from "./ml-worker-client";
+import { mlWorker, type WorkerFailureReason } from "./ml-worker-client";
 import { mlSettings } from "./mlConfig";
 import { ActionData, TrainedModel } from "./model";
 import { DataWindow } from "./project-utils";
 
 export type TrainModelResult =
   | { error: false; model: TrainedModel }
-  | { error: true };
+  | { error: true; reason: WorkerFailureReason };
 
 const minTrainingDurationMs = 2000;
 
@@ -49,7 +49,7 @@ export const trainModel = async (
   };
   requestAnimationFrame(tick);
 
-  const trainResult = await mlWorker.train(
+  const outcome = await mlWorker.train(
     features,
     labels,
     {
@@ -60,15 +60,15 @@ export const trainModel = async (
       actualProgress = value;
     }
   );
-  const result: TrainModelResult = trainResult
+  const result: TrainModelResult = outcome.success
     ? {
         error: false,
         model: {
-          artifacts: trainResult.artifacts,
-          machineCode: trainResult.machineCode,
+          artifacts: outcome.result.artifacts,
+          machineCode: outcome.result.machineCode,
         },
       }
-    : { error: true };
+    : { error: true, reason: outcome.reason };
   const remaining = minTrainingDurationMs - (Date.now() - startTime);
   if (!result.error && remaining > 0) {
     await new Promise((resolve) => setTimeout(resolve, remaining));
