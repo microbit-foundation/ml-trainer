@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { useCallback, useRef } from "react";
-import { Dialog, Popover as RACPopover } from "react-aria-components";
+import {
+  Dialog,
+  Heading as RACHeading,
+  Popover as RACPopover,
+} from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
@@ -193,7 +197,9 @@ const Tour = () => {
         {/* Chakra's popper arrow: white, shadowless, 16px base. */}
         <PopoverArrow size={16} css={{ "& svg": { fill: "white" } }} />
         <Dialog className={popoverDialogClass}>
-          <div className={popoverHeaderClass}>{step.title}</div>
+          <RACHeading slot="title" className={popoverHeaderClass}>
+            {step.title}
+          </RACHeading>
           <div className={popoverBodyClass}>{step.content}</div>
           <div className={popoverFooterClass}>{footer}</div>
         </Dialog>

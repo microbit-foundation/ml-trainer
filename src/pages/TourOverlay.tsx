@@ -22,6 +22,9 @@ const TourOverlay = ({ reference, ...clipStyle }: TourOverlayProps) => {
   const [overlay, cutOut] = useRects(reference);
   return createPortal(
     <svg
+      // Purely decorative: the spotlight can't be conveyed to assistive
+      // technology, so the step's dialog names its target instead.
+      aria-hidden="true"
       className={css({
         zIndex: "overlay",
         position: "fixed",
