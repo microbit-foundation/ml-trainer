@@ -13,13 +13,11 @@ export interface InfoToolTipProps {
   titleId: string;
   descriptionId: string;
   placement?: TooltipProps["placement"];
-  isDisabled?: boolean;
 }
 const InfoToolTip = ({
   titleId,
   descriptionId,
   placement = "right",
-  isDisabled,
 }: InfoToolTipProps) => {
   const { appNameFull } = useDeployment();
   return (
@@ -27,7 +25,6 @@ const InfoToolTip = ({
       titleId={titleId}
       hasArrow
       placement={placement}
-      isDisabled={isDisabled}
       label={
         <VStack textAlign="left" alignItems="flex-start" m={3}>
           <Text fontWeight="bold">

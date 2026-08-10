@@ -29,7 +29,6 @@ interface ClickableTooltipProps {
   placement?: TooltipProps["placement"];
   hasArrow?: boolean;
   titleId?: string;
-  isDisabled?: boolean;
   /** Styles for the tooltip itself, e.g. padding for a multi-line body. */
   css?: SystemStyleObject;
   /**
@@ -95,7 +94,6 @@ const ClickableTooltip = ({
   placement,
   hasArrow,
   titleId,
-  isDisabled,
   deprecatedVisualOnly = false,
   css: cssProp,
 }: ClickableTooltipProps) => {
@@ -248,7 +246,7 @@ const ClickableTooltip = ({
       }
       placement={placement}
       hasArrow={hasArrow}
-      isOpen={isOpen && !isDisabled}
+      isOpen={isOpen}
       triggerRef={ref}
       css={cssProp}
     >
@@ -257,21 +255,12 @@ const ClickableTooltip = ({
         className={css({ display: "flex" })}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        // `inert` is what "the surrounding UI is inactive" actually means: no
-        // tab stop, no pointer events, and — unlike aria-disabled — nothing
-        // announced, since a disabled button is noise in inert UI. React 18
-        // neither types nor coerces it, hence the HTML boolean form.
-        {...(isDisabled ? ({ inert: "" } as { inert?: string }) : {})}
       >
         {isButton ? (
           <button
             type="button"
             {...nameProps}
             className={cx("focusable-tooltip", triggerStyle)}
-            // Fallback for Safari < 15.5, which predates `inert` but is still
-            // in our support range: keep it out of the tab order at least.
-            tabIndex={isDisabled ? -1 : undefined}
-            aria-disabled={isDisabled || undefined}
             onClick={handleClick}
             onPointerDown={handlePointerDown}
             onFocus={handleFocus}

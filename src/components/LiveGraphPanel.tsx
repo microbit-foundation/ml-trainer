@@ -125,6 +125,22 @@ const LiveGraphPanel = ({
             ? css({ pointerEvents: "none", opacity: 0.2 })
             : undefined
         )}
+        // Faded out behind the "not connected" overlay, so nothing in here
+        // should be reachable: `inert` takes the whole layer out of the tab
+        // order, hit-testing and the accessibility tree at once, which is more
+        // honest than each control disabling itself. Nothing inside needs an
+        // exception — isDisconnected rules out the connected and reconnecting
+        // states, so the disconnect button and reconnecting text aren't
+        // rendered. React 18 neither types nor coerces the attribute, hence the
+        // HTML boolean form.
+        //
+        // inert needs Chrome 102/Safari 15.5/Firefox 112, above every
+        // browserslist floor here, so older engines — iPads capped at iPadOS
+        // 15.x in practice — keep only the pointerEvents: none above and can
+        // still reach the info tooltips by keyboard or VoiceOver. Accepted
+        // degradation: aria-hidden would hide the layer from assistive tech but
+        // leave those tab stops nameless, which is worse.
+        {...(isDisconnected ? ({ inert: "" } as { inert?: string }) : {})}
       >
         {portalTarget &&
           createPortal(
@@ -147,7 +163,6 @@ const LiveGraphPanel = ({
                   <InfoToolTip
                     titleId="live-graph"
                     descriptionId="live-graph-tooltip"
-                    isDisabled={isDisconnected}
                   />
                 </HStack>
                 {isConnected && (
