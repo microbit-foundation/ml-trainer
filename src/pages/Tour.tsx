@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { useCallback, useRef } from "react";
-import { Dialog, Popover as RACPopover } from "react-aria-components";
+import {
+  Dialog,
+  Heading as RACHeading,
+  Popover as RACPopover,
+} from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
@@ -58,12 +62,13 @@ const Tour = () => {
   const anchored = !!step?.selector && !isSmallScreen;
   const spotlightPadding = step?.spotlightStyle?.padding ?? 5;
 
-  // The spotlighted element the popover anchors to. Assigned during render so
-  // it's set before the (remounted, keyed) popover measures it on mount.
-  const anchorRef = useRef<HTMLElement | null>(null);
-  anchorRef.current = step?.selector
+  // The spotlighted element the popover anchors to. Looked up during render so
+  // it's known before the (remounted, keyed) popover measures it on mount.
+  const anchorEl = step?.selector
     ? document.querySelector<HTMLElement>(step.selector)
     : null;
+  const anchorRef = useRef<HTMLElement | null>(null);
+  anchorRef.current = anchorEl;
 
   // Let focus move to the body so the next Tab enters the page from the top.
   // react-aria restores focus on unmount only when focus is still inside the
@@ -134,19 +139,22 @@ const Tour = () => {
   // backdrops flashes; TourOverlay dims (and spotlights) instead.
   const useTourOverlay = Boolean(step.selector) || steps.length > 1;
 
+  // Rendered first in both branches below so it isn't remounted between steps.
+  const tourOverlay = (
+    <TourOverlay
+      reference={anchorEl}
+      padding={spotlightPadding}
+      paddingTop={step.spotlightStyle?.paddingTop}
+      paddingBottom={step.spotlightStyle?.paddingBottom}
+      paddingRight={step.spotlightStyle?.paddingRight}
+      paddingLeft={step.spotlightStyle?.paddingLeft}
+    />
+  );
+
   if (!anchored) {
     return (
       <>
-        {useTourOverlay && (
-          <TourOverlay
-            referenceRef={anchorRef as React.MutableRefObject<HTMLElement>}
-            padding={spotlightPadding}
-            paddingTop={step.spotlightStyle?.paddingTop}
-            paddingBottom={step.spotlightStyle?.paddingBottom}
-            paddingRight={step.spotlightStyle?.paddingRight}
-            paddingLeft={step.spotlightStyle?.paddingLeft}
-          />
-        )}
+        {useTourOverlay && tourOverlay}
         <Modal
           isOpen={isOpen}
           onClose={() => {}}
@@ -172,14 +180,7 @@ const Tour = () => {
 
   return (
     <>
-      <TourOverlay
-        referenceRef={anchorRef as React.MutableRefObject<HTMLElement>}
-        padding={spotlightPadding}
-        paddingTop={step.spotlightStyle?.paddingTop}
-        paddingBottom={step.spotlightStyle?.paddingBottom}
-        paddingRight={step.spotlightStyle?.paddingRight}
-        paddingLeft={step.spotlightStyle?.paddingLeft}
-      />
+      {tourOverlay}
       <RACPopover
         // Remount per step so the popover re-measures its new anchor.
         key={step.selector}
@@ -196,7 +197,9 @@ const Tour = () => {
         {/* Chakra's popper arrow: white, shadowless, 16px base. */}
         <PopoverArrow size={16} css={{ "& svg": { fill: "white" } }} />
         <Dialog className={popoverDialogClass}>
-          <div className={popoverHeaderClass}>{step.title}</div>
+          <RACHeading slot="title" className={popoverHeaderClass}>
+            {step.title}
+          </RACHeading>
           <div className={popoverBodyClass}>{step.content}</div>
           <div className={popoverFooterClass}>{footer}</div>
         </Dialog>

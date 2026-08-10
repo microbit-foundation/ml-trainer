@@ -4,8 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useCallback, useState } from "react";
-import { createPortal } from "react-dom";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   DataConnectionStep,
@@ -47,8 +46,6 @@ const LiveGraphPanel = ({
   );
   const isConnected = dataConnection.step === DataConnectionStep.Connected;
   const isReconnecting = dataConnection.isReconnecting;
-  // State, not a ref: the portal target must trigger a re-render once mounted.
-  const [portalTarget, setPortalTarget] = useState<HTMLDivElement | null>(null);
   const logging = useLogging();
 
   // Show disconnected state when not connected, not reconnecting, and don't distract from dialogs.
@@ -82,6 +79,7 @@ const LiveGraphPanel = ({
       role="region"
       aria-label={intl.formatMessage({ id: "data-connection-region" })}
       position="relative"
+      isolation="isolate"
       h="160px"
       width="100%"
       bg="white"
@@ -94,7 +92,7 @@ const LiveGraphPanel = ({
           h="100%"
           gap={10}
           justifyContent="center"
-          zIndex={1}
+          zIndex={2}
           // On mobile text will overlap
           bg={{ base: "white", md: "unset" }}
         >
@@ -119,7 +117,6 @@ const LiveGraphPanel = ({
         </HStack>
       )}
       <HStack
-        ref={setPortalTarget}
         className={cx(
           isDisconnected
             ? css({ pointerEvents: "none", opacity: 0.2 })
@@ -130,48 +127,47 @@ const LiveGraphPanel = ({
         // form.
         {...(isDisconnected ? ({ inert: "" } as { inert?: string }) : {})}
       >
-        {portalTarget &&
-          createPortal(
-            <HStack
-              position="absolute"
-              top={0}
-              left={0}
-              right={0}
-              px={5}
-              py={2.5}
-              w={`calc(100% - ${
-                showPredictedAction ? `${predictedActionDisplayWidth}px` : "0"
-              })`}
-            >
-              <HStack gap={4}>
-                <HStack gap={2}>
-                  <Text fontWeight="bold">
-                    <FormattedMessage id="live-data-graph" />
-                  </Text>
-                  <InfoToolTip
-                    titleId="live-graph"
-                    descriptionId="live-graph-tooltip"
-                  />
-                </HStack>
-                {isConnected && (
-                  <Button
-                    variant="secondary"
-                    size="xs"
-                    onPress={handleDisconnect}
-                    css={{ backgroundColor: "white" }}
-                  >
-                    <FormattedMessage id="disconnect-action" />
-                  </Button>
-                )}
-                {isReconnecting && (
-                  <Text bg="white" fontWeight="bold">
-                    <FormattedMessage id="reconnecting" />
-                  </Text>
-                )}
-              </HStack>
-            </HStack>,
-            portalTarget
-          )}
+        <HStack
+          position="absolute"
+          zIndex={1}
+          top={0}
+          left={0}
+          right={0}
+          px={5}
+          py={2.5}
+          style={{
+            width: `calc(100% - ${
+              showPredictedAction ? predictedActionDisplayWidth : 0
+            }px)`,
+          }}
+        >
+          <HStack gap={4}>
+            <HStack gap={2}>
+              <Text fontWeight="bold">
+                <FormattedMessage id="live-data-graph" />
+              </Text>
+              <InfoToolTip
+                titleId="live-graph"
+                descriptionId="live-graph-tooltip"
+              />
+            </HStack>
+            {isConnected && (
+              <Button
+                variant="secondary"
+                size="xs"
+                onPress={handleDisconnect}
+                css={{ backgroundColor: "white" }}
+              >
+                <FormattedMessage id="disconnect-action" />
+              </Button>
+            )}
+            {isReconnecting && (
+              <Text bg="white" fontWeight="bold">
+                <FormattedMessage id="reconnecting" />
+              </Text>
+            )}
+          </HStack>
+        </HStack>
         <HStack position="absolute" width="100%" height="100%" gap={0}>
           <LiveGraph paused={isTraining} />
           {showPredictedAction && <PredictedAction />}
