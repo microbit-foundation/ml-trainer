@@ -178,11 +178,6 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
             {language.enName}
           </Text>
           {!supported && (
-            // Undo the content layer's pointerEvents: none for the trigger, and
-            // shrink to the glyph so the focus ring is an even square around it.
-            // gray.500 rather than the design's gray.400: as a control the
-            // glyph needs 3:1 against the card (WCAG 1.4.11), and gray.400 is
-            // 2.26:1.
             <Box
               css={{
                 pointerEvents: "auto",
