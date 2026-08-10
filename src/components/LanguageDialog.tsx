@@ -30,11 +30,11 @@ import {
   Stack,
   SystemStyleObject,
   Text,
+  TooltipButton,
   useToast,
   VStack,
 } from "@microbit/ui";
 import { useStore } from "../store";
-import ClickableTooltip from "./ClickableTooltip";
 import ModalFooterContent from "./ModalFooterContent";
 
 interface LanguageDialogProps {
@@ -188,10 +188,9 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
                 pointerEvents: "auto",
                 color: "gray.500",
                 display: "inline-flex",
-                lineHeight: "1",
               }}
             >
-              <ClickableTooltip
+              <TooltipButton
                 hasArrow
                 placement="top"
                 css={{ px: 3, py: 3 }}
@@ -205,7 +204,7 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
                 }
               >
                 <Icon as={RiErrorWarningLine} />
-              </ClickableTooltip>
+              </TooltipButton>
             </Box>
           )}
         </HStack>

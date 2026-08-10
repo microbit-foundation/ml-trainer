@@ -10,7 +10,7 @@ import { applyFilters } from "../ml";
 import { XYZData } from "../model";
 import { useStore } from "../store";
 import { calculateGradientColor } from "../utils/gradient-calculator";
-import ClickableTooltip from "./ClickableTooltip";
+import VisualOnlyTooltip from "./VisualOnlyTooltip";
 
 interface RecordingFingerprintProps extends ComponentProps<typeof Box> {
   data: XYZData;
@@ -42,10 +42,7 @@ const RecordingFingerprint = ({
       {...rest}
     >
       {Object.keys(dataFeatures).map((k) => (
-        <ClickableTooltip
-          // Temporary escape hatch from being a tab stop until an
-          // accessible solution is implemented.
-          deprecatedVisualOnly
+        <VisualOnlyTooltip
           placement="right bottom"
           key={k}
           label={
@@ -64,7 +61,7 @@ const RecordingFingerprint = ({
               ),
             }}
           />
-        </ClickableTooltip>
+        </VisualOnlyTooltip>
       ))}
     </Box>
   );

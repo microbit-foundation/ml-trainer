@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { expect } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 import { test } from "./fixtures";
 import { modalDialog } from "./app/shared";
 
@@ -26,9 +26,7 @@ test.describe("language dialog", () => {
     const tooltip = page
       .getByRole("tooltip")
       .filter({ hasText: "Language not fully supported" });
-    const trigger = modalDialog(page)
-      .locator("button.focusable-tooltip")
-      .first();
+    const trigger = partialSupportTriggers(page).first();
 
     // Tab to the first partially supported language's warning button. The
     // fully supported cards come first and have no tooltip trigger.
@@ -69,9 +67,7 @@ test.describe("language dialog", () => {
     const tooltip = page
       .getByRole("tooltip")
       .filter({ hasText: "Language not fully supported" });
-    const trigger = modalDialog(page)
-      .locator("button.focusable-tooltip")
-      .first();
+    const trigger = partialSupportTriggers(page).first();
 
     // WCAG 1.4.13: the pointer must be able to move onto the tooltip, e.g. to
     // read it magnified or select the text, without it disappearing.
@@ -97,20 +93,22 @@ test.describe("language dialog", () => {
     const tooltips = page
       .getByRole("tooltip")
       .filter({ hasText: "Language not fully supported" });
-    const triggers = modalDialog(page).locator("button.focusable-tooltip");
-
-    await triggers.first().focus();
-    await expect(tooltips).toHaveCount(1);
-    // Hovering another trigger while the first keeps focus shows that one
-    // instead, rather than nothing or both.
+    const triggers = partialSupportTriggers(page);
+    const first = triggers.first();
     const second = triggers.nth(1);
-    const secondBox = (await second.boundingBox())!;
+
+    // Pointer throughout: react-aria ignores hover until the next pointer press
+    // once you've used the keyboard, so a focus-then-hover sequence proves
+    // nothing about exclusivity.
+    await first.hover();
+    await expect(tooltips).toHaveCount(1);
+    await expectCentredOn(tooltips.first(), first);
+
+    // Hovering the next warning moves the one tooltip rather than adding a
+    // second.
     await second.hover();
     await expect(tooltips).toHaveCount(1);
-    const box = (await tooltips.boundingBox())!;
-    expect(Math.abs(box.x + box.width / 2 - secondBox.x)).toBeLessThan(
-      box.width
-    );
+    await expectCentredOn(tooltips.first(), second);
   });
 
   test("partial support tooltip opens on hover and click", async ({
@@ -120,9 +118,7 @@ test.describe("language dialog", () => {
     const tooltip = page
       .getByRole("tooltip")
       .filter({ hasText: "Language not fully supported" });
-    const trigger = modalDialog(page)
-      .locator("button.focusable-tooltip")
-      .first();
+    const trigger = partialSupportTriggers(page).first();
 
     await trigger.hover();
     await expect(tooltip).toBeVisible();
@@ -138,3 +134,19 @@ test.describe("language dialog", () => {
 });
 
 const isFocused = (el: Element) => el === document.activeElement;
+
+/** Asserts the tooltip is positioned over its own trigger, not another. */
+const expectCentredOn = async (tooltip: Locator, trigger: Locator) => {
+  const t = (await tooltip.boundingBox())!;
+  const g = (await trigger.boundingBox())!;
+  expect(Math.abs(t.x + t.width / 2 - (g.x + g.width / 2))).toBeLessThan(24);
+};
+
+/**
+ * The warning buttons on the partially supported language cards. Their whole
+ * tooltip body is their accessible name, which begins with the title.
+ */
+const partialSupportTriggers = (page: Page) =>
+  modalDialog(page).getByRole("button", {
+    name: /^Language not fully supported/,
+  });
