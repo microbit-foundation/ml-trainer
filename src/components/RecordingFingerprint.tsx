@@ -45,7 +45,7 @@ const RecordingFingerprint = ({
         <ClickableTooltip
           // Temporary escape hatch from being a tab stop until an
           // accessible solution is implemented.
-          visualOnly
+          deprecatedVisualOnly
           placement="right bottom"
           key={k}
           label={

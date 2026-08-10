@@ -30,11 +30,11 @@ import {
   Stack,
   SystemStyleObject,
   Text,
-  Tooltip,
   useToast,
   VStack,
 } from "@microbit/ui";
 import { useStore } from "../store";
+import ClickableTooltip from "./ClickableTooltip";
 import ModalFooterContent from "./ModalFooterContent";
 
 interface LanguageDialogProps {
@@ -178,43 +178,35 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
             {language.enName}
           </Text>
           {!supported && (
-            <Tooltip
-              hasArrow
-              placement="top"
-              css={{ px: 3, py: 3 }}
-              label={
-                <Stack>
-                  <Text fontWeight="bold">
-                    <FormattedMessage id="language-toast-title" />
-                  </Text>
-                  <SupportStatement language={language} intl={intl} />
-                </Stack>
-              }
+            // Undo the content layer's pointerEvents: none for the trigger, and
+            // shrink to the glyph so the focus ring is an even square around it.
+            // gray.500 rather than the design's gray.400: as a control the
+            // glyph needs 3:1 against the card (WCAG 1.4.11), and gray.400 is
+            // 2.26:1.
+            <Box
+              css={{
+                pointerEvents: "auto",
+                color: "gray.500",
+                display: "inline-flex",
+                lineHeight: "1",
+              }}
             >
-              <Button
-                variant="unstyled"
-                aria-label={intl.formatMessage({ id: "language-toast-title" })}
-                css={{
-                  pointerEvents: "auto",
-                  color: "gray.400",
-                  cursor: "default",
-                  // Shrink tightly to the icon: fixes partial-card height (the
-                  // default md size would force h10) and makes the focus ring an
-                  // even square around the glyph rather than a tall rectangle.
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  lineHeight: "1",
-                  height: "auto",
-                  minHeight: "0",
-                  minWidth: "0",
-                  padding: "0",
-                  borderRadius: "base",
-                }}
+              <ClickableTooltip
+                hasArrow
+                placement="top"
+                css={{ px: 3, py: 3 }}
+                label={
+                  <Stack>
+                    <Text fontWeight="bold">
+                      <FormattedMessage id="language-toast-title" />
+                    </Text>
+                    <SupportStatement language={language} intl={intl} />
+                  </Stack>
+                }
               >
                 <Icon as={RiErrorWarningLine} />
-              </Button>
-            </Tooltip>
+              </ClickableTooltip>
+            </Box>
           )}
         </HStack>
       </VStack>

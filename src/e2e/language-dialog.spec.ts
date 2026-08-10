@@ -1,0 +1,140 @@
+/**
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+import { expect } from "@playwright/test";
+import { test } from "./fixtures";
+import { modalDialog } from "./app/shared";
+
+test.describe("language dialog", () => {
+  test.beforeEach(async ({ homePage }) => {
+    await homePage.goto();
+    await homePage.page
+      .getByRole("button", { name: "Settings actions menu" })
+      .click();
+    await homePage.page.getByRole("menuitem", { name: "Language" }).click();
+    await expect(modalDialog(homePage.page)).toBeVisible();
+  });
+
+  test("partial support tooltip is keyboard reachable and toggles", async ({
+    homePage,
+  }) => {
+    const page = homePage.page;
+    // Tooltips portal to the body, so identify this one by its text rather
+    // than by position in the dialog.
+    const tooltip = page
+      .getByRole("tooltip")
+      .filter({ hasText: "Language not fully supported" });
+    const trigger = modalDialog(page)
+      .locator("button.focusable-tooltip")
+      .first();
+
+    // Tab to the first partially supported language's warning button. The
+    // fully supported cards come first and have no tooltip trigger.
+    await expect(trigger).toBeAttached();
+    for (let i = 0; i < 200 && !(await trigger.evaluate(isFocused)); i++) {
+      await page.keyboard.press("Tab");
+    }
+    expect(await trigger.evaluate(isFocused)).toEqual(true);
+
+    // Focus alone shows it.
+    await expect(tooltip).toBeVisible();
+
+    // A keypress that isn't Escape leaves it open.
+    await page.keyboard.press("a");
+    await expect(tooltip).toBeVisible();
+
+    // Escape dismisses the tooltip, leaving the dialog open.
+    await page.keyboard.press("Escape");
+    await expect(tooltip).toBeHidden();
+    await expect(modalDialog(page)).toBeVisible();
+
+    // Enter toggles it back on, and off again, without choosing the language.
+    await page.keyboard.press("Enter");
+    await expect(tooltip).toBeVisible();
+    await page.keyboard.press("Enter");
+    await expect(tooltip).toBeHidden();
+    await expect(modalDialog(page)).toBeVisible();
+
+    // The mouse can still bring it back on a trigger that keeps focus.
+    await trigger.hover();
+    await expect(tooltip).toBeVisible();
+  });
+
+  test("partial support tooltip stays open while hovered", async ({
+    homePage,
+  }) => {
+    const page = homePage.page;
+    const tooltip = page
+      .getByRole("tooltip")
+      .filter({ hasText: "Language not fully supported" });
+    const trigger = modalDialog(page)
+      .locator("button.focusable-tooltip")
+      .first();
+
+    // WCAG 1.4.13: the pointer must be able to move onto the tooltip, e.g. to
+    // read it magnified or select the text, without it disappearing.
+    await trigger.hover();
+    await expect(tooltip).toBeVisible();
+    const box = (await tooltip.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height - 4, {
+      steps: 10,
+    });
+    await expect(tooltip).toBeVisible();
+    await page.waitForTimeout(300);
+    await expect(tooltip).toBeVisible();
+
+    // Leaving the tooltip closes it.
+    await page.mouse.move(0, 0);
+    await expect(tooltip).toBeHidden();
+  });
+
+  test("only one partial support tooltip is open at a time", async ({
+    homePage,
+  }) => {
+    const page = homePage.page;
+    const tooltips = page
+      .getByRole("tooltip")
+      .filter({ hasText: "Language not fully supported" });
+    const triggers = modalDialog(page).locator("button.focusable-tooltip");
+
+    await triggers.first().focus();
+    await expect(tooltips).toHaveCount(1);
+    // Hovering another trigger while the first keeps focus shows that one
+    // instead, rather than nothing or both.
+    const second = triggers.nth(1);
+    const secondBox = (await second.boundingBox())!;
+    await second.hover();
+    await expect(tooltips).toHaveCount(1);
+    const box = (await tooltips.boundingBox())!;
+    expect(Math.abs(box.x + box.width / 2 - secondBox.x)).toBeLessThan(
+      box.width
+    );
+  });
+
+  test("partial support tooltip opens on hover and click", async ({
+    homePage,
+  }) => {
+    const page = homePage.page;
+    const tooltip = page
+      .getByRole("tooltip")
+      .filter({ hasText: "Language not fully supported" });
+    const trigger = modalDialog(page)
+      .locator("button.focusable-tooltip")
+      .first();
+
+    await trigger.hover();
+    await expect(tooltip).toBeVisible();
+    await page.mouse.move(0, 0);
+    await expect(tooltip).toBeHidden();
+
+    // Clicking the warning shows the tooltip (the tap path on touch devices)
+    // rather than choosing the language, which would close the dialog.
+    await trigger.click();
+    await expect(tooltip).toBeVisible();
+    await expect(modalDialog(page)).toBeVisible();
+  });
+});
+
+const isFocused = (el: Element) => el === document.activeElement;
