@@ -128,7 +128,6 @@ const ProjectLoadDetails = ({
           data-testid="name-text"
           value={name}
           placeholder={nameLabel}
-          // Chakra's size="lg" input.
           css={{ minW: "25ch", height: 12, fontSize: "lg", borderRadius: "md" }}
           onChange={(e) => setName(e.currentTarget.value)}
         />

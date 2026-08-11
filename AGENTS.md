@@ -2,9 +2,8 @@
 
 ## Styling / branded builds / verification
 
-This app uses react-aria-components + Panda CSS via `@microbit/ui`
-(migrated from Chakra UI, July 2026). **Read the gotcha catalog in
-`../ui/docs/migration-playbook.md` before styling/theming/UI work.**
+This app uses react-aria-components + Panda CSS via `@microbit/ui`.
+**Read `../ui/docs/hints.md` before styling/theming/UI work.**
 
 - **Branded build locally**: build the sibling `../ml-trainer-microbit`
   package (`npm run build` there → `dist/panda-preset.js`) and make it
@@ -15,7 +14,7 @@ This app uses react-aria-components + Panda CSS via `@microbit/ui`
   to `../ui/packages/ui`; a plain `npm i` restores the registry version.
 - **After changing or (re)linking either sibling package, do a _clean_
   Panda regen**: `rm -rf styled-system && npm run panda`. Incremental
-  codegen doesn't detect external preset changes (playbook gotcha #27).
+  codegen doesn't detect external preset changes.
   Restart the dev server too, and `rm -rf node_modules/.vite`: Vite serves
   the old pre-bundle of the package otherwise, and a new export fails as
   "does not provide an export named X" on a blank page.

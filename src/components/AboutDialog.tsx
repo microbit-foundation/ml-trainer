@@ -58,7 +58,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
         setHasCopied(true);
         setTimeout(() => setHasCopied(false), 1500);
       },
-      // E.g. permission denied; give no feedback, like Chakra's useClipboard.
+      // E.g. permission denied; give no feedback.
       () => {}
     );
   }, [clipboardVersion]);
@@ -114,8 +114,8 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
               </AspectRatio>
             </Box>
             <VStack alignItems="center" justifyContent="center" gap={4}>
-              {/* One-off Chakra-style table (size sm); not worth a primitive
-                  for a single two-cell layout. */}
+              {/* One-off table styling; not worth a primitive for a single
+                  two-cell layout. */}
               <table className={css({ borderCollapse: "collapse" })}>
                 <caption
                   className={css({

@@ -75,8 +75,7 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Layout(
         alignItems="center"
         // "0%" not 0: a percentage is treated as auto in the row's intrinsic
         // width calculation, so the collapsed item still props up the row and
-        // the left stack's 45% resolves against the full-size row (Chakra's
-        // width={0} meant 0%).
+        // the left stack's 45% resolves against the full-size row.
         width={centerLeftDuration ? "0%" : undefined}
         style={{
           transition: centerLeftDuration
