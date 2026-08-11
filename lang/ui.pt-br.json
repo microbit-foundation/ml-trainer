@@ -144,7 +144,7 @@
     "description": "Step 3 of how it works animation"
   },
   "animation-step-4": {
-    "defaultMessage": "Programar",
+    "defaultMessage": "Programe",
     "description": "Step 4 of how it works animation"
   },
   "animation-step-5": {
@@ -252,7 +252,7 @@
     "description": "Title for error message relating to project loading"
   },
   "code-label": {
-    "defaultMessage": "Programar",
+    "defaultMessage": "Programe",
     "description": "Code column heading"
   },
   "code-label-tooltip-aria": {
@@ -320,7 +320,7 @@
     "description": "Connection dialog heading"
   },
   "connect-bluetooth-start-requirements1": {
-    "defaultMessage": "Um micro:bit;",
+    "defaultMessage": "1 micro:bit",
     "description": "Label for icon of single micro:bit"
   },
   "connect-bluetooth-start-requirements2-subtitle": {
@@ -1888,7 +1888,7 @@
     "description": "Start training button text"
   },
   "steps-code": {
-    "defaultMessage": "Programar",
+    "defaultMessage": "Programe",
     "description": "Step in home page diagram"
   },
   "steps-collect-data": {
