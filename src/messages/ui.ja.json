@@ -228,7 +228,7 @@
   "animation-bluetooth-mode-label": [
     {
       "type": 0,
-      "value": "Animation demonstrating how to reset to Bluetooth mode."
+      "value": "Bluetoothモードにリセットする方法を説明しているアニメーション。"
     }
   ],
   "animation-label": [
@@ -530,7 +530,7 @@
   "confirm-share-action": [
     {
       "type": 0,
-      "value": "Confirm and share"
+      "value": "確認して共有"
     }
   ],
   "connect-action": [
@@ -650,7 +650,7 @@
   "connect-cannot-see-pattern": [
     {
       "type": 0,
-      "value": "I do not see a pattern"
+      "value": "パターンが表示されません"
     }
   ],
   "connect-computer": [
@@ -722,19 +722,19 @@
   "connect-native-change-pattern": [
     {
       "type": 0,
-      "value": "My pattern is different"
+      "value": "自分のパターンが違う"
     }
   ],
   "connect-native-pattern-heading": [
     {
       "type": 0,
-      "value": "Confirm this pattern matches your micro:bit"
+      "value": "micro:bitにマッチするパターンを確認する"
     }
   ],
   "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "If needed, change the pattern below to match."
+      "value": "必要に応じて、以下のパターンをそれに合わせて変更してください。"
     }
   ],
   "connect-native-start-battery-check": [
@@ -746,7 +746,7 @@
   "connect-native-start-heading": [
     {
       "type": 0,
-      "value": "Connect micro:bit battery pack"
+      "value": "micro:bitの電池パックを接続する"
     }
   ],
   "connect-pattern-heading": [
@@ -1020,7 +1020,7 @@
   "connect-try-another-way": [
     {
       "type": 0,
-      "value": "Try another way"
+      "value": "別の方法を試してみてください"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode": [
@@ -1038,7 +1038,7 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
     {
       "type": 0,
-      "value": "Try the following:"
+      "value": "以下をお試しください。"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
@@ -1502,19 +1502,19 @@
   "downloading-stage-checking-bond": [
     {
       "type": 0,
-      "value": "Choose ‘Pair’ if asked"
+      "value": "質問された場合は「ペアリング」を選択してください"
     }
   ],
   "downloading-stage-connecting": [
     {
       "type": 0,
-      "value": "Connecting to micro:bit…"
+      "value": "micro:bitに接続中"
     }
   ],
   "downloading-stage-finding-device": [
     {
       "type": 0,
-      "value": "Finding micro:bit…"
+      "value": "micro:bitを探す…"
     }
   ],
   "downloading-stage-flashing-native": [
@@ -3095,6 +3095,12 @@
     {
       "type": 0,
       "value": "プロジェクト名を変更"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": [
+    {
+      "type": 0,
+      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [

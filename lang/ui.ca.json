@@ -1408,47 +1408,47 @@
     "description": "Body text for native Bluetooth connection error dialog"
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:",
+    "defaultMessage": "Si us plau comprova que:",
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {
-    "defaultMessage": "the micro:bit is close to this device",
+    "defaultMessage": "la micro:bit està a prop del dispositiu",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-mode": {
-    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "defaultMessage": "la micro:bit està en mode Bluetooth (mostrant el patró d'emparellament)",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "the pattern you entered is correct",
+    "defaultMessage": "el patró que has entrat és correcte",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
+    "defaultMessage": "Si us plau, oblida aquest dispositiu en la configuració del Bluetooth i torna-ho a intentar.",
     "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Go to Bluetooth in the Settings app",
+    "defaultMessage": "Anar al Bluetooth a l'app de Configuració",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
+    "defaultMessage": "Toca la icona <infoIcon>d'informació</infoIcon> al costat del dispositiu de la BBC micro:bit",
     "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
   },
   "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "Tap ‘Forget This Device’",
+    "defaultMessage": "Clica ‘Oblida Aquest Dispositiu’",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "Return to this app to try again",
+    "defaultMessage": "Retorna a aquesta app per tornar a provar",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-heading": {
-    "defaultMessage": "Could not connect to micro:bit",
+    "defaultMessage": "No s'ha pogut connectar a micro:bit",
     "description": "Heading for native Bluetooth connection error dialog"
   },
   "new-project-setup-title": {
-    "defaultMessage": "New project setup",
+    "defaultMessage": "Configuració de nou projecte",
     "description": "New project setup title"
   },
   "newpage-new-project-title": {
@@ -1706,6 +1706,10 @@
   "rename-project-heading": {
     "defaultMessage": "Reanomena el projecte",
     "description": "Heading for rename project dialog"
+  },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",

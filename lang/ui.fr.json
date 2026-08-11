@@ -1707,6 +1707,10 @@
     "defaultMessage": "Renommer le projet",
     "description": "Heading for rename project dialog"
   },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
+  },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Maintenez les touches A et B enfoncées et appuyez sur RESET. Maintenez les touches A et B enfoncées jusqu'à ce que l'icône Bluetooth apparaisse.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"

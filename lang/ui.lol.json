@@ -1707,6 +1707,10 @@
     "defaultMessage": "crwdns369387:0crwdne369387:0",
     "description": "Heading for rename project dialog"
   },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
+  },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "crwdns369723:0crwdne369723:0",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"

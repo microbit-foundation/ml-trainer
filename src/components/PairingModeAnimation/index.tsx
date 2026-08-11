@@ -101,8 +101,8 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         {isTripleReset ? (
           <MicrobitBoardFront
             css={{
-              width: { base: "50%", md: "25%" },
-              height: { base: "50%", md: "25%" },
+              width: { base: "50%", md: "27%" },
+              height: { base: "50%", md: "27%" },
             }}
             ref={microbitBoardFrontRef}
           />
@@ -110,13 +110,13 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
           <ABLabelledMicrobitBoard
             activeColor={token("colors.brand2.500")}
             ref={microbitABBoardFrontRef}
-            css={{ width: { base: "50%", md: "25%" } }}
+            css={{ width: { base: "50%", md: "27%" } }}
           />
         )}
         <ResetPressedMicrobitBoard
           activeColor={token("colors.brand2.500")}
           ref={microbitBoardBackRef}
-          css={{ width: { base: "50%", md: "25%" } }}
+          css={{ width: { base: "50%", md: "27%" } }}
         />
       </Stack>
     </>

@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { match } from "@formatjs/intl-localematcher";
+import { flags } from "./flags";
 import { DataSamplesView, TourTriggerName } from "./model";
 import { isNativePlatform } from "./platform";
 
@@ -20,7 +21,7 @@ export interface Language {
   makeCode: boolean;
 }
 
-// Tag new languages with `preview: true` to enable for beta only.
+// Tag new languages with `ui: "preview"` to enable for beta only.
 // Adding a new language? Ensure the project links work, or add a temporary
 // redirect on microbit.org to fallback on not having a language path.
 export const allLanguages: Language[] = [
@@ -165,6 +166,13 @@ export const allLanguages: Language[] = [
     makeCode: true,
   },
   {
+    id: "lo",
+    name: "ພາສາລາວ",
+    enName: "Lao",
+    ui: true,
+    makeCode: true,
+  },
+  {
     id: "nl",
     name: "Nederlands",
     enName: "Dutch",
@@ -259,7 +267,7 @@ export const allLanguages: Language[] = [
     id: "vi",
     name: "Tiếng việt",
     enName: "Vietnamese",
-    ui: false,
+    ui: true,
     makeCode: true,
   },
   {
@@ -288,7 +296,29 @@ export const getMakeCodeLang = (languageId: string): string =>
  * and are never auto-selected on first run. Add ids here as translations
  * land.
  */
-export const nativeLanguageIds = ["en", "en-US", "nl", "fr", "pl", "es-ES"];
+export const nativeLanguageIds = [
+  "en",
+  "en-US",
+  "nl",
+  "fr",
+  "pl",
+  "es-ES",
+  "pt-BR",
+  "vi",
+  "lo",
+];
+
+/**
+ * Whether the language's UI translation is enabled in this build.
+ *
+ * Preview languages are enabled on beta only, so their translations can be
+ * reviewed before going live.
+ */
+export const isUiEnabled = (
+  language: Language,
+  previewEnabled: boolean = flags.translationPreview
+): boolean =>
+  language.ui === true || (language.ui === "preview" && previewEnabled);
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
 const defaultLanguageId = allLanguages[0].id;
@@ -326,6 +356,21 @@ export const matchLanguage = (requestedLanguages: readonly string[]): string =>
   defaultLanguageId;
 
 /**
+ * Language ids that may be auto-selected on first run on native: those
+ * covering the native strings whose UI translation is enabled in this build.
+ *
+ * Parameters default from the environment and exist for testing.
+ */
+export const autoSelectableLanguageIds = (
+  languages: readonly Language[] = allLanguages,
+  previewEnabled: boolean = flags.translationPreview,
+  nativeIds: readonly string[] = nativeLanguageIds
+): string[] =>
+  languages
+    .filter((l) => nativeIds.includes(l.id) && isUiEnabled(l, previewEnabled))
+    .map((l) => l.id);
+
+/**
  * Get the initial language, checking URL parameter first, then OS/browser
  * preference.
  *
@@ -352,7 +397,8 @@ export const getDefaultLanguage = (
     return matchLanguage(requestedLanguages);
   }
   return (
-    matchOrUndefined(requestedLanguages, nativeLanguageIds) ?? defaultLanguageId
+    matchOrUndefined(requestedLanguages, autoSelectableLanguageIds()) ??
+    defaultLanguageId
   );
 };
 

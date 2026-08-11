@@ -2508,49 +2508,49 @@
   "native-bluetooth-error-check": [
     {
       "type": 0,
-      "value": "Please check that:"
+      "value": "Si us plau comprova que:"
     }
   ],
   "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "the micro:bit is close to this device"
+      "value": "la micro:bit està a prop del dispositiu"
     }
   ],
   "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+      "value": "la micro:bit està en mode Bluetooth (mostrant el patró d'emparellament)"
     }
   ],
   "native-bluetooth-error-check-pattern": [
     {
       "type": 0,
-      "value": "the pattern you entered is correct"
+      "value": "el patró que has entrat és correcte"
     }
   ],
   "native-bluetooth-error-forget-device": [
     {
       "type": 0,
-      "value": "Please forget this device in your Bluetooth settings and try again."
+      "value": "Si us plau, oblida aquest dispositiu en la configuració del Bluetooth i torna-ho a intentar."
     }
   ],
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Go to Bluetooth in the Settings app"
+      "value": "Anar al Bluetooth a l'app de Configuració"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
     {
       "type": 0,
-      "value": "Tap the "
+      "value": "Toca la icona "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "information"
+          "value": "d'informació"
         }
       ],
       "type": 8,
@@ -2558,31 +2558,31 @@
     },
     {
       "type": 0,
-      "value": " icon next to the BBC micro:bit device"
+      "value": " al costat del dispositiu de la BBC micro:bit"
     }
   ],
   "native-bluetooth-error-forget-device-step-3": [
     {
       "type": 0,
-      "value": "Tap ‘Forget This Device’"
+      "value": "Clica ‘Oblida Aquest Dispositiu’"
     }
   ],
   "native-bluetooth-error-forget-device-step-4": [
     {
       "type": 0,
-      "value": "Return to this app to try again"
+      "value": "Retorna a aquesta app per tornar a provar"
     }
   ],
   "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "Could not connect to micro:bit"
+      "value": "No s'ha pogut connectar a micro:bit"
     }
   ],
   "new-project-setup-title": [
     {
       "type": 0,
-      "value": "New project setup"
+      "value": "Configuració de nou projecte"
     }
   ],
   "newpage-new-project-title": [
@@ -3141,6 +3141,12 @@
     {
       "type": 0,
       "value": "Reanomena el projecte"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": [
+    {
+      "type": 0,
+      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
