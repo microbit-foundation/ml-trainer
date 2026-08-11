@@ -4,30 +4,27 @@
  * SPDX-License-Identifier: MIT
  */
 import { RiInformationLine } from "react-icons/ri";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useDeployment } from "../deployment";
-import { Icon, Text, TooltipProps, VStack } from "@microbit/ui";
-import ClickableTooltip from "./ClickableTooltip";
+import { Icon, Text, TooltipButton, TooltipProps, VStack } from "@microbit/ui";
 
 export interface InfoToolTipProps {
   titleId: string;
   descriptionId: string;
   placement?: TooltipProps["placement"];
-  isDisabled?: boolean;
 }
 const InfoToolTip = ({
   titleId,
   descriptionId,
   placement = "right",
-  isDisabled,
 }: InfoToolTipProps) => {
   const { appNameFull } = useDeployment();
+  const intl = useIntl();
   return (
-    <ClickableTooltip
-      titleId={titleId}
+    <TooltipButton
+      aria-label={intl.formatMessage({ id: `${titleId}-tooltip-aria` })}
       hasArrow
       placement={placement}
-      isDisabled={isDisabled}
       label={
         <VStack textAlign="left" alignItems="flex-start" m={3}>
           <Text fontWeight="bold">
@@ -43,7 +40,7 @@ const InfoToolTip = ({
         as={RiInformationLine}
         css={{ opacity: 0.7, width: 5, height: 5 }}
       />
-    </ClickableTooltip>
+    </TooltipButton>
   );
 };
 export default InfoToolTip;

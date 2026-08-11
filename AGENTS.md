@@ -16,7 +16,9 @@ This app uses react-aria-components + Panda CSS via `@microbit/ui`
 - **After changing or (re)linking either sibling package, do a _clean_
   Panda regen**: `rm -rf styled-system && npm run panda`. Incremental
   codegen doesn't detect external preset changes (playbook gotcha #27).
-  Restart the dev server too.
+  Restart the dev server too, and `rm -rf node_modules/.vite`: Vite serves
+  the old pre-bundle of the package otherwise, and a new export fails as
+  "does not provide an export named X" on a blank page.
 - Compare against the live branded deployment:
   `npm run build && npm run preview` vs https://createai.microbit.org/.
 - E2e notes: run the full suite only on a stable tree (mid-run source or

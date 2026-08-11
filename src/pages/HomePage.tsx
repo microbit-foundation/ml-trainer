@@ -17,7 +17,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
 import CarouselRow from "../components/Carousel/CarouselRow";
-import ClickableTooltip from "../components/ClickableTooltip";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import DefaultPageLayout, {
   HomeToolbarItem,
@@ -47,6 +46,7 @@ import {
   LinkBox,
   LinkOverlayButton,
   Text,
+  TooltipButton,
   useBreakpointValue,
   VStack,
 } from "@microbit/ui";
@@ -209,7 +209,7 @@ const ProjectRow = () => {
               <FormattedMessage id="my-projects-row-title" />
             </Heading>
             {!isNativePlatform() && (
-              <ClickableTooltip
+              <TooltipButton
                 hasArrow
                 placement={tooltipPlacement}
                 label={
@@ -224,7 +224,7 @@ const ProjectRow = () => {
                   as={RiInformationLine}
                   css={{ opacity: 0.7, width: 5, height: 5 }}
                 />
-              </ClickableTooltip>
+              </TooltipButton>
             )}
           </HStack>
         }

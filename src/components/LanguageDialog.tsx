@@ -30,7 +30,7 @@ import {
   Stack,
   SystemStyleObject,
   Text,
-  Tooltip,
+  TooltipButton,
   useToast,
   VStack,
 } from "@microbit/ui";
@@ -178,43 +178,29 @@ const LanguageCard = ({ language, onChooseLanguage }: LanguageCardProps) => {
             {language.enName}
           </Text>
           {!supported && (
-            <Tooltip
-              hasArrow
-              placement="top"
-              css={{ px: 3, py: 3 }}
-              label={
-                <Stack>
-                  <Text fontWeight="bold">
-                    <FormattedMessage id="language-toast-title" />
-                  </Text>
-                  <SupportStatement language={language} intl={intl} />
-                </Stack>
-              }
+            <Box
+              css={{
+                pointerEvents: "auto",
+                color: "gray.500",
+                display: "inline-flex",
+              }}
             >
-              <Button
-                variant="unstyled"
-                aria-label={intl.formatMessage({ id: "language-toast-title" })}
-                css={{
-                  pointerEvents: "auto",
-                  color: "gray.400",
-                  cursor: "default",
-                  // Shrink tightly to the icon: fixes partial-card height (the
-                  // default md size would force h10) and makes the focus ring an
-                  // even square around the glyph rather than a tall rectangle.
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  lineHeight: "1",
-                  height: "auto",
-                  minHeight: "0",
-                  minWidth: "0",
-                  padding: "0",
-                  borderRadius: "base",
-                }}
+              <TooltipButton
+                hasArrow
+                placement="top"
+                css={{ px: 3, py: 3 }}
+                label={
+                  <Stack>
+                    <Text fontWeight="bold">
+                      <FormattedMessage id="language-toast-title" />
+                    </Text>
+                    <SupportStatement language={language} intl={intl} />
+                  </Stack>
+                }
               >
                 <Icon as={RiErrorWarningLine} />
-              </Button>
-            </Tooltip>
+              </TooltipButton>
+            </Box>
           )}
         </HStack>
       </VStack>
