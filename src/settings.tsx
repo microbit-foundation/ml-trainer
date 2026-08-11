@@ -169,7 +169,7 @@ export const allLanguages: Language[] = [
     id: "lo",
     name: "ພາສາລາວ",
     enName: "Lao",
-    ui: "preview",
+    ui: true,
     makeCode: true,
   },
   {
@@ -267,7 +267,7 @@ export const allLanguages: Language[] = [
     id: "vi",
     name: "Tiếng việt",
     enName: "Vietnamese",
-    ui: "preview",
+    ui: true,
     makeCode: true,
   },
   {
