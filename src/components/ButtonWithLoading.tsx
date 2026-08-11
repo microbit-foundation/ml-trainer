@@ -11,15 +11,14 @@ import { Button, ButtonProps, css, Spinner } from "@microbit/ui";
 export interface ButtonWithLoadingProps
   extends Omit<ButtonProps, "children" | "onPress"> {
   isLoading?: boolean;
-  /** Click handler (onPress naming kept off the API to ease migration). */
+  /** Click handler. */
   onClick?: () => void;
   children: ReactNode;
 }
 
 /**
  * Button that swaps its label for a centred spinner while loading, keeping
- * its width (the label stays in the layout, hidden), like Chakra's
- * `isLoading`.
+ * its width (the label stays in the layout, hidden).
  */
 export const ButtonWithLoading = forwardRef<
   HTMLButtonElement,

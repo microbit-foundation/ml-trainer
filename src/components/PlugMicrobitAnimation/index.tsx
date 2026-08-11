@@ -75,9 +75,8 @@ const PlugMicrobitAnimation = ({
             ),
           }}
         />
-        {/* Plain img: width/height must stay HTML attributes (intrinsic size,
-            Chakra's htmlWidth/htmlHeight); on styled Image they'd be style
-            props. */}
+        {/* Plain img: width/height must stay HTML attributes (intrinsic
+            size); on styled Image they'd be style props. */}
         <img
           src={microbitImage}
           alt=""

@@ -110,8 +110,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           left: "44%",
           width: "3em",
           top: "30%",
-          // Faithful to Chakra incl. the bogus base "active" colour (the
-          // browser drops it and the arrow inherits the text colour below md).
+          // The base "active" value is not a real colour: the browser drops
+          // it and the arrow inherits the text colour below md (intentional).
           color:
             arrowState === "hidden"
               ? "transparent"
@@ -128,8 +128,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           width: "3em",
           bottom: "-22%",
           transform: "rotate(180deg)",
-          // Faithful to Chakra incl. the bogus base "active" colour (the
-          // browser drops it and the arrow inherits the text colour below md).
+          // The base "active" value is not a real colour: the browser drops
+          // it and the arrow inherits the text colour below md (intentional).
           color:
             arrowState === "hidden"
               ? "transparent"
@@ -148,8 +148,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           left: "-2em",
           width: "2em",
           transform: "rotate(-90deg)",
-          // Faithful to Chakra incl. the bogus base "active" colour (the
-          // browser drops it and the arrow inherits the text colour below md).
+          // The base "active" value is not a real colour: the browser drops
+          // it and the arrow inherits the text colour below md (intentional).
           color:
             arrowState === "hidden"
               ? "transparent"
@@ -167,8 +167,8 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
           right: "-2em",
           width: "2em",
           transform: "rotate(90deg)",
-          // Faithful to Chakra incl. the bogus base "active" colour (the
-          // browser drops it and the arrow inherits the text colour below md).
+          // The base "active" value is not a real colour: the browser drops
+          // it and the arrow inherits the text colour below md (intentional).
           color:
             arrowState === "hidden"
               ? "transparent"

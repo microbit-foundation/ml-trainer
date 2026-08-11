@@ -6,14 +6,12 @@
  * Establishes the app-wide cascade layer order before any other stylesheet
  * declares layers (the first @layer statement fixes relative order for the
  * whole document). `vendor` holds third-party CSS (see Carousel/swiper.css)
- * so that it beats Panda's preflight reset but loses to app styling —
- * matching the pre-Panda cascade, where the reset came first and app styles
- * were injected last. The other names are Panda's own layers.
+ * so that it beats Panda's preflight reset but loses to app styling.
+ * The other names are Panda's own layers.
  */
 @layer reset, vendor, base, tokens, recipes, utilities;
 
-/* Required since @microbit/ui 0.1.0-alpha.7: Chakra-parity
- * border-color/word-wrap defaults, kept in the bottom layer so the
- * production cascade-layer flattening can't boost them above CSS it
- * doesn't process (playbook gotcha #28). */
+/* @microbit/ui's border-color/word-wrap defaults, kept in the bottom
+ * layer so the production cascade-layer flattening can't boost them
+ * above CSS it doesn't process. */
 @import "@microbit/ui/reset.css" layer(reset);

@@ -70,9 +70,8 @@ export const SettingsDialog = ({
   // active surface; the web build defers to the shared-assets cookie
   // modal accessed via the nav-drawer "Manage cookies" link.
   const showAnalyticsToggle = isNativePlatform();
-  // Unlike Chakra, react-aria focuses the dialog itself on open (not the
-  // first form control), so no initial-focus hack is needed to stop the
-  // first <select> opening its picker on mobile.
+  // react-aria focuses the dialog itself on open (not the first form
+  // control), which stops the first <select> opening its picker on mobile.
   const [isResetConfirmOpen, setResetConfirmOpen] = useState(false);
   const handleResetToDefault = useCallback(() => {
     setResetConfirmOpen(true);
@@ -191,9 +190,9 @@ export const SettingsDialog = ({
                 <FormattedMessage id="graph-preview" />
               </Text>
               {/* Native aspect-ratio rather than the AspectRatio pattern: the
-                  pattern's `&>*` child selector loses to the (still-Chakra)
-                  RecordingGraph's own position style, leaving its padding
-                  spacer above an in-flow child. */}
+                  pattern's `&>*` child selector loses to RecordingGraph's own
+                  position style, leaving its padding spacer above an in-flow
+                  child. */}
               <Box w="full" css={{ aspectRatio: "526 / 92" }}>
                 <RecordingGraph
                   responsive

@@ -27,7 +27,7 @@ const AppLogo = ({ color = "#FFF", css: cssProp }: AppLogoProps) => {
       {OrgLogo && (
         <>
           <OrgLogo />
-          {/* Chakra's vertical Divider with borderWidth 1px (so ~2px wide). */}
+          {/* Vertical divider; 1px border on both sides, so ~2px wide. */}
           <div
             aria-hidden
             className={css({
