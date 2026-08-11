@@ -3946,7 +3946,7 @@
   "ui.breadcrumb": [
     {
       "type": 0,
-      "value": "Breadcrumb"
+      "value": "Trilha de navegação"
     }
   ],
   "ui.close-action": [
@@ -3970,7 +3970,7 @@
   "ui.loading": [
     {
       "type": 0,
-      "value": "Loading"
+      "value": "Carregando"
     }
   ],
   "ui.numberfield-decrease": [
@@ -4002,7 +4002,7 @@
   "ui.select-row-action": [
     {
       "type": 0,
-      "value": "Selecionar"
+      "value": "Seleciona"
     }
   ],
   "ui.toast-region": [
@@ -4044,25 +4044,25 @@
   "ui.toast-status-error": [
     {
       "type": 0,
-      "value": "Error"
+      "value": "Erro"
     }
   ],
   "ui.toast-status-info": [
     {
       "type": 0,
-      "value": "Information"
+      "value": "Informações"
     }
   ],
   "ui.toast-status-success": [
     {
       "type": 0,
-      "value": "Success"
+      "value": "Sucesso"
     }
   ],
   "ui.toast-status-warning": [
     {
       "type": 0,
-      "value": "Warning"
+      "value": "Atenção"
     }
   ],
   "unknown": [

@@ -12,6 +12,8 @@ This app uses react-aria-components + Panda CSS via `@microbit/ui`.
   the version pinned in `workflow-config.json`.
 - **Local `@microbit/ui` development**: symlink `node_modules/@microbit/ui`
   to `../ui/packages/ui`; a plain `npm i` restores the registry version.
+- **After bumping the pinned `@microbit/ui` version**, follow "Upgrading in
+  an app" in `../ui/packages/ui/README.md`.
 - **After changing or (re)linking either sibling package, do a _clean_
   Panda regen**: `rm -rf styled-system && npm run panda`. Incremental
   codegen doesn't detect external preset changes.
