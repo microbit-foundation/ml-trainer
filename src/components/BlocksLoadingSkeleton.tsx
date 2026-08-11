@@ -5,7 +5,7 @@
  */
 import { Box, css, VStack } from "@microbit/ui";
 
-/** Pulsing line placeholder standing in for Chakra's SkeletonText. */
+/** Pulsing skeleton lines shown while the blocks preview loads. */
 const BlocksLoadingSkeleton = () => (
   <VStack w="xs" gap={5} alignItems="stretch" aria-hidden>
     {Array.from(Array(5)).map((_, idx) => (

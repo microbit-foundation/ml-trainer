@@ -27,8 +27,7 @@ import TourOverlay from "./TourOverlay";
 // Default distance or margin between the reference and popover.
 const gutterDefault = 8;
 
-// Chakra's popper-positioned ModalContent had no shadow (it overrode
-// boxShadow to none) and the standard modal white box.
+// The standard modal white box, deliberately without a shadow.
 const popoverDialogClass = css({
   bg: "white",
   borderRadius: "md",
@@ -194,7 +193,6 @@ const Tour = () => {
         }
         className={css({ zIndex: "modal" })}
       >
-        {/* Chakra's popper arrow: white, shadowless, 16px base. */}
         <PopoverArrow size={16} css={{ "& svg": { fill: "white" } }} />
         <Dialog className={popoverDialogClass}>
           <RACHeading slot="title" className={popoverHeaderClass}>

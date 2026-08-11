@@ -67,7 +67,7 @@ const LedIconPicker = ({
         })}
       >
         {children}
-        {/* Decorative ghost-button look (Chakra had IconButton as="div"). */}
+        {/* Decorative ghost-button look. */}
         <span
           className={cx(
             button({ variant: "ghost", size: "sm" }),

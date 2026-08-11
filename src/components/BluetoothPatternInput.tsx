@@ -244,7 +244,7 @@ const PatternLedOption = ({
   // the click reaches the React root), which would otherwise revert the
   // change. onReactivate is only wired on the currently-checked option, so
   // selection clicks don't trigger it; keyboard activation of a checked radio
-  // also fires a click, matching the Chakra behaviour.
+  // also fires a click, so it is handled too.
   const wrapperRef = useRef<HTMLDivElement>(null);
   const onReactivateRef = useRef(onReactivate);
   onReactivateRef.current = onReactivate;

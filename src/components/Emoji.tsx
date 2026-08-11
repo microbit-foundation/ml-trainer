@@ -7,7 +7,7 @@ type Side = "left" | "right";
 interface EmojiProps {
   leftEye?: Eye;
   rightEye?: Eye;
-  /** Box size on the spacing scale; the Chakra call sites used 16 and 20. */
+  /** Box size on the spacing scale. */
   size?: "16" | "20";
   className?: string;
 }

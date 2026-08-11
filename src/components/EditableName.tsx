@@ -34,7 +34,7 @@ interface EditableNameProps {
   onEditRef?: MutableRefObject<(() => void) | undefined>;
 }
 
-// Shared by both variants' single-css()-call styles (gotcha #8).
+// Shared by both variants' single-css()-call styles.
 const previewButtonBase: SystemStyleObject = {
   display: "flex",
   h: 10,
@@ -46,8 +46,8 @@ const previewButtonBase: SystemStyleObject = {
 };
 
 /**
- * The editable project name. Replaces Chakra's Editable: a preview button
- * that swaps to an input; Enter/blur commits, Escape reverts.
+ * The editable project name: a preview button that swaps to an input;
+ * Enter/blur commits, Escape reverts.
  */
 const EditableName = ({
   suffix,
@@ -77,7 +77,7 @@ const EditableName = ({
 
   useEffect(() => {
     if (editing) {
-      // Select-all like Chakra's Editable, so typing replaces the name.
+      // Select all so typing replaces the name.
       inputRef.current?.focus();
       inputRef.current?.select();
     }

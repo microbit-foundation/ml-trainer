@@ -77,7 +77,7 @@ const StepTickPill = forwardRef<StepTickPillRef, StepTickPillProps>(
           borderRadius="full"
         >
           <Grid
-            // Panda's Grid pattern defaults gap to 8px; Chakra's had none.
+            // Panda's Grid pattern defaults gap to 8px; none wanted here.
             gap={0}
             gridTemplateColumns="1fr 2fr 1fr"
             backgroundColor={state.active ? "brand2.500" : "transparent"}
