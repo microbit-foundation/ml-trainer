@@ -314,9 +314,11 @@ export const nativeLanguageIds = [
  * Preview languages are enabled on beta only, so their translations can be
  * reviewed before going live.
  */
-export const isUiEnabled = (language: Language): boolean =>
-  language.ui === true ||
-  (language.ui === "preview" && flags.translationPreview);
+export const isUiEnabled = (
+  language: Language,
+  previewEnabled: boolean = flags.translationPreview
+): boolean =>
+  language.ui === true || (language.ui === "preview" && previewEnabled);
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
 const defaultLanguageId = allLanguages[0].id;
@@ -354,6 +356,21 @@ export const matchLanguage = (requestedLanguages: readonly string[]): string =>
   defaultLanguageId;
 
 /**
+ * Language ids that may be auto-selected on first run on native: those
+ * covering the native strings whose UI translation is enabled in this build.
+ *
+ * Parameters default from the environment and exist for testing.
+ */
+export const autoSelectableLanguageIds = (
+  languages: readonly Language[] = allLanguages,
+  previewEnabled: boolean = flags.translationPreview,
+  nativeIds: readonly string[] = nativeLanguageIds
+): string[] =>
+  languages
+    .filter((l) => nativeIds.includes(l.id) && isUiEnabled(l, previewEnabled))
+    .map((l) => l.id);
+
+/**
  * Get the initial language, checking URL parameter first, then OS/browser
  * preference.
  *
@@ -379,11 +396,9 @@ export const getDefaultLanguage = (
   if (!native) {
     return matchLanguage(requestedLanguages);
   }
-  const autoSelectable = allLanguages
-    .filter((l) => nativeLanguageIds.includes(l.id) && isUiEnabled(l))
-    .map((l) => l.id);
   return (
-    matchOrUndefined(requestedLanguages, autoSelectable) ?? defaultLanguageId
+    matchOrUndefined(requestedLanguages, autoSelectableLanguageIds()) ??
+    defaultLanguageId
   );
 };
 
