@@ -282,7 +282,7 @@
   "animation-step-4": [
     {
       "type": 0,
-      "value": "Programar"
+      "value": "Programe"
     }
   ],
   "animation-step-5": [
@@ -512,7 +512,7 @@
   "code-label": [
     {
       "type": 0,
-      "value": "Programar"
+      "value": "Programe"
     }
   ],
   "code-label-tooltip-aria": [
@@ -614,7 +614,7 @@
   "connect-bluetooth-start-requirements1": [
     {
       "type": 0,
-      "value": "Um micro:bit;"
+      "value": "1 micro:bit"
     }
   ],
   "connect-bluetooth-start-requirements2-subtitle": [
@@ -3490,7 +3490,7 @@
   "steps-code": [
     {
       "type": 0,
-      "value": "Programar"
+      "value": "Programe"
     }
   ],
   "steps-collect-data": [
