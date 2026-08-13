@@ -20,6 +20,7 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalFooter,
+  ModalHeader,
   Text,
   VisuallyHidden,
   VStack,
@@ -70,8 +71,11 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
       size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
     >
+      <ModalHeader>
+        <FormattedMessage id="about" />
+      </ModalHeader>
+      <ModalCloseButton />
       <ModalBody>
-        <ModalCloseButton />
         <VStack gap={8} pl={5} pr={5} pt={5}>
           <HStack justifyContent="center" gap={8}>
             {OrgLogo && <OrgLogo color="black" h="55px" />}

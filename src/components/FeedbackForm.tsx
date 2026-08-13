@@ -3,8 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Modal, ModalBody, ModalCloseButton } from "@microbit/ui";
+import { Modal, ModalBody, ModalCloseButton, ModalHeader } from "@microbit/ui";
 import { useEffect, useRef } from "react";
+import { FormattedMessage } from "react-intl";
 
 interface FeedbackFormProps {
   isOpen: boolean;
@@ -47,6 +48,9 @@ const FeedbackForm = ({
       size={{ base: "full", md: "2xl" }}
       finalFocusRef={finalFocusRef}
     >
+      <ModalHeader>
+        <FormattedMessage id="feedback" />
+      </ModalHeader>
       <ModalCloseButton />
       <ModalBody>
         <iframe
