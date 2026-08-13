@@ -89,8 +89,6 @@ describe("autoSelectableLanguageIds", () => {
     // Synthetic ids ("live", "preview", …) keep the cases readable; the
     // registry union doesn't know them, hence the cast.
     id: id as Language["id"],
-    name: id,
-    enName: id,
     ui,
     makeCode: true,
   });
