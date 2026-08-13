@@ -1043,10 +1043,6 @@
     "defaultMessage": "Ajuda i suport",
     "description": "Link or menu item link to support site"
   },
-  "help-translate": {
-    "defaultMessage": "Ajuda a traduir",
-    "description": "Help translate  menu option text"
-  },
   "home-action": {
     "defaultMessage": "Inici",
     "description": "Home button text"
@@ -1110,30 +1106,6 @@
   "language": {
     "defaultMessage": "Idioma",
     "description": "Language option text"
-  },
-  "language-fully-supported-heading": {
-    "defaultMessage": "Completament compatible",
-    "description": "Fully supported languages heading text"
-  },
-  "language-partially-supported-heading": {
-    "defaultMessage": "Parcialment compatible",
-    "description": "Partially supported languages heading text"
-  },
-  "language-support-checked": {
-    "defaultMessage": "Compatible",
-    "description": "Aria label for ticked checkbox for language support"
-  },
-  "language-support-unchecked": {
-    "defaultMessage": "Incompatible",
-    "description": "Aria label for unticked checkbox for language support"
-  },
-  "language-supported-for": {
-    "defaultMessage": "Traduccions compatibles per a:",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
-  },
-  "language-toast-title": {
-    "defaultMessage": "L'idioma no està disponible totalment",
-    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Més informació sobre els requisits del tallafoc",

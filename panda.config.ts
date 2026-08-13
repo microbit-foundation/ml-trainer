@@ -50,6 +50,7 @@ export default defineConfig({
     // path shows up only as broken non-recipe styling (unsized icons,
     // collapsed fields).
     "./node_modules/@microbit/ui/src/**/*.{ts,tsx}",
+    "./node_modules/@microbit/ui-patterns/src/**/*.{ts,tsx}",
   ],
   outdir: "styled-system",
 });

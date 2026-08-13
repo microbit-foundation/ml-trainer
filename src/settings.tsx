@@ -4,7 +4,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { match } from "@formatjs/intl-localematcher";
+import {
+  getDefaultLanguageId,
+  type KnownLanguageId,
+} from "@microbit/ui-patterns";
 import { flags } from "./flags";
 import { DataSamplesView, TourTriggerName } from "./model";
 import { isNativePlatform } from "./platform";
@@ -12,7 +15,9 @@ import { isNativePlatform } from "./platform";
 type Translation = "preview" | boolean;
 
 export interface Language {
-  id: string;
+  // Typo-proof: the shared registry's id union, so `tsc` catches an id the
+  // family doesn't know.
+  id: KnownLanguageId;
   name: string;
   enName: string;
   // Language supported in Classroom UI.
@@ -296,7 +301,7 @@ export const getMakeCodeLang = (languageId: string): string =>
  * and are never auto-selected on first run. Add ids here as translations
  * land.
  */
-export const nativeLanguageIds = [
+export const nativeLanguageIds: KnownLanguageId[] = [
   "en",
   "en-US",
   "nl",
@@ -321,39 +326,15 @@ export const isUiEnabled = (
   language.ui === true || (language.ui === "preview" && previewEnabled);
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
-const defaultLanguageId = allLanguages[0].id;
-
-const isValidLanguageId = (langId: string): boolean => {
-  try {
-    Intl.getCanonicalLocales(langId);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-// match() returns its default verbatim when nothing matches so a sentinel
-// lets us distinguish no-match from a real match of the default language.
-const noMatch = "x-no-match";
-
-const matchOrUndefined = (
-  requestedLanguages: readonly string[],
-  languageIds: string[]
-): string | undefined => {
-  const matched = match(
-    requestedLanguages.filter(isValidLanguageId),
-    languageIds,
-    noMatch
-  );
-  return matched === noMatch ? undefined : matched;
-};
 
 /**
  * Match the user's preferred languages (from browser/OS) to supported languages.
  */
 export const matchLanguage = (requestedLanguages: readonly string[]): string =>
-  matchOrUndefined(requestedLanguages, supportedLanguageIds) ??
-  defaultLanguageId;
+  getDefaultLanguageId({
+    autoSelectableIds: supportedLanguageIds,
+    requestedLanguages,
+  });
 
 /**
  * Language ids that may be auto-selected on first run on native: those
@@ -389,18 +370,16 @@ export const getDefaultLanguage = (
   ).get("l"),
   osLanguages: readonly string[] = navigator.languages,
   native: boolean = isNativePlatform()
-): string => {
-  const requestedLanguages = languageParam
-    ? [languageParam, ...osLanguages]
-    : osLanguages;
-  if (!native) {
-    return matchLanguage(requestedLanguages);
-  }
-  return (
-    matchOrUndefined(requestedLanguages, autoSelectableLanguageIds()) ??
-    defaultLanguageId
-  );
-};
+): string =>
+  getDefaultLanguageId({
+    // On native only fully supported languages may be auto-selected; on the
+    // web any supported language may be.
+    autoSelectableIds: native
+      ? autoSelectableLanguageIds()
+      : supportedLanguageIds,
+    languageHint: languageParam,
+    requestedLanguages: osLanguages,
+  });
 
 export const defaultSettings: Settings = {
   languageId: getDefaultLanguage(),

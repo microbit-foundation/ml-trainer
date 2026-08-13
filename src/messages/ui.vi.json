@@ -1901,12 +1901,6 @@
       "value": "Trợ giúp & hỗ trợ"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Trợ giúp dịch thuật"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2055,42 +2049,6 @@
     {
       "type": 0,
       "value": "Ngôn ngữ"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Được hỗ trợ đầy đủ"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Được hỗ trợ một phần"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Được hỗ trợ"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Không được hỗ trợ"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Hỗ trợ dịch cho:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "Ngôn ngữ không được hỗ trợ đầy đủ"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3943,6 +3901,60 @@
       "value": "Thử lại"
     }
   ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Trợ giúp dịch thuật"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Ngôn ngữ"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Được hỗ trợ đầy đủ"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Được hỗ trợ một phần"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Được hỗ trợ"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Không được hỗ trợ"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Hỗ trợ dịch cho:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "Ngôn ngữ không được hỗ trợ đầy đủ"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -3971,6 +3983,12 @@
     {
       "type": 0,
       "value": "Đang tải"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
     }
   ],
   "ui.numberfield-decrease": [

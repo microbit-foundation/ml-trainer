@@ -1901,12 +1901,6 @@
       "value": "Help & support"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Help translate"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2055,42 +2049,6 @@
     {
       "type": 0,
       "value": "Language"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Fully supported"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Partially supported"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Supported"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Unsupported"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Translations supported for:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "Language not fully supported"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3939,6 +3897,60 @@
       "value": "Try again"
     }
   ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Help translate"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Language"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Supported"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Unsupported"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Translations supported for:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "Language not fully supported"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -3967,6 +3979,12 @@
     {
       "type": 0,
       "value": "Loading"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
     }
   ],
   "ui.numberfield-decrease": [

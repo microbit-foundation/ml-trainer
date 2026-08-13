@@ -1043,10 +1043,6 @@
     "defaultMessage": "Trợ giúp & hỗ trợ",
     "description": "Link or menu item link to support site"
   },
-  "help-translate": {
-    "defaultMessage": "Trợ giúp dịch thuật",
-    "description": "Help translate  menu option text"
-  },
   "home-action": {
     "defaultMessage": "Trang chủ",
     "description": "Home button text"
@@ -1110,30 +1106,6 @@
   "language": {
     "defaultMessage": "Ngôn ngữ",
     "description": "Language option text"
-  },
-  "language-fully-supported-heading": {
-    "defaultMessage": "Được hỗ trợ đầy đủ",
-    "description": "Fully supported languages heading text"
-  },
-  "language-partially-supported-heading": {
-    "defaultMessage": "Được hỗ trợ một phần",
-    "description": "Partially supported languages heading text"
-  },
-  "language-support-checked": {
-    "defaultMessage": "Được hỗ trợ",
-    "description": "Aria label for ticked checkbox for language support"
-  },
-  "language-support-unchecked": {
-    "defaultMessage": "Không được hỗ trợ",
-    "description": "Aria label for unticked checkbox for language support"
-  },
-  "language-supported-for": {
-    "defaultMessage": "Hỗ trợ dịch cho:",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
-  },
-  "language-toast-title": {
-    "defaultMessage": "Ngôn ngữ không được hỗ trợ đầy đủ",
-    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Tìm hiểu về các yêu cầu tường lửa",

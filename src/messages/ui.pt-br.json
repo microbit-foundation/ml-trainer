@@ -1901,12 +1901,6 @@
       "value": "Ajuda e suporte"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Ajude a traduzir"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2055,42 +2049,6 @@
     {
       "type": 0,
       "value": "Idioma"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Suporte completo"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Suporte parcial"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Suportado"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Não suportado"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Traduções suportadas para:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "O idioma possui suporte parcial"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3943,6 +3901,60 @@
       "value": "Tentar novamente"
     }
   ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Ajude a traduzir"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Idioma"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Suporte completo"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Suporte parcial"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Suportado"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Não suportado"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traduções suportadas para:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "O idioma possui suporte parcial"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -3971,6 +3983,12 @@
     {
       "type": 0,
       "value": "Carregando"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
     }
   ],
   "ui.numberfield-decrease": [
