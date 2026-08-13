@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, Icon, Image, Stack, Text } from "@microbit/ui";
+import { AspectRatio, HStack, Icon, Image, Stack, Text } from "@microbit/ui";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import makecodeBackImage from "./images/makecode-back.png";
@@ -37,13 +37,12 @@ const LiveGraphStep = () => {
       <Text>
         <FormattedMessage id="tour-dataSamples-liveGraph-content" />
       </Text>
-      <Image
-        src={accelerometerImage}
-        w="150px"
-        aspectRatio={500 / 482}
-        flexShrink={0}
-        alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
-      />
+      <AspectRatio w="150px" ratio={500 / 482} flexShrink={0}>
+        <Image
+          src={accelerometerImage}
+          alt={intl.formatMessage({ id: "accelerometer-image-alt" })}
+        />
+      </AspectRatio>
     </HStack>
   );
 };
@@ -62,15 +61,13 @@ const MakeCodeStep = () => {
           <br />
           <FormattedMessage id="tour-makecode-intro-content3" />
         </Text>
-        <Image
-          src={makecodeBackImage}
-          w="50px"
-          aspectRatio={1}
-          flexShrink={0}
-          borderRadius="sm"
-          mx={3}
-          alt={intl.formatMessage({ id: "makecode-back-alt" })}
-        />
+        <AspectRatio w="50px" ratio={1} flexShrink={0} mx={3}>
+          <Image
+            src={makecodeBackImage}
+            borderRadius="sm"
+            alt={intl.formatMessage({ id: "makecode-back-alt" })}
+          />
+        </AspectRatio>
       </HStack>
     </Stack>
   );

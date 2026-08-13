@@ -189,16 +189,28 @@ export const SettingsDialog = ({
               <Text>
                 <FormattedMessage id="graph-preview" />
               </Text>
-              {/* Native aspect-ratio rather than the AspectRatio pattern: the
-                  pattern's `&>*` child selector loses to RecordingGraph's own
-                  position style, leaving its padding spacer above an in-flow
-                  child. */}
-              <Box w="full" css={{ aspectRatio: "526 / 92" }}>
+              {/* The AspectRatio pattern's `&>*` child selector loses to
+                  RecordingGraph's own position style, so this uses the same
+                  ::before percentage-padding spacer and positions the graph
+                  via its own props. */}
+              <Box
+                w="full"
+                position="relative"
+                _before={{
+                  content: '""',
+                  display: "block",
+                  height: 0,
+                  paddingBottom: `${(92 / 526) * 100}%`,
+                }}
+              >
                 <RecordingGraph
                   responsive
                   data={previewGraphData}
                   role="img"
+                  position="absolute"
+                  inset={0}
                   w="full"
+                  h="full"
                   aria-label={intl.formatMessage({
                     id: "recording-graph-label",
                   })}
