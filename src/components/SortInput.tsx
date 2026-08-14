@@ -69,12 +69,13 @@ const SortInput = ({
         css={{
           background: "white",
           fontSize: "2xl",
-          border: "1px solid",
+          border: "2px solid",
           // This button poses as the second half of the attached select, so
-          // its border must track the input recipe's outline stop (gray.400
-          // since the accessible-outline change) — a mismatch here reads as
-          // a broken control.
-          borderColor: "gray.400",
+          // its border must track the input recipe's resting border (2px
+          // gray.300 since the light-rest change, gray.500 on hover) — a
+          // mismatch here reads as a broken control.
+          borderColor: "gray.300",
+          _hover: { borderColor: "gray.500" },
           // Was the literal #838383 (~2.9:1); the ramp's text-safe secondary
           // also clears 3:1 for the direction glyph.
           color: "gray.500",
