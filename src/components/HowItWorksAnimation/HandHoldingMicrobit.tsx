@@ -3,11 +3,20 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps, useToken } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { Svg, SystemStyleObject, token } from "@microbit/ui";
 import { icons, Off } from "../../utils/icons";
 
-interface HandHoldingMicrobitProps extends IconProps {}
+interface HandHoldingMicrobitProps {
+  /** Per-instance style overrides, merged after the base. */
+  css?: SystemStyleObject;
+  style?: CSSProperties;
+}
 
 export interface HandHoldingMicrobitRef {
   displayHappyLed(): void;
@@ -21,11 +30,12 @@ const ledSpacing = 10; // Distance between led.
 const HandHoldingMicrobit = forwardRef<
   HandHoldingMicrobitRef,
   HandHoldingMicrobitProps
->(function HandHoldingMicrobit({ ...props }: HandHoldingMicrobitProps, ref) {
-  const [litLedColor, unlitLedColor] = useToken("colors", [
-    "pink.500",
-    "gray.200",
-  ]);
+>(function HandHoldingMicrobit(
+  { css: cssProp, style }: HandHoldingMicrobitProps,
+  ref
+) {
+  const litLedColor = token("colors.pink.500");
+  const unlitLedColor = token("colors.gray.200");
   const [ledPattern, setLedPattern] = useState<string>(Off);
   const [visible, setVisible] = useState<boolean>(false);
   useImperativeHandle(
@@ -47,12 +57,15 @@ const HandHoldingMicrobit = forwardRef<
     []
   );
   return (
-    <Icon
+    <Svg
       viewBox="0 0 194.7 200.05"
-      w="100%"
-      position="absolute"
-      opacity={visible ? 1 : 0}
-      {...props}
+      css={{
+        w: "100%",
+        position: "absolute",
+        opacity: visible ? 1 : 0,
+        ...cssProp,
+      }}
+      style={style}
     >
       {[...ledPattern].map((lit, i) => (
         <circle
@@ -103,7 +116,7 @@ const HandHoldingMicrobit = forwardRef<
         fill="#010101"
         d="M126.54,13.38l-10.51-.06c-.1,0-.2,0-.3,0-3.78.06-6.79,3.17-6.73,6.95.06,3.78,3.17,6.79,6.95,6.73l10.52.06c.11,0,.22,0,.33,0,3.78-.07,6.78-3.19,6.71-6.97-.07-3.78-3.19-6.78-6.97-6.71ZM126.48,24.32l-10.52-.06c-.06,0-.13,0-.19,0-2.27-.07-4.05-1.95-3.98-4.22.07-2.27,1.95-4.05,4.22-3.98l10.51.06c.07,0,.15,0,.22,0,2.27.07,4.04,1.97,3.97,4.24s-1.97,4.04-4.24,3.97Z"
       />
-    </Icon>
+    </Svg>
   );
 });
 

@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
-import SwiperCarousel from "./SwiperCarousel";
 import { SwiperClass } from "swiper/react";
+import { css } from "@microbit/ui";
+import SwiperCarousel from "./SwiperCarousel";
 
 const slow = 3000;
 const fast = 1000;
@@ -125,7 +126,7 @@ const NewPageCarousel = ({
       onInit={recalculateBreakpoints}
       padding={hero ? 0 : undefined}
       speed={hero ? slow : fast}
-      sx={{
+      className={css({
         "--carousel-px": { base: "12px", md: "20px" },
         "--carousel-pt": "1rem",
         "--carousel-pb": "12px",
@@ -133,7 +134,7 @@ const NewPageCarousel = ({
         "& .swiper": {
           padding: "var(--carousel-pt) var(--carousel-px) var(--carousel-pb)",
         },
-      }}
+      })}
     />
   );
 };

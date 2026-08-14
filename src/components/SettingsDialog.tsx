@@ -3,45 +3,60 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { ReactNode, useCallback, useMemo, useState } from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import {
-  AspectRatio,
+  Box,
   Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  HStack,
+  FieldHelperText,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  NativeSelectField,
   Switch,
   Text,
-  useDisclosure,
   VStack,
-} from "@chakra-ui/react";
-import { useCallback, useMemo, useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from "@microbit/ui";
 import { useDeployment } from "../deployment";
 import { isNativePlatform } from "../platform";
 import {
   defaultSettings,
+  GraphColorScheme,
   graphColorSchemeOptions,
+  GraphLineScheme,
   graphLineSchemeOptions,
+  GraphLineWeight,
   graphLineWeightOptions,
 } from "../settings";
 import { useSettings } from "../store";
 import { previewGraphData } from "../utils/preview-graph-data";
 import { ConfirmDialog } from "./ConfirmDialog";
 import RecordingGraph from "./RecordingGraph";
-import SelectFormControl, { createOptions } from "./SelectFormControl";
 
 interface SettingsDialogProps {
   isOpen: boolean;
   onClose: () => void;
   finalFocusRef?: React.RefObject<HTMLButtonElement>;
 }
+
+/**
+ * Translated <option>s for a settings select.
+ *
+ * @param values Values to create options for.
+ * @param prefix Prefix (no trailing '-') to use for translation keys.
+ * @param intl For translation strings.
+ */
+const createOptions = (
+  values: readonly string[],
+  prefix: string,
+  intl: IntlShape
+): ReactNode =>
+  values.map((value) => (
+    <option key={value} value={value}>
+      {intl.formatMessage({ id: `${prefix}-${value}` })}
+    </option>
+  ));
 
 export const SettingsDialog = ({
   isOpen,
@@ -55,14 +70,12 @@ export const SettingsDialog = ({
   // active surface; the web build defers to the shared-assets cookie
   // modal accessed via the nav-drawer "Manage cookies" link.
   const showAnalyticsToggle = isNativePlatform();
-  // Focus the heading rather than the first form control on open. Otherwise
-  // the graph colour scheme <select> takes focus and on mobile that opens its
-  // picker as soon as the dialog appears.
-  const initialFocusRef = useRef<HTMLHeadingElement>(null);
-  const resetConfirmDialog = useDisclosure();
+  // react-aria focuses the dialog itself on open (not the first form
+  // control), which stops the first <select> opening its picker on mobile.
+  const [isResetConfirmOpen, setResetConfirmOpen] = useState(false);
   const handleResetToDefault = useCallback(() => {
-    resetConfirmDialog.onOpen();
-  }, [resetConfirmDialog]);
+    setResetConfirmOpen(true);
+  }, []);
 
   const confirmResetToDefault = useCallback(() => {
     setSettings({
@@ -73,9 +86,8 @@ export const SettingsDialog = ({
       // "Restore defaults" so users aren't re-prompted unexpectedly.
       analyticsConsent: settings.analyticsConsent,
     });
-    resetConfirmDialog.onClose();
+    setResetConfirmOpen(false);
   }, [
-    resetConfirmDialog,
     setSettings,
     settings.analyticsConsent,
     settings.languageId,
@@ -110,130 +122,126 @@ export const SettingsDialog = ({
         body={intl.formatMessage({
           id: "restore-defaults-confirm-body",
         })}
-        isOpen={resetConfirmDialog.isOpen}
+        isOpen={isResetConfirmOpen}
         onConfirm={confirmResetToDefault}
         confirmText={intl.formatMessage({
           id: "restore-defaults-confirm-action",
         })}
-        onCancel={resetConfirmDialog.onClose}
+        onCancel={() => setResetConfirmOpen(false)}
       />
       <Modal
         isOpen={isOpen}
         onClose={onClose}
         size={{ base: "full", md: "xl" }}
         finalFocusRef={finalFocusRef}
-        initialFocusRef={initialFocusRef}
-        preserveScrollBarGap={false}
       >
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader
-              ref={initialFocusRef}
-              tabIndex={-1}
-              _focus={{ outline: "none", boxShadow: "none" }}
-              fontSize="lg"
-              fontWeight="bold"
+        <ModalHeader css={{ fontSize: "lg", fontWeight: "bold" }}>
+          <FormattedMessage id="settings" />
+        </ModalHeader>
+        <ModalBody>
+          <VStack alignItems="flex-start" gap={5}>
+            <NativeSelectField
+              id="graphLineColors"
+              label={intl.formatMessage({ id: "graph-color-scheme" })}
+              labelPosition="side"
+              wrapperCss={{ width: "28ch" }}
+              value={settings.graphColorScheme}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  graphColorScheme: e.currentTarget.value as GraphColorScheme,
+                })
+              }
             >
-              <FormattedMessage id="settings" />
-            </ModalHeader>
-            <ModalBody>
-              <VStack alignItems="flex-start" spacing={5}>
-                <SelectFormControl
-                  id="graphLineColors"
-                  label={intl.formatMessage({ id: "graph-color-scheme" })}
-                  options={options.graphColorScheme}
-                  value={settings.graphColorScheme}
-                  onChange={(graphColorScheme) =>
-                    setSettings({
-                      ...settings,
-                      graphColorScheme,
-                    })
-                  }
+              {options.graphColorScheme}
+            </NativeSelectField>
+            <NativeSelectField
+              id="graphLineScheme"
+              label={intl.formatMessage({ id: "graph-line-scheme" })}
+              labelPosition="side"
+              wrapperCss={{ width: "28ch" }}
+              value={settings.graphLineScheme}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  graphLineScheme: e.currentTarget.value as GraphLineScheme,
+                })
+              }
+            >
+              {options.graphLineScheme}
+            </NativeSelectField>
+            <NativeSelectField
+              id="graphLineWeight"
+              label={intl.formatMessage({ id: "graph-line-weight" })}
+              labelPosition="side"
+              wrapperCss={{ width: "28ch" }}
+              value={settings.graphLineWeight}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  graphLineWeight: e.currentTarget.value as GraphLineWeight,
+                })
+              }
+            >
+              {options.graphLineWeight}
+            </NativeSelectField>
+            <VStack alignItems="flex-start" w="full">
+              <Text>
+                <FormattedMessage id="graph-preview" />
+              </Text>
+              {/* Native aspect-ratio rather than the AspectRatio pattern: the
+                  pattern's `&>*` child selector loses to RecordingGraph's own
+                  position style, leaving its padding spacer above an in-flow
+                  child. */}
+              <Box w="full" css={{ aspectRatio: "526 / 92" }}>
+                <RecordingGraph
+                  responsive
+                  data={previewGraphData}
+                  role="img"
+                  w="full"
+                  aria-label={intl.formatMessage({
+                    id: "recording-graph-label",
+                  })}
                 />
-                <SelectFormControl
-                  id="graphLineScheme"
-                  label={intl.formatMessage({ id: "graph-line-scheme" })}
-                  options={options.graphLineScheme}
-                  value={settings.graphLineScheme}
-                  onChange={(graphLineScheme) =>
+              </Box>
+            </VStack>
+            {showAnalyticsToggle && (
+              // The w-full Box keeps the row spanning the dialog: the VStack
+              // is alignItems flex-start, and Switch's helperText wrapper has
+              // no width of its own.
+              <Box w="full">
+                <Switch
+                  isSelected={settings.analyticsConsent === "granted"}
+                  onChange={(granted) => {
                     setSettings({
-                      ...settings,
-                      graphLineScheme,
-                    })
+                      analyticsConsent: granted ? "granted" : "denied",
+                    });
+                    logging.setConsent(granted);
+                  }}
+                  labelPosition="start"
+                  helperText={
+                    <FormattedMessage id="analytics-consent-setting-helper" />
                   }
-                />
-                <SelectFormControl
-                  id="graphLineWeight"
-                  label={intl.formatMessage({ id: "graph-line-weight" })}
-                  options={options.graphLineWeight}
-                  value={settings.graphLineWeight}
-                  onChange={(graphLineWeight) =>
-                    setSettings({
-                      ...settings,
-                      graphLineWeight,
-                    })
-                  }
-                />
-                <VStack alignItems="flex-start" w="full">
-                  <Text>
-                    <FormattedMessage id="graph-preview" />
-                  </Text>
-                  <AspectRatio ratio={526 / 92} w="full">
-                    <RecordingGraph
-                      responsive
-                      data={previewGraphData}
-                      role="img"
-                      w="full"
-                      aria-label={intl.formatMessage({
-                        id: "recording-graph-label",
-                      })}
-                    />
-                  </AspectRatio>
-                </VStack>
-                {showAnalyticsToggle && (
-                  <FormControl>
-                    <HStack justify="space-between" align="center">
-                      <FormLabel
-                        htmlFor="analyticsConsent"
-                        mb={0}
-                        fontWeight="normal"
-                      >
-                        <FormattedMessage id="analytics-consent-setting-label" />
-                      </FormLabel>
-                      <Switch
-                        id="analyticsConsent"
-                        isChecked={settings.analyticsConsent === "granted"}
-                        onChange={(e) => {
-                          const granted = e.target.checked;
-                          setSettings({
-                            analyticsConsent: granted ? "granted" : "denied",
-                          });
-                          logging.setConsent(granted);
-                        }}
-                      />
-                    </HStack>
-                    <FormHelperText lineHeight="base">
-                      <FormattedMessage id="analytics-consent-setting-helper" />
-                    </FormHelperText>
-                  </FormControl>
-                )}
-                <FormControl>
-                  <Button variant="link" onClick={handleResetToDefault}>
-                    <FormattedMessage id="restore-defaults-action" />
-                  </Button>
-                  <FormHelperText>
-                    <FormattedMessage id="restore-defaults-helper" />
-                  </FormHelperText>
-                </FormControl>
-              </VStack>
-            </ModalBody>
-            <ModalFooter>
-              <Button variant="primary" onClick={onClose}>
-                <FormattedMessage id="close-action" />
+                >
+                  <FormattedMessage id="analytics-consent-setting-label" />
+                </Switch>
+              </Box>
+            )}
+            <Box w="full">
+              <Button variant="link" onPress={handleResetToDefault}>
+                <FormattedMessage id="restore-defaults-action" />
               </Button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
+              <FieldHelperText>
+                <FormattedMessage id="restore-defaults-helper" />
+              </FieldHelperText>
+            </Box>
+          </VStack>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="primary" onPress={onClose}>
+            <FormattedMessage id="close-action" />
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

@@ -5,19 +5,17 @@
  */
 import {
   Button,
-  HStack,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
+import { ButtonWithLoading } from "./ButtonWithLoading";
 
 export interface PermissionErrorDialogProps {
   headingId: string;
@@ -61,61 +59,54 @@ const PermissionErrorDialog = ({
 
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "lg" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id={headingId} />
-          </ModalHeader>
-          <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <Text textAlign="left" w="100%">
-                {onOpenSettings ? (
-                  <FormattedMessage
-                    id={bodyId}
-                    values={{
-                      appNameShort,
-                      link: (chunks: ReactNode) => (
-                        <Button
-                          variant="link"
-                          textDecoration="underline"
-                          onClick={onOpenSettings}
-                        >
-                          {chunks}
-                        </Button>
-                      ),
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage id={bodyId} />
-                )}
-              </Text>
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="end">
-            <HStack gap={5}>
-              <Button onClick={onClose} variant="secondary" size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button
-                onClick={onTryAgain}
-                variant="primary"
-                size="lg"
-                isLoading={showLoading}
-              >
-                <FormattedMessage id="try-again-action" />
-              </Button>
-            </HStack>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id={headingId} />
+      </ModalHeader>
+      <ModalBody>
+        <VStack width="100%" alignItems="left" gap={5}>
+          <Text textAlign="left" w="100%">
+            {onOpenSettings ? (
+              <FormattedMessage
+                id={bodyId}
+                values={{
+                  appNameShort,
+                  link: (chunks: ReactNode) => (
+                    <Button
+                      variant="link"
+                      css={{ textDecoration: "underline" }}
+                      onPress={onOpenSettings}
+                    >
+                      {chunks}
+                    </Button>
+                  ),
+                }}
+              />
+            ) : (
+              <FormattedMessage id={bodyId} />
+            )}
+          </Text>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <Button onPress={onClose} variant="secondary" size="lg">
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <ButtonWithLoading
+          onClick={onTryAgain}
+          variant="primary"
+          size="lg"
+          isLoading={showLoading}
+        >
+          <FormattedMessage id="try-again-action" />
+        </ButtonWithLoading>
+      </ModalFooter>
     </Modal>
   );
 };

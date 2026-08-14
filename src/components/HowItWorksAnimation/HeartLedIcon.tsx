@@ -3,19 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Icon, IconProps } from "@chakra-ui/react";
+import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 
-interface HeartLedIconProps extends IconProps {
-  size?: string;
-}
-
-const HeartLedIcon = ({ size, ...props }: HeartLedIconProps) => {
+const HeartLedIcon = (props: AnimationIconProps) => {
   return (
-    <Icon
+    <AnimationIcon
       viewBox="0 0 23 22"
-      color="brand2.500"
-      width={size}
-      height={size}
+      baseCss={{ color: "brand2.500" }}
       {...props}
     >
       <path
@@ -82,7 +76,7 @@ const HeartLedIcon = ({ size, ...props }: HeartLedIconProps) => {
         d="M9.89997 17.9004H12.7C12.9 17.9004 13 18.1004 13 18.2004V21.0004C13 21.2004 12.8 21.3004 12.7 21.3004H9.89997C9.69997 21.3004 9.59998 21.1004 9.59998 21.0004V18.2004C9.59998 18.0004 9.79997 17.9004 9.89997 17.9004Z"
         fill="currentColor"
       />
-    </Icon>
+    </AnimationIcon>
   );
 };
 

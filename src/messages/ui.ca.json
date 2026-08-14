@@ -1883,12 +1883,6 @@
       "value": "Ajuda i suport"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Ajuda a traduir"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2037,42 +2031,6 @@
     {
       "type": 0,
       "value": "Idioma"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Completament compatible"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Parcialment compatible"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Compatible"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Incompatible"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Traduccions compatibles per a:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "L'idioma no està disponible totalment"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3919,6 +3877,188 @@
     {
       "type": 0,
       "value": "Torna-ho a provar"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Ajuda a traduir"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Idioma"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Completament compatible"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Parcialment compatible"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Compatible"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Incompatible"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traduccions compatibles per a:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "L'idioma no està disponible totalment"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "Rastres de navegació"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "Tanca "
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "Suggeriments"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "Mostra els suggeriments"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "S'està carregant"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 0,
+      "value": "Decrementa "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 0,
+      "value": "Incrementa "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "Selecciona un element"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "Selecciona"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notificació"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notificacions"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Informació"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Completat amb èxit"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Advertència"
     }
   ],
   "unknown": [

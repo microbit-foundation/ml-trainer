@@ -1,18 +1,22 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  Icon,
-  LinkBox,
-  LinkOverlay,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import { RefObject, useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { ProjectNameDialogReason } from "../project-utils";
-import { shortScreenHeightBreakpoint } from "../responsive";
+import {
+  Card,
+  CardBody,
+  css,
+  cx,
+  LinkBox,
+  LinkOverlayButton,
+  Stack,
+  Text,
+} from "@microbit/ui";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage } from "../store";
 import { createDataSamplesPageUrl } from "../urls";
@@ -50,22 +54,21 @@ const ProjectCard = ({
   const { id, name, actions, timestamp } = projectData;
   const hasCheckbox = !!onSelected;
 
-  const handleLoadProject = useCallback(
-    async (_e: React.MouseEvent) => {
-      await loadProjectAndModelFromStorage(id);
-      navigate(createDataSamplesPageUrl());
-    },
-    [id, navigate]
-  );
+  const handleLoadProject = useCallback(async () => {
+    await loadProjectAndModelFromStorage(id);
+    navigate(createDataSamplesPageUrl());
+  }, [id, navigate]);
 
   return (
-    <LinkBox h="100%" w="100%" role="group">
-      <Card h="100%" w="100%">
+    <LinkBox h="100%" w="100%">
+      <Card css={{ h: "100%", w: "100%" }}>
         <CardBody
-          display="flex"
-          sx={short ? { [shortScreenHeightBreakpoint]: { p: 3 } } : undefined}
+          css={{
+            display: "flex",
+            ...(short ? { _shortHeight: { p: 3 } } : {}),
+          }}
         >
-          <Stack h="100%" w="100%" spacing={0}>
+          <Stack h="100%" w="100%" gap={0}>
             <ProjectCardActions
               id={id}
               name={name}
@@ -77,23 +80,25 @@ const ProjectCard = ({
               setFinalFocusRef={setFinalFocusRef}
               onSkipToToolbar={onSkipToToolbar}
             />
-            <Icon
-              width={32}
-              height="auto"
-              color="brand.500"
-              ml={hasCheckbox ? -2 : -5}
-              mt={hasCheckbox ? 4 : -5}
-              sx={
+            {/* Outer svg scales the inner drawing via its viewBox (the inner
+                width is in outer user units). */}
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden
+              className={cx(
+                css({
+                  width: 32,
+                  height: "auto",
+                  color: "brand.500",
+                  flexShrink: 0,
+                }),
+                hasCheckbox ? css({ ml: -2, mt: 4 }) : css({ ml: -5, mt: -5 }),
                 short
-                  ? {
-                      [shortScreenHeightBreakpoint]: {
-                        width: 20,
-                        ml: hasCheckbox ? -1 : -2,
-                        mt: hasCheckbox ? 2 : -2,
-                      },
-                    }
+                  ? hasCheckbox
+                    ? css({ _shortHeight: { width: 20, ml: -1, mt: 2 } })
+                    : css({ _shortHeight: { width: 20, ml: -2, mt: -2 } })
                   : undefined
-              }
+              )}
             >
               <svg
                 width="27"
@@ -107,21 +112,21 @@ const ProjectCard = ({
                   fill="currentColor"
                 />
               </svg>
-            </Icon>
-            <LinkOverlay
-              as={Button}
-              mt="auto"
-              h={8}
-              textAlign="left"
-              fontSize="xl"
-              isTruncated
+            </svg>
+            <LinkOverlayButton
               onClick={handleLoadProject}
-              variant="unstyled"
-              _focusVisible={{ boxShadow: "outline", outline: "none" }}
+              css={{
+                mt: "auto",
+                h: 8,
+                textAlign: "left",
+                fontSize: "xl",
+                truncate: true,
+                _focusVisible: { focusShadow: "outline" },
+              }}
             >
               {name}
-            </LinkOverlay>
-            <Text noOfLines={1} h="1lh">
+            </LinkOverlayButton>
+            <Text lineClamp={1} h="1lh">
               {actions.map((a) => a.name).join(", ")}
             </Text>
             <Text fontSize="sm" pt={2} color="blackAlpha.700">

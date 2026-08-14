@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Ref, forwardRef } from "react";
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
 } from "react-router-dom";
-import { chakra } from "@chakra-ui/react";
-import { Ref, forwardRef } from "react";
+import { styled } from "@microbit/ui";
 
 // Adapter to deal with to vs href.
 type RouterLinkAdaptedProps = Omit<RouterLinkProps, "to"> & { href: string };
@@ -20,12 +20,7 @@ const RouterLinkAdapted = forwardRef(function RouterLinkAdaptedInner(
   return <RouterLink ref={ref} to={href} {...props} />;
 });
 
-// https://chakra-ui.com/docs/components/link
-const Link = chakra<typeof RouterLinkAdapted, RouterLinkAdaptedProps>(
-  RouterLinkAdapted,
-  {
-    shouldForwardProp: (prop) => ["href", "target", "children"].includes(prop),
-  }
-);
+/** A react-router link accepting Panda style props (like shared-ui Link). */
+const Link = styled(RouterLinkAdapted);
 
 export default Link;

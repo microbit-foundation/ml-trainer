@@ -9,14 +9,12 @@ import {
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   UnorderedList,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import { useDeployment } from "../deployment";
 import ExternalLink from "./ExternalLink";
@@ -74,59 +72,54 @@ const ConnectErrorDialog = ({
 
   return (
     <Modal
-      motionPreset="none"
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "2xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id={`${textPrefix}-${deviceType}-heading`} />
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack width="100%" alignItems="left" gap={5}>
-              <VStack gap={3} textAlign="left" w="100%">
-                <Text w="100%">
-                  <FormattedMessage id={`${textPrefix}-${deviceType}1`} />
-                </Text>
-                <Text w="100%">
-                  <FormattedMessage id={recoverySteps.listHeading} />
-                </Text>
-                <UnorderedList textAlign="left" ps={8}>
-                  {recoverySteps.bullets.map((textId) => (
-                    <ListItem key={textId}>
-                      <Text>
-                        <FormattedMessage id={textId} />
-                      </Text>
-                    </ListItem>
-                  ))}
-                </UnorderedList>
-              </VStack>
-            </VStack>
-          </ModalBody>
-          <ModalFooter>
-            <ModalFooterContent
-              leftContent={
-                <ExternalLink
-                  textId="connect-troubleshooting"
-                  href={supportLinks.troubleshooting}
-                />
-              }
-            >
-              <Button onClick={onClose} variant="secondary" size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button onClick={onRetry} variant="primary" size="lg">
-                <FormattedMessage id="try-again-action" />
-              </Button>
-            </ModalFooterContent>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id={`${textPrefix}-${deviceType}-heading`} />
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <VStack width="100%" alignItems="left" gap={5}>
+          <VStack gap={3} textAlign="left" w="100%">
+            <Text w="100%">
+              <FormattedMessage id={`${textPrefix}-${deviceType}1`} />
+            </Text>
+            <Text w="100%">
+              <FormattedMessage id={recoverySteps.listHeading} />
+            </Text>
+            <UnorderedList textAlign="left" ps={8}>
+              {recoverySteps.bullets.map((textId) => (
+                <ListItem key={textId}>
+                  <Text>
+                    <FormattedMessage id={textId} />
+                  </Text>
+                </ListItem>
+              ))}
+            </UnorderedList>
+          </VStack>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <ModalFooterContent
+          leftContent={
+            <ExternalLink
+              textId="connect-troubleshooting"
+              href={supportLinks.troubleshooting}
+            />
+          }
+        >
+          <Button onPress={onClose} variant="secondary" size="lg">
+            <FormattedMessage id="cancel-action" />
+          </Button>
+          <Button onPress={onRetry} variant="primary" size="lg">
+            <FormattedMessage id="try-again-action" />
+          </Button>
+        </ModalFooterContent>
+      </ModalFooter>
     </Modal>
   );
 };

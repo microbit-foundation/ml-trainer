@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Button, Flex, HStack, Text } from "@chakra-ui/react";
 import { RiFeedbackFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
+import { Button, Flex, HStack, Text } from "@microbit/ui";
 import { useStore } from "../store";
 
 const PreReleaseNotice = () => {
@@ -31,12 +31,9 @@ const PreReleaseNotice = () => {
         <Button
           leftIcon={<RiFeedbackFill />}
           variant="link"
-          color="white"
-          colorScheme="whiteAlpha"
-          fontWeight="bold"
           size="xs"
-          p={1}
-          onClick={feedbackOnOpen}
+          css={{ color: "white", fontWeight: "bold", p: 1 }}
+          onPress={feedbackOnOpen}
         >
           <FormattedMessage id="feedback" />
         </Button>

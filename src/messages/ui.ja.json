@@ -1869,12 +1869,6 @@
       "value": "ヘルプとサポート"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "翻訳を手伝う"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2015,42 +2009,6 @@
     {
       "type": 0,
       "value": "言語"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "完全に対応"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "部分的に対応"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "対応"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "非対応"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "サポートされている翻訳:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "言語が完全にサポートされていません"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3869,6 +3827,188 @@
     {
       "type": 0,
       "value": "もう一度やり直す"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "翻訳を手伝う"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "言語"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "完全に対応"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "部分的に対応"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "対応"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "非対応"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "サポートされている翻訳:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "言語が完全にサポートされていません"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "パンくずリスト"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "閉じる"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "候補"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "候補を表示"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "読み込み中"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": "を縮小"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": "を拡大"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "項目を選択"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "選択する"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " 個の通知"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " 個の通知"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "。"
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "エラー"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "情報"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "成功"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "警告"
     }
   ],
   "unknown": [

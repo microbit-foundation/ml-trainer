@@ -1897,12 +1897,6 @@
       "value": "Aide et support"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Contribuer à la traduction"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2051,42 +2045,6 @@
     {
       "type": 0,
       "value": "Langue"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Entièrement pris en charge"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Partiellement pris en charge"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Pris en charge"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Non pris en charge"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Traductions prises en charge pour :"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "La langue n'est pas entièrement prise en charge"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3937,6 +3895,188 @@
     {
       "type": 0,
       "value": "Réessayer"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Contribuer à la traduction"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Langue"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Entièrement pris en charge"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partiellement pris en charge"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Pris en charge"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Non pris en charge"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traductions prises en charge pour :"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "La langue n'est pas entièrement prise en charge"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "Fil d'Ariane"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "Fermer"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "Suggestions"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "Afficher les suggestions"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "Chargement"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 0,
+      "value": "Diminuer "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 0,
+      "value": "Augmenter "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "Sélectionner un élément"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "Sélectionner"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notification"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notifications"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Erreur"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Informations"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Succès"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Avertissement"
     }
   ],
   "unknown": [

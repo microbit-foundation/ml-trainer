@@ -3,17 +3,18 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useToken } from "@chakra-ui/react";
 import { icons, LedIconType } from "../../utils/icons";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
+import { token } from "@microbit/ui";
 
 interface LedIconSvg {
   icon: LedIconType;
 }
 
 const LedIconSvg = ({ icon }: LedIconSvg) => {
-  const [brand500, gray200] = useToken("colors", ["brand.500", "gray.200"]);
+  const brand500 = token("colors.brand.500");
+  const gray200 = token("colors.gray.200");
   const iconData = icons[icon];
   const intl = useIntl();
   const getFill = useCallback(

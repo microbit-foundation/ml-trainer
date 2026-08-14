@@ -4,7 +4,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, useSize } from "@chakra-ui/react";
+import { useElementSize } from "../hooks/use-element-size";
+import { HStack } from "@microbit/ui";
 import { AccelerometerData } from "@microbit/microbit-connection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SmoothieChart, TimeSeries } from "@microbit/smoothie";
@@ -40,7 +41,7 @@ const LiveGraph = ({ paused }: LiveGraphProps) => {
   const lineWidth = graphLineWeight === "default" ? 2 : 3;
 
   const liveGraphContainerRef = useRef(null);
-  const { width, height } = useSize(liveGraphContainerRef) ?? {
+  const { width, height } = useElementSize(liveGraphContainerRef) ?? {
     width: 100,
     height: 100,
   };

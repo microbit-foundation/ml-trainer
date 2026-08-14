@@ -6,14 +6,12 @@
 import {
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  Progress,
+  ProgressBar,
   VStack,
-} from "@chakra-ui/react";
-import { FormattedMessage } from "react-intl";
+} from "@microbit/ui";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface DownloadingDialogProps {
   isOpen: boolean;
@@ -26,35 +24,31 @@ const TrainingModelProgressDialog = ({
   progress,
   finalFocusRef,
 }: DownloadingDialogProps) => {
+  const intl = useIntl();
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={() => {}}
       size={{ base: "full", md: "2xl" }}
       isCentered
       finalFocusRef={finalFocusRef}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="training-model" />
-          </ModalHeader>
-          <ModalBody>
-            <VStack width="100%" alignItems="left">
-              <Progress
-                value={progress}
-                colorScheme="brand2"
-                size="md"
-                rounded={100}
-              />
-            </VStack>
-          </ModalBody>
-          <ModalFooter />
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id="training-model" />
+      </ModalHeader>
+      <ModalBody>
+        <VStack width="100%" alignItems="stretch">
+          <ProgressBar
+            value={progress}
+            aria-label={intl.formatMessage({ id: "training-model" })}
+            css={{ borderRadius: "100px" }}
+            barCss={{ bg: "brand2.500" }}
+          />
+        </VStack>
+      </ModalBody>
+      <ModalFooter />
     </Modal>
   );
 };

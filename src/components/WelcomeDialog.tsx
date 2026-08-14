@@ -4,17 +4,16 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import { ComponentProps } from "react";
+} from "@microbit/ui";
+
 import { FormattedMessage } from "react-intl";
 import { AnimationProvider } from "./AnimationProvider";
 import { ButtonWithLoading } from "./ButtonWithLoading";
@@ -22,7 +21,7 @@ import { useConnectFirst } from "./ConnectFirstDialog";
 import HowItWorksAnimation from "./HowItWorksAnimation/index";
 import PauseResumeLink from "./PauseResumeAnimationLink";
 
-type WelcomeDialogProps = Omit<ComponentProps<typeof Modal>, "children">;
+type WelcomeDialogProps = Omit<ControlledModalProps, "children">;
 
 const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
   const { handleClose, isConnecting, handleConnect } = useConnectFirst({
@@ -33,40 +32,35 @@ const WelcomeDialog = ({ onClose, isOpen, ...rest }: WelcomeDialogProps) => {
   return (
     <AnimationProvider startPausedIfReducedMotion>
       <Modal
-        closeOnOverlayClick={false}
-        motionPreset="none"
+        isDismissable={false}
+        motionless
         size={{ base: "full", sm: "full", md: "4xl" }}
         isCentered
         onClose={handleClose}
         isOpen={isOpen}
         {...rest}
-        preserveScrollBarGap={false}
       >
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>
-              <Text>
-                <FormattedMessage id="welcome-title" />
-              </Text>
-            </ModalHeader>
-            <ModalBody>
-              <ModalCloseButton />
-              <HowItWorksAnimation />
-            </ModalBody>
-            <ModalFooter justifyContent="space-between">
-              <VStack alignItems="start">
-                <PauseResumeLink />
-              </VStack>
-              <ButtonWithLoading
-                variant="primary"
-                onClick={handleConnect}
-                isLoading={isConnecting}
-              >
-                <FormattedMessage id="connect-action" />
-              </ButtonWithLoading>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
+        <ModalHeader>
+          <Text>
+            <FormattedMessage id="welcome-title" />
+          </Text>
+        </ModalHeader>
+        <ModalBody>
+          <ModalCloseButton />
+          <HowItWorksAnimation />
+        </ModalBody>
+        <ModalFooter css={{ justifyContent: "space-between" }}>
+          <VStack alignItems="start">
+            <PauseResumeLink />
+          </VStack>
+          <ButtonWithLoading
+            variant="primary"
+            onClick={handleConnect}
+            isLoading={isConnecting}
+          >
+            <FormattedMessage id="connect-action" />
+          </ButtonWithLoading>
+        </ModalFooter>
       </Modal>
     </AnimationProvider>
   );

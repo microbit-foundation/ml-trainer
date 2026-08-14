@@ -65,8 +65,9 @@ let activeMenuClose: (() => void) | null = null;
 
 /**
  * Register a callback that the back button handler will invoke to
- * close the currently open menu. Called by the Menu component wrapper
- * when a menu opens on native platforms.
+ * close the currently open menu. Installed as shared-ui's overlay-close
+ * registrar (see SharedUIConfig in App.tsx), so menus register
+ * themselves while open on native platforms.
  */
 export const setActiveMenuClose = (cb: (() => void) | null): void => {
   activeMenuClose = cb;

@@ -4,18 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  Button,
-  HStack,
   Icon,
+  Button,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { ReactNode } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
@@ -36,76 +33,72 @@ const BrokenFirmwareDialog = ({
   const { supportLinks } = useDeployment();
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: "3xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="firmware-outdated-heading" />
-          </ModalHeader>
-          <ModalBody>
-            <VStack gap={5} textAlign="left" w="100%">
-              <Text w="100%">
-                <FormattedMessage id="firmware-outdated-content1" />
-              </Text>
-              <Text w="100%">
-                <FormattedMessage
-                  id="firmware-outdated-content2"
-                  values={{
-                    link: (chunks: ReactNode) => (
-                      <Link
-                        color="brand.600"
-                        textDecoration="underline"
-                        href="https://microbit.org/get-started/user-guide/firmware/"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {chunks}
-                      </Link>
-                    ),
-                  }}
-                />
-              </Text>
-              <Text w="100%">
-                <Link
-                  color="brand.600"
-                  textDecoration="underline"
-                  href={supportLinks.troubleshooting}
-                  target="_blank"
-                  rel="noopener"
-                  display="flex"
-                  flexDirection="row"
-                  gap={1}
-                >
-                  <FormattedMessage id="connect-troubleshoot" />
-                  <Icon
-                    as={RiExternalLinkLine}
-                    boxSize={5}
+      <ModalHeader>
+        <FormattedMessage id="firmware-outdated-heading" />
+      </ModalHeader>
+      <ModalBody>
+        <VStack gap={5} textAlign="left" w="100%">
+          <Text w="100%">
+            <FormattedMessage id="firmware-outdated-content1" />
+          </Text>
+          <Text w="100%">
+            <FormattedMessage
+              id="firmware-outdated-content2"
+              values={{
+                link: (chunks: ReactNode) => (
+                  <Link
                     color="brand.600"
-                    position="relative"
-                  />
-                </Link>
-              </Text>
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="end">
-            <HStack gap={5}>
-              <Button onClick={onClose} variant="secondary" size="lg">
-                <FormattedMessage id="cancel-action" />
-              </Button>
-              <Button onClick={onTryAgain} variant="primary" size="lg">
-                <FormattedMessage id="try-again-action" />
-              </Button>
-            </HStack>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+                    textDecoration="underline"
+                    href="https://microbit.org/get-started/user-guide/firmware/"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {chunks}
+                  </Link>
+                ),
+              }}
+            />
+          </Text>
+          <Text w="100%">
+            <Link
+              color="brand.600"
+              textDecoration="underline"
+              href={supportLinks.troubleshooting}
+              target="_blank"
+              rel="noopener"
+              display="flex"
+              flexDirection="row"
+              gap={1}
+            >
+              <FormattedMessage id="connect-troubleshoot" />
+              <Icon
+                as={RiExternalLinkLine}
+                css={{
+                  width: 5,
+                  height: 5,
+                  color: "brand.600",
+                  position: "relative",
+                }}
+              />
+            </Link>
+          </Text>
+        </VStack>
+      </ModalBody>
+      <ModalFooter>
+        <Button onPress={onClose} variant="secondary" size="lg">
+          <FormattedMessage id="cancel-action" />
+        </Button>
+        <Button onPress={onTryAgain} variant="primary" size="lg">
+          <FormattedMessage id="try-again-action" />
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

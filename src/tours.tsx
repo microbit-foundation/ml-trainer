@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { HStack, Icon, Image, Stack, Text } from "@chakra-ui/react";
+import { HStack, Icon, Image, Stack, Text } from "@microbit/ui";
 import { RiInformationLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import makecodeBackImage from "./images/makecode-back.png";
@@ -56,7 +56,7 @@ const MakeCodeStep = () => {
         <FormattedMessage id="tour-makecode-intro-content1" />
       </Text>
       <HStack gap={4}>
-        <Icon as={RiInformationLine} boxSize={6} />
+        <Icon as={RiInformationLine} css={{ width: 6, height: 6 }} />
         <Text w="fit-content">
           <FormattedMessage id="tour-makecode-intro-content2" />
           <br />

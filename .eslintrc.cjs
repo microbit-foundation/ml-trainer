@@ -15,6 +15,7 @@ module.exports = {
   ],
   ignorePatterns: [
     "dist",
+    "styled-system",
     ".eslintrc.cjs",
     "deployment.cjs",
     "bin/**/*.js",
@@ -41,7 +42,7 @@ module.exports = {
   rules: {
     // More trouble than it's worth
     "react/no-unescaped-entities": "off",
-    // False positives from library imports from Chakra UI
+    // False positives from library imports
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/no-misused-promises": [
       "error",

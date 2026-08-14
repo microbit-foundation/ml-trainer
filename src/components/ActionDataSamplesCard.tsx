@@ -3,51 +3,34 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { forwardRef, ReactNode, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
+import { RiHashtag, RiTimerLine } from "react-icons/ri";
+import { FormattedMessage, useIntl } from "react-intl";
+import { ActionData, DataSamplesView, RecordingData } from "../model";
 import {
   Box,
-  BoxProps,
   Button,
   ButtonGroup,
-  Card,
   CardBody,
-  CardProps,
   CloseButton,
+  css,
+  cx,
   HStack,
   Icon,
   MenuItem,
   MenuList,
-  Portal,
+  MenuTrigger,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
-import { forwardRef, ReactNode, useCallback, useRef } from "react";
-import { RiHashtag, RiTimerLine } from "react-icons/ri";
-import { FormattedMessage, useIntl } from "react-intl";
-import { DataSamplesView, ActionData, RecordingData } from "../model";
-import Menu from "./Menu";
+} from "@microbit/ui";
+import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import MoreMenuButton from "./MoreMenuButton";
+import { RecordingOptions } from "./RecordingDialog";
 import RecordingFingerprint from "./RecordingFingerprint";
 import RecordingGraph from "./RecordingGraph";
-import { RecordingOptions } from "./RecordingDialog";
-
-const flash = keyframes({
-  "0%, 10%": {
-    backgroundColor: "#4040ff44",
-  },
-  "100%": {},
-});
-
-const bigHitArea = {
-  position: "absolute",
-  top: -2,
-  right: -2,
-  bottom: -2,
-  left: -2,
-  content: '""',
-};
 
 interface ActionDataSamplesCardProps {
   preview?: boolean;
@@ -80,8 +63,10 @@ const ActionDataSamplesCard = ({
           <DataSamplesRowCard
             onSelectRow={onSelectRow}
             selected={selected}
-            position="relative"
-            className={tourElClassname.recordDataSamplesCard}
+            className={cx(
+              css({ position: "relative" }),
+              tourElClassname.recordDataSamplesCard
+            )}
           >
             <RecordingArea
               action={value}
@@ -107,15 +92,22 @@ const ActionDataSamplesCard = ({
                     action: value.name,
                   }
                 )}
-                position="absolute"
-                top={-2}
-                right={-2}
-                rounded="full"
-                bgColor="white"
-                borderColor="blackAlpha.500"
-                boxShadow="sm"
                 onClick={() => deleteActionRecording(value.id, recording.id)}
-                _after={bigHitArea}
+                expandHitArea
+                css={{
+                  position: "absolute",
+                  top: -2,
+                  right: -2,
+                  borderRadius: "full",
+                  bg: "white",
+                  borderColor: "blackAlpha.500",
+                  boxShadow: "sm",
+                  // Solid hover/active: this button floats over the card
+                  // edge, so the default translucent hover lets the content
+                  // beneath show through it.
+                  _hover: { bg: "gray.100" },
+                  _active: { bg: "gray.200" },
+                }}
               />
             }
           >
@@ -186,51 +178,61 @@ const GraphAndDataFeaturesDataSampleCard = ({
   closeButton,
   ...props
 }: GraphAndDataFeaturesDataSampleCardProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  // State, not a ref: the portal target must trigger a re-render once mounted.
+  // Portaling appends the close button after the card content so it paints
+  // above the recording graph.
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
   return (
-    <DataSamplesRowCard {...props} ref={ref}>
-      <Portal containerRef={ref}>{closeButton}</Portal>
+    <DataSamplesRowCard {...props} ref={setTarget}>
+      {target && createPortal(closeButton, target)}
       {children}
     </DataSamplesRowCard>
   );
 };
 
-interface DataSamplesRowCardProps extends CardProps {
+interface DataSamplesRowCardProps {
   selected: boolean;
   onSelectRow?: () => void;
   children: ReactNode;
+  variant?: "elevated" | "outline";
+  className?: string;
 }
 
 const DataSamplesRowCard = forwardRef<HTMLDivElement, DataSamplesRowCardProps>(
   function DataSamplesRowCard(
-    { selected, onSelectRow, children, ...rest }: DataSamplesRowCardProps,
+    { selected, onSelectRow, children, variant, className },
     ref
   ) {
     return (
-      <Card
+      <RowCard
         ref={ref}
         onClick={onSelectRow}
-        p={2}
-        h="120px"
-        display="flex"
-        flexDirection="row"
-        width="fit-content"
-        borderColor={selected ? "brand.500" : "transparent"}
-        borderWidth={1}
-        {...rest}
+        variant={variant}
+        selected={selected}
+        css={{ width: "fit-content" }}
+        className={className}
       >
-        <CardBody display="flex" flexDirection="row" p={1} gap={3}>
+        <CardBody
+          css={{
+            display: "flex",
+            flexDirection: "row",
+            px: 1,
+            py: 1,
+            gap: 3,
+          }}
+        >
           {children}
         </CardBody>
-      </Card>
+      </RowCard>
     );
   }
 );
 
-interface RecordingAreaProps extends BoxProps {
+interface RecordingAreaProps {
   action: ActionData;
   selected: boolean;
   onRecord: (recordingOptions: RecordingOptions) => void;
+  className?: string;
 }
 
 export const recordButtonId = (action: ActionData) =>
@@ -240,83 +242,88 @@ const RecordingArea = ({
   action,
   selected,
   onRecord,
-  ...props
+  className,
 }: RecordingAreaProps) => {
   const intl = useIntl();
   return (
-    <VStack w="8.25rem" justifyContent="center" {...props}>
-      <Menu>
-        <ButtonGroup isAttached>
-          <Button
-            id={recordButtonId(action)}
-            pr={2}
-            variant={selected ? "record" : "recordOutline"}
-            borderRight="none"
-            onClick={() =>
-              onRecord({ recordingsToCapture: 1, continuousRecording: false })
-            }
-            aria-label={intl.formatMessage(
-              { id: "record-action-aria" },
-              { action: action.name }
-            )}
-          >
-            <FormattedMessage id="record-action" />
-          </Button>
+    <VStack w="8.25rem" justifyContent="center" className={className}>
+      <ButtonGroup isAttached>
+        <Button
+          id={recordButtonId(action)}
+          variant={selected ? "record" : "recordOutline"}
+          onPress={() =>
+            onRecord({ recordingsToCapture: 1, continuousRecording: false })
+          }
+          aria-label={intl.formatMessage(
+            { id: "record-action-aria" },
+            { action: action.name }
+          )}
+          css={{ pr: 2, borderRight: "none" }}
+        >
+          <FormattedMessage id="record-action" />
+        </Button>
+        <MenuTrigger>
           <MoreMenuButton
-            minW={8}
+            css={{ minW: 8 }}
             variant={selected ? "record" : "recordOutline"}
             aria-label={intl.formatMessage(
               { id: "recording-options-aria" },
               { action: action.name }
             )}
           />
-          <Portal>
-            <MenuList>
-              <MenuItem
-                onClick={() =>
-                  onRecord({
-                    recordingsToCapture: 10,
-                    continuousRecording: false,
-                  })
-                }
-                icon={<Icon as={RiHashtag} h={5} w={5} />}
-              >
-                <Text fontSize="md">
-                  <FormattedMessage
-                    id="record-samples"
-                    values={{ numSamples: 10 }}
-                  />
-                </Text>
-                <Text fontSize="xs">
-                  <FormattedMessage id="record-samples-help" />
-                </Text>
-              </MenuItem>
-              <MenuItem
-                onClick={() =>
-                  onRecord({
-                    recordingsToCapture: 10,
-                    continuousRecording: true,
-                  })
-                }
-                icon={<Icon as={RiTimerLine} h={5} w={5} />}
-              >
-                <Text fontSize="md">
-                  <FormattedMessage
-                    id="record-seconds"
-                    values={{ numSeconds: 10 }}
-                  />
-                </Text>
-                <Text fontSize="xs">
-                  <FormattedMessage
-                    id="record-seconds-help"
-                    values={{ numSamples: 10 }}
-                  />
-                </Text>
-              </MenuItem>
-            </MenuList>
-          </Portal>
-        </ButtonGroup>
-      </Menu>
+          <MenuList>
+            <MenuItem
+              onAction={() =>
+                onRecord({
+                  recordingsToCapture: 10,
+                  continuousRecording: false,
+                })
+              }
+              icon={<Icon as={RiHashtag} css={{ width: 5, height: 5 }} />}
+              textValue={intl.formatMessage(
+                { id: "record-samples" },
+                { numSamples: 10 }
+              )}
+            >
+              <Text fontSize="md">
+                <FormattedMessage
+                  id="record-samples"
+                  values={{ numSamples: 10 }}
+                />
+              </Text>
+              <Text fontSize="xs">
+                <FormattedMessage id="record-samples-help" />
+              </Text>
+            </MenuItem>
+            <MenuItem
+              onAction={() =>
+                onRecord({
+                  recordingsToCapture: 10,
+                  continuousRecording: true,
+                })
+              }
+              icon={<Icon as={RiTimerLine} css={{ width: 5, height: 5 }} />}
+              textValue={intl.formatMessage(
+                { id: "record-seconds" },
+                { numSeconds: 10 }
+              )}
+            >
+              <Text fontSize="md">
+                <FormattedMessage
+                  id="record-seconds"
+                  values={{ numSeconds: 10 }}
+                />
+              </Text>
+              <Text fontSize="xs">
+                <FormattedMessage
+                  id="record-seconds-help"
+                  values={{ numSamples: 10 }}
+                />
+              </Text>
+            </MenuItem>
+          </MenuList>
+        </MenuTrigger>
+      </ButtonGroup>
       {action.recordings.length < 3 ? (
         <Text
           fontSize="xs"
@@ -361,7 +368,6 @@ const DataSample = ({
   view: DataSamplesView;
   hasClose?: boolean;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const hasGraph =
     view === DataSamplesView.Graph ||
     view === DataSamplesView.GraphAndDataFeatures;
@@ -376,30 +382,31 @@ const DataSample = ({
     <HStack
       key={recording.id}
       position="relative"
-      ref={ref}
       gap={hasFingerprint && hasGraph ? 2 : 0}
     >
       {hasClose && (
-        <Portal containerRef={ref}>
-          <CloseButton
-            position="absolute"
-            top={0}
-            right={0}
-            size="sm"
-            aria-label={intl.formatMessage(
-              {
-                id: "delete-recording-aria",
-              },
-              {
-                sample: numRecordings - recordingIndex,
-                numSamples: numRecordings,
-                action: actionName,
-              }
-            )}
-            onClick={handleDelete}
-            _after={bigHitArea}
-          />
-        </Portal>
+        <CloseButton
+          size="sm"
+          aria-label={intl.formatMessage(
+            {
+              id: "delete-recording-aria",
+            },
+            {
+              sample: numRecordings - recordingIndex,
+              numSamples: numRecordings,
+              action: actionName,
+            }
+          )}
+          onClick={handleDelete}
+          expandHitArea
+          css={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            // Paint above the graph/fingerprint siblings that follow it.
+            zIndex: 1,
+          }}
+        />
       )}
       {hasGraph && (
         <RecordingGraph
@@ -416,7 +423,9 @@ const DataSample = ({
             left={0}
             right={0}
             rounded="md"
-            animation={isNew ? `${flash} 1s` : undefined}
+            className={
+              isNew ? css({ animation: "recordingFlash 1s" }) : undefined
+            }
             onAnimationEnd={onNewAnimationEnd}
           />
         </RecordingGraph>

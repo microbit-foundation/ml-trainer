@@ -1905,12 +1905,6 @@
       "value": "Hulp & Ondersteuning"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Help met vertalen"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2059,42 +2053,6 @@
     {
       "type": 0,
       "value": "Taal"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Volledig ondersteund"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Gedeeltelijk ondersteund"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Ondersteund"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Niet ondersteund"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Vertalingen ondersteund voor:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "Taal niet volledig ondersteund"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3949,6 +3907,188 @@
     {
       "type": 0,
       "value": "Probeer het opnieuw"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Help met vertalen"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Taal"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Volledig ondersteund"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Gedeeltelijk ondersteund"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Ondersteund"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Niet ondersteund"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Vertalingen ondersteund voor:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "Taal niet volledig ondersteund"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "Kruimelpad"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "Afsluiten"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "Suggesties"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "Suggesties weergeven"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "Laden"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 0,
+      "value": "Verlaag "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 0,
+      "value": "Verhoog "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "Selecteer een item"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "Selecteer"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " melding"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " meldingen"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Fout"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Informatie"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Succes"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Waarschuwing"
     }
   ],
   "unknown": [
