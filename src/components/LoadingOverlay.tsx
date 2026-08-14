@@ -16,6 +16,7 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
       isDismissable={false}
       onClose={doNothing}
       isCentered
+      aria-label={intl.formatMessage({ id: "loading" })}
       contentCss={{
         background: "transparent",
         boxShadow: "none",
