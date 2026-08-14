@@ -176,7 +176,11 @@ const DefaultPageLayout = ({
             <ActionBar
               w="100%"
               px={{ base: 2, md: 5 }}
-              itemsCenterProps={{ overflow: "hidden" }}
+              // The clip stops the centre content overflowing the bar, but
+              // its box hugs the 40px name button exactly, so the focus
+              // ring (2px outline at 2px offset) needs the 4px of vertical
+              // room — the bar is 64px, so the extra height just recentres.
+              itemsCenterProps={{ overflow: "hidden", py: 1 }}
               itemsCenter={
                 showProjectName || showPageTitle ? (
                   <HStack h={10} w="100%" justifyContent="center">
