@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, css, Image } from "@microbit/ui";
+import { AspectRatio, Box, css, Image } from "@microbit/ui";
 import connectorImage from "../../images/micro-usb-connector.png";
 import microbitImage from "../../images/microbit.png";
 import { useAnimation } from "../AnimationProvider";
@@ -45,12 +45,12 @@ const PlugMicrobitAnimation = ({
       style={{ width }}
     >
       <Box position="relative" width="100%">
-        <Box
+        <AspectRatio
+          ratio={1}
           position="absolute"
           left="40%"
           top="16%"
           width="23%"
-          aspectRatio="1"
           transform="translate(-75%, -75%)"
           borderRadius="full"
           backgroundImage="radial-gradient(closest-side, rgba(255, 199, 0, 0.55) 50%, transparent)"
