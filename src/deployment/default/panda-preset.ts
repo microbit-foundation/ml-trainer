@@ -279,15 +279,6 @@ export const appPreset = definePreset({
         button: {
           variants: {
             variant: {
-              led: {
-                borderWidth: "2px",
-                borderRadius: "5px",
-                borderColor: "brand2.500",
-                color: "brand2.700",
-                bg: "transparent",
-                _hover: { cursor: "pointer", borderColor: "brand2.500" },
-                _active: { bg: "brand2.500", borderColor: "brand2.500" },
-              },
               recordOutline: {
                 borderWidth: "1px",
                 borderColor: "red.500",
