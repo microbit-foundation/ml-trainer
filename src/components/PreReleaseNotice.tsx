@@ -5,7 +5,7 @@
  */
 import { RiFeedbackFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
-import { Button, Flex, HStack, Text } from "@microbit/ui";
+import { Button, Flex, HStack, Text, darkSurface } from "@microbit/ui";
 import { useStore } from "../store";
 
 const PreReleaseNotice = () => {
@@ -13,6 +13,8 @@ const PreReleaseNotice = () => {
   return (
     <Flex
       w="100%"
+      // Dark by design: white focus rings for the buttons on it.
+      {...darkSurface}
       bgColor="gray.800"
       color="white"
       p={1}

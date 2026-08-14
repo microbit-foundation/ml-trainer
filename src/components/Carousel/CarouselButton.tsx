@@ -53,7 +53,7 @@ const CarouselButton = React.forwardRef(function CarouselButton(
             "& svg": { transform: "scale(1.2)" },
           },
           _focusVisible: {
-            focusShadow: "outline",
+            focusRing: "outline",
           },
           "& svg": {
             objectFit: "contain",

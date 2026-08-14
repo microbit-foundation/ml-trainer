@@ -127,14 +127,10 @@ const EditableName = ({
           ? {
               ...previewButtonBase,
               pl: 0,
-              _focusVisible: { focusShadow: "outline" },
             }
           : {
               ...previewButtonBase,
               _hover: { backgroundColor: "blackAlpha.300" },
-              _focusVisible: {
-                boxShadow: "inset token(shadows.outlineDark)",
-              },
             }
       }
     >

@@ -119,7 +119,6 @@ const ProjectCardActions = ({
             _focusVisible: {
               opacity: 1,
               pointerEvents: "auto",
-              boxShadow: "0 0 0 2px white, 0 0 0 4px token(colors.brand.500)",
             },
           }}
         >

@@ -4,7 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { ReactNode } from "react";
-import { Box, BoxProps, HStack, HstackProps, VStack } from "@microbit/ui";
+import {
+  Box,
+  BoxProps,
+  darkSurface,
+  HStack,
+  HstackProps,
+  VStack,
+} from "@microbit/ui";
 
 export interface ActionBarProps extends BoxProps {
   itemsLeft?: ReactNode;
@@ -33,6 +40,9 @@ const ActionBar = ({
     <VStack
       as="header"
       gap={0}
+      // The chrome bar is a coloured/dark surface with white content in
+      // every brand, so focus rings inside it are the white on-dark ones.
+      {...darkSurface}
       bg="statusBarBg"
       css={{ "--inset-top": "env(safe-area-inset-top)" }}
       {...rest}

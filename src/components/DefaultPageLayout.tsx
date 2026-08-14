@@ -256,9 +256,6 @@ const DefaultPageLayout = ({
                         },
                         color: "white",
                         fontSize: "xl",
-                        _focusVisible: {
-                          focusShadow: "outlineDark",
-                        },
                       }}
                     >
                       <BackArrow />
@@ -272,9 +269,6 @@ const DefaultPageLayout = ({
                       css={{
                         display: useTabletLayout ? "inline-flex" : "none",
                         color: "white",
-                        _focusVisible: {
-                          focusShadow: "outlineDark",
-                        },
                       }}
                     >
                       <RiMenuLine size={24} />
@@ -303,8 +297,11 @@ const DefaultPageLayout = ({
                       className={css({
                         display: useTabletLayout ? "none" : "inline-flex",
                         outline: "none",
+                        // A react-router link (no recipe), so it carries the
+                        // ring explicitly; the radius shapes the ring's
+                        // corners.
                         _focusVisible: {
-                          focusShadow: "outlineDark",
+                          focusRing: "outline",
                           borderRadius: "md",
                         },
                       })}
@@ -334,9 +331,6 @@ const DefaultPageLayout = ({
                       css={{
                         display: useTabletLayout ? "inline-flex" : "none",
                         color: "white",
-                        _focusVisible: {
-                          focusShadow: "outlineDark",
-                        },
                       }}
                     >
                       <RiMenuLine size={24} />
@@ -435,9 +429,6 @@ export const HomeToolbarItem = () => {
       aria-label={intl.formatMessage({ id: "homepage" })}
       css={{
         color: "white",
-        _focusVisible: {
-          focusShadow: "outlineDark",
-        },
       }}
     >
       <RiHome2Line size={24} />
