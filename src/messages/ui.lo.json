@@ -1909,12 +1909,6 @@
       "value": "ຊ່ວຍເຫຼືອ ແລະ ສະໜັບສະໜູນ"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "ຊ່ວຍແປ"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2063,42 +2057,6 @@
     {
       "type": 0,
       "value": "ພາສາ"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "ຮອງຮັບຢ່າງເຕັມທີ່"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "ຮອງຮັບບາງສ່ວນ"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "ຮອງຮັບ"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "ບໍ່ຮອງຮັບ"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "ຮອງຮັບການແປສຳລັບ:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "ພາສາບໍ່ຮອງຮັບຢ່າງເຕັມທີ່"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3951,6 +3909,60 @@
       "value": "ລອງໃໝ່ອີກຄັ້ງ"
     }
   ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍແປ"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "ພາສາ"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບຢ່າງເຕັມທີ່"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບບາງສ່ວນ"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບ"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "ບໍ່ຮອງຮັບ"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບການແປສຳລັບ:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "ພາສາບໍ່ຮອງຮັບຢ່າງເຕັມທີ່"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -3979,6 +3991,12 @@
     {
       "type": 0,
       "value": "ກຳລັງໂຫຼດ"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
     }
   ],
   "ui.numberfield-decrease": [

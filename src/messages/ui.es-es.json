@@ -1909,12 +1909,6 @@
       "value": "Ayuda y asistencia"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Ayudar a traducir"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2063,42 +2057,6 @@
     {
       "type": 0,
       "value": "Idioma"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Totalmente compatible"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Parcialmente compatible"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Compatible"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "No compatible"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Traducciones compatibles con:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "Idioma no es totalmente compatible"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3951,6 +3909,60 @@
       "value": "Inténtalo de nuevo"
     }
   ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Ayudar a traducir"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Idioma"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Totalmente compatible"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Parcialmente compatible"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Compatible"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "No compatible"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traducciones compatibles con:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "Idioma no es totalmente compatible"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -3979,6 +3991,12 @@
     {
       "type": 0,
       "value": "Cargando"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
     }
   ],
   "ui.numberfield-decrease": [
