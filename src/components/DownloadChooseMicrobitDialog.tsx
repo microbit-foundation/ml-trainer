@@ -117,7 +117,7 @@ const RadioCard = ({ id, imgSrc }: RadioCardProps) => {
             isSelected
               ? css({ borderColor: "brand.600" })
               : css({ borderColor: "gray.400" }),
-            isFocusVisible ? css({ focusShadow: "outline" }) : undefined
+            isFocusVisible ? css({ focusRing: "outline" }) : undefined
           )}
         >
           <HStack justifyContent="right" mb={-7} mt={-1} mr={-1}>

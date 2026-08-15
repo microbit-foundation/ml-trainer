@@ -7,7 +7,15 @@ import { FormattedMessage } from "react-intl";
 import { button } from "styled-system/recipes";
 import bannerBackground from "theme-package/images/banner-background.svg";
 import { useDeployment } from "../deployment";
-import { css, cx, Heading, HStack, Text, VStack } from "@microbit/ui";
+import {
+  css,
+  cx,
+  darkSurface,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@microbit/ui";
 import { useSettings } from "../store";
 import { learnMoreUrl } from "../utils/external-links";
 
@@ -26,6 +34,7 @@ const HomepageBanner = () => {
         mt={5}
         borderRadius="5px"
         justifyContent="center"
+        {...darkSurface}
         bg="brand.500"
         backgroundSize="cover"
         backgroundPosition="center"
@@ -71,11 +80,6 @@ const HomepageBanner = () => {
                 border: 0,
                 color: "brand.700",
                 _hover: { textDecoration: "none" },
-                _focusVisible: {
-                  boxShadow:
-                    "0 0 0 2px token(colors.brand.600), 0 0 0 6px rgba(255, 255, 255, 0.8)",
-                  outline: "none",
-                },
               })
             )}
           >

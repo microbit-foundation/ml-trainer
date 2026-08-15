@@ -42,6 +42,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  darkSurface,
   LinkBox,
   LinkOverlayButton,
   Text,
@@ -245,7 +246,7 @@ const ViewAllProjectsLink = () => {
         py: 1,
         textDecoration: "none",
         _hover: { textDecoration: "underline" },
-        _focusVisible: { focusShadow: "outline" },
+        _focusVisible: { focusRing: "outline" },
       })}
     >
       <FormattedMessage id="view-all-projects" />
@@ -271,6 +272,7 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
         }}
       >
         <CardBody
+          {...darkSurface}
           css={{
             display: "flex",
             backgroundColor: "brand.500",
@@ -294,7 +296,6 @@ const ActionCard = ({ onClick, icon, textId }: ActionCardProps) => {
               css={{
                 h: 8,
                 fontSize: "xl",
-                _focusVisible: { focusShadow: "outlineLight" },
               }}
             >
               <FormattedMessage id={textId} />

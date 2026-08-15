@@ -176,7 +176,11 @@ const DefaultPageLayout = ({
             <ActionBar
               w="100%"
               px={{ base: 2, md: 5 }}
-              itemsCenterProps={{ overflow: "hidden" }}
+              // The clip stops the centre content overflowing the bar, but
+              // its box hugs the 40px name button exactly, so the focus
+              // ring (2px outline at 2px offset) needs the 4px of vertical
+              // room — the bar is 64px, so the extra height just recentres.
+              itemsCenterProps={{ overflow: "hidden", py: 1 }}
               itemsCenter={
                 showProjectName || showPageTitle ? (
                   <HStack h={10} w="100%" justifyContent="center">
@@ -256,9 +260,6 @@ const DefaultPageLayout = ({
                         },
                         color: "white",
                         fontSize: "xl",
-                        _focusVisible: {
-                          focusShadow: "outlineDark",
-                        },
                       }}
                     >
                       <BackArrow />
@@ -272,9 +273,6 @@ const DefaultPageLayout = ({
                       css={{
                         display: useTabletLayout ? "inline-flex" : "none",
                         color: "white",
-                        _focusVisible: {
-                          focusShadow: "outlineDark",
-                        },
                       }}
                     >
                       <RiMenuLine size={24} />
@@ -304,7 +302,7 @@ const DefaultPageLayout = ({
                         display: useTabletLayout ? "none" : "inline-flex",
                         outline: "none",
                         _focusVisible: {
-                          focusShadow: "outlineDark",
+                          focusRing: "outline",
                           borderRadius: "md",
                         },
                       })}
@@ -334,9 +332,6 @@ const DefaultPageLayout = ({
                       css={{
                         display: useTabletLayout ? "inline-flex" : "none",
                         color: "white",
-                        _focusVisible: {
-                          focusShadow: "outlineDark",
-                        },
                       }}
                     >
                       <RiMenuLine size={24} />
@@ -435,9 +430,6 @@ export const HomeToolbarItem = () => {
       aria-label={intl.formatMessage({ id: "homepage" })}
       css={{
         color: "white",
-        _focusVisible: {
-          focusShadow: "outlineDark",
-        },
       }}
     >
       <RiHome2Line size={24} />

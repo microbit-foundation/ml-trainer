@@ -127,14 +127,10 @@ const EditableName = ({
           ? {
               ...previewButtonBase,
               pl: 0,
-              _focusVisible: { focusShadow: "outline" },
             }
           : {
               ...previewButtonBase,
               _hover: { backgroundColor: "blackAlpha.300" },
-              _focusVisible: {
-                boxShadow: "inset token(shadows.outlineDark)",
-              },
             }
       }
     >
@@ -163,6 +159,12 @@ const EditableName = ({
         gap={0}
         w={variant === "drawer" ? "100%" : undefined}
         overflow={variant === "drawer" ? undefined : "hidden"}
+        // The clip is for name truncation, but it would also clip the
+        // focus ring (2px outline at 2px offset): pad the clip box by the
+        // ring's 4px extent and pull it back with margin, so the clip edge
+        // sits outside the ring at unchanged layout.
+        p={variant === "drawer" ? undefined : 1}
+        m={variant === "drawer" ? undefined : -1}
       >
         {editing ? (
           <InputGroup

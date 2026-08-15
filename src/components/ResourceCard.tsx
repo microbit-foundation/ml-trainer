@@ -60,7 +60,7 @@ const ResourceCard = ({
       <VStack p={3} py={2} pb={3} flexGrow={1} gap={3} alignItems="stretch">
         <HStack justifyContent="space-between" alignItems="flex-start">
           <Heading as="h3" fontSize="lg" fontWeight="bold" m={3}>
-            <LinkOverlay href={url} _focusVisible={{ focusShadow: "outline" }}>
+            <LinkOverlay href={url} _focusVisible={{ focusRing: "outline" }}>
               {title}
             </LinkOverlay>
           </Heading>

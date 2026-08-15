@@ -35,7 +35,6 @@ export const ActionBarMenuButton = forwardRef<
       css={{
         display: hidden ? "none" : undefined,
         color: "white",
-        _focusVisible: { focusShadow: "outlineDark" },
       }}
       {...rest}
     >
