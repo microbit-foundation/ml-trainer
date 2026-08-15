@@ -13,7 +13,6 @@ const PreReleaseNotice = () => {
   return (
     <Flex
       w="100%"
-      // Dark by design: white focus rings for the buttons on it.
       {...darkSurface}
       bgColor="gray.800"
       color="white"

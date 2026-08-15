@@ -301,9 +301,6 @@ const DefaultPageLayout = ({
                       className={css({
                         display: useTabletLayout ? "none" : "inline-flex",
                         outline: "none",
-                        // A react-router link (no recipe), so it carries the
-                        // ring explicitly; the radius shapes the ring's
-                        // corners.
                         _focusVisible: {
                           focusRing: "outline",
                           borderRadius: "md",

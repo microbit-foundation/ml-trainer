@@ -40,8 +40,6 @@ const ActionBar = ({
     <VStack
       as="header"
       gap={0}
-      // The chrome bar is a coloured/dark surface with white content in
-      // every brand, so focus rings inside it are the white on-dark ones.
       {...darkSurface}
       bg="statusBarBg"
       css={{ "--inset-top": "env(safe-area-inset-top)" }}
