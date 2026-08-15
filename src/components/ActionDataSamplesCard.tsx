@@ -250,7 +250,7 @@ const RecordingArea = ({
       <ButtonGroup isAttached>
         <Button
           id={recordButtonId(action)}
-          variant={selected ? "solid" : "outline"}
+          variant={selected ? "solid" : "recordOutline"}
           tone="red"
           onPress={() =>
             onRecord({ recordingsToCapture: 1, continuousRecording: false })
@@ -266,7 +266,7 @@ const RecordingArea = ({
         <MenuTrigger>
           <MoreMenuButton
             css={{ minW: 8 }}
-            variant={selected ? "solid" : "outline"}
+            variant={selected ? "solid" : "recordOutline"}
             tone="red"
             aria-label={intl.formatMessage(
               { id: "recording-options-aria" },

@@ -279,6 +279,31 @@ export const appPreset = definePreset({
         button: {
           variants: {
             variant: {
+              // The record button on a row that isn't selected. The family
+              // `outline` is deliberately heavier than this wants: a table
+              // of them would compete with the one solid button that marks
+              // the active row. Weight only — the colour still comes from
+              // `tone` — so it is the 1px border and 500 label this button
+              // has always had, which the graded red now puts at 4.55:1
+              // (it was 4.13:1, which is why the shared shape labels at
+              // 600). Hover and press darken to 600 so the label stays
+              // above 4.5:1 over their washes.
+              recordOutline: {
+                borderWidth: "1px",
+                borderColor: "colorPalette.500",
+                color: "colorPalette.500",
+                bg: "transparent",
+                _hover: {
+                  bg: "colorPalette.50",
+                  borderColor: "colorPalette.600",
+                  color: "colorPalette.600",
+                },
+                _active: {
+                  bg: "colorPalette.100",
+                  borderColor: "colorPalette.600",
+                  color: "colorPalette.600",
+                },
+              },
               // `secondary` while its action isn't available yet: looks
               // inert but stays operable, and explains what is missing when
               // pressed. Same tokens as `secondary` so the two can't drift.
