@@ -328,7 +328,8 @@ const RecordingDialog = ({
       </ModalBody>
       <ModalFooter css={{ justifyContent: "center", pb: 7, pt: 2 }}>
         <Button
-          variant="warning"
+          variant="outline"
+          tone="red"
           css={{
             width: "fit-content",
             opacity: recordingStatus === RecordingStatus.Done ? 0.5 : 1,

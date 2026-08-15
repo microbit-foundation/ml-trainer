@@ -19,8 +19,8 @@ const MoreMenuButton = forwardRef<
     <IconButton
       ref={ref}
       css={{
-        // The shorthand's implied currentColor matters: the divider reads
-        // white on filled variants and red on recordOutline.
+        // The shorthand's implied currentColor matters: the divider follows
+        // the button's own text colour.
         borderLeft: "1px solid",
         ...cssProp,
       }}

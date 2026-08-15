@@ -58,7 +58,7 @@ export const ConfirmDialog = ({
         <Button autoFocus onPress={onCancel}>
           {cancelText}
         </Button>
-        <Button variant="warningSolid" onPress={onConfirm}>
+        <Button variant="solid" tone="danger" onPress={onConfirm}>
           {confirmText}
         </Button>
       </ModalFooter>
