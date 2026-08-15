@@ -123,7 +123,6 @@ const DataSamplesMenu = () => {
             id: "data-actions-menu",
           })}
           variant="ghost"
-          isRound
           css={{ color: "gray.800" }}
         >
           <Icon as={MdMoreVert} css={{ width: 7, height: 7 }} />

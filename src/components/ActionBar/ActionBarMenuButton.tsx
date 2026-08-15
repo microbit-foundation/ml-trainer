@@ -31,7 +31,6 @@ export const ActionBarMenuButton = forwardRef<
       ref={ref}
       variant="plain"
       size="lg"
-      isRound
       css={{
         display: hidden ? "none" : undefined,
         color: "white",
