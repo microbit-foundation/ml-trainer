@@ -41,7 +41,7 @@ const ActionBar = ({
       as="header"
       gap={0}
       {...darkSurface}
-      bg="statusBarBg"
+      bg="surface.statusBar"
       css={{ "--inset-top": "env(safe-area-inset-top)" }}
       {...rest}
     >

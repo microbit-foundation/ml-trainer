@@ -34,6 +34,8 @@
     "ci": "npm run test && npm run lint && npm run build && npx prettier --check src",
     "deploy": "website-deploy-aws",
     "panda": "panda codegen",
+    "dev:link-ui": "rm -rf node_modules/@microbit/ui && ln -s ../../../ui/packages/ui node_modules/@microbit/ui && rm -rf styled-system && npm run panda",
+    "dev:link-ui-patterns": "rm -rf node_modules/@microbit/ui-patterns && ln -s ../../../ui/packages/ui-patterns node_modules/@microbit/ui-patterns && rm -rf styled-system && npm run panda",
     "predev": "npm run panda",
     "dev": "cross-env VITE_VERSION=$npm_package_version vite",
     "dev:apps": "cross-env VITE_BUILD_MODE=apps VITE_VERSION=$npm_package_version vite --host",
