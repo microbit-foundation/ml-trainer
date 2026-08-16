@@ -15,7 +15,6 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import IncompatibleEditorDevice from "../components/IncompatibleEditorDevice";
 import LiveGraphPanel from "../components/LiveGraphPanel";
-import MoreMenuButton from "../components/MoreMenuButton";
 import TestingModelTable from "../components/TestingModelTable";
 import { useDataConnected } from "../data-connection-flow";
 import { useProject } from "../hooks/project-hooks";
@@ -26,6 +25,7 @@ import {
   MenuItem,
   MenuList,
   MenuTrigger,
+  MoreMenuButton,
 } from "@microbit/ui";
 import { useBoardVersion } from "../hooks/use-board-version";
 import { usePrevious } from "../hooks/use-previous";

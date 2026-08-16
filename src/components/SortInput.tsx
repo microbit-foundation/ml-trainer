@@ -69,9 +69,10 @@ const SortInput = ({
         css={{
           background: "white",
           fontSize: "2xl",
-          border: "2px solid",
           // This button poses as the second half of the attached select, so
-          // its border must track the input recipe's resting border.
+          // its border must track the input recipe's resting border. The
+          // divider between the two is ButtonGroup's hairline, not this.
+          border: "2px solid",
           borderColor: "gray.300",
           _hover: { borderColor: "gray.500" },
           // Was the literal #838383 (~2.9:1); the ramp's text-safe secondary

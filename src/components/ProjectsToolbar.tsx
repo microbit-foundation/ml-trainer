@@ -47,7 +47,11 @@ const ProjectsToolbar = ({
       aria-label={intl.formatMessage({ id: "selection-actions-group" })}
       css={
         isAttached
-          ? {
+          ? // A squared strip with drawn dividers, not the shared group's
+            // pill with a gap: `ghost` buttons have no fill for a gap to
+            // separate, so at rest nothing would mark the cells at all.
+            // App-local until a second consumer wants this toolbar shape.
+            {
               "& > button": { borderRadius: 0 },
               "& > button + button": {
                 borderLeft: "1px solid",

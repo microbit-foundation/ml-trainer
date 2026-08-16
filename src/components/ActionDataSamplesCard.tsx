@@ -21,13 +21,13 @@ import {
   MenuItem,
   MenuList,
   MenuTrigger,
+  MoreMenuButton,
   Text,
   VStack,
 } from "@microbit/ui";
 import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
-import MoreMenuButton from "./MoreMenuButton";
 import { RecordingOptions } from "./RecordingDialog";
 import RecordingFingerprint from "./RecordingFingerprint";
 import RecordingGraph from "./RecordingGraph";
@@ -259,7 +259,8 @@ const RecordingArea = ({
             { id: "record-action-aria" },
             { action: action.name }
           )}
-          css={{ pr: 2, borderRight: "none" }}
+          // The card is a fixed 8.25rem wide and the group has to fit.
+          css={{ pr: 2 }}
         >
           <FormattedMessage id="record-action" />
         </Button>
