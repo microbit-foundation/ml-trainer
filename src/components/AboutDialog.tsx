@@ -158,7 +158,7 @@ const AboutDialog = ({ isOpen, onClose, finalFocusRef }: AboutDialogProps) => {
                   ))}
                 </tbody>
               </table>
-              <Button leftIcon={<RiFileCopy2Line />} onPress={onCopy} size="md">
+              <Button startIcon={<RiFileCopy2Line />} onPress={onCopy} size="md">
                 <FormattedMessage id={hasCopied ? "copied" : "copy-action"} />
               </Button>
             </VStack>

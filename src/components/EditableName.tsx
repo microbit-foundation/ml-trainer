@@ -20,7 +20,7 @@ import {
   Icon,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputStartElement,
   SystemStyleObject,
   Text,
   Tooltip,
@@ -120,13 +120,13 @@ const EditableName = ({
       variant="unstyled"
       onPress={startEditing}
       {...(variant === "drawer"
-        ? { rightIcon: <Icon as={RiEditLine} /> }
-        : { leftIcon: <Icon as={RiEditLine} /> })}
+        ? { endIcon: <Icon as={RiEditLine} /> }
+        : { startIcon: <Icon as={RiEditLine} /> })}
       css={
         variant === "drawer"
           ? {
               ...previewButtonBase,
-              pl: 0,
+              ps: 0,
             }
           : {
               ...previewButtonBase,
@@ -176,9 +176,9 @@ const EditableName = ({
             w={variant === "drawer" ? "100%" : undefined}
           >
             {variant !== "drawer" && (
-              <InputLeftElement pointerEvents="none">
+              <InputStartElement pointerEvents="none">
                 <Icon as={RiEditLine} />
-              </InputLeftElement>
+              </InputStartElement>
             )}
             <Input
               ref={inputRef}
@@ -202,7 +202,7 @@ const EditableName = ({
               }}
               css={{
                 color: "inherit",
-                pl: variant === "drawer" ? 3 : 10,
+                ps: variant === "drawer" ? 3 : 10,
                 // The global selection colour is too faint to see on the
                 // toolbar's dark field.
                 _selection:

@@ -8,14 +8,14 @@ import { Button } from "@microbit/ui";
 
 interface DialogFooterLinkProps {
   onClick?: () => void;
-  leftIcon?: ReactNode;
+  startIcon?: ReactNode;
   children: ReactNode;
 }
 
 /** Link-styled action in a dialog footer's left slot. */
 const DialogFooterLink = ({
   onClick,
-  leftIcon,
+  startIcon,
   children,
 }: DialogFooterLinkProps) => {
   return (
@@ -23,7 +23,7 @@ const DialogFooterLink = ({
       variant="link"
       size="lg"
       onPress={onClick}
-      leftIcon={leftIcon}
+      startIcon={startIcon}
       css={{ borderRadius: 0 }}
     >
       {children}

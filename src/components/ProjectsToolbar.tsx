@@ -77,7 +77,7 @@ const ProjectsToolbar = ({
             variant="ghost"
             size={size}
             onPress={() => onRenameDuplicateProject("rename")}
-            leftIcon={<Icon as={RiEdit2Line} />}
+            startIcon={<Icon as={RiEdit2Line} />}
           >
             <FormattedMessage id="rename-project-action" />
           </Button>
@@ -100,7 +100,7 @@ const ProjectsToolbar = ({
             variant="ghost"
             size={size}
             onPress={() => onRenameDuplicateProject("duplicate")}
-            leftIcon={<Icon as={RiFileCopyLine} />}
+            startIcon={<Icon as={RiFileCopyLine} />}
           >
             <FormattedMessage id="duplicate-project-action" />
           </Button>
@@ -123,7 +123,7 @@ const ProjectsToolbar = ({
           variant="ghost"
           size={size}
           onPress={() => onDeleteProject()}
-          leftIcon={<Icon as={RiDeleteBin2Line} />}
+          startIcon={<Icon as={RiDeleteBin2Line} />}
         >
           <FormattedMessage id="delete-project-action" values={{ count }} />
         </Button>
@@ -143,7 +143,7 @@ const ProjectsToolbar = ({
           variant="ghost"
           size={size}
           onPress={onClearSelection}
-          leftIcon={<Icon as={RiCloseLine} />}
+          startIcon={<Icon as={RiCloseLine} />}
         >
           <FormattedMessage id="clear" />
         </Button>

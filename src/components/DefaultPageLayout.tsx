@@ -150,7 +150,7 @@ const DefaultPageLayout = ({
       <NavigationDrawer
         isOpen={isDrawerOpen}
         onClose={drawerOnClose}
-        placement={backUrl ? "right" : "left"}
+        placement={backUrl ? "end" : "start"}
         showProjectName={showProjectName}
         tourTrigger={tourTrigger}
       />
@@ -282,7 +282,7 @@ const DefaultPageLayout = ({
                   {backUrl && (
                     <Button
                       variant="toolbar"
-                      leftIcon={<BackArrow />}
+                      startIcon={<BackArrow />}
                       onPress={() => navigate(backUrl)}
                       css={{
                         display: "none",
@@ -375,14 +375,14 @@ export const ProjectToolbarItems = () => {
       {shareOnly ? (
         <Button
           variant="toolbar"
-          leftIcon={<Icon as={RiShareLine} />}
+          startIcon={<Icon as={RiShareLine} />}
           onPress={handleShare}
         >
           <FormattedMessage id="share-action" />
         </Button>
       ) : canShare ? (
         <MenuTrigger>
-          <Button variant="toolbar" leftIcon={<Icon as={RiShareLine} />}>
+          <Button variant="toolbar" startIcon={<Icon as={RiShareLine} />}>
             <FormattedMessage id="share-action" />
           </Button>
           <MenuList>
@@ -405,7 +405,7 @@ export const ProjectToolbarItems = () => {
       ) : (
         <Button
           variant="toolbar"
-          leftIcon={<Icon as={RiDownload2Line} />}
+          startIcon={<Icon as={RiDownload2Line} />}
           onPress={handleSave}
         >
           <FormattedMessage id="save-action" />

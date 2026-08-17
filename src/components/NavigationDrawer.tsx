@@ -46,7 +46,7 @@ import EditableName from "./EditableName";
 interface NavigationDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  placement?: "left" | "right";
+  placement?: "start" | "end";
   showProjectName?: boolean;
   tourTrigger: TourTrigger | undefined;
 }
@@ -54,7 +54,7 @@ interface NavigationDrawerProps {
 const NavigationDrawer = ({
   isOpen,
   onClose,
-  placement = "left",
+  placement = "start",
   showProjectName,
   tourTrigger,
 }: NavigationDrawerProps) => {
