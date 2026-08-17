@@ -57,6 +57,7 @@ export const NativeConsentDialog = ({
               <>
                 {" "}
                 <Link
+                  color="fg.link"
                   href={privacyPolicyLink}
                   target="_blank"
                   rel="noopener noreferrer"

@@ -60,7 +60,7 @@ const IncompatibleEditorDevice = ({
                 values={{
                   link: (children) => (
                     <Link
-                      color="brand.600"
+                      color="fg.link"
                       textDecoration="underline"
                       href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-"
                       target="_blank"
@@ -85,7 +85,7 @@ const IncompatibleEditorDevice = ({
                         <Button
                           variant="link"
                           css={{
-                            color: "brand.600",
+                            color: "fg.link",
                             textDecoration: "underline",
                           }}
                           onPress={() => saveHex(SaveType.Download)}

@@ -19,7 +19,7 @@ const NotFound = ({ href }: NotFoundProps) => {
   return (
     <ErrorPage title={intl.formatMessage({ id: "not-found-title" })}>
       <Link
-        color="brand.600"
+        color="fg.link"
         textDecoration="underline"
         href={href ? href : createHomePageUrl()}
       >
