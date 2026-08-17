@@ -27,6 +27,7 @@ interface TemplateStrings {
   appNameFull: string;
   ogDescription: undefined | string;
   metaDescription: undefined | string;
+  iosAppStoreId: undefined | string;
   buildMode?: string;
 }
 
@@ -86,10 +87,16 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         appNameFull: "ml-trainer",
         ogDescription: undefined,
         metaDescription: undefined,
+        iosAppStoreId: undefined,
       };
 
   // Add VITE_BUILD_MODE environment variable to template data
   strings.buildMode = process.env.VITE_BUILD_MODE;
+
+  // EJS resolves template variables via `with`, so a key the brand package
+  // omits entirely throws rather than reading as undefined. Define it here so
+  // a brand package predating the field still builds.
+  strings.iosAppStoreId = strings.iosAppStoreId ?? undefined;
 
   return {
     base: process.env.BASE_URL ?? "/",
