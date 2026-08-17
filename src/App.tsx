@@ -38,6 +38,7 @@ import { SharedUIProvider, ToastProvider, useToast } from "@microbit/ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
+import { useSmartAppBanner } from "./smart-app-banner-hook";
 import { deployment, useDeployment } from "./deployment";
 import { MockBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
@@ -286,6 +287,10 @@ const Layout = () => {
 
   // Native deep link (Universal Link / App Link) handling (no-op on desktop).
   useDeepLinks();
+
+  // Keep the iOS Smart App Banner's app-argument on the current route
+  // (no-op where the banner meta tag isn't emitted).
+  useSmartAppBanner();
 
   const isLoadingOverlayVisible = useStore((s) => s.isLoadingOverlayVisible);
   return (

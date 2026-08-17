@@ -30,7 +30,23 @@
        and won't show it again once dismissed. Not in the apps build: there
        the page is already running inside that app. */
     if (iosAppStoreId && buildMode !== 'apps') { %>
-    <meta name="apple-itunes-app" content="app-id=<%= iosAppStoreId %>" />
+    <meta
+      name="apple-itunes-app"
+      content="app-id=<%= iosAppStoreId %>, app-argument=%VITE_FULL_URL%"
+    />
+    <script>
+      // Point app-argument at the landing URL rather than the canonical one
+      // baked in above: Safari reads this tag on load, before React mounts,
+      // so useSmartAppBanner is too late for the first read. It takes over
+      // for the client-side navigations that follow.
+      (function () {
+        var meta = document.querySelector('meta[name="apple-itunes-app"]');
+        meta.content = meta.content.replace(
+          /app-argument=.*$/,
+          "app-argument=" + window.location.href
+        );
+      })();
+    </script>
     <% } %>
     <link rel="shortcut icon" href="%VITE_FULL_URL%imgs/favicon.ico" />
     <% if (buildMode !== 'apps') { %>
