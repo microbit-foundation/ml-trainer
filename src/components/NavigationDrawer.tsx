@@ -313,6 +313,7 @@ interface NavLinkProps {
 const NavLink = ({ href, onClick, children }: NavLinkProps) => (
   <ListItem>
     <Link
+      variant="standalone"
       display="flex"
       alignItems="center"
       w="100%"
@@ -341,6 +342,7 @@ interface FooterLinkProps {
 
 const FooterLink = ({ href, children }: FooterLinkProps) => (
   <Link
+    variant="standalone"
     href={href}
     target="_blank"
     rel="noopener"
