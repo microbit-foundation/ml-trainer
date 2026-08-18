@@ -374,7 +374,7 @@ const ImportProjectButton = () => {
         <Icon as={RiUpload2Line} />
       </IconButton>
       <Button
-        leftIcon={<Icon as={RiUpload2Line} />}
+        startIcon={<Icon as={RiUpload2Line} />}
         onPress={handleContinueSessionFromFile}
         css={{ display: { base: "none", sm: "inline-flex" } }}
       >
