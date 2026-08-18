@@ -11,8 +11,8 @@ import {
   IconButton,
   Input,
   InputGroup,
-  InputLeftElement,
-  InputRightElement,
+  InputStartElement,
+  InputEndElement,
 } from "@microbit/ui";
 
 interface SearchProps {
@@ -41,9 +41,9 @@ const Search = ({
 
   return (
     <InputGroup className={className}>
-      <InputLeftElement pointerEvents="none">
+      <InputStartElement pointerEvents="none">
         <Icon as={RiSearch2Line} css={{ color: "gray.800" }} />
-      </InputLeftElement>
+      </InputStartElement>
       <Input
         aria-label={intl.formatMessage({ id: "search" })}
         ref={ref}
@@ -52,8 +52,8 @@ const Search = ({
         type="text"
         placeholder={intl.formatMessage({ id: "search" })}
         css={{
-          pl: 10,
-          pr: 10,
+          ps: 10,
+          pe: 10,
           fontSize: "lg",
           _placeholder: { color: "gray.500" },
           borderRadius: "20px",
@@ -61,7 +61,7 @@ const Search = ({
         }}
       />
       {query && (
-        <InputRightElement>
+        <InputEndElement>
           <IconButton
             variant="ghost"
             aria-label={intl.formatMessage({ id: "clear" })}
@@ -74,7 +74,7 @@ const Search = ({
           >
             <Icon as={RiCloseLine} />
           </IconButton>
-        </InputRightElement>
+        </InputEndElement>
       )}
     </InputGroup>
   );
