@@ -13,7 +13,7 @@
     />
     <title><%= appNameFull %></title>
     <meta property="og:title" content="<%= appNameFull %>" />
-    <link rel="canonical" href="%VITE_FULL_URL%" />
+    <link rel="canonical" href="%VITE_FULL_URL%" vite-ignore />
     <meta property="og:url" content="%VITE_FULL_URL%" />
     <% if (ogDescription) { %>
     <meta property="og:description" content="<%= ogDescription %>" />
@@ -58,12 +58,7 @@
     <script type="module" src="/src/main.tsx"></script>
   </head>
 
-  <body
-    style="
-      overscroll-behavior-y: none;
-      height: 100%;
-    "
-  >
+  <body style="overscroll-behavior-y: none; height: 100%">
     <div id="root" style="overscroll-behavior-y: none; height: 100%"></div>
   </body>
 </html>
