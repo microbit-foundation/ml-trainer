@@ -271,7 +271,7 @@ export const appPreset = definePreset({
           // The native app's status-bar area (the ActionBar and the
           // full-screen dialog's safe-area gradient) follows the second
           // accent.
-          statusBarBg: { value: "{colors.brand2.500}" },
+          surface: { statusBar: { value: "{colors.brand2.500}" } },
         },
       },
       // This app's button vocabulary, merged into the core `button` recipe.
@@ -309,8 +309,8 @@ export const appPreset = definePreset({
               // pressed. Same tokens as `secondary` so the two can't drift.
               "secondary-disabled": {
                 borderWidth: "2px",
-                borderColor: "button.secondaryBorder",
-                color: "button.secondaryText",
+                borderColor: "button.secondary.border",
+                color: "button.secondary.fg",
                 bg: "transparent",
                 opacity: "0.4",
               },

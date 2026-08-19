@@ -140,11 +140,7 @@ const DownloadProgressDialog = ({
       </ModalBody>
       <ModalFooter css={{ justifyContent: "start" }}>
         {isNativePlatform() && tryAgain && isFindingDevice && (
-          <Button
-            variant="link"
-            css={{ color: "brand.600" }}
-            onPress={tryAgain}
-          >
+          <Button variant="link" css={{ color: "fg.link" }} onPress={tryAgain}>
             <FormattedMessage id="connect-native-change-pattern" />
           </Button>
         )}

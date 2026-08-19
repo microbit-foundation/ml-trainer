@@ -99,7 +99,7 @@ const OpenSharedProjectPage = () => {
                     values={{
                       link: (children: ReactNode) => (
                         <Link
-                          color="brand.600"
+                          color="fg.link"
                           textDecoration="underline"
                           href={`https://makecode.microbit.org/${encodeURIComponent(
                             shareId!
