@@ -11,6 +11,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/v') && 'release' || github.ref }}
   cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') }}
 
+env:
+  # renovate: datasource=npm depName=npm
+  NPM_VERSION: "11"
+  # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
+  ML_THEME_VERSION: 0.2.0-dev.143
+
 jobs:
   build-android:
     # Only run for apps releases, or pushes to main or branches whose name ends with -apps
@@ -30,7 +36,7 @@ jobs:
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
 
-      - run: npm install -g npm@11 --registry=https://registry.npmjs.org
+      - run: npm install -g npm@${{ env.NPM_VERSION }} --registry=https://registry.npmjs.org
 
       - uses: microbit-foundation/npm-package-versioner-action@v3
 
@@ -52,7 +58,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo "ML_THEME_VERSION=$(jq -r '.["theme-package-version"]' workflow-config.json)" >> $GITHUB_ENV
 
       - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }}
         if: github.repository_owner == 'microbit-foundation'
