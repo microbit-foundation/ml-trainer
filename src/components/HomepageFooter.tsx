@@ -78,16 +78,12 @@ const HomepageFooter = () => {
           </Button>
         )}
         {privacyPolicyLink && (
-          <Link
-            href={privacyPolicyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link href={privacyPolicyLink} rel="noopener noreferrer">
             <FormattedMessage id="privacy" />
           </Link>
         )}
         {termsOfUseLink && (
-          <Link href={termsOfUseLink} target="_blank" rel="noopener noreferrer">
+          <Link href={termsOfUseLink} rel="noopener noreferrer">
             <FormattedMessage id="terms" />
           </Link>
         )}
