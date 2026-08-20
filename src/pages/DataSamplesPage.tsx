@@ -315,12 +315,10 @@ const getHintText = (
     }
     case "record-action": {
       return isConnected
-        ? intl
-            .formatMessage(
-              { id: "record-hint-button-b" },
-              { mark: (chunks: string[]) => chunks }
-            )
-            .toString()
+        ? intl.formatMessage(
+            { id: "record-hint-button-b" },
+            { mark: (chunks: string[]) => chunks.join("") }
+          )
         : intl.formatMessage({ id: "record-hint" });
     }
     case "name-action-short":
