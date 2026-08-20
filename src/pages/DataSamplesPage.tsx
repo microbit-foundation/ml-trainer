@@ -219,7 +219,7 @@ const DataSamplesPage = () => {
                 <Button
                   className={tourElClassname.addActionButton}
                   variant={hasSufficientData ? "secondary" : "primary"}
-                  leftIcon={<Icon as={RiAddLine} />}
+                  startIcon={<Icon as={RiAddLine} />}
                   onPress={handleAddNewAction}
                   isDisabled={isAddNewActionDisabled}
                 >
@@ -236,7 +236,7 @@ const DataSamplesPage = () => {
                     onPress={handleNavigateToModel}
                     className={tourElClassname.trainModelButton}
                     variant="primary"
-                    rightIcon={<Icon as={RiArrowRightLine} />}
+                    endIcon={<Icon as={RiArrowRightLine} />}
                   >
                     <FormattedMessage id="testing-model-title" />
                   </Button>

@@ -8,11 +8,11 @@ import PauseIcon from "./icons/PauseIcon";
 const PauseResumeLink = () => {
   const { pause, isPaused, resume } = useAnimation();
   return isPaused ? (
-    <DialogFooterLink onClick={resume} leftIcon={<Icon as={RiPlayFill} />}>
+    <DialogFooterLink onClick={resume} startIcon={<Icon as={RiPlayFill} />}>
       <FormattedMessage id="animation-resume-action" />
     </DialogFooterLink>
   ) : (
-    <DialogFooterLink onClick={pause} leftIcon={<PauseIcon />}>
+    <DialogFooterLink onClick={pause} startIcon={<PauseIcon />}>
       <FormattedMessage id="animation-pause-action" />
     </DialogFooterLink>
   );

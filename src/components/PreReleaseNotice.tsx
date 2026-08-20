@@ -30,7 +30,7 @@ const PreReleaseNotice = () => {
       </Text>
       <HStack>
         <Button
-          leftIcon={<RiFeedbackFill />}
+          startIcon={<RiFeedbackFill />}
           variant="link"
           size="xs"
           css={{ color: "white", fontWeight: "bold", p: 1 }}

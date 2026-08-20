@@ -37,6 +37,7 @@
     "predev": "npm run panda",
     "dev": "cross-env VITE_VERSION=$npm_package_version vite",
     "dev:apps": "cross-env VITE_BUILD_MODE=apps VITE_VERSION=$npm_package_version vite --host",
+    "dev:link-ui": "rm -rf node_modules/@microbit/ui node_modules/@microbit/ui-patterns && ln -s ../../../ui/packages/ui node_modules/@microbit/ui && ln -s ../../../ui/packages/ui-patterns node_modules/@microbit/ui-patterns && rm -rf styled-system node_modules/.vite && npm run panda",
     "invalidate": "invalidate-cloudfront-distribution",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write src",
@@ -75,7 +76,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react": "^4.5.2",
+    "@vitejs/plugin-react": "^5.2.0",
     "@vitest/web-worker": "^4.1.9",
     "better-sqlite3": "^12.6.2",
     "cross-env": "^7.0.3",
@@ -89,9 +90,9 @@
     "patch-package": "^8.0.1",
     "playwright": "1.58.2",
     "prettier": "2.8.8",
-    "typescript": "^5.4.2",
-    "vite": "^6.3.5",
-    "vite-plugin-svgr": "^4.3.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.6",
+    "vite-plugin-svgr": "^4.5.0",
     "vitest": "^4.1.9",
     "vitest-dom": "^0.1.1"
   },
@@ -112,8 +113,8 @@
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/ml4f": "^2.0.0-beta.0",
     "@microbit/smoothie": "^1.37.0-microbit.2",
-    "@microbit/ui": "0.1.0-alpha.30",
-    "@microbit/ui-patterns": "0.1.0-alpha.3",
+    "@microbit/ui": "^0.1.1",
+    "@microbit/ui-patterns": "^0.1.1",
     "@sentry/capacitor": "^4.0.0",
     "@tensorflow/tfjs": "^4.20.0",
     "@tensorflow/tfjs-backend-wasm": "^4.20.0",
@@ -141,5 +142,8 @@
     "swiper": "^12.0.3",
     "uuid": "^13.0.0",
     "zustand": "^4.5.5"
+  },
+  "overrides": {
+    "postcss": "^8.5.26"
   }
 }
