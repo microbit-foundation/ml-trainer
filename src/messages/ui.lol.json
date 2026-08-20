@@ -281,6 +281,12 @@
       "value": "crwdns369297:0crwdne369297:0"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -1769,6 +1775,12 @@
       "value": "crwdns363004:0crwdne363004:0"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1889,6 +1901,12 @@
     {
       "type": 0,
       "value": "crwdns369335:0crwdne369335:0"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [

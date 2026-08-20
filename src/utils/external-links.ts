@@ -35,6 +35,12 @@ export const supportSiteFolderUrl = () =>
 
 export const accessibilityUrl = () => `${microbitOrgBaseUrl}accessibility/`;
 
+export const appStoreUrl = () =>
+  "https://apps.apple.com/app/micro-bit-createai/id6757603093";
+
+export const googlePlayUrl = () =>
+  "https://play.google.com/store/apps/details?id=org.microbit.createai";
+
 export const learnMoreUrl = (languageId: string) =>
   `${microbitOrgBaseUrl}${langPath(
     learnMoreUrlLanguages.includes(languageId) ? languageId : "en"
