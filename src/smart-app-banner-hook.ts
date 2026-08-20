@@ -34,7 +34,7 @@ export const useSmartAppBanner = (): void => {
     const url = `${window.location.origin}${pathname}${search}${hash}`;
     meta.content = meta.content.replace(
       /app-argument=.*$/,
-      `app-argument=${url}`
+      () => `app-argument=${url}`
     );
   }, [pathname, search, hash]);
 };

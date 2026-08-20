@@ -41,10 +41,9 @@
       // for the client-side navigations that follow.
       (function () {
         var meta = document.querySelector('meta[name="apple-itunes-app"]');
-        meta.content = meta.content.replace(
-          /app-argument=.*$/,
-          "app-argument=" + window.location.href
-        );
+        meta.content = meta.content.replace(/app-argument=.*$/, function () {
+          return "app-argument=" + window.location.href;
+        });
       })();
     </script>
     <% } %>
