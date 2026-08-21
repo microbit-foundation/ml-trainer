@@ -84,7 +84,7 @@ const ProjectsPage = () => {
         detail: { surface: "projects" },
       });
       await loadProjectAndModelFromStorage(id ?? selectedProjectIds[0]);
-      navigate(createDataSamplesPageUrl());
+      void navigate(createDataSamplesPageUrl());
     },
     [logging, navigate, selectedProjectIds]
   );

@@ -4,10 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Ref, forwardRef } from "react";
-import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps,
-} from "react-router-dom";
+import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router";
 import { styled } from "@microbit/ui";
 import { link } from "styled-system/recipes";
 

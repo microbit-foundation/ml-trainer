@@ -30,7 +30,7 @@ const TrainModelDialogs = ({ finalFocusRef }: TrainModelDialogsProps) => {
       setSettings({ showPreTrainHelp: !isSkipNextTime });
       const result = await trainModel();
       if (result) {
-        navigate(createTestingModelPageUrl());
+        void navigate(createTestingModelPageUrl());
         // Push it onto the event queue after the navigate call
         setTimeout(() => closeTrainModelDialogs(), 0);
       }

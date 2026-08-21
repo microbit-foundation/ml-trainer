@@ -51,12 +51,13 @@ const TestingModelPage = () => {
   const intl = useIntl();
 
   const navigateToDataSamples = useCallback(() => {
-    navigate(createDataSamplesPageUrl());
+    void navigate(createDataSamplesPageUrl());
   }, [navigate]);
 
   useEffect(() => {
     if (!projectSessionStorage.getProjectId()) {
-      return navigate(createHomePageUrl());
+      void navigate(createHomePageUrl());
+      return;
     }
     if (!model) {
       return navigateToDataSamples();
@@ -124,7 +125,7 @@ const TestingModelPage = () => {
         focusVisible: state.focusVisible ?? false,
       });
       // Clear the state so a page refresh doesn't re-focus the button.
-      navigate(location.pathname, { replace: true });
+      void navigate(location.pathname, { replace: true });
     }
   }, [location.state, location.pathname, navigate]);
 
