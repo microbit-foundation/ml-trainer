@@ -15,7 +15,7 @@ env:
   # renovate: datasource=npm depName=npm
   NPM_VERSION: "11"
   # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
-  ML_THEME_VERSION: 0.2.0-dev.143
+  ML_THEME_VERSION: 0.4.0
 
 jobs:
   build-ios:
@@ -27,9 +27,9 @@ jobs:
       contents: read
       packages: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: "npm"
@@ -90,7 +90,7 @@ jobs:
           BUILD_NUMBER: ${{ github.run_number }}
           MARKETING_VERSION: ${{ env.MARKETING_VERSION }}
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: ios-app-${{ github.sha }}
           path: ios/App/build/output/*.ipa

@@ -33,7 +33,6 @@ module.exports = {
     project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh"],
   settings: {
     react: {
       version: "18",
