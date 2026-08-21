@@ -61,7 +61,6 @@ const IncompatibleEditorDevice = ({
                   link: (children) => (
                     <Link
                       color="brand.600"
-                      textDecoration="underline"
                       href="https://support.microbit.org/support/solutions/articles/19000154234-which-version-of-micro-bit-do-i-have-"
                       target="_blank"
                       rel="noopener"
@@ -105,6 +104,7 @@ const IncompatibleEditorDevice = ({
                     link: (chunks: ReactNode) => (
                       <Button
                         variant="link"
+                        css={{ textDecoration: "underline" }}
                         onPress={() => saveHex(SaveType.Download)}
                       >
                         {chunks}
