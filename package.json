@@ -15,7 +15,7 @@
   ],
   "allowScripts": {
     "aws-sdk": false,
-    "better-sqlite3@12.6.2": true,
+    "better-sqlite3": true,
     "fsevents": true,
     "esbuild": true,
     "core-js": false,
