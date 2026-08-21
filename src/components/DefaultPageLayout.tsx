@@ -12,8 +12,7 @@ import {
   RiShareLine,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useLocation, useNavigate } from "react-router";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router";
 import { isDataConnectionDialogOpen } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
@@ -420,7 +419,7 @@ export const HomeToolbarItem = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const handleHomeClick = useCallback(() => {
-    navigate(createHomePageUrl());
+    void navigate(createHomePageUrl());
   }, [navigate]);
   return (
     <IconButton

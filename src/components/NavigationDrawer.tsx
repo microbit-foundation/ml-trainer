@@ -74,7 +74,7 @@ const NavigationDrawer = ({
 
   const handleCloseComplete = useCallback(() => {
     if (pendingNavRef.current) {
-      navigate(pendingNavRef.current);
+      void navigate(pendingNavRef.current);
       pendingNavRef.current = null;
     }
   }, [navigate]);

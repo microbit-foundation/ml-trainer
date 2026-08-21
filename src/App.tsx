@@ -14,12 +14,12 @@ import {
   createBrowserRouter,
   Navigate,
   Outlet,
-  RouterProvider,
   ScrollRestoration,
   useLocation,
   useNavigate,
   useRouteError,
-} from "react-router-dom";
+} from "react-router";
+import { RouterProvider } from "react-router/dom";
 import { Capacitor } from "@capacitor/core";
 import "theme-package/fonts/fonts.css";
 import { setActiveMenuClose, useNativeBackButton } from "./back-button";
@@ -174,7 +174,7 @@ const Layout = () => {
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
-          navigate(createDataSamplesPageUrl());
+          void navigate(createDataSamplesPageUrl());
           toast({
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
@@ -248,7 +248,7 @@ const Layout = () => {
           case BroadcastChannelMessageType.DELETE_PROJECT: {
             clearProjectState();
             if (updateProjectTimestampUrls.includes(location.pathname)) {
-              navigate(createHomePageUrl());
+              void navigate(createHomePageUrl());
             }
             break;
           }
