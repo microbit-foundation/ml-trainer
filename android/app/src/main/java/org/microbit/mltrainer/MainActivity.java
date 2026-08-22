@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.getcapacitor.BridgeActivity;
+import com.getcapacitor.PluginHandle;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(SaveToDownloadsPlugin.class);
+        registerPlugin(SafeAreaNavPlugin.class);
         super.onCreate(savedInstanceState);
     }
 
@@ -69,6 +71,8 @@ public class MainActivity extends BridgeActivity {
      *   insets (and passes the insets through unchanged for newer WebViews).
      * - Never offsets for the on-screen keyboard. The keyboard overlays the
      *   WebView; keyboard avoidance is handled in JS (see useKeyboardHeight).
+     * - Reports the navigation-bar portion of the insets to SafeAreaNavPlugin
+     *   in CSS pixels, backing shared-ui's safeAreaNavSource contract.
      *
      * Must be called after EdgeToEdge.enable(), which installs its own listener
      * that would otherwise override ours.
@@ -91,11 +95,17 @@ public class MainActivity extends BridgeActivity {
 
             if (passthrough) {
                 view.setPadding(0, 0, 0, 0);
+                Insets nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
+                float density = getResources().getDisplayMetrics().density;
+                updateSafeAreaNav(nav.left / density, nav.right / density);
                 return builder.build();
             }
 
             // Older WebView: emulate the safe area by padding the decorView and
             // reporting zeroed insets, since env(safe-area-inset-*) is broken.
+            // The padding already keeps content clear of the nav bar, so the
+            // nav-side values the web layer sees must be zero too.
+            updateSafeAreaNav(0, 0);
             view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             return builder.setInsets(barsTypeMask, Insets.of(0, 0, 0, 0)).build();
         });
@@ -103,6 +113,13 @@ public class MainActivity extends BridgeActivity {
         // Force an initial pass: unlike the plugin we don't install a
         // WebViewClient that re-requests insets after the page loads.
         ViewCompat.requestApplyInsets(getWindow().getDecorView());
+    }
+
+    private void updateSafeAreaNav(double left, double right) {
+        PluginHandle handle = getBridge().getPlugin("SafeAreaNav");
+        if (handle != null && handle.getInstance() instanceof SafeAreaNavPlugin) {
+            ((SafeAreaNavPlugin) handle.getInstance()).update(left, right);
+        }
     }
 
     /**
