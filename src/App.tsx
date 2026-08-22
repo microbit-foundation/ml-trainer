@@ -45,7 +45,6 @@ import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 import { MockUSBConnection } from "./device/mockUsb";
 import { flags } from "./flags";
 import { ProjectProvider } from "./hooks/project-hooks";
-import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
 import TranslationProvider from "./messages/TranslationProvider";
@@ -58,6 +57,7 @@ import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import { isNativePlatform } from "./platform";
+import { safeAreaNavSource } from "./safe-area-nav";
 import { projectSessionStorage } from "./session-storage";
 import {
   getAllProjectsFromStorage,
@@ -109,6 +109,11 @@ const radioBridge = isMockDeviceMode()
  */
 const SharedUIConfig = ({ children }: ProviderLayoutProps) => (
   <SharedUIProvider
+    // Real Android only (not ?flag=android): the plugin only exists
+    // on-device, and elsewhere the raw env() fallbacks apply.
+    safeAreaNavSource={
+      Capacitor.getPlatform() === "android" ? safeAreaNavSource : undefined
+    }
     overlayCloseRegistrar={
       Capacitor.isNativePlatform() ? setActiveMenuClose : undefined
     }
@@ -395,9 +400,6 @@ const createRouter = () => {
 };
 
 const App = () => {
-  // Detect safe area insets and set CSS variables for nav bar side only
-  useSafeAreaInsets();
-
   useEffect(() => {
     // Capability flags are user-scoped GA4 dimensions on the web build —
     // they describe the browser's WebUSB / WebBluetooth API surface, not

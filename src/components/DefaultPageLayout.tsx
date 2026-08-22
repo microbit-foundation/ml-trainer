@@ -165,11 +165,11 @@ const DefaultPageLayout = ({
           bg="whitesmoke"
           overflow="hidden"
           css={{
-            // Handle landscape orientation where nav bar moves to side.
-            // Uses heuristic: larger inset is nav bar, smaller is camera cutout.
-            paddingLeft: "var(--safe-area-nav-left, 0px)",
-            paddingRight: "var(--safe-area-nav-right, 0px)",
-            paddingBottom: "env(safe-area-inset-bottom)",
+            // Landscape: pad the nav-bar side, flow under a camera cutout
+            // (shared-ui README: CSS-variable contract).
+            paddingLeft: "safeAreaNavLeft",
+            paddingRight: "safeAreaNavRight",
+            paddingBottom: "safeAreaBottom",
           }}
         >
           <VStack zIndex={999} position="sticky" top={0} gap={0}>
