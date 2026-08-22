@@ -60,8 +60,9 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
           paddingTop: "env(safe-area-inset-top)",
           paddingBottom: "env(safe-area-inset-bottom)",
           paddingLeft:
-            "max(var(--window-controls-left, 0px), var(--safe-area-nav-left, 0px))",
-          paddingRight: "var(--safe-area-nav-right, 0px)",
+            "max(var(--window-controls-left, 0px), var(--safe-area-nav-left, env(safe-area-inset-left)))",
+          paddingRight:
+            "var(--safe-area-nav-right, env(safe-area-inset-right))",
         }}
       >
         <Editor ref={ref} style={{ flexGrow: 1 }} />
