@@ -3,7 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { CSSProperties, forwardRef, useImperativeHandle, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { SystemStyleObject, Svg, token } from "@microbit/ui";
 import { icons } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
