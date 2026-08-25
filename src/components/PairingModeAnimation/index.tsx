@@ -135,9 +135,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
               style={boardStagingStyle("back")}
             />
             <MicrobitBoardFront
-              // Svg has icon base sizing (1em square), so height must be
-              // released to the viewBox aspect ratio.
-              css={{ width: { base: "50%", md: "25%" }, height: "auto" }}
+              css={{ width: { base: "50%", md: "25%" } }}
               ref={microbitBoardFrontRef}
               style={boardStagingStyle("front")}
             />

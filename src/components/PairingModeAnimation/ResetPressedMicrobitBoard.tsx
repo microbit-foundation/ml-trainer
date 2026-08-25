@@ -17,6 +17,14 @@ import { MicrobitBoardBack } from "./MicrobitBoardBack";
 
 type HandSide = "left" | "right";
 
+/**
+ * Hand positions per side.
+ *
+ * `hidden` and `ready` are applied directly as styles. `press` is never read
+ * here: it documents the position the preset keyframes animate to. Keep every
+ * value in sync with the matching keyframes in panda-preset.ts, or the hand
+ * will jump when an animation finishes and hands over to the static style.
+ */
 const handPos = {
   right: {
     // Start - hand is out of view.
@@ -27,7 +35,7 @@ const handPos = {
     press: { right: "-15%", top: "5%" },
   },
   left: {
-    // Start - hand is out of view.
+    // Start - hand is faded out, just short of its ready position.
     hidden: { left: "15%", top: "15%" },
     // Ready - hand is ready to press reset button.
     ready: { left: "25%", top: "10%" },
@@ -49,15 +57,15 @@ type HandState = "hidden" | "moving" | "ready" | "pressDown" | "pressUp";
 interface HandConfig {
   position: CSSProperties;
   animation?: {
-    // A preset keyframe name (see panda-preset.ts); the positional values in
-    // handPos are duplicated there.
+    // A preset keyframe name (see panda-preset.ts), which duplicates the
+    // positional values in handPos. Keep the two in sync.
     kf: string;
     duration: number;
   };
 }
 
-// Preset keyframe names per side (see panda-preset.ts); the positional values
-// in handPos are duplicated there.
+// Preset keyframe names per side (see panda-preset.ts). Each animates between
+// the handPos values for its side, so the two must be kept in sync.
 const handKeyframes: Record<
   HandSide,
   Record<"moveIn" | "pressDown" | "pressUp", string>
