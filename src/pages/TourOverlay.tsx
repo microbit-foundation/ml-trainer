@@ -3,60 +3,62 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Portal, useModalContext, useToken } from "@chakra-ui/react";
-import { MutableRefObject, RefObject, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { css } from "@microbit/ui";
 
 interface TourOverlayProps extends SpotlightStyle {
-  referenceRef: MutableRefObject<HTMLElement | undefined>;
+  /**
+   * The element to spotlight, or null for no cut out.
+   */
+  reference: HTMLElement | null;
 }
 
 /**
- * A replacement for Chakra UI's overlay that cuts out a section to highlight
+ * A replacement for the modal backdrop that cuts out a section to highlight
  * some of the background. Suitable for onboarding tours.
  */
-const TourOverlay = ({ referenceRef, ...clipStyle }: TourOverlayProps) => {
-  const { isOpen } = useModalContext();
-  const zIndex = useToken("zIndex", "overlay");
-  const [overlay, cutOut] = useRects(referenceRef);
-  if (!isOpen) {
-    return null;
-  }
-  return (
-    <Portal>
-      <Box
-        as="svg"
-        zIndex={zIndex}
-        position="fixed"
-        left="0"
-        top="0"
-        w="100vw"
-        h="100vh"
-      >
-        <g>
-          <defs>
-            {cutOut && (
-              <clipPath id="mask">
-                <path
-                  clipRule="evenodd"
-                  d={createClipPath(overlay, cutOut, clipStyle)}
-                />
-              </clipPath>
-            )}
-          </defs>
-          <rect
-            clipPath="url(#mask)"
-            clipRule="evenodd"
-            // Matches blackAlpha.600 which is what the regular modal uses.
-            fill="000000"
-            fillOpacity="0.48"
-            height="100%"
-            width="100%"
-            x={0}
-            y={0}
-          />
-        </g>
-      </Box>
-    </Portal>
+const TourOverlay = ({ reference, ...clipStyle }: TourOverlayProps) => {
+  const [overlay, cutOut] = useRects(reference);
+  return createPortal(
+    <svg
+      // Purely decorative: the spotlight can't be conveyed to assistive
+      // technology, so the step's dialog names its target instead.
+      aria-hidden="true"
+      className={css({
+        zIndex: "overlay",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        w: "100vw",
+        h: "100vh",
+      })}
+    >
+      <g>
+        <defs>
+          {cutOut && (
+            <clipPath id="mask">
+              <path
+                clipRule="evenodd"
+                d={createClipPath(overlay, cutOut, clipStyle)}
+              />
+            </clipPath>
+          )}
+        </defs>
+        <rect
+          clipPath="url(#mask)"
+          clipRule="evenodd"
+          // Matches blackAlpha.600 which is what the regular modal uses.
+          fill="000000"
+          fillOpacity="0.48"
+          height="100%"
+          width="100%"
+          x={0}
+          y={0}
+        />
+      </g>
+    </svg>,
+    document.body
   );
 };
 
@@ -67,27 +69,29 @@ interface Rect {
   y: number;
 }
 
-const useRects = (ref: RefObject<HTMLElement | undefined>): Rect[] => {
+// Measure the element on each change of step, not just on mount: the overlay
+// stays mounted for the whole tour so the spotlight has to follow the element.
+const useRects = (element: HTMLElement | null): Rect[] => {
   const [rects, setRects] = useState<Rect[]>([]);
   useLayoutEffect(() => {
-    // Scroll ref element into view before calculating rect.
-    ref.current?.scrollIntoView({ behavior: "instant", inline: "nearest" });
-    const resizeObserver = new ResizeObserver(() => {
-      if (ref.current) {
-        setRects([
-          document.body.getBoundingClientRect(),
-          ref.current.getBoundingClientRect(),
-        ]);
-      }
-    });
-    if (ref.current) {
-      resizeObserver.observe(ref.current);
-      resizeObserver.observe(document.body);
+    if (!element) {
+      setRects((previous) => (previous.length === 0 ? previous : []));
+      return;
     }
+    // Scroll the element into view before calculating rect.
+    element.scrollIntoView({ behavior: "instant", inline: "nearest" });
+    const resizeObserver = new ResizeObserver(() => {
+      setRects([
+        document.body.getBoundingClientRect(),
+        element.getBoundingClientRect(),
+      ]);
+    });
+    resizeObserver.observe(element);
+    resizeObserver.observe(document.body);
     return () => {
       resizeObserver.disconnect();
     };
-  }, [ref]);
+  }, [element]);
   return rects;
 };
 

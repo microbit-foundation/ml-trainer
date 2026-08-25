@@ -3,21 +3,36 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Heading, Icon, IconProps, Stack, VStack } from "@chakra-ui/react";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage } from "react-intl";
+import {
+  Box,
+  Heading,
+  Stack,
+  Svg,
+  SystemStyleObject,
+  VStack,
+} from "@microbit/ui";
 import ProgressBar, { ProgressBarRef } from "./ProgressBar";
 import DataSamplesCollection, {
   DataSamplesCollectionRef,
 } from "./DataSamplesCollection";
 import TestModelScreen, { TestModelScreenRef } from "./TestModelScreen";
 import Tick from "./Tick";
-import { animations } from "../../utils/animations";
 import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
 import { useAnimation } from "../AnimationProvider";
 
-interface ComputerProps extends IconProps {
+interface ComputerProps {
   isTablet: boolean;
+  /** Per-instance style overrides for the computer svg. */
+  css?: SystemStyleObject;
+  style?: CSSProperties;
 }
 type DisplayType =
   | "none"
@@ -38,7 +53,7 @@ export interface ComputerRef {
 }
 
 const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
-  { isTablet, ...props }: ComputerProps,
+  { isTablet, css: cssProp, style }: ComputerProps,
   ref
 ) {
   const { withPlayState } = useAnimation();
@@ -89,7 +104,11 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
       transition="opacity 0.3s ease"
     >
       {isTablet ? (
-        <Icon viewBox="0 0 195.46 133.33" {...props} mt="-10px">
+        <Svg
+          viewBox="0 0 195.46 133.33"
+          css={{ ...cssProp, mt: "-10px" }}
+          style={style}
+        >
           <rect
             fill="none"
             stroke="#1e1e1c"
@@ -102,9 +121,9 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
             rx="15"
           />
           <circle cx="97" cy="15" r="3" />
-        </Icon>
+        </Svg>
       ) : (
-        <Icon viewBox="0 0 195.46 133.33" {...props}>
+        <Svg viewBox="0 0 195.46 133.33" css={cssProp} style={style}>
           <path
             fill="none"
             stroke="#1e1e1c"
@@ -119,7 +138,7 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
             strokeWidth="4px"
             d="M187.33,111.97H8.14c-1.36,0-2.49,1.13-2.49,2.48,0,7.23,5.76,13.11,12.99,13.11h158.18c7.23,0,12.99-5.88,12.99-13.11,0-.68-.23-1.35-.68-1.81-.56-.34-1.13-.56-1.81-.68"
           />
-        </Icon>
+        </Svg>
       )}
       <Stack
         position="absolute"
@@ -132,11 +151,14 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
       >
         {/* Tick display */}
         <Tick
-          display={display === "tick" ? "block" : "none"}
-          size="30%"
-          animation={withPlayState(
-            `${animations.fadeIn} 0.3s ease-in-out forwards`
-          )}
+          css={{
+            display: display === "tick" ? "block" : "none",
+            width: "30%",
+            height: "30%",
+          }}
+          style={{
+            animation: withPlayState(`fadeIn 0.3s ease-in-out forwards`),
+          }}
         />
         {/* Data collection display */}
         <DataSamplesCollection ref={dataSamplesRef} />
@@ -155,9 +177,9 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
         {/* Code display */}
         <CodeBlock
           ref={codeBlockRef}
-          animation={withPlayState(
-            `${animations.fadeIn} 0.3s ease-in-out forwards`
-          )}
+          style={{
+            animation: withPlayState(`fadeIn 0.3s ease-in-out forwards`),
+          }}
         />
       </Stack>
     </Box>

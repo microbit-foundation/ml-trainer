@@ -1865,12 +1865,6 @@
       "value": "도움말 및 지원"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "번역 지원"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2011,42 +2005,6 @@
     {
       "type": 0,
       "value": "언어 선택"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "완벽 지원"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "일부 지원"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "지원됨"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "지원되지 않음"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "번역 지원 언어:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "완전히 지원되지 않는 언어"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3093,6 +3051,12 @@
       "value": "프로젝트 이름 변경"
     }
   ],
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": [
+    {
+      "type": 0,
+      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+    }
+  ],
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
@@ -3851,6 +3815,188 @@
     {
       "type": 0,
       "value": "다시 시도"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "번역 지원"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "언어 선택"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "완벽 지원"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "일부 지원"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "지원됨"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "지원되지 않음"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "번역 지원 언어:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "완전히 지원되지 않는 언어"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "이동경로"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "닫기"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "제안"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "제안 사항 표시"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "불러오는 중..."
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": " 감소"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": " 증가"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "항목 선택"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "선택"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": "개 알림"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": "개 알림"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "오류"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "정보"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "성공"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "경고"
     }
   ],
   "unknown": [

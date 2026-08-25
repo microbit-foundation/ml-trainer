@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, HStack, VisuallyHidden, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { HStack, VisuallyHidden, VStack } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { useAnimation } from "../AnimationProvider";
 import Arrow, { ArrowRef } from "./Arrow";
@@ -333,13 +333,13 @@ const HowItWorksAnimation = () => {
   return (
     <>
       <VisuallyHidden>
-        <Box as="img" alt={intl.formatMessage({ id: "animation-label" })} />
+        <img alt={intl.formatMessage({ id: "animation-label" })} />
       </VisuallyHidden>
       <VStack
         aria-hidden
         gap={7}
         opacity={visible ? 1 : 0}
-        transition={`opacity ${fadeInOutDuration}s ease`}
+        style={{ transition: `opacity ${fadeInOutDuration}s ease` }}
         height={{ base: "28em", sm: "30em", md: "23em" }}
         position="relative"
         overflow="hidden"
@@ -354,9 +354,11 @@ const HowItWorksAnimation = () => {
           leftItems={
             <>
               <HandHoldingMicrobit
-                px="5%"
-                width={{ base: "100%", sm: "80%", md: "60%" }}
-                height="auto"
+                css={{
+                  px: "5%",
+                  width: { base: "100%", sm: "80%", md: "60%" },
+                  height: "auto",
+                }}
                 ref={handHoldingMicrobitRef}
               />
               <MicrobitOnWrist ref={microbitOnWristRef} />
@@ -371,9 +373,11 @@ const HowItWorksAnimation = () => {
           rightItems={
             <Computer
               isTablet={isNativePlatform()}
-              height="auto"
               ref={computerRef}
-              width={{ base: "100%", sm: "80%", md: "60%" }}
+              css={{
+                height: "auto",
+                width: { base: "100%", sm: "80%", md: "60%" },
+              }}
             />
           }
         />

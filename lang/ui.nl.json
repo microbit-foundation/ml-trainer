@@ -1043,10 +1043,6 @@
     "defaultMessage": "Hulp & Ondersteuning",
     "description": "Link or menu item link to support site"
   },
-  "help-translate": {
-    "defaultMessage": "Help met vertalen",
-    "description": "Help translate  menu option text"
-  },
   "home-action": {
     "defaultMessage": "Startpagina",
     "description": "Home button text"
@@ -1110,30 +1106,6 @@
   "language": {
     "defaultMessage": "Taal",
     "description": "Language option text"
-  },
-  "language-fully-supported-heading": {
-    "defaultMessage": "Volledig ondersteund",
-    "description": "Fully supported languages heading text"
-  },
-  "language-partially-supported-heading": {
-    "defaultMessage": "Gedeeltelijk ondersteund",
-    "description": "Partially supported languages heading text"
-  },
-  "language-support-checked": {
-    "defaultMessage": "Ondersteund",
-    "description": "Aria label for ticked checkbox for language support"
-  },
-  "language-support-unchecked": {
-    "defaultMessage": "Niet ondersteund",
-    "description": "Aria label for unticked checkbox for language support"
-  },
-  "language-supported-for": {
-    "defaultMessage": "Vertalingen ondersteund voor:",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
-  },
-  "language-toast-title": {
-    "defaultMessage": "Taal niet volledig ondersteund",
-    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Meer informatie over firewall vereisten",
@@ -1706,6 +1678,10 @@
   "rename-project-heading": {
     "defaultMessage": "Hernoem project",
     "description": "Heading for rename project dialog"
+  },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Houd A+B ingedrukt en druk op RESET. Blijf A+B ingedrukt houden totdat het Bluetooth pictogram verschijnt.",

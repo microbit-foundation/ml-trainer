@@ -24,9 +24,11 @@ const languages = [
   "fr",
   "ja",
   "ko",
+  "lo",
   "nl",
   "pl",
   "pt-BR",
+  "vi",
   "zh-TW",
   "lol",
 ];

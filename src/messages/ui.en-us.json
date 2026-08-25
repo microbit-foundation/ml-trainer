@@ -1901,12 +1901,6 @@
       "value": "Help & support"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Help translate"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2055,42 +2049,6 @@
     {
       "type": 0,
       "value": "Language"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Fully supported"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Partially supported"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Supported"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "Unsupported"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Translations supported for:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "Language not fully supported"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3161,6 +3119,12 @@
       "value": "Rename project"
     }
   ],
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": [
+    {
+      "type": 0,
+      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+    }
+  ],
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
@@ -3931,6 +3895,188 @@
     {
       "type": 0,
       "value": "Try again"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Help translate"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Language"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Fully supported"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Partially supported"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Supported"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "Unsupported"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Translations supported for:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "Language not fully supported"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "Breadcrumb"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "Suggestions"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "Show suggestions"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "Loading"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 0,
+      "value": "Decrease "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 0,
+      "value": "Increase "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "Select an item"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "Select"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notification"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notifications"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Warning"
     }
   ],
   "unknown": [

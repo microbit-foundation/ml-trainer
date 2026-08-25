@@ -1,6 +1,6 @@
-import { Icon } from "@chakra-ui/react";
 import { RiPlayFill } from "react-icons/ri";
 import { FormattedMessage } from "react-intl";
+import { Icon } from "@microbit/ui";
 import { useAnimation } from "./AnimationProvider";
 import DialogFooterLink from "./DialogFooterLink";
 import PauseIcon from "./icons/PauseIcon";
@@ -8,11 +8,11 @@ import PauseIcon from "./icons/PauseIcon";
 const PauseResumeLink = () => {
   const { pause, isPaused, resume } = useAnimation();
   return isPaused ? (
-    <DialogFooterLink onClick={resume} leftIcon={<Icon as={RiPlayFill} />}>
+    <DialogFooterLink onClick={resume} startIcon={<Icon as={RiPlayFill} />}>
       <FormattedMessage id="animation-resume-action" />
     </DialogFooterLink>
   ) : (
-    <DialogFooterLink onClick={pause} leftIcon={<PauseIcon />}>
+    <DialogFooterLink onClick={pause} startIcon={<PauseIcon />}>
       <FormattedMessage id="animation-pause-action" />
     </DialogFooterLink>
   );

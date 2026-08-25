@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect, type Page } from "@playwright/test";
-import { Navbar } from "./shared";
+import { appUrl, Navbar } from "./shared";
 import { MakeCodeEditor } from "./makecode-editor";
 
 export class TestModelPage {
@@ -15,9 +15,7 @@ export class TestModelPage {
   }
 
   expectUrl() {
-    const url = `http://localhost:5173${
-      process.env.CI ? process.env.BASE_URL : "/"
-    }testing-model`;
+    const url = `${appUrl()}testing-model`;
     expect(this.page.url()).toEqual(url);
   }
 

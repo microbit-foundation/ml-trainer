@@ -1043,10 +1043,6 @@
     "defaultMessage": "Ayuda y asistencia",
     "description": "Link or menu item link to support site"
   },
-  "help-translate": {
-    "defaultMessage": "Ayudar a traducir",
-    "description": "Help translate  menu option text"
-  },
   "home-action": {
     "defaultMessage": "Inicio",
     "description": "Home button text"
@@ -1110,30 +1106,6 @@
   "language": {
     "defaultMessage": "Idioma",
     "description": "Language option text"
-  },
-  "language-fully-supported-heading": {
-    "defaultMessage": "Totalmente compatible",
-    "description": "Fully supported languages heading text"
-  },
-  "language-partially-supported-heading": {
-    "defaultMessage": "Parcialmente compatible",
-    "description": "Partially supported languages heading text"
-  },
-  "language-support-checked": {
-    "defaultMessage": "Compatible",
-    "description": "Aria label for ticked checkbox for language support"
-  },
-  "language-support-unchecked": {
-    "defaultMessage": "No compatible",
-    "description": "Aria label for unticked checkbox for language support"
-  },
-  "language-supported-for": {
-    "defaultMessage": "Traducciones compatibles con:",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
-  },
-  "language-toast-title": {
-    "defaultMessage": "Idioma no es totalmente compatible",
-    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "Conoce los requisitos del cortafuegos",
@@ -1706,6 +1678,10 @@
   "rename-project-heading": {
     "defaultMessage": "Renombrar Proyecto",
     "description": "Heading for rename project dialog"
+  },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Mantén presionados A+B y presiona RESET. Sigue presionando A+B hasta que aparezca el icono de Bluetooth.",

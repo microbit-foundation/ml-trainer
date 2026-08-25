@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box } from "@chakra-ui/react";
 import {
   createContext,
   ReactNode,
@@ -168,7 +167,7 @@ export const AnimationProvider = ({
         prefersReducedMotion,
       }}
     >
-      <Box>{children}</Box>
+      <div>{children}</div>
     </AnimationContext.Provider>
   );
 };

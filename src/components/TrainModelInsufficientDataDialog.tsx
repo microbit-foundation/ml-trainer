@@ -5,50 +5,44 @@
  */
 import {
   Button,
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   Text,
-} from "@chakra-ui/react";
-import { ComponentProps } from "react";
+} from "@microbit/ui";
+
 import { FormattedMessage } from "react-intl";
 
 const TrainModelInsufficientDataDialog = ({
   onClose,
   ...rest
-}: Omit<ComponentProps<typeof Modal>, "children">) => {
+}: Omit<ControlledModalProps, "children">) => {
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       size="lg"
       isCentered
       onClose={onClose}
       {...rest}
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="insufficient-data-title" />
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>
-              <FormattedMessage id="insufficient-data-body" />
-            </Text>
-          </ModalBody>
-          <ModalFooter justifyContent="flex-end">
-            <Button variant="primary" onClick={onClose}>
-              <FormattedMessage id="close-action" />
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id="insufficient-data-title" />
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <Text>
+          <FormattedMessage id="insufficient-data-body" />
+        </Text>
+      </ModalBody>
+      <ModalFooter>
+        <Button variant="primary" onPress={onClose}>
+          <FormattedMessage id="close-action" />
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

@@ -1043,10 +1043,6 @@
     "defaultMessage": "說明與支援",
     "description": "Link or menu item link to support site"
   },
-  "help-translate": {
-    "defaultMessage": "說明翻譯",
-    "description": "Help translate  menu option text"
-  },
   "home-action": {
     "defaultMessage": "主頁",
     "description": "Home button text"
@@ -1110,30 +1106,6 @@
   "language": {
     "defaultMessage": "語言",
     "description": "Language option text"
-  },
-  "language-fully-supported-heading": {
-    "defaultMessage": "完全支援",
-    "description": "Fully supported languages heading text"
-  },
-  "language-partially-supported-heading": {
-    "defaultMessage": "部分支持",
-    "description": "Partially supported languages heading text"
-  },
-  "language-support-checked": {
-    "defaultMessage": "支援",
-    "description": "Aria label for ticked checkbox for language support"
-  },
-  "language-support-unchecked": {
-    "defaultMessage": "不支援",
-    "description": "Aria label for unticked checkbox for language support"
-  },
-  "language-supported-for": {
-    "defaultMessage": "支援的翻譯：",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
-  },
-  "language-toast-title": {
-    "defaultMessage": "語言未完全支持",
-    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "瞭解防火牆要求",
@@ -1706,6 +1678,10 @@
   "rename-project-heading": {
     "defaultMessage": "重新命名專案",
     "description": "Heading for rename project dialog"
+  },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",

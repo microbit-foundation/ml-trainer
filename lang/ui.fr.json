@@ -1043,10 +1043,6 @@
     "defaultMessage": "Aide et support",
     "description": "Link or menu item link to support site"
   },
-  "help-translate": {
-    "defaultMessage": "Contribuer à la traduction",
-    "description": "Help translate  menu option text"
-  },
   "home-action": {
     "defaultMessage": "Accueil",
     "description": "Home button text"
@@ -1110,30 +1106,6 @@
   "language": {
     "defaultMessage": "Langue",
     "description": "Language option text"
-  },
-  "language-fully-supported-heading": {
-    "defaultMessage": "Entièrement pris en charge",
-    "description": "Fully supported languages heading text"
-  },
-  "language-partially-supported-heading": {
-    "defaultMessage": "Partiellement pris en charge",
-    "description": "Partially supported languages heading text"
-  },
-  "language-support-checked": {
-    "defaultMessage": "Pris en charge",
-    "description": "Aria label for ticked checkbox for language support"
-  },
-  "language-support-unchecked": {
-    "defaultMessage": "Non pris en charge",
-    "description": "Aria label for unticked checkbox for language support"
-  },
-  "language-supported-for": {
-    "defaultMessage": "Traductions prises en charge pour :",
-    "description": "Text introducing list of translated areas for a given language (areas: Microsoft MakeCode, micro:bit CreateAI UI itself)"
-  },
-  "language-toast-title": {
-    "defaultMessage": "La langue n'est pas entièrement prise en charge",
-    "description": "Language support toast notification title"
   },
   "learn-about-firewall-requirements-action": {
     "defaultMessage": "En savoir plus sur les exigences du pare-feu",
@@ -1706,6 +1678,10 @@
   "rename-project-heading": {
     "defaultMessage": "Renommer le projet",
     "description": "Heading for rename project dialog"
+  },
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
+    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Maintenez les touches A et B enfoncées et appuyez sur RESET. Maintenez les touches A et B enfoncées jusqu'à ce que l'icône Bluetooth apparaisse.",

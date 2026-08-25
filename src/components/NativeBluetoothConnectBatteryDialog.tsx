@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Image, Text, VStack } from "@chakra-ui/react";
+import { AspectRatio, Image, Text, VStack } from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 import microbitWithBatteryPack from "../images/microbit-with-battery-pack.svg";
 import ConnectContainerDialog, {
@@ -37,13 +37,9 @@ const NativeBluetoothConnectBatteryDialog = ({
         <Text width="100%">
           <FormattedMessage id="connect-native-start-battery-check" />
         </Text>
-        <Image
-          src={microbitWithBatteryPack}
-          alt=""
-          width="22rem"
-          aspectRatio={250 / 148}
-          my={3.5}
-        />
+        <AspectRatio width="22rem" maxWidth="100%" ratio={250 / 148} my={3.5}>
+          <Image src={microbitWithBatteryPack} alt="" />
+        </AspectRatio>
       </VStack>
     </ConnectContainerDialog>
   );

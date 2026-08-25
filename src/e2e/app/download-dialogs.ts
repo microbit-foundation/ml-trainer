@@ -93,7 +93,7 @@ export class DownloadDialogs {
   }
 
   async checkDontShowAgain() {
-    // Click on the label text instead of the checkbox input due to Chakra UI styling
+    // Click the label text rather than the checkbox input.
     await this.page.getByText("Don't show this again").click();
   }
 

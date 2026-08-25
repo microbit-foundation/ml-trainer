@@ -4,278 +4,72 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { match } from "@formatjs/intl-localematcher";
+import {
+  getDefaultLanguageId,
+  type KnownLanguageId,
+} from "@microbit/ui-patterns";
+import { flags } from "./flags";
 import { DataSamplesView, TourTriggerName } from "./model";
 import { isNativePlatform } from "./platform";
 
 type Translation = "preview" | boolean;
 
+/**
+ * Per-language support flags. Names and display order come from
+ * @microbit/ui-patterns' language registry; this list holds only what the
+ * registry can't know: this app's support axes.
+ */
 export interface Language {
-  id: string;
-  name: string;
-  enName: string;
-  // Language supported in Classroom UI.
+  // Typo-proof: the shared registry's id union, so `tsc` catches an id the
+  // family doesn't know.
+  id: KnownLanguageId;
+  // Language supported in this app's UI.
   ui: Translation;
   // Language supported in Microsoft MakeCode editor.
   makeCode: boolean;
 }
 
-// Tag new languages with `preview: true` to enable for beta only.
+// Tag new languages with `ui: "preview"` to enable for beta only.
 // Adding a new language? Ensure the project links work, or add a temporary
 // redirect on microbit.org to fallback on not having a language path.
 export const allLanguages: Language[] = [
-  {
-    id: "en",
-    name: "English (UK)",
-    enName: "English (UK)",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "en-US",
-    name: "English (US)",
-    enName: "English (US)",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "ar",
-    name: "العربية",
-    enName: "Arabic",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "bg",
-    name: "български",
-    enName: "Bulgarian",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "ca",
-    name: "Català",
-    enName: "Catalan",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "cs",
-    name: "Čeština",
-    enName: "Czech",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "cy",
-    name: "Cymraeg",
-    enName: "Welsh",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "da",
-    name: "Dansk",
-    enName: "Danish",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "de",
-    name: "Deutsch",
-    enName: "German",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "el",
-    name: "Ελληνικά",
-    enName: "Greek",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "es-ES",
-    name: "Español",
-    enName: "Spanish",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "fi",
-    name: "Suomi",
-    enName: "Finnish",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "fr",
-    name: "Français",
-    enName: "French",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "gn",
-    name: "Avañe'ẽ",
-    enName: "Guarani",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "he",
-    name: "עברית",
-    enName: "Hebrew",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "hu",
-    name: "Magyar",
-    enName: "Hungarian",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "is",
-    name: "Íslenska",
-    enName: "Icelandic",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "it",
-    name: "Italiano",
-    enName: "Italian",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "ja",
-    name: "日本語",
-    enName: "Japanese",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "ko",
-    name: "한국어",
-    enName: "Korean",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "nl",
-    name: "Nederlands",
-    enName: "Dutch",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "nb",
-    name: "Norsk bokmål",
-    enName: "Norwegian Bokmal",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "nn-NO",
-    name: "Norsk nynorsk",
-    enName: "Norwegian Nynorsk",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "pl",
-    name: "Polski",
-    enName: "Polish",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "pt-BR",
-    name: "Português (Brasil)",
-    enName: "Portuguese (Brazil)",
-    ui: true,
-    makeCode: true,
-  },
-  {
-    id: "pt-PT",
-    name: "Português (Portugal)",
-    enName: "Portuguese (Portugal)",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "ru",
-    name: "Русский",
-    enName: "Russian",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "si-LK",
-    name: "සිංහල",
-    enName: "Sinhala",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "sk",
-    name: "Slovenčina",
-    enName: "Slovak",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "sr",
-    name: "Srpski",
-    enName: "Serbian (Latin)",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "sv-SE",
-    name: "Svenska",
-    enName: "Swedish",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "tr",
-    name: "Türkçe",
-    enName: "Turkish",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "uk",
-    name: "Українська",
-    enName: "Ukrainian",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "vi",
-    name: "Tiếng việt",
-    enName: "Vietnamese",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "zh-CN",
-    name: "简体中文",
-    enName: "Chinese (Simplified)",
-    ui: false,
-    makeCode: true,
-  },
-  {
-    id: "zh-TW",
-    name: "繁體中文",
-    enName: "Chinese (Traditional)",
-    ui: true,
-    makeCode: true,
-  },
+  { id: "en", ui: true, makeCode: true },
+  { id: "en-US", ui: true, makeCode: true },
+  { id: "ar", ui: false, makeCode: true },
+  { id: "bg", ui: false, makeCode: true },
+  { id: "ca", ui: true, makeCode: true },
+  { id: "cs", ui: false, makeCode: true },
+  { id: "cy", ui: false, makeCode: true },
+  { id: "da", ui: false, makeCode: true },
+  { id: "de", ui: false, makeCode: true },
+  { id: "el", ui: false, makeCode: true },
+  { id: "es-ES", ui: true, makeCode: true },
+  { id: "fi", ui: false, makeCode: true },
+  { id: "fr", ui: true, makeCode: true },
+  { id: "gn", ui: false, makeCode: true },
+  { id: "he", ui: false, makeCode: true },
+  { id: "hu", ui: false, makeCode: true },
+  { id: "is", ui: false, makeCode: true },
+  { id: "it", ui: false, makeCode: true },
+  { id: "ja", ui: true, makeCode: true },
+  { id: "ko", ui: true, makeCode: true },
+  { id: "lo", ui: true, makeCode: true },
+  { id: "nl", ui: true, makeCode: true },
+  { id: "nb", ui: false, makeCode: true },
+  { id: "nn-NO", ui: false, makeCode: true },
+  { id: "pl", ui: true, makeCode: true },
+  { id: "pt-BR", ui: true, makeCode: true },
+  { id: "pt-PT", ui: false, makeCode: true },
+  { id: "ru", ui: false, makeCode: true },
+  { id: "si-LK", ui: false, makeCode: true },
+  { id: "sk", ui: false, makeCode: true },
+  { id: "sr", ui: false, makeCode: true },
+  { id: "sv-SE", ui: false, makeCode: true },
+  { id: "tr", ui: false, makeCode: true },
+  { id: "uk", ui: false, makeCode: true },
+  { id: "vi", ui: true, makeCode: true },
+  { id: "zh-CN", ui: false, makeCode: true },
+  { id: "zh-TW", ui: true, makeCode: true },
 ];
 
 export const getMakeCodeLang = (languageId: string): string =>
@@ -288,42 +82,55 @@ export const getMakeCodeLang = (languageId: string): string =>
  * and are never auto-selected on first run. Add ids here as translations
  * land.
  */
-export const nativeLanguageIds = ["en", "en-US", "nl", "fr", "pl", "es-ES"];
+export const nativeLanguageIds: KnownLanguageId[] = [
+  "en",
+  "en-US",
+  "nl",
+  "fr",
+  "pl",
+  "es-ES",
+  "pt-BR",
+  "vi",
+  "lo",
+];
+
+/**
+ * Whether the language's UI translation is enabled in this build.
+ *
+ * Preview languages are enabled on beta only, so their translations can be
+ * reviewed before going live.
+ */
+export const isUiEnabled = (
+  language: Language,
+  previewEnabled: boolean = flags.translationPreview
+): boolean =>
+  language.ui === true || (language.ui === "preview" && previewEnabled);
 
 const supportedLanguageIds = allLanguages.map((l) => l.id);
-const defaultLanguageId = allLanguages[0].id;
-
-const isValidLanguageId = (langId: string): boolean => {
-  try {
-    Intl.getCanonicalLocales(langId);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-// match() returns its default verbatim when nothing matches so a sentinel
-// lets us distinguish no-match from a real match of the default language.
-const noMatch = "x-no-match";
-
-const matchOrUndefined = (
-  requestedLanguages: readonly string[],
-  languageIds: string[]
-): string | undefined => {
-  const matched = match(
-    requestedLanguages.filter(isValidLanguageId),
-    languageIds,
-    noMatch
-  );
-  return matched === noMatch ? undefined : matched;
-};
 
 /**
  * Match the user's preferred languages (from browser/OS) to supported languages.
  */
 export const matchLanguage = (requestedLanguages: readonly string[]): string =>
-  matchOrUndefined(requestedLanguages, supportedLanguageIds) ??
-  defaultLanguageId;
+  getDefaultLanguageId({
+    autoSelectableIds: supportedLanguageIds,
+    requestedLanguages,
+  });
+
+/**
+ * Language ids that may be auto-selected on first run on native: those
+ * covering the native strings whose UI translation is enabled in this build.
+ *
+ * Parameters default from the environment and exist for testing.
+ */
+export const autoSelectableLanguageIds = (
+  languages: readonly Language[] = allLanguages,
+  previewEnabled: boolean = flags.translationPreview,
+  nativeIds: readonly string[] = nativeLanguageIds
+): string[] =>
+  languages
+    .filter((l) => nativeIds.includes(l.id) && isUiEnabled(l, previewEnabled))
+    .map((l) => l.id);
 
 /**
  * Get the initial language, checking URL parameter first, then OS/browser
@@ -344,17 +151,16 @@ export const getDefaultLanguage = (
   ).get("l"),
   osLanguages: readonly string[] = navigator.languages,
   native: boolean = isNativePlatform()
-): string => {
-  const requestedLanguages = languageParam
-    ? [languageParam, ...osLanguages]
-    : osLanguages;
-  if (!native) {
-    return matchLanguage(requestedLanguages);
-  }
-  return (
-    matchOrUndefined(requestedLanguages, nativeLanguageIds) ?? defaultLanguageId
-  );
-};
+): string =>
+  getDefaultLanguageId({
+    // On native only fully supported languages may be auto-selected; on the
+    // web any supported language may be.
+    autoSelectableIds: native
+      ? autoSelectableLanguageIds()
+      : supportedLanguageIds,
+    languageHint: languageParam,
+    requestedLanguages: osLanguages,
+  });
 
 export const defaultSettings: Settings = {
   languageId: getDefaultLanguage(),

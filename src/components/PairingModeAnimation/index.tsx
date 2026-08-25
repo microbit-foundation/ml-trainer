@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Stack, VisuallyHidden } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
+import { Stack, token, VisuallyHidden } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { BluetoothPairingMethod } from "../../data-connection-flow/data-connection-types";
 import { useAnimation } from "../AnimationProvider";
@@ -40,6 +40,8 @@ const boardOpacityTransition = "opacity 0.3s";
 
 type ActiveBoard = "back" | "front";
 
+const activeColor = token("colors.brand2.500");
+
 const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const intl = useIntl();
   const microbitABBoardFrontRef = useRef<ABLabelledMicrobitBoardRef>(null);
@@ -50,6 +52,12 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
     useAnimation();
   const isTripleReset = pairingMethod === "triple-reset";
   const [activeBoard, setActiveBoard] = useState<ActiveBoard>("back");
+
+  // Dynamic, so applied inline rather than through the css prop.
+  const boardStagingStyle = (board: ActiveBoard): CSSProperties => ({
+    opacity: activeBoard === board ? 1 : inactiveBoardOpacity,
+    transition: prefersReducedMotion ? undefined : boardOpacityTransition,
+  });
 
   useEffect(() => {
     const run = async () => {
@@ -100,8 +108,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   return (
     <>
       <VisuallyHidden>
-        <Box
-          as="img"
+        <img
           alt={intl.formatMessage({ id: "animation-bluetooth-mode-label" })}
         />
       </VisuallyHidden>
@@ -114,42 +121,38 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         }}
         justifyContent="center"
         gap={{ base: 10, md: "1rem" }}
-        alignItems={isTripleReset ? "center" : { base: "center", md: "end" }}
+        alignItems={{ base: "center", md: isTripleReset ? "center" : "end" }}
         minH={{ base: "auto", md: "200px" }}
         userSelect="none"
       >
         {isTripleReset ? (
           <>
             <ResetPressedMicrobitBoard
-              activeColor="brand2.500"
+              activeColor={activeColor}
               handSide="left"
               ref={microbitBoardBackRef}
-              w={{ base: "50%", md: "25%" }}
-              opacity={activeBoard === "back" ? 1 : inactiveBoardOpacity}
-              transition={
-                prefersReducedMotion ? undefined : boardOpacityTransition
-              }
+              css={{ width: { base: "50%", md: "25%" } }}
+              style={boardStagingStyle("back")}
             />
             <MicrobitBoardFront
-              boxSize={{ base: "50%", md: "25%" }}
+              // Svg has icon base sizing (1em square), so height must be
+              // released to the viewBox aspect ratio.
+              css={{ width: { base: "50%", md: "25%" }, height: "auto" }}
               ref={microbitBoardFrontRef}
-              opacity={activeBoard === "front" ? 1 : inactiveBoardOpacity}
-              transition={
-                prefersReducedMotion ? undefined : boardOpacityTransition
-              }
+              style={boardStagingStyle("front")}
             />
           </>
         ) : (
           <>
             <ABLabelledMicrobitBoard
-              activeColor="brand2.500"
+              activeColor={activeColor}
               ref={microbitABBoardFrontRef}
-              w={{ base: "50%", md: "25%" }}
+              css={{ width: { base: "50%", md: "25%" } }}
             />
             <ResetPressedMicrobitBoard
-              activeColor="brand2.500"
+              activeColor={activeColor}
               ref={microbitBoardBackRef}
-              w={{ base: "50%", md: "25%" }}
+              css={{ width: { base: "50%", md: "25%" } }}
             />
           </>
         )}

@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, Text, useToken } from "@chakra-ui/react";
+import { Box, Text, token } from "@microbit/ui";
 
 const ArrowOne = () => {
-  const [brand500] = useToken("colors", ["brand2.500"]);
+  const brand500 = token("colors.brand2.500");
   return (
     <svg
       width="250"
@@ -15,9 +15,14 @@ const ArrowOne = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="35" y="15" width="180" height="10" fill={brand500} />
-      <circle cx="230" cy="20" r="20" fill={brand500} />
-      <path d="M0 19.5L38.25 4.34455V34.6554L0 19.5Z" fill={brand500} />
+      {/* fill via style, not the attribute: the token can resolve to a
+          var() reference, which presentation attributes don't substitute. */}
+      <rect x="35" y="15" width="180" height="10" style={{ fill: brand500 }} />
+      <circle cx="230" cy="20" r="20" style={{ fill: brand500 }} />
+      <path
+        d="M0 19.5L38.25 4.34455V34.6554L0 19.5Z"
+        style={{ fill: brand500 }}
+      />
       <foreignObject x="210" y="0" width="40" height="40">
         <Box
           aria-hidden

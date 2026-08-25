@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box } from "@chakra-ui/react";
 import { useIntl } from "react-intl";
+import { Box } from "@microbit/ui";
 
 const ChooseDeviceOverlay = () => {
   const intl = useIntl();

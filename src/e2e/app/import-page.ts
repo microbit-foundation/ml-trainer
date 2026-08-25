@@ -1,4 +1,5 @@
 import { Locator, type Page, expect } from "@playwright/test";
+import { appUrl } from "./shared";
 
 export class ImportPage {
   private readonly url: string;
@@ -6,9 +7,7 @@ export class ImportPage {
   private openProjectBtn: Locator;
 
   constructor(public readonly page: Page) {
-    this.url = `http://localhost:5173${
-      process.env.CI ? process.env.BASE_URL : "/"
-    }`;
+    this.url = appUrl();
 
     this.openProjectBtn = page
       .getByRole("button", { name: "Open project" })

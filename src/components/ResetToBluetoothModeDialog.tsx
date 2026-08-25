@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Text, VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@microbit/ui";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { BluetoothPairingMethod } from "../data-connection-flow/data-connection-types";
@@ -58,9 +58,16 @@ const ResetToBluetoothModeDialog = ({
         }
       >
         <VStack gap={5} width="100%">
-          <Text alignSelf="left" width="100%">
-            <FormattedMessage id={subtitleId} />
-          </Text>
+          <VStack width="100%">
+            <Text alignSelf="left" width="100%">
+              <FormattedMessage id={subtitleId} />
+            </Text>
+            {!isTripleReset && (
+              <Text alignSelf="left" width="100%">
+                <FormattedMessage id="reset-to-bluetooth-mode-ab-power-on-subtitle" />
+              </Text>
+            )}
+          </VStack>
           <PairingModeAnimation pairingMethod={pairingMethod} />
         </VStack>
       </ConnectContainerDialog>

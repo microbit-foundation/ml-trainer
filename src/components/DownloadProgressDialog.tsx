@@ -5,19 +5,17 @@
  */
 import {
   Box,
-  Link,
+  Button,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  Progress,
+  ProgressBar,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { ProgressStage } from "@microbit/microbit-connection";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { DataConnectionType, RadioFlowPhase } from "../data-connection-flow";
 import { isNativePlatform } from "../platform";
 import ChooseDeviceOverlay from "./ChooseDeviceOverlay";
@@ -87,6 +85,7 @@ const DownloadProgressDialog = ({
   tryAgain,
   microbitName,
 }: DownloadProgressDialogProps) => {
+  const intl = useIntl();
   // Skip showing dialog when stage is undefined (not yet started).
   if (stage === undefined) {
     return null;
@@ -101,57 +100,55 @@ const DownloadProgressDialog = ({
   const isFindingDevice = stage === ProgressStage.FindingDevice;
   return (
     <Modal
-      closeOnOverlayClick={false}
-      motionPreset="none"
+      isDismissable={false}
+      motionless
       isOpen={isOpen}
       onClose={noop}
       size={{ base: "full", md: "3xl" }}
       isCentered
-      preserveScrollBarGap={false}
     >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id={headingId} />
-          </ModalHeader>
-          <ModalBody>
-            <VStack
-              width="100%"
-              gap={5}
-              alignItems={isIndeterminate ? "center" : "flex-start"}
-            >
-              <Text textAlign={isIndeterminate ? "center" : "left"}>
-                {subtitleId ? <FormattedMessage id={subtitleId} /> : "\u00A0"}
-              </Text>
-              {isNativePlatform() && isFindingDevice ? (
-                <BluetoothPatternInput
-                  microbitName={microbitName}
-                  invalid={false}
-                />
-              ) : isIndeterminate ? (
-                <LoadingAnimation />
-              ) : (
-                <Box h={25} display="flex" alignItems="center" width="100%">
-                  <Progress
-                    value={progress * 100}
-                    colorScheme="brand2"
-                    size="md"
-                    rounded={100}
-                    width="100%"
-                  />
-                </Box>
-              )}
-            </VStack>
-          </ModalBody>
-          <ModalFooter justifyContent="start">
-            {isNativePlatform() && tryAgain && isFindingDevice && (
-              <Link as="button" color="brand.600" onClick={tryAgain}>
-                <FormattedMessage id="connect-native-change-pattern" />
-              </Link>
-            )}
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
+      <ModalHeader>
+        <FormattedMessage id={headingId} />
+      </ModalHeader>
+      <ModalBody>
+        <VStack
+          width="100%"
+          gap={5}
+          alignItems={isIndeterminate ? "center" : "flex-start"}
+        >
+          <Text textAlign={isIndeterminate ? "center" : "left"}>
+            {subtitleId ? <FormattedMessage id={subtitleId} /> : "\u00A0"}
+          </Text>
+          {isNativePlatform() && isFindingDevice ? (
+            <BluetoothPatternInput
+              microbitName={microbitName}
+              invalid={false}
+            />
+          ) : isIndeterminate ? (
+            <LoadingAnimation />
+          ) : (
+            <Box h={25} display="flex" alignItems="center" width="100%">
+              <ProgressBar
+                value={progress * 100}
+                aria-label={intl.formatMessage({ id: headingId })}
+                css={{ borderRadius: "100px" }}
+                barCss={{ bg: "brand2.500" }}
+              />
+            </Box>
+          )}
+        </VStack>
+      </ModalBody>
+      <ModalFooter css={{ justifyContent: "start" }}>
+        {isNativePlatform() && tryAgain && isFindingDevice && (
+          <Button
+            variant="link"
+            css={{ color: "brand.600" }}
+            onPress={tryAgain}
+          >
+            <FormattedMessage id="connect-native-change-pattern" />
+          </Button>
+        )}
+      </ModalFooter>
     </Modal>
   );
 };

@@ -1,0 +1,17 @@
+/*
+ * (c) 2026, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Establishes the app-wide cascade layer order before any other stylesheet
+ * declares layers (the first @layer statement fixes relative order for the
+ * whole document). `vendor` holds third-party CSS (see Carousel/swiper.css)
+ * so that it beats Panda's preflight reset but loses to app styling.
+ * The other names are Panda's own layers.
+ */
+@layer reset, vendor, base, tokens, recipes, utilities;
+
+/* @microbit/ui's border-color/word-wrap defaults, kept in the bottom
+ * layer so the production cascade-layer flattening can't boost them
+ * above CSS it doesn't process. */
+@import "@microbit/ui/reset.css" layer(reset);

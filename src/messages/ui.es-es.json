@@ -1909,12 +1909,6 @@
       "value": "Ayuda y asistencia"
     }
   ],
-  "help-translate": [
-    {
-      "type": 0,
-      "value": "Ayudar a traducir"
-    }
-  ],
   "home-action": [
     {
       "type": 0,
@@ -2063,42 +2057,6 @@
     {
       "type": 0,
       "value": "Idioma"
-    }
-  ],
-  "language-fully-supported-heading": [
-    {
-      "type": 0,
-      "value": "Totalmente compatible"
-    }
-  ],
-  "language-partially-supported-heading": [
-    {
-      "type": 0,
-      "value": "Parcialmente compatible"
-    }
-  ],
-  "language-support-checked": [
-    {
-      "type": 0,
-      "value": "Compatible"
-    }
-  ],
-  "language-support-unchecked": [
-    {
-      "type": 0,
-      "value": "No compatible"
-    }
-  ],
-  "language-supported-for": [
-    {
-      "type": 0,
-      "value": "Traducciones compatibles con:"
-    }
-  ],
-  "language-toast-title": [
-    {
-      "type": 0,
-      "value": "Idioma no es totalmente compatible"
     }
   ],
   "learn-about-firewall-requirements-action": [
@@ -3173,6 +3131,12 @@
       "value": "Renombrar Proyecto"
     }
   ],
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": [
+    {
+      "type": 0,
+      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+    }
+  ],
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
@@ -3943,6 +3907,188 @@
     {
       "type": 0,
       "value": "Inténtalo de nuevo"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "Ayudar a traducir"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "Idioma"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "Totalmente compatible"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "Parcialmente compatible"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "Compatible"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "No compatible"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "Traducciones compatibles con:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "Idioma no es totalmente compatible"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "Sendero de navegación"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "Cerrar"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "Sugerencias"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "Mostrar sugerencias"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "Cargando"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 0,
+      "value": "Reducir "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 0,
+      "value": "Aumentar "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "Seleccionar un artículo"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "Seleccionar"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notificación"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notificaciones"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Información"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Éxito"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "Advertencia"
     }
   ],
   "unknown": [

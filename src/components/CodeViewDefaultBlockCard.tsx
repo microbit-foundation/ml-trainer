@@ -3,30 +3,35 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Card, CardProps } from "@chakra-ui/react";
 import { memo } from "react";
 import { ActionData } from "../model";
+import { Card, css, cx } from "@microbit/ui";
 import { tourElClassname } from "../tours";
 import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
 
-interface CodeViewDefaultBlockCardProps extends CardProps {
+interface CodeViewDefaultBlockCardProps {
   action: ActionData;
+  className?: string;
 }
 
 const CodeViewDefaultBlockCard = ({
   action,
-  ...props
+  className,
 }: CodeViewDefaultBlockCardProps) => {
   return (
     <Card
-      px={5}
-      h="120px"
-      display="flex"
-      borderColor="brand.500"
-      maxW="100%"
-      justifyContent="center"
-      className={tourElClassname.makeCodeCodeView}
-      {...props}
+      className={cx(
+        tourElClassname.makeCodeCodeView,
+        css({
+          px: 5,
+          h: "120px",
+          display: "flex",
+          borderColor: "brand.500",
+          maxW: "100%",
+          justifyContent: "center",
+        }),
+        className
+      )}
     >
       <CodeViewDefaultBlock actionName={action.name} icon={action.icon} />
     </Card>

@@ -1,0 +1,4218 @@
+{
+  "aarhus-university-alt": [
+    {
+      "type": 0,
+      "value": "Aarhus University"
+    }
+  ],
+  "about": [
+    {
+      "type": 0,
+      "value": "ກ່ຽວກັບ"
+    }
+  ],
+  "about-dialog-alt": [
+    {
+      "type": 0,
+      "value": "ບອດ micro:bit ກຳລັງສະແດງຮູບຫົວໃຈໃນໜ້າຈໍ LED"
+    }
+  ],
+  "about-dialog-title": [
+    {
+      "type": 0,
+      "value": "ພັດທະນາຮ່ວມກັນກັບ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Center for Computational Thinking and Design, Aarhus University"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "accelerometer-image-alt": [
+    {
+      "type": 0,
+      "value": "micro:bit ສະແດງແກນ X ພາດຜ່ານດ້ານໜ້າ, ແກນ Y ຊີ້ຂຶ້ນ ແລະ ລົງ ແລະ ແກນ Z ຈາກດ້ານຫຼັງມາດ້ານໜ້າ"
+    }
+  ],
+  "accessibility": [
+    {
+      "type": 0,
+      "value": "ການເຂົ້າເຖິງໄດ້ສຳລັບທຸກຄົນ"
+    }
+  ],
+  "accessibility-resource-title": [
+    {
+      "type": 0,
+      "value": "ການເຂົ້າເຖິງໄດ້ສຳລັບທຸກຄົນ"
+    }
+  ],
+  "action-label": [
+    {
+      "type": 0,
+      "value": "ການດຳເນີນການ"
+    }
+  ],
+  "action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ຄຳແນະນຳເມື່ອຊີ້ໃສ່ການດຳເນີນການ"
+    }
+  ],
+  "action-length-error": [
+    {
+      "type": 0,
+      "value": "ຊື່ການດຳເນີນການຕ້ອງບໍ່ຍາວເກີນ "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": " ຕົວອັກສອນ."
+    }
+  ],
+  "action-name-placeholder": [
+    {
+      "type": 0,
+      "value": "ຊື່ຂອງການດຳເນີນການ"
+    }
+  ],
+  "action-region": [
+    {
+      "type": 0,
+      "value": "ການດຳເນີນການ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "action-tooltip": [
+    {
+      "type": 0,
+      "value": "ປະເພດຂອງການເຄື່ອນໄຫວທີ່ທ່ານຕ້ອງການໃຫ້ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ຈົດຈຳໄດ້ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ຕົບມື’."
+    }
+  ],
+  "actions-label": [
+    {
+      "type": 0,
+      "value": "ການດຳເນີນການຕ່າງໆ"
+    }
+  ],
+  "add-action-action": [
+    {
+      "type": 0,
+      "value": "ເພີ່ມການດຳເນີນການ"
+    }
+  ],
+  "add-action-hint": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກສຳລັບ "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " ສຳເລັດແລ້ວບໍ?"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ເພີ່ມການດຳເນີນການອື່ນ"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "add-action-hint-label": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກສຳລັບ "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    },
+    {
+      "type": 0,
+      "value": " ສຳເລັດແລ້ວບໍ? ກົດປຸ່ມ ‘ເພີ່ມການດຳເນີນການ’ ເພື່ອເພີ່ມການດຳເນີນການອື່ນ."
+    }
+  ],
+  "ai-activity-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "ໂຕນັບເວລາກິດຈະກຳ AI"
+    }
+  ],
+  "ai-light-switch-resource-title": [
+    {
+      "type": 0,
+      "value": "ສະວິດໄຟ AI"
+    }
+  ],
+  "ai-sports-data-logger-resource-title": [
+    {
+      "type": 0,
+      "value": "ຕົວບັນທຶກຂໍ້ມູນກິລາ AI"
+    }
+  ],
+  "ai-storytelling-friend-resource-title": [
+    {
+      "type": 0,
+      "value": "ໝູ່ເລົ່າເລື່ອງ AI"
+    }
+  ],
+  "analytics-consent-allow-action": [
+    {
+      "type": 0,
+      "value": "ອະນຸຍາດການວິເຄາະຂໍ້ມູນ"
+    }
+  ],
+  "analytics-consent-analytics": [
+    {
+      "type": 0,
+      "value": "ພວກເຮົາຕ້ອງການເກັບຂໍ້ມູນແບບບໍ່ລະບຸຕົວຕົນກ່ຽວກັບວິທີທີ່ທ່ານໃຊ້ແອັບ ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາປັບປຸງມັນໃຫ້ດີຂຶ້ນ. ພວກເຮົາບໍ່ແບ່ງປັນຂໍ້ມູນສ່ວນບຸກຄົນ ຫຼື ໃຊ້ໂຄສະນາຈາກບຸກຄົນທີສາມ."
+    }
+  ],
+  "analytics-consent-change-later": [
+    {
+      "type": 0,
+      "value": "ທ່ານສາມາດປ່ຽນການຕັ້ງຄ່ານີ້ໄດ້ພາຍຫຼັງໃນການຕັ້ງຄ່າ."
+    }
+  ],
+  "analytics-consent-decline-action": [
+    {
+      "type": 0,
+      "value": "ບໍ່, ຂອບໃຈຫຼາຍໆ"
+    }
+  ],
+  "analytics-consent-learn-more": [
+    {
+      "type": 0,
+      "value": "ຮຽນຮູ້ເພີ່ມເຕີມ"
+    }
+  ],
+  "analytics-consent-setting-helper": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍໃຫ້ພວກເຮົາປັບປຸງແອັບດ້ວຍຂໍ້ມູນການໃຊ້ງານແບບບໍ່ລະບຸຕົວຕົນ."
+    }
+  ],
+  "analytics-consent-setting-label": [
+    {
+      "type": 0,
+      "value": "ແບ່ງປັນຂໍ້ມູນການໃຊ້ງານແບບບໍ່ລະບຸຕົວຕົນ"
+    }
+  ],
+  "analytics-consent-title": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍປັບປຸງ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ໃຫ້ດີຂຶ້ນ"
+    }
+  ],
+  "animation-bluetooth-mode-label": [
+    {
+      "type": 0,
+      "value": "ພາບເຄື່ອນໄຫວສາທິດວິທີຣີເຊັດໃຫ້ກັບໄປຢູ່ໂໝດ Bluetooth."
+    }
+  ],
+  "animation-label": [
+    {
+      "type": 0,
+      "value": "ພາບເຄື່ອນໄຫວ ສາທິດຫ້າຂັ້ນຕອນຂອງຂະບວນການເຮັດວຽກ CreateAI: ເຊື່ອມຕໍ່, ເກັບຂໍ້ມູນ, ທົດສອບໂມເດວ, ຂຽນໂຄ້ດ ແລະ ນຳໃຊ້. ເຊື່ອມຕໍ່: ອຸປະກອນ micro:bit ຖືກເຊື່ອມຕໍ່ກັບຄອມພິວເຕີ ເພື່ອສ້າງການສື່ສານລະຫວ່າງທັງສອງ. ເກັບຂໍ້ມູນ: micro:bit ຖືກສວມໃສ່ຂໍ້ມື. ຂໍ້ມູນການເຄື່ອນໄຫວຖືກບັນທຶກສຳລັບສອງທ່າທາງ: ການໂບກມື (ສະແດງດ້ວຍໄອຄອນຮູບຫົວໃຈ) ແລະ ການສັ່ນ (ສະແດງດ້ວຍໄອຄອນຮູບກາກະບາດ). ມີການເກັບຕົວຢ່າງຫຼາຍຊຸດສຳລັບແຕ່ລະທ່າທາງເພື່ອຝຶກຝົນໂມເດວ. ທົດສອບໂມເດວ: ເມື່ອເກັບຕົວຢ່າງໄດ້ພຽງພໍແລ້ວ ຈະມີການຝຶກຝົນໂມເດວ ການຮຽນຮູ້ຂອງເຄື່ອງ. ຈາກນັ້ນ ຄອມພິວເຕີຈະພະຍາຍາມຈົດຈຳການໂບກມື ແລະ ການສັ່ນແບບເວລາຈິງ. ທ່ານສາມາດກັບໄປທີ່ຂັ້ນຕອນ ເກັບຂໍ້ມູນ ເພື່ອເກັບຕົວຢ່າງເພີ່ມເຕີມ ແລະ ທົດສອບຕໍ່ໄປໄດ້. ຂຽນໂຄດ: ທ່ານຂຽນໂປຣແກຣມໂດຍໃຊ້ບລັອກ MakeCode ທີ່ລວມເອົາໂມເດວທີ່ຝຶກຝົນແລ້ວ. ໂປຣແກຣມທີ່ສຳເລັດແລ້ວຈະຖືກດາວໂຫຼດລົງໃນ micro:bit. ນຳໃຊ້: micro:bit ຕອບສະໜອງຕໍ່ການເຄື່ອນໄຫວທາງຮ່າງກາຍຂອງທ່ານ ໂດຍສະແດງໄອຄອນທີ່ແຕກຕ່າງກັນໃນໜ້າຈໍ LED ຂອງມັນ ຂຶ້ນຢູ່ກັບວ່າກວດພົບການໂບກມື ຫຼື ການສັ່ນ."
+    }
+  ],
+  "animation-pause-action": [
+    {
+      "type": 0,
+      "value": "ຢຸດພາບເຄື່ອນໄຫວຊົ່ວຄາວ"
+    }
+  ],
+  "animation-resume-action": [
+    {
+      "type": 0,
+      "value": "ດຳເນີນພາບເຄື່ອນໄຫວຕໍ່ໄປ"
+    }
+  ],
+  "animation-step-1": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່"
+    }
+  ],
+  "animation-step-2": [
+    {
+      "type": 0,
+      "value": "ເກັບຂໍ້ມູນ"
+    }
+  ],
+  "animation-step-3": [
+    {
+      "type": 0,
+      "value": "ທົດສອບໂມເດວ"
+    }
+  ],
+  "animation-step-4": [
+    {
+      "type": 0,
+      "value": "ຂຽນໂຄ້ດ"
+    }
+  ],
+  "animation-step-5": [
+    {
+      "type": 0,
+      "value": "ນຳໃຊ້"
+    }
+  ],
+  "animation-training": [
+    {
+      "type": 0,
+      "value": "ການຝຶກຝົນໂມເດວ"
+    }
+  ],
+  "back-action": [
+    {
+      "type": 0,
+      "value": "ກັບຄືນ"
+    }
+  ],
+  "back-to-data-samples-action": [
+    {
+      "type": 0,
+      "value": "ແກ້ໄຂຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "blocks-preview-title": [
+    {
+      "type": 0,
+      "value": "ຕົວຢ່າງບລັອກໂຄ້ດ"
+    }
+  ],
+  "bluetooth-disabled-body": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາເປີດ Bluetooth ແລ້ວລອງອີກຄັ້ງ."
+    }
+  ],
+  "bluetooth-disabled-heading": [
+    {
+      "type": 0,
+      "value": "Bluetooth ຖືກປິດຢູ່"
+    }
+  ],
+  "bluetooth-permission-denied-body-android": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " ໃຊ້ Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ. ກະລຸນາເປີດສິດອະນຸຍາດອຸປະກອນໃກ້ຄຽງໃນ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ການຕັ້ງຄ່າຂອງ "
+        },
+        {
+          "type": 1,
+          "value": "appNameShort"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-body-ios": [
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": " ໃຊ້ Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ. ກະລຸນາອະນຸຍາດໃຫ້ເຂົ້າເຖິງ Bluetooth ໃນ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ການຕັ້ງຄ່າຂອງ "
+        },
+        {
+          "type": 1,
+          "value": "appNameShort"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "bluetooth-permission-denied-heading": [
+    {
+      "type": 0,
+      "value": "ຕ້ອງການສິດອະນຸຍາດ Bluetooth"
+    }
+  ],
+  "bluetooth-unsupported-advice": [
+    {
+      "type": 0,
+      "value": "ພວກເຮົາແນະນຳໃຫ້ໃຊ້ Google Chrome ຫຼື Microsoft Edge ເພື່ອໃຫ້ທ່ານສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານໄດ້ໂດຍກົງ."
+    }
+  ],
+  "bluetooth-unsupported-explain": [
+    {
+      "type": 0,
+      "value": "ໜ້າເສຍດາຍ, WebUSB ແລະ Web Bluetooth ບໍ່ຮອງຮັບໂດຍບຣາວເຊີນີ້. ນີ້ໝາຍຄວາມວ່າ ທ່ານບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນທີ່ຈຳເປັນສຳລັບຝຶກຝົນໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ."
+    }
+  ],
+  "bluetooth-unsupported-header": [
+    {
+      "type": 0,
+      "value": "ບຣາວເຊີນີ້ບໍ່ຮອງຮັບ"
+    }
+  ],
+  "cancel-action": [
+    {
+      "type": 0,
+      "value": "ຍົກເລີກ"
+    }
+  ],
+  "cancel-recording-action": [
+    {
+      "type": 0,
+      "value": "ຍົກເລີກການບັນທຶກ"
+    }
+  ],
+  "carousel-role": [
+    {
+      "type": 0,
+      "value": "ຮູບແບບເລື່ອນຮູບ"
+    }
+  ],
+  "carousel-slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " ຂອງ "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "carousel-slide-role": [
+    {
+      "type": 0,
+      "value": "ສະໄລ້"
+    }
+  ],
+  "certainty-label": [
+    {
+      "type": 0,
+      "value": "ຄວາມແນ່ນອນ"
+    }
+  ],
+  "certainty-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ຄຳແນະນຳຄວາມແນ່ນອນ"
+    }
+  ],
+  "certainty-percentage-label": [
+    {
+      "type": 0,
+      "value": "ຄວາມແນ່ນອນສຳລັບ "
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "currentConfidence"
+    },
+    {
+      "type": 0,
+      "value": " ເປີເຊັນ"
+    }
+  ],
+  "certainty-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄວາມແນ່ໃຈທີ່ໂມເດວຄິດວ່າມັນກຳລັງດຳເນີນແຕ່ລະການກະທຳຢູ່ໃນຂະນະນີ້ແນວໃດ"
+    }
+  ],
+  "clear": [
+    {
+      "type": 0,
+      "value": "ລຶບລ້າງ"
+    }
+  ],
+  "click-to-reload-page-action": [
+    {
+      "type": 0,
+      "value": "ຄລິກເພື່ອໂຫຼດໜ້າໃໝ່"
+    }
+  ],
+  "close-action": [
+    {
+      "type": 0,
+      "value": "ປິດໜ້າ"
+    }
+  ],
+  "code-download-error": [
+    {
+      "type": 0,
+      "value": "ຜິດພາດໃນການດາວໂຫຼດໂຄດໂປຣເຈັກ"
+    }
+  ],
+  "code-label": [
+    {
+      "type": 0,
+      "value": "ຂຽນໂຄດ"
+    }
+  ],
+  "code-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ຄຳແນະນຳໂຄດ"
+    }
+  ],
+  "code-tooltip": [
+    {
+      "type": 0,
+      "value": "ເຫຼົ່ານີ້ແມ່ນບລັອກ MakeCode ສຳລັບແຕ່ລະການກະທຳທີ່ຖືກກວດພົບ ເມື່ອທ່ານໂອນໂມເດວ ML ແລະໂຄດໄປຍັງ micro:bit"
+    }
+  ],
+  "confirm-action": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນ"
+    }
+  ],
+  "confirm-save-action": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນ ແລະ ບັນທຶກ"
+    }
+  ],
+  "confirm-share-action": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນ ແລະ ແບ່ງປັນ"
+    }
+  ],
+  "connect-action": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່"
+    }
+  ],
+  "connect-action-aria": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit"
+    }
+  ],
+  "connect-battery-heading": [
+    {
+      "type": 0,
+      "value": "ຖອດສາຍ USB ອອກ ແລະ ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ"
+    }
+  ],
+  "connect-battery-holder": [
+    {
+      "type": 0,
+      "value": "ຕົວຍຶດແບັດເຕີຣີ"
+    }
+  ],
+  "connect-battery-link": [
+    {
+      "type": 0,
+      "value": "ທ່ານສາມາດຕິດ micro:bit ໄວ້ກັບຂໍ້ມື ຫຼື ວັດຖຸອື່ນໆໄດ້"
+    }
+  ],
+  "connect-battery-subtitle": [
+    {
+      "type": 0,
+      "value": "ຖອດ micro:bit ອອກຈາກຄອມພິວເຕີ ແລະ ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ"
+    }
+  ],
+  "connect-bluetooth-cancelled-connection": [
+    {
+      "type": 0,
+      "value": "ທ່ານຍັງບໍ່ໄດ້ເລືອກ micro:bit ເທື່ອ. ທ່ານຢາກລອງອີກຄັ້ງບໍ?"
+    }
+  ],
+  "connect-bluetooth-enabled": [
+    {
+      "type": 0,
+      "value": "ເປີດ Bluetooth ແລ້ວ"
+    }
+  ],
+  "connect-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ໂດຍໃຊ້ Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-invalid-pattern": [
+    {
+      "type": 0,
+      "value": "ຮູບແບບທີ່ທ່ານວາດໃຊ້ບໍ່ໄດ້."
+    }
+  ],
+  "connect-bluetooth-start-heading": [
+    {
+      "type": 0,
+      "value": "ສິ່ງທີ່ທ່ານຕ້ອງໃຊ້ເພື່ອເຊື່ອມໂດຍໃຊ້ Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-requirements1": [
+    {
+      "type": 0,
+      "value": "1 micro:bit"
+    }
+  ],
+  "connect-bluetooth-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "ມີອິນເຕີເນັດ, ຜອດ USB ແລະ Web Bluetooth"
+    }
+  ],
+  "connect-bluetooth-start-switch-radio": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ໂດຍໃຊ້ວິທະຍຸ micro:bit ແທນ"
+    }
+  ],
+  "connect-cable-alt": [
+    {
+      "type": 0,
+      "value": "ອະນິເມຊັນສະແດງສາຍ USB ກຳລັງຖືກເຊື່ອມຕໍ່ເຂົ້າທາງດ້ານເທິງຂອງ micro:bit"
+    }
+  ],
+  "connect-cable-download-project-subtitle": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit ເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອດາວໂຫຼດໂປຣແກຣມ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກລົງໄປໃນອຸປະກອນນັ້ນ."
+    }
+  ],
+  "connect-cable-heading": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ສາຍ USB ເຂົ້າກັບ micro:bit"
+    }
+  ],
+  "connect-cable-skip": [
+    {
+      "type": 0,
+      "value": "ຂ້າມ: ໂປຣແກຣມໄດ້ຖືກດາວໂຫຼດແລ້ວບໍ?"
+    }
+  ],
+  "connect-cable-subtitle": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit ເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ໂປຣແກຣມເກັບຂໍ້ມູນສາມາດດາວໂຫຼດລົງໄປໃນອຸປະກອນນັ້ນໄດ້."
+    }
+  ],
+  "connect-cannot-see-pattern": [
+    {
+      "type": 0,
+      "value": "ຂ້ອຍບໍ່ເຫັນຮູບແບບ"
+    }
+  ],
+  "connect-computer": [
+    {
+      "type": 0,
+      "value": "ຄອມພິວເຕີ"
+    }
+  ],
+  "connect-data-collection-heading": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ສາຍ USB ເຂົ້າກັບ micro:bit 1"
+    }
+  ],
+  "connect-data-collection-subtitle": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit ອັນທຳອິດເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ໂປຣແກຣມເກັບຂໍ້ມູນສາມາດດາວໂຫຼດລົງໄປໃນອຸປະກອນນັ້ນໄດ້ ນີ້ແມ່ນ micro:bit ທີ່ທ່ານຈະໃຊ້ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນ."
+    }
+  ],
+  "connect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ micro:bit"
+    }
+  ],
+  "connect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້."
+    }
+  ],
+  "connect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ລິ້ງວິທະຍຸ micro:bit"
+    }
+  ],
+  "connect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້."
+    }
+  ],
+  "connect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ"
+    }
+  ],
+  "connect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້."
+    }
+  ],
+  "connect-help-alt": [
+    {
+      "type": 0,
+      "value": "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ WebUSB ທີ່ມີລາຍການ BBC micro:bit ຖືກຕິດປ້າຍເລກ 1 ແລະ ປຸ່ມ “Connect” ຖືກຕິດປ້າຍເລກ 2"
+    }
+  ],
+  "connect-micro-usb-cable": [
+    {
+      "type": 0,
+      "value": "ສາຍ Micro USB"
+    }
+  ],
+  "connect-native-change-pattern": [
+    {
+      "type": 0,
+      "value": "ຮູບແບບຂອງຂ້ອຍບໍ່ຄືກັນ"
+    }
+  ],
+  "connect-native-pattern-heading": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນວ່າ ຮູບແບບນີ້ຕົງກັບ micro:bit ຂອງທ່ານ"
+    }
+  ],
+  "connect-native-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "ຖ້າຈຳເປັນ, ປ່ຽນຮູບແບບດ້ານລຸ່ມໃຫ້ກົງກັນ."
+    }
+  ],
+  "connect-native-start-battery-check": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ ຈາກນັ້ນກວດເບິ່ງວ່າ ໄຟຢູ່ດ້ານຫຼັງຂອງ micro:bit ເປີດຢູ່."
+    }
+  ],
+  "connect-native-start-heading": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີຂອງ micro:bit"
+    }
+  ],
+  "connect-pattern-heading": [
+    {
+      "type": 0,
+      "value": "ຄັດລອກຮູບແບບ"
+    }
+  ],
+  "connect-pattern-input-label": [
+    {
+      "type": 0,
+      "value": "ຖັນ "
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": " - ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນໜ້າຈໍຂອງ micro:bit"
+    }
+  ],
+  "connect-pattern-label": [
+    {
+      "type": 0,
+      "value": "ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນແຕ່ລະຖັນຂອງໜ້າຈໍ micro:bit ຈາກຊ້າຍໄປຂວາ ແມ່ນ "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol1"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol2"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol3"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol4"
+    },
+    {
+      "type": 0,
+      "value": ", ແລະ "
+    },
+    {
+      "type": 1,
+      "value": "numLedsOnCol5"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "connect-pattern-led-option-label": [
+    {
+      "type": 0,
+      "value": "Column "
+    },
+    {
+      "type": 1,
+      "value": "colNum"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " LED lit"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " LEDs lit"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numLeds"
+    }
+  ],
+  "connect-pattern-subtitle": [
+    {
+      "type": 0,
+      "value": "ຄັດລອກຮູບແບບທີ່ສະແດງຢູ່ໃນ micro:bit."
+    }
+  ],
+  "connect-popup": [
+    {
+      "type": 0,
+      "value": "ເລືອກ micro:bit"
+    }
+  ],
+  "connect-popup-bluetooth-alt": [
+    {
+      "type": 0,
+      "value": "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ Web Bluetooth ທີ່ມີລາຍການ micro:bit ຕິດປ້າຍໝາຍເລກ 1 ແລະ ປຸ່ມ Pair ຕິດປ້າຍໝາຍເລກ 2"
+    }
+  ],
+  "connect-popup-bluetooth-instruction2": [
+    {
+      "type": 0,
+      "value": "ເລືອກ 'ຈັບຄູ່'"
+    }
+  ],
+  "connect-popup-bluetooth-title": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ກັບ micro:bit ໂດຍໃຊ້ Web Bluetooth"
+    }
+  ],
+  "connect-popup-instruction-heading": [
+    {
+      "type": 0,
+      "value": "ໃນໜ້າຕ່າງປັອບອັບຖັດໄປ"
+    }
+  ],
+  "connect-popup-instruction1": [
+    {
+      "type": 0,
+      "value": "ເລືອກ micro:bit ຂອງທ່ານ"
+    }
+  ],
+  "connect-popup-usb-bluetooth-data-collection-title": [
+    {
+      "type": 0,
+      "value": "ດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນລົງໃນ micro:bit"
+    }
+  ],
+  "connect-popup-usb-radio-data-collection-title": [
+    {
+      "type": 0,
+      "value": "ດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນລົງໃນ micro:bit 1"
+    }
+  ],
+  "connect-popup-usb-radio-link-title": [
+    {
+      "type": 0,
+      "value": "ດາວໂຫຼດໂປຣແກຣມເຊື່ອມຕໍ່ວິທະຍຸລົງໃນ micro:bit 2"
+    }
+  ],
+  "connect-popup-webusb-instruction2": [
+    {
+      "type": 0,
+      "value": "ເລືອກ 'ເຊື່ອມຕໍ່'"
+    }
+  ],
+  "connect-radio-data-collection-microbit-description": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນກັບຄອມພິວເຕີນີ້ ເພື່ອດາວໂຫຼດໂປຣແກຣມ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານລົງໃນມັນ. ຖ້າທ່ານກຳລັງສວມ micro:bit ສຳລັບເກັບຂໍ້ມູນຢູ່ ທ່ານອາດຈະຕ້ອງຖອດມັນອອກກ່ອນ."
+    }
+  ],
+  "connect-radio-data-collection-microbit-title": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ສາຍ USB ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ"
+    }
+  ],
+  "connect-radio-heading": [
+    {
+      "type": 0,
+      "value": "ກຳລັງເຊື່ອມຕໍ່ micro:bits"
+    }
+  ],
+  "connect-radio-link-heading": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ສາຍ USB ກັບ micro:bit 2"
+    }
+  ],
+  "connect-radio-link-subtitle": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit ອັນທີສອງກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ສາມາດດາວໂຫຼດໂປຣແກຣມເຊື່ອມຕໍ່ວິທະຍຸລົງໃນມັນໄດ້. micro:bit ສຳລັບເຊື່ອມຕໍ່ວິທະຍຸນີ້ຈະສື່ສານກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ."
+    }
+  ],
+  "connect-radio-start-heading": [
+    {
+      "type": 0,
+      "value": "ສິ່ງທີ່ທ່ານຕ້ອງການ ເພື່ອເຊື່ອມຕໍ່ໂດຍໃຊ້ວິທະຍຸ micro:bit\n"
+    }
+  ],
+  "connect-radio-start-requirements1": [
+    {
+      "type": 0,
+      "value": "2 micro:bits"
+    }
+  ],
+  "connect-radio-start-requirements1-subtitle": [
+    {
+      "type": 0,
+      "value": "V2 ເທົ່ານັ້ນ"
+    }
+  ],
+  "connect-radio-start-requirements2-subtitle": [
+    {
+      "type": 0,
+      "value": "ພ້ອມອິນເຕີເນັດ ແລະ ພອດ USB"
+    }
+  ],
+  "connect-radio-start-switch-bluetooth": [
+    {
+      "type": 0,
+      "value": "ໃຊ້ Web Bluetooth ເພື່ອເຊື່ອມຕໍ່ແທນ"
+    }
+  ],
+  "connect-to-record": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "connect-to-record-body": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ micro:bit ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນ."
+    }
+  ],
+  "connect-to-test-model": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ເພື່ອທົດສອບໂມເດວ ML ຂອງທ່ານ"
+    }
+  ],
+  "connect-to-tour-body": [
+    {
+      "type": 0,
+      "value": "ທ່ານຕ້ອງເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ ເພື່ອເບິ່ງການແນະນຳນີ້."
+    }
+  ],
+  "connect-troubleshoot": [
+    {
+      "type": 0,
+      "value": "ແກ້ໄຂບັນຫາໃນການເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ"
+    }
+  ],
+  "connect-troubleshooting": [
+    {
+      "type": 0,
+      "value": "ການແກ້ໄຂບັນຫາ"
+    }
+  ],
+  "connect-try-another-way": [
+    {
+      "type": 0,
+      "value": "ລອງວິທີອື່ນເບິ່ງ"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຂົ້າສູ່ໂໝດ Bluetooth ໄດ້ແມ່ນບໍ?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຂົ້າສູ່ໂໝດ Bluetooth ໄດ້ແມ່ນບໍ?"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
+    {
+      "type": 0,
+      "value": "ລອງເຮັດຕາມຂັ້ນຕອນຕໍ່ໄປນີ້:"
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
+    {
+      "type": 0,
+      "value": "ຖອດ micro:bit ອອກຈາກແຫຼ່ງຈ່າຍໄຟ ແລ້ວເຊື່ອມຕໍ່ມັນຄືນໃໝ່."
+    }
+  ],
+  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
+    {
+      "type": 0,
+      "value": "ຖ້າ micro:bit ຂອງທ່ານສະແດງໄອຄອນ ‘+’, ໃຫ້ເຊື່ອມຕໍ່ micro:bit ກັບຄອມພິວເຕີດ້ວຍສາຍ USB ແລະ ດາວໂຫຼດໂປຣແກຣມງ່າຍໆໜຶ່ງລົງໃນມັນ. ຍົກເລີກການຈັບຄູ່/ລືມ micro:bit ໃນແອັບ ການຕັ້ງຄ່າ ກ່ອນທີ່ຈະລອງອີກຄັ້ງ."
+    }
+  ],
+  "connect-with-batteries": [
+    {
+      "type": 0,
+      "value": "ພ້ອມແບັດເຕີຣີ"
+    }
+  ],
+  "connect-with-web-bluetooth": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ດ້ວຍ Web Bluetooth"
+    }
+  ],
+  "connecting": [
+    {
+      "type": 0,
+      "value": "ກຳລັງເຊື່ອມຕໍ່…"
+    }
+  ],
+  "connecting-data-collection-microbit-heading": [
+    {
+      "type": 0,
+      "value": "ກຳລັງເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ"
+    }
+  ],
+  "continue-makecode-action": [
+    {
+      "type": 0,
+      "value": "ດຳເນີນຕໍ່ໄປທີ່ MakeCode"
+    }
+  ],
+  "cookies-action": [
+    {
+      "type": 0,
+      "value": "ຄຸກກີ້"
+    }
+  ],
+  "copied": [
+    {
+      "type": 0,
+      "value": "ຄັດລອກແລ້ວ"
+    }
+  ],
+  "copy-action": [
+    {
+      "type": 0,
+      "value": "ຄັດລອກ"
+    }
+  ],
+  "create-project": [
+    {
+      "type": 0,
+      "value": "ສ້າງໂຄງການ"
+    }
+  ],
+  "create-project-dialog-heading": [
+    {
+      "type": 0,
+      "value": "ສ້າງໂຄງການໜຶ່ງ"
+    }
+  ],
+  "createai-taster-lessons-resource-title": [
+    {
+      "type": 0,
+      "value": "ບົດຮຽນທົດລອງຮຽນ"
+    }
+  ],
+  "data-actions-menu": [
+    {
+      "type": 0,
+      "value": "ການກະທຳຂໍ້ມູນ"
+    }
+  ],
+  "data-collection-microbit": [
+    {
+      "type": 0,
+      "value": "micro:bit ສຳລັບເກັບຂໍ້ມູນ"
+    }
+  ],
+  "data-collection-microbit-label": [
+    {
+      "type": 0,
+      "value": "ຮູບສະແດງການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ ກັບຂໍ້ມືຂອງຄົນ"
+    }
+  ],
+  "data-connection-region": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ຂໍ້ມູນ micro:bit"
+    }
+  ],
+  "data-features-hide-action": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອງຄຸນສົມບັດຂໍ້ມູນ"
+    }
+  ],
+  "data-features-show-action": [
+    {
+      "type": 0,
+      "value": "ສະແດງຄຸນສົມບັດຂໍ້ມູນ"
+    }
+  ],
+  "data-preview-title": [
+    {
+      "type": 0,
+      "value": "ເບິ່ງຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "data-samples-actions-region": [
+    {
+      "type": 0,
+      "value": "ແຖບເຄື່ອງມືຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "data-samples-label": [
+    {
+      "type": 0,
+      "value": "ຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "data-samples-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ຄຳແນະນຳຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "data-samples-status-count": [
+    {
+      "type": 0,
+      "value": "ໄດ້ບັນທຶກຕົວຢ່າງ "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " ຕົວແລ້ວ"
+    }
+  ],
+  "data-samples-status-not-enough": [
+    {
+      "type": 0,
+      "value": "ຕ້ອງການຢ່າງນ້ອຍ 3 ອັນ"
+    }
+  ],
+  "data-samples-title": [
+    {
+      "type": 0,
+      "value": "ຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "data-samples-tooltip": [
+    {
+      "type": 0,
+      "value": "ການເກັບຂໍ້ມູນການເຄື່ອນໄຫວແບບສັ້ນ ໃຊ້ເວລາ 1 ວິນາທີ. ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານຖືກເກັບໄວ້ແຕ່ໃນຄອມພິວເຕີຂອງທ່ານເທົ່ານັ້ນ ແລະ ບໍ່ໄດ້ຖືກສົ່ງໄປຫາໃຜອື່ນທັງສິ້ນ."
+    }
+  ],
+  "default-project-name": [
+    {
+      "type": 0,
+      "value": "ບໍ່ມີຊື່ (ຍັງບໍ່ໄດ້ຕັ້ງຊື່)"
+    }
+  ],
+  "delete-action-aria": [
+    {
+      "type": 0,
+      "value": "ລຶບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "delete-action-confirm-heading": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນການລຶບການກະທຳ"
+    }
+  ],
+  "delete-action-confirm-text": [
+    {
+      "type": 0,
+      "value": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-data-samples-action": [
+    {
+      "type": 0,
+      "value": "ລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ"
+    }
+  ],
+  "delete-data-samples-confirm-heading": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ"
+    }
+  ],
+  "delete-data-samples-confirm-text": [
+    {
+      "type": 0,
+      "value": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ?"
+    }
+  ],
+  "delete-project-action": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "ລຶບ"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "ລຶບ "
+            },
+            {
+              "type": 1,
+              "value": "count"
+            },
+            {
+              "type": 0,
+              "value": " ໂຄງການ"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    }
+  ],
+  "delete-project-confirm-heading": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນການລຶບໂຄງການ"
+    }
+  ],
+  "delete-project-confirm-text": [
+    {
+      "type": 0,
+      "value": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບໂຄງການ \""
+    },
+    {
+      "type": 1,
+      "value": "project"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "delete-projects-confirm-heading": [
+    {
+      "type": 0,
+      "value": "ຢືນຢັນການລຶບໂຄງການ"
+    }
+  ],
+  "delete-projects-confirm-text": [
+    {
+      "type": 0,
+      "value": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບ "
+    },
+    {
+      "type": 1,
+      "value": "numProjects"
+    },
+    {
+      "type": 0,
+      "value": " ໂຄງການ?"
+    }
+  ],
+  "delete-recording-aria": [
+    {
+      "type": 0,
+      "value": "ລຶບການບັນທຶກ "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " ຈາກທັງໝົດ "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " ສຳລັບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "disconnect-action": [
+    {
+      "type": 0,
+      "value": "ຕັດການເຊື່ອມຕໍ່"
+    }
+  ],
+  "disconnected-during-recording": [
+    {
+      "type": 0,
+      "value": "micro:bit ຖືກຖອດອອກລະຫວ່າງການບັນທຶກ"
+    }
+  ],
+  "disconnected-warning-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນຂາດຫາຍ"
+    }
+  ],
+  "disconnected-warning-bluetooth1": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນໄດ້ຂາດຫາຍໄປແລ້ວ."
+    }
+  ],
+  "disconnected-warning-bluetooth2": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາກວດສອບວ່າ micro:bit:"
+    }
+  ],
+  "disconnected-warning-bluetooth3": [
+    {
+      "type": 0,
+      "value": "ເປີດຢູ່ (ໄຟສີແດງທາງດ້ານຫຼັງຂອງ micro:bit ຄວນຈະເປີດຢູ່)"
+    }
+  ],
+  "disconnected-warning-bluetooth4": [
+    {
+      "type": 0,
+      "value": "ຢູ່ໃກ້ກັບຄອມພິວເຕີ"
+    }
+  ],
+  "disconnected-warning-bridge-heading": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ micro:bit ຜ່ານລິ້ງວິທະຍຸຂາດຫາຍ"
+    }
+  ],
+  "disconnected-warning-bridge1": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້ຂາດຫາຍໄປແລ້ວ."
+    }
+  ],
+  "disconnected-warning-remote-heading": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນຂາດຫາຍ"
+    }
+  ],
+  "disconnected-warning-remote1": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນໄດ້ຂາດຫາຍໄປແລ້ວ."
+    }
+  ],
+  "dont-show-again": [
+    {
+      "type": 0,
+      "value": "ຢ່າສະແດງອັນນີ້ອີກ"
+    }
+  ],
+  "download-data-samples-action": [
+    {
+      "type": 0,
+      "value": "ດາວໂຫຼດຕົວຢ່າງຂໍ້ມູນທັງໝົດ"
+    }
+  ],
+  "download-project-choose-microbit-subtitle": [
+    {
+      "type": 0,
+      "value": "ການດາວໂຫຼດໂຄງການຂອງທ່ານໄປຍັງ micro:bit ອັນດຽວກັນ ຈະເຮັດໃຫ້ micro:bit ຖືກຕັດອອກຈາກເຄື່ອງມືນີ້. ຖ້າທ່ານຕ້ອງການບັນທຶກຕົວຢ່າງຂໍ້ມູນເພີ່ມ ທ່ານຈະຕ້ອງເຊື່ອມຕໍ່ micro:bit ໃໝ່ອີກຄັ້ງ."
+    }
+  ],
+  "download-project-choose-microbit-title": [
+    {
+      "type": 0,
+      "value": "ທ່ານຕ້ອງການໃຊ້ micro:bit ອັນໃດ?"
+    }
+  ],
+  "download-project-different-microbit-option": [
+    {
+      "type": 0,
+      "value": "micro:bit ອີກອັນໜຶ່ງ"
+    }
+  ],
+  "download-project-intro-description": [
+    {
+      "type": 0,
+      "value": "ໂປຣແກຣມຂອງທ່ານມີໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກທີ່ທ່ານສ້າງໄວ້ຢູ່ດ້ວຍ. ໂມເດວນີ້ຈະຮັນຢູ່ໃນ micro:bit ເພື່ອໃຫ້ທ່ານໃຊ້ໄດ້ໂດຍບໍ່ຕ້ອງເຊື່ອມຕໍ່ກັບ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "download-project-intro-title": [
+    {
+      "type": 0,
+      "value": "ດາວໂຫຼດໂຄງການ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານ"
+    }
+  ],
+  "download-project-same-microbit-option": [
+    {
+      "type": 0,
+      "value": "micro:bit ອັນເດີມ"
+    }
+  ],
+  "downloading-data-collection-header": [
+    {
+      "type": 0,
+      "value": "ກຳລັງດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນ"
+    }
+  ],
+  "downloading-data-collection-microbit-header": [
+    {
+      "type": 0,
+      "value": "ກຳລັງດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນໄປຍັງ micro:bit"
+    }
+  ],
+  "downloading-header": [
+    {
+      "type": 0,
+      "value": "ກຳລັງດາວໂຫຼດໂປຣແກຣມໄປຍັງ micro:bit"
+    }
+  ],
+  "downloading-radio-link-header": [
+    {
+      "type": 0,
+      "value": "ກຳລັງດາວໂຫຼດໂປຣແກຣມລິ້ງວິທະຍຸ"
+    }
+  ],
+  "downloading-stage-checking-bond": [
+    {
+      "type": 0,
+      "value": "ຖ້າຖືກຖາມ, ໃຫ້ເລືອກ ‘ຈັບຄູ່’\n"
+    }
+  ],
+  "downloading-stage-connecting": [
+    {
+      "type": 0,
+      "value": "ກຳລັງເຊື່ອມຕໍ່ກັບ micro:bit…"
+    }
+  ],
+  "downloading-stage-finding-device": [
+    {
+      "type": 0,
+      "value": "ກຳລັງຊອກຫາ micro:bit…"
+    }
+  ],
+  "downloading-stage-flashing-native": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາຢ່າໂຕ້ຕອບກັບ micro:bit ກ່ອນທີ່ການດາວໂຫຼດຈະສຳເລັດ."
+    }
+  ],
+  "downloading-stage-resetting-device": [
+    {
+      "type": 0,
+      "value": "ກຳລັງລໍຖ້າໃຫ້ micro:bit ເລີ່ມຕົ້ນໃໝ່..."
+    }
+  ],
+  "downloading-subtitle": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາລໍຖ້າ. ກຳລັງດາວໂຫຼດໂປຣແກຣມລົງໃນ micro:bit."
+    }
+  ],
+  "duplicate-project-action": [
+    {
+      "type": 0,
+      "value": "ສຳເນົາຊ້ຳ"
+    }
+  ],
+  "duplicate-project-heading": [
+    {
+      "type": 0,
+      "value": "ສຳເນົາໂຄງການຊ້ຳ"
+    }
+  ],
+  "edit-in-makecode-action": [
+    {
+      "type": 0,
+      "value": "ແກ້ໄຂໃນ MakeCode"
+    }
+  ],
+  "estimated-action-aria": [
+    {
+      "type": 0,
+      "value": "ການດຳເນີນການທີ່ຄາດຄະເນ: \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "estimated-action-label": [
+    {
+      "type": 0,
+      "value": "ການດຳເນີນການທີ່ຄາດຄະເນ"
+    }
+  ],
+  "estimated-action-label-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ຄຳແນະນຳຂອງການດຳເນີນການທີ່ຄາດຄະເນ"
+    }
+  ],
+  "estimated-action-tooltip": [
+    {
+      "type": 0,
+      "value": "ນີ້ແມ່ນການດຳເນີນການທີ່ໂມເດວຄິດວ່າທ່ານກຳລັງເຮັດຢູ່ໃນຂະນະນີ້."
+    }
+  ],
+  "feedback": [
+    {
+      "type": 0,
+      "value": "ຄຳຕິຊົມຄືນ"
+    }
+  ],
+  "fingerprint-acc-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ x"
+    }
+  ],
+  "fingerprint-acc-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ y"
+    }
+  ],
+  "fingerprint-acc-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ z"
+    }
+  ],
+  "fingerprint-max-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
+    }
+  ],
+  "fingerprint-max-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
+    }
+  ],
+  "fingerprint-max-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
+    }
+  ],
+  "fingerprint-mean-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ x"
+    }
+  ],
+  "fingerprint-mean-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ y"
+    }
+  ],
+  "fingerprint-mean-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ z"
+    }
+  ],
+  "fingerprint-min-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
+    }
+  ],
+  "fingerprint-min-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ\n"
+    }
+  ],
+  "fingerprint-min-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
+    }
+  ],
+  "fingerprint-peaks-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
+    }
+  ],
+  "fingerprint-peaks-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
+    }
+  ],
+  "fingerprint-peaks-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
+    }
+  ],
+  "fingerprint-rms-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
+    }
+  ],
+  "fingerprint-rms-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
+    }
+  ],
+  "fingerprint-rms-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
+    }
+  ],
+  "fingerprint-std-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
+    }
+  ],
+  "fingerprint-std-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
+    }
+  ],
+  "fingerprint-std-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
+    }
+  ],
+  "fingerprint-zcr-x-tooltip": [
+    {
+      "type": 0,
+      "value": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ x"
+    }
+  ],
+  "fingerprint-zcr-y-tooltip": [
+    {
+      "type": 0,
+      "value": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ y"
+    }
+  ],
+  "fingerprint-zcr-z-tooltip": [
+    {
+      "type": 0,
+      "value": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ z"
+    }
+  ],
+  "firmware-outdated-content1": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ກັບ micro:bit ລົ້ມເຫຼວ ເນື່ອງຈາກ firmware ໃນ micro:bit ຂອງທ່ານເກົ່າເກີນໄປ."
+    }
+  ],
+  "firmware-outdated-content2": [
+    {
+      "type": 0,
+      "value": "ທ່ານຕ້ອງ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ອັບເດດ firmware ຂອງທ່ານ"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " ກ່ອນທີ່ຈະສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ນີ້ໄດ້."
+    }
+  ],
+  "firmware-outdated-heading": [
+    {
+      "type": 0,
+      "value": "ຕ້ອງອັບເດດກ່ອນໃຊ້ງານ"
+    }
+  ],
+  "first-lessons-with-microbit-createai-resource-title": [
+    {
+      "type": 0,
+      "value": "ບົດຮຽນທຳອິດ"
+    }
+  ],
+  "go-action": [
+    {
+      "type": 0,
+      "value": "ໄປ"
+    }
+  ],
+  "graph-color-scheme": [
+    {
+      "type": 0,
+      "value": "ຊຸດສີຂອງກຣາຟ"
+    }
+  ],
+  "graph-color-scheme-color-blind-1": [
+    {
+      "type": 0,
+      "value": "ທາງເລືອກສຳລັບຜູ້ຕາບອດສີ 1"
+    }
+  ],
+  "graph-color-scheme-color-blind-2": [
+    {
+      "type": 0,
+      "value": "ທາງເລືອກສຳລັບຜູ້ຕາບອດສີ 2"
+    }
+  ],
+  "graph-color-scheme-default": [
+    {
+      "type": 0,
+      "value": "ຄ່າເລີ່ມຕົ້ນ (ສີແດງ, ສີຟ້າ, ສີຂຽວ)"
+    }
+  ],
+  "graph-line-scheme": [
+    {
+      "type": 0,
+      "value": "ຮູບແບບເສັ້ນກຣາຟ"
+    }
+  ],
+  "graph-line-scheme-accessible": [
+    {
+      "type": 0,
+      "value": "ເສັ້ນທີ່ເຂົ້າເຖິງງ່າຍ (ເສັ້ນທຶບ, ເສັ້ນປະ, ຈຸດ)"
+    }
+  ],
+  "graph-line-scheme-solid": [
+    {
+      "type": 0,
+      "value": "ເສັ້ນທຶບ"
+    }
+  ],
+  "graph-line-weight": [
+    {
+      "type": 0,
+      "value": "ຄວາມໜາຂອງເສັ້ນກຣາຟ"
+    }
+  ],
+  "graph-line-weight-default": [
+    {
+      "type": 0,
+      "value": "ຄ່າເລີ່ມຕົ້ນ"
+    }
+  ],
+  "graph-line-weight-thick": [
+    {
+      "type": 0,
+      "value": "ໜາ"
+    }
+  ],
+  "graph-preview": [
+    {
+      "type": 0,
+      "value": "ເບິ່ງຕົວຢ່າງກຣາຟ"
+    }
+  ],
+  "help-label": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍເຫຼືອ"
+    }
+  ],
+  "help-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "ລາຍການແຫຼ່ງຂໍ້ມູນຊ່ວຍເຫຼືອ"
+    }
+  ],
+  "help-resources-row-title": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍເຫຼືອ"
+    }
+  ],
+  "help-support": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍເຫຼືອ ແລະ ສະໜັບສະໜູນ"
+    }
+  ],
+  "home-action": [
+    {
+      "type": 0,
+      "value": "ໜ້າຫຼັກ"
+    }
+  ],
+  "homepage": [
+    {
+      "type": 0,
+      "value": "ໜ້າຫຼັກ"
+    }
+  ],
+  "homepage-banner-heading": [
+    {
+      "type": 0,
+      "value": "ໃໝ່ກັບ "
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": " ບໍ?"
+    }
+  ],
+  "homepage-banner-subtitle": [
+    {
+      "type": 0,
+      "value": "ການຮຽນຮູ້ເຄື່ອງຈັກດ້ວຍການເຄື່ອນໄຫວ ແລະ micro:bit"
+    }
+  ],
+  "import-data-samples-action": [
+    {
+      "type": 0,
+      "value": "ນຳເຂົ້າຕົວຢ່າງຂໍ້ມູນ"
+    }
+  ],
+  "import-error-dialog-content": [
+    {
+      "type": 0,
+      "value": "ໄຟລ໌ MakeCode ແບບ .hex ຫຼື ໄຟລ໌ຕົວຢ່າງຂໍ້ມູນ (.json) ເທົ່ານັ້ນທີ່ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ສາມາດເປີດໄດ້."
+    }
+  ],
+  "import-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "ປະເພດໄຟລ໌ບໍ່ຮອງຮັບ"
+    }
+  ],
+  "import-file-action": [
+    {
+      "type": 0,
+      "value": "ນຳເຂົ້າ"
+    }
+  ],
+  "incompatible-device-body-alt": [
+    {
+      "type": 0,
+      "value": "ກັບຄືນໄປເພື່ອເລືອກ micro:bit ອື່ນ ຫຼື "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ບັນທຶກໄຟລ໌ໂປຣເຈັກ hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " ເພື່ອສາມາດດາວໂຫຼດໃສ່ micro:bit V2 ໃນພາຍຫຼັງໄດ້."
+    }
+  ],
+  "incompatible-device-body1": [
+    {
+      "type": 0,
+      "value": "ສືບຕໍ່ໄປທີ່ MakeCode ເພື່ອແກ້ໄຂໂປຣແກຣມ. ຈາກນັ້ນທ່ານສາມາດບັນທຶກໄຟລ໌ໂປຣເຈັກ hex ເພື່ອນຳໄປດາວໂຫຼດໃສ່ micro:bit V2 ໄດ້."
+    }
+  ],
+  "incompatible-device-body2": [
+    {
+      "type": 0,
+      "value": "ອີກທາງເລືອກໜຶ່ງ, "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ບັນທຶກໄຟລ໌ໂຄງການ hex"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " ໂດຍບໍ່ຕ້ອງໃຊ້ MakeCode."
+    }
+  ],
+  "incompatible-device-heading": [
+    {
+      "type": 0,
+      "value": "ອຸປະກອນບໍ່ຮອງຮັບ"
+    }
+  ],
+  "incompatible-device-subtitle": [
+    {
+      "type": 0,
+      "value": "ທ່ານກຳລັງໃຊ້ micro:bit V1, ແຕ່ໂຄງການການຮຽນຮູ້ເຄື່ອງຈັກຕ້ອງໃຊ້ຕົວປະມວນຜົນທີ່ໄວກວ່າໃນ micro:bit V2. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ຮຽນຮູ້ເພີ່ມເຕີມກ່ຽວກັບລຸ້ນ micro:bit"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    }
+  ],
+  "insufficient-data-body": [
+    {
+      "type": 0,
+      "value": "ທ່ານຕ້ອງມີຕົວຢ່າງຂໍ້ມູນຢ່າງນ້ອຍ 3 ອັນ ສຳລັບ 2 ການກະທຳ ເພື່ອຝຶກໂມເດວໄດ້."
+    }
+  ],
+  "insufficient-data-title": [
+    {
+      "type": 0,
+      "value": "ທ່ານມີຂໍ້ມູນບໍ່ພຽງພໍ"
+    }
+  ],
+  "language": [
+    {
+      "type": 0,
+      "value": "ພາສາ"
+    }
+  ],
+  "learn-about-firewall-requirements-action": [
+    {
+      "type": 0,
+      "value": "ຮຽນຮູ້ກ່ຽວກັບຄວາມຕ້ອງການຂອງ firewall"
+    }
+  ],
+  "learn-more-action": [
+    {
+      "type": 0,
+      "value": "ຮຽນຮູ້ເພີ່ມເຕີມ"
+    }
+  ],
+  "led-icon-option-angry": [
+    {
+      "type": 0,
+      "value": "ໂມໂຫ"
+    }
+  ],
+  "led-icon-option-asleep": [
+    {
+      "type": 0,
+      "value": "ນອນຫຼັບ"
+    }
+  ],
+  "led-icon-option-butterfly": [
+    {
+      "type": 0,
+      "value": "ຜີເສື້ອ"
+    }
+  ],
+  "led-icon-option-chessboard": [
+    {
+      "type": 0,
+      "value": "ກະດານໝາກເສິກ"
+    }
+  ],
+  "led-icon-option-confused": [
+    {
+      "type": 0,
+      "value": "ສັບສົນ"
+    }
+  ],
+  "led-icon-option-cow": [
+    {
+      "type": 0,
+      "value": "ງົວ"
+    }
+  ],
+  "led-icon-option-diamond": [
+    {
+      "type": 0,
+      "value": "ເພັດ"
+    }
+  ],
+  "led-icon-option-duck": [
+    {
+      "type": 0,
+      "value": "ເປັດ"
+    }
+  ],
+  "led-icon-option-eighthnote": [
+    {
+      "type": 0,
+      "value": "ໂນດຕົວທີ່ແປດ"
+    }
+  ],
+  "led-icon-option-fabulous": [
+    {
+      "type": 0,
+      "value": "ດີເລີດຫຼາຍ"
+    }
+  ],
+  "led-icon-option-ghost": [
+    {
+      "type": 0,
+      "value": "ຜີ"
+    }
+  ],
+  "led-icon-option-giraffe": [
+    {
+      "type": 0,
+      "value": "ຍີຣາຟ"
+    }
+  ],
+  "led-icon-option-happy": [
+    {
+      "type": 0,
+      "value": "ມີຄວາມສຸກ"
+    }
+  ],
+  "led-icon-option-heart": [
+    {
+      "type": 0,
+      "value": "ຫົວໃຈ"
+    }
+  ],
+  "led-icon-option-house": [
+    {
+      "type": 0,
+      "value": "ເຮືອນ"
+    }
+  ],
+  "led-icon-option-lefttriangle": [
+    {
+      "type": 0,
+      "value": "ສາມຫຼ່ຽມທາງຊ້າຍ"
+    }
+  ],
+  "led-icon-option-meh": [
+    {
+      "type": 0,
+      "value": "ບໍ່ຄ່ອຍສົນໃຈ"
+    }
+  ],
+  "led-icon-option-no": [
+    {
+      "type": 0,
+      "value": "ບໍ່ໄດ້"
+    }
+  ],
+  "led-icon-option-off": [
+    {
+      "type": 0,
+      "value": "ປິດ"
+    }
+  ],
+  "led-icon-option-pitchfork": [
+    {
+      "type": 0,
+      "value": "ໂກຍ"
+    }
+  ],
+  "led-icon-option-quarternote": [
+    {
+      "type": 0,
+      "value": "ໂນດໄຕມາດ"
+    }
+  ],
+  "led-icon-option-rabbit": [
+    {
+      "type": 0,
+      "value": "ກະຕ່າຍ"
+    }
+  ],
+  "led-icon-option-rollerskate": [
+    {
+      "type": 0,
+      "value": "ລໍ້ສະເກັດ"
+    }
+  ],
+  "led-icon-option-sad": [
+    {
+      "type": 0,
+      "value": "ເສົ້າ"
+    }
+  ],
+  "led-icon-option-scissors": [
+    {
+      "type": 0,
+      "value": "ມີດຕັດ"
+    }
+  ],
+  "led-icon-option-silly": [
+    {
+      "type": 0,
+      "value": "ຂີ້ຫຼິ້ນ"
+    }
+  ],
+  "led-icon-option-skull": [
+    {
+      "type": 0,
+      "value": "ກະໂຫຼກ"
+    }
+  ],
+  "led-icon-option-smalldiamond": [
+    {
+      "type": 0,
+      "value": "ເພັດນ້ອຍ"
+    }
+  ],
+  "led-icon-option-smallheart": [
+    {
+      "type": 0,
+      "value": "ຫົວໃຈນ້ອຍ"
+    }
+  ],
+  "led-icon-option-smallsquare": [
+    {
+      "type": 0,
+      "value": "ສີ່ຫຼ່ຽມນ້ອຍ"
+    }
+  ],
+  "led-icon-option-snake": [
+    {
+      "type": 0,
+      "value": "ງູ"
+    }
+  ],
+  "led-icon-option-square": [
+    {
+      "type": 0,
+      "value": "ສີ່ຫຼ່ຽມ"
+    }
+  ],
+  "led-icon-option-stickfigure": [
+    {
+      "type": 0,
+      "value": "ຮູບຄົນແບບຂີດ"
+    }
+  ],
+  "led-icon-option-surprised": [
+    {
+      "type": 0,
+      "value": "ຕົກໃຈ"
+    }
+  ],
+  "led-icon-option-sword": [
+    {
+      "type": 0,
+      "value": "ດາບ"
+    }
+  ],
+  "led-icon-option-target": [
+    {
+      "type": 0,
+      "value": "ເປົ້າໝາຍ"
+    }
+  ],
+  "led-icon-option-tortoise": [
+    {
+      "type": 0,
+      "value": "ເຕົ່າ"
+    }
+  ],
+  "led-icon-option-triangle": [
+    {
+      "type": 0,
+      "value": "ສາມຫຼ່ຽມ"
+    }
+  ],
+  "led-icon-option-tshirt": [
+    {
+      "type": 0,
+      "value": "ເສື້ອຍືດ"
+    }
+  ],
+  "led-icon-option-umbrella": [
+    {
+      "type": 0,
+      "value": "ຮົ່ມ"
+    }
+  ],
+  "led-icon-option-yes": [
+    {
+      "type": 0,
+      "value": "ແມ່ນແລ້ວ"
+    }
+  ],
+  "live-data-graph": [
+    {
+      "type": 0,
+      "value": "ກຣາຟຂໍ້ມູນສົດ"
+    }
+  ],
+  "live-graph": [
+    {
+      "type": 0,
+      "value": "ກຣາຟສົດ"
+    }
+  ],
+  "live-graph-tooltip": [
+    {
+      "type": 0,
+      "value": "ກຣາຟນີ້ສະແດງຂໍ້ມູນການເຄື່ອນໄຫວຈາກເຊັນເຊີແອັກເຊເລໂຣເມັດ micro:bit's ໃນເວລາຈິງ. ລອງເຄື່ອນອຸປະກອນເກັບຂໍ້ມູນ micro:bit ຂອງທ່ານເພື່ອເບິ່ງແກນ X, Y ແລະ Z ປ່ຽນແປງ. ເສັ້ນສີແຕ່ລະເສັ້ນແທນທິດທາງທີ່ແຕກຕ່າງ (ມິຕິ) ທີ່ທ່ານກຳລັງຍ້າຍອຸປະກອນ micro:bit ຢູ່."
+    }
+  ],
+  "live-graph-tooltip-aria": [
+    {
+      "type": 0,
+      "value": "ຄຳແນະນຳກຣາຟສົດ"
+    }
+  ],
+  "loading": [
+    {
+      "type": 0,
+      "value": "ກຳລັງໂຫຼດ"
+    }
+  ],
+  "location-disabled-body": [
+    {
+      "type": 0,
+      "value": "ຕ້ອງເປີດບໍລິການຕຳແໜ່ງ ເພື່ອໃຊ້ Bluetooth ໃນອຸປະກອນນີ້. ກະລຸນາເປີດບໍລິການຕຳແໜ່ງ (Location Services) ໃນ"
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Settings"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " ແລ້ວລອງອີກຄັ້ງ."
+    }
+  ],
+  "location-disabled-heading": [
+    {
+      "type": 0,
+      "value": "ຈຳເປັນຕ້ອງເປີດບໍລິການຕຳແໜ່ງ"
+    }
+  ],
+  "main-menu": [
+    {
+      "type": 0,
+      "value": "ເມນູຫຼັກ"
+    }
+  ],
+  "makecode-back-alt": [
+    {
+      "type": 0,
+      "value": "ໄອຄອນລູກສອນຊ້າຍສຳລັບກັບຄືນໃນ MakeCode"
+    }
+  ],
+  "makecode-block-alt-prefix": [
+    {
+      "type": 0,
+      "value": "ບລັອກ MakeCode:"
+    }
+  ],
+  "makecode-block-show-icon": [
+    {
+      "type": 0,
+      "value": "ສະແດງໄອຄອນ"
+    }
+  ],
+  "makecode-load-error-dialog-body": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ບໍ່ສາມາດໂຫຼດ MakeCode ໄດ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດ, ໂຫຼດໜ້າໃໝ່ ແລ້ວລອງອີກຄັ້ງ."
+    }
+  ],
+  "makecode-load-error-dialog-title": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດໂຫຼດ Microsoft MakeCode ໄດ້"
+    }
+  ],
+  "microbit-name-label": [
+    {
+      "type": 0,
+      "value": "ຊື່ micro:bit: "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "microbit-not-connected": [
+    {
+      "type": 0,
+      "value": "micro:bit ຂອງທ່ານຍັງບໍ່ໄດ້ເຊື່ອມຕໍ່"
+    }
+  ],
+  "ml.onStart|block": [
+    {
+      "type": 0,
+      "value": "ໃນ ML ເມື່ອ $event ເລີ່ມຕົ້ນ"
+    }
+  ],
+  "more-edit-in-makecode-options": [
+    {
+      "type": 0,
+      "value": "ຕົວເລືອກແກ້ໄຂເພີ່ມເຕີມໃນ MakeCode"
+    }
+  ],
+  "move-hint": [
+    {
+      "type": 0,
+      "value": "ເຄື່ອນ micro:bit ເພື່ອສຳຫຼວດວ່າການກະທຳຕ່າງໆປ່ຽນແປງກຣາຟແນວໃດ"
+    }
+  ],
+  "my-projects-row-carousel": [
+    {
+      "type": 0,
+      "value": "ລາຍຊື່ໂຄງການຂອງຂ້ອຍ"
+    }
+  ],
+  "my-projects-row-title": [
+    {
+      "type": 0,
+      "value": "ໂຄງການຂອງຂ້ອຍ"
+    }
+  ],
+  "name-action-hint": [
+    {
+      "type": 0,
+      "value": "ຕັ້ງຊື່ການກະທຳທີ່ທ່ານຕ້ອງການໃຫ້ CreateAI ຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ກະໂດດ’"
+    }
+  ],
+  "name-project": [
+    {
+      "type": 0,
+      "value": "ຕັ້ງຊື່ໂຄງການຂອງທ່ານ"
+    }
+  ],
+  "name-text": [
+    {
+      "type": 0,
+      "value": "ຊື່"
+    }
+  ],
+  "name-used-when": [
+    {
+      "type": 0,
+      "value": "ຊື່ນີ້ຈະຖືກໃຊ້ເມື່ອທ່ານບັນທຶກໄຟລ໌."
+    }
+  ],
+  "native-bluetooth-error-body": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ກັບ micro:bit ລົ້ມເຫຼວ."
+    }
+  ],
+  "native-bluetooth-error-check": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາກວດສອບວ່າ:"
+    }
+  ],
+  "native-bluetooth-error-check-distance": [
+    {
+      "type": 0,
+      "value": "micro:bit ຢູ່ໃກ້ກັບອຸປະກອນນີ້"
+    }
+  ],
+  "native-bluetooth-error-check-mode": [
+    {
+      "type": 0,
+      "value": "micro:bit ຢູ່ໃນໂໝດ Bluetooth (ສະແດງຮູບແບບການຈັບຄູ່)"
+    }
+  ],
+  "native-bluetooth-error-check-pattern": [
+    {
+      "type": 0,
+      "value": "ຮູບແບບທີ່ທ່ານໃສ່ຖືກຕ້ອງແລ້ວ"
+    }
+  ],
+  "native-bluetooth-error-forget-device": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາລຶບອຸປະກອນນີ້ອອກຈາກການຕັ້ງຄ່າ Bluetooth ຂອງທ່ານ ແລ້ວລອງອີກຄັ້ງ"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-1": [
+    {
+      "type": 0,
+      "value": "ໄປທີ່ Bluetooth ໃນແອັບ Settings"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-2": [
+    {
+      "type": 0,
+      "value": "ກົດ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ຂໍ້ມູນ"
+        }
+      ],
+      "type": 8,
+      "value": "infoIcon"
+    },
+    {
+      "type": 0,
+      "value": " ໄອຄອນຂໍ້ມູນ ທີ່ຢູ່ຂ້າງອຸປະກອນ BBC micro:bit"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-3": [
+    {
+      "type": 0,
+      "value": "ແຕະ ‘ລືມອຸປະກອນນີ້’"
+    }
+  ],
+  "native-bluetooth-error-forget-device-step-4": [
+    {
+      "type": 0,
+      "value": "ກັບຄືນໄປທີ່ແອັບນີ້ເພື່ອລອງໃໝ່ອີກຄັ້ງ"
+    }
+  ],
+  "native-bluetooth-error-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ໄດ້"
+    }
+  ],
+  "new-project-setup-title": [
+    {
+      "type": 0,
+      "value": "ການຕັ້ງຄ່າໂຄງການໃໝ່"
+    }
+  ],
+  "newpage-new-project-title": [
+    {
+      "type": 0,
+      "value": "ໂຄງການໃໝ່"
+    }
+  ],
+  "next-action": [
+    {
+      "type": 0,
+      "value": "ຕໍ່ໄປ"
+    }
+  ],
+  "no-projects": [
+    {
+      "type": 0,
+      "value": "ບໍ່ມີໂຄງການໃຫ້ສະແດງ"
+    }
+  ],
+  "not-create-ai-hex-import-dialog-content": [
+    {
+      "type": 0,
+      "value": "ໂຄງການນີ້ບໍ່ມີຕົວຢ່າງຂໍ້ມູນ, ດັ່ງນັ້ນ ໄດ້ເປີດແຕ່ໂຄດເທົ່ານັ້ນ. ທ່ານຈຳເປັນຕ້ອງຝຶກໂມເດວກ່ອນ ເພື່ອຈະໃຊ້ໂຄດນີ້ໄດ້."
+    }
+  ],
+  "not-create-ai-hex-import-dialog-title": [
+    {
+      "type": 0,
+      "value": "ໂຄງການ MakeCode ຂອງທ່ານໄດ້ຖືກນຳເຂົ້າແລ້ວ"
+    }
+  ],
+  "not-found": [
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ໜ້າຫຼັກ"
+    }
+  ],
+  "not-found-title": [
+    {
+      "type": 0,
+      "value": "ບໍ່ພົບໜ້າ"
+    }
+  ],
+  "open-file-dropped": [
+    {
+      "type": 0,
+      "value": "ເປີດໄຟລ໌ເມື່ອຖືກວາງ"
+    }
+  ],
+  "open-project-action": [
+    {
+      "type": 0,
+      "value": "ເປີດ"
+    }
+  ],
+  "open-shared-project-action": [
+    {
+      "type": 0,
+      "value": "ເປີດໂຄງການ"
+    }
+  ],
+  "open-shared-project-blocks-preview-description": [
+    {
+      "type": 0,
+      "value": "ຕົວຢ່າງການເບິ່ງໂຄດ MakeCode ທີ່ຢູ່ໃນໂຄງການນີ້."
+    }
+  ],
+  "open-shared-project-data-preview-description": [
+    {
+      "type": 0,
+      "value": "ຕົວຢ່າງການເບິ່ງການກະທຳ ແລະ ຂໍ້ມູນທີ່ຢູ່ໃນໂຄງການນີ້."
+    }
+  ],
+  "open-shared-project-description": [
+    {
+      "type": 0,
+      "value": "ນີ້ແມ່ນໂຄງການທີ່ແບ່ງປັນຈາກ Microsoft MakeCode ທີ່ສາມາດໃຊ້ກັບ CreateAI ໄດ້."
+    }
+  ],
+  "open-shared-project-error-description": [
+    {
+      "type": 0,
+      "value": "ກວດສອບວ່າລິ້ງທີ່ທ່ານກົດເຂົ້າມາຖືກຕ້ອງຫຼືບໍ່ ແລະກວດວ່າທ່ານເຊື່ອມຕໍ່ອິນເທີເນັດຢູ່ກ່ອນຈະລອງໃໝ່ອີກຄັ້ງ."
+    }
+  ],
+  "open-shared-project-title": [
+    {
+      "type": 0,
+      "value": "ເປີດໂຄງການ CreateAI ທີ່ຖືກແບ່ງປັນ"
+    }
+  ],
+  "other-tabs-body1": [
+    {
+      "type": 0,
+      "value": "ມີຂະບວນການອື່ນກຳລັງເຊື່ອມກັບອຸປະກອນນີ້ຢູ່."
+    }
+  ],
+  "other-tabs-body2": [
+    {
+      "type": 0,
+      "value": "ປິດແທັບອື່ນໆທີ່ອາດກຳລັງໃຊ້ WebUSB (ເຊັ່ນ: MakeCode, Python Editor, "
+    },
+    {
+      "type": 1,
+      "value": "appNameShort"
+    },
+    {
+      "type": 0,
+      "value": ") ຫຼື ຖອດສາຍ micro:bit ແລ້ວຕໍ່ໃໝ່ ກ່ອນລອງອີກຄັ້ງ."
+    }
+  ],
+  "other-tabs-heading": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ຜ່ານ WebUSB"
+    }
+  ],
+  "privacy": [
+    {
+      "type": 0,
+      "value": "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ"
+    }
+  ],
+  "project-ideas-row-carousel": [
+    {
+      "type": 0,
+      "value": "ລາຍການໄອເດຍໂຄງການ"
+    }
+  ],
+  "project-ideas-row-title": [
+    {
+      "type": 0,
+      "value": "ໄອເດຍໂຄງການ"
+    }
+  ],
+  "project-label": [
+    {
+      "type": 0,
+      "value": "ໂຄງການ"
+    }
+  ],
+  "project-loaded": [
+    {
+      "type": 0,
+      "value": "ໂຄງການຖືກໂຫຼດແລ້ວ"
+    }
+  ],
+  "project-menu-action": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " ເມນູການກະທຳ"
+    }
+  ],
+  "project-name-not-empty": [
+    {
+      "type": 0,
+      "value": "ຊື່ໂຄງການບໍ່ສາມາດວ່າງໄດ້"
+    }
+  ],
+  "project-name-text": [
+    {
+      "type": 0,
+      "value": "ຊື່ໂຄງການ"
+    }
+  ],
+  "project-name-tooltip": [
+    {
+      "type": 0,
+      "value": "ຄລິກເພື່ອແກ້ໄຂຊື່ໂຄງການ"
+    }
+  ],
+  "project-skip-to-toolbar": [
+    {
+      "type": 0,
+      "value": "ຂ້າມໄປທີ່ແຖບເຄື່ອງມື"
+    }
+  ],
+  "project-storage-tooltip": [
+    {
+      "type": 0,
+      "value": "ຂໍ້ມູນຂອງທ່ານຖືກບັນທຶກໄວ້ໃນບຣາວເຊີນີ້ໃນອຸປະກອນນີ້. ການລຶບຄຸກກີ້ ຫຼື ຂໍ້ມູນເວັບໄຊທ໌ຂອງບຣາວເຊີຈະເຮັດໃຫ້ຂໍ້ມູນນີ້ຖືກລຶບໄປນຳ. ມັນອາດຈະຖືກລຶບອອກອັດຕະໂນມັດໂດຍບຣາວເຊີ ຖ້າອຸປະກອນຂອງທ່ານມີພື້ນທີ່ຈັດເກັບເຫຼືອນ້ອຍລົງ.\n"
+    }
+  ],
+  "projects-page-title": [
+    {
+      "type": 0,
+      "value": "ໂຄງການທັງໝົດ"
+    }
+  ],
+  "radio-link-microbit": [
+    {
+      "type": 0,
+      "value": "ລິ້ງວິທະຍຸຂອງ micro:bit"
+    }
+  ],
+  "radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "ແຜນວາດສະແດງລິ້ງວິທະຍຸ micro:bit ທີ່ຖືກເຊື່ອມຕໍ່ກັບຄອມພິວເຕີ"
+    }
+  ],
+  "recognition-point-label": [
+    {
+      "type": 0,
+      "value": "ຈຸດການຮັບຮູ້:"
+    }
+  ],
+  "reconnect-action": [
+    {
+      "type": 0,
+      "value": "ເຊື່ອມຕໍ່ໃໝ່"
+    }
+  ],
+  "reconnect-failed-bluetooth-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່"
+    }
+  ],
+  "reconnect-failed-bluetooth1": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້ອີກຄັ້ງ."
+    }
+  ],
+  "reconnect-failed-bridge-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຊື່ອມຕໍ່ micro:bit ໄດ້ໃໝ່"
+    }
+  ],
+  "reconnect-failed-bridge1": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້ອີກຄັ້ງ."
+    }
+  ],
+  "reconnect-failed-native-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່"
+    }
+  ],
+  "reconnect-failed-radio-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຊື່ອມຕໍ່ micro:bits ໄດ້ໃໝ່"
+    }
+  ],
+  "reconnect-failed-remote-heading": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່"
+    }
+  ],
+  "reconnect-failed-remote1": [
+    {
+      "type": 0,
+      "value": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້ອີກຄັ້ງ."
+    }
+  ],
+  "reconnect-failed-subtitle": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາປະຕິບັດຕາມຄຳແນະນຳເຫຼົ່ານີ້ເພື່ອເລີ່ມຂັ້ນຕອນການເຊື່ອມຕໍ່ໃໝ່."
+    }
+  ],
+  "reconnecting": [
+    {
+      "type": 0,
+      "value": "ກຳລັງເຊື່ອມຕໍ່ຄືນ…"
+    }
+  ],
+  "record-action": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກ"
+    }
+  ],
+  "record-action-aria": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກຂໍ້ມູນສຳລັບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "record-hint": [
+    {
+      "type": 0,
+      "value": "ກົດບັນທຶກ ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນການເຄື່ອນໄຫວ."
+    }
+  ],
+  "record-hint-button-b": [
+    {
+      "type": 0,
+      "value": "ກົດບັນທຶກ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ຫຼື"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    },
+    {
+      "type": 0,
+      "value": " ປຸ່ມ B ຢູ່ micro:bit ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນການເຄື່ອນໄຫວ."
+    }
+  ],
+  "record-more-hint": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກຢ່າງນ້ອຍ "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " ຕົວຢ່າງຂໍ້ມູນເພີ່ມ"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " ຕົວຢ່າງຂໍ້ມູນເພີ່ມ"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    }
+  ],
+  "record-more-hint-label": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກຢ່າງນ້ອຍ "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " ຕົວຢ່າງຂໍ້ມູນເພີ່ມ"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " ຕົວຢ່າງຂໍ້ມູນເພີ່ມ"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " ສຳລັບ "
+    },
+    {
+      "type": 1,
+      "value": "actionName"
+    }
+  ],
+  "record-samples": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກ "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " ຕົວຢ່າງ"
+    }
+  ],
+  "record-samples-help": [
+    {
+      "type": 0,
+      "value": "ແຕ່ລະຕົວຢ່າງມີການນັບຖອຍຫຼັງຂອງຕົວເອງ"
+    }
+  ],
+  "record-seconds": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກເປັນເວລາ "
+    },
+    {
+      "type": 1,
+      "value": "numSeconds"
+    },
+    {
+      "type": 0,
+      "value": " ວິນາທີ"
+    }
+  ],
+  "record-seconds-help": [
+    {
+      "type": 0,
+      "value": "ເຄື່ອນໄຫວຢ່າງຕໍ່ເນື່ອງເພື່ອຮັບເອົາ "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " ຕົວຢ່າງ"
+    }
+  ],
+  "recording": [
+    {
+      "type": 0,
+      "value": "ກຳລັງບັນທຶກ"
+    }
+  ],
+  "recording-complete": [
+    {
+      "type": 0,
+      "value": "ສຳເລັດແລ້ວ"
+    }
+  ],
+  "recording-data-for": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກຂໍ້ມູນສຳລັບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-data-for-numbered": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກ "
+    },
+    {
+      "type": 1,
+      "value": "sample"
+    },
+    {
+      "type": 0,
+      "value": " ຈາກທັງໝົດ "
+    },
+    {
+      "type": 1,
+      "value": "numSamples"
+    },
+    {
+      "type": 0,
+      "value": " ສຳລັບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "recording-fingerprint-label": [
+    {
+      "type": 0,
+      "value": "ຮູບສະແດງແຜນທີ່ຄວາມຮ້ອນ (heatmap) ທີ່ສະແດງຄຸນສົມບັດຂໍ້ມູນມາດວັດການເລັ່ງ x, y, z ຂອງ micro:bit ສຳລັບການບັນທຶກໜຶ່ງຄັ້ງ"
+    }
+  ],
+  "recording-graph-label": [
+    {
+      "type": 0,
+      "value": "ກຣາຟທີ່ສະແດງຂໍ້ມູນມາດວັດການເລັ່ງ x, y, z ຈາກ micro:bit ສຳລັບການບັນທຶກດຽວ"
+    }
+  ],
+  "recording-options-aria": [
+    {
+      "type": 0,
+      "value": "ຕົວເລືອກການບັນທຶກເພີ່ມເຕີມສຳລັບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "reload-action": [
+    {
+      "type": 0,
+      "value": "ໂຫຼດໃໝ່"
+    }
+  ],
+  "rename-project-action": [
+    {
+      "type": 0,
+      "value": "ປ່ຽນຊື່"
+    }
+  ],
+  "rename-project-heading": [
+    {
+      "type": 0,
+      "value": "ປ່ຽນຊື່ໂຄງການ"
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-power-on-subtitle": [
+    {
+      "type": 0,
+      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+    }
+  ],
+  "reset-to-bluetooth-mode-ab-subtitle": [
+    {
+      "type": 0,
+      "value": "ກົດ A + B ແລ້ວກົດ RESET ຄ້າງໄວ້. ໃຫ້ສືບຕໍ່ກົດ A + B ຄ້າງໄວ້ຈົນກວ່າໄອຄອນ Bluetooth ຈະປາກົດ."
+    }
+  ],
+  "reset-to-bluetooth-mode-heading": [
+    {
+      "type": 0,
+      "value": "ຣີເຊັດໄປໂໝດ Bluetooth"
+    }
+  ],
+  "reset-to-bluetooth-mode-subtitle": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາກົດ RESET ສາມຄັ້ງ."
+    }
+  ],
+  "reset-to-default-action": [
+    {
+      "type": 0,
+      "value": "ຣີເຊັດໄປຫາບລັອກຄ່າເລີ່ມຕົ້ນ"
+    }
+  ],
+  "restore-defaults-action": [
+    {
+      "type": 0,
+      "value": "ກູ້ຄືນຄ່າເລີ່ມຕົ້ນສຳລັບການຕັ້ງຄ່າທັງໝົດ"
+    }
+  ],
+  "restore-defaults-confirm-action": [
+    {
+      "type": 0,
+      "value": "ກູ້ຄືນຄ່າເລີ່ມຕົ້ນ"
+    }
+  ],
+  "restore-defaults-confirm-body": [
+    {
+      "type": 0,
+      "value": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການກູ້ຄືນຄ່າເລີ່ມຕົ້ນຂອງການຕັ້ງຄ່າທັງໝົດ?"
+    }
+  ],
+  "restore-defaults-confirm-heading": [
+    {
+      "type": 0,
+      "value": "ກູ້ຄືນການຕັ້ງຄ່າເລີ່ມຕົ້ນ"
+    }
+  ],
+  "restore-defaults-helper": [
+    {
+      "type": 0,
+      "value": "ເນື້ອຫາຊ່ວຍເຫຼືອທີ່ເຄີຍຖືກປິດໄວ້ອາດຈະຖືກສະແດງອີກຄັ້ງ."
+    }
+  ],
+  "save-action": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກ"
+    }
+  ],
+  "save-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກໂຄງການເປັນໄຟລ໌ hex"
+    }
+  ],
+  "save-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "ການດາວໂຫຼດນີ້ມີການກະທຳຂອງທ່ານ, ຕົວຢ່າງຂໍ້ມູນ ແລະ ໂຄງການ MakeCode ຂອງທ່ານ. ເປີດມັນໃນ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ເພື່ອສືບຕໍ່ເຮັດວຽກ."
+    }
+  ],
+  "save-hex-dialog-message2": [
+    {
+      "type": 0,
+      "value": "ທ່ານຍັງສາມາດເປີດມັນດ້ວຍ Microsoft MakeCode ໄດ້ ຖ້າທ່ານບໍ່ຈຳເປັນຕ້ອງແກ້ໄຂການກະທຳ ແລະ ຕົວຢ່າງຂໍ້ມູນ."
+    }
+  ],
+  "save-to-files-action": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກໄປທີ່ໄຟລ໌"
+    }
+  ],
+  "saving-dataset-toast-title": [
+    {
+      "type": 0,
+      "value": "ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ"
+    }
+  ],
+  "saving-description": [
+    {
+      "type": 0,
+      "value": "ການດາວໂຫຼດຂອງທ່ານຈະພ້ອມໃຊ້ໃນໄວໆນີ້."
+    }
+  ],
+  "saving-title": [
+    {
+      "type": 0,
+      "value": "ກຳລັງບັນທຶກ…"
+    }
+  ],
+  "saving-toast-title": [
+    {
+      "type": 0,
+      "value": "ໄຟລ໌ hex ຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "ຄົ້ນຫາ"
+    }
+  ],
+  "select-icon-action-aria": [
+    {
+      "type": 0,
+      "value": "ເລືອກໄອຄອນສຳລັບການກະທຳ \""
+    },
+    {
+      "type": 1,
+      "value": "action"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "select-icon-action-untitled-aria": [
+    {
+      "type": 0,
+      "value": "ເລືອກໄອຄອນສຳລັບການກະທຳທີ່ຍັງບໍ່ມີຊື່"
+    }
+  ],
+  "select-icon-option-action-aria": [
+    {
+      "type": 0,
+      "value": "ເລືອກໄອຄອນ “"
+    },
+    {
+      "type": 1,
+      "value": "iconName"
+    },
+    {
+      "type": 0,
+      "value": "”"
+    }
+  ],
+  "select-project-action": [
+    {
+      "type": 0,
+      "value": "ເລືອກ "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "selection-actions-group": [
+    {
+      "type": 0,
+      "value": "ການເລືອກການກະທຳ"
+    }
+  ],
+  "settings": [
+    {
+      "type": 0,
+      "value": "ການຕັ້ງຄ່າ"
+    }
+  ],
+  "settings-menu-action": [
+    {
+      "type": 0,
+      "value": "ເມນູການກະທຳການຕັ້ງຄ່າ"
+    }
+  ],
+  "share-action": [
+    {
+      "type": 0,
+      "value": "ແບ່ງປັນ"
+    }
+  ],
+  "share-file-description": [
+    {
+      "type": 0,
+      "value": "ໂຄງການ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "share-hex-dialog-heading": [
+    {
+      "type": 0,
+      "value": "ແບ່ງປັນໂຄງການເປັນໄຟລ໌ hex"
+    }
+  ],
+  "share-hex-dialog-message1": [
+    {
+      "type": 0,
+      "value": "ໄຟລ໌ hex ມີການກະທຳຂອງທ່ານ, ຕົວຢ່າງຂໍ້ມູນ ແລະໂຄງການ MakeCode ຂອງທ່ານ. ເປີດມັນໃນ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ເພື່ອສືບຕໍ່ເຮັດວຽກ."
+    }
+  ],
+  "share-named-file": [
+    {
+      "type": 0,
+      "value": "ແບ່ງປັນ "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "sharing-description": [
+    {
+      "type": 0,
+      "value": "ໂຄງການຂອງທ່ານຈະພ້ອມໃຫ້ແບ່ງປັນໃນໄວໆນີ້."
+    }
+  ],
+  "sharing-title": [
+    {
+      "type": 0,
+      "value": "ກຳລັງແບ່ງປັນ…"
+    }
+  ],
+  "show-graphs-checkbox-label-text": [
+    {
+      "type": 0,
+      "value": "ສະແດງກຣາຟ"
+    }
+  ],
+  "simple-ai-exercise-timer-resource-title": [
+    {
+      "type": 0,
+      "value": "ໂມງຈັບເວລາອອກກຳລັງກາຍແບບ AI ງ່າຍດາຍ"
+    }
+  ],
+  "skip-tour-action": [
+    {
+      "type": 0,
+      "value": "ຂ້າມການນຳທ່ຽວ"
+    }
+  ],
+  "software-versions": [
+    {
+      "type": 0,
+      "value": "ເວີຊັນຂອງຊອບແວ"
+    }
+  ],
+  "sort-option-last-modified": [
+    {
+      "type": 0,
+      "value": "ແກ້ໄຂລ່າສຸດ"
+    }
+  ],
+  "sort-option-name": [
+    {
+      "type": 0,
+      "value": "ຊື່"
+    }
+  ],
+  "sort-option-relevance": [
+    {
+      "type": 0,
+      "value": "ຄວາມກ່ຽວຂ້ອງ"
+    }
+  ],
+  "sort-order-ascending-label": [
+    {
+      "type": 0,
+      "value": "ລຳດັບຈາກນ້ອຍໄປຫາໃຫຍ່"
+    }
+  ],
+  "sort-order-descending-label": [
+    {
+      "type": 0,
+      "value": "ລຳດັບຈາກໃຫຍ່ໄປຫານ້ອຍ"
+    }
+  ],
+  "sort-select-label": [
+    {
+      "type": 0,
+      "value": "ຈັດລຳດັບໂຄງການ"
+    }
+  ],
+  "start-training-action": [
+    {
+      "type": 0,
+      "value": "ເລີ່ມຝຶກອົບຮົມ"
+    }
+  ],
+  "steps-code": [
+    {
+      "type": 0,
+      "value": "ຂຽນໂຄດ"
+    }
+  ],
+  "steps-collect-data": [
+    {
+      "type": 0,
+      "value": "ເກັບຂໍ້ມູນ"
+    }
+  ],
+  "steps-improve": [
+    {
+      "type": 0,
+      "value": "ປັບປຸງ"
+    }
+  ],
+  "steps-test-model": [
+    {
+      "type": 0,
+      "value": "ທົດສອບໂມເດວ"
+    }
+  ],
+  "steps-train": [
+    {
+      "type": 0,
+      "value": "ຝຶກ"
+    }
+  ],
+  "stop-recording-action": [
+    {
+      "type": 0,
+      "value": "ຢຸດການບັນທຶກ"
+    }
+  ],
+  "storage-error-device-other": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກໂຄງການຂອງທ່ານໄປຍັງພື້ນທີ່ເກັບຂໍ້ມູນອຸປະກອນບໍ່ສຳເລັດ"
+    }
+  ],
+  "storage-error-other": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກໂຄງການຂອງທ່ານໄປຍັງພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີບໍ່ສຳເລັດ"
+    }
+  ],
+  "storage-error-quota-description": [
+    {
+      "type": 0,
+      "value": "ການແກ້ໄຂໂຄງການຂອງທ່ານອາດຈະບໍ່ຖືກບັນທຶກ."
+    }
+  ],
+  "storage-error-quota-title": [
+    {
+      "type": 0,
+      "value": "ພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີເຕັມແລ້ວ"
+    }
+  ],
+  "support-request": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາພິຈາລະນາ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ສົ່ງຄຳຮ້ອງຂໍສະໜັບສະໜູນ"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "teacher-resources-row-carousel": [
+    {
+      "type": 0,
+      "value": "ລາຍການຊັບພະຍາກອນສຳລັບຄູ"
+    }
+  ],
+  "teacher-resources-row-title": [
+    {
+      "type": 0,
+      "value": "ຊັບພະຍາກອນສຳລັບຄູ"
+    }
+  ],
+  "terms": [
+    {
+      "type": 0,
+      "value": "ເງື່ອນໄຂການໃຊ້ງານ"
+    }
+  ],
+  "testing-model-actions-region": [
+    {
+      "type": 0,
+      "value": "ແຖບເຄື່ອງມືການທົດສອບໂມເດວ"
+    }
+  ],
+  "testing-model-title": [
+    {
+      "type": 0,
+      "value": "ການທົດສອບໂມເດວ"
+    }
+  ],
+  "third-party-content-description": [
+    {
+      "type": 0,
+      "value": "ໂຄງການນີ້ຖືກສະໜອງໂດຍຜູ້ໃຊ້ ແລະ ບໍ່ໄດ້ຮັບການຮັບຮອງໂດຍ Microsoft ຫຼື Micro:bit Educational Foundation. ເຂົ້າໄປທີ່ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ໂຄງການທີ່ແບ່ງປັນຂອງ MakeCode"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " ເພື່ອລາຍງານການໃຊ້ງານທີ່ບໍ່ເໝາະສົມກັບ Microsoft MakeCode ຖ້າທ່ານຄິດວ່າມັນບໍ່ເໝາະສົມ."
+    }
+  ],
+  "timestamp-now": [
+    {
+      "type": 0,
+      "value": "ຕອນນີ້"
+    }
+  ],
+  "timestamp-seconds": [
+    {
+      "type": 0,
+      "value": "ສອງສາມວິນາທີກ່ອນ"
+    }
+  ],
+  "tour-action": [
+    {
+      "type": 0,
+      "value": "ການນຳທ່ຽວ"
+    }
+  ],
+  "tour-collect-addActions-content": [
+    {
+      "type": 0,
+      "value": "ຕັດສິນໃຈວ່າ ການກະທຳອື່ນໆຂອງທ່ານຈະເປັນຫຍັງ ແລະ ຈະຕັ້ງຊື່ມັນວ່າຫຍັງ. ທ່ານຈຳເປັນຕ້ອງມີຢ່າງນ້ອຍ 2 ການກະທຳ ແລະ 3 ຕົວຢ່າງຂໍ້ມູນ ເພື່ອຝຶກໂມເດວ. ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານຖືກເກັບໄວ້ໃນຄອມພິວເຕີຂອງທ່ານເທົ່ານັ້ນ ແລະ ບໍ່ຖືກສົ່ງໄປຫາຜູ້ອື່ນໃດໆ."
+    }
+  ],
+  "tour-collect-addActions-title": [
+    {
+      "type": 0,
+      "value": "ເພີ່ມການກະທຳເພີ່ມເຕີມ"
+    }
+  ],
+  "tour-collect-afterFirst-content": [
+    {
+      "type": 0,
+      "value": "ເພື່ອຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ ທ່ານຈຳເປັນຕ້ອງມີຢ່າງນ້ອຍ 3 ຕົວຢ່າງຂໍ້ມູນ ສຳລັບ 2 ການກະທຳທີ່ແຕກຕ່າງກັນ."
+    }
+  ],
+  "tour-collect-afterFirst-title": [
+    {
+      "type": 0,
+      "value": "ທ່ານໄດ້ບັນທຶກຕົວຢ່າງທຳອິດແລ້ວ "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "ຕົວຢ່າງ"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 0,
+              "value": "ຕົວຢ່າງ"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "recordingCount"
+    },
+    {
+      "type": 0,
+      "value": "!"
+    }
+  ],
+  "tour-collect-collectMore-explanation-content": [
+    {
+      "type": 0,
+      "value": "ການເກັບຕົວຢ່າງເພີ່ມເຕີມຈະຊ່ວຍໃຫ້ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກມີຄວາມແມ່ນຍຳດີຂຶ້ນ."
+    }
+  ],
+  "tour-collect-collectMore-hasRecordings-content": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກຕົວຢ່າງຂໍ້ມູນສຳລັບການກະທຳຂອງທ່ານ."
+    }
+  ],
+  "tour-collect-collectMore-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກຕົວຢ່າງເພີ່ມເຕີມສຳລັບການກະທຳນີ້."
+    }
+  ],
+  "tour-collect-collectMore-title": [
+    {
+      "type": 0,
+      "value": "ເກັບຕົວຢ່າງຂໍ້ມູນເພີ່ມເຕີມ"
+    }
+  ],
+  "tour-collect-trainModel-content": [
+    {
+      "type": 0,
+      "value": "ເມື່ອທ່ານເກັບຕົວຢ່າງຂໍ້ມູນພຽງພໍແລ້ວ ທ່ານສາມາດຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກໄດ້. ທ່ານສາມາດກັບມາພາຍຫຼັງເພື່ອລຶບ ຫຼື ເພີ່ມຂໍ້ມູນ ແລະ ຝຶກໃໝ່ເພື່ອໃຫ້ໂມເດວມີຄວາມເຊື່ອຖືໄດ້ຫຼາຍຂຶ້ນ."
+    }
+  ],
+  "tour-dataSamples-actions-common-content": [
+    {
+      "type": 0,
+      "value": "ການກະທຳ ແມ່ນປະເພດການເຄື່ອນໄຫວທີ່ທ່ານຕ້ອງການໃຫ້ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ຕົບມື’."
+    }
+  ],
+  "tour-dataSamples-actions-noRecordings-content": [
+    {
+      "type": 0,
+      "value": "ຕັດສິນໃຈວ່າ ການກະທຳທຳອິດຂອງທ່ານຈະເປັນຫຍັງ ຕັ້ງຊື່ມັນແລ້ວເລີ່ມບັນທຶກຕົວຢ່າງຂໍ້ມູນ."
+    }
+  ],
+  "tour-dataSamples-connected-content": [
+    {
+      "type": 0,
+      "value": "ຕອນນີ້ ທ່ານສາມາດເລີ່ມເກັບຕົວຢ່າງຂໍ້ມູນ ເພື່ອຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ (ML) ໃຫ້ຈຳແນກການເຄື່ອນໄຫວ ຫຼື ການກະທຳທີ່ແຕກຕ່າງກັນໄດ້."
+    }
+  ],
+  "tour-dataSamples-connected-title": [
+    {
+      "type": 0,
+      "value": "micro:bit ສຳລັບເກັບຂໍ້ມູນຂອງທ່ານໄດ້ເຊື່ອມຕໍ່ແລ້ວ!"
+    }
+  ],
+  "tour-dataSamples-liveGraph-content": [
+    {
+      "type": 0,
+      "value": "ເສັ້ນກຣາຟສະແດງຂໍ້ມູນການເຄື່ອນໄຫວຈາກມາດວັດການເລັ່ງຂອງ micro:bit. ຍ້າຍ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນຂອງທ່ານ ແລະ ເບິ່ງວ່າກຣາຟປ່ຽນແປງແນວໃດ."
+    }
+  ],
+  "tour-makecode-intro-content1": [
+    {
+      "type": 0,
+      "value": "ດາວໂຫຼດໂມເດວ ແລະ ໂຄດເພື່ອທົດສອບໂຄງການຂອງທ່ານໃນ micro:bit ໄດ້. ທ່ານຍັງສາມາດເພີ່ມບລັອກໂຄດເພີ່ມເຕີມ ເພື່ອສ້າງໂປຣແກຣມຂອງທ່ານເອງຈາກໂມເດວນີ້ໄດ້."
+    }
+  ],
+  "tour-makecode-intro-content2": [
+    {
+      "type": 0,
+      "value": "ຕ້ອງການປັບປຸງໂມເດວ ML ບໍ? "
+    }
+  ],
+  "tour-makecode-intro-content3": [
+    {
+      "type": 0,
+      "value": "ໃຊ້ປຸ່ມກັບຄືນຢູ່ມຸມຊ້າຍເທິງ."
+    }
+  ],
+  "tour-makecode-intro-title": [
+    {
+      "type": 0,
+      "value": "Microsoft MakeCode"
+    }
+  ],
+  "tour-trainModel-afterTrain-alreadyConnected-title": [
+    {
+      "type": 0,
+      "value": "ທ່ານໄດ້ຝຶກໂມເດວ ML ສຳເລັດແລ້ວ!"
+    }
+  ],
+  "tour-trainModel-afterTrain-content": [
+    {
+      "type": 0,
+      "value": "ຕອນນີ້ໃຫ້ທົດສອບໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານ. ລອງແຕ່ລະການກະທຳໂດຍການຍ້າຍ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນ. ໂມເດວສາມາດປະເມີນການກະທຳໄດ້ຖືກຕ້ອງບໍ?"
+    }
+  ],
+  "tour-trainModel-afterTrain-delayedUntilConnected-title": [
+    {
+      "type": 0,
+      "value": "ທົດສອບໂມເດວ ML ຂອງທ່ານ"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-content": [
+    {
+      "type": 0,
+      "value": "ແຜນວາດແທ່ງສະແດງຄວາມໝັ້ນໃຈຂອງໂມເດວວ່າທ່ານກຳລັງເຮັດແຕ່ລະການກະທຳໃດ. ເລື່ອນຕົວສະໄລ້ເພື່ອປັບຈຸດ ຫຼື ເກນຂອງການຮັບຮູ້.\n\n\n"
+    }
+  ],
+  "tour-trainModel-certaintyRecognition-title": [
+    {
+      "type": 0,
+      "value": "ຄວາມແນ່ໃຈ ແລະ ຈຸດການຮັບຮູ້"
+    }
+  ],
+  "tour-trainModel-editInMakeCode-content": [
+    {
+      "type": 0,
+      "value": "ເປີດໂຄງການຂອງທ່ານໃນ MakeCode ເພື່ອດາວໂຫຼດໂປຣແກຣມ ແລະ ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກໄປຍັງ micro:bit. ທ່ານສາມາດເພີ່ມບລັອກເພື່ອສ້າງໂປຣແກຣມຂອງທ່ານເອງໂດຍໃຊ້ໂມເດວນີ້ໄດ້."
+    }
+  ],
+  "tour-trainModel-estimatedAction-content": [
+    {
+      "type": 0,
+      "value": "ການກະທຳທີ່ໂມເດວຄາດຄະເນວ່າທ່ານກຳລັງເຮັດ ຈະຖືກສະແດງຢູ່ຂ້າງລຸ່ມໄອຄອນ micro:bit ຂອງການກະທຳນັ້ນ."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-content": [
+    {
+      "type": 0,
+      "value": "ບລັອກ MakeCode ເຫຼົ່ານີ້ຈະສະແດງໄອຄອນສຳລັບແຕ່ລະການກະທຳທີ່ຖືກຈຳແນກ ເມື່ອທ່ານໂອນໂຄດ ແລະ ໂມເດວໄປຍັງ micro:bit."
+    }
+  ],
+  "tour-trainModel-makeCodeBlocks-title": [
+    {
+      "type": 0,
+      "value": "ບລັອກ Microsoft MakeCode"
+    }
+  ],
+  "train-description": [
+    {
+      "type": 0,
+      "value": "ໂປຣແກຣມໃນຄອມພິວເຕີຈະຄົ້ນຫາຮູບແບບ ຫຼື ຄວາມແຕກຕ່າງໃນຕົວຢ່າງຂໍ້ມູນຂອງທ່ານ ແລະນຳມາໃຊ້ເພື່ອສ້າງໂມເດວທາງຄະນິດສາດ ທີ່ເຮັດໃຫ້ "
+    },
+    {
+      "type": 1,
+      "value": "appNameFull"
+    },
+    {
+      "type": 0,
+      "value": " ສາມາດຈຳແນກການກະທຳຕ່າງໆໄດ້ ເມື່ອທ່ານຍ້າຍ micro:bit ຂອງທ່ານ."
+    }
+  ],
+  "train-error-body": [
+    {
+      "type": 0,
+      "value": "ການຝຶກບໍ່ໄດ້ຜົນເປັນໂມເດວທີ່ໃຊ້ງານໄດ້. ເຫດຜົນອາດເປັນເພາະຂໍ້ມູນທີ່ໃຊ້ຝຶກ. ຖ້າຕົວຢ່າງຂໍ້ມູນຂອງແຕ່ລະການກະທຳຄ້າຍກັນເກີນໄປ ອາດເຮັດໃຫ້ມີບັນຫາໃນຂະບວນການຝຶກໄດ້."
+    }
+  ],
+  "train-error-header": [
+    {
+      "type": 0,
+      "value": "ການຝຶກໂມເດວລົ້ມເຫຼວ"
+    }
+  ],
+  "train-error-todo": [
+    {
+      "type": 0,
+      "value": "ກັບໄປທີ່ໜ້າ Add data ແລະ ປ່ຽນຂໍ້ມູນຂອງທ່ານ."
+    }
+  ],
+  "train-header": [
+    {
+      "type": 0,
+      "value": "ກຳລັງຝຶກໂມເດວ"
+    }
+  ],
+  "train-hint": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກເສັດແລ້ວບໍ? "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ຝຶກໂມເດວ"
+        }
+      ],
+      "type": 8,
+      "value": "mark"
+    }
+  ],
+  "train-hint-label": [
+    {
+      "type": 0,
+      "value": "ບັນທຶກເສັດແລ້ວບໍ? ກົດປຸ່ມ “ຝຶກໂມເດວ” ເພື່ອຝຶກໂມເດວ"
+    }
+  ],
+  "train-model": [
+    {
+      "type": 0,
+      "value": "ຝຶກໂມເດວ"
+    }
+  ],
+  "training-model": [
+    {
+      "type": 0,
+      "value": "ກຳລັງຝຶກໂມເດວ…"
+    }
+  ],
+  "transfer-hex-alt": [
+    {
+      "type": 0,
+      "value": "ອະນິເມຊັນສະແດງການລາກໄຟລ໌ hex ຈາກໂຟນເດີຕາວໂຫຼດໄປວາງໃສ່ໄດຣຟ micro:bit ຫຼື ອຸປະກອນທີ່ສະແດງຢູ່ໃນຕົວສຳຫຼວດໄຟລ໌"
+    }
+  ],
+  "transfer-hex-heading": [
+    {
+      "type": 0,
+      "value": "ໂອນໄຟລ໌ hex ທີ່ບັນທຶກໄວ້ໄປຍັງ micro:bit"
+    }
+  ],
+  "transfer-hex-manual-download": [
+    {
+      "type": 0,
+      "value": "ຖ້າໄຟລ໌ບໍ່ໄດ້ດາວໂຫຼດອັດຕະໂນມັດ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ກະລຸນາດາວໂຫຼດໄຟລ໌ທີ່ນີ້"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "transfer-hex-message": [
+    {
+      "type": 0,
+      "value": "ລາກໄຟລ໌ hex ຈາກໂຟນເດີ Downloads ໄປວາງໃສ່ໄດຣຟ MICROBIT."
+    }
+  ],
+  "troubleshooting-resource-title": [
+    {
+      "type": 0,
+      "value": "ການແກ້ໄຂບັນຫາ"
+    }
+  ],
+  "try-again-action": [
+    {
+      "type": 0,
+      "value": "ລອງໃໝ່ອີກຄັ້ງ"
+    }
+  ],
+  "ui-patterns.help-translate": [
+    {
+      "type": 0,
+      "value": "ຊ່ວຍແປ"
+    }
+  ],
+  "ui-patterns.language": [
+    {
+      "type": 0,
+      "value": "ພາສາ"
+    }
+  ],
+  "ui-patterns.language-fully-supported-heading": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບຢ່າງເຕັມທີ່"
+    }
+  ],
+  "ui-patterns.language-partially-supported-heading": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບບາງສ່ວນ"
+    }
+  ],
+  "ui-patterns.language-preview-notice": [
+    {
+      "type": 0,
+      "value": "* These languages are an early preview of in-progress translations."
+    }
+  ],
+  "ui-patterns.language-support-checked": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບ"
+    }
+  ],
+  "ui-patterns.language-support-unchecked": [
+    {
+      "type": 0,
+      "value": "ບໍ່ຮອງຮັບ"
+    }
+  ],
+  "ui-patterns.language-supported-for": [
+    {
+      "type": 0,
+      "value": "ຮອງຮັບການແປສຳລັບ:"
+    }
+  ],
+  "ui-patterns.language-toast-title": [
+    {
+      "type": 0,
+      "value": "ພາສາບໍ່ຮອງຮັບຢ່າງເຕັມທີ່"
+    }
+  ],
+  "ui.breadcrumb": [
+    {
+      "type": 0,
+      "value": "ແຖບເສັ້ນທາງນຳທາງ"
+    }
+  ],
+  "ui.close-action": [
+    {
+      "type": 0,
+      "value": "ປິດໜ້າ"
+    }
+  ],
+  "ui.combobox-listbox": [
+    {
+      "type": 0,
+      "value": "Suggestions"
+    }
+  ],
+  "ui.combobox-trigger": [
+    {
+      "type": 0,
+      "value": "Show suggestions"
+    }
+  ],
+  "ui.loading": [
+    {
+      "type": 0,
+      "value": "ກຳລັງໂຫຼດ"
+    }
+  ],
+  "ui.new-tab-notice": [
+    {
+      "type": 0,
+      "value": "opens in a new tab"
+    }
+  ],
+  "ui.numberfield-decrease": [
+    {
+      "type": 0,
+      "value": "Decrease "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.numberfield-increase": [
+    {
+      "type": 0,
+      "value": "Increase "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    }
+  ],
+  "ui.select-placeholder": [
+    {
+      "type": 0,
+      "value": "Select an item"
+    }
+  ],
+  "ui.select-row-action": [
+    {
+      "type": 0,
+      "value": "Select"
+    }
+  ],
+  "ui.toast-region": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notification"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notifications"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "ui.toast-status-error": [
+    {
+      "type": 0,
+      "value": "ຂໍ້ຜິດພາດ"
+    }
+  ],
+  "ui.toast-status-info": [
+    {
+      "type": 0,
+      "value": "Information"
+    }
+  ],
+  "ui.toast-status-success": [
+    {
+      "type": 0,
+      "value": "Success"
+    }
+  ],
+  "ui.toast-status-warning": [
+    {
+      "type": 0,
+      "value": "ຄຳເຕືອນ"
+    }
+  ],
+  "unknown": [
+    {
+      "type": 0,
+      "value": "ບໍ່ຮູ້ຈັກ"
+    }
+  ],
+  "unplug-radio-link-microbit-description": [
+    {
+      "type": 0,
+      "value": "ຖອດ micro:bit ທີ່ໃຊ້ລິ້ງວິທະຍຸອອກຈາກຄອມພິວເຕີ. ຖ້າທ່ານຕ້ອງການເກັບຂໍ້ມູນຕົວຢ່າງເພີ່ມ ຈະຕ້ອງເຊື່ອມຕໍ່ micro:bit ໃໝ່ອີກຄັ້ງ."
+    }
+  ],
+  "unplug-radio-link-microbit-label": [
+    {
+      "type": 0,
+      "value": "ອະນິເມຊັນສະແດງການຖອດສາຍ USB ອອກຈາກດ້ານເທິງຂອງ micro:bit"
+    }
+  ],
+  "unplug-radio-link-microbit-title": [
+    {
+      "type": 0,
+      "value": "ຖອດ micro:bit ທີ່ໃຊ້ລິ້ງວິທະຍຸອອກ"
+    }
+  ],
+  "unsupported-device-explain": [
+    {
+      "type": 0,
+      "value": "ຂໍໂທດ, ພວກເຮົາຮອງຮັບການໃຊ້ micro:bit V2 ເທົ່ານັ້ນໃນການເຊື່ອມຕໍ່ຜ່ານວິທະຍຸ micro:bit. ທ່ານໄດ້ເຊື່ອມຕໍ່ "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "micro:bit V1"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": " ແລ້ວ."
+    }
+  ],
+  "unsupported-device-header": [
+    {
+      "type": 0,
+      "value": "ການເຊື່ອມຕໍ່ຜ່ານ micro:bit ວິທະຍຸ ບໍ່ຮອງຮັບ micro:bit V1"
+    }
+  ],
+  "unsupported-device-with-bluetooth": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາໃຊ້ Web Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit V1 ຂອງທ່ານແທນ."
+    }
+  ],
+  "unsupported-device-without-bluetooth": [
+    {
+      "type": 0,
+      "value": "ທ່ານສາມາດເຊື່ອມຕໍ່ micro:bit V1 ໂດຍໃຊ້ Web Bluetooth ໄດ້, ແຕ່ບຣາວເຊີ ຫຼື ອຸປະກອນນີ້ບໍ່ໄດ້ເປີດ Bluetooth ໃຊ້ງານຢູ່. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "ວິທີເປີດໃຊ້ງານ Bluetooth"
+        }
+      ],
+      "type": 8,
+      "value": "link"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "user-guide": [
+    {
+      "type": 0,
+      "value": "ຄູ່ມືຜູ້ໃຊ້"
+    }
+  ],
+  "view-all-projects": [
+    {
+      "type": 0,
+      "value": "ເບິ່ງທັງໝົດ"
+    }
+  ],
+  "webusb-retry-no-select": [
+    {
+      "type": 0,
+      "value": "ທ່ານຍັງບໍ່ໄດ້ເລືອກ micro:bit. ທ່ານຕ້ອງການລອງອີກຄັ້ງບໍ?"
+    }
+  ],
+  "webusb-retry-replug1": [
+    {
+      "type": 0,
+      "value": "ເກີດຂໍ້ຜິດພາດ WebUSB."
+    }
+  ],
+  "webusb-retry-replug2": [
+    {
+      "type": 0,
+      "value": "ກະລຸນາ:"
+    }
+  ],
+  "webusb-retry-replug3": [
+    {
+      "type": 0,
+      "value": "ກວດສອບວ່າ micro:bit ນີ້ບໍ່ໄດ້ຕໍ່ກັບຊຸດແບດເຕີຣີ"
+    }
+  ],
+  "webusb-retry-replug4": [
+    {
+      "type": 0,
+      "value": "ຖອດສາຍ USB ອອກ ແລ້ວສຽບກັບເຂົ້າໃໝ່"
+    }
+  ],
+  "welcome-title": [
+    {
+      "type": 0,
+      "value": "CreateAI ເຮັດວຽກແນວໃດ"
+    }
+  ]
+}

@@ -4,47 +4,37 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ControlledModalProps,
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  ModalProps,
   Text,
   VStack,
-} from "@chakra-ui/react";
+} from "@microbit/ui";
 import { FormattedMessage } from "react-intl";
 
-const TrainingErrorDialog = ({ ...rest }: Omit<ModalProps, "children">) => {
+const TrainingErrorDialog = ({
+  ...rest
+}: Omit<ControlledModalProps, "children">) => {
   return (
-    <Modal
-      motionPreset="none"
-      size="lg"
-      isCentered
-      {...rest}
-      preserveScrollBarGap={false}
-    >
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>
-            <FormattedMessage id="train-error-header" />
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack gap={3} textAlign="left" w="100%">
-              <Text w="100%">
-                <FormattedMessage id="train-error-body" />
-              </Text>
-              <Text w="100%" fontWeight="bold">
-                <FormattedMessage id="train-error-todo" />
-              </Text>
-            </VStack>
-          </ModalBody>
-          <ModalFooter />
-        </ModalContent>
-      </ModalOverlay>
+    <Modal motionless size="lg" isCentered {...rest}>
+      <ModalHeader>
+        <FormattedMessage id="train-error-header" />
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <VStack gap={3} textAlign="left" w="100%">
+          <Text w="100%">
+            <FormattedMessage id="train-error-body" />
+          </Text>
+          <Text w="100%" fontWeight="bold">
+            <FormattedMessage id="train-error-todo" />
+          </Text>
+        </VStack>
+      </ModalBody>
+      <ModalFooter />
     </Modal>
   );
 };
