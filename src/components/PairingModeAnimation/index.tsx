@@ -24,7 +24,7 @@ interface PairingModeAnimationProps {
 }
 
 const durations = {
-  startPause: 1,
+  startPause: 0.25,
   pause: 0.1,
   // Hold the finished state so the result can be read before the loop restarts.
   endPause: 1.5,
