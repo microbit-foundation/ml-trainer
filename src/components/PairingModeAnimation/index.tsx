@@ -48,15 +48,16 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const microbitBoardFrontRef = useRef<MicrobitBoardFrontRef>(null);
   const microbitBoardBackRef = useRef<ResetPressedMicrobitBoardRef>(null);
 
-  const { restartAbortController, delayInSec, prefersReducedMotion } =
-    useAnimation();
+  const { restartAbortController, delayInSec } = useAnimation();
   const isTripleReset = pairingMethod === "triple-reset";
   const [activeBoard, setActiveBoard] = useState<ActiveBoard>("back");
 
   // Dynamic, so applied inline rather than through the css prop.
+  // The transition is kept under prefers-reduced-motion: a fade isn't motion,
+  // and without it the boards snap-flash between opacities on every cycle.
   const boardStagingStyle = (board: ActiveBoard): CSSProperties => ({
     opacity: activeBoard === board ? 1 : inactiveBoardOpacity,
-    transition: prefersReducedMotion ? undefined : boardOpacityTransition,
+    transition: boardOpacityTransition,
   });
 
   useEffect(() => {
