@@ -310,7 +310,7 @@ export const ProjectProvider = ({
       try {
         setProjectEdited();
         await doAfterEditorUpdate(() => {
-          navigate(createCodePageUrl());
+          void navigate(createCodePageUrl());
           return Promise.resolve();
         });
       } catch (e) {
@@ -399,7 +399,7 @@ export const ProjectProvider = ({
           const actions = JSON.parse(actionsString) as unknown;
           if (isDatasetUserFileFormat(actions)) {
             await loadDataset(actions, loadAction);
-            navigate(createDataSamplesPageUrl());
+            void navigate(createDataSamplesPageUrl());
           } else {
             setPostImportDialogState(PostImportDialogState.Error);
           }
@@ -540,7 +540,7 @@ export const ProjectProvider = ({
       fromEditor: true,
       focusVisible: openedViaKeyboardRef.current,
     };
-    navigate(createTestingModelPageUrl(), { state });
+    void navigate(createTestingModelPageUrl(), { state });
   }, [navigate]);
   const onSave = useCallback(
     (hex: HexData) => saveHex(SaveType.Download, hex),

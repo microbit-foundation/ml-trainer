@@ -30,10 +30,12 @@ const CodePage = () => {
   const initAsyncCalled = useRef(false);
   useEffect(() => {
     if (!projectSessionStorage.getProjectId()) {
-      return navigate(createHomePageUrl());
+      void navigate(createHomePageUrl());
+      return;
     }
     if (!model) {
-      return navigate(createDataSamplesPageUrl());
+      void navigate(createDataSamplesPageUrl());
+      return;
     }
     const initAsync = async () => {
       initAsyncCalled.current = true;
@@ -42,7 +44,7 @@ const CodePage = () => {
         setLoading(false);
         setEditorOpen(true);
       } else {
-        navigate(createTestingModelPageUrl());
+        void navigate(createTestingModelPageUrl());
       }
     };
 
@@ -59,7 +61,7 @@ const CodePage = () => {
   // MakeCode activity in another tab / window.
   useEffect(() => {
     if (!loading && !isEditorOpen) {
-      navigate(createTestingModelPageUrl());
+      void navigate(createTestingModelPageUrl());
     }
   }, [isEditorOpen, loading, navigate]);
 

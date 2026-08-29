@@ -24,7 +24,7 @@ export const useDeepLinks = (): void => {
         return;
       }
       const parsed = new URL(url);
-      navigate(`${parsed.pathname}${parsed.search}${parsed.hash}`);
+      void navigate(`${parsed.pathname}${parsed.search}${parsed.hash}`);
     };
 
     // Cold start: the link that launched the app fires appUrlOpen before the
