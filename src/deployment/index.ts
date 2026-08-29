@@ -57,6 +57,13 @@ export interface BrandConfig {
    * runtime.
    */
   ogDescription?: string;
+  /**
+   * The numeric App Store ID of this brand's iOS app (App Store Connect >
+   * General > App Information > Apple ID). Read by vite.config.ts at build
+   * time to emit the `apple-itunes-app` Smart App Banner meta tag on the web
+   * build. Omit it and no banner is offered. Not used at runtime.
+   */
+  iosAppStoreId?: string;
   AppLogo: ComponentType<LogoProps>;
   OrgLogo?: ComponentType<LogoProps>;
   welcomeVideoYouTubeId?: string;

@@ -15,7 +15,7 @@ env:
   # renovate: datasource=npm depName=npm
   NPM_VERSION: "11"
   # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
-  ML_THEME_VERSION: 0.2.0-dev.143
+  ML_THEME_VERSION: 0.4.0
 
 jobs:
   build-ios:
@@ -26,10 +26,12 @@ jobs:
     permissions:
       contents: read
       packages: read
+    env:
+      OFFICIAL_REPO: ${{ github.repository == 'microbit-foundation/ml-trainer' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: "npm"
@@ -45,7 +47,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.4.10"
           bundler-cache: true
 
       - name: Setup SSH for Match
@@ -90,14 +92,14 @@ jobs:
           BUILD_NUMBER: ${{ github.run_number }}
           MARKETING_VERSION: ${{ env.MARKETING_VERSION }}
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: ios-app-${{ github.sha }}
           path: ios/App/build/output/*.ipa
           retention-days: 30
 
       - name: Upload to TestFlight
-        if: github.event_name == 'release'
+        if: env.OFFICIAL_REPO == 'true' && github.event_name == 'release'
         run: bundle exec fastlane ios upload
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}

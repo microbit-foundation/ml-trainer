@@ -1,11 +1,11 @@
 PODS:
-  - Capacitor (8.3.4):
+  - Capacitor (8.5.0):
     - CapacitorCordova
-  - CapacitorApp (8.1.0):
+  - CapacitorApp (8.1.1):
     - Capacitor
-  - CapacitorCommunityBluetoothLe (8.1.3):
+  - CapacitorCommunityBluetoothLe (8.3.0):
     - Capacitor
-  - CapacitorCordova (8.3.4)
+  - CapacitorCordova (8.5.0)
   - CapacitorFilesystem (8.1.2):
     - Capacitor
     - IONFilesystemLib (~> 1.1.1)
@@ -17,7 +17,7 @@ PODS:
     - FirebaseAnalytics/WithoutAdIdSupport (~> 11.7.0)
   - CapacitorFirebaseAnalytics/Lite (7.5.0):
     - Capacitor
-  - CapacitorKeyboard (8.0.3):
+  - CapacitorKeyboard (8.0.5):
     - Capacitor
   - CapacitorShare (8.0.1):
     - Capacitor
@@ -88,12 +88,12 @@ PODS:
   - NordicDFU (4.16.0):
     - ZIPFoundation (= 0.9.19)
   - PromisesObjC (2.4.0)
-  - Sentry (9.8.0):
-    - Sentry/Core (= 9.8.0)
-  - Sentry/Core (9.8.0)
-  - SentryCapacitor (4.0.0):
+  - Sentry (9.16.1):
+    - Sentry/Core (= 9.16.1)
+  - Sentry/Core (9.16.1)
+  - SentryCapacitor (4.3.0):
     - Capacitor
-    - Sentry (= 9.8.0)
+    - Sentry (= 9.16.1)
   - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
@@ -150,13 +150,13 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: d13cad5fa09155679672808cc4ca9fbc2997e1b4
-  CapacitorApp: 449ffe26375e96f8aaaee625ac6e01e5c57c8650
-  CapacitorCommunityBluetoothLe: ab4b04474c7c13315cd591dee0995f1adce73c98
-  CapacitorCordova: c07921bdcfec6f691bae22274446b4d606ebf6a4
+  Capacitor: 00b87168591cc006ea6f5c0de681ec5c39a2c8eb
+  CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
+  CapacitorCommunityBluetoothLe: f9c76baa5338d206b7418c48d945d93d47800af3
+  CapacitorCordova: 9d3acbb574048e7167d2af127a0af2123e619f2f
   CapacitorFilesystem: 2db285a1ac6e475cc27cae2e1bea999000f9e2be
   CapacitorFirebaseAnalytics: 27ad621b8f41c2cd2b2169f2db6f476cdac49011
-  CapacitorKeyboard: 31c8285d92c9d1410071d52449f16d2c6673b6f4
+  CapacitorKeyboard: b6b0744890cdb1d9a96e2cafcc9253fdcc55de3b
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
   FirebaseAnalytics: bc9e565af9044ba8d6c6e4157e4edca8e5fdf7ec
   FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
@@ -170,8 +170,8 @@ SPEC CHECKSUMS:
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  Sentry: 88746bf877eff714bc45315a39ad1d1efea2cdda
-  SentryCapacitor: 1d620200b850ef6f4e7056f5e20d7860e7c04572
+  Sentry: e5d82a3c1f2d951f75c04c57215a0abb1facbd51
+  SentryCapacitor: 0561def7ada7e47d0437324e7aa3db60d52bfe40
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
 PODFILE CHECKSUM: 29d696bc2bbc03ae11a4ec8f381a42af12266d5c
