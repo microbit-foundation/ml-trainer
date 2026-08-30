@@ -1,6 +1,7 @@
 /dist/
 .idea/
 /node_modules/
+/.claude
 
 # Panda CSS generated output
 /styled-system/
