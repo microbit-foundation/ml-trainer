@@ -190,7 +190,9 @@ export const ProjectProvider = ({
     logging.log("[MakeCode] Workspace loaded");
     await editorContentLoadedPromise.promise;
     // Get latest start up state and only mark editor ready if editor has not timed out.
-    getEditorStartUp() !== "timed out" && editorReady();
+    if (getEditorStartUp() !== "timed out") {
+      editorReady();
+    }
     editorReadyPromise.resolve();
   }, [
     editorContentLoadedPromise,

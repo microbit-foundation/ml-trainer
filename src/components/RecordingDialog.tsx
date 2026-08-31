@@ -226,7 +226,9 @@ const RecordingDialog = ({
       }, config.duration);
       return () => {
         clearTimeout(countdownTimeout);
-        doneTimeout.current && clearTimeout(doneTimeout.current);
+        if (doneTimeout.current) {
+          clearTimeout(doneTimeout.current);
+        }
       };
     } else if (runningContinuously) {
       recordingStarted();

@@ -5,7 +5,7 @@ class ProjectSessionStorage {
   private useSessionStorage() {
     try {
       return window.sessionStorage;
-    } catch (e) {
+    } catch {
       // Handle possible SecurityError, absent window.
       return undefined;
     }

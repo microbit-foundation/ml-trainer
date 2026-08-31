@@ -79,7 +79,7 @@ const cleanupIdb = async (db: Database) => {
   const req = indexedDB.deleteDatabase("ml");
   await new Promise<void>((resolve, reject) => {
     req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
+    req.onerror = () => reject(req.error ?? new Error("IndexedDB error"));
   });
 };
 

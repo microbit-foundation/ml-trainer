@@ -85,9 +85,9 @@ const HowItWorksAnimation = () => {
 
     // Connected.
     await Promise.all([
-      signalRef.current?.playConnected(),
-      handHoldingMicrobitRef.current?.displayHappyLed(),
-      computerRef.current?.setDisplay("tick"),
+      signalRef.current?.playConnected() ?? Promise.resolve(),
+      handHoldingMicrobitRef.current?.displayHappyLed() ?? Promise.resolve(),
+      computerRef.current?.setDisplay("tick") ?? Promise.resolve(),
     ]);
 
     stepFlowRef.current?.setStep(1, "completed");
@@ -294,7 +294,6 @@ const HowItWorksAnimation = () => {
 
   useEffect(() => {
     const run = async () => {
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         try {
           setVisible(true);

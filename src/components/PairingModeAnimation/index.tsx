@@ -40,7 +40,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   useEffect(() => {
     const run = async () => {
       await delayInSec(durations.startPause);
-      // eslint-disable-next-line no-constant-condition
+
       while (true) {
         try {
           switch (pairingMethod) {

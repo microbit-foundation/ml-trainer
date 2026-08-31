@@ -18,7 +18,7 @@ const seedAnalyticsConsentDenied = async () => {
     new Promise<IDBDatabase>((resolve, reject) => {
       const req = indexedDB.open("ml", 1);
       req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+      req.onerror = () => reject(req.error ?? new Error("IndexedDB error"));
     });
   for (let i = 0; i < 50; i++) {
     const db = await openDb();
@@ -26,7 +26,7 @@ const seedAnalyticsConsentDenied = async () => {
       const tx = db.transaction("settings", "readonly");
       const get = tx.objectStore("settings").get("settings");
       get.onsuccess = () => resolve(get.result);
-      get.onerror = () => reject(get.error);
+      get.onerror = () => reject(get.error ?? new Error("IndexedDB error"));
     });
     if (existing && typeof existing === "object") {
       await new Promise<void>((resolve, reject) => {
@@ -36,7 +36,7 @@ const seedAnalyticsConsentDenied = async () => {
           "settings"
         );
         tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
+        tx.onerror = () => reject(tx.error ?? new Error("IndexedDB error"));
       });
       db.close();
       return;
