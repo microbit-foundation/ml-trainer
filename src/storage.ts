@@ -1129,7 +1129,7 @@ const getLegacyModelArtifacts = async (): Promise<
     } finally {
       db.close();
     }
-  } catch (err) {
+  } catch {
     return undefined;
   }
 };

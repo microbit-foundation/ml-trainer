@@ -438,7 +438,7 @@ const App = () => {
       document.head.appendChild(script);
     }
   }, []);
-  const router = useMemo(createRouter, []);
+  const router = useMemo(() => createRouter(), []);
   return (
     <Providers>
       <RouterProvider router={router} />

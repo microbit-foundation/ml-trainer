@@ -70,6 +70,8 @@ const NativeBluetoothPairingLostDialog = ({
                           // list, so iOS system blue - not a brand ramp.
                           color: "#007AFF",
                         }}
+                        // The translated chunk content is a string at runtime.
+                        // eslint-disable-next-line @typescript-eslint/no-base-to-string
                         aria-label={String(chunks)}
                       />
                     ),

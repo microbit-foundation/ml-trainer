@@ -71,7 +71,7 @@ const BluetoothPatternInput = ({
       clearHighlighted();
       const columns = updateMatrixColumns(matrixColumns, { colIdx, rowIdx });
       const matrix = transformColumnsToMatrix(columns) as boolean[];
-      onChange && onChange(microbitPatternToName(matrix));
+      onChange?.(microbitPatternToName(matrix));
     },
     [clearHighlighted, matrixColumns, onChange]
   );

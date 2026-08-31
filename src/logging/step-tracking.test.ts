@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { describe, expect, it } from "vitest";
-import { DataConnectionEvent } from "../data-connection-flow/data-connection-machine-common";
 import { DataConnectionType } from "../data-connection-flow/data-connection-types";
-import { DownloadEvent } from "../download-flow/download-machine-common";
 import { MockLogging } from "./mock";
 import { logConnectionTransition, logFlashTransition } from "./step-tracking";
 
@@ -17,7 +15,7 @@ describe("logConnectionTransition", () => {
       logging,
       "Start",
       "Start",
-      { type: "next" } as DataConnectionEvent,
+      { type: "next" },
       DataConnectionType.WebBluetooth
     );
     expect(logging.events).toEqual([]);
@@ -29,7 +27,7 @@ describe("logConnectionTransition", () => {
       logging,
       "ConnectingMicrobits",
       "Connected",
-      { type: "deviceConnected" } as DataConnectionEvent,
+      { type: "deviceConnected" },
       DataConnectionType.NativeBluetooth
     );
     expect(logging.events).toEqual([
@@ -119,7 +117,7 @@ describe("logConnectionTransition", () => {
       logging,
       "Connected",
       "ConnectionLost",
-      { type: "deviceDisconnected" } as DataConnectionEvent,
+      { type: "deviceDisconnected" },
       DataConnectionType.WebBluetooth
     );
     expect(logging.events).toEqual([
@@ -183,7 +181,7 @@ describe("logConnectionTransition", () => {
       logging,
       "Start",
       "WebUsbBluetoothUnsupported",
-      { type: "next" } as DataConnectionEvent,
+      { type: "next" },
       DataConnectionType.WebBluetooth
     );
     expect(logging.events).toEqual([]);
@@ -195,7 +193,7 @@ describe("logConnectionTransition", () => {
       logging,
       "Idle",
       "Start",
-      { type: "connect" } as DataConnectionEvent,
+      { type: "connect" },
       DataConnectionType.Radio
     );
     expect(logging.events).toEqual([
@@ -220,7 +218,7 @@ describe("logFlashTransition", () => {
       logging,
       "Help",
       "Help",
-      { type: "next" } as DownloadEvent,
+      { type: "next" },
       "browser-default"
     );
     expect(logging.events).toEqual([]);
@@ -306,7 +304,7 @@ describe("logFlashTransition", () => {
       logging,
       "Help",
       "ChooseSameOrDifferentMicrobit",
-      { type: "next" } as DownloadEvent,
+      { type: "next" },
       "browser-default"
     );
     expect(logging.events).toEqual([

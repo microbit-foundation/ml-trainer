@@ -5,7 +5,7 @@
  */
 import { SystemStyleObject, Svg } from "@microbit/ui";
 
-export interface MicrobitBoardBackRef {}
+export type MicrobitBoardBackRef = object;
 
 interface MicrobitBoardBackProps {
   /** A resolved CSS colour (not a token name). */

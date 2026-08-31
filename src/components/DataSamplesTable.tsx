@@ -141,7 +141,11 @@ const DataSamplesTable = ({
   const handleRecord = useCallback(
     (recordingOptions: RecordingOptions) => {
       setRecordingOptions(recordingOptions);
-      isConnected ? recordingDialogOnOpen() : connectToRecordDialogOnOpen();
+      if (isConnected) {
+        recordingDialogOnOpen();
+      } else {
+        connectToRecordDialogOnOpen();
+      }
     },
     [connectToRecordDialogOnOpen, isConnected, recordingDialogOnOpen]
   );

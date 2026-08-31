@@ -95,7 +95,7 @@ export const generateCustomFiles = (
         ...customFiles,
         [filenames.pxtJson]: JSON.stringify(updatedPxt),
       };
-    } catch (e) {
+    } catch {
       // If we reach this case, the project is in theory already very broken
       // as it will be missing a pxt file and the extension.
     }

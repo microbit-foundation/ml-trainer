@@ -9,7 +9,7 @@ import { forwardRef, memo, useEffect, useRef } from "react";
 import { useStore } from "../store";
 import Editor from "./Editor";
 
-interface EditCodeDialogProps {}
+type EditCodeDialogProps = object;
 
 const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
   function EditCodeDialog(_, ref) {
