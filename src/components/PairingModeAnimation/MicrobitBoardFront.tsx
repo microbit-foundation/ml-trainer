@@ -263,6 +263,7 @@ export const MicrobitBoardFront = forwardRef<
       {/* Dot grid */}
       {dotGridPositions.map(([cx, cy], i) => (
         <circle
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
           key={i}
           cx={cx}
           cy={cy}

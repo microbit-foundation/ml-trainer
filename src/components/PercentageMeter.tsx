@@ -65,6 +65,7 @@ const PercentageMeter = ({
             .fill(0)
             .map((_, i) => (
               <HStack
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
                 key={i}
                 bg={i === 0 || i === numTicks + 1 ? undefined : "white"}
                 w={0.5}

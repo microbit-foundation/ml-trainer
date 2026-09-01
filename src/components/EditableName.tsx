@@ -228,7 +228,7 @@ const EditableName = ({
                 {previewButton}
               </Tooltip>
             )}
-            {suffix && (
+            {suffix ? (
               <HStack
                 gap={0}
                 flexShrink={0}
@@ -236,7 +236,7 @@ const EditableName = ({
               >
                 {suffix}
               </HStack>
-            )}
+            ) : null}
           </>
         )}
       </HStack>

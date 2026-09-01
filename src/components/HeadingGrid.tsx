@@ -29,7 +29,11 @@ const HeadingGrid = ({ headings, className }: HeadingGridProps) => {
       className={className}
     >
       {headings.map((props, idx) => (
-        <GridColumnHeadingItem {...props} key={idx} />
+        <GridColumnHeadingItem
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- column position is identity
+          key={idx}
+          {...props}
+        />
       ))}
     </Grid>
   );

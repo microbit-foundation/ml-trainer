@@ -50,7 +50,7 @@ const BluetoothPatternInput = ({
   const pattern = microbitName
     ? microbitNameToBluetoothPattern(microbitName)
     : (Array(25).fill(false) as BluetoothPattern);
-  const [highlighted, setHighlighted] = useState<boolean[][]>(
+  const [highlighted, setHighlighted] = useState<boolean[][]>(() =>
     generateMatrix(matrixDim, false)
   );
   const matrixColumns = transformMatrixToColumns(pattern, matrixDim);
@@ -89,6 +89,7 @@ const BluetoothPatternInput = ({
           : undefined;
         return isEditable ? (
           <PatternColumn
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
             key={colIdx}
             colIdx={colIdx}
             cells={cells}
@@ -100,6 +101,7 @@ const BluetoothPatternInput = ({
             onClearHighlight={clearHighlighted}
           />
         ) : (
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
           <ReadonlyPatternColumn key={colIdx} cells={cells} letter={letter} />
         );
       })}
@@ -180,6 +182,7 @@ const PatternColumn = ({
     >
       {cells.map((isOn, rowIdx) => (
         <PatternLedOption
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
           key={rowIdx}
           value={rowIdx.toString()}
           isOn={isOn}
@@ -255,6 +258,7 @@ const PatternLedOption = ({
     }
     const listener = () => {
       if (onReactivateRef.current) {
+        // eslint-disable-next-line @eslint-react/web-api-no-leaked-timeout -- zero-delay defer, nothing to clean up
         setTimeout(() => onReactivateRef.current?.(), 0);
       }
     };
@@ -317,6 +321,7 @@ const ReadonlyPatternColumn = ({
   <VStack gap={1} aria-hidden>
     {cells.map((isOn, rowIdx) => (
       <Box
+        // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
         key={rowIdx}
         w={cellSize}
         h={cellSize}

@@ -34,7 +34,7 @@ const ModalFooterContent = ({
     gap={{ base: 4, md: 0 }}
     width="100%"
   >
-    {leftContent && <Box flexShrink={0}>{leftContent}</Box>}
+    {leftContent ? <Box flexShrink={0}>{leftContent}</Box> : null}
     <HStack
       gap={5}
       justifyContent="flex-end"

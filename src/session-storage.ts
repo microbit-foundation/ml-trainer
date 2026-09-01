@@ -2,7 +2,7 @@ class ProjectSessionStorage {
   key = "projectId";
   constructor() {}
 
-  private useSessionStorage() {
+  private getSessionStorage() {
     try {
       return window.sessionStorage;
     } catch {
@@ -12,18 +12,18 @@ class ProjectSessionStorage {
   }
 
   setProjectId(id: string) {
-    this.useSessionStorage()?.setItem(this.key, id);
+    this.getSessionStorage()?.setItem(this.key, id);
   }
 
   getProjectId(): string | null | undefined {
-    const sessionStorage = this.useSessionStorage();
+    const sessionStorage = this.getSessionStorage();
     if (sessionStorage) {
       return sessionStorage.getItem(this.key);
     }
   }
 
   clearProjectId() {
-    this.useSessionStorage()?.removeItem(this.key);
+    this.getSessionStorage()?.removeItem(this.key);
   }
 }
 

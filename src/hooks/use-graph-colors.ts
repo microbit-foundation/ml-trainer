@@ -5,6 +5,7 @@
  */
 import { GraphColorScheme } from "../settings";
 
+// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix -- consumed as a hook; renaming its call sites is a separate change
 export const useGraphColors = (graphColorScheme: GraphColorScheme) => {
   switch (graphColorScheme) {
     case "color-blind-1": {
