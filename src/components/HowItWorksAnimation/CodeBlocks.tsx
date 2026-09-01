@@ -62,7 +62,7 @@ const CodeBlock = forwardRef<CodeBlockRef, CodeBlockProps>(function CodeBlock(
         }}
         style={style}
       />
-      {duration && (
+      {duration ? (
         <InnerCodeBlock
           // The keyframe differs per breakpoint (static, extractable); the
           // duration/play-state longhands are dynamic so they're inline.
@@ -80,7 +80,7 @@ const CodeBlock = forwardRef<CodeBlockRef, CodeBlockProps>(function CodeBlock(
             animationPlayState: isPaused ? "paused" : "running",
           }}
         />
-      )}
+      ) : null}
     </Box>
   );
 });

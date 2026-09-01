@@ -344,11 +344,11 @@ const DefaultPageLayout = ({
           <Flex flexGrow={1} flexDir="column" overflow="auto">
             {children}
           </Flex>
-          {bottomContent && (
+          {bottomContent ? (
             <VStack w="full" flexShrink={0} gap={0} bg="whitesmoke">
               {bottomContent}
             </VStack>
-          )}
+          ) : null}
         </VStack>
       </ProjectDropTarget>
     </>

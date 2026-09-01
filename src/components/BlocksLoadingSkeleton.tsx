@@ -10,6 +10,7 @@ const BlocksLoadingSkeleton = () => (
   <VStack w="xs" gap={5} alignItems="stretch" aria-hidden>
     {Array.from(Array(5)).map((_, idx) => (
       <Box
+        // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
         key={idx}
         h={2}
         borderRadius="sm"

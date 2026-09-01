@@ -75,6 +75,7 @@ const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
             const start = idx * 5;
             return (
               <LedIconRow
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
                 key={idx}
                 data={iconData.substring(start, start + 5)}
               />
@@ -97,6 +98,7 @@ const LedIconRow = ({ data }: LedIconRowProps) => {
         <Box
           h="100%"
           w="100%"
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
           key={idx}
           borderRadius="sm"
           transitionTimingFunction="ease"

@@ -162,6 +162,7 @@ export const deployment: DeploymentConfig = (() => {
   return composed;
 })();
 
+// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix -- hook-shaped by design and used as one throughout
 export const useDeployment = (): DeploymentConfig => deployment;
 
 export const useCookieConsent = (): CookieConsent | undefined => {

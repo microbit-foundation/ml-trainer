@@ -206,7 +206,7 @@ const ResetPressedMicrobitBoard = forwardRef<
 
   return (
     <VStack position="relative" css={cssProp} style={style}>
-      {count && (
+      {count ? (
         <Heading
           variant="marketing"
           position="absolute"
@@ -218,7 +218,7 @@ const ResetPressedMicrobitBoard = forwardRef<
         >
           {count}
         </Heading>
-      )}
+      ) : null}
       <GlowLines
         css={{
           position: "absolute",

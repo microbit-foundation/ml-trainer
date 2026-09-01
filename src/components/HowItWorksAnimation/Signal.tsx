@@ -215,6 +215,7 @@ const Signal = forwardRef<SignalRef>(function Signal(_, ref) {
           >
             {dotOpacities.map(({ travelOpacity, settledOpacity }, i) => (
               <Box
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
                 key={i}
                 borderRadius="full"
                 bg="brand2.500"

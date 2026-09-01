@@ -37,6 +37,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         if (document.activeElement === iframe) {
           // Use setTimeout to ensure MakeCode's internal focus handling
           // has completed before we override it.
+          // eslint-disable-next-line @eslint-react/web-api-no-leaked-timeout -- zero-delay defer, nothing to clean up
           setTimeout(() => window.focus(), 0);
         }
       };
