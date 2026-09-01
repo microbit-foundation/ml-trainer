@@ -3,31 +3,33 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { useMemo } from "react";
 import { GraphColorScheme } from "../settings";
 
-// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix -- consumed as a hook; renaming its call sites is a separate change
 export const useGraphColors = (graphColorScheme: GraphColorScheme) => {
-  switch (graphColorScheme) {
-    case "color-blind-1": {
-      return {
-        x: "rgb(42, 146, 214)",
-        y: "rgb(205, 3, 101)",
-        z: "rgb(0, 0, 0)",
-      };
+  return useMemo(() => {
+    switch (graphColorScheme) {
+      case "color-blind-1": {
+        return {
+          x: "rgb(42, 146, 214)",
+          y: "rgb(205, 3, 101)",
+          z: "rgb(0, 0, 0)",
+        };
+      }
+      case "color-blind-2": {
+        return {
+          x: "rgb(42, 146, 214)",
+          y: "rgb(0, 160, 0)",
+          z: "rgb(0, 0, 0)",
+        };
+      }
+      default: {
+        return {
+          x: "rgb(255, 68, 68)",
+          y: "rgb(29, 157, 29)",
+          z: "rgb(0, 0, 191)",
+        };
+      }
     }
-    case "color-blind-2": {
-      return {
-        x: "rgb(42, 146, 214)",
-        y: "rgb(0, 160, 0)",
-        z: "rgb(0, 0, 0)",
-      };
-    }
-    default: {
-      return {
-        x: "rgb(255, 68, 68)",
-        y: "rgb(29, 157, 29)",
-        z: "rgb(0, 0, 191)",
-      };
-    }
-  }
+  }, [graphColorScheme]);
 };
