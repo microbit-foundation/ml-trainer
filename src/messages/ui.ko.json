@@ -19,14 +19,14 @@
   ],
   "about-dialog-title": [
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "오르후스대학교 컴퓨팅 사고 및 디자인 센터(Center for Computational Thinking and Design, Aarhus University)"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -129,14 +129,14 @@
       "value": "에 대한 기록을 완료하셨나요?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "다른 행동을 추가하세요"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "add-action-hint-label": [
@@ -325,6 +325,8 @@
       "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 1,
@@ -334,9 +336,7 @@
           "type": 0,
           "value": " settings"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -353,6 +353,8 @@
       "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 1,
@@ -362,9 +364,7 @@
           "type": 0,
           "value": " settings"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -821,7 +821,8 @@
       "value": ", "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numLeds",
       "options": {
         "one": {
           "value": [
@@ -846,9 +847,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numLeds"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "connect-pattern-subtitle": [
@@ -1263,7 +1263,8 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "other": {
           "value": [
@@ -1282,9 +1283,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "delete-project-confirm-heading": [
@@ -1743,14 +1743,14 @@
       "value": "이 micro:bit에 연결하기 전에 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "펌웨어를 업데이트"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1927,14 +1927,14 @@
       "value": "뒤로 돌아가 다른 micro:bit를 선택하거나,  "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "프로젝트 hex를 저장"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1953,14 +1953,14 @@
       "value": "또는 MakeCode를 사용하지 않고 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "프로젝트 hex를 저장"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1979,14 +1979,14 @@
       "value": "현재 micro:bit V1을 사용하고 있지만 기계 학습 프로젝트에는 더 빠른 프로세서가 탑재된 micro:bit V2가 필요합니다. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit 버전에 대해 자세히 알아보세요."
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "insufficient-data-body": [
@@ -2301,14 +2301,14 @@
       "value": "Location services are required for Bluetooth on this device. Please enable location services in "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Settings"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2479,14 +2479,14 @@
       "value": "Tap the "
     },
     {
+      "type": 8,
+      "value": "infoIcon",
       "children": [
         {
           "type": 0,
           "value": "information"
         }
-      ],
-      "type": 8,
-      "value": "infoIcon"
+      ]
     },
     {
       "type": 0,
@@ -2829,14 +2829,14 @@
       "value": "움직임 데이터 샘플을 수집하려면 micro:bit에서 기록 "
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "또는"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     },
     {
       "type": 0,
@@ -2849,7 +2849,8 @@
       "value": "최소 "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "other": {
           "value": [
@@ -2864,9 +2865,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -2883,7 +2883,8 @@
       "value": " 행동에 대해 최소 "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "other": {
           "value": [
@@ -2898,9 +2899,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3431,14 +3431,14 @@
   ],
   "support-request": [
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "지원 요청"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3481,14 +3481,14 @@
       "value": "이 프로젝트는 Microsoft 또는 Micro:bit Educational Foundation의 승인을 받지 않은 사용자가 제공한 것으로 부적절하다고 판단되는 경우 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "MakeCode 공유 프로젝트"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3537,7 +3537,8 @@
       "value": "첫 번째 "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "recordingCount",
       "options": {
         "other": {
           "value": [
@@ -3548,9 +3549,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "recordingCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3739,14 +3739,14 @@
       "value": "기록을 완료하셨나요?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "모델을 학습시키세요"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "train-hint-label": [
@@ -3785,14 +3785,14 @@
       "value": "파일 다운로드가 자동으로 시작되지 않으면 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "여기에서 파일을 다운로드하세요"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3941,7 +3941,8 @@
   ],
   "ui.toast-region": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -3966,9 +3967,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4029,14 +4029,14 @@
       "value": "아쉽게도 micro:bit 라디오로 연결 시 micro:bit V2만 지원합니다. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit V1"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4061,14 +4061,14 @@
       "value": "Web Bluetooth를 사용하여 micro:bit V1에 연결할 수 있지만, 이 브라우저 또는 기기의 Bluetooth가 활성화되어 있지 않습니다. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Bluetooth를 활성화하는 방법"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,

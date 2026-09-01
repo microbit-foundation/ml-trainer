@@ -176,6 +176,21 @@ export const appPreset = definePreset({
           from: { right: "-15%", top: "5%" },
           to: { right: "-17.5%", top: "5%" },
         },
+        // Left-hand approach, used when the board sits on the left of the
+        // animation and a right-hand approach would cover the other board.
+        handMoveInLeft: {
+          "0%": { left: "15%", top: "15%", opacity: 0 },
+          "10%": { opacity: 1 },
+          "100%": { left: "25%", top: "10%", opacity: 1 },
+        },
+        handPressDownLeft: {
+          from: { left: "25%", top: "10%" },
+          to: { left: "27%", top: "10%" },
+        },
+        handPressUpLeft: {
+          from: { left: "27%", top: "10%" },
+          to: { left: "25%", top: "10%" },
+        },
         textBoxFillUp: {
           "75%": { backgroundSize: "100% 0%" },
           "100%": { backgroundSize: "100% 100%" },

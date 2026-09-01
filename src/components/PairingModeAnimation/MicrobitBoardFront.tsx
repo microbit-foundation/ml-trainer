@@ -3,7 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useImperativeHandle, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { SystemStyleObject, Svg, token } from "@microbit/ui";
 import { icons } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
@@ -56,6 +61,8 @@ interface MicrobitBoardFrontProps {
   buttonStrokeColor?: string;
   /** Sizing/positioning from the call site, merged as one literal. */
   css?: SystemStyleObject;
+  /** Runtime styles from the call site, e.g. the attention-staging opacity. */
+  style?: CSSProperties;
 }
 
 export interface MicrobitBoardFrontRef {
@@ -74,7 +81,11 @@ export const MicrobitBoardFront = forwardRef<
   MicrobitBoardFrontRef,
   MicrobitBoardFrontProps
 >(function MicrobitBoard(
-  { buttonStrokeColor = "transparent", css: cssProp }: MicrobitBoardFrontProps,
+  {
+    buttonStrokeColor = "transparent",
+    css: cssProp,
+    style,
+  }: MicrobitBoardFrontProps,
   ref
 ) {
   const { delayInSec } = useAnimation();
@@ -128,7 +139,14 @@ export const MicrobitBoardFront = forwardRef<
     [delayInSec]
   );
   return (
-    <Svg viewBox="0 0 181 146" fill="none" css={cssProp}>
+    <Svg
+      viewBox="0 0 181 146"
+      fill="none"
+      // Svg's base sizing is icon-sized (1em square), so release the height to
+      // the viewBox aspect ratio before the call site's own sizing applies.
+      css={{ height: "auto", ...cssProp }}
+      style={style}
+    >
       {/* Card outline */}
       <path
         d="M166.284 2.70146L14.4969 2.40504C7.95522 2.39482 2.64013 7.68947 2.62991 14.2311L2.40504 130.928C2.39482 137.47 7.68947 142.785 14.2311 142.795H19.3929C21.4883 139.555 25.8323 138.614 29.0827 140.72C29.9311 141.262 30.6466 141.987 31.1883 142.836L51.8149 142.877C53.9103 139.626 58.2544 138.686 61.5047 140.792C62.3531 141.333 63.0686 142.059 63.6103 142.907L84.237 142.948C86.3323 139.698 90.6764 138.758 93.9268 140.863C94.7751 141.405 95.4906 142.131 96.0324 142.979L116.659 143.02C118.754 139.769 123.098 138.829 126.349 140.935C127.197 141.476 127.913 142.202 128.454 143.05L149.081 143.091C151.176 139.841 155.52 138.901 158.771 141.006C159.619 141.548 160.335 142.274 160.876 143.122H166.048C172.59 143.142 177.905 137.848 177.915 131.306L178.14 14.6093C178.15 8.06766 172.856 2.75257 166.314 2.74235"

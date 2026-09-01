@@ -23,14 +23,14 @@
       "value": "Desenvolupat en col·laboració amb el "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Centre for Computational Thinking and Design, Universitat d'Aarhus"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "accelerometer-image-alt": [
@@ -133,14 +133,14 @@
       "value": "actionName"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "Afegir una altra acció"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "add-action-hint-label": [
@@ -333,6 +333,8 @@
       "value": " fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -342,9 +344,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -361,6 +361,8 @@
       "value": " fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -370,9 +372,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -837,7 +837,8 @@
       "value": ", "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numLeds",
       "options": {
         "one": {
           "value": [
@@ -862,9 +863,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numLeds"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "connect-pattern-subtitle": [
@@ -1279,7 +1279,8 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -1306,9 +1307,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "delete-project-confirm-heading": [
@@ -1953,14 +1953,14 @@
       "value": "Torna enrere per seleccionar una micro:bit diferent, o bé "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "desa l'hexadecimal del projecte"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1979,14 +1979,14 @@
       "value": "Alternativament, "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "desa l'hexadecimal del projecte"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2005,14 +2005,14 @@
       "value": "Estàs utilitzant una micro:bit V1, però els projectes d'aprenentatge automàtic necessiten el processador més ràpid en una micro:bit V2. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Més informació sobre les versions de les micro:bit."
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "insufficient-data-body": [
@@ -2327,14 +2327,14 @@
       "value": "Calen serveis de localització per al Bluetooth en aquest dispositiu. Activa els serveis de localització a "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Configuració"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2505,14 +2505,14 @@
       "value": "Toca la icona "
     },
     {
+      "type": 8,
+      "value": "infoIcon",
       "children": [
         {
           "type": 0,
           "value": "d'informació"
         }
-      ],
-      "type": 8,
-      "value": "infoIcon"
+      ]
     },
     {
       "type": 0,
@@ -2855,14 +2855,14 @@
       "value": "Press record "
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "or"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     },
     {
       "type": 0,
@@ -2875,7 +2875,8 @@
       "value": "Record at least "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "one": {
           "value": [
@@ -2902,9 +2903,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "record-more-hint-label": [
@@ -2913,7 +2913,8 @@
       "value": "Record at least "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "one": {
           "value": [
@@ -2940,9 +2941,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3485,14 +3485,14 @@
       "value": "Si us plau, considera"
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "fer una sol·licitud d'assistència"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3535,14 +3535,14 @@
       "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "MakeCode shared project"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3591,7 +3591,8 @@
       "value": "Has gravat el teu primer "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "recordingCount",
       "options": {
         "one": {
           "value": [
@@ -3610,9 +3611,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "recordingCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3801,14 +3801,14 @@
       "value": "Finished recording?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "Train the model"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "train-hint-label": [
@@ -3847,14 +3847,14 @@
       "value": "Si el fitxer no s'ha transferit automàticament, "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "descarrega el fitxer aquí"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4003,7 +4003,8 @@
   ],
   "ui.toast-region": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -4028,9 +4029,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4091,14 +4091,14 @@
       "value": "Malauradament, només admetem l'ús de micro:bit V2 quan ens connectem mitjançant la ràdio micro:bit. Has connectat una "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit V1"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4123,14 +4123,14 @@
       "value": "Pots connectar-te a la micro:bit V1 mitjançant Web Bluetooth, però aquest navegador o dispositiu no té Bluetooth activat. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Com activar el Bluetooth"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
