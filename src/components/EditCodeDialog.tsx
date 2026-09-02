@@ -58,11 +58,11 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         visibility={isOpen ? "visible" : "hidden"}
         position={isOpen ? undefined : "absolute"}
         css={{
-          paddingTop: "env(safe-area-inset-top)",
-          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingTop: "safeAreaTop",
+          paddingBottom: "safeAreaBottom",
           paddingLeft:
-            "max(var(--window-controls-left, 0px), var(--safe-area-nav-left, 0px))",
-          paddingRight: "var(--safe-area-nav-right, 0px)",
+            "max(var(--window-controls-left, 0px), token(spacing.safeAreaNavLeft))",
+          paddingRight: "safeAreaNavRight",
         }}
       >
         <Editor ref={ref} style={{ flexGrow: 1 }} />
