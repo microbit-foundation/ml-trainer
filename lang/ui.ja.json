@@ -548,11 +548,11 @@
     "description": "Link to alternative connection method"
   },
   "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "Bluetooth モードにできませんか？",
     "description": "Link to troubleshooting entering Bluetooth mode"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "Unable to enter Bluetooth mode?",
+    "defaultMessage": "Bluetooth モードにできませんか？",
     "description": "Unable to enter Bluetooth mode dialog heading"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
@@ -560,7 +560,7 @@
     "description": "Heading for list of things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source.",
+    "defaultMessage": "micro:bitの電源を取り外して、再度、接続してください。",
     "description": "List item in things to try to enter Bluetooth mode dialog"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
@@ -1384,11 +1384,11 @@
     "description": "Heading for list of things to check in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-distance": {
-    "defaultMessage": "the micro:bit is close to this device",
+    "defaultMessage": "micro:bit を接続したい機器に近づけてください。",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-mode": {
-    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)",
+    "defaultMessage": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-check-pattern": {
@@ -1680,7 +1680,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
@@ -1796,7 +1796,7 @@
     "description": "Label for a hex file with app name context"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "Share project as a hex file",
+    "defaultMessage": "hexファイルとしてプロジェクトを共有します。",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message1": {

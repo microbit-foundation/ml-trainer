@@ -1026,13 +1026,13 @@
   "connect-unable-to-enter-bluetooth-mode": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Bluetooth モードにできませんか？"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Bluetooth モードにできませんか？"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
@@ -1044,7 +1044,7 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
     {
       "type": 0,
-      "value": "Disconnect and then reconnect the micro:bit with the power source."
+      "value": "micro:bitの電源を取り外して、再度、接続してください。"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
@@ -2450,13 +2450,13 @@
   "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "the micro:bit is close to this device"
+      "value": "micro:bit を接続したい機器に近づけてください。"
     }
   ],
   "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+      "value": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。"
     }
   ],
   "native-bluetooth-error-check-pattern": [
@@ -3058,7 +3058,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3268,7 +3268,7 @@
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as a hex file"
+      "value": "hexファイルとしてプロジェクトを共有します。"
     }
   ],
   "share-hex-dialog-message1": [

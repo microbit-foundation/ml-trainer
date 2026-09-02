@@ -236,7 +236,7 @@
     "description": "Tooltip for certainty column"
   },
   "clear": {
-    "defaultMessage": "Limpar",
+    "defaultMessage": "Limpar/Apagar",
     "description": "Aria label for the search input and project toolbar (clears selection/search text)"
   },
   "click-to-reload-page-action": {
@@ -320,7 +320,7 @@
     "description": "Connection dialog heading"
   },
   "connect-bluetooth-start-requirements1": {
-    "defaultMessage": "1 micro:bit",
+    "defaultMessage": "Um micro:bit;",
     "description": "Label for icon of single micro:bit"
   },
   "connect-bluetooth-start-requirements2-subtitle": {
@@ -1680,7 +1680,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
