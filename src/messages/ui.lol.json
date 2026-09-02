@@ -3773,6 +3773,16 @@
       "value": "crwdns370142:0crwdne370142:0"
     }
   ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
