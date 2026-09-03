@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "Quant a",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "placa micro:bit que mostra un cor a la pantalla LED",
@@ -88,11 +88,11 @@
     "description": "Accept button on the analytics consent dialog"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "Ens agradaria recollir dades anònimes sobre com useu l'app per ajudar-nos a millorar-la. No compartirem dades personals ni farem servir anuncis de tercers.",
+    "defaultMessage": "Ens agradaria recollir dades anònimes sobre com fas servir l'app per ajudar-nos a millorar-la. No compartirem dades personals ni farem servir anuncis de tercers.",
     "description": "Body of the analytics consent dialog explaining the optional analytics collection"
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "Podeu canviar això a la configuració més tard.",
+    "defaultMessage": "Pots canviar això a la configuració més tard.",
     "description": "Reassurance line on the analytics consent dialog about reversibility"
   },
   "analytics-consent-decline-action": {
@@ -408,7 +408,7 @@
     "description": "Native Bluetooth pattern dialog heading"
   },
   "connect-native-pattern-subtitle": {
-    "defaultMessage": "Si cal, canvieu el patró de més avall per coincidir.",
+    "defaultMessage": "Si cal, canvia el patró de més avall per coincidir.",
     "description": "Native Bluetooth pattern dialog subtitle"
   },
   "connect-native-start-battery-check": {
@@ -432,7 +432,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "defaultMessage": "Columna {colNum}, {numLeds, plural, one {# LED encès} other {# LEDs encèsos}}",
     "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
   },
   "connect-pattern-subtitle": {
@@ -865,7 +865,7 @@
   },
   "feedback": {
     "defaultMessage": "Comentaris",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "Suma de dades de la direcció x",
@@ -1400,7 +1400,7 @@
     "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Anar al Bluetooth a l'app de Configuració",
+    "defaultMessage": "Ves a Bluetooth en la configuració de l'app",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
@@ -1416,7 +1416,7 @@
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-heading": {
-    "defaultMessage": "No s'ha pogut connectar a micro:bit",
+    "defaultMessage": "No s'ha pogut connectar amb la micro:bit",
     "description": "Heading for native Bluetooth connection error dialog"
   },
   "new-project-setup-title": {
@@ -1464,23 +1464,23 @@
     "description": "Open project button text"
   },
   "open-shared-project-blocks-preview-description": {
-    "defaultMessage": "Preview of the MakeCode code contained within this project.",
+    "defaultMessage": "Vista prèvia del codi MakeCode contingut en aquest projecte.",
     "description": "Blocks preview description text"
   },
   "open-shared-project-data-preview-description": {
-    "defaultMessage": "Preview of the actions and data contained within this project.",
+    "defaultMessage": "Vista prèvia de les accions i dades contingudes en aquest projecte.",
     "description": "Data preview description text"
   },
   "open-shared-project-description": {
-    "defaultMessage": "This is a Microsoft MakeCode shared project compatible with CreateAI.",
+    "defaultMessage": "Aquest és un projecte compartit de Microsoft MakeCode compatible amb CreateAI.",
     "description": "Import shared CreateAI project description"
   },
   "open-shared-project-error-description": {
-    "defaultMessage": "Check the link you followed is correct, and make sure you are connected to the internet before trying again.",
+    "defaultMessage": "Comprova que l'enllaç que has seguit sigui correcte i assegura't que estàs connectat a Internet abans de tornar-ho a provar.",
     "description": "Import shared CreateAI error description"
   },
   "open-shared-project-title": {
-    "defaultMessage": "Open shared CreateAI project",
+    "defaultMessage": "Obre el projecte CreateAI compartit",
     "description": "Import shared CreateAI project title"
   },
   "other-tabs-body1": {
@@ -1500,7 +1500,7 @@
     "description": "Link to view privacy policy"
   },
   "project-ideas-row-carousel": {
-    "defaultMessage": "List of project ideas",
+    "defaultMessage": "Llista d'idees de projectes",
     "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
@@ -1528,15 +1528,15 @@
     "description": "Label for project name input"
   },
   "project-name-tooltip": {
-    "defaultMessage": "Click to edit project name",
+    "defaultMessage": "Fes clic per editar el nom del projecte",
     "description": "Tooltip for the project name editable input"
   },
   "project-skip-to-toolbar": {
-    "defaultMessage": "Skip to toolbar",
+    "defaultMessage": "Salta a la barra d'eines",
     "description": "Button to skip focus to the projects toolbar"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage.",
+    "defaultMessage": "Les teves dades es guarden en aquest navegador en aquest dispositiu. Si esborres les galetes del teu navegador o les dades del lloc, s'eliminarà. El teu navegador també pot eliminar-lo automàticament si el teu dispositiu té poc emmagatzematge.",
     "description": "Tooltip for my projects row"
   },
   "projects-page-title": {
@@ -1608,19 +1608,19 @@
     "description": "Aria label for record button"
   },
   "record-hint": {
-    "defaultMessage": "Press record to collect a movement data sample.",
+    "defaultMessage": "Prem Registre per recollir una mostra de dades de moviment.",
     "description": "Hint when you have named the first action but not recorded any data samples"
   },
   "record-hint-button-b": {
-    "defaultMessage": "Press record <mark>or</mark> button B on the micro:bit to collect a movement data sample.",
+    "defaultMessage": "Prem el botó de registre <mark>o</mark> B de la micro:bit per recollir una mostra de dades de moviment.",
     "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
   },
   "record-more-hint": {
-    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}}",
+    "defaultMessage": "Enregistra almenys {numSamples, plural, one {{numSamples} mostra de dades més} other{{numSamples} mostres de dades més}}",
     "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-more-hint-label": {
-    "defaultMessage": "Record at least {numSamples, plural, one {{numSamples} more data sample} other {{numSamples} more data samples}} for {actionName}",
+    "defaultMessage": "Enregistra almenys {numSamples, plural, one {{numSamples} més mostres de dades } other{{numSamples} més mostres de dades}} per {actionName}",
     "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
@@ -1680,19 +1680,19 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "Si no pots accedir al botó de restabliment, manté premut A+B mentre engegues la micro:bit.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
+    "defaultMessage": "Manté premut A+B i prem RESTABLECIR. Manté premut A+B fins que aparegui la icona de Bluetooth.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Reset to Bluetooth mode",
+    "defaultMessage": "Restableix la micro:bit en mode Bluetooth",
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times.",
+    "defaultMessage": "Prem el botó REINICIAR tres vegades.",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {
@@ -1736,11 +1736,11 @@
     "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
   },
   "save-to-files-action": {
-    "defaultMessage": "Save to Files",
+    "defaultMessage": "Desa al fitxer",
     "description": "Label for action that saves the project to the device file system on Android"
   },
   "saving-dataset-toast-title": {
-    "defaultMessage": "Your data samples have been downloaded",
+    "defaultMessage": "Les teves mostres de dades s'han transferit",
     "description": "Notification after a dataset has been downloaded"
   },
   "saving-description": {
@@ -1772,11 +1772,11 @@
     "description": "Aria label for icon option"
   },
   "select-project-action": {
-    "defaultMessage": "Select {name}",
+    "defaultMessage": "Selecciona {name}",
     "description": "Label for project selection checkbox"
   },
   "selection-actions-group": {
-    "defaultMessage": "Selection actions",
+    "defaultMessage": "Selecció d'accions",
     "description": "Accessible label for the group of actions available when projects are selected"
   },
   "settings": {
@@ -1792,27 +1792,27 @@
     "description": "Label for action that initiates sharing the project on mobile"
   },
   "share-file-description": {
-    "defaultMessage": "{appNameFull} project: {name}",
+    "defaultMessage": "Projecte {appNameFull}: {name}",
     "description": "Label for a hex file with app name context"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "Share project as a hex file",
+    "defaultMessage": "Comparteix el projecte com a fitxer hexadecimal",
     "description": "Heading for the dialog shown when sharing a hex file on mobile"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
+    "defaultMessage": "El fitxer hex conté les teves accions, mostres de dades i el teu projecte MakeCode. Obre'l a {appNameFull} per continuar treballant.",
     "description": "Text in the dialog shown when sharing a hex file on mobile"
   },
   "share-named-file": {
-    "defaultMessage": "Share {name}",
+    "defaultMessage": "Comparteix {name}",
     "description": "Label for sharing a named file"
   },
   "sharing-description": {
-    "defaultMessage": "Your project will be ready to share soon.",
+    "defaultMessage": "El teu projecte estarà llest per compartir aviat.",
     "description": "Sharing progress dialog text for mobile"
   },
   "sharing-title": {
-    "defaultMessage": "Sharing…",
+    "defaultMessage": "S'està compartint…",
     "description": "Sharing progress title"
   },
   "show-graphs-checkbox-label-text": {
@@ -1884,19 +1884,19 @@
     "description": "Button label to stop recording movement data while recording multiple samples"
   },
   "storage-error-device-other": {
-    "defaultMessage": "Failed to save your project to device storage",
+    "defaultMessage": "No s'ha pogut desar el projecte a l'emmagatzematge del dispositiu",
     "description": "Toast shown when a SQLite storage write fails on a native device"
   },
   "storage-error-other": {
-    "defaultMessage": "Failed to save your project to browser storage",
+    "defaultMessage": "No s'ha pogut desar el projecte a l'emmagatzematge del navegador",
     "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
   },
   "storage-error-quota-description": {
-    "defaultMessage": "Your project edit may not be saved.",
+    "defaultMessage": "És possible que l'edició del projecte no es pugui desar.",
     "description": "Toast description when browser storage quota is exceeded"
   },
   "storage-error-quota-title": {
-    "defaultMessage": "Browser storage full",
+    "defaultMessage": "La memòria del navegador és plena",
     "description": "Toast title when browser storage quota is exceeded"
   },
   "support-request": {
@@ -1904,7 +1904,7 @@
     "description": "Support request link text"
   },
   "teacher-resources-row-carousel": {
-    "defaultMessage": "List of teacher resources",
+    "defaultMessage": "Llista de recursos docents",
     "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
@@ -1924,7 +1924,7 @@
     "description": "Testing model page title"
   },
   "third-party-content-description": {
-    "defaultMessage": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the <link>MakeCode shared project</link> to report abuse to Microsoft MakeCode if you think it's not appropriate.",
+    "defaultMessage": "Aquest projecte és proporcionat per un usuari i no està avalat per Microsoft o la Micro:bit Educational Foundation. Visita el <link>Projecte compartit de MakeCode</link> per informar d'un abús a Microsoft MakeCode si creus que no és apropiat.",
     "description": "Notify user of third party content"
   },
   "timestamp-now": {
@@ -2068,11 +2068,11 @@
     "description": "Training dialog"
   },
   "train-hint": {
-    "defaultMessage": "Finished recording?<mark>Train the model</mark>",
+    "defaultMessage": "Has acabat d'enregistrar?<mark>Entrena el model</mark>",
     "description": "Hint when you have recorded enough data samples to train a model"
   },
   "train-hint-label": {
-    "defaultMessage": "Finished recording? Press ‘Train the model’ button to train the model",
+    "defaultMessage": "Has acabat de enregistrar? Prem el botó \"Entrena el model\" per entrenar el model",
     "description": "Hint when you have recorded enough data samples to train a model aria label"
   },
   "train-model": {
@@ -2144,7 +2144,7 @@
     "description": "Used for link to user guide page on microbit.org"
   },
   "view-all-projects": {
-    "defaultMessage": "View all",
+    "defaultMessage": "Veure-ho tot",
     "description": "View all projects button / card text"
   },
   "webusb-retry-no-select": {
@@ -2168,7 +2168,7 @@
     "description": "WebUSB error dialog"
   },
   "welcome-title": {
-    "defaultMessage": "How CreateAI works",
+    "defaultMessage": "Com funciona CreateAI",
     "description": "Welcome dialog"
   }
 }

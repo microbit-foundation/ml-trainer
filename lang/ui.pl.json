@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "O programie",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "tablica micro:bit pokazująca serce na wyświetlaczu LED",
@@ -432,7 +432,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "defaultMessage": "Kolumna {colNum}, {numLeds, plural, one {# LED aktywowana} other {# LED aktywowane}}",
     "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
   },
   "connect-pattern-subtitle": {
@@ -865,7 +865,7 @@
   },
   "feedback": {
     "defaultMessage": "Informacje zwrotne",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "Suma danych w kierunku x",
@@ -1680,7 +1680,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "Jeśli nie masz dostępu do przycisku resetowania, przytrzymaj przyciski A+B podczas włączania micro:bit.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {

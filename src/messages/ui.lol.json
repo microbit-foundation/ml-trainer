@@ -810,7 +810,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "crwdns370182:0colNum="
     },
     {
       "type": 1,
@@ -818,37 +818,15 @@
     },
     {
       "type": 0,
-      "value": ", "
+      "value": "crwdnd370182:0numLeds="
     },
     {
-      "type": 6,
-      "value": "numLeds",
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 7
-            },
-            {
-              "type": 0,
-              "value": " LED lit"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 7
-            },
-            {
-              "type": 0,
-              "value": " LEDs lit"
-            }
-          ]
-        }
-      },
-      "offset": 0,
-      "pluralType": "cardinal"
+      "type": 1,
+      "value": "numLeds"
+    },
+    {
+      "type": 0,
+      "value": "crwdne370182:0"
     }
   ],
   "connect-pattern-subtitle": [
@@ -3000,7 +2978,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "crwdns370184:0crwdne370184:0"
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [

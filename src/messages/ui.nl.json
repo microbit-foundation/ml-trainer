@@ -3134,7 +3134,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "Als je geen toegang hebt tot de reset knop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
