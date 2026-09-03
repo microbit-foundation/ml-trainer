@@ -31,6 +31,22 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+      # The runner image pins macOS, not Xcode: GitHub bumps an image's
+      # default Xcode over its lifetime, including across majors. Xcode 27
+      # builds against the iOS 27 SDK, which refuses to launch an app that
+      # hasn't adopted the UIScene lifecycle, so let that upgrade be a
+      # deliberate change here rather than an image refresh. The image only
+      # symlinks exact minors, so take the newest 26.x present.
+      - name: Pin Xcode 26
+        run: |
+          xcode="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -z "$xcode" ]; then
+            echo "::error::No Xcode 26.x on this runner image"
+            exit 1
+          fi
+          sudo xcode-select -s "$xcode"
+          xcodebuild -version
+
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
