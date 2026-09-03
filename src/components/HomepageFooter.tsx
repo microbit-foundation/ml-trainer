@@ -81,12 +81,20 @@ const HomepageFooter = () => {
           </Button>
         )}
         {privacyPolicyLink && (
-          <Link href={privacyPolicyLink} rel="noopener noreferrer">
+          <Link
+            variant="standalone"
+            href={privacyPolicyLink}
+            rel="noopener noreferrer"
+          >
             <FormattedMessage id="privacy" />
           </Link>
         )}
         {termsOfUseLink && (
-          <Link href={termsOfUseLink} rel="noopener noreferrer">
+          <Link
+            variant="standalone"
+            href={termsOfUseLink}
+            rel="noopener noreferrer"
+          >
             <FormattedMessage id="terms" />
           </Link>
         )}
