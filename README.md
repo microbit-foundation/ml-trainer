@@ -171,7 +171,7 @@ The editor is deployed by [GitHub actions](https://github.com/microbit-foundatio
 
 ## License
 
-Unless covered under some other license, all content in this repository is shared under an MIT license. This software is under the MIT open source license.
+This software is under the MIT open source license.
 
 [SPDX-License-Identifier: MIT](LICENSE)
 
@@ -199,8 +199,6 @@ The repository includes forks of Lancaster's micro:bit-samples repositories for
 micro:bit [V1](https://github.com/lancaster-university/microbit-samples) and
 [V2](https://github.com/lancaster-university/microbit-v2-samples). They are MIT
 licensed.
-
-Google Play is a trademark of Google LLC. Apple and the Apple Logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.
 
 ## Code of Conduct
 
