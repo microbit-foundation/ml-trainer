@@ -7,8 +7,10 @@ import { Button, HStack, Image, Link, Text, VStack } from "@microbit/ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { styled } from "styled-system/jsx";
 import { useDeployment } from "../deployment";
-import appStoreBadge from "theme-package/images/apple-app-store-badge.svg";
-import googlePlayBadge from "theme-package/images/google-play-store-badge.svg";
+// Optional images: undefined unless the branded theme package ships
+// them, in which case the whole badge section is hidden. See vite-env.d.ts.
+import appStoreBadge from "theme-package/images/optional/apple-app-store-badge.svg";
+import googlePlayBadge from "theme-package/images/optional/google-play-store-badge.svg";
 import { appStoreUrl, googlePlayUrl } from "../utils/external-links";
 import { isNativePlatform } from "../platform";
 
@@ -17,7 +19,8 @@ const fontSize = { base: "sm", sm: "md" };
 const HomepageFooter = () => {
   const intl = useIntl();
   const { privacyPolicyLink, termsOfUseLink, compliance } = useDeployment();
-  const showAppBadges = !isNativePlatform();
+  const showAppBadges =
+    !isNativePlatform() && !!appStoreBadge && !!googlePlayBadge;
   return (
     <styled.footer
       display="flex"

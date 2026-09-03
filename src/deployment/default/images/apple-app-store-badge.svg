@@ -1,9 +1,0 @@
-<!--
-  Placeholder for the App Store badge. The official badge artwork is
-  Apple-licensed so it ships in the branded theme package only; this stands in
-  for OSS builds at the same aspect ratio.
--->
-<svg xmlns="http://www.w3.org/2000/svg" width="119.66407" height="40" viewBox="0 0 119.66407 40">
-  <rect x="0.5" y="0.5" width="118.66" height="39" rx="6.5" fill="#000" stroke="#a6a6a6"/>
-  <text x="59.83" y="24.5" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle">App Store</text>
-</svg>
