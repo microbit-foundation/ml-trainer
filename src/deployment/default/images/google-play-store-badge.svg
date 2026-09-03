@@ -1,0 +1,9 @@
+<!--
+  Placeholder for the Google Play badge. The official badge artwork is
+  Google-licensed so it ships in the branded theme package only; this stands in
+  for OSS builds at the same aspect ratio.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="238.96" height="70.87" viewBox="0 0 238.96 70.87">
+  <rect x="1" y="1" width="236.96" height="68.87" rx="8.86" fill="#000" stroke="#a6a6a6" stroke-width="1.42"/>
+  <text x="119.48" y="42.5" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-size="21" text-anchor="middle">Google Play</text>
+</svg>

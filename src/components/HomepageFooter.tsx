@@ -7,8 +7,8 @@ import { Button, HStack, Image, Link, Text, VStack } from "@microbit/ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { styled } from "styled-system/jsx";
 import { useDeployment } from "../deployment";
-import appStoreBadge from "../images/apple_app_store_badge_black.svg";
-import googlePlayBadge from "../images/google_play_store_badge.svg";
+import appStoreBadge from "theme-package/images/apple-app-store-badge.svg";
+import googlePlayBadge from "theme-package/images/google-play-store-badge.svg";
 import { appStoreUrl, googlePlayUrl } from "../utils/external-links";
 import { isNativePlatform } from "../platform";
 
