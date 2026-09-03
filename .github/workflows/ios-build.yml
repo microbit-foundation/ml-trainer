@@ -31,6 +31,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+      # The runner image pins macOS, not Xcode: GitHub bumps an image's
+      # default Xcode over its lifetime, including across majors. Xcode 27
+      # builds against the iOS 27 SDK, which refuses to launch an app that
+      # hasn't adopted the UIScene lifecycle, so let that upgrade be a
+      # deliberate change here rather than an image refresh.
+      - run: sudo xcode-select -s /Applications/Xcode_26.app
+
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
