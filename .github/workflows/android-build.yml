@@ -15,7 +15,7 @@ env:
   # renovate: datasource=npm depName=npm
   NPM_VERSION: "11"
   # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
-  ML_THEME_VERSION: 0.4.0
+  ML_THEME_VERSION: 0.2.0-app.badges.171
 
 jobs:
   build-android:
