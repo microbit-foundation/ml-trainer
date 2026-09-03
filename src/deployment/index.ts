@@ -80,6 +80,11 @@ export interface BrandConfig {
   privacyPolicyLink?: string;
   activitiesBaseUrl?: string;
   translationLink?: string;
+  /**
+   * Name shown after the copyright symbol in the homepage footer. Omit it and 
+   * no copyright line is shown.
+   */
+  copyrightHolder?: string;
 }
 
 export type BrandConfigFactory = (env: Record<string, string>) => BrandConfig;

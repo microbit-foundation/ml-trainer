@@ -18,7 +18,8 @@ const fontSize = { base: "sm", sm: "md" };
 
 const HomepageFooter = () => {
   const intl = useIntl();
-  const { privacyPolicyLink, termsOfUseLink, compliance } = useDeployment();
+  const { copyrightHolder, privacyPolicyLink, termsOfUseLink, compliance } =
+    useDeployment();
   const showAppBadges =
     !isNativePlatform() && !!appStoreBadge && !!googlePlayBadge;
   return (
@@ -70,7 +71,9 @@ const HomepageFooter = () => {
         rowGap={1}
         fontSize={fontSize}
       >
-        <Text fontSize={fontSize}>© Micro:bit Educational Foundation</Text>
+        {copyrightHolder && (
+          <Text fontSize={fontSize}>© {copyrightHolder}</Text>
+        )}
         {compliance.manageCookies && (
           <Button
             variant="link"
