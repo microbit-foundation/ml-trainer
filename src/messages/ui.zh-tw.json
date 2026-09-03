@@ -301,6 +301,12 @@
       "value": "訓練"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -1819,6 +1825,12 @@
       "value": "進行"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1939,6 +1951,12 @@
     {
       "type": 0,
       "value": "結合移動與 micro:bit 的機器學習"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [

@@ -40,6 +40,48 @@ const themePackageAlias = themePackageExternal
   ? theme
   : path.resolve(__dirname, internal);
 
+// A brand-optional theme image that neither the branded package nor the OSS
+// default provides resolves to this virtual module, so the import evaluates
+// to `undefined` and the component hides the affected UI. See
+// resolveThemeImage and the "theme-package/images/optional/*" declaration in
+// src/vite-env.d.ts.
+const missingOptionalImage = "\0theme-package-missing-optional-image";
+
+const themeOptionalImagesPlugin = (): Plugin => ({
+  name: "theme-package-optional-images",
+  load(id) {
+    if (id === missingOptionalImage) {
+      return "export default undefined;";
+    }
+  },
+});
+
+/**
+ * Resolves theme-package/images/* imports per file rather than per package:
+ * the branded package wins when it ships the file, and the OSS default in
+ * src/deployment/default stands in otherwise, so the branded package only
+ * needs to carry images that differ from the defaults.
+ *
+ * Images under images/optional/ are brand-only extras with no OSS
+ * counterpart (e.g. the licensed app store badges). When absent everywhere
+ * they resolve to `undefined` via the virtual module above instead of
+ * failing the build. All other images are required: a miss resolves to the
+ * nonexistent default path so the build fails loudly, typos included.
+ */
+const resolveThemeImage = (id: string): string => {
+  if (themePackageExternal) {
+    const branded = path.resolve(__dirname, external, "dist", id);
+    if (fs.existsSync(branded)) {
+      return branded;
+    }
+  }
+  const fallback = path.resolve(__dirname, internal, id);
+  if (fs.existsSync(fallback)) {
+    return fallback;
+  }
+  return id.startsWith("images/optional/") ? missingOptionalImage : fallback;
+};
+
 // Auto-derive the runtime Firebase-config gate from the theme-package's
 // native/ directory — the source of truth for whether real Firebase
 // config is available for this build. Controls whether `createLogging`
@@ -100,7 +142,12 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
 
   return {
     base: process.env.BASE_URL ?? "/",
-    plugins: [viteEjsPlugin(strings), react(), svgr()],
+    plugins: [
+      viteEjsPlugin(strings),
+      react(),
+      svgr(),
+      themeOptionalImagesPlugin(),
+    ],
     assetsInclude: ["**/*.hex"],
     define: {
       "import.meta.env.VITE_APP_VERSION": JSON.stringify(
@@ -123,13 +170,23 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       setupFiles: ["fake-indexeddb/auto"],
     },
     resolve: {
-      alias: {
-        "theme-package": themePackageAlias,
-        // Also resolves the styled-system/* imports inside @microbit/ui's
-        // shipped source onto this app's generated output (Panda's
-        // ship-as-source library pattern).
-        "styled-system": path.resolve(__dirname, "styled-system"),
-      },
+      alias: [
+        {
+          // Theme images resolve per file so the branded package only ships
+          // images that differ from the OSS defaults. See resolveThemeImage.
+          find: /^theme-package\/(images\/.+)$/,
+          replacement: "$1",
+          customResolver: (id: string) => resolveThemeImage(id),
+        },
+        { find: "theme-package", replacement: themePackageAlias },
+        {
+          // Also resolves the styled-system/* imports inside @microbit/ui's
+          // shipped source onto this app's generated output (Panda's
+          // ship-as-source library pattern).
+          find: "styled-system",
+          replacement: path.resolve(__dirname, "styled-system"),
+        },
+      ],
       // @microbit/ui may be installed as a symlink to a sibling checkout;
       // its files then resolve bare imports through the sibling's own
       // node_modules, which would load second copies of these (breaking

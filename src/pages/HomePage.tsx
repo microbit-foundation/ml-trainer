@@ -22,6 +22,7 @@ import DefaultPageLayout, {
 } from "../components/DefaultPageLayout";
 import { createHelpCards } from "../components/HelpCards";
 import HomepageBanner from "../components/HomepageBanner";
+import HomepageFooter from "../components/HomepageFooter";
 import { createLessonCards } from "../components/LessonCards";
 import LoadProjectInput, {
   LoadProjectInputRef,
@@ -84,6 +85,7 @@ const HomePage = () => {
         carouselItems={createHelpCards(intl)}
         titleId="help-resources-row-title"
       />
+      <HomepageFooter />
     </DefaultPageLayout>
   );
 };

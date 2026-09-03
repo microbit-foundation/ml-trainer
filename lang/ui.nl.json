@@ -155,6 +155,10 @@
     "defaultMessage": "Training",
     "description": "Machine learning training on computer screen of how it works animation"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Download on the App Store",
+    "description": "Alt text for the Apple App Store badge in the homepage footer"
+  },
   "back-action": {
     "defaultMessage": "Terug",
     "description": "Back button text"
@@ -983,6 +987,10 @@
     "defaultMessage": "Gaan",
     "description": "Go action"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Get it on Google Play",
+    "description": "Alt text for the Google Play badge in the homepage footer"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Grafiek kleurschema",
     "description": "Graph colour scheme setting label"
@@ -1058,6 +1066,10 @@
   "homepage-banner-subtitle": {
     "defaultMessage": "Machine learning met beweging en de micro:bit",
     "description": "Homepage banner subtitle"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Available on Android tablets and iPads",
+    "description": "Homepage footer text advertising the mobile apps"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importeer data samples",
