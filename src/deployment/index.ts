@@ -81,7 +81,7 @@ export interface BrandConfig {
   activitiesBaseUrl?: string;
   translationLink?: string;
   /**
-   * Name shown after the copyright symbol in the homepage footer. Omit it and 
+   * Name shown after the copyright symbol in the homepage footer. Omit it and
    * no copyright line is shown.
    */
   copyrightHolder?: string;
