@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "Acerca de nosotros",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "placa micro:bit mostrando un corazón en la pantalla LED",
@@ -865,7 +865,7 @@
   },
   "feedback": {
     "defaultMessage": "Comentarios",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "Suma de los datos de la dirección x",

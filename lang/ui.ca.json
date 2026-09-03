@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "Quant a",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "placa micro:bit que mostra un cor a la pantalla LED",
@@ -432,7 +432,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "defaultMessage": "Columna {colNum}, {numLeds, plural, one {# LED encès} other {# LEDs encèsos}}",
     "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
   },
   "connect-pattern-subtitle": {
@@ -865,7 +865,7 @@
   },
   "feedback": {
     "defaultMessage": "Comentaris",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "Suma de dades de la direcció x",
@@ -1400,7 +1400,7 @@
     "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Anar a Bluetooth a la configuració de l'app",
+    "defaultMessage": "Ves a Bluetooth en la configuració de l'app",
     "description": "List item in native Bluetooth error dialog"
   },
   "native-bluetooth-error-forget-device-step-2": {
@@ -1620,7 +1620,7 @@
     "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-more-hint-label": {
-    "defaultMessage": "Enregistra almenys {numSamples, plural, one {{numSamples} mostra de dades més} other{{numSamples} mostres de dades més}} for {actionName}",
+    "defaultMessage": "Enregistra almenys {numSamples, plural, one {{numSamples} més mostres de dades } other{{numSamples} més mostres de dades}} per {actionName}",
     "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
   },
   "record-samples": {
@@ -1680,7 +1680,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "Si no pots accedir al botó de restabliment, manté premut A+B mentre engegues la micro:bit.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
@@ -1688,7 +1688,7 @@
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Restableix la micro:bit en mode \"Bluetooth",
+    "defaultMessage": "Restableix la micro:bit en mode Bluetooth",
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
@@ -1776,7 +1776,7 @@
     "description": "Label for project selection checkbox"
   },
   "selection-actions-group": {
-    "defaultMessage": "Selecciona accions",
+    "defaultMessage": "Selecció d'accions",
     "description": "Accessible label for the group of actions available when projects are selected"
   },
   "settings": {

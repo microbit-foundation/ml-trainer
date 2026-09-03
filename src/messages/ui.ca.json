@@ -826,7 +826,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "Columna "
     },
     {
       "type": 1,
@@ -847,7 +847,7 @@
             },
             {
               "type": 0,
-              "value": " LED lit"
+              "value": " LED encès"
             }
           ]
         },
@@ -858,7 +858,7 @@
             },
             {
               "type": 0,
-              "value": " LEDs lit"
+              "value": " LEDs encèsos"
             }
           ]
         }
@@ -2496,7 +2496,7 @@
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Anar a Bluetooth a la configuració de l'app"
+      "value": "Ves a Bluetooth en la configuració de l'app"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
@@ -2924,7 +2924,7 @@
             },
             {
               "type": 0,
-              "value": " mostra de dades més"
+              "value": " més mostres de dades "
             }
           ]
         },
@@ -2936,7 +2936,7 @@
             },
             {
               "type": 0,
-              "value": " mostres de dades més"
+              "value": " més mostres de dades"
             }
           ]
         }
@@ -2946,7 +2946,7 @@
     },
     {
       "type": 0,
-      "value": " for "
+      "value": " per "
     },
     {
       "type": 1,
@@ -3104,7 +3104,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
+      "value": "Si no pots accedir al botó de restabliment, manté premut A+B mentre engegues la micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3116,7 +3116,7 @@
   "reset-to-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Restableix la micro:bit en mode \"Bluetooth"
+      "value": "Restableix la micro:bit en mode Bluetooth"
     }
   ],
   "reset-to-bluetooth-mode-subtitle": [
@@ -3276,7 +3276,7 @@
   "selection-actions-group": [
     {
       "type": 0,
-      "value": "Selecciona accions"
+      "value": "Selecció d'accions"
     }
   ],
   "settings": [

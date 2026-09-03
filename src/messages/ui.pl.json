@@ -830,7 +830,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "Kolumna "
     },
     {
       "type": 1,
@@ -851,7 +851,7 @@
             },
             {
               "type": 0,
-              "value": " LED lit"
+              "value": " LED aktywowana"
             }
           ]
         },
@@ -862,7 +862,7 @@
             },
             {
               "type": 0,
-              "value": " LEDs lit"
+              "value": " LED aktywowane"
             }
           ]
         }
@@ -3134,7 +3134,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
+      "value": "Jeśli nie masz dostępu do przycisku resetowania, przytrzymaj przyciski A+B podczas włączania micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [

@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "crwdns362650:0crwdne362650:0",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "crwdns362652:0crwdne362652:0",
@@ -432,7 +432,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "defaultMessage": "crwdns370182:0colNum={colNum}crwdnd370182:0numLeds={numLeds}crwdne370182:0",
     "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
   },
   "connect-pattern-subtitle": {
@@ -865,7 +865,7 @@
   },
   "feedback": {
     "defaultMessage": "crwdns362944:0crwdne362944:0",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "crwdns362946:0crwdne362946:0",
@@ -1680,7 +1680,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "crwdns370184:0crwdne370184:0",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
