@@ -67,7 +67,13 @@ const HomepageFooter = () => {
         rowGap={1}
         fontSize={fontSize}
       >
-        <Text fontSize={fontSize}>© Micro:bit Educational Foundation</Text>
+        <Text
+          fontSize={fontSize}
+          flexBasis={{ base: "100%", sm: "auto" }}
+          textAlign="center"
+        >
+          © Micro:bit Educational Foundation
+        </Text>
         {compliance.manageCookies && (
           <Button
             variant="link"
