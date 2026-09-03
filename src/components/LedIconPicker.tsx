@@ -112,6 +112,7 @@ const LedIconPicker = ({
             <Grid gridTemplateColumns="repeat(4, 1fr)" gap={4}>
               {Object.keys(makecodeIcons).map((icon, idx) => (
                 <IconButton
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
                   key={idx}
                   aria-label={intl.formatMessage(
                     { id: "select-icon-option-action-aria" },

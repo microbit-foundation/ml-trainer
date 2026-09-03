@@ -56,7 +56,7 @@ const ProjectCard = ({
 
   const handleLoadProject = useCallback(async () => {
     await loadProjectAndModelFromStorage(id);
-    navigate(createDataSamplesPageUrl());
+    void navigate(createDataSamplesPageUrl());
   }, [id, navigate]);
 
   return (

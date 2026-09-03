@@ -14,8 +14,7 @@ import {
   RiUpload2Line,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router";
 import CarouselRow from "../components/Carousel/CarouselRow";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import DefaultPageLayout, {
@@ -110,7 +109,7 @@ const ProjectRow = () => {
           detail: { surface: "home" },
         });
         await loadProjectAndModelFromStorage(id);
-        navigate(createDataSamplesPageUrl());
+        void navigate(createDataSamplesPageUrl());
       }
     },
     [logging, navigate]
@@ -323,7 +322,7 @@ const NewProjectCard = () => {
         detail: { surface: "home" },
       });
       await newSession(projectName);
-      navigate(createDataSamplesPageUrl());
+      void navigate(createDataSamplesPageUrl());
     },
     [logging, newSession, navigate]
   );
@@ -389,7 +388,7 @@ const ImportProjectButton = () => {
 const ViewAllProjectsCard = () => {
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
-    navigate(createProjectsPageUrl());
+    void navigate(createProjectsPageUrl());
   }, [navigate]);
   return (
     <ActionCard

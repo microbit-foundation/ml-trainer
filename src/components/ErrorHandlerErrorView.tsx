@@ -31,7 +31,6 @@ const ErrorHandlerErrorView = ({ error }: ErrorHandlerErrorViewProps) => {
               link: (chunks: ReactNode) => (
                 <Link
                   color="brand.600"
-                  textDecoration="underline"
                   href="https://support.microbit.org"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -64,7 +63,8 @@ const StorageVersionErrorView = () => {
               new Promise<void>((resolve, reject) => {
                 const req = indexedDB.deleteDatabase(db.name!);
                 req.onsuccess = () => resolve();
-                req.onerror = () => reject(req.error);
+                req.onerror = () =>
+                  reject(req.error ?? new Error("IndexedDB error"));
               })
           )
       );

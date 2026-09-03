@@ -19,14 +19,14 @@
   ],
   "about-dialog-title": [
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "オーフス大学 Center for Computational Thinking and Design"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -129,14 +129,14 @@
       "value": "の記録が完了しましたか？"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "別のアクションを追加"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "add-action-hint-label": [
@@ -331,6 +331,8 @@
       "value": " uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 1,
@@ -340,9 +342,7 @@
           "type": 0,
           "value": " settings"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -359,6 +359,8 @@
       "value": " uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 1,
@@ -368,9 +370,7 @@
           "type": 0,
           "value": " settings"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -831,7 +831,8 @@
       "value": ", "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numLeds",
       "options": {
         "one": {
           "value": [
@@ -856,9 +857,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numLeds"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "connect-pattern-subtitle": [
@@ -1032,13 +1032,13 @@
   "connect-unable-to-enter-bluetooth-mode": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Bluetooth モードにできませんか？"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Unable to enter Bluetooth mode?"
+      "value": "Bluetooth モードにできませんか？"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": [
@@ -1050,7 +1050,7 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": [
     {
       "type": 0,
-      "value": "Disconnect and then reconnect the micro:bit with the power source."
+      "value": "micro:bitの電源を取り外して、再度、接続してください。"
     }
   ],
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": [
@@ -1273,7 +1273,8 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "other": {
           "value": [
@@ -1288,9 +1289,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "delete-project-confirm-heading": [
@@ -1753,14 +1753,14 @@
       "value": "このmicro:bitに接続するには、"
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "ファームウェアを更新する"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1949,14 +1949,14 @@
       "value": "戻って別のmicro:bitを選ぶか、"
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "プロジェクトのhexを保存して"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1975,14 +1975,14 @@
       "value": "別の方法として、 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "MakeCode を使用せずにプロジェクトの hex"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2001,14 +2001,14 @@
       "value": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bitのバージョンについてもっと調べる。"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "insufficient-data-body": [
@@ -2323,14 +2323,14 @@
       "value": "Location services are required for Bluetooth on this device. Please enable location services in "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Settings"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2468,13 +2468,13 @@
   "native-bluetooth-error-check-distance": [
     {
       "type": 0,
-      "value": "the micro:bit is close to this device"
+      "value": "micro:bit を接続したい機器に近づけてください。"
     }
   ],
   "native-bluetooth-error-check-mode": [
     {
       "type": 0,
-      "value": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
+      "value": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。"
     }
   ],
   "native-bluetooth-error-check-pattern": [
@@ -2501,14 +2501,14 @@
       "value": "Tap the "
     },
     {
+      "type": 8,
+      "value": "infoIcon",
       "children": [
         {
           "type": 0,
           "value": "information"
         }
-      ],
-      "type": 8,
-      "value": "infoIcon"
+      ]
     },
     {
       "type": 0,
@@ -2851,14 +2851,14 @@
       "value": "動作データサンプルを収集するには、micro:bitの記録"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "または"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     },
     {
       "type": 0,
@@ -2871,7 +2871,8 @@
       "value": "少なくとも"
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "other": {
           "value": [
@@ -2890,9 +2891,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -2909,7 +2909,8 @@
       "value": "に少なくとも"
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "other": {
           "value": [
@@ -2928,9 +2929,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3076,13 +3076,13 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears."
+      "value": "Hold A+B and press reset. Keep holding A+B until the Bluetooth icon appears."
     }
   ],
   "reset-to-bluetooth-mode-heading": [
@@ -3094,7 +3094,7 @@
   "reset-to-bluetooth-mode-subtitle": [
     {
       "type": 0,
-      "value": "Press RESET three times."
+      "value": "Press reset 3 times quickly."
     }
   ],
   "reset-to-default-action": [
@@ -3286,7 +3286,7 @@
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as a hex file"
+      "value": "hexファイルとしてプロジェクトを共有します。"
     }
   ],
   "share-hex-dialog-message1": [
@@ -3453,14 +3453,14 @@
   ],
   "support-request": [
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "サポートリクエストの提出"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3503,14 +3503,14 @@
       "value": "このプロジェクトはユーザーによって提供されたものであり、 Microsoft または Micro:bit Educational Foundation によって承認されたものではありません。不適切だと思われる場合は、 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": " MakeCode 共有プロジェクト"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3559,7 +3559,8 @@
       "value": "最初の"
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "recordingCount",
       "options": {
         "one": {
           "value": [
@@ -3578,9 +3579,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "recordingCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3769,14 +3769,14 @@
       "value": "記録は完了しましたか？"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "モデルをトレーニングする"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "train-hint-label": [
@@ -3815,14 +3815,14 @@
       "value": "ファイルが自動でダウンロードされない場合は"
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "ここにファイルをダウンロードしてください"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3874,7 +3874,7 @@
   "ui-patterns.language-preview-notice": [
     {
       "type": 0,
-      "value": "* These languages are an early preview of in-progress translations."
+      "value": "*これらの言語は、翻訳の早期プレビューを実施中です。"
     }
   ],
   "ui-patterns.language-support-checked": [
@@ -3899,6 +3899,16 @@
     {
       "type": 0,
       "value": "言語が完全にサポートされていません"
+    }
+  ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "ui.breadcrumb": [
@@ -3971,7 +3981,8 @@
   ],
   "ui.toast-region": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -3996,9 +4007,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4059,14 +4069,14 @@
       "value": "残念ながら、micro:bit 無線を使った接続は micro:bit V2 だけでサポートされています。接続されているのは "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit V1"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4091,14 +4101,14 @@
       "value": "Web Bluetoothを使ってmicro:bit V1に接続できますが、このブラウザやデバイスはBluetoothを有効にしていません。 "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Bluetooth を有効にする方法"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,

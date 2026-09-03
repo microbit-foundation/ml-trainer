@@ -21,6 +21,8 @@ interface ExternalLinkProps {
 const ExternalLink = ({ textId, href, size = "lg" }: ExternalLinkProps) => {
   return (
     <Link
+      // Dialog-footer placement, styled as an action; not a prose link.
+      variant="standalone"
       className={cx(
         button({ variant: "link" }),
         css({

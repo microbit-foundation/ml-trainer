@@ -14,12 +14,12 @@ import {
   createBrowserRouter,
   Navigate,
   Outlet,
-  RouterProvider,
   ScrollRestoration,
   useLocation,
   useNavigate,
   useRouteError,
-} from "react-router-dom";
+} from "react-router";
+import { RouterProvider } from "react-router/dom";
 import { Capacitor } from "@capacitor/core";
 import "theme-package/fonts/fonts.css";
 import { setActiveMenuClose, useNativeBackButton } from "./back-button";
@@ -38,13 +38,13 @@ import { SharedUIProvider, ToastProvider, useToast } from "@microbit/ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
 import { useDeepLinks } from "./deep-links-hook";
+import { useSmartAppBanner } from "./smart-app-banner-hook";
 import { deployment, useDeployment } from "./deployment";
 import { MockBluetoothConnection } from "./device/mockBluetooth";
 import { MockRadioBridgeConnection } from "./device/mockRadioBridge";
 import { MockUSBConnection } from "./device/mockUsb";
 import { flags } from "./flags";
 import { ProjectProvider } from "./hooks/project-hooks";
-import { useSafeAreaInsets } from "./hooks/use-safe-area-insets";
 import { LoggingProvider } from "./logging/logging-hooks";
 import { hasMakeCodeMlExtension } from "./makecode/utils";
 import TranslationProvider from "./messages/TranslationProvider";
@@ -57,6 +57,7 @@ import OpenSharedProjectPage from "./pages/OpenSharedProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import TestingModelPage from "./pages/TestingModelPage";
 import { isNativePlatform } from "./platform";
+import { safeAreaNavSource } from "./safe-area-nav";
 import { projectSessionStorage } from "./session-storage";
 import {
   getAllProjectsFromStorage,
@@ -108,6 +109,11 @@ const radioBridge = isMockDeviceMode()
  */
 const SharedUIConfig = ({ children }: ProviderLayoutProps) => (
   <SharedUIProvider
+    // Real Android only (not ?flag=android): the plugin only exists
+    // on-device, and elsewhere the raw env() fallbacks apply.
+    safeAreaNavSource={
+      Capacitor.getPlatform() === "android" ? safeAreaNavSource : undefined
+    }
     overlayCloseRegistrar={
       Capacitor.isNativePlatform() ? setActiveMenuClose : undefined
     }
@@ -174,7 +180,7 @@ const Layout = () => {
       ) => {
         if (projectLoadTimestamp > prevProjectLoadTimestamp) {
           // Side effects of loading a project, which MakeCode notifies us of.
-          navigate(createDataSamplesPageUrl());
+          void navigate(createDataSamplesPageUrl());
           toast({
             title: intl.formatMessage({ id: "project-loaded" }),
             status: "info",
@@ -248,7 +254,7 @@ const Layout = () => {
           case BroadcastChannelMessageType.DELETE_PROJECT: {
             clearProjectState();
             if (updateProjectTimestampUrls.includes(location.pathname)) {
-              navigate(createHomePageUrl());
+              void navigate(createHomePageUrl());
             }
             break;
           }
@@ -286,6 +292,10 @@ const Layout = () => {
 
   // Native deep link (Universal Link / App Link) handling (no-op on desktop).
   useDeepLinks();
+
+  // Keep the iOS Smart App Banner's app-argument on the current route
+  // (no-op where the banner meta tag isn't emitted).
+  useSmartAppBanner();
 
   const isLoadingOverlayVisible = useStore((s) => s.isLoadingOverlayVisible);
   return (
@@ -390,9 +400,6 @@ const createRouter = () => {
 };
 
 const App = () => {
-  // Detect safe area insets and set CSS variables for nav bar side only
-  useSafeAreaInsets();
-
   useEffect(() => {
     // Capability flags are user-scoped GA4 dimensions on the web build —
     // they describe the browser's WebUSB / WebBluetooth API surface, not
@@ -433,7 +440,7 @@ const App = () => {
       document.head.appendChild(script);
     }
   }, []);
-  const router = useMemo(createRouter, []);
+  const router = useMemo(() => createRouter(), []);
   return (
     <Providers>
       <RouterProvider router={router} />

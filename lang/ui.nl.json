@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "Over",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "micro:bit bord met een hart op het LED-display",
@@ -869,7 +869,7 @@
   },
   "feedback": {
     "defaultMessage": "Feedback",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "Som van x-richtinggegevens",
@@ -1692,7 +1692,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "Als je geen toegang hebt tot de reset knop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {

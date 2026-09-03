@@ -44,7 +44,7 @@ const OpenSharedProjectPage = () => {
     if (!header || !projectText) return;
     await loadProject({ header: { ...header, name }, text: projectText }, name);
     logging.event({ type: "project_share_open" });
-    navigate(createDataSamplesPageUrl());
+    void navigate(createDataSamplesPageUrl());
   }, [loadProject, header, projectText, name, navigate, logging]);
 
   if (sharedState === SharedState.Failed) {
@@ -100,7 +100,6 @@ const OpenSharedProjectPage = () => {
                       link: (children: ReactNode) => (
                         <Link
                           color="brand.600"
-                          textDecoration="underline"
                           href={`https://makecode.microbit.org/${encodeURIComponent(
                             shareId!
                           )}`}

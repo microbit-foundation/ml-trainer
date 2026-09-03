@@ -91,6 +91,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
           { delay: 3, top: "80%", left: "-30%" },
         ].map(({ delay, top, left }, i) => (
           <HeartLedIcon
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
             key={i}
             css={{
               width: "2em",
@@ -117,6 +118,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
           { delay: 3, top: "50%", right: "-10%" },
         ].map(({ delay, top, left, right }, i) => (
           <CrossLedIcon
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
             key={i}
             css={{
               position: "absolute",
@@ -184,6 +186,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
           "M30.07,167.53c-1.35,1.52-3.67,1.65-5.19.3-1.52-1.35-1.65-3.67-.3-5.19,1.35-1.52,3.67-1.65,5.19-.3h0c1.52,1.35,1.65,3.67.3,5.19Z",
         ].map((d, i) => (
           <path
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
             key={i}
             fill="none"
             stroke="#010101"
@@ -287,6 +290,7 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
           [71.12, 187.79],
         ].map(([x, y], i) => (
           <circle
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
             key={i}
             cx={x}
             cy={y}

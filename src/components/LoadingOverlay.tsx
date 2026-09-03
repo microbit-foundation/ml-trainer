@@ -20,8 +20,8 @@ const LoadingOverlay = ({ loading }: LoadingOverlayProps) => {
       contentCss={{
         background: "transparent",
         boxShadow: "none",
-        alignItems: "center",
-        justifyContent: "center",
+        width: "auto",
+        maxWidth: "none",
       }}
     >
       <Spinner

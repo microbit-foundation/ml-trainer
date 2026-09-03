@@ -24,7 +24,6 @@ const ConnectBatteryDialog = ({ ...props }: ConnectBatteryDialogProps) => {
           <FormattedMessage id="connect-battery-subtitle" />
           <Link
             color="brand.600"
-            textDecoration="underline"
             href={supportLinks.wearable}
             target="_blank"
             rel="noopener"

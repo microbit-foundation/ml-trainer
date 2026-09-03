@@ -3,19 +3,45 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { CSSProperties, ReactNode } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import {
+  CSSProperties,
+  forwardRef,
+  ReactNode,
+  useCallback,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { Heading, SystemStyleObject, Svg, VStack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 import { MicrobitBoardBack } from "./MicrobitBoardBack";
 
+type HandSide = "left" | "right";
+
+/**
+ * Hand positions per side.
+ *
+ * `hidden` and `ready` are applied directly as styles. `press` is never read
+ * here: it documents the position the preset keyframes animate to. Keep every
+ * value in sync with the matching keyframes in panda-preset.ts, or the hand
+ * will jump when an animation finishes and hands over to the static style.
+ */
 const handPos = {
-  // Start - hand is out of view.
-  hidden: { right: "-50%", top: "25%" },
-  // Ready - hand is ready to press reset button.
-  ready: { right: "-17.5%", top: "5%" },
-  // Press - hand is pressing reset button.
-  press: { right: "-15%", top: "5%" },
+  right: {
+    // Start - hand is out of view.
+    hidden: { right: "-50%", top: "25%" },
+    // Ready - hand is ready to press reset button.
+    ready: { right: "-17.5%", top: "5%" },
+    // Press - hand is pressing reset button.
+    press: { right: "-15%", top: "5%" },
+  },
+  left: {
+    // Start - hand is faded out, just short of its ready position.
+    hidden: { left: "15%", top: "15%" },
+    // Ready - hand is ready to press reset button.
+    ready: { left: "25%", top: "10%" },
+    // Press - hand is pressing reset button.
+    press: { left: "27%", top: "10%" },
+  },
 };
 
 // Durations in sec.
@@ -31,37 +57,64 @@ type HandState = "hidden" | "moving" | "ready" | "pressDown" | "pressUp";
 interface HandConfig {
   position: CSSProperties;
   animation?: {
-    // A preset keyframe name (see panda-preset.ts); the positional values in
-    // handPos are duplicated there.
+    // A preset keyframe name (see panda-preset.ts), which duplicates the
+    // positional values in handPos. Keep the two in sync.
     kf: string;
     duration: number;
   };
 }
 
-const handConfig: Record<HandState, HandConfig> = {
-  moving: {
-    position: { ...handPos.hidden, opacity: 0 },
-    animation: {
-      kf: "handMoveIn",
-      duration: durations.move,
-    },
+// Preset keyframe names per side (see panda-preset.ts). Each animates between
+// the handPos values for its side, so the two must be kept in sync.
+const handKeyframes: Record<
+  HandSide,
+  Record<"moveIn" | "pressDown" | "pressUp", string>
+> = {
+  right: {
+    moveIn: "handMoveIn",
+    pressDown: "handPressDown",
+    pressUp: "handPressUp",
   },
-  hidden: { position: { ...handPos.hidden, opacity: 0 } },
-  ready: { position: { ...handPos.ready } },
-  pressDown: {
-    position: { ...handPos.ready },
-    animation: {
-      kf: "handPressDown",
-      duration: durations.press,
-    },
+  left: {
+    moveIn: "handMoveInLeft",
+    pressDown: "handPressDownLeft",
+    pressUp: "handPressUpLeft",
   },
-  pressUp: {
-    position: { ...handPos.ready },
-    animation: {
-      kf: "handPressUp",
-      duration: durations.press,
+};
+
+const createHandConfig = (side: HandSide): Record<HandState, HandConfig> => {
+  const pos = handPos[side];
+  const kf = handKeyframes[side];
+  return {
+    moving: {
+      position: { ...pos.hidden, opacity: 0 },
+      animation: {
+        kf: kf.moveIn,
+        duration: durations.move,
+      },
     },
-  },
+    hidden: { position: { ...pos.hidden, opacity: 0 } },
+    ready: { position: { ...pos.ready } },
+    pressDown: {
+      position: { ...pos.ready },
+      animation: {
+        kf: kf.pressDown,
+        duration: durations.press,
+      },
+    },
+    pressUp: {
+      position: { ...pos.ready },
+      animation: {
+        kf: kf.pressUp,
+        duration: durations.press,
+      },
+    },
+  };
+};
+
+const handConfig: Record<HandSide, Record<HandState, HandConfig>> = {
+  left: createHandConfig("left"),
+  right: createHandConfig("right"),
 };
 
 export interface ResetPressedMicrobitBoardRef {
@@ -71,14 +124,23 @@ export interface ResetPressedMicrobitBoardRef {
 interface ResetPressedMicrobitBoardProps {
   /** A resolved CSS colour (not a token name). */
   activeColor: string;
+  /**
+   * Side the hand approaches the board from. Defaults to "right".
+   */
+  handSide?: HandSide;
   /** Sizing from the call site, merged as one literal. */
   css?: SystemStyleObject;
+  /** Runtime styles from the call site, e.g. the attention-staging opacity. */
+  style?: CSSProperties;
 }
 
 const ResetPressedMicrobitBoard = forwardRef<
   ResetPressedMicrobitBoardRef,
   ResetPressedMicrobitBoardProps
->(function ResetHighlightedMicrobitBoard({ activeColor, css: cssProp }, ref) {
+>(function ResetHighlightedMicrobitBoard(
+  { activeColor, handSide = "right", css: cssProp, style },
+  ref
+) {
   const { delayInSec, withPlayState } = useAnimation();
   const [showButtonOutline, setShowButtonOutline] = useState<boolean>(false);
   const [showGlowLines, setShowGlowLines] = useState<boolean>(false);
@@ -87,15 +149,18 @@ const ResetPressedMicrobitBoard = forwardRef<
 
   const getHandStyle = useCallback(
     (state: HandState): CSSProperties => {
-      const { animation, position } = handConfig[state];
+      const { animation, position } = handConfig[handSide][state];
       return {
         ...position,
+        // Mirror the hand so it points towards the reset button rather than
+        // away from it when approaching from the left.
+        transform: handSide === "left" ? "scaleX(-1) rotate(20deg)" : undefined,
         animation: animation
           ? withPlayState(`${animation.kf} ${animation.duration}s forwards`)
           : undefined,
       };
     },
-    [withPlayState]
+    [handSide, withPlayState]
   );
 
   useImperativeHandle(
@@ -121,12 +186,11 @@ const ResetPressedMicrobitBoard = forwardRef<
           await delayInSec(durations.pressing);
           setShowGlowLines(false);
 
-          // Press up.
+          // Press up. The count stays visible until reset so that the tally of
+          // presses is still on screen alongside the resulting LED pattern.
           setHandState("pressUp");
           await delayInSec(durations.press);
           setHandState("ready");
-
-          setCount(undefined);
         },
 
         reset() {
@@ -141,8 +205,8 @@ const ResetPressedMicrobitBoard = forwardRef<
   );
 
   return (
-    <VStack position="relative" css={cssProp}>
-      {count && (
+    <VStack position="relative" css={cssProp} style={style}>
+      {count ? (
         <Heading
           variant="marketing"
           position="absolute"
@@ -154,7 +218,7 @@ const ResetPressedMicrobitBoard = forwardRef<
         >
           {count}
         </Heading>
-      )}
+      ) : null}
       <GlowLines
         css={{
           position: "absolute",

@@ -66,7 +66,7 @@ const ActionBar = ({
         >
           {itemsLeft}
         </HStack>
-        {itemsCenter && (
+        {itemsCenter ? (
           <HStack
             flex="2 1"
             justifyContent="center"
@@ -75,7 +75,7 @@ const ActionBar = ({
           >
             {itemsCenter}
           </HStack>
-        )}
+        ) : null}
         <HStack
           flex={{ base: "0 1 max-content", xl: "1 0" }}
           justifyContent="flex-end"

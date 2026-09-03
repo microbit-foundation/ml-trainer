@@ -80,7 +80,11 @@ const ManualFlashingDialog = ({
             id="transfer-hex-manual-download"
             values={{
               link: (chunks: ReactNode) => (
-                <Button variant="link" onPress={handleDownload}>
+                <Button
+                  variant="link"
+                  css={{ textDecoration: "underline" }}
+                  onPress={handleDownload}
+                >
                   {chunks}
                 </Button>
               ),

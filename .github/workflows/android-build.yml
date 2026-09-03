@@ -11,6 +11,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/v') && 'release' || github.ref }}
   cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') }}
 
+env:
+  # renovate: datasource=npm depName=npm
+  NPM_VERSION: "11"
+  # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
+  ML_THEME_VERSION: 0.4.0
+
 jobs:
   build-android:
     # Only run for apps releases, or pushes to main or branches whose name ends with -apps
@@ -21,16 +27,18 @@ jobs:
       contents: read
       packages: read
       id-token: write
+    env:
+      OFFICIAL_REPO: ${{ github.repository == 'microbit-foundation/ml-trainer' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
 
-      - run: npm install -g npm@11 --registry=https://registry.npmjs.org
+      - run: npm install -g npm@${{ env.NPM_VERSION }} --registry=https://registry.npmjs.org
 
       - uses: microbit-foundation/npm-package-versioner-action@v3
 
@@ -38,21 +46,20 @@ jobs:
       - name: Set marketing version
         run: echo "MARKETING_VERSION=$(jq -r .version package.json | sed 's/-.*//')" >> $GITHUB_ENV
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: "temurin"
           java-version: "21"
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.4.10"
           bundler-cache: true
 
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo "ML_THEME_VERSION=$(jq -r '.["theme-package-version"]' workflow-config.json)" >> $GITHUB_ENV
 
       - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }}
         if: github.repository_owner == 'microbit-foundation'
@@ -92,25 +99,25 @@ jobs:
         run: rm -f "$RUNNER_TEMP/keystore.jks"
         if: always()
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: android-apk-${{ github.sha }}
           path: android/app/build/outputs/apk/release/*.apk
           retention-days: 30
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: android-aab-${{ github.sha }}
           path: android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
 
       - name: Authenticate to Google Cloud
-        if: github.event_name == 'release'
-        uses: google-github-actions/auth@v2
+        if: env.OFFICIAL_REPO == 'true' && github.event_name == 'release'
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
         with:
           workload_identity_provider: projects/311821962964/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions
           service_account: fastlane-supply@microbit-fastlane.iam.gserviceaccount.com
 
       - name: Upload to Google Play
-        if: github.event_name == 'release'
+        if: env.OFFICIAL_REPO == 'true' && github.event_name == 'release'
         run: bundle exec fastlane android upload
