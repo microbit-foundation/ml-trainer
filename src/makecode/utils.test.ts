@@ -118,7 +118,7 @@ describe("test project update", () => {
           trainedModel,
           currentDataWindow,
           true,
-          projectToUpdate as unknown as MakeCodeProject
+          projectToUpdate
         ),
       },
     };

@@ -79,11 +79,11 @@ export const trainModelFromFeatures = async (
       callbacks: {
         onEpochEnd: (epoch: number) => {
           // Epochs indexed at 0
-          onProgress && onProgress(epoch / (numEpochs - 1));
+          onProgress?.(epoch / (numEpochs - 1));
         },
       },
     });
-  } catch (err) {
+  } catch {
     return { error: true };
   }
   return { error: false, model };

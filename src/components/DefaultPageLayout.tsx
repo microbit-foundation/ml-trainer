@@ -12,8 +12,7 @@ import {
   RiShareLine,
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useLocation, useNavigate } from "react-router";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router";
 import { isDataConnectionDialogOpen } from "../data-connection-flow";
 import { useDeployment } from "../deployment";
 import { flags } from "../flags";
@@ -165,11 +164,11 @@ const DefaultPageLayout = ({
           bg="whitesmoke"
           overflow="hidden"
           css={{
-            // Handle landscape orientation where nav bar moves to side.
-            // Uses heuristic: larger inset is nav bar, smaller is camera cutout.
-            paddingLeft: "var(--safe-area-nav-left, 0px)",
-            paddingRight: "var(--safe-area-nav-right, 0px)",
-            paddingBottom: "env(safe-area-inset-bottom)",
+            // Landscape: pad the nav-bar side, flow under a camera cutout
+            // (shared-ui README: CSS-variable contract).
+            paddingLeft: "safeAreaNavLeft",
+            paddingRight: "safeAreaNavRight",
+            paddingBottom: "safeAreaBottom",
           }}
         >
           <VStack zIndex={999} position="sticky" top={0} gap={0}>
@@ -345,11 +344,11 @@ const DefaultPageLayout = ({
           <Flex flexGrow={1} flexDir="column" overflow="auto">
             {children}
           </Flex>
-          {bottomContent && (
+          {bottomContent ? (
             <VStack w="full" flexShrink={0} gap={0} bg="whitesmoke">
               {bottomContent}
             </VStack>
-          )}
+          ) : null}
         </VStack>
       </ProjectDropTarget>
     </>
@@ -420,7 +419,7 @@ export const HomeToolbarItem = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const handleHomeClick = useCallback(() => {
-    navigate(createHomePageUrl());
+    void navigate(createHomePageUrl());
   }, [navigate]);
   return (
     <IconButton

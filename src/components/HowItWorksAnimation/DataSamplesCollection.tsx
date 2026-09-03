@@ -95,6 +95,7 @@ const DataSamplesCollection = forwardRef<DataSamplesCollectionRef>(
             {topVisible &&
               topSamples.map(({ order }, i) => (
                 <DataSample1
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
                   key={i}
                   style={{
                     animation: getSampleAnimation(order, topVisible),
@@ -117,6 +118,7 @@ const DataSamplesCollection = forwardRef<DataSamplesCollectionRef>(
             {bottomVisible &&
               bottomSamples.map(({ order }, i) => (
                 <DataSample2
+                  // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
                   key={i}
                   css={{ opacity: 0 }}
                   style={{

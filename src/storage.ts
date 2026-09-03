@@ -228,7 +228,7 @@ export class IdbDatabase implements Database {
     this.dbPromise = this.initializeDb();
   }
 
-  private async useDb(): Promise<IDBPDatabase<Schema>> {
+  private async getDb(): Promise<IDBPDatabase<Schema>> {
     if (this.dbReady) {
       return this.dbPromise;
     }
@@ -371,7 +371,7 @@ export class IdbDatabase implements Database {
     projectData: { timestamp: number; name: string; id: string }
   ): Promise<void> {
     const id = projectData.id;
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.EDITOR_PROJECT,
@@ -398,7 +398,7 @@ export class IdbDatabase implements Database {
   }
 
   async getProject(id: string): Promise<PersistedProjectData> {
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -450,7 +450,7 @@ export class IdbDatabase implements Database {
     projectData: { timestamp: number; id: string }
   ): Promise<void> {
     const id = projectData.id;
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -483,7 +483,7 @@ export class IdbDatabase implements Database {
   }
 
   async getAllProjectData(): Promise<ProjectDataWithActions[]> {
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [DatabaseStore.ACTIONS, DatabaseStore.PROJECT_DATA],
       "readonly"
     );
@@ -512,7 +512,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.EDITOR_PROJECT,
@@ -544,7 +544,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.EDITOR_PROJECT,
@@ -576,7 +576,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.EDITOR_PROJECT,
@@ -612,7 +612,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -651,7 +651,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -692,7 +692,7 @@ export class IdbDatabase implements Database {
     projectData: { timestamp: number; id: string | undefined }
   ) {
     const id = this.assertProjectId(projectData.id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -741,7 +741,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.EDITOR_PROJECT,
@@ -780,7 +780,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.EDITOR_PROJECT,
@@ -814,7 +814,7 @@ export class IdbDatabase implements Database {
     timestamp: number
   ): Promise<void> {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [DatabaseStore.EDITOR_PROJECT, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
@@ -835,7 +835,7 @@ export class IdbDatabase implements Database {
 
   async updateProjectTimestamp(id: string | undefined, timestamp: number) {
     id = this.assertProjectId(id);
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
@@ -852,7 +852,7 @@ export class IdbDatabase implements Database {
   }
 
   async renameProject(id: string, name: string, timestamp: number) {
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [DatabaseStore.EDITOR_PROJECT, DatabaseStore.PROJECT_DATA],
       "readwrite"
     );
@@ -881,7 +881,7 @@ export class IdbDatabase implements Database {
     newProjectData: ProjectData
   ) {
     const { id, name, timestamp } = newProjectData;
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -952,7 +952,7 @@ export class IdbDatabase implements Database {
   }
 
   async deleteProject(id: string): Promise<void> {
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -981,7 +981,7 @@ export class IdbDatabase implements Database {
   }
 
   async deleteProjects(ids: string[]): Promise<void> {
-    const tx = (await this.useDb()).transaction(
+    const tx = (await this.getDb()).transaction(
       [
         DatabaseStore.ACTIONS,
         DatabaseStore.RECORDINGS,
@@ -1015,20 +1015,20 @@ export class IdbDatabase implements Database {
   }
 
   async getSettings(): Promise<Settings> {
-    const db = await this.useDb();
+    const db = await this.getDb();
     return assertData(
       await db.get(DatabaseStore.SETTINGS, DatabaseStore.SETTINGS)
     );
   }
 
   async updateSettings(settings: Settings): Promise<void> {
-    const db = await this.useDb();
+    const db = await this.getDb();
     await db.put(DatabaseStore.SETTINGS, settings, DatabaseStore.SETTINGS);
   }
 
   async saveModel(id: string | undefined, artifacts: tf.io.ModelArtifacts) {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
+    const db = await this.getDb();
     await db.put(
       DatabaseStore.MODELS,
       modelArtifactsToStoredData(artifacts),
@@ -1038,12 +1038,12 @@ export class IdbDatabase implements Database {
 
   async removeModel(id: string | undefined) {
     id = this.assertProjectId(id);
-    const db = await this.useDb();
+    const db = await this.getDb();
     await db.delete(DatabaseStore.MODELS, id);
   }
 
   async loadModel(id: string): Promise<tf.io.ModelArtifacts | undefined> {
-    const db = await this.useDb();
+    const db = await this.getDb();
     const stored = await db.get(DatabaseStore.MODELS, id);
     if (!stored) {
       return undefined;
@@ -1129,7 +1129,7 @@ const getLegacyModelArtifacts = async (): Promise<
     } finally {
       db.close();
     }
-  } catch (err) {
+  } catch {
     return undefined;
   }
 };

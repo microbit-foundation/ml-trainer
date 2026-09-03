@@ -216,6 +216,7 @@ const BlockLedMatrixInternalSvg = ({
   const initalPos = { x: 9, y: 6 };
   return [...ledPattern].map((led: string, idx: number) => (
     <rect
+      // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
       key={idx}
       rx="1"
       ry="1"

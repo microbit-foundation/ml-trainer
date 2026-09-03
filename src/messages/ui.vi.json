@@ -23,14 +23,14 @@
       "value": "Được phát triển phối hợp với "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Center for Computational Thinking and Design, Aarhus University"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "accelerometer-image-alt": [
@@ -137,14 +137,14 @@
       "value": " chưa?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "Thêm chuyển động khác"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "add-action-hint-label": [
@@ -337,6 +337,8 @@
       "value": " sử dụng Bluetooth để kết nối với micro:bit của bạn. Vui lòng cấp quyền Thiết bị ở gần trong "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -346,9 +348,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -365,6 +365,8 @@
       "value": " sử dụng Bluetooth để kết nối với micro:bit của bạn. Vui lòng bật quyền truy cập Bluetooth trong "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -374,9 +376,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -841,7 +841,8 @@
       "value": ", "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numLeds",
       "options": {
         "one": {
           "value": [
@@ -866,9 +867,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numLeds"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "connect-pattern-subtitle": [
@@ -1283,7 +1283,8 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -1310,9 +1311,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "delete-project-confirm-heading": [
@@ -1779,14 +1779,14 @@
       "value": "Bạn phải "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "cập nhật phần mềm"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1971,14 +1971,14 @@
       "value": "Quay lại để chọn micro:bit khác, hoặc "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "lưu tệp hex của dự án"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1997,14 +1997,14 @@
       "value": "Ngoài ra, "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "lưu tệp hex của dự án"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2023,14 +2023,14 @@
       "value": "Bạn đang sử dụng micro:bit V1, nhưng các dự án học máy cần bộ xử lý nhanh hơn trên micro:bit V2. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Tìm hiểu thêm về các phiên bản micro:bit."
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "insufficient-data-body": [
@@ -2345,14 +2345,14 @@
       "value": "Bắt buộc có dịch vụ định vị để dùng Bluetooth trên thiết bị này. Vui lòng bật dịch vụ định vị trong "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Cài đặt"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2523,14 +2523,14 @@
       "value": "Nhấn vào biểu tượng "
     },
     {
+      "type": 8,
+      "value": "infoIcon",
       "children": [
         {
           "type": 0,
           "value": "thông tin"
         }
-      ],
-      "type": 8,
-      "value": "infoIcon"
+      ]
     },
     {
       "type": 0,
@@ -2873,14 +2873,14 @@
       "value": "Nhấn ghi "
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "hoặc"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     },
     {
       "type": 0,
@@ -2893,7 +2893,8 @@
       "value": "Ghi thêm ít nhất "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "one": {
           "value": [
@@ -2920,9 +2921,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "record-more-hint-label": [
@@ -2931,7 +2931,8 @@
       "value": "Ghi ít nhất  "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "one": {
           "value": [
@@ -2958,9 +2959,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3122,7 +3122,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3507,14 +3507,14 @@
       "value": "Vui lòng xem xét "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "đưa ra yêu cầu hỗ trợ"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3557,14 +3557,14 @@
       "value": "Dự án này do một người dùng cung cấp và không được Microsoft hoặc Micro:bit Educational Foundation xác nhận. Hãy truy cập "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "dự án MakeCode được chia sẻ"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3613,7 +3613,8 @@
       "value": "Bạn đã ghi lại "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "recordingCount",
       "options": {
         "one": {
           "value": [
@@ -3632,9 +3633,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "recordingCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3823,14 +3823,14 @@
       "value": "Đã ghi xong chưa?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "Huấn luyện mô hình"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "train-hint-label": [
@@ -3869,14 +3869,14 @@
       "value": "Nếu tệp không được tải xuống tự động thì "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "vui lòng tải tệp tại đây"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3955,6 +3955,16 @@
       "value": "Ngôn ngữ không được hỗ trợ đầy đủ"
     }
   ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -4025,7 +4035,8 @@
   ],
   "ui.toast-region": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "other": {
           "value": [
@@ -4039,9 +4050,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4102,14 +4112,14 @@
       "value": "Rất tiếc, chúng tôi chỉ hỗ trợ sử dụng micro:bit V2 khi kết nối bằng micro:bit vô tuyến. Bạn đã kết nối một "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit V1"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4134,14 +4144,14 @@
       "value": "Bạn có thể kết nối với micro:bit V1 bằng Web Bluetooth, tuy nhiên trình duyệt hoặc thiết bị này chưa bật Bluetooth. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Cách bật Bluetooth"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,

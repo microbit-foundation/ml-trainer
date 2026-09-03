@@ -126,7 +126,7 @@ export const createWebCompliance = (env: Record<string, string>) => {
 const inIframe = () => {
   try {
     return window.self !== window.top;
-  } catch (e) {
+  } catch {
     return true;
   }
 };

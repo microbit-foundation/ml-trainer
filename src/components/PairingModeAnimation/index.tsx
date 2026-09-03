@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { Stack, token, VisuallyHidden } from "@microbit/ui";
 import { useIntl } from "react-intl";
 import { BluetoothPairingMethod } from "../../data-connection-flow/data-connection-types";
@@ -24,9 +24,23 @@ interface PairingModeAnimationProps {
 }
 
 const durations = {
-  startPause: 1,
+  startPause: 0.25,
   pause: 0.1,
+  // Hold the finished state so the result can be read before the loop restarts.
+  endPause: 1.5,
 };
+
+/**
+ * For the triple reset method the two boards are the same micro:bit shown from
+ * both sides, so we dim the one that isn't being acted on. This directs
+ * attention from the reset presses to the resulting LED pattern.
+ */
+const inactiveBoardOpacity = 0.35;
+const boardOpacityTransition = "opacity 0.3s";
+
+type ActiveBoard = "back" | "front";
+
+const activeColor = token("colors.brand2.500");
 
 const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
   const intl = useIntl();
@@ -36,11 +50,20 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
 
   const { restartAbortController, delayInSec } = useAnimation();
   const isTripleReset = pairingMethod === "triple-reset";
+  const [activeBoard, setActiveBoard] = useState<ActiveBoard>("back");
+
+  // Dynamic, so applied inline rather than through the css prop.
+  // The transition is kept under prefers-reduced-motion: a fade isn't motion,
+  // and without it the boards snap-flash between opacities on every cycle.
+  const boardStagingStyle = (board: ActiveBoard): CSSProperties => ({
+    opacity: activeBoard === board ? 1 : inactiveBoardOpacity,
+    transition: boardOpacityTransition,
+  });
 
   useEffect(() => {
     const run = async () => {
       await delayInSec(durations.startPause);
-      // eslint-disable-next-line no-constant-condition
+
       while (true) {
         try {
           switch (pairingMethod) {
@@ -52,17 +75,22 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
               break;
             }
             case "triple-reset": {
+              setActiveBoard("back");
               await microbitBoardBackRef.current?.playPressed(1);
               await microbitBoardBackRef.current?.playPressed(2);
               await microbitBoardBackRef.current?.playPressed(3);
+              setActiveBoard("front");
               await microbitBoardFrontRef.current?.playBluetoothPattern();
             }
           }
+
+          await delayInSec(durations.endPause);
 
           // Reset all.
           microbitABBoardFrontRef.current?.reset();
           microbitBoardFrontRef.current?.reset();
           microbitBoardBackRef.current?.reset();
+          setActiveBoard("back");
           await delayInSec(durations.pause);
         } catch (e) {
           if (e instanceof DOMException && e.name === "AbortError") {
@@ -89,7 +117,7 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         py={3.5}
         aria-hidden
         direction={{
-          base: isTripleReset ? "column-reverse" : "column",
+          base: "column",
           md: "row",
         }}
         justifyContent="center"
@@ -99,25 +127,34 @@ const PairingModeAnimation = ({ pairingMethod }: PairingModeAnimationProps) => {
         userSelect="none"
       >
         {isTripleReset ? (
-          <MicrobitBoardFront
-            css={{
-              width: { base: "50%", md: "27%" },
-              height: { base: "50%", md: "27%" },
-            }}
-            ref={microbitBoardFrontRef}
-          />
+          <>
+            <ResetPressedMicrobitBoard
+              activeColor={activeColor}
+              handSide="left"
+              ref={microbitBoardBackRef}
+              css={{ width: { base: "50%", md: "25%" } }}
+              style={boardStagingStyle("back")}
+            />
+            <MicrobitBoardFront
+              css={{ width: { base: "50%", md: "25%" } }}
+              ref={microbitBoardFrontRef}
+              style={boardStagingStyle("front")}
+            />
+          </>
         ) : (
-          <ABLabelledMicrobitBoard
-            activeColor={token("colors.brand2.500")}
-            ref={microbitABBoardFrontRef}
-            css={{ width: { base: "50%", md: "27%" } }}
-          />
+          <>
+            <ABLabelledMicrobitBoard
+              activeColor={activeColor}
+              ref={microbitABBoardFrontRef}
+              css={{ width: { base: "50%", md: "25%" } }}
+            />
+            <ResetPressedMicrobitBoard
+              activeColor={activeColor}
+              ref={microbitBoardBackRef}
+              css={{ width: { base: "50%", md: "25%" } }}
+            />
+          </>
         )}
-        <ResetPressedMicrobitBoard
-          activeColor={token("colors.brand2.500")}
-          ref={microbitBoardBackRef}
-          css={{ width: { base: "50%", md: "27%" } }}
-        />
       </Stack>
     </>
   );

@@ -69,6 +69,7 @@ const HandHoldingMicrobit = forwardRef<
     >
       {[...ledPattern].map((lit, i) => (
         <circle
+          // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
           key={i}
           cx={102.47 + (i % ledDim) * ledSpacing}
           cy={39.07 + Math.floor(i / ledDim) * ledSpacing}

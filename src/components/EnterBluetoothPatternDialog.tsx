@@ -43,12 +43,12 @@ const EnterBluetoothPatternDialog = ({
       return;
     }
     onChangeMicrobitName(value);
-    onNextClick && onNextClick();
+    onNextClick?.();
   }, [onChangeMicrobitName, onNextClick, value]);
 
   const handleBackClick = useCallback(() => {
     setShowInvalid(false);
-    onBackClick && onBackClick();
+    onBackClick?.();
   }, [onBackClick]);
 
   const handleNameChange = useCallback((name: string) => {

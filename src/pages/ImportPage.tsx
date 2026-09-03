@@ -6,8 +6,7 @@
 import { MakeCodeProject } from "@microbit/makecode-embed/react";
 import { useCallback, useEffect, useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
@@ -93,12 +92,12 @@ const ImportPage = () => {
           detail: { source: "microbit_org" },
         });
         await loadProject(project, name);
-        navigate(createDataSamplesPageUrl());
+        void navigate(createDataSamplesPageUrl());
       } else {
         // If no resource fetched, start as new empty session
         // with provided project name
         await newSession(name);
-        navigate(createDataSamplesPageUrl());
+        void navigate(createDataSamplesPageUrl());
       }
     } finally {
       setLoadingOverlayVisible(false);

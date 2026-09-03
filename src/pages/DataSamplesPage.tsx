@@ -56,7 +56,7 @@ const DataSamplesPage = () => {
 
   useEffect(() => {
     if (!projectSessionStorage.getProjectId() || !projectId) {
-      return navigate(createHomePageUrl());
+      void navigate(createHomePageUrl());
     }
   }, [navigate, projectId]);
 
@@ -78,7 +78,7 @@ const DataSamplesPage = () => {
   const isAddNewActionDisabled = actions.some((a) => a.name.length === 0);
 
   const handleNavigateToModel = useCallback(() => {
-    navigate(createTestingModelPageUrl());
+    void navigate(createTestingModelPageUrl());
   }, [navigate]);
 
   const trainButtonRef = useRef(null);
@@ -315,12 +315,10 @@ const getHintText = (
     }
     case "record-action": {
       return isConnected
-        ? intl
-            .formatMessage(
-              { id: "record-hint-button-b" },
-              { mark: (chunks: string[]) => chunks }
-            )
-            .toString()
+        ? intl.formatMessage(
+            { id: "record-hint-button-b" },
+            { mark: (chunks: string[]) => chunks.join("") }
+          )
         : intl.formatMessage({ id: "record-hint" });
     }
     case "name-action-short":

@@ -59,6 +59,7 @@ const Arrow = forwardRef<ArrowRef>(function Arrow(_, ref) {
       <Box position="relative" width="100%" height="100%">
         {starIconConfigs.map(({ size, delay, top, right }, i) => (
           <StarIcon
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
             key={i}
             css={{ position: "absolute", opacity: 0 }}
             // Sizes/positions/delays vary per star config; keep them inline.

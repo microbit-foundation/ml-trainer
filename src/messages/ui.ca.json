@@ -23,14 +23,14 @@
       "value": "Desenvolupat en col·laboració amb el "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Centre for Computational Thinking and Design, Universitat d'Aarhus"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "accelerometer-image-alt": [
@@ -133,14 +133,14 @@
       "value": "actionName"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "Afegir una altra acció"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "add-action-hint-label": [
@@ -190,13 +190,13 @@
   "analytics-consent-analytics": [
     {
       "type": 0,
-      "value": "Ens agradaria recollir dades anònimes sobre com useu l'app per ajudar-nos a millorar-la. No compartirem dades personals ni farem servir anuncis de tercers."
+      "value": "Ens agradaria recollir dades anònimes sobre com fas servir l'app per ajudar-nos a millorar-la. No compartirem dades personals ni farem servir anuncis de tercers."
     }
   ],
   "analytics-consent-change-later": [
     {
       "type": 0,
-      "value": "Podeu canviar això a la configuració més tard."
+      "value": "Pots canviar això a la configuració més tard."
     }
   ],
   "analytics-consent-decline-action": [
@@ -339,6 +339,8 @@
       "value": " fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -348,9 +350,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -367,6 +367,8 @@
       "value": " fa servir el Bluetooth per connectar-se a la teva micro:bit. Si us plau, dona permís a dispositius propers a "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -376,9 +378,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -748,7 +748,7 @@
   "connect-native-pattern-subtitle": [
     {
       "type": 0,
-      "value": "Si cal, canvieu el patró de més avall per coincidir."
+      "value": "Si cal, canvia el patró de més avall per coincidir."
     }
   ],
   "connect-native-start-battery-check": [
@@ -832,7 +832,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "Columna "
     },
     {
       "type": 1,
@@ -843,7 +843,8 @@
       "value": ", "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numLeds",
       "options": {
         "one": {
           "value": [
@@ -852,7 +853,7 @@
             },
             {
               "type": 0,
-              "value": " LED lit"
+              "value": " LED encès"
             }
           ]
         },
@@ -863,14 +864,13 @@
             },
             {
               "type": 0,
-              "value": " LEDs lit"
+              "value": " LEDs encèsos"
             }
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numLeds"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "connect-pattern-subtitle": [
@@ -1285,7 +1285,8 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -1312,9 +1313,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "delete-project-confirm-heading": [
@@ -1971,14 +1971,14 @@
       "value": "Torna enrere per seleccionar una micro:bit diferent, o bé "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "desa l'hexadecimal del projecte"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1997,14 +1997,14 @@
       "value": "Alternativament, "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "desa l'hexadecimal del projecte"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2023,14 +2023,14 @@
       "value": "Estàs utilitzant una micro:bit V1, però els projectes d'aprenentatge automàtic necessiten el processador més ràpid en una micro:bit V2. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Més informació sobre les versions de les micro:bit."
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "insufficient-data-body": [
@@ -2345,14 +2345,14 @@
       "value": "Calen serveis de localització per al Bluetooth en aquest dispositiu. Activa els serveis de localització a "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Configuració"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2514,7 +2514,7 @@
   "native-bluetooth-error-forget-device-step-1": [
     {
       "type": 0,
-      "value": "Anar al Bluetooth a l'app de Configuració"
+      "value": "Ves a Bluetooth en la configuració de l'app"
     }
   ],
   "native-bluetooth-error-forget-device-step-2": [
@@ -2523,14 +2523,14 @@
       "value": "Toca la icona "
     },
     {
+      "type": 8,
+      "value": "infoIcon",
       "children": [
         {
           "type": 0,
           "value": "d'informació"
         }
-      ],
-      "type": 8,
-      "value": "infoIcon"
+      ]
     },
     {
       "type": 0,
@@ -2552,7 +2552,7 @@
   "native-bluetooth-error-heading": [
     {
       "type": 0,
-      "value": "No s'ha pogut connectar a micro:bit"
+      "value": "No s'ha pogut connectar amb la micro:bit"
     }
   ],
   "new-project-setup-title": [
@@ -2628,31 +2628,31 @@
   "open-shared-project-blocks-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the MakeCode code contained within this project."
+      "value": "Vista prèvia del codi MakeCode contingut en aquest projecte."
     }
   ],
   "open-shared-project-data-preview-description": [
     {
       "type": 0,
-      "value": "Preview of the actions and data contained within this project."
+      "value": "Vista prèvia de les accions i dades contingudes en aquest projecte."
     }
   ],
   "open-shared-project-description": [
     {
       "type": 0,
-      "value": "This is a Microsoft MakeCode shared project compatible with CreateAI."
+      "value": "Aquest és un projecte compartit de Microsoft MakeCode compatible amb CreateAI."
     }
   ],
   "open-shared-project-error-description": [
     {
       "type": 0,
-      "value": "Check the link you followed is correct, and make sure you are connected to the internet before trying again."
+      "value": "Comprova que l'enllaç que has seguit sigui correcte i assegura't que estàs connectat a Internet abans de tornar-ho a provar."
     }
   ],
   "open-shared-project-title": [
     {
       "type": 0,
-      "value": "Open shared CreateAI project"
+      "value": "Obre el projecte CreateAI compartit"
     }
   ],
   "other-tabs-body1": [
@@ -2690,7 +2690,7 @@
   "project-ideas-row-carousel": [
     {
       "type": 0,
-      "value": "List of project ideas"
+      "value": "Llista d'idees de projectes"
     }
   ],
   "project-ideas-row-title": [
@@ -2736,19 +2736,19 @@
   "project-name-tooltip": [
     {
       "type": 0,
-      "value": "Click to edit project name"
+      "value": "Fes clic per editar el nom del projecte"
     }
   ],
   "project-skip-to-toolbar": [
     {
       "type": 0,
-      "value": "Skip to toolbar"
+      "value": "Salta a la barra d'eines"
     }
   ],
   "project-storage-tooltip": [
     {
       "type": 0,
-      "value": "Your data is saved in this browser on this device. Clearing your browser's cookies or site data will delete it. It may also be automatically removed by your browser if your device is low on storage."
+      "value": "Les teves dades es guarden en aquest navegador en aquest dispositiu. Si esborres les galetes del teu navegador o les dades del lloc, s'eliminarà. El teu navegador també pot eliminar-lo automàticament si el teu dispositiu té poc emmagatzematge."
     }
   ],
   "projects-page-title": [
@@ -2864,36 +2864,37 @@
   "record-hint": [
     {
       "type": 0,
-      "value": "Press record to collect a movement data sample."
+      "value": "Prem Registre per recollir una mostra de dades de moviment."
     }
   ],
   "record-hint-button-b": [
     {
       "type": 0,
-      "value": "Press record "
+      "value": "Prem el botó de registre "
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
-          "value": "or"
+          "value": "o"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     },
     {
       "type": 0,
-      "value": " button B on the micro:bit to collect a movement data sample."
+      "value": " B de la micro:bit per recollir una mostra de dades de moviment."
     }
   ],
   "record-more-hint": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "Enregistra almenys "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "one": {
           "value": [
@@ -2903,7 +2904,7 @@
             },
             {
               "type": 0,
-              "value": " more data sample"
+              "value": " mostra de dades més"
             }
           ]
         },
@@ -2915,23 +2916,23 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": " mostres de dades més"
             }
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "record-more-hint-label": [
     {
       "type": 0,
-      "value": "Record at least "
+      "value": "Enregistra almenys "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "one": {
           "value": [
@@ -2941,7 +2942,7 @@
             },
             {
               "type": 0,
-              "value": " more data sample"
+              "value": " més mostres de dades "
             }
           ]
         },
@@ -2953,18 +2954,17 @@
             },
             {
               "type": 0,
-              "value": " more data samples"
+              "value": " més mostres de dades"
             }
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
-      "value": " for "
+      "value": " per "
     },
     {
       "type": 1,
@@ -3122,25 +3122,25 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "Si no pots accedir al botó de restabliment, manté premut A+B mentre engegues la micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
     {
       "type": 0,
-      "value": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears."
+      "value": "Manté premut A+B i prem RESTABLECIR. Manté premut A+B fins que aparegui la icona de Bluetooth."
     }
   ],
   "reset-to-bluetooth-mode-heading": [
     {
       "type": 0,
-      "value": "Reset to Bluetooth mode"
+      "value": "Restableix la micro:bit en mode Bluetooth"
     }
   ],
   "reset-to-bluetooth-mode-subtitle": [
     {
       "type": 0,
-      "value": "Press RESET three times."
+      "value": "Prem el botó REINICIAR tres vegades."
     }
   ],
   "reset-to-default-action": [
@@ -3214,13 +3214,13 @@
   "save-to-files-action": [
     {
       "type": 0,
-      "value": "Save to Files"
+      "value": "Desa al fitxer"
     }
   ],
   "saving-dataset-toast-title": [
     {
       "type": 0,
-      "value": "Your data samples have been downloaded"
+      "value": "Les teves mostres de dades s'han transferit"
     }
   ],
   "saving-description": [
@@ -3284,7 +3284,7 @@
   "select-project-action": [
     {
       "type": 0,
-      "value": "Select "
+      "value": "Selecciona "
     },
     {
       "type": 1,
@@ -3294,7 +3294,7 @@
   "selection-actions-group": [
     {
       "type": 0,
-      "value": "Selection actions"
+      "value": "Selecció d'accions"
     }
   ],
   "settings": [
@@ -3317,12 +3317,16 @@
   ],
   "share-file-description": [
     {
+      "type": 0,
+      "value": "Projecte "
+    },
+    {
       "type": 1,
       "value": "appNameFull"
     },
     {
       "type": 0,
-      "value": " project: "
+      "value": ": "
     },
     {
       "type": 1,
@@ -3332,13 +3336,13 @@
   "share-hex-dialog-heading": [
     {
       "type": 0,
-      "value": "Share project as a hex file"
+      "value": "Comparteix el projecte com a fitxer hexadecimal"
     }
   ],
   "share-hex-dialog-message1": [
     {
       "type": 0,
-      "value": "The hex file contains your actions, data samples and your MakeCode project. Open it in "
+      "value": "El fitxer hex conté les teves accions, mostres de dades i el teu projecte MakeCode. Obre'l a "
     },
     {
       "type": 1,
@@ -3346,13 +3350,13 @@
     },
     {
       "type": 0,
-      "value": " to continue working."
+      "value": " per continuar treballant."
     }
   ],
   "share-named-file": [
     {
       "type": 0,
-      "value": "Share "
+      "value": "Comparteix "
     },
     {
       "type": 1,
@@ -3362,13 +3366,13 @@
   "sharing-description": [
     {
       "type": 0,
-      "value": "Your project will be ready to share soon."
+      "value": "El teu projecte estarà llest per compartir aviat."
     }
   ],
   "sharing-title": [
     {
       "type": 0,
-      "value": "Sharing…"
+      "value": "S'està compartint…"
     }
   ],
   "show-graphs-checkbox-label-text": [
@@ -3476,25 +3480,25 @@
   "storage-error-device-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to device storage"
+      "value": "No s'ha pogut desar el projecte a l'emmagatzematge del dispositiu"
     }
   ],
   "storage-error-other": [
     {
       "type": 0,
-      "value": "Failed to save your project to browser storage"
+      "value": "No s'ha pogut desar el projecte a l'emmagatzematge del navegador"
     }
   ],
   "storage-error-quota-description": [
     {
       "type": 0,
-      "value": "Your project edit may not be saved."
+      "value": "És possible que l'edició del projecte no es pugui desar."
     }
   ],
   "storage-error-quota-title": [
     {
       "type": 0,
-      "value": "Browser storage full"
+      "value": "La memòria del navegador és plena"
     }
   ],
   "support-request": [
@@ -3503,14 +3507,14 @@
       "value": "Si us plau, considera"
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "fer una sol·licitud d'assistència"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3520,7 +3524,7 @@
   "teacher-resources-row-carousel": [
     {
       "type": 0,
-      "value": "List of teacher resources"
+      "value": "Llista de recursos docents"
     }
   ],
   "teacher-resources-row-title": [
@@ -3550,21 +3554,21 @@
   "third-party-content-description": [
     {
       "type": 0,
-      "value": "This project is provided by a user, and not endorsed by Microsoft or the Micro:bit Educational Foundation. Visit the "
+      "value": "Aquest projecte és proporcionat per un usuari i no està avalat per Microsoft o la Micro:bit Educational Foundation. Visita el "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
-          "value": "MakeCode shared project"
+          "value": "Projecte compartit de MakeCode"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
-      "value": " to report abuse to Microsoft MakeCode if you think it's not appropriate."
+      "value": " per informar d'un abús a Microsoft MakeCode si creus que no és apropiat."
     }
   ],
   "timestamp-now": [
@@ -3609,7 +3613,8 @@
       "value": "Has gravat el teu primer "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "recordingCount",
       "options": {
         "one": {
           "value": [
@@ -3628,9 +3633,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "recordingCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3816,23 +3820,23 @@
   "train-hint": [
     {
       "type": 0,
-      "value": "Finished recording?"
+      "value": "Has acabat d'enregistrar?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
-          "value": "Train the model"
+          "value": "Entrena el model"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "train-hint-label": [
     {
       "type": 0,
-      "value": "Finished recording? Press ‘Train the model’ button to train the model"
+      "value": "Has acabat de enregistrar? Prem el botó \"Entrena el model\" per entrenar el model"
     }
   ],
   "train-model": [
@@ -3865,14 +3869,14 @@
       "value": "Si el fitxer no s'ha transferit automàticament, "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "descarrega el fitxer aquí"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3951,6 +3955,16 @@
       "value": "L'idioma no està disponible totalment"
     }
   ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
@@ -4021,7 +4035,8 @@
   ],
   "ui.toast-region": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -4046,9 +4061,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4109,14 +4123,14 @@
       "value": "Malauradament, només admetem l'ús de micro:bit V2 quan ens connectem mitjançant la ràdio micro:bit. Has connectat una "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit V1"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4141,14 +4155,14 @@
       "value": "Pots connectar-te a la micro:bit V1 mitjançant Web Bluetooth, però aquest navegador o dispositiu no té Bluetooth activat. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Com activar el Bluetooth"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4164,7 +4178,7 @@
   "view-all-projects": [
     {
       "type": 0,
-      "value": "View all"
+      "value": "Veure-ho tot"
     }
   ],
   "webusb-retry-no-select": [
@@ -4200,7 +4214,7 @@
   "welcome-title": [
     {
       "type": 0,
-      "value": "How CreateAI works"
+      "value": "Com funciona CreateAI"
     }
   ]
 }

@@ -171,7 +171,7 @@ The editor is deployed by [GitHub actions](https://github.com/microbit-foundatio
 
 ## License
 
-Unless covered under some other license, all content in this repository is shared under an MIT license. This software is under the MIT open source license.
+This software is under the MIT open source license.
 
 [SPDX-License-Identifier: MIT](LICENSE)
 
@@ -179,7 +179,10 @@ Significant code is derived from ML-Machine (also MIT licensed) and is (c)
 Center for Computational Thinking and Design at Aarhus University and
 contributors. See individual file copyright notices for more details.
 
-Conceptually this project draws heavily on the work done by the Center for Computational Thinking and Design at Aarhus University (see [CCTD.dk](https://cctd.au.dk)) and we're hugely grateful for their ongoing support and collaboration.
+Conceptually this project draws heavily on the work done by the Center for
+Computational Thinking and Design at Aarhus University (see
+[CCTD.dk](https://cctd.au.dk)) and we're hugely grateful for their ongoing
+support and collaboration.
 
 We use dependencies via the NPM registry as specified by the package.json file
 under common Open Source licenses.
@@ -196,8 +199,6 @@ The repository includes forks of Lancaster's micro:bit-samples repositories for
 micro:bit [V1](https://github.com/lancaster-university/microbit-samples) and
 [V2](https://github.com/lancaster-university/microbit-v2-samples). They are MIT
 licensed.
-
-Google Play is a trademark of Google LLC. Apple and the Apple Logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.
 
 ## Code of Conduct
 

@@ -9,7 +9,7 @@ import { forwardRef, memo, useEffect, useRef } from "react";
 import { useStore } from "../store";
 import Editor from "./Editor";
 
-interface EditCodeDialogProps {}
+type EditCodeDialogProps = object;
 
 const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
   function EditCodeDialog(_, ref) {
@@ -37,6 +37,7 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         if (document.activeElement === iframe) {
           // Use setTimeout to ensure MakeCode's internal focus handling
           // has completed before we override it.
+          // eslint-disable-next-line @eslint-react/web-api-no-leaked-timeout -- zero-delay defer, nothing to clean up
           setTimeout(() => window.focus(), 0);
         }
       };
@@ -57,11 +58,11 @@ const EditCodeDialog = forwardRef<MakeCodeFrameDriver, EditCodeDialogProps>(
         visibility={isOpen ? "visible" : "hidden"}
         position={isOpen ? undefined : "absolute"}
         css={{
-          paddingTop: "env(safe-area-inset-top)",
-          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingTop: "safeAreaTop",
+          paddingBottom: "safeAreaBottom",
           paddingLeft:
-            "max(var(--window-controls-left, 0px), var(--safe-area-nav-left, 0px))",
-          paddingRight: "var(--safe-area-nav-right, 0px)",
+            "max(var(--window-controls-left, 0px), token(spacing.safeAreaNavLeft))",
+          paddingRight: "safeAreaNavRight",
         }}
       >
         <Editor ref={ref} style={{ flexGrow: 1 }} />

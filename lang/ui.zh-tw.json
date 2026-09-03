@@ -5,7 +5,7 @@
   },
   "about": {
     "defaultMessage": "關於",
-    "description": "Menu item link to view information about app"
+    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
   },
   "about-dialog-alt": {
     "defaultMessage": "micro:bit 開發板在 LED 顯示器上顯示一顆心",
@@ -869,7 +869,7 @@
   },
   "feedback": {
     "defaultMessage": "回饋",
-    "description": "Action to open a feedback dialog"
+    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
   },
   "fingerprint-acc-x-tooltip": {
     "defaultMessage": "x 方向數據的總和",
@@ -1692,11 +1692,11 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the RESET button, hold A+B while you power on the micro:bit.",
+    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press RESET. Keep holding A+B until the Bluetooth icon appears.",
+    "defaultMessage": "Hold A+B and press reset. Keep holding A+B until the Bluetooth icon appears.",
     "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
   },
   "reset-to-bluetooth-mode-heading": {
@@ -1704,7 +1704,7 @@
     "description": "Title for dialog with instructures on using "
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press RESET three times.",
+    "defaultMessage": "Press reset 3 times quickly.",
     "description": "Instructions to press the physical reset button on the micro:bit"
   },
   "reset-to-default-action": {

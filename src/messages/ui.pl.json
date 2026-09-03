@@ -23,14 +23,14 @@
       "value": "Opracowane w partnerstwie z "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Centrum Komputacyjnego Myślenia  i Projektowania, Uniwersytet Aarhus"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "accelerometer-image-alt": [
@@ -137,14 +137,14 @@
       "value": "?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "Dodaj kolejną akcję"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "add-action-hint-label": [
@@ -343,6 +343,8 @@
       "value": " używa Bluetooth do połączenia się z Twoim micro:bitem. Włącz pozwolenia w urządzeniach w pobliżu w "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -352,9 +354,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -371,6 +371,8 @@
       "value": " używa Bluetooth do połączenia z Twoim micro:bitem. Włącz dostęp do Bluetooth w "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
@@ -380,9 +382,7 @@
           "type": 1,
           "value": "appNameShort"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -836,7 +836,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "Kolumna "
     },
     {
       "type": 1,
@@ -847,7 +847,8 @@
       "value": ", "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numLeds",
       "options": {
         "one": {
           "value": [
@@ -856,7 +857,7 @@
             },
             {
               "type": 0,
-              "value": " LED lit"
+              "value": " LED aktywowana"
             }
           ]
         },
@@ -867,14 +868,13 @@
             },
             {
               "type": 0,
-              "value": " LEDs lit"
+              "value": " LED aktywowane"
             }
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numLeds"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "connect-pattern-subtitle": [
@@ -1293,7 +1293,8 @@
   ],
   "delete-project-action": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
         "one": {
           "value": [
@@ -1320,9 +1321,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "delete-project-confirm-heading": [
@@ -1789,14 +1789,14 @@
       "value": "Zanim będziesz mógł połączyć się z tym micro:bitem, musisz "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "zaktualizować oprogramowanie sprzętowe"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -1993,14 +1993,14 @@
       "value": "Wróć, aby wybrać inny micro:bit lub "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "zapisz hex projektu"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2019,14 +2019,14 @@
       "value": "Alternatywnie, "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "zapisz hex projektu"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2045,14 +2045,14 @@
       "value": "Używasz micro:bit V1, ale projekty nauczania maszynowego wymagają szybszego procesora w micro:bicie V2. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Dowiedz się więcej o wersjach micro:bita."
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     }
   ],
   "insufficient-data-body": [
@@ -2367,14 +2367,14 @@
       "value": "Usługi lokalizacji są wymagane dla Bluetooth na tym urządzeniu. Proszę włączyć usługi lokalizacji w ustawieniach "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Ustawienia"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -2545,14 +2545,14 @@
       "value": "Dotknij ikony "
     },
     {
+      "type": 8,
+      "value": "infoIcon",
       "children": [
         {
           "type": 0,
           "value": "Informacje"
         }
-      ],
-      "type": 8,
-      "value": "infoIcon"
+      ]
     },
     {
       "type": 0,
@@ -2895,14 +2895,14 @@
       "value": "Naciśnij nagraj "
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": "lub"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     },
     {
       "type": 0,
@@ -2915,7 +2915,8 @@
       "value": "Nagraj co najmniej "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
         "other": {
           "value": [
@@ -2930,9 +2931,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "record-more-hint-label": [
@@ -2941,8 +2941,21 @@
       "value": "Nagraj co najmniej "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "numSamples",
       "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "numSamples"
+            },
+            {
+              "type": 0,
+              "value": " więcej próbek danych"
+            }
+          ]
+        },
         "few": {
           "value": [
             {
@@ -2967,18 +2980,6 @@
             }
           ]
         },
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "numSamples"
-            },
-            {
-              "type": 0,
-              "value": " więcej próbek danych"
-            }
-          ]
-        },
         "other": {
           "value": [
             {
@@ -2992,9 +2993,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "numSamples"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3152,7 +3152,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the RESET button, hold A+B while you power on the micro:bit."
+      "value": "Jeśli nie masz dostępu do przycisku resetowania, przytrzymaj przyciski A+B podczas włączania micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3291,8 +3291,7 @@
       "value": "\""
     }
   ],
-  "select-icon-action-untitled-aria": [
-  ],
+  "select-icon-action-untitled-aria": [],
   "select-icon-option-action-aria": [
     {
       "type": 0,
@@ -3533,14 +3532,14 @@
       "value": "Rozważ "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "złożenie prośby o pomoc"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3583,14 +3582,14 @@
       "value": "Ten projekt jest dostarczany przez użytkownika i nie jest wspierany przez Microsoft ani Micro:bit Educational Foundation. Odwiedź "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "udostępniony projekt MakeCode"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3639,7 +3638,8 @@
       "value": "Zarejestrowałeś swój pierwszy "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "recordingCount",
       "options": {
         "one": {
           "value": [
@@ -3658,9 +3658,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "recordingCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -3849,14 +3848,14 @@
       "value": "Zakończono nagrywanie?"
     },
     {
+      "type": 8,
+      "value": "mark",
       "children": [
         {
           "type": 0,
           "value": " Trenuj model"
         }
-      ],
-      "type": 8,
-      "value": "mark"
+      ]
     }
   ],
   "train-hint-label": [
@@ -3895,14 +3894,14 @@
       "value": "Jeśli plik nie został pobrany automatycznie, to "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "pobierz plik tutaj"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -3954,7 +3953,7 @@
   "ui-patterns.language-preview-notice": [
     {
       "type": 0,
-      "value": "* These languages are an early preview of in-progress translations."
+      "value": "* Te języki są we wczesnym podglądzie bieżącego tłumaczenia."
     }
   ],
   "ui-patterns.language-support-checked": [
@@ -3979,6 +3978,16 @@
     {
       "type": 0,
       "value": "Język nie w pełni obsługiwany"
+    }
+  ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "ui.breadcrumb": [
@@ -4051,8 +4060,20 @@
   ],
   "ui.toast-region": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "count",
       "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " powiadomienie"
+            }
+          ]
+        },
         "few": {
           "value": [
             {
@@ -4075,17 +4096,6 @@
             }
           ]
         },
-        "one": {
-          "value": [
-            {
-              "type": 7
-            },
-            {
-              "type": 0,
-              "value": " powiadomienie"
-            }
-          ]
-        },
         "other": {
           "value": [
             {
@@ -4098,9 +4108,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "count"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4161,14 +4170,14 @@
       "value": "Niestety, wspieramy tylko używanie micro:bit V2 podczas łączenia się z radiem micro:bit. Podłączyłeś "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "micro:bit V1"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,
@@ -4193,14 +4202,14 @@
       "value": "Możesz połączyć się z micro:bitem V1 za pomocą Web Bluetooth, jednak ta przeglądarka lub urządzenie nie ma włączonego Bluetooth. "
     },
     {
+      "type": 8,
+      "value": "link",
       "children": [
         {
           "type": 0,
           "value": "Jak włączyć Bluetooth"
         }
-      ],
-      "type": 8,
-      "value": "link"
+      ]
     },
     {
       "type": 0,

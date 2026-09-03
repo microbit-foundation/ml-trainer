@@ -74,7 +74,7 @@ const NavigationDrawer = ({
 
   const handleCloseComplete = useCallback(() => {
     if (pendingNavRef.current) {
-      navigate(pendingNavRef.current);
+      void navigate(pendingNavRef.current);
       pendingNavRef.current = null;
     }
   }, [navigate]);
@@ -134,8 +134,18 @@ const NavigationDrawer = ({
       placement={placement}
       aria-label={intl.formatMessage({ id: "main-menu" })}
     >
-      <DrawerHeader css={{ bg: "brand2.500", px: 0, py: 0 }}>
-        <Box h="max(0px, calc(env(safe-area-inset-top) - 12px))" />
+      <DrawerHeader
+        css={{
+          bg: "brand2.500",
+          px: 0,
+          py: 0,
+          // The 64px logo row has vertical headroom to spare, so let it
+          // absorb the first 12px of the status-bar inset (which the
+          // drawer's safe-area padding reserves in full) instead of
+          // stacking the whole inset on top of the row.
+          mt: "calc(-1 * min(12px, token(spacing.safeAreaTop)))",
+        }}
+      >
         <HStack h="64px" px={4} alignItems="center">
           <AppLogo
             css={{ transform: "scale(0.85)", transformOrigin: "left" }}
@@ -313,6 +323,7 @@ interface NavLinkProps {
 const NavLink = ({ href, onClick, children }: NavLinkProps) => (
   <ListItem>
     <Link
+      variant="standalone"
       display="flex"
       alignItems="center"
       w="100%"
@@ -341,6 +352,7 @@ interface FooterLinkProps {
 
 const FooterLink = ({ href, children }: FooterLinkProps) => (
   <Link
+    variant="standalone"
     href={href}
     target="_blank"
     rel="noopener"
