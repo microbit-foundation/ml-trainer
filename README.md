@@ -69,30 +69,70 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ### Local development
 
+Follow the [Capacitor environment setup instructions](https://capacitorjs.com/docs/getting-started/environment-setup) for the relevant platform (iOS or Android).
+
+To use Xcode for the first time, point the command line tools at the full Xcode install (by default they point at the standalone Command Line Tools, which lack `xcodebuild`):
+
+```bash
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+```
+
+And read and accept the licence:
+
+```bash
+# Read the licence (type "agree" at the end to accept, or "cancel" to exit)
+sudo xcodebuild -license
+
+# Or accept it non-interactively
+sudo xcodebuild -license accept
+```
+
+Then run the first launch command to install additional required components:
+
+```bash
+sudo xcodebuild -runFirstLaunch
+```
+
+To run the apps locally, you can serve a build or create a dev server with hot reloading.
+
+To serve a build using Android as an example:
+
+```bash
+npm run build:apps
+npx cap sync android
+npx cap open android
+```
+
 To get a proper dev server for iOS/Android development run:
 
 ```bash
 npm run cap:sync:dev
-```
-
-Then run
-
-```bash
 npm run dev:apps
 ```
 
-Use e.g. `npx cap open ios` to open the IDE and run from there.
+Then use e.g. `npx cap open android` to open the IDE and run from there.
 
-The vite dev server run by dev:apps will be running inside the app.
+The Vite dev server run by `dev:apps` will be running inside the app.
+
+When opening Android Studio for the first time, it may prompt you to use a compatible JVM version. Accept the recommended compatible version.
+
+When opening Xcode for the first time, it may prompt you to download Xcode support for the relevant iOS version, which is required.
+
+To run the Android app on a real device, go to the device Settings -> About phone, then tap on Build number 7 times to enable developer mode. Once enabled, go to Settings -> Developer options (location varies by manufacturer), then enable USB debugging. When you connect the device via USB, accept the 'Allow USB debugging?' prompt on the device so Android Studio can detect it.
+
+To run the iOS app on a real device, you will need to set up code signing.
 
 ### Signing for your own iOS device
 
 The repo defaults to bundle id `org.microbit.mltrainer` and an empty Apple
 development team — fine for the iOS Simulator, but to install on a real
 iPhone or iPad you need to sign with your own Apple Developer account.
-The default bundle id is reserved for the Micro:bit Educational
-Foundation's developer account, so unless you're a member of that team
-you'll need to use one of your own.
+
+Micro:bit Educational Foundation team members need to be added to the Foundation's Apple development team with the relevant certificate access. Once this is done, you may need to restart Xcode as it caches old information.
+
+Select the App target, then Signing & Capabilities -> Team -> Add account and sign in with your Apple ID (the one added to the Foundation's developer team). From the dropdown shown, select "Micro:bit Educational Foundation". Connect a device and select it from the device dropdown at the top of Xcode. Press the play button on the left-hand side to run the app on the device. You may have to accept permissions prompts on the device.
+
+If you are not part of the Micro:bit Educational Foundation's developer team, you'll need to use your own bundle id.
 
 Drop a gitignored override at `ios/App/App/Brand.local.xcconfig`:
 
