@@ -211,18 +211,6 @@
     "defaultMessage": "Anuluj nagrywanie",
     "description": "Button label to cancel a movement data recording"
   },
-  "carousel-role": {
-    "defaultMessage": "karuzela",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum} z {totalSlides}",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "slide",
-    "description": "aria-roledescription for carousel slide / item"
-  },
   "certainty-label": {
     "defaultMessage": "Pewność",
     "description": "Heading for certainty column"
@@ -1039,10 +1027,6 @@
     "defaultMessage": "Pomoc",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "Lista zasobów pomocy",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "Pomoc",
     "description": "Title for home page row"
@@ -1363,10 +1347,6 @@
     "defaultMessage": "Poruszaj micro:bitem, aby zobaczyć, jak różne akcje zmieniają wykres",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "Lista moich projektów",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "Moje projekty",
     "description": "Title for home page row"
@@ -1510,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "Polityka prywatności",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "Lista pomysłów na projekt",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Pomysły na projekt",
@@ -1914,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "Rozważ <link>złożenie prośby o pomoc</link>.",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "Lista zasobów nauczyciela",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Materiały dla nauczycieli",

@@ -155,6 +155,10 @@
     "defaultMessage": "Huấn luyện",
     "description": "Machine learning training on computer screen of how it works animation"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Download on the App Store",
+    "description": "Alt text for the Apple App Store badge in the homepage footer"
+  },
   "back-action": {
     "defaultMessage": "Quay lại",
     "description": "Back button text"
@@ -206,18 +210,6 @@
   "cancel-recording-action": {
     "defaultMessage": "Hủy ghi âm",
     "description": "Button label to cancel a movement data recording"
-  },
-  "carousel-role": {
-    "defaultMessage": "băng chuyền",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum} trong tổng số {totalSlides}",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "trang trình chiếu",
-    "description": "aria-roledescription for carousel slide / item"
   },
   "certainty-label": {
     "defaultMessage": "Độ chắc chắn",
@@ -983,6 +975,10 @@
     "defaultMessage": "Bắt đầu",
     "description": "Go action"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Get it on Google Play",
+    "description": "Alt text for the Google Play badge in the homepage footer"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Bảng màu của biểu đồ",
     "description": "Graph colour scheme setting label"
@@ -1031,10 +1027,6 @@
     "defaultMessage": "Trợ giúp",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "Danh sách tài nguyên trợ giúp",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "Trợ giúp",
     "description": "Title for home page row"
@@ -1058,6 +1050,10 @@
   "homepage-banner-subtitle": {
     "defaultMessage": "Học máy với chuyển động và micro:bit",
     "description": "Homepage banner subtitle"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Available on Android tablets and iPads",
+    "description": "Homepage footer text advertising the mobile apps"
   },
   "import-data-samples-action": {
     "defaultMessage": "Nhập các mẫu dữ liệu",
@@ -1351,10 +1347,6 @@
     "defaultMessage": "Di chuyển micro:bit để xem các chuyển động khác nhau làm thay đổi biểu đồ như thế nào",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "Danh sách dự án của tôi",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "Các dự án của tôi",
     "description": "Title for home page row"
@@ -1498,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "Chính sách quyền riêng tư",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "Danh sách ý tưởng dự án",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Ý tưởng dự án",
@@ -1902,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "Vui lòng xem xét <link>đưa ra yêu cầu hỗ trợ</link>.",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "Danh sách tài nguyên dành cho giáo viên",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Tài nguyên dành cho giáo viên",

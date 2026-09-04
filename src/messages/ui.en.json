@@ -425,32 +425,6 @@
       "value": "Cancel recording"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "carousel"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " of "
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "slide"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1895,12 +1869,6 @@
       "value": "Help"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of help resources"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2457,12 +2425,6 @@
       "value": "Move the micro:bit to explore how different actions change the graph"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of my projects"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2703,12 +2665,6 @@
     {
       "type": 0,
       "value": "Privacy policy"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of project ideas"
     }
   ],
   "project-ideas-row-title": [
@@ -3535,12 +3491,6 @@
       "value": "."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "List of teacher resources"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3915,6 +3865,44 @@
       "value": "Try again"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "carousel"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3967,16 +3955,6 @@
     {
       "type": 0,
       "value": "Language not fully supported"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [

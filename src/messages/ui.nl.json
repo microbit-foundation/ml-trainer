@@ -429,32 +429,6 @@
       "value": "Opname annuleren"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "carrousel"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " van "
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "Veeg"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1899,12 +1873,6 @@
       "value": "Help"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lijst van hulpbronnen"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2461,12 +2429,6 @@
       "value": "Beweeg de micro:bit om te ontdekken hoe verschillende acties de grafiek veranderen"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lijst van mijn projecten"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2707,12 +2669,6 @@
     {
       "type": 0,
       "value": "Privacybeleid"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lijst van projectideeën"
     }
   ],
   "project-ideas-row-title": [
@@ -3547,12 +3503,6 @@
       "value": " in te dienen."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lijst van hulpbronnen voor leraren"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3927,6 +3877,44 @@
       "value": "Probeer het opnieuw"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "carrousel"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " van "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "Veeg"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3979,16 +3967,6 @@
     {
       "type": 0,
       "value": "Taal niet volledig ondersteund"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [

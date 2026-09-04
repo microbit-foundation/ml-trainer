@@ -397,40 +397,6 @@
       "value": "crwdns362688:0crwdne362688:0"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "crwdns369299:0crwdne369299:0"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 0,
-      "value": "crwdns369301:0"
-    },
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": "crwdnd369301:0"
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    },
-    {
-      "type": 0,
-      "value": "crwdne369301:0"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "crwdns369303:0crwdne369303:0"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1831,12 +1797,6 @@
       "value": "crwdns363014:0crwdne363014:0"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "crwdns369329:0crwdne369329:0"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2349,12 +2309,6 @@
       "value": "crwdns369341:0crwdne369341:0"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "crwdns369343:0crwdne369343:0"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2585,12 +2539,6 @@
     {
       "type": 0,
       "value": "crwdns363236:0crwdne363236:0"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "crwdns369359:0crwdne369359:0"
     }
   ],
   "project-ideas-row-title": [
@@ -3393,12 +3341,6 @@
       "value": "crwdns363362:0crwdne363362:0"
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "crwdns369407:0crwdne369407:0"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3715,6 +3657,52 @@
       "value": "crwdns363448:0crwdne363448:0"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "crwdns369299:0crwdne369299:0"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 0,
+      "value": "crwdns369301:0"
+    },
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": "crwdnd369301:0"
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    },
+    {
+      "type": 0,
+      "value": "crwdne369301:0"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "crwdns369303:0crwdne369303:0"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3767,16 +3755,6 @@
     {
       "type": 0,
       "value": "crwdns370142:0crwdne370142:0"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [

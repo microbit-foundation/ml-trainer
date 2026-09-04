@@ -301,6 +301,12 @@
       "value": "ການຝຶກຝົນໂມເດວ"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -421,32 +427,6 @@
     {
       "type": 0,
       "value": "ຍົກເລີກການບັນທຶກ"
-    }
-  ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "ຮູບແບບເລື່ອນຮູບ"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " ຂອງ "
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "ສະໄລ້"
     }
   ],
   "certainty-label": [
@@ -1819,6 +1799,12 @@
       "value": "ໄປ"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1891,12 +1877,6 @@
       "value": "ຊ່ວຍເຫຼືອ"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "ລາຍການແຫຼ່ງຂໍ້ມູນຊ່ວຍເຫຼືອ"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -1939,6 +1919,12 @@
     {
       "type": 0,
       "value": "ການຮຽນຮູ້ເຄື່ອງຈັກດ້ວຍການເຄື່ອນໄຫວ ແລະ micro:bit"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [
@@ -2447,12 +2433,6 @@
       "value": "ເຄື່ອນ micro:bit ເພື່ອສຳຫຼວດວ່າການກະທຳຕ່າງໆປ່ຽນແປງກຣາຟແນວໃດ"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "ລາຍຊື່ໂຄງການຂອງຂ້ອຍ"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2693,12 +2673,6 @@
     {
       "type": 0,
       "value": "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "ລາຍການໄອເດຍໂຄງການ"
     }
   ],
   "project-ideas-row-title": [
@@ -3529,12 +3503,6 @@
       "value": "."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "ລາຍການຊັບພະຍາກອນສຳລັບຄູ"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3909,6 +3877,44 @@
       "value": "ລອງໃໝ່ອີກຄັ້ງ"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "ຮູບແບບເລື່ອນຮູບ"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " ຂອງ "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "ສະໄລ້"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3961,16 +3967,6 @@
     {
       "type": 0,
       "value": "ພາສາບໍ່ຮອງຮັບຢ່າງເຕັມທີ່"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [

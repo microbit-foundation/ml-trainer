@@ -211,18 +211,6 @@
     "defaultMessage": "Cancel·la l'enregistrament",
     "description": "Button label to cancel a movement data recording"
   },
-  "carousel-role": {
-    "defaultMessage": "Carrusel",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum}de{totalSlides}",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "so lliscant",
-    "description": "aria-roledescription for carousel slide / item"
-  },
   "certainty-label": {
     "defaultMessage": "Certesa",
     "description": "Heading for certainty column"
@@ -1039,10 +1027,6 @@
     "defaultMessage": "Ajuda",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "Llista de recursos d'ajuda",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "Ajuda",
     "description": "Title for home page row"
@@ -1363,10 +1347,6 @@
     "defaultMessage": "Mou la micro:bit per explorar com diferents accions canvien el gràfic",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "Llista dels meus projectes",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "Els meus projectes",
     "description": "Title for home page row"
@@ -1510,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "Política de privadesa",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "Llista d'idees de projectes",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Idees de projectes",
@@ -1914,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "Si us plau, considera<link>fer una sol·licitud d'assistència</link>.",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "Llista de recursos docents",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Recursos del professor",

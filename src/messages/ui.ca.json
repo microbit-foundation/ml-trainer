@@ -421,32 +421,6 @@
       "value": "Cancel·la l'enregistrament"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "Carrusel"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": "de"
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "so lliscant"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1877,12 +1851,6 @@
       "value": "Ajuda"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Llista de recursos d'ajuda"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2439,12 +2407,6 @@
       "value": "Mou la micro:bit per explorar com diferents accions canvien el gràfic"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "Llista dels meus projectes"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2685,12 +2647,6 @@
     {
       "type": 0,
       "value": "Política de privadesa"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "Llista d'idees de projectes"
     }
   ],
   "project-ideas-row-title": [
@@ -3521,12 +3477,6 @@
       "value": "."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Llista de recursos docents"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3901,6 +3851,44 @@
       "value": "Torna-ho a provar"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "Carrusel"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": "de"
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "so lliscant"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3953,16 +3941,6 @@
     {
       "type": 0,
       "value": "L'idioma no està disponible totalment"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [

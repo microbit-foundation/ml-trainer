@@ -417,32 +417,6 @@
       "value": "Annuler l'enregistrement"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "carrousel"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " sur "
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "slide"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1891,12 +1865,6 @@
       "value": "Aide"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Liste des ressources d'aide"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2453,12 +2421,6 @@
       "value": "Faire bouger le micro:bit pour découvrir comment différentes actions changent le graphique"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "Liste de mes projets"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2699,12 +2661,6 @@
     {
       "type": 0,
       "value": "Politique de confidentialité"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "Liste des idées de projet"
     }
   ],
   "project-ideas-row-title": [
@@ -3535,12 +3491,6 @@
       "value": "."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Liste des ressources pédagogiques"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3915,6 +3865,44 @@
       "value": "Réessayer"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "carrousel"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " sur "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3967,16 +3955,6 @@
     {
       "type": 0,
       "value": "La langue n'est pas entièrement prise en charge"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [

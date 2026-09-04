@@ -297,6 +297,12 @@
       "value": "Huấn luyện"
     }
   ],
+  "app-store-badge-alt": [
+    {
+      "type": 0,
+      "value": "Download on the App Store"
+    }
+  ],
   "back-action": [
     {
       "type": 0,
@@ -417,32 +423,6 @@
     {
       "type": 0,
       "value": "Hủy ghi âm"
-    }
-  ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "băng chuyền"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " trong tổng số "
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "trang trình chiếu"
     }
   ],
   "certainty-label": [
@@ -1811,6 +1791,12 @@
       "value": "Bắt đầu"
     }
   ],
+  "google-play-badge-alt": [
+    {
+      "type": 0,
+      "value": "Get it on Google Play"
+    }
+  ],
   "graph-color-scheme": [
     {
       "type": 0,
@@ -1883,12 +1869,6 @@
       "value": "Trợ giúp"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Danh sách tài nguyên trợ giúp"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -1931,6 +1911,12 @@
     {
       "type": 0,
       "value": "Học máy với chuyển động và micro:bit"
+    }
+  ],
+  "homepage-footer-title": [
+    {
+      "type": 0,
+      "value": "Available on Android tablets and iPads"
     }
   ],
   "import-data-samples-action": [
@@ -2439,12 +2425,6 @@
       "value": "Di chuyển micro:bit để xem các chuyển động khác nhau làm thay đổi biểu đồ như thế nào"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "Danh sách dự án của tôi"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2685,12 +2665,6 @@
     {
       "type": 0,
       "value": "Chính sách quyền riêng tư"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "Danh sách ý tưởng dự án"
     }
   ],
   "project-ideas-row-title": [
@@ -3521,12 +3495,6 @@
       "value": "."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Danh sách tài nguyên dành cho giáo viên"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3901,6 +3869,44 @@
       "value": "Thử lại"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "băng chuyền"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " trong tổng số "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "trang trình chiếu"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3953,16 +3959,6 @@
     {
       "type": 0,
       "value": "Ngôn ngữ không được hỗ trợ đầy đủ"
-    }
-  ],
-  "ui-patterns.play-video": [
-    {
-      "type": 0,
-      "value": "Play video: "
-    },
-    {
-      "type": 1,
-      "value": "title"
     }
   ],
   "ui.breadcrumb": [
