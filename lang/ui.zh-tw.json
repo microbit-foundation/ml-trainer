@@ -211,18 +211,6 @@
     "defaultMessage": "取消錄製",
     "description": "Button label to cancel a movement data recording"
   },
-  "carousel-role": {
-    "defaultMessage": "順序播放",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "第 {slideNum} 張，共 {totalSlides} 張",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "slide",
-    "description": "aria-roledescription for carousel slide / item"
-  },
   "certainty-label": {
     "defaultMessage": "確定性",
     "description": "Heading for certainty column"
@@ -1039,10 +1027,6 @@
     "defaultMessage": "幫助",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "協助資源列表",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "幫助",
     "description": "Title for home page row"
@@ -1363,10 +1347,6 @@
     "defaultMessage": "移動 micro:bit，探索不同動作如何變更圖表",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "我的專案列表",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "我的專案",
     "description": "Title for home page row"
@@ -1510,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "隱私權政策",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "專案構想列表",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "專案構想",
@@ -1914,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "請考慮<link>提出支援請求</link>。",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "教師資源列表",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "教師資源",

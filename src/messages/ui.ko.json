@@ -413,32 +413,6 @@
       "value": "기록 취소"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "무한 재생"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": "/"
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "slide"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1859,12 +1833,6 @@
       "value": "도움 및 지원"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "도움말 자료 목록"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2413,12 +2381,6 @@
       "value": "micro:bit를 움직여 행동에 따라 그래프가 어떻게 변하는지 살펴보세요."
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "내 프로젝트 목록"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2659,12 +2621,6 @@
     {
       "type": 0,
       "value": "개인정보 보호 정책"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "프로젝트 아이디어 목록"
     }
   ],
   "project-ideas-row-title": [
@@ -3463,12 +3419,6 @@
       "value": "을 생각해 보세요."
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "교사용 자료 목록"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3833,6 +3783,44 @@
     {
       "type": 0,
       "value": "다시 시도"
+    }
+  ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "무한 재생"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": "/"
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
     }
   ],
   "ui-patterns.help-translate": [

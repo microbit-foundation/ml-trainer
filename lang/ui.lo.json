@@ -155,6 +155,10 @@
     "defaultMessage": "ການຝຶກຝົນໂມເດວ",
     "description": "Machine learning training on computer screen of how it works animation"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Download on the App Store",
+    "description": "Alt text for the Apple App Store badge in the homepage footer"
+  },
   "back-action": {
     "defaultMessage": "ກັບຄືນ",
     "description": "Back button text"
@@ -206,18 +210,6 @@
   "cancel-recording-action": {
     "defaultMessage": "ຍົກເລີກການບັນທຶກ",
     "description": "Button label to cancel a movement data recording"
-  },
-  "carousel-role": {
-    "defaultMessage": "ຮູບແບບເລື່ອນຮູບ",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum} ຂອງ {totalSlides}",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "ສະໄລ້",
-    "description": "aria-roledescription for carousel slide / item"
   },
   "certainty-label": {
     "defaultMessage": "ຄວາມແນ່ນອນ",
@@ -983,6 +975,10 @@
     "defaultMessage": "ໄປ",
     "description": "Go action"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Get it on Google Play",
+    "description": "Alt text for the Google Play badge in the homepage footer"
+  },
   "graph-color-scheme": {
     "defaultMessage": "ຊຸດສີຂອງກຣາຟ",
     "description": "Graph colour scheme setting label"
@@ -1031,10 +1027,6 @@
     "defaultMessage": "ຊ່ວຍເຫຼືອ",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "ລາຍການແຫຼ່ງຂໍ້ມູນຊ່ວຍເຫຼືອ",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "ຊ່ວຍເຫຼືອ",
     "description": "Title for home page row"
@@ -1058,6 +1050,10 @@
   "homepage-banner-subtitle": {
     "defaultMessage": "ການຮຽນຮູ້ເຄື່ອງຈັກດ້ວຍການເຄື່ອນໄຫວ ແລະ micro:bit",
     "description": "Homepage banner subtitle"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Available on Android tablets and iPads",
+    "description": "Homepage footer text advertising the mobile apps"
   },
   "import-data-samples-action": {
     "defaultMessage": "ນຳເຂົ້າຕົວຢ່າງຂໍ້ມູນ",
@@ -1351,10 +1347,6 @@
     "defaultMessage": "ເຄື່ອນ micro:bit ເພື່ອສຳຫຼວດວ່າການກະທຳຕ່າງໆປ່ຽນແປງກຣາຟແນວໃດ",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "ລາຍຊື່ໂຄງການຂອງຂ້ອຍ",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "ໂຄງການຂອງຂ້ອຍ",
     "description": "Title for home page row"
@@ -1498,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "ລາຍການໄອເດຍໂຄງການ",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "ໄອເດຍໂຄງການ",
@@ -1902,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "ກະລຸນາພິຈາລະນາ <link>ສົ່ງຄຳຮ້ອງຂໍສະໜັບສະໜູນ</link>.",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "ລາຍການຊັບພະຍາກອນສຳລັບຄູ",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "ຊັບພະຍາກອນສຳລັບຄູ",

@@ -425,32 +425,6 @@
       "value": "Cancelar a gravação"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "carrossel"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " de "
-    },
-    {
-      "type": 1,
-      "value": "totalSlides"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "deslizar"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1895,12 +1869,6 @@
       "value": "Ajuda"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lista de recursos de ajuda"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2457,12 +2425,6 @@
       "value": "Mova o micro:bit para ver como diferentes ações alteram o gráfico"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lista dos meus projetos"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2707,12 +2669,6 @@
     {
       "type": 0,
       "value": "Política de Privacidade"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lista de ideias de projetos"
     }
   ],
   "project-ideas-row-title": [
@@ -3539,12 +3495,6 @@
       ]
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "Lista de recursos para professores"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3919,6 +3869,44 @@
       "value": "Tentar novamente"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "carrossel"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " de "
+    },
+    {
+      "type": 1,
+      "value": "totalSlides"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "deslizar"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3934,7 +3922,7 @@
   "ui-patterns.language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Suporte completo"
+      "value": "Totalmente suportado"
     }
   ],
   "ui-patterns.language-partially-supported-heading": [

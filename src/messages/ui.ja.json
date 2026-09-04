@@ -413,36 +413,6 @@
       "value": "記録をキャンセル"
     }
   ],
-  "carousel-role": [
-    {
-      "type": 0,
-      "value": "カルーセル"
-    }
-  ],
-  "carousel-slide-label": [
-    {
-      "type": 1,
-      "value": "totalSlides"
-    },
-    {
-      "type": 0,
-      "value": "枚中"
-    },
-    {
-      "type": 1,
-      "value": "slideNum"
-    },
-    {
-      "type": 0,
-      "value": " 枚目"
-    }
-  ],
-  "carousel-slide-role": [
-    {
-      "type": 0,
-      "value": "slide"
-    }
-  ],
   "certainty-label": [
     {
       "type": 0,
@@ -1863,12 +1833,6 @@
       "value": "ヘルプ"
     }
   ],
-  "help-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "ヘルプリソースのリスト"
-    }
-  ],
   "help-resources-row-title": [
     {
       "type": 0,
@@ -2417,12 +2381,6 @@
       "value": "micro:bitを動かして、さまざまなアクションでグラフがどのように変化するか見てみましょう"
     }
   ],
-  "my-projects-row-carousel": [
-    {
-      "type": 0,
-      "value": "自分のプロジェクトのリスト"
-    }
-  ],
   "my-projects-row-title": [
     {
       "type": 0,
@@ -2663,12 +2621,6 @@
     {
       "type": 0,
       "value": "プライバシーポリシー"
-    }
-  ],
-  "project-ideas-row-carousel": [
-    {
-      "type": 0,
-      "value": "プロジェクトアイデアのリスト"
     }
   ],
   "project-ideas-row-title": [
@@ -3467,12 +3419,6 @@
       "value": " を検討してください。"
     }
   ],
-  "teacher-resources-row-carousel": [
-    {
-      "type": 0,
-      "value": "先生向けのリソースのリストを表示"
-    }
-  ],
   "teacher-resources-row-title": [
     {
       "type": 0,
@@ -3847,6 +3793,48 @@
       "value": "もう一度やり直す"
     }
   ],
+  "ui-carousel.next": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "ui-carousel.previous": [
+    {
+      "type": 0,
+      "value": "Previous"
+    }
+  ],
+  "ui-carousel.role": [
+    {
+      "type": 0,
+      "value": "カルーセル"
+    }
+  ],
+  "ui-carousel.slide-label": [
+    {
+      "type": 1,
+      "value": "totalSlides"
+    },
+    {
+      "type": 0,
+      "value": "枚中"
+    },
+    {
+      "type": 1,
+      "value": "slideNum"
+    },
+    {
+      "type": 0,
+      "value": " 枚目"
+    }
+  ],
+  "ui-carousel.slide-role": [
+    {
+      "type": 0,
+      "value": "slide"
+    }
+  ],
   "ui-patterns.help-translate": [
     {
       "type": 0,
@@ -3938,7 +3926,7 @@
   "ui.loading": [
     {
       "type": 0,
-      "value": "読み込み中"
+      "value": "ロード中"
     }
   ],
   "ui.new-tab-notice": [

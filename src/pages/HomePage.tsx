@@ -15,7 +15,7 @@ import {
 } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link as RouterLink, useNavigate } from "react-router";
-import CarouselRow from "../components/Carousel/CarouselRow";
+import { CarouselRow } from "@microbit/ui-carousel";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import DefaultPageLayout, {
   HomeToolbarItem,
@@ -38,8 +38,6 @@ import {
   Card,
   CardBody,
   css,
-  Heading,
-  HStack,
   Icon,
   IconButton,
   darkSurface,
@@ -58,6 +56,8 @@ import {
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
 import { useDefaultProjectName } from "../hooks/project-hooks";
 
+const carouselRowClassName = css({ _shortHeight: { py: 4 } });
+
 const HomePage = () => {
   const intl = useIntl();
   const [{ languageId }] = useSettings();
@@ -71,19 +71,22 @@ const HomePage = () => {
       <HomepageBanner />
       <ProjectRow />
       <CarouselRow
-        containerMessageId="project-ideas-row-carousel"
         carouselItems={createProjectIdeaCards(intl, languageId)}
-        titleId="project-ideas-row-title"
+        title={<FormattedMessage id="project-ideas-row-title" />}
+        navigation={!isNativePlatform()}
+        className={carouselRowClassName}
       />
       <CarouselRow
-        containerMessageId="teacher-resources-row-carousel"
         carouselItems={createLessonCards(intl)}
-        titleId="teacher-resources-row-title"
+        title={<FormattedMessage id="teacher-resources-row-title" />}
+        navigation={!isNativePlatform()}
+        className={carouselRowClassName}
       />
       <CarouselRow
-        containerMessageId="help-resources-row-carousel"
         carouselItems={createHelpCards(intl)}
-        titleId="help-resources-row-title"
+        title={<FormattedMessage id="help-resources-row-title" />}
+        navigation={!isNativePlatform()}
+        className={carouselRowClassName}
       />
       <HomepageFooter />
     </DefaultPageLayout>
@@ -204,31 +207,28 @@ const ProjectRow = () => {
             ) : undefined,
           ].filter(Boolean) as JSX.Element[]
         }
-        containerMessageId="my-projects-row-carousel"
-        titleElement={
-          <HStack gap={3}>
-            <Heading size="lg">
-              <FormattedMessage id="my-projects-row-title" />
-            </Heading>
-            {!isNativePlatform() && (
-              <TooltipButton
-                hasArrow
-                placement={tooltipPlacement}
-                label={
-                  <VStack textAlign="left" alignItems="flex-start" m={3}>
-                    <Text>
-                      <FormattedMessage id="project-storage-tooltip" />
-                    </Text>
-                  </VStack>
-                }
-              >
-                <Icon
-                  as={RiInformationLine}
-                  css={{ opacity: 0.7, width: 5, height: 5 }}
-                />
-              </TooltipButton>
-            )}
-          </HStack>
+        navigation={!isNativePlatform()}
+        className={carouselRowClassName}
+        title={<FormattedMessage id="my-projects-row-title" />}
+        titleSuffix={
+          !isNativePlatform() && (
+            <TooltipButton
+              hasArrow
+              placement={tooltipPlacement}
+              label={
+                <VStack textAlign="left" alignItems="flex-start" m={3}>
+                  <Text>
+                    <FormattedMessage id="project-storage-tooltip" />
+                  </Text>
+                </VStack>
+              }
+            >
+              <Icon
+                as={RiInformationLine}
+                css={{ opacity: 0.7, width: 5, height: 5 }}
+              />
+            </TooltipButton>
+          )
         }
       />
     </>

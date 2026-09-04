@@ -211,18 +211,6 @@
     "defaultMessage": "記録をキャンセル",
     "description": "Button label to cancel a movement data recording"
   },
-  "carousel-role": {
-    "defaultMessage": "カルーセル",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{totalSlides}枚中{slideNum} 枚目",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "slide",
-    "description": "aria-roledescription for carousel slide / item"
-  },
   "certainty-label": {
     "defaultMessage": "確実性",
     "description": "Heading for certainty column"
@@ -1039,10 +1027,6 @@
     "defaultMessage": "ヘルプ",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "ヘルプリソースのリスト",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "ヘルプ",
     "description": "Title for home page row"
@@ -1363,10 +1347,6 @@
     "defaultMessage": "micro:bitを動かして、さまざまなアクションでグラフがどのように変化するか見てみましょう",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "自分のプロジェクトのリスト",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "自分のプロジェクト",
     "description": "Title for home page row"
@@ -1510,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "プライバシーポリシー",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "プロジェクトアイデアのリスト",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "プロジェクトアイデア",
@@ -1914,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "先生向けのリソースのリストを表示",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "教育者用リソース",
