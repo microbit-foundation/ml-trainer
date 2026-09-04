@@ -828,7 +828,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "Colonne "
     },
     {
       "type": 1,
@@ -3136,7 +3136,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
+      "value": "Si vous ne pouvez pas accéder au bouton de réinitialisation, maintenez A+B pendant que vous allumez le micro:bit."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [

@@ -436,7 +436,7 @@
     "description": "Screen reader text for numeric pattern input"
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
+    "defaultMessage": "Kolom {colNum}, {numLeds, plural, one {# LED aan} other {# LED's aan}}",
     "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
   },
   "connect-pattern-subtitle": {
@@ -1692,7 +1692,7 @@
     "description": "Heading for rename project dialog"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "Als je geen toegang hebt tot de reset knop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt.",
+    "defaultMessage": "Als je geen toegang hebt tot de resetknop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt.",
     "description": "Instructions to hold A and B buttons while powering on the micro:bit"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
