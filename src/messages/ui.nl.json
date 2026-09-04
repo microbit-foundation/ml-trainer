@@ -840,7 +840,7 @@
   "connect-pattern-led-option-label": [
     {
       "type": 0,
-      "value": "Column "
+      "value": "Kolom "
     },
     {
       "type": 1,
@@ -861,7 +861,7 @@
             },
             {
               "type": 0,
-              "value": " LED lit"
+              "value": " LED aan"
             }
           ]
         },
@@ -872,7 +872,7 @@
             },
             {
               "type": 0,
-              "value": " LEDs lit"
+              "value": " LED's aan"
             }
           ]
         }
@@ -3152,7 +3152,7 @@
   "reset-to-bluetooth-mode-ab-power-on-subtitle": [
     {
       "type": 0,
-      "value": "Als je geen toegang hebt tot de reset knop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt."
+      "value": "Als je geen toegang hebt tot de resetknop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt."
     }
   ],
   "reset-to-bluetooth-mode-ab-subtitle": [
@@ -3994,7 +3994,7 @@
   "ui.breadcrumb": [
     {
       "type": 0,
-      "value": "Kruimelpad"
+      "value": "Kruimelspoor"
     }
   ],
   "ui.close-action": [
@@ -4110,7 +4110,7 @@
   "ui.toast-status-success": [
     {
       "type": 0,
-      "value": "Succes"
+      "value": "Succesvol"
     }
   ],
   "ui.toast-status-warning": [
