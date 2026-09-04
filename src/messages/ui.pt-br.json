@@ -3922,7 +3922,7 @@
   "ui-patterns.language-fully-supported-heading": [
     {
       "type": 0,
-      "value": "Suporte completo"
+      "value": "Totalmente suportado"
     }
   ],
   "ui-patterns.language-partially-supported-heading": [
@@ -3959,6 +3959,16 @@
     {
       "type": 0,
       "value": "O idioma possui suporte parcial"
+    }
+  ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
     }
   ],
   "ui.breadcrumb": [

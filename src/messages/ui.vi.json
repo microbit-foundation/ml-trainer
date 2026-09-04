@@ -3961,6 +3961,16 @@
       "value": "Ngôn ngữ không được hỗ trợ đầy đủ"
     }
   ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,

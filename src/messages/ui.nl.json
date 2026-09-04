@@ -3969,10 +3969,20 @@
       "value": "Taal niet volledig ondersteund"
     }
   ],
+  "ui-patterns.play-video": [
+    {
+      "type": 0,
+      "value": "Play video: "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
   "ui.breadcrumb": [
     {
       "type": 0,
-      "value": "Kruimelpad"
+      "value": "Kruimelspoor"
     }
   ],
   "ui.close-action": [
@@ -4088,7 +4098,7 @@
   "ui.toast-status-success": [
     {
       "type": 0,
-      "value": "Succes"
+      "value": "Succesvol"
     }
   ],
   "ui.toast-status-warning": [
