@@ -45,7 +45,7 @@ When documenting properties/fields use the following style of comment:
 
 To add or amend UI strings:
 
-1. Edit `lang/ui.en.json`. If the US spelling differs, add the message to `lang/ui.en-us.json` too; that file holds only the messages that differ from `en`.
+1. Edit `lang/ui.en.json`. If the US spelling differs, add the message to `lang/ui.en-US.json` too; that file holds only the messages that differ from `en`.
 2. Run `npm run i18n:compile` to regenerate `src/messages/` (gitignored; also run by `postinstall` and before `dev` and `build`).
 
 The other `lang/ui.<lang>.json` files hold only what Crowdin has translated, so there is nothing to reset while iterating on English text: the compile falls back to English for anything missing. `npm run i18n:tidy` sorts and prunes them and CI checks they are tidy. They are updated from Crowdin by the translations-download workflow (or `npm run i18n:download` with a `CROWDIN_PERSONAL_TOKEN`); English is uploaded with the translations-upload workflow when the copy is ready. See `i18n.config.mjs` and `@microbit/i18n-tools`.
