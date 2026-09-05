@@ -1,2186 +1,1640 @@
 {
   "aarhus-university-alt": {
-    "defaultMessage": "Aarhus University",
-    "description": "Alt text for Aarhus University logo in about dialog"
+    "defaultMessage": "Aarhus University"
   },
   "about": {
-    "defaultMessage": "ກ່ຽວກັບ",
-    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
+    "defaultMessage": "ກ່ຽວກັບ"
   },
   "about-dialog-alt": {
-    "defaultMessage": "ບອດ micro:bit ກຳລັງສະແດງຮູບຫົວໃຈໃນໜ້າຈໍ LED",
-    "description": "Alt text for image in about dialog"
+    "defaultMessage": "ບອດ micro:bit ກຳລັງສະແດງຮູບຫົວໃຈໃນໜ້າຈໍ LED"
   },
   "about-dialog-title": {
-    "defaultMessage": "ພັດທະນາຮ່ວມກັນກັບ <link>Center for Computational Thinking and Design, Aarhus University</link>",
-    "description": "Title of about dialog"
+    "defaultMessage": "ພັດທະນາຮ່ວມກັນກັບ <link>Center for Computational Thinking and Design, Aarhus University</link>"
   },
   "accelerometer-image-alt": {
-    "defaultMessage": "micro:bit ສະແດງແກນ X ພາດຜ່ານດ້ານໜ້າ, ແກນ Y ຊີ້ຂຶ້ນ ແລະ ລົງ ແລະ ແກນ Z ຈາກດ້ານຫຼັງມາດ້ານໜ້າ",
-    "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
+    "defaultMessage": "micro:bit ສະແດງແກນ X ພາດຜ່ານດ້ານໜ້າ, ແກນ Y ຊີ້ຂຶ້ນ ແລະ ລົງ ແລະ ແກນ Z ຈາກດ້ານຫຼັງມາດ້ານໜ້າ"
   },
   "accessibility": {
-    "defaultMessage": "ການເຂົ້າເຖິງໄດ້ສຳລັບທຸກຄົນ",
-    "description": "Menu item for link to accessibility site"
+    "defaultMessage": "ການເຂົ້າເຖິງໄດ້ສຳລັບທຸກຄົນ"
   },
   "accessibility-resource-title": {
-    "defaultMessage": "ການເຂົ້າເຖິງໄດ້ສຳລັບທຸກຄົນ",
-    "description": "Accessibility resource card title"
+    "defaultMessage": "ການເຂົ້າເຖິງໄດ້ສຳລັບທຸກຄົນ"
   },
   "action-label": {
-    "defaultMessage": "ການດຳເນີນການ",
-    "description": "Label for a movement-related action, e.g. clapping"
+    "defaultMessage": "ການດຳເນີນການ"
   },
   "action-label-tooltip-aria": {
-    "defaultMessage": "ຄຳແນະນຳເມື່ອຊີ້ໃສ່ການດຳເນີນການ",
-    "description": "Aria label for action tooltip icon"
+    "defaultMessage": "ຄຳແນະນຳເມື່ອຊີ້ໃສ່ການດຳເນີນການ"
   },
   "action-length-error": {
-    "defaultMessage": "ຊື່ການດຳເນີນການຕ້ອງບໍ່ຍາວເກີນ {maxLen} ຕົວອັກສອນ.",
-    "description": "Error message shown when an action name is too long"
+    "defaultMessage": "ຊື່ການດຳເນີນການຕ້ອງບໍ່ຍາວເກີນ {maxLen} ຕົວອັກສອນ."
   },
   "action-name-placeholder": {
-    "defaultMessage": "ຊື່ຂອງການດຳເນີນການ",
-    "description": "Placeholder text for user supplied name of a movement-related action, e.g. clapping"
+    "defaultMessage": "ຊື່ຂອງການດຳເນີນການ"
   },
   "action-region": {
-    "defaultMessage": "ການດຳເນີນການ \"{action}\"",
-    "description": "Region label for action row"
+    "defaultMessage": "ການດຳເນີນການ \"{action}\""
   },
   "action-tooltip": {
-    "defaultMessage": "ປະເພດຂອງການເຄື່ອນໄຫວທີ່ທ່ານຕ້ອງການໃຫ້ {appNameFull} ຈົດຈຳໄດ້ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ຕົບມື’.",
-    "description": "Tooltip explaining action"
+    "defaultMessage": "ປະເພດຂອງການເຄື່ອນໄຫວທີ່ທ່ານຕ້ອງການໃຫ້ {appNameFull} ຈົດຈຳໄດ້ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ຕົບມື’."
   },
   "actions-label": {
-    "defaultMessage": "ການດຳເນີນການຕ່າງໆ",
-    "description": "Label for Actions"
+    "defaultMessage": "ການດຳເນີນການຕ່າງໆ"
   },
   "add-action-action": {
-    "defaultMessage": "ເພີ່ມການດຳເນີນການ",
-    "description": "Button to add an action (movement related, e.g. clapping)"
+    "defaultMessage": "ເພີ່ມການດຳເນີນການ"
   },
   "add-action-hint": {
-    "defaultMessage": "ບັນທຶກສຳລັບ {actionName} ສຳເລັດແລ້ວບໍ?<mark>ເພີ່ມການດຳເນີນການອື່ນ</mark>",
-    "description": "Hint when you have recorded enough data samples for one action"
+    "defaultMessage": "ບັນທຶກສຳລັບ {actionName} ສຳເລັດແລ້ວບໍ?<mark>ເພີ່ມການດຳເນີນການອື່ນ</mark>"
   },
   "add-action-hint-label": {
-    "defaultMessage": "ບັນທຶກສຳລັບ {actionName} ສຳເລັດແລ້ວບໍ? ກົດປຸ່ມ ‘ເພີ່ມການດຳເນີນການ’ ເພື່ອເພີ່ມການດຳເນີນການອື່ນ.",
-    "description": "Hint when you have recorded enough data samples for one action aria label"
+    "defaultMessage": "ບັນທຶກສຳລັບ {actionName} ສຳເລັດແລ້ວບໍ? ກົດປຸ່ມ ‘ເພີ່ມການດຳເນີນການ’ ເພື່ອເພີ່ມການດຳເນີນການອື່ນ."
   },
   "ai-activity-timer-resource-title": {
-    "defaultMessage": "ໂຕນັບເວລາກິດຈະກຳ AI",
-    "description": "Home page resource card title"
+    "defaultMessage": "ໂຕນັບເວລາກິດຈະກຳ AI"
   },
   "ai-light-switch-resource-title": {
-    "defaultMessage": "ສະວິດໄຟ AI",
-    "description": "Home page resource card title"
+    "defaultMessage": "ສະວິດໄຟ AI"
   },
   "ai-sports-data-logger-resource-title": {
-    "defaultMessage": "ຕົວບັນທຶກຂໍ້ມູນກິລາ AI",
-    "description": "Home page resource card title"
+    "defaultMessage": "ຕົວບັນທຶກຂໍ້ມູນກິລາ AI"
   },
   "ai-storytelling-friend-resource-title": {
-    "defaultMessage": "ໝູ່ເລົ່າເລື່ອງ AI",
-    "description": "Home page resource card title"
+    "defaultMessage": "ໝູ່ເລົ່າເລື່ອງ AI"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "ອະນຸຍາດການວິເຄາະຂໍ້ມູນ",
-    "description": "Accept button on the analytics consent dialog"
+    "defaultMessage": "ອະນຸຍາດການວິເຄາະຂໍ້ມູນ"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "ພວກເຮົາຕ້ອງການເກັບຂໍ້ມູນແບບບໍ່ລະບຸຕົວຕົນກ່ຽວກັບວິທີທີ່ທ່ານໃຊ້ແອັບ ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາປັບປຸງມັນໃຫ້ດີຂຶ້ນ. ພວກເຮົາບໍ່ແບ່ງປັນຂໍ້ມູນສ່ວນບຸກຄົນ ຫຼື ໃຊ້ໂຄສະນາຈາກບຸກຄົນທີສາມ.",
-    "description": "Body of the analytics consent dialog explaining the optional analytics collection"
+    "defaultMessage": "ພວກເຮົາຕ້ອງການເກັບຂໍ້ມູນແບບບໍ່ລະບຸຕົວຕົນກ່ຽວກັບວິທີທີ່ທ່ານໃຊ້ແອັບ ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາປັບປຸງມັນໃຫ້ດີຂຶ້ນ. ພວກເຮົາບໍ່ແບ່ງປັນຂໍ້ມູນສ່ວນບຸກຄົນ ຫຼື ໃຊ້ໂຄສະນາຈາກບຸກຄົນທີສາມ."
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "ທ່ານສາມາດປ່ຽນການຕັ້ງຄ່ານີ້ໄດ້ພາຍຫຼັງໃນການຕັ້ງຄ່າ.",
-    "description": "Reassurance line on the analytics consent dialog about reversibility"
+    "defaultMessage": "ທ່ານສາມາດປ່ຽນການຕັ້ງຄ່ານີ້ໄດ້ພາຍຫຼັງໃນການຕັ້ງຄ່າ."
   },
   "analytics-consent-decline-action": {
-    "defaultMessage": "ບໍ່, ຂອບໃຈຫຼາຍໆ",
-    "description": "Decline button on the analytics consent dialog"
+    "defaultMessage": "ບໍ່, ຂອບໃຈຫຼາຍໆ"
   },
   "analytics-consent-learn-more": {
-    "defaultMessage": "ຮຽນຮູ້ເພີ່ມເຕີມ",
-    "description": "Link on the analytics consent dialog to the privacy policy"
+    "defaultMessage": "ຮຽນຮູ້ເພີ່ມເຕີມ"
   },
   "analytics-consent-setting-helper": {
-    "defaultMessage": "ຊ່ວຍໃຫ້ພວກເຮົາປັບປຸງແອັບດ້ວຍຂໍ້ມູນການໃຊ້ງານແບບບໍ່ລະບຸຕົວຕົນ.",
-    "description": "Helper text for the analytics consent toggle in the settings dialog"
+    "defaultMessage": "ຊ່ວຍໃຫ້ພວກເຮົາປັບປຸງແອັບດ້ວຍຂໍ້ມູນການໃຊ້ງານແບບບໍ່ລະບຸຕົວຕົນ."
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "ແບ່ງປັນຂໍ້ມູນການໃຊ້ງານແບບບໍ່ລະບຸຕົວຕົນ",
-    "description": "Label for the analytics consent toggle in the settings dialog"
+    "defaultMessage": "ແບ່ງປັນຂໍ້ມູນການໃຊ້ງານແບບບໍ່ລະບຸຕົວຕົນ"
   },
   "analytics-consent-title": {
-    "defaultMessage": "ຊ່ວຍປັບປຸງ {appNameFull} ໃຫ້ດີຂຶ້ນ",
-    "description": "Title of the first-run analytics consent dialog on mobile"
+    "defaultMessage": "ຊ່ວຍປັບປຸງ {appNameFull} ໃຫ້ດີຂຶ້ນ"
   },
   "animation-bluetooth-mode-label": {
-    "defaultMessage": "ພາບເຄື່ອນໄຫວສາທິດວິທີຣີເຊັດໃຫ້ກັບໄປຢູ່ໂໝດ Bluetooth.",
-    "description": "Aria label for animation"
+    "defaultMessage": "ພາບເຄື່ອນໄຫວສາທິດວິທີຣີເຊັດໃຫ້ກັບໄປຢູ່ໂໝດ Bluetooth."
   },
   "animation-label": {
-    "defaultMessage": "ພາບເຄື່ອນໄຫວ ສາທິດຫ້າຂັ້ນຕອນຂອງຂະບວນການເຮັດວຽກ CreateAI: ເຊື່ອມຕໍ່, ເກັບຂໍ້ມູນ, ທົດສອບໂມເດວ, ຂຽນໂຄ້ດ ແລະ ນຳໃຊ້. ເຊື່ອມຕໍ່: ອຸປະກອນ micro:bit ຖືກເຊື່ອມຕໍ່ກັບຄອມພິວເຕີ ເພື່ອສ້າງການສື່ສານລະຫວ່າງທັງສອງ. ເກັບຂໍ້ມູນ: micro:bit ຖືກສວມໃສ່ຂໍ້ມື. ຂໍ້ມູນການເຄື່ອນໄຫວຖືກບັນທຶກສຳລັບສອງທ່າທາງ: ການໂບກມື (ສະແດງດ້ວຍໄອຄອນຮູບຫົວໃຈ) ແລະ ການສັ່ນ (ສະແດງດ້ວຍໄອຄອນຮູບກາກະບາດ). ມີການເກັບຕົວຢ່າງຫຼາຍຊຸດສຳລັບແຕ່ລະທ່າທາງເພື່ອຝຶກຝົນໂມເດວ. ທົດສອບໂມເດວ: ເມື່ອເກັບຕົວຢ່າງໄດ້ພຽງພໍແລ້ວ ຈະມີການຝຶກຝົນໂມເດວ ການຮຽນຮູ້ຂອງເຄື່ອງ. ຈາກນັ້ນ ຄອມພິວເຕີຈະພະຍາຍາມຈົດຈຳການໂບກມື ແລະ ການສັ່ນແບບເວລາຈິງ. ທ່ານສາມາດກັບໄປທີ່ຂັ້ນຕອນ ເກັບຂໍ້ມູນ ເພື່ອເກັບຕົວຢ່າງເພີ່ມເຕີມ ແລະ ທົດສອບຕໍ່ໄປໄດ້. ຂຽນໂຄດ: ທ່ານຂຽນໂປຣແກຣມໂດຍໃຊ້ບລັອກ MakeCode ທີ່ລວມເອົາໂມເດວທີ່ຝຶກຝົນແລ້ວ. ໂປຣແກຣມທີ່ສຳເລັດແລ້ວຈະຖືກດາວໂຫຼດລົງໃນ micro:bit. ນຳໃຊ້: micro:bit ຕອບສະໜອງຕໍ່ການເຄື່ອນໄຫວທາງຮ່າງກາຍຂອງທ່ານ ໂດຍສະແດງໄອຄອນທີ່ແຕກຕ່າງກັນໃນໜ້າຈໍ LED ຂອງມັນ ຂຶ້ນຢູ່ກັບວ່າກວດພົບການໂບກມື ຫຼື ການສັ່ນ.",
-    "description": "Aria label for animation"
+    "defaultMessage": "ພາບເຄື່ອນໄຫວ ສາທິດຫ້າຂັ້ນຕອນຂອງຂະບວນການເຮັດວຽກ CreateAI: ເຊື່ອມຕໍ່, ເກັບຂໍ້ມູນ, ທົດສອບໂມເດວ, ຂຽນໂຄ້ດ ແລະ ນຳໃຊ້. ເຊື່ອມຕໍ່: ອຸປະກອນ micro:bit ຖືກເຊື່ອມຕໍ່ກັບຄອມພິວເຕີ ເພື່ອສ້າງການສື່ສານລະຫວ່າງທັງສອງ. ເກັບຂໍ້ມູນ: micro:bit ຖືກສວມໃສ່ຂໍ້ມື. ຂໍ້ມູນການເຄື່ອນໄຫວຖືກບັນທຶກສຳລັບສອງທ່າທາງ: ການໂບກມື (ສະແດງດ້ວຍໄອຄອນຮູບຫົວໃຈ) ແລະ ການສັ່ນ (ສະແດງດ້ວຍໄອຄອນຮູບກາກະບາດ). ມີການເກັບຕົວຢ່າງຫຼາຍຊຸດສຳລັບແຕ່ລະທ່າທາງເພື່ອຝຶກຝົນໂມເດວ. ທົດສອບໂມເດວ: ເມື່ອເກັບຕົວຢ່າງໄດ້ພຽງພໍແລ້ວ ຈະມີການຝຶກຝົນໂມເດວ ການຮຽນຮູ້ຂອງເຄື່ອງ. ຈາກນັ້ນ ຄອມພິວເຕີຈະພະຍາຍາມຈົດຈຳການໂບກມື ແລະ ການສັ່ນແບບເວລາຈິງ. ທ່ານສາມາດກັບໄປທີ່ຂັ້ນຕອນ ເກັບຂໍ້ມູນ ເພື່ອເກັບຕົວຢ່າງເພີ່ມເຕີມ ແລະ ທົດສອບຕໍ່ໄປໄດ້. ຂຽນໂຄດ: ທ່ານຂຽນໂປຣແກຣມໂດຍໃຊ້ບລັອກ MakeCode ທີ່ລວມເອົາໂມເດວທີ່ຝຶກຝົນແລ້ວ. ໂປຣແກຣມທີ່ສຳເລັດແລ້ວຈະຖືກດາວໂຫຼດລົງໃນ micro:bit. ນຳໃຊ້: micro:bit ຕອບສະໜອງຕໍ່ການເຄື່ອນໄຫວທາງຮ່າງກາຍຂອງທ່ານ ໂດຍສະແດງໄອຄອນທີ່ແຕກຕ່າງກັນໃນໜ້າຈໍ LED ຂອງມັນ ຂຶ້ນຢູ່ກັບວ່າກວດພົບການໂບກມື ຫຼື ການສັ່ນ."
   },
   "animation-pause-action": {
-    "defaultMessage": "ຢຸດພາບເຄື່ອນໄຫວຊົ່ວຄາວ",
-    "description": "Pause animation button text"
+    "defaultMessage": "ຢຸດພາບເຄື່ອນໄຫວຊົ່ວຄາວ"
   },
   "animation-resume-action": {
-    "defaultMessage": "ດຳເນີນພາບເຄື່ອນໄຫວຕໍ່ໄປ",
-    "description": "Resume animation button text"
+    "defaultMessage": "ດຳເນີນພາບເຄື່ອນໄຫວຕໍ່ໄປ"
   },
   "animation-step-1": {
-    "defaultMessage": "ເຊື່ອມຕໍ່",
-    "description": "Step 1 of how it works animation"
+    "defaultMessage": "ເຊື່ອມຕໍ່"
   },
   "animation-step-2": {
-    "defaultMessage": "ເກັບຂໍ້ມູນ",
-    "description": "Step 2 of how it works animation"
+    "defaultMessage": "ເກັບຂໍ້ມູນ"
   },
   "animation-step-3": {
-    "defaultMessage": "ທົດສອບໂມເດວ",
-    "description": "Step 3 of how it works animation"
+    "defaultMessage": "ທົດສອບໂມເດວ"
   },
   "animation-step-4": {
-    "defaultMessage": "ຂຽນໂຄ້ດ",
-    "description": "Step 4 of how it works animation"
+    "defaultMessage": "ຂຽນໂຄ້ດ"
   },
   "animation-step-5": {
-    "defaultMessage": "ນຳໃຊ້",
-    "description": "Step 5 of how it works animation"
+    "defaultMessage": "ນຳໃຊ້"
   },
   "animation-training": {
-    "defaultMessage": "ການຝຶກຝົນໂມເດວ",
-    "description": "Machine learning training on computer screen of how it works animation"
+    "defaultMessage": "ການຝຶກຝົນໂມເດວ"
   },
   "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store",
-    "description": "Alt text for the Apple App Store badge in the homepage footer"
+    "defaultMessage": "Download on the App Store"
   },
   "back-action": {
-    "defaultMessage": "ກັບຄືນ",
-    "description": "Back button text"
+    "defaultMessage": "ກັບຄືນ"
   },
   "back-to-data-samples-action": {
-    "defaultMessage": "ແກ້ໄຂຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Back button text"
+    "defaultMessage": "ແກ້ໄຂຕົວຢ່າງຂໍ້ມູນ"
   },
   "blocks-preview-title": {
-    "defaultMessage": "ຕົວຢ່າງບລັອກໂຄ້ດ",
-    "description": "Blocks preview heading text"
+    "defaultMessage": "ຕົວຢ່າງບລັອກໂຄ້ດ"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "ກະລຸນາເປີດ Bluetooth ແລ້ວລອງອີກຄັ້ງ.",
-    "description": "Body text for Bluetooth disabled error dialog"
+    "defaultMessage": "ກະລຸນາເປີດ Bluetooth ແລ້ວລອງອີກຄັ້ງ."
   },
   "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetooth ຖືກປິດຢູ່",
-    "description": "Heading for Bluetooth disabled error dialog"
+    "defaultMessage": "Bluetooth ຖືກປິດຢູ່"
   },
   "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} ໃຊ້ Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ. ກະລຸນາເປີດສິດອະນຸຍາດອຸປະກອນໃກ້ຄຽງໃນ <link>ການຕັ້ງຄ່າຂອງ {appNameShort}</link>.",
-    "description": "Body text for Bluetooth permission denied error dialog on Android"
+    "defaultMessage": "{appNameShort} ໃຊ້ Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ. ກະລຸນາເປີດສິດອະນຸຍາດອຸປະກອນໃກ້ຄຽງໃນ <link>ການຕັ້ງຄ່າຂອງ {appNameShort}</link>."
   },
   "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} ໃຊ້ Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ. ກະລຸນາອະນຸຍາດໃຫ້ເຂົ້າເຖິງ Bluetooth ໃນ <link>ການຕັ້ງຄ່າຂອງ {appNameShort}</link>.",
-    "description": "Body text for Bluetooth permission denied error dialog on iOS"
+    "defaultMessage": "{appNameShort} ໃຊ້ Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ. ກະລຸນາອະນຸຍາດໃຫ້ເຂົ້າເຖິງ Bluetooth ໃນ <link>ການຕັ້ງຄ່າຂອງ {appNameShort}</link>."
   },
   "bluetooth-permission-denied-heading": {
-    "defaultMessage": "ຕ້ອງການສິດອະນຸຍາດ Bluetooth",
-    "description": "Heading for Bluetooth permission denied error dialog"
+    "defaultMessage": "ຕ້ອງການສິດອະນຸຍາດ Bluetooth"
   },
   "bluetooth-unsupported-advice": {
-    "defaultMessage": "ພວກເຮົາແນະນຳໃຫ້ໃຊ້ Google Chrome ຫຼື Microsoft Edge ເພື່ອໃຫ້ທ່ານສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານໄດ້ໂດຍກົງ.",
-    "description": "Note on supported browsers"
+    "defaultMessage": "ພວກເຮົາແນະນຳໃຫ້ໃຊ້ Google Chrome ຫຼື Microsoft Edge ເພື່ອໃຫ້ທ່ານສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານໄດ້ໂດຍກົງ."
   },
   "bluetooth-unsupported-explain": {
-    "defaultMessage": "ໜ້າເສຍດາຍ, WebUSB ແລະ Web Bluetooth ບໍ່ຮອງຮັບໂດຍບຣາວເຊີນີ້. ນີ້ໝາຍຄວາມວ່າ ທ່ານບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນທີ່ຈຳເປັນສຳລັບຝຶກຝົນໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ.",
-    "description": "Note on supported browsers"
+    "defaultMessage": "ໜ້າເສຍດາຍ, WebUSB ແລະ Web Bluetooth ບໍ່ຮອງຮັບໂດຍບຣາວເຊີນີ້. ນີ້ໝາຍຄວາມວ່າ ທ່ານບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນທີ່ຈຳເປັນສຳລັບຝຶກຝົນໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ."
   },
   "bluetooth-unsupported-header": {
-    "defaultMessage": "ບຣາວເຊີນີ້ບໍ່ຮອງຮັບ",
-    "description": "Heading for browser support dialog"
+    "defaultMessage": "ບຣາວເຊີນີ້ບໍ່ຮອງຮັບ"
   },
   "cancel-action": {
-    "defaultMessage": "ຍົກເລີກ",
-    "description": "Cancel button text"
+    "defaultMessage": "ຍົກເລີກ"
   },
   "cancel-recording-action": {
-    "defaultMessage": "ຍົກເລີກການບັນທຶກ",
-    "description": "Button label to cancel a movement data recording"
+    "defaultMessage": "ຍົກເລີກການບັນທຶກ"
   },
   "carousel-role": {
-    "defaultMessage": "ຮູບແບບເລື່ອນຮູບ",
-    "description": "aria-roledescription for carousel"
+    "defaultMessage": "ຮູບແບບເລື່ອນຮູບ"
   },
   "carousel-slide-label": {
-    "defaultMessage": "{slideNum} ຂອງ {totalSlides}",
-    "description": "Label for carousel slide / item"
+    "defaultMessage": "{slideNum} ຂອງ {totalSlides}"
   },
   "carousel-slide-role": {
-    "defaultMessage": "ສະໄລ້",
-    "description": "aria-roledescription for carousel slide / item"
+    "defaultMessage": "ສະໄລ້"
   },
   "certainty-label": {
-    "defaultMessage": "ຄວາມແນ່ນອນ",
-    "description": "Heading for certainty column"
+    "defaultMessage": "ຄວາມແນ່ນອນ"
   },
   "certainty-label-tooltip-aria": {
-    "defaultMessage": "ຄຳແນະນຳຄວາມແນ່ນອນ",
-    "description": "Aria label for code certainty icon"
+    "defaultMessage": "ຄຳແນະນຳຄວາມແນ່ນອນ"
   },
   "certainty-percentage-label": {
-    "defaultMessage": "ຄວາມແນ່ນອນສຳລັບ {action}: {currentConfidence} ເປີເຊັນ",
-    "description": "Label for certainty of an action"
+    "defaultMessage": "ຄວາມແນ່ນອນສຳລັບ {action}: {currentConfidence} ເປີເຊັນ"
   },
   "certainty-tooltip": {
-    "defaultMessage": "ຄວາມແນ່ໃຈທີ່ໂມເດວຄິດວ່າມັນກຳລັງດຳເນີນແຕ່ລະການກະທຳຢູ່ໃນຂະນະນີ້ແນວໃດ",
-    "description": "Tooltip for certainty column"
+    "defaultMessage": "ຄວາມແນ່ໃຈທີ່ໂມເດວຄິດວ່າມັນກຳລັງດຳເນີນແຕ່ລະການກະທຳຢູ່ໃນຂະນະນີ້ແນວໃດ"
   },
   "clear": {
-    "defaultMessage": "ລຶບລ້າງ",
-    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
+    "defaultMessage": "ລຶບລ້າງ"
   },
   "click-to-reload-page-action": {
-    "defaultMessage": "ຄລິກເພື່ອໂຫຼດໜ້າໃໝ່",
-    "description": "Reload page button text"
+    "defaultMessage": "ຄລິກເພື່ອໂຫຼດໜ້າໃໝ່"
   },
   "close-action": {
-    "defaultMessage": "ປິດໜ້າ",
-    "description": "Close button text or label"
+    "defaultMessage": "ປິດໜ້າ"
   },
   "code-download-error": {
-    "defaultMessage": "ຜິດພາດໃນການດາວໂຫຼດໂຄດໂປຣເຈັກ",
-    "description": "Title for error message relating to project loading"
+    "defaultMessage": "ຜິດພາດໃນການດາວໂຫຼດໂຄດໂປຣເຈັກ"
   },
   "code-label": {
-    "defaultMessage": "ຂຽນໂຄດ",
-    "description": "Code column heading"
+    "defaultMessage": "ຂຽນໂຄດ"
   },
   "code-label-tooltip-aria": {
-    "defaultMessage": "ຄຳແນະນຳໂຄດ",
-    "description": "Aria label for code tooltip icon"
+    "defaultMessage": "ຄຳແນະນຳໂຄດ"
   },
   "code-tooltip": {
-    "defaultMessage": "ເຫຼົ່ານີ້ແມ່ນບລັອກ MakeCode ສຳລັບແຕ່ລະການກະທຳທີ່ຖືກກວດພົບ ເມື່ອທ່ານໂອນໂມເດວ ML ແລະໂຄດໄປຍັງ micro:bit",
-    "description": "Code column heading tooltip"
+    "defaultMessage": "ເຫຼົ່ານີ້ແມ່ນບລັອກ MakeCode ສຳລັບແຕ່ລະການກະທຳທີ່ຖືກກວດພົບ ເມື່ອທ່ານໂອນໂມເດວ ML ແລະໂຄດໄປຍັງ micro:bit"
   },
   "confirm-action": {
-    "defaultMessage": "ຢືນຢັນ",
-    "description": "Confirm button text"
+    "defaultMessage": "ຢືນຢັນ"
   },
   "confirm-save-action": {
-    "defaultMessage": "ຢືນຢັນ ແລະ ບັນທຶກ",
-    "description": "Confirm and save action label"
+    "defaultMessage": "ຢືນຢັນ ແລະ ບັນທຶກ"
   },
   "confirm-share-action": {
-    "defaultMessage": "ຢືນຢັນ ແລະ ແບ່ງປັນ",
-    "description": "Confirm and share action label"
+    "defaultMessage": "ຢືນຢັນ ແລະ ແບ່ງປັນ"
   },
   "connect-action": {
-    "defaultMessage": "ເຊື່ອມຕໍ່",
-    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+    "defaultMessage": "ເຊື່ອມຕໍ່"
   },
   "connect-action-aria": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit",
-    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit"
   },
   "connect-battery-heading": {
-    "defaultMessage": "ຖອດສາຍ USB ອອກ ແລະ ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ",
-    "description": "Battery connection dialog "
+    "defaultMessage": "ຖອດສາຍ USB ອອກ ແລະ ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ"
   },
   "connect-battery-holder": {
-    "defaultMessage": "ຕົວຍຶດແບັດເຕີຣີ",
-    "description": "Label for battery holder icon"
+    "defaultMessage": "ຕົວຍຶດແບັດເຕີຣີ"
   },
   "connect-battery-link": {
-    "defaultMessage": "ທ່ານສາມາດຕິດ micro:bit ໄວ້ກັບຂໍ້ມື ຫຼື ວັດຖຸອື່ນໆໄດ້",
-    "description": "Battery connection dialog"
+    "defaultMessage": "ທ່ານສາມາດຕິດ micro:bit ໄວ້ກັບຂໍ້ມື ຫຼື ວັດຖຸອື່ນໆໄດ້"
   },
   "connect-battery-subtitle": {
-    "defaultMessage": "ຖອດ micro:bit ອອກຈາກຄອມພິວເຕີ ແລະ ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ",
-    "description": "Battery connection dialog"
+    "defaultMessage": "ຖອດ micro:bit ອອກຈາກຄອມພິວເຕີ ແລະ ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ"
   },
   "connect-bluetooth-cancelled-connection": {
-    "defaultMessage": "ທ່ານຍັງບໍ່ໄດ້ເລືອກ micro:bit ເທື່ອ. ທ່ານຢາກລອງອີກຄັ້ງບໍ?",
-    "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+    "defaultMessage": "ທ່ານຍັງບໍ່ໄດ້ເລືອກ micro:bit ເທື່ອ. ທ່ານຢາກລອງອີກຄັ້ງບໍ?"
   },
   "connect-bluetooth-enabled": {
-    "defaultMessage": "ເປີດ Bluetooth ແລ້ວ",
-    "description": "Label indicating Bluetooth needs to be enabled"
+    "defaultMessage": "ເປີດ Bluetooth ແລ້ວ"
   },
   "connect-bluetooth-heading": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ໂດຍໃຊ້ Web Bluetooth",
-    "description": "Connection dialogs"
+    "defaultMessage": "ເຊື່ອມຕໍ່ໂດຍໃຊ້ Web Bluetooth"
   },
   "connect-bluetooth-invalid-pattern": {
-    "defaultMessage": "ຮູບແບບທີ່ທ່ານວາດໃຊ້ບໍ່ໄດ້.",
-    "description": "Error when the bluetooth pattern is incomplete "
+    "defaultMessage": "ຮູບແບບທີ່ທ່ານວາດໃຊ້ບໍ່ໄດ້."
   },
   "connect-bluetooth-start-heading": {
-    "defaultMessage": "ສິ່ງທີ່ທ່ານຕ້ອງໃຊ້ເພື່ອເຊື່ອມໂດຍໃຊ້ Web Bluetooth",
-    "description": "Connection dialog heading"
+    "defaultMessage": "ສິ່ງທີ່ທ່ານຕ້ອງໃຊ້ເພື່ອເຊື່ອມໂດຍໃຊ້ Web Bluetooth"
   },
   "connect-bluetooth-start-requirements1": {
-    "defaultMessage": "1 micro:bit",
-    "description": "Label for icon of single micro:bit"
+    "defaultMessage": "1 micro:bit"
   },
   "connect-bluetooth-start-requirements2-subtitle": {
-    "defaultMessage": "ມີອິນເຕີເນັດ, ຜອດ USB ແລະ Web Bluetooth",
-    "description": "Under heading 'Computer' this lists the features the computer needs"
+    "defaultMessage": "ມີອິນເຕີເນັດ, ຜອດ USB ແລະ Web Bluetooth"
   },
   "connect-bluetooth-start-switch-radio": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ໂດຍໃຊ້ວິທະຍຸ micro:bit ແທນ",
-    "description": "Link to alternative connection method"
+    "defaultMessage": "ເຊື່ອມຕໍ່ໂດຍໃຊ້ວິທະຍຸ micro:bit ແທນ"
   },
   "connect-cable-alt": {
-    "defaultMessage": "ອະນິເມຊັນສະແດງສາຍ USB ກຳລັງຖືກເຊື່ອມຕໍ່ເຂົ້າທາງດ້ານເທິງຂອງ micro:bit",
-    "description": "Alt text"
+    "defaultMessage": "ອະນິເມຊັນສະແດງສາຍ USB ກຳລັງຖືກເຊື່ອມຕໍ່ເຂົ້າທາງດ້ານເທິງຂອງ micro:bit"
   },
   "connect-cable-download-project-subtitle": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອດາວໂຫຼດໂປຣແກຣມ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກລົງໄປໃນອຸປະກອນນັ້ນ.",
-    "description": "Download project dialog"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອດາວໂຫຼດໂປຣແກຣມ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກລົງໄປໃນອຸປະກອນນັ້ນ."
   },
   "connect-cable-heading": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ເຂົ້າກັບ micro:bit",
-    "description": "Connect cable dialog heading"
+    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ເຂົ້າກັບ micro:bit"
   },
   "connect-cable-skip": {
-    "defaultMessage": "ຂ້າມ: ໂປຣແກຣມໄດ້ຖືກດາວໂຫຼດແລ້ວບໍ?",
-    "description": "Link to skip"
+    "defaultMessage": "ຂ້າມ: ໂປຣແກຣມໄດ້ຖືກດາວໂຫຼດແລ້ວບໍ?"
   },
   "connect-cable-subtitle": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ໂປຣແກຣມເກັບຂໍ້ມູນສາມາດດາວໂຫຼດລົງໄປໃນອຸປະກອນນັ້ນໄດ້.",
-    "description": "Project download instructions"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ໂປຣແກຣມເກັບຂໍ້ມູນສາມາດດາວໂຫຼດລົງໄປໃນອຸປະກອນນັ້ນໄດ້."
   },
   "connect-cannot-see-pattern": {
-    "defaultMessage": "ຂ້ອຍບໍ່ເຫັນຮູບແບບ",
-    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+    "defaultMessage": "ຂ້ອຍບໍ່ເຫັນຮູບແບບ"
   },
   "connect-computer": {
-    "defaultMessage": "ຄອມພິວເຕີ",
-    "description": "Label for computer icon in connection dialog"
+    "defaultMessage": "ຄອມພິວເຕີ"
   },
   "connect-data-collection-heading": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ເຂົ້າກັບ micro:bit 1",
-    "description": "Connection dialog heading"
+    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ເຂົ້າກັບ micro:bit 1"
   },
   "connect-data-collection-subtitle": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ອັນທຳອິດເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ໂປຣແກຣມເກັບຂໍ້ມູນສາມາດດາວໂຫຼດລົງໄປໃນອຸປະກອນນັ້ນໄດ້ ນີ້ແມ່ນ micro:bit ທີ່ທ່ານຈະໃຊ້ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນ.",
-    "description": "Connection dialog subtitle"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ອັນທຳອິດເຂົ້າກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ໂປຣແກຣມເກັບຂໍ້ມູນສາມາດດາວໂຫຼດລົງໄປໃນອຸປະກອນນັ້ນໄດ້ ນີ້ແມ່ນ micro:bit ທີ່ທ່ານຈະໃຊ້ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນ."
   },
   "connect-failed-bluetooth-heading": {
-    "defaultMessage": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ micro:bit",
-    "description": "Bluetooth connection error message"
+    "defaultMessage": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ micro:bit"
   },
   "connect-failed-bluetooth1": {
-    "defaultMessage": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້.",
-    "description": "Bluetooth connection error message"
+    "defaultMessage": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້."
   },
   "connect-failed-bridge-heading": {
-    "defaultMessage": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ລິ້ງວິທະຍຸ micro:bit",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ລິ້ງວິທະຍຸ micro:bit"
   },
   "connect-failed-bridge1": {
-    "defaultMessage": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້.",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້."
   },
   "connect-failed-remote-heading": {
-    "defaultMessage": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "ລົ້ມເຫຼວໃນການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ"
   },
   "connect-failed-remote1": {
-    "defaultMessage": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້.",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "ບໍ່ສາມາດສ້າງການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້."
   },
   "connect-help-alt": {
-    "defaultMessage": "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ WebUSB ທີ່ມີລາຍການ BBC micro:bit ຖືກຕິດປ້າຍເລກ 1 ແລະ ປຸ່ມ “Connect” ຖືກຕິດປ້າຍເລກ 2",
-    "description": "Alt text for image in connect help dialog"
+    "defaultMessage": "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ WebUSB ທີ່ມີລາຍການ BBC micro:bit ຖືກຕິດປ້າຍເລກ 1 ແລະ ປຸ່ມ “Connect” ຖືກຕິດປ້າຍເລກ 2"
   },
   "connect-micro-usb-cable": {
-    "defaultMessage": "ສາຍ Micro USB",
-    "description": "Label for cable icon in list of requirements"
+    "defaultMessage": "ສາຍ Micro USB"
   },
   "connect-native-change-pattern": {
-    "defaultMessage": "ຮູບແບບຂອງຂ້ອຍບໍ່ຄືກັນ",
-    "description": "Change Bluetooth pattern link"
+    "defaultMessage": "ຮູບແບບຂອງຂ້ອຍບໍ່ຄືກັນ"
   },
   "connect-native-pattern-heading": {
-    "defaultMessage": "ຢືນຢັນວ່າ ຮູບແບບນີ້ຕົງກັບ micro:bit ຂອງທ່ານ",
-    "description": "Native Bluetooth pattern dialog heading"
+    "defaultMessage": "ຢືນຢັນວ່າ ຮູບແບບນີ້ຕົງກັບ micro:bit ຂອງທ່ານ"
   },
   "connect-native-pattern-subtitle": {
-    "defaultMessage": "ຖ້າຈຳເປັນ, ປ່ຽນຮູບແບບດ້ານລຸ່ມໃຫ້ກົງກັນ.",
-    "description": "Native Bluetooth pattern dialog subtitle"
+    "defaultMessage": "ຖ້າຈຳເປັນ, ປ່ຽນຮູບແບບດ້ານລຸ່ມໃຫ້ກົງກັນ."
   },
   "connect-native-start-battery-check": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ ຈາກນັ້ນກວດເບິ່ງວ່າ ໄຟຢູ່ດ້ານຫຼັງຂອງ micro:bit ເປີດຢູ່.",
-    "description": "Instruction to check the micro:bit is powered on via the battery pack"
+    "defaultMessage": "ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີ ຈາກນັ້ນກວດເບິ່ງວ່າ ໄຟຢູ່ດ້ານຫຼັງຂອງ micro:bit ເປີດຢູ່."
   },
   "connect-native-start-heading": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີຂອງ micro:bit",
-    "description": "Connection dialog heading"
+    "defaultMessage": "ເຊື່ອມຕໍ່ຊຸດແບັດເຕີຣີຂອງ micro:bit"
   },
   "connect-pattern-heading": {
-    "defaultMessage": "ຄັດລອກຮູບແບບ",
-    "description": "Heading for Bluetooth pattern connection dialog"
+    "defaultMessage": "ຄັດລອກຮູບແບບ"
   },
   "connect-pattern-input-label": {
-    "defaultMessage": "ຖັນ {colNum} - ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນໜ້າຈໍຂອງ micro:bit",
-    "description": "Screen reader text for numeric pattern input"
+    "defaultMessage": "ຖັນ {colNum} - ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນໜ້າຈໍຂອງ micro:bit"
   },
   "connect-pattern-label": {
-    "defaultMessage": "ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນແຕ່ລະຖັນຂອງໜ້າຈໍ micro:bit ຈາກຊ້າຍໄປຂວາ ແມ່ນ {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, ແລະ {numLedsOnCol5}.",
-    "description": "Screen reader text for numeric pattern input"
+    "defaultMessage": "ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນແຕ່ລະຖັນຂອງໜ້າຈໍ micro:bit ຈາກຊ້າຍໄປຂວາ ແມ່ນ {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, ແລະ {numLedsOnCol5}."
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
-    "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
+    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
-    "defaultMessage": "ຄັດລອກຮູບແບບທີ່ສະແດງຢູ່ໃນ micro:bit.",
-    "description": "Instruction for bluetooth pattern dialog"
+    "defaultMessage": "ຄັດລອກຮູບແບບທີ່ສະແດງຢູ່ໃນ micro:bit."
   },
   "connect-popup": {
-    "defaultMessage": "ເລືອກ micro:bit",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "ເລືອກ micro:bit"
   },
   "connect-popup-bluetooth-alt": {
-    "defaultMessage": "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ Web Bluetooth ທີ່ມີລາຍການ micro:bit ຕິດປ້າຍໝາຍເລກ 1 ແລະ ປຸ່ມ Pair ຕິດປ້າຍໝາຍເລກ 2",
-    "description": "Alt text"
+    "defaultMessage": "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ Web Bluetooth ທີ່ມີລາຍການ micro:bit ຕິດປ້າຍໝາຍເລກ 1 ແລະ ປຸ່ມ Pair ຕິດປ້າຍໝາຍເລກ 2"
   },
   "connect-popup-bluetooth-instruction2": {
-    "defaultMessage": "ເລືອກ 'ຈັບຄູ່'",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "ເລືອກ 'ຈັບຄູ່'"
   },
   "connect-popup-bluetooth-title": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ກັບ micro:bit ໂດຍໃຊ້ Web Bluetooth",
-    "description": "Instruction for dialog that previews the Bluetooth permission dialog"
+    "defaultMessage": "ເຊື່ອມຕໍ່ກັບ micro:bit ໂດຍໃຊ້ Web Bluetooth"
   },
   "connect-popup-instruction-heading": {
-    "defaultMessage": "ໃນໜ້າຕ່າງປັອບອັບຖັດໄປ",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "ໃນໜ້າຕ່າງປັອບອັບຖັດໄປ"
   },
   "connect-popup-instruction1": {
-    "defaultMessage": "ເລືອກ micro:bit ຂອງທ່ານ",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "ເລືອກ micro:bit ຂອງທ່ານ"
   },
   "connect-popup-usb-bluetooth-data-collection-title": {
-    "defaultMessage": "ດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນລົງໃນ micro:bit",
-    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+    "defaultMessage": "ດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນລົງໃນ micro:bit"
   },
   "connect-popup-usb-radio-data-collection-title": {
-    "defaultMessage": "ດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນລົງໃນ micro:bit 1",
-    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+    "defaultMessage": "ດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນລົງໃນ micro:bit 1"
   },
   "connect-popup-usb-radio-link-title": {
-    "defaultMessage": "ດາວໂຫຼດໂປຣແກຣມເຊື່ອມຕໍ່ວິທະຍຸລົງໃນ micro:bit 2",
-    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+    "defaultMessage": "ດາວໂຫຼດໂປຣແກຣມເຊື່ອມຕໍ່ວິທະຍຸລົງໃນ micro:bit 2"
   },
   "connect-popup-webusb-instruction2": {
-    "defaultMessage": "ເລືອກ 'ເຊື່ອມຕໍ່'",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "ເລືອກ 'ເຊື່ອມຕໍ່'"
   },
   "connect-radio-data-collection-microbit-description": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນກັບຄອມພິວເຕີນີ້ ເພື່ອດາວໂຫຼດໂປຣແກຣມ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານລົງໃນມັນ. ຖ້າທ່ານກຳລັງສວມ micro:bit ສຳລັບເກັບຂໍ້ມູນຢູ່ ທ່ານອາດຈະຕ້ອງຖອດມັນອອກກ່ອນ.",
-    "description": "Connect radio data collection micro:bit dialog description"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນກັບຄອມພິວເຕີນີ້ ເພື່ອດາວໂຫຼດໂປຣແກຣມ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານລົງໃນມັນ. ຖ້າທ່ານກຳລັງສວມ micro:bit ສຳລັບເກັບຂໍ້ມູນຢູ່ ທ່ານອາດຈະຕ້ອງຖອດມັນອອກກ່ອນ."
   },
   "connect-radio-data-collection-microbit-title": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ",
-    "description": "Connect radio data collection micro:bit dialog title"
+    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ"
   },
   "connect-radio-heading": {
-    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ micro:bits",
-    "description": "Text shown while radio link and data connection micro:bit are being connected"
+    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ micro:bits"
   },
   "connect-radio-link-heading": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ກັບ micro:bit 2",
-    "description": "Heading for connecting radio link micro:bit cable"
+    "defaultMessage": "ເຊື່ອມຕໍ່ສາຍ USB ກັບ micro:bit 2"
   },
   "connect-radio-link-subtitle": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ອັນທີສອງກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ສາມາດດາວໂຫຼດໂປຣແກຣມເຊື່ອມຕໍ່ວິທະຍຸລົງໃນມັນໄດ້. micro:bit ສຳລັບເຊື່ອມຕໍ່ວິທະຍຸນີ້ຈະສື່ສານກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ.",
-    "description": "Instruction for connecting radio link micro:bit cable"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ອັນທີສອງກັບຄອມພິວເຕີນີ້ດ້ວຍສາຍ USB ເພື່ອໃຫ້ສາມາດດາວໂຫຼດໂປຣແກຣມເຊື່ອມຕໍ່ວິທະຍຸລົງໃນມັນໄດ້. micro:bit ສຳລັບເຊື່ອມຕໍ່ວິທະຍຸນີ້ຈະສື່ສານກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ."
   },
   "connect-radio-start-heading": {
-    "defaultMessage": "ສິ່ງທີ່ທ່ານຕ້ອງການ ເພື່ອເຊື່ອມຕໍ່ໂດຍໃຊ້ວິທະຍຸ micro:bit\n",
-    "description": "Connection dialog heading"
+    "defaultMessage": "ສິ່ງທີ່ທ່ານຕ້ອງການ ເພື່ອເຊື່ອມຕໍ່ໂດຍໃຊ້ວິທະຍຸ micro:bit\n"
   },
   "connect-radio-start-requirements1": {
-    "defaultMessage": "2 micro:bits",
-    "description": "Label for icon of two micro:bits"
+    "defaultMessage": "2 micro:bits"
   },
   "connect-radio-start-requirements1-subtitle": {
-    "defaultMessage": "V2 ເທົ່ານັ້ນ",
-    "description": "Shown below 2 micro:bit label for micro:bit radio approach"
+    "defaultMessage": "V2 ເທົ່ານັ້ນ"
   },
   "connect-radio-start-requirements2-subtitle": {
-    "defaultMessage": "ພ້ອມອິນເຕີເນັດ ແລະ ພອດ USB",
-    "description": "Shown below 'Computer' heading listing additional requirements"
+    "defaultMessage": "ພ້ອມອິນເຕີເນັດ ແລະ ພອດ USB"
   },
   "connect-radio-start-switch-bluetooth": {
-    "defaultMessage": "ໃຊ້ Web Bluetooth ເພື່ອເຊື່ອມຕໍ່ແທນ",
-    "description": "Link to alternative connection method"
+    "defaultMessage": "ໃຊ້ Web Bluetooth ເພື່ອເຊື່ອມຕໍ່ແທນ"
   },
   "connect-to-record": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Live graph disconnected micro:bit status message for data samples page"
+    "defaultMessage": "ເຊື່ອມຕໍ່ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນ"
   },
   "connect-to-record-body": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນ.",
-    "description": "Insufficient data modal content"
+    "defaultMessage": "ເຊື່ອມຕໍ່ micro:bit ເພື່ອບັນທຶກຕົວຢ່າງຂໍ້ມູນ."
   },
   "connect-to-test-model": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ເພື່ອທົດສອບໂມເດວ ML ຂອງທ່ານ",
-    "description": "Live graph disconnected micro:bit status message for test model page"
+    "defaultMessage": "ເຊື່ອມຕໍ່ເພື່ອທົດສອບໂມເດວ ML ຂອງທ່ານ"
   },
   "connect-to-tour-body": {
-    "defaultMessage": "ທ່ານຕ້ອງເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ ເພື່ອເບິ່ງການແນະນຳນີ້.",
-    "description": "Prompt to connect the app to a micro:bit"
+    "defaultMessage": "ທ່ານຕ້ອງເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ ເພື່ອເບິ່ງການແນະນຳນີ້."
   },
   "connect-troubleshoot": {
-    "defaultMessage": "ແກ້ໄຂບັນຫາໃນການເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ",
-    "description": "Link to support article for troubleshooting"
+    "defaultMessage": "ແກ້ໄຂບັນຫາໃນການເຊື່ອມຕໍ່ກັບ micro:bit ຂອງທ່ານ"
   },
   "connect-troubleshooting": {
-    "defaultMessage": "ການແກ້ໄຂບັນຫາ",
-    "description": "Troubleshooting heading"
+    "defaultMessage": "ການແກ້ໄຂບັນຫາ"
   },
   "connect-try-another-way": {
-    "defaultMessage": "ລອງວິທີອື່ນເບິ່ງ",
-    "description": "Link to alternative connection method"
+    "defaultMessage": "ລອງວິທີອື່ນເບິ່ງ"
   },
   "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "ບໍ່ສາມາດເຂົ້າສູ່ໂໝດ Bluetooth ໄດ້ແມ່ນບໍ?",
-    "description": "Link to troubleshooting entering Bluetooth mode"
+    "defaultMessage": "ບໍ່ສາມາດເຂົ້າສູ່ໂໝດ Bluetooth ໄດ້ແມ່ນບໍ?"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຂົ້າສູ່ໂໝດ Bluetooth ໄດ້ແມ່ນບໍ?",
-    "description": "Unable to enter Bluetooth mode dialog heading"
+    "defaultMessage": "ບໍ່ສາມາດເຂົ້າສູ່ໂໝດ Bluetooth ໄດ້ແມ່ນບໍ?"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
-    "defaultMessage": "ລອງເຮັດຕາມຂັ້ນຕອນຕໍ່ໄປນີ້:",
-    "description": "Heading for list of things to try to enter Bluetooth mode dialog"
+    "defaultMessage": "ລອງເຮັດຕາມຂັ້ນຕອນຕໍ່ໄປນີ້:"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "ຖອດ micro:bit ອອກຈາກແຫຼ່ງຈ່າຍໄຟ ແລ້ວເຊື່ອມຕໍ່ມັນຄືນໃໝ່.",
-    "description": "List item in things to try to enter Bluetooth mode dialog"
+    "defaultMessage": "ຖອດ micro:bit ອອກຈາກແຫຼ່ງຈ່າຍໄຟ ແລ້ວເຊື່ອມຕໍ່ມັນຄືນໃໝ່."
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "ຖ້າ micro:bit ຂອງທ່ານສະແດງໄອຄອນ ‘+’, ໃຫ້ເຊື່ອມຕໍ່ micro:bit ກັບຄອມພິວເຕີດ້ວຍສາຍ USB ແລະ ດາວໂຫຼດໂປຣແກຣມງ່າຍໆໜຶ່ງລົງໃນມັນ. ຍົກເລີກການຈັບຄູ່/ລືມ micro:bit ໃນແອັບ ການຕັ້ງຄ່າ ກ່ອນທີ່ຈະລອງອີກຄັ້ງ.",
-    "description": "List item in things to try to enter Bluetooth mode dialog"
+    "defaultMessage": "ຖ້າ micro:bit ຂອງທ່ານສະແດງໄອຄອນ ‘+’, ໃຫ້ເຊື່ອມຕໍ່ micro:bit ກັບຄອມພິວເຕີດ້ວຍສາຍ USB ແລະ ດາວໂຫຼດໂປຣແກຣມງ່າຍໆໜຶ່ງລົງໃນມັນ. ຍົກເລີກການຈັບຄູ່/ລືມ micro:bit ໃນແອັບ ການຕັ້ງຄ່າ ກ່ອນທີ່ຈະລອງອີກຄັ້ງ."
   },
   "connect-with-batteries": {
-    "defaultMessage": "ພ້ອມແບັດເຕີຣີ",
-    "description": "Under header 'Battery holder' this notes that batteries are required"
+    "defaultMessage": "ພ້ອມແບັດເຕີຣີ"
   },
   "connect-with-web-bluetooth": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ດ້ວຍ Web Bluetooth",
-    "description": "Connection dialog title"
+    "defaultMessage": "ເຊື່ອມຕໍ່ດ້ວຍ Web Bluetooth"
   },
   "connecting": {
-    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່…",
-    "description": "Text shown while waiting for bluetooth/radio connection"
+    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່…"
   },
   "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ",
-    "description": "Connection dialogs"
+    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນ"
   },
   "continue-makecode-action": {
-    "defaultMessage": "ດຳເນີນຕໍ່ໄປທີ່ MakeCode",
-    "description": "Continue to MakeCode editor button text"
+    "defaultMessage": "ດຳເນີນຕໍ່ໄປທີ່ MakeCode"
   },
   "cookies-action": {
-    "defaultMessage": "ຄຸກກີ້",
-    "description": "Action to show dialog to choose website cookie preferences"
+    "defaultMessage": "ຄຸກກີ້"
   },
   "copied": {
-    "defaultMessage": "ຄັດລອກແລ້ວ",
-    "description": "Displayed as copy button text briefly after successful copy action"
+    "defaultMessage": "ຄັດລອກແລ້ວ"
   },
   "copy-action": {
-    "defaultMessage": "ຄັດລອກ",
-    "description": "Copy button text"
+    "defaultMessage": "ຄັດລອກ"
   },
   "create-project": {
-    "defaultMessage": "ສ້າງໂຄງການ",
-    "description": "Create project button text"
+    "defaultMessage": "ສ້າງໂຄງການ"
   },
   "create-project-dialog-heading": {
-    "defaultMessage": "ສ້າງໂຄງການໜຶ່ງ",
-    "description": "Create project dialog heading"
+    "defaultMessage": "ສ້າງໂຄງການໜຶ່ງ"
   },
   "createai-taster-lessons-resource-title": {
-    "defaultMessage": "ບົດຮຽນທົດລອງຮຽນ",
-    "description": "Home page resource card title"
+    "defaultMessage": "ບົດຮຽນທົດລອງຮຽນ"
   },
   "data-actions-menu": {
-    "defaultMessage": "ການກະທຳຂໍ້ມູນ",
-    "description": "Aria label for menu"
+    "defaultMessage": "ການກະທຳຂໍ້ມູນ"
   },
   "data-collection-microbit": {
-    "defaultMessage": "micro:bit ສຳລັບເກັບຂໍ້ມູນ",
-    "description": "Data collection micro:bit image caption"
+    "defaultMessage": "micro:bit ສຳລັບເກັບຂໍ້ມູນ"
   },
   "data-collection-microbit-label": {
-    "defaultMessage": "ຮູບສະແດງການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ ກັບຂໍ້ມືຂອງຄົນ",
-    "description": "Aria label for data collection image"
+    "defaultMessage": "ຮູບສະແດງການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນ ກັບຂໍ້ມືຂອງຄົນ"
   },
   "data-connection-region": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ຂໍ້ມູນ micro:bit",
-    "description": "Region label for data connection area"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ຂໍ້ມູນ micro:bit"
   },
   "data-features-hide-action": {
-    "defaultMessage": "ເຊື່ອງຄຸນສົມບັດຂໍ້ມູນ",
-    "description": "Hide data features button text"
+    "defaultMessage": "ເຊື່ອງຄຸນສົມບັດຂໍ້ມູນ"
   },
   "data-features-show-action": {
-    "defaultMessage": "ສະແດງຄຸນສົມບັດຂໍ້ມູນ",
-    "description": "Show data features button text"
+    "defaultMessage": "ສະແດງຄຸນສົມບັດຂໍ້ມູນ"
   },
   "data-preview-title": {
-    "defaultMessage": "ເບິ່ງຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Data preview heading text"
+    "defaultMessage": "ເບິ່ງຕົວຢ່າງຂໍ້ມູນ"
   },
   "data-samples-actions-region": {
-    "defaultMessage": "ແຖບເຄື່ອງມືຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Region label for data samples actions"
+    "defaultMessage": "ແຖບເຄື່ອງມືຕົວຢ່າງຂໍ້ມູນ"
   },
   "data-samples-label": {
-    "defaultMessage": "ຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Heading for data samples column"
+    "defaultMessage": "ຕົວຢ່າງຂໍ້ມູນ"
   },
   "data-samples-label-tooltip-aria": {
-    "defaultMessage": "ຄຳແນະນຳຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Aria label for data samples tooltip icon"
+    "defaultMessage": "ຄຳແນະນຳຕົວຢ່າງຂໍ້ມູນ"
   },
   "data-samples-status-count": {
-    "defaultMessage": "ໄດ້ບັນທຶກຕົວຢ່າງ {numSamples} ຕົວແລ້ວ",
-    "description": "Data samples status text"
+    "defaultMessage": "ໄດ້ບັນທຶກຕົວຢ່າງ {numSamples} ຕົວແລ້ວ"
   },
   "data-samples-status-not-enough": {
-    "defaultMessage": "ຕ້ອງການຢ່າງນ້ອຍ 3 ອັນ",
-    "description": "Data samples status text"
+    "defaultMessage": "ຕ້ອງການຢ່າງນ້ອຍ 3 ອັນ"
   },
   "data-samples-title": {
-    "defaultMessage": "ຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Data samples page title"
+    "defaultMessage": "ຕົວຢ່າງຂໍ້ມູນ"
   },
   "data-samples-tooltip": {
-    "defaultMessage": "ການເກັບຂໍ້ມູນການເຄື່ອນໄຫວແບບສັ້ນ ໃຊ້ເວລາ 1 ວິນາທີ. ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານຖືກເກັບໄວ້ແຕ່ໃນຄອມພິວເຕີຂອງທ່ານເທົ່ານັ້ນ ແລະ ບໍ່ໄດ້ຖືກສົ່ງໄປຫາໃຜອື່ນທັງສິ້ນ.",
-    "description": "Tooltip for data samples heading"
+    "defaultMessage": "ການເກັບຂໍ້ມູນການເຄື່ອນໄຫວແບບສັ້ນ ໃຊ້ເວລາ 1 ວິນາທີ. ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານຖືກເກັບໄວ້ແຕ່ໃນຄອມພິວເຕີຂອງທ່ານເທົ່ານັ້ນ ແລະ ບໍ່ໄດ້ຖືກສົ່ງໄປຫາໃຜອື່ນທັງສິ້ນ."
   },
   "default-project-name": {
-    "defaultMessage": "ບໍ່ມີຊື່ (ຍັງບໍ່ໄດ້ຕັ້ງຊື່)",
-    "description": "Default project name"
+    "defaultMessage": "ບໍ່ມີຊື່ (ຍັງບໍ່ໄດ້ຕັ້ງຊື່)"
   },
   "delete-action-aria": {
-    "defaultMessage": "ລຶບການກະທຳ \"{action}\"",
-    "description": "Aria label for action delete icon"
+    "defaultMessage": "ລຶບການກະທຳ \"{action}\""
   },
   "delete-action-confirm-heading": {
-    "defaultMessage": "ຢືນຢັນການລຶບການກະທຳ",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "ຢືນຢັນການລຶບການກະທຳ"
   },
   "delete-action-confirm-text": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບການກະທຳ \"{action}\"?",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບການກະທຳ \"{action}\"?"
   },
   "delete-data-samples-action": {
-    "defaultMessage": "ລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ",
-    "description": "Menu item to delete data samples"
+    "defaultMessage": "ລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ"
   },
   "delete-data-samples-confirm-heading": {
-    "defaultMessage": "ຢືນຢັນການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "ຢືນຢັນການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ"
   },
   "delete-data-samples-confirm-text": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ?",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ?"
   },
   "delete-project-action": {
-    "defaultMessage": "{count, plural, one {ລຶບ} other {ລຶບ {count} ໂຄງການ}}",
-    "description": "Delete project button"
+    "defaultMessage": "{count, plural, one {ລຶບ} other {ລຶບ {count} ໂຄງການ}}"
   },
   "delete-project-confirm-heading": {
-    "defaultMessage": "ຢືນຢັນການລຶບໂຄງການ",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "ຢືນຢັນການລຶບໂຄງການ"
   },
   "delete-project-confirm-text": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບໂຄງການ \"{project}\"?",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບໂຄງການ \"{project}\"?"
   },
   "delete-projects-confirm-heading": {
-    "defaultMessage": "ຢືນຢັນການລຶບໂຄງການ",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "ຢືນຢັນການລຶບໂຄງການ"
   },
   "delete-projects-confirm-text": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບ {numProjects} ໂຄງການ?",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບ {numProjects} ໂຄງການ?"
   },
   "delete-recording-aria": {
-    "defaultMessage": "ລຶບການບັນທຶກ {sample} ຈາກທັງໝົດ {numSamples} ສຳລັບການກະທຳ \"{action}\"",
-    "description": "Aria label for data sample delete action"
+    "defaultMessage": "ລຶບການບັນທຶກ {sample} ຈາກທັງໝົດ {numSamples} ສຳລັບການກະທຳ \"{action}\""
   },
   "disconnect-action": {
-    "defaultMessage": "ຕັດການເຊື່ອມຕໍ່",
-    "description": "Disconnect (from bluetooth/radio) action"
+    "defaultMessage": "ຕັດການເຊື່ອມຕໍ່"
   },
   "disconnected-during-recording": {
-    "defaultMessage": "micro:bit ຖືກຖອດອອກລະຫວ່າງການບັນທຶກ",
-    "description": "Error when the micro:bit is disconnected during recording"
+    "defaultMessage": "micro:bit ຖືກຖອດອອກລະຫວ່າງການບັນທຶກ"
   },
   "disconnected-warning-bluetooth-heading": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນຂາດຫາຍ",
-    "description": "Dialog heading"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນຂາດຫາຍ"
   },
   "disconnected-warning-bluetooth1": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນໄດ້ຂາດຫາຍໄປແລ້ວ.",
-    "description": "Dialog text"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນໄດ້ຂາດຫາຍໄປແລ້ວ."
   },
   "disconnected-warning-bluetooth2": {
-    "defaultMessage": "ກະລຸນາກວດສອບວ່າ micro:bit:",
-    "description": "Heading for list of things to check"
+    "defaultMessage": "ກະລຸນາກວດສອບວ່າ micro:bit:"
   },
   "disconnected-warning-bluetooth3": {
-    "defaultMessage": "ເປີດຢູ່ (ໄຟສີແດງທາງດ້ານຫຼັງຂອງ micro:bit ຄວນຈະເປີດຢູ່)",
-    "description": "List item, one of several things to check about the micro:bit"
+    "defaultMessage": "ເປີດຢູ່ (ໄຟສີແດງທາງດ້ານຫຼັງຂອງ micro:bit ຄວນຈະເປີດຢູ່)"
   },
   "disconnected-warning-bluetooth4": {
-    "defaultMessage": "ຢູ່ໃກ້ກັບຄອມພິວເຕີ",
-    "description": "List item, one of several things to check about the micro:bit"
+    "defaultMessage": "ຢູ່ໃກ້ກັບຄອມພິວເຕີ"
   },
   "disconnected-warning-bridge-heading": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ micro:bit ຜ່ານລິ້ງວິທະຍຸຂາດຫາຍ",
-    "description": "Connection error dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ micro:bit ຜ່ານລິ້ງວິທະຍຸຂາດຫາຍ"
   },
   "disconnected-warning-bridge1": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້ຂາດຫາຍໄປແລ້ວ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້ຂາດຫາຍໄປແລ້ວ."
   },
   "disconnected-warning-remote-heading": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນຂາດຫາຍ",
-    "description": "Connection error dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ micro:bit ສຳລັບເກັບຂໍ້ມູນຂາດຫາຍ"
   },
   "disconnected-warning-remote1": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນໄດ້ຂາດຫາຍໄປແລ້ວ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບເກັບຂໍ້ມູນໄດ້ຂາດຫາຍໄປແລ້ວ."
   },
   "dont-show-again": {
-    "defaultMessage": "ຢ່າສະແດງອັນນີ້ອີກ",
-    "description": "Text to never show a dialog again"
+    "defaultMessage": "ຢ່າສະແດງອັນນີ້ອີກ"
   },
   "download-data-samples-action": {
-    "defaultMessage": "ດາວໂຫຼດຕົວຢ່າງຂໍ້ມູນທັງໝົດ",
-    "description": "Download action"
+    "defaultMessage": "ດາວໂຫຼດຕົວຢ່າງຂໍ້ມູນທັງໝົດ"
   },
   "download-project-choose-microbit-subtitle": {
-    "defaultMessage": "ການດາວໂຫຼດໂຄງການຂອງທ່ານໄປຍັງ micro:bit ອັນດຽວກັນ ຈະເຮັດໃຫ້ micro:bit ຖືກຕັດອອກຈາກເຄື່ອງມືນີ້. ຖ້າທ່ານຕ້ອງການບັນທຶກຕົວຢ່າງຂໍ້ມູນເພີ່ມ ທ່ານຈະຕ້ອງເຊື່ອມຕໍ່ micro:bit ໃໝ່ອີກຄັ້ງ.",
-    "description": "Download project choose micro:bit dialog subtitle"
+    "defaultMessage": "ການດາວໂຫຼດໂຄງການຂອງທ່ານໄປຍັງ micro:bit ອັນດຽວກັນ ຈະເຮັດໃຫ້ micro:bit ຖືກຕັດອອກຈາກເຄື່ອງມືນີ້. ຖ້າທ່ານຕ້ອງການບັນທຶກຕົວຢ່າງຂໍ້ມູນເພີ່ມ ທ່ານຈະຕ້ອງເຊື່ອມຕໍ່ micro:bit ໃໝ່ອີກຄັ້ງ."
   },
   "download-project-choose-microbit-title": {
-    "defaultMessage": "ທ່ານຕ້ອງການໃຊ້ micro:bit ອັນໃດ?",
-    "description": "Download project choose micro:bit dialog title"
+    "defaultMessage": "ທ່ານຕ້ອງການໃຊ້ micro:bit ອັນໃດ?"
   },
   "download-project-different-microbit-option": {
-    "defaultMessage": "micro:bit ອີກອັນໜຶ່ງ",
-    "description": "Download project different micro:bit option"
+    "defaultMessage": "micro:bit ອີກອັນໜຶ່ງ"
   },
   "download-project-intro-description": {
-    "defaultMessage": "ໂປຣແກຣມຂອງທ່ານມີໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກທີ່ທ່ານສ້າງໄວ້ຢູ່ດ້ວຍ. ໂມເດວນີ້ຈະຮັນຢູ່ໃນ micro:bit ເພື່ອໃຫ້ທ່ານໃຊ້ໄດ້ໂດຍບໍ່ຕ້ອງເຊື່ອມຕໍ່ກັບ {appNameFull}.",
-    "description": "Download project intro dialog description"
+    "defaultMessage": "ໂປຣແກຣມຂອງທ່ານມີໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກທີ່ທ່ານສ້າງໄວ້ຢູ່ດ້ວຍ. ໂມເດວນີ້ຈະຮັນຢູ່ໃນ micro:bit ເພື່ອໃຫ້ທ່ານໃຊ້ໄດ້ໂດຍບໍ່ຕ້ອງເຊື່ອມຕໍ່ກັບ {appNameFull}."
   },
   "download-project-intro-title": {
-    "defaultMessage": "ດາວໂຫຼດໂຄງການ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານ",
-    "description": "Download project intro dialog title"
+    "defaultMessage": "ດາວໂຫຼດໂຄງການ MakeCode ການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານ"
   },
   "download-project-same-microbit-option": {
-    "defaultMessage": "micro:bit ອັນເດີມ",
-    "description": "Download project same micro:bit option"
+    "defaultMessage": "micro:bit ອັນເດີມ"
   },
   "downloading-data-collection-header": {
-    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນ",
-    "description": "Progress text"
+    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນ"
   },
   "downloading-data-collection-microbit-header": {
-    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນໄປຍັງ micro:bit",
-    "description": "Progress text"
+    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມເກັບຂໍ້ມູນໄປຍັງ micro:bit"
   },
   "downloading-header": {
-    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມໄປຍັງ micro:bit",
-    "description": "Progress text"
+    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມໄປຍັງ micro:bit"
   },
   "downloading-radio-link-header": {
-    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມລິ້ງວິທະຍຸ",
-    "description": "Progress text"
+    "defaultMessage": "ກຳລັງດາວໂຫຼດໂປຣແກຣມລິ້ງວິທະຍຸ"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "ຖ້າຖືກຖາມ, ໃຫ້ເລືອກ ‘ຈັບຄູ່’\n",
-    "description": "Progress text when ensuring device is paired before flashing"
+    "defaultMessage": "ຖ້າຖືກຖາມ, ໃຫ້ເລືອກ ‘ຈັບຄູ່’\n"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ກັບ micro:bit…",
-    "description": "Progress text during connection stage of flashing"
+    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ກັບ micro:bit…"
   },
   "downloading-stage-finding-device": {
-    "defaultMessage": "ກຳລັງຊອກຫາ micro:bit…",
-    "description": "Progress text during device discovery stage of flashing"
+    "defaultMessage": "ກຳລັງຊອກຫາ micro:bit…"
   },
   "downloading-stage-flashing-native": {
-    "defaultMessage": "ກະລຸນາຢ່າໂຕ້ຕອບກັບ micro:bit ກ່ອນທີ່ການດາວໂຫຼດຈະສຳເລັດ.",
-    "description": "Progress text during native flashing stage"
+    "defaultMessage": "ກະລຸນາຢ່າໂຕ້ຕອບກັບ micro:bit ກ່ອນທີ່ການດາວໂຫຼດຈະສຳເລັດ."
   },
   "downloading-stage-resetting-device": {
-    "defaultMessage": "ກຳລັງລໍຖ້າໃຫ້ micro:bit ເລີ່ມຕົ້ນໃໝ່...",
-    "description": "Progress text when rebooting micro:bit before flashing"
+    "defaultMessage": "ກຳລັງລໍຖ້າໃຫ້ micro:bit ເລີ່ມຕົ້ນໃໝ່..."
   },
   "downloading-subtitle": {
-    "defaultMessage": "ກະລຸນາລໍຖ້າ. ກຳລັງດາວໂຫຼດໂປຣແກຣມລົງໃນ micro:bit.",
-    "description": "Progress text during actual flashing stage"
+    "defaultMessage": "ກະລຸນາລໍຖ້າ. ກຳລັງດາວໂຫຼດໂປຣແກຣມລົງໃນ micro:bit."
   },
   "duplicate-project-action": {
-    "defaultMessage": "ສຳເນົາຊ້ຳ",
-    "description": "Duplicate project action"
+    "defaultMessage": "ສຳເນົາຊ້ຳ"
   },
   "duplicate-project-heading": {
-    "defaultMessage": "ສຳເນົາໂຄງການຊ້ຳ",
-    "description": "Heading for duplicate project dialog"
+    "defaultMessage": "ສຳເນົາໂຄງການຊ້ຳ"
   },
   "edit-in-makecode-action": {
-    "defaultMessage": "ແກ້ໄຂໃນ MakeCode",
-    "description": "Edit in MakeCode button text"
+    "defaultMessage": "ແກ້ໄຂໃນ MakeCode"
   },
   "estimated-action-aria": {
-    "defaultMessage": "ການດຳເນີນການທີ່ຄາດຄະເນ: \"{action}\"",
-    "description": "Aria live text for the current estimated action"
+    "defaultMessage": "ການດຳເນີນການທີ່ຄາດຄະເນ: \"{action}\""
   },
   "estimated-action-label": {
-    "defaultMessage": "ການດຳເນີນການທີ່ຄາດຄະເນ",
-    "description": "Heading for estimated action area next to the live graph"
+    "defaultMessage": "ການດຳເນີນການທີ່ຄາດຄະເນ"
   },
   "estimated-action-label-tooltip-aria": {
-    "defaultMessage": "ຄຳແນະນຳຂອງການດຳເນີນການທີ່ຄາດຄະເນ",
-    "description": "Aria label for estimated action tooltip icon"
+    "defaultMessage": "ຄຳແນະນຳຂອງການດຳເນີນການທີ່ຄາດຄະເນ"
   },
   "estimated-action-tooltip": {
-    "defaultMessage": "ນີ້ແມ່ນການດຳເນີນການທີ່ໂມເດວຄິດວ່າທ່ານກຳລັງເຮັດຢູ່ໃນຂະນະນີ້.",
-    "description": "Tooltip for the estimated action heading"
+    "defaultMessage": "ນີ້ແມ່ນການດຳເນີນການທີ່ໂມເດວຄິດວ່າທ່ານກຳລັງເຮັດຢູ່ໃນຂະນະນີ້."
   },
   "feedback": {
-    "defaultMessage": "ຄຳຕິຊົມຄືນ",
-    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
+    "defaultMessage": "ຄຳຕິຊົມຄືນ"
   },
   "fingerprint-acc-x-tooltip": {
-    "defaultMessage": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ x",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ x"
   },
   "fingerprint-acc-y-tooltip": {
-    "defaultMessage": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ y",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ y"
   },
   "fingerprint-acc-z-tooltip": {
-    "defaultMessage": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ z",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຜົນລວມຂອງຂໍ້ມູນໃນທິດທາງ z"
   },
   "fingerprint-max-x-tooltip": {
-    "defaultMessage": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
   },
   "fingerprint-max-y-tooltip": {
-    "defaultMessage": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
   },
   "fingerprint-max-z-tooltip": {
-    "defaultMessage": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າສູງສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
   },
   "fingerprint-mean-x-tooltip": {
-    "defaultMessage": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ x",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ x"
   },
   "fingerprint-mean-y-tooltip": {
-    "defaultMessage": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ y",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ y"
   },
   "fingerprint-mean-z-tooltip": {
-    "defaultMessage": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ z",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າສະເລ່ຍຂອງຂໍ້ມູນທິດທາງ z"
   },
   "fingerprint-min-x-tooltip": {
-    "defaultMessage": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
   },
   "fingerprint-min-y-tooltip": {
-    "defaultMessage": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ\n",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ\n"
   },
   "fingerprint-min-z-tooltip": {
-    "defaultMessage": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
   },
   "fingerprint-peaks-x-tooltip": {
-    "defaultMessage": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
   },
   "fingerprint-peaks-y-tooltip": {
-    "defaultMessage": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
   },
   "fingerprint-peaks-z-tooltip": {
-    "defaultMessage": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຈຳນວນຄ່າສູງສຸດ ແລະ ຄ່າຕ່ຳສຸດໃນບັນດາຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
   },
   "fingerprint-rms-x-tooltip": {
-    "defaultMessage": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
   },
   "fingerprint-rms-y-tooltip": {
-    "defaultMessage": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
   },
   "fingerprint-rms-z-tooltip": {
-    "defaultMessage": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຮາກສະເລ່ຍກຳລັງສອງຂອງຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
   },
   "fingerprint-std-x-tooltip": {
-    "defaultMessage": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ x ທັງໝົດ"
   },
   "fingerprint-std-y-tooltip": {
-    "defaultMessage": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ y ທັງໝົດ"
   },
   "fingerprint-std-z-tooltip": {
-    "defaultMessage": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ຄ່າຄວາມຜັນຜວນສະເລ່ຍຈາກ 0 ຂອງຈຸດຂໍ້ມູນທິດທາງ z ທັງໝົດ"
   },
   "fingerprint-zcr-x-tooltip": {
-    "defaultMessage": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ x",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ x"
   },
   "fingerprint-zcr-y-tooltip": {
-    "defaultMessage": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ y",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ y"
   },
   "fingerprint-zcr-z-tooltip": {
-    "defaultMessage": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ z",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "ອັດຕາທີ່ຄວາມເລັ່ງປ່ຽນຜ່ານລະຫວ່າງຄ່າບວກ ແລະ ຄ່າລົບ ສຳລັບຈຸດຂໍ້ມູນທິດທາງ z"
   },
   "firmware-outdated-content1": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ລົ້ມເຫຼວ ເນື່ອງຈາກ firmware ໃນ micro:bit ຂອງທ່ານເກົ່າເກີນໄປ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ລົ້ມເຫຼວ ເນື່ອງຈາກ firmware ໃນ micro:bit ຂອງທ່ານເກົ່າເກີນໄປ."
   },
   "firmware-outdated-content2": {
-    "defaultMessage": "ທ່ານຕ້ອງ <link>ອັບເດດ firmware ຂອງທ່ານ</link> ກ່ອນທີ່ຈະສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ນີ້ໄດ້.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ທ່ານຕ້ອງ <link>ອັບເດດ firmware ຂອງທ່ານ</link> ກ່ອນທີ່ຈະສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ນີ້ໄດ້."
   },
   "firmware-outdated-heading": {
-    "defaultMessage": "ຕ້ອງອັບເດດກ່ອນໃຊ້ງານ",
-    "description": "Connection error dialog"
+    "defaultMessage": "ຕ້ອງອັບເດດກ່ອນໃຊ້ງານ"
   },
   "first-lessons-with-microbit-createai-resource-title": {
-    "defaultMessage": "ບົດຮຽນທຳອິດ",
-    "description": "Home page resource card title"
+    "defaultMessage": "ບົດຮຽນທຳອິດ"
   },
   "go-action": {
-    "defaultMessage": "ໄປ",
-    "description": "Go action"
+    "defaultMessage": "ໄປ"
   },
   "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play",
-    "description": "Alt text for the Google Play badge in the homepage footer"
+    "defaultMessage": "Get it on Google Play"
   },
   "graph-color-scheme": {
-    "defaultMessage": "ຊຸດສີຂອງກຣາຟ",
-    "description": "Graph colour scheme setting label"
+    "defaultMessage": "ຊຸດສີຂອງກຣາຟ"
   },
   "graph-color-scheme-color-blind-1": {
-    "defaultMessage": "ທາງເລືອກສຳລັບຜູ້ຕາບອດສີ 1",
-    "description": "Graph colour scheme option"
+    "defaultMessage": "ທາງເລືອກສຳລັບຜູ້ຕາບອດສີ 1"
   },
   "graph-color-scheme-color-blind-2": {
-    "defaultMessage": "ທາງເລືອກສຳລັບຜູ້ຕາບອດສີ 2",
-    "description": "Graph colour scheme option"
+    "defaultMessage": "ທາງເລືອກສຳລັບຜູ້ຕາບອດສີ 2"
   },
   "graph-color-scheme-default": {
-    "defaultMessage": "ຄ່າເລີ່ມຕົ້ນ (ສີແດງ, ສີຟ້າ, ສີຂຽວ)",
-    "description": "Graph colour scheme option"
+    "defaultMessage": "ຄ່າເລີ່ມຕົ້ນ (ສີແດງ, ສີຟ້າ, ສີຂຽວ)"
   },
   "graph-line-scheme": {
-    "defaultMessage": "ຮູບແບບເສັ້ນກຣາຟ",
-    "description": "Graph line scheme setting label"
+    "defaultMessage": "ຮູບແບບເສັ້ນກຣາຟ"
   },
   "graph-line-scheme-accessible": {
-    "defaultMessage": "ເສັ້ນທີ່ເຂົ້າເຖິງງ່າຍ (ເສັ້ນທຶບ, ເສັ້ນປະ, ຈຸດ)",
-    "description": "Graph line scheme option"
+    "defaultMessage": "ເສັ້ນທີ່ເຂົ້າເຖິງງ່າຍ (ເສັ້ນທຶບ, ເສັ້ນປະ, ຈຸດ)"
   },
   "graph-line-scheme-solid": {
-    "defaultMessage": "ເສັ້ນທຶບ",
-    "description": "Graph line scheme option"
+    "defaultMessage": "ເສັ້ນທຶບ"
   },
   "graph-line-weight": {
-    "defaultMessage": "ຄວາມໜາຂອງເສັ້ນກຣາຟ",
-    "description": "Graph line weight setting label"
+    "defaultMessage": "ຄວາມໜາຂອງເສັ້ນກຣາຟ"
   },
   "graph-line-weight-default": {
-    "defaultMessage": "ຄ່າເລີ່ມຕົ້ນ",
-    "description": "Graph line weight option"
+    "defaultMessage": "ຄ່າເລີ່ມຕົ້ນ"
   },
   "graph-line-weight-thick": {
-    "defaultMessage": "ໜາ",
-    "description": "Graph line weight option"
+    "defaultMessage": "ໜາ"
   },
   "graph-preview": {
-    "defaultMessage": "ເບິ່ງຕົວຢ່າງກຣາຟ",
-    "description": "Label for preview of the graph shown in the settings dialog"
+    "defaultMessage": "ເບິ່ງຕົວຢ່າງກຣາຟ"
   },
   "help-label": {
-    "defaultMessage": "ຊ່ວຍເຫຼືອ",
-    "description": "Help icon aria label"
+    "defaultMessage": "ຊ່ວຍເຫຼືອ"
   },
   "help-resources-row-carousel": {
-    "defaultMessage": "ລາຍການແຫຼ່ງຂໍ້ມູນຊ່ວຍເຫຼືອ",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "ລາຍການແຫຼ່ງຂໍ້ມູນຊ່ວຍເຫຼືອ"
   },
   "help-resources-row-title": {
-    "defaultMessage": "ຊ່ວຍເຫຼືອ",
-    "description": "Title for home page row"
+    "defaultMessage": "ຊ່ວຍເຫຼືອ"
   },
   "help-support": {
-    "defaultMessage": "ຊ່ວຍເຫຼືອ ແລະ ສະໜັບສະໜູນ",
-    "description": "Link or menu item link to support site"
+    "defaultMessage": "ຊ່ວຍເຫຼືອ ແລະ ສະໜັບສະໜູນ"
   },
   "home-action": {
-    "defaultMessage": "ໜ້າຫຼັກ",
-    "description": "Home button text"
+    "defaultMessage": "ໜ້າຫຼັກ"
   },
   "homepage": {
-    "defaultMessage": "ໜ້າຫຼັກ",
-    "description": "Link to home page"
+    "defaultMessage": "ໜ້າຫຼັກ"
   },
   "homepage-banner-heading": {
-    "defaultMessage": "ໃໝ່ກັບ {appName} ບໍ?",
-    "description": "Homepage banner heading"
+    "defaultMessage": "ໃໝ່ກັບ {appName} ບໍ?"
   },
   "homepage-banner-subtitle": {
-    "defaultMessage": "ການຮຽນຮູ້ເຄື່ອງຈັກດ້ວຍການເຄື່ອນໄຫວ ແລະ micro:bit",
-    "description": "Homepage banner subtitle"
+    "defaultMessage": "ການຮຽນຮູ້ເຄື່ອງຈັກດ້ວຍການເຄື່ອນໄຫວ ແລະ micro:bit"
   },
   "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads",
-    "description": "Homepage footer text advertising the mobile apps"
+    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
-    "defaultMessage": "ນຳເຂົ້າຕົວຢ່າງຂໍ້ມູນ",
-    "description": "Data samples action"
+    "defaultMessage": "ນຳເຂົ້າຕົວຢ່າງຂໍ້ມູນ"
   },
   "import-error-dialog-content": {
-    "defaultMessage": "ໄຟລ໌ MakeCode ແບບ .hex ຫຼື ໄຟລ໌ຕົວຢ່າງຂໍ້ມູນ (.json) ເທົ່ານັ້ນທີ່ {appNameFull} ສາມາດເປີດໄດ້.",
-    "description": "Content of import error dialog"
+    "defaultMessage": "ໄຟລ໌ MakeCode ແບບ .hex ຫຼື ໄຟລ໌ຕົວຢ່າງຂໍ້ມູນ (.json) ເທົ່ານັ້ນທີ່ {appNameFull} ສາມາດເປີດໄດ້."
   },
   "import-error-dialog-title": {
-    "defaultMessage": "ປະເພດໄຟລ໌ບໍ່ຮອງຮັບ",
-    "description": "Title of import error dialog"
+    "defaultMessage": "ປະເພດໄຟລ໌ບໍ່ຮອງຮັບ"
   },
   "import-file-action": {
-    "defaultMessage": "ນຳເຂົ້າ",
-    "description": "Import file action"
+    "defaultMessage": "ນຳເຂົ້າ"
   },
   "incompatible-device-body-alt": {
-    "defaultMessage": "ກັບຄືນໄປເພື່ອເລືອກ micro:bit ອື່ນ ຫຼື <link>ບັນທຶກໄຟລ໌ໂປຣເຈັກ hex</link> ເພື່ອສາມາດດາວໂຫຼດໃສ່ micro:bit V2 ໃນພາຍຫຼັງໄດ້.",
-    "description": "Incompatible device dialog body text"
+    "defaultMessage": "ກັບຄືນໄປເພື່ອເລືອກ micro:bit ອື່ນ ຫຼື <link>ບັນທຶກໄຟລ໌ໂປຣເຈັກ hex</link> ເພື່ອສາມາດດາວໂຫຼດໃສ່ micro:bit V2 ໃນພາຍຫຼັງໄດ້."
   },
   "incompatible-device-body1": {
-    "defaultMessage": "ສືບຕໍ່ໄປທີ່ MakeCode ເພື່ອແກ້ໄຂໂປຣແກຣມ. ຈາກນັ້ນທ່ານສາມາດບັນທຶກໄຟລ໌ໂປຣເຈັກ hex ເພື່ອນຳໄປດາວໂຫຼດໃສ່ micro:bit V2 ໄດ້.",
-    "description": "Incompatible device dialog body text"
+    "defaultMessage": "ສືບຕໍ່ໄປທີ່ MakeCode ເພື່ອແກ້ໄຂໂປຣແກຣມ. ຈາກນັ້ນທ່ານສາມາດບັນທຶກໄຟລ໌ໂປຣເຈັກ hex ເພື່ອນຳໄປດາວໂຫຼດໃສ່ micro:bit V2 ໄດ້."
   },
   "incompatible-device-body2": {
-    "defaultMessage": "ອີກທາງເລືອກໜຶ່ງ, <link>ບັນທຶກໄຟລ໌ໂຄງການ hex</link> ໂດຍບໍ່ຕ້ອງໃຊ້ MakeCode.",
-    "description": "Incompatible device dialog body text"
+    "defaultMessage": "ອີກທາງເລືອກໜຶ່ງ, <link>ບັນທຶກໄຟລ໌ໂຄງການ hex</link> ໂດຍບໍ່ຕ້ອງໃຊ້ MakeCode."
   },
   "incompatible-device-heading": {
-    "defaultMessage": "ອຸປະກອນບໍ່ຮອງຮັບ",
-    "description": "Incompatible device dialog heading"
+    "defaultMessage": "ອຸປະກອນບໍ່ຮອງຮັບ"
   },
   "incompatible-device-subtitle": {
-    "defaultMessage": "ທ່ານກຳລັງໃຊ້ micro:bit V1, ແຕ່ໂຄງການການຮຽນຮູ້ເຄື່ອງຈັກຕ້ອງໃຊ້ຕົວປະມວນຜົນທີ່ໄວກວ່າໃນ micro:bit V2. <link>ຮຽນຮູ້ເພີ່ມເຕີມກ່ຽວກັບລຸ້ນ micro:bit</link>",
-    "description": "Incompatible device dialog subtitle"
+    "defaultMessage": "ທ່ານກຳລັງໃຊ້ micro:bit V1, ແຕ່ໂຄງການການຮຽນຮູ້ເຄື່ອງຈັກຕ້ອງໃຊ້ຕົວປະມວນຜົນທີ່ໄວກວ່າໃນ micro:bit V2. <link>ຮຽນຮູ້ເພີ່ມເຕີມກ່ຽວກັບລຸ້ນ micro:bit</link>"
   },
   "insufficient-data-body": {
-    "defaultMessage": "ທ່ານຕ້ອງມີຕົວຢ່າງຂໍ້ມູນຢ່າງນ້ອຍ 3 ອັນ ສຳລັບ 2 ການກະທຳ ເພື່ອຝຶກໂມເດວໄດ້.",
-    "description": "Insufficient data modal content"
+    "defaultMessage": "ທ່ານຕ້ອງມີຕົວຢ່າງຂໍ້ມູນຢ່າງນ້ອຍ 3 ອັນ ສຳລັບ 2 ການກະທຳ ເພື່ອຝຶກໂມເດວໄດ້."
   },
   "insufficient-data-title": {
-    "defaultMessage": "ທ່ານມີຂໍ້ມູນບໍ່ພຽງພໍ",
-    "description": "Insufficient data modal title"
+    "defaultMessage": "ທ່ານມີຂໍ້ມູນບໍ່ພຽງພໍ"
   },
   "language": {
-    "defaultMessage": "ພາສາ",
-    "description": "Language option text"
+    "defaultMessage": "ພາສາ"
   },
   "learn-about-firewall-requirements-action": {
-    "defaultMessage": "ຮຽນຮູ້ກ່ຽວກັບຄວາມຕ້ອງການຂອງ firewall",
-    "description": "Link to support article for firewall requirements"
+    "defaultMessage": "ຮຽນຮູ້ກ່ຽວກັບຄວາມຕ້ອງການຂອງ firewall"
   },
   "learn-more-action": {
-    "defaultMessage": "ຮຽນຮູ້ເພີ່ມເຕີມ",
-    "description": "Learn more button text"
+    "defaultMessage": "ຮຽນຮູ້ເພີ່ມເຕີມ"
   },
   "led-icon-option-angry": {
-    "defaultMessage": "ໂມໂຫ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ໂມໂຫ"
   },
   "led-icon-option-asleep": {
-    "defaultMessage": "ນອນຫຼັບ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ນອນຫຼັບ"
   },
   "led-icon-option-butterfly": {
-    "defaultMessage": "ຜີເສື້ອ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຜີເສື້ອ"
   },
   "led-icon-option-chessboard": {
-    "defaultMessage": "ກະດານໝາກເສິກ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ກະດານໝາກເສິກ"
   },
   "led-icon-option-confused": {
-    "defaultMessage": "ສັບສົນ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ສັບສົນ"
   },
   "led-icon-option-cow": {
-    "defaultMessage": "ງົວ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ງົວ"
   },
   "led-icon-option-diamond": {
-    "defaultMessage": "ເພັດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເພັດ"
   },
   "led-icon-option-duck": {
-    "defaultMessage": "ເປັດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເປັດ"
   },
   "led-icon-option-eighthnote": {
-    "defaultMessage": "ໂນດຕົວທີ່ແປດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ໂນດຕົວທີ່ແປດ"
   },
   "led-icon-option-fabulous": {
-    "defaultMessage": "ດີເລີດຫຼາຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ດີເລີດຫຼາຍ"
   },
   "led-icon-option-ghost": {
-    "defaultMessage": "ຜີ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຜີ"
   },
   "led-icon-option-giraffe": {
-    "defaultMessage": "ຍີຣາຟ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຍີຣາຟ"
   },
   "led-icon-option-happy": {
-    "defaultMessage": "ມີຄວາມສຸກ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ມີຄວາມສຸກ"
   },
   "led-icon-option-heart": {
-    "defaultMessage": "ຫົວໃຈ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຫົວໃຈ"
   },
   "led-icon-option-house": {
-    "defaultMessage": "ເຮືອນ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເຮືອນ"
   },
   "led-icon-option-lefttriangle": {
-    "defaultMessage": "ສາມຫຼ່ຽມທາງຊ້າຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ສາມຫຼ່ຽມທາງຊ້າຍ"
   },
   "led-icon-option-meh": {
-    "defaultMessage": "ບໍ່ຄ່ອຍສົນໃຈ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ບໍ່ຄ່ອຍສົນໃຈ"
   },
   "led-icon-option-no": {
-    "defaultMessage": "ບໍ່ໄດ້",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ບໍ່ໄດ້"
   },
   "led-icon-option-off": {
-    "defaultMessage": "ປິດ",
-    "description": "Icon option."
+    "defaultMessage": "ປິດ"
   },
   "led-icon-option-pitchfork": {
-    "defaultMessage": "ໂກຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ໂກຍ"
   },
   "led-icon-option-quarternote": {
-    "defaultMessage": "ໂນດໄຕມາດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ໂນດໄຕມາດ"
   },
   "led-icon-option-rabbit": {
-    "defaultMessage": "ກະຕ່າຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ກະຕ່າຍ"
   },
   "led-icon-option-rollerskate": {
-    "defaultMessage": "ລໍ້ສະເກັດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ລໍ້ສະເກັດ"
   },
   "led-icon-option-sad": {
-    "defaultMessage": "ເສົ້າ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເສົ້າ"
   },
   "led-icon-option-scissors": {
-    "defaultMessage": "ມີດຕັດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ມີດຕັດ"
   },
   "led-icon-option-silly": {
-    "defaultMessage": "ຂີ້ຫຼິ້ນ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຂີ້ຫຼິ້ນ"
   },
   "led-icon-option-skull": {
-    "defaultMessage": "ກະໂຫຼກ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ກະໂຫຼກ"
   },
   "led-icon-option-smalldiamond": {
-    "defaultMessage": "ເພັດນ້ອຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເພັດນ້ອຍ"
   },
   "led-icon-option-smallheart": {
-    "defaultMessage": "ຫົວໃຈນ້ອຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຫົວໃຈນ້ອຍ"
   },
   "led-icon-option-smallsquare": {
-    "defaultMessage": "ສີ່ຫຼ່ຽມນ້ອຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ສີ່ຫຼ່ຽມນ້ອຍ"
   },
   "led-icon-option-snake": {
-    "defaultMessage": "ງູ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ງູ"
   },
   "led-icon-option-square": {
-    "defaultMessage": "ສີ່ຫຼ່ຽມ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ສີ່ຫຼ່ຽມ"
   },
   "led-icon-option-stickfigure": {
-    "defaultMessage": "ຮູບຄົນແບບຂີດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຮູບຄົນແບບຂີດ"
   },
   "led-icon-option-surprised": {
-    "defaultMessage": "ຕົກໃຈ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຕົກໃຈ"
   },
   "led-icon-option-sword": {
-    "defaultMessage": "ດາບ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ດາບ"
   },
   "led-icon-option-target": {
-    "defaultMessage": "ເປົ້າໝາຍ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເປົ້າໝາຍ"
   },
   "led-icon-option-tortoise": {
-    "defaultMessage": "ເຕົ່າ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເຕົ່າ"
   },
   "led-icon-option-triangle": {
-    "defaultMessage": "ສາມຫຼ່ຽມ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ສາມຫຼ່ຽມ"
   },
   "led-icon-option-tshirt": {
-    "defaultMessage": "ເສື້ອຍືດ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ເສື້ອຍືດ"
   },
   "led-icon-option-umbrella": {
-    "defaultMessage": "ຮົ່ມ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ຮົ່ມ"
   },
   "led-icon-option-yes": {
-    "defaultMessage": "ແມ່ນແລ້ວ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ແມ່ນແລ້ວ"
   },
   "live-data-graph": {
-    "defaultMessage": "ກຣາຟຂໍ້ມູນສົດ",
-    "description": "Title for live data graph"
+    "defaultMessage": "ກຣາຟຂໍ້ມູນສົດ"
   },
   "live-graph": {
-    "defaultMessage": "ກຣາຟສົດ",
-    "description": "Heading for live graph"
+    "defaultMessage": "ກຣາຟສົດ"
   },
   "live-graph-tooltip": {
-    "defaultMessage": "ກຣາຟນີ້ສະແດງຂໍ້ມູນການເຄື່ອນໄຫວຈາກເຊັນເຊີແອັກເຊເລໂຣເມັດ micro:bit's ໃນເວລາຈິງ. ລອງເຄື່ອນອຸປະກອນເກັບຂໍ້ມູນ micro:bit ຂອງທ່ານເພື່ອເບິ່ງແກນ X, Y ແລະ Z ປ່ຽນແປງ. ເສັ້ນສີແຕ່ລະເສັ້ນແທນທິດທາງທີ່ແຕກຕ່າງ (ມິຕິ) ທີ່ທ່ານກຳລັງຍ້າຍອຸປະກອນ micro:bit ຢູ່.",
-    "description": "Tooltip for live graph heading"
+    "defaultMessage": "ກຣາຟນີ້ສະແດງຂໍ້ມູນການເຄື່ອນໄຫວຈາກເຊັນເຊີແອັກເຊເລໂຣເມັດ micro:bit's ໃນເວລາຈິງ. ລອງເຄື່ອນອຸປະກອນເກັບຂໍ້ມູນ micro:bit ຂອງທ່ານເພື່ອເບິ່ງແກນ X, Y ແລະ Z ປ່ຽນແປງ. ເສັ້ນສີແຕ່ລະເສັ້ນແທນທິດທາງທີ່ແຕກຕ່າງ (ມິຕິ) ທີ່ທ່ານກຳລັງຍ້າຍອຸປະກອນ micro:bit ຢູ່."
   },
   "live-graph-tooltip-aria": {
-    "defaultMessage": "ຄຳແນະນຳກຣາຟສົດ",
-    "description": "Aria label for live graph tooltip icon"
+    "defaultMessage": "ຄຳແນະນຳກຣາຟສົດ"
   },
   "loading": {
-    "defaultMessage": "ກຳລັງໂຫຼດ",
-    "description": "Aria label for loading spinner"
+    "defaultMessage": "ກຳລັງໂຫຼດ"
   },
   "location-disabled-body": {
-    "defaultMessage": "ຕ້ອງເປີດບໍລິການຕຳແໜ່ງ ເພື່ອໃຊ້ Bluetooth ໃນອຸປະກອນນີ້. ກະລຸນາເປີດບໍລິການຕຳແໜ່ງ (Location Services) ໃນ<link>Settings</link> ແລ້ວລອງອີກຄັ້ງ.",
-    "description": "Body text for location disabled error dialog (Android only)"
+    "defaultMessage": "ຕ້ອງເປີດບໍລິການຕຳແໜ່ງ ເພື່ອໃຊ້ Bluetooth ໃນອຸປະກອນນີ້. ກະລຸນາເປີດບໍລິການຕຳແໜ່ງ (Location Services) ໃນ<link>Settings</link> ແລ້ວລອງອີກຄັ້ງ."
   },
   "location-disabled-heading": {
-    "defaultMessage": "ຈຳເປັນຕ້ອງເປີດບໍລິການຕຳແໜ່ງ",
-    "description": "Heading for location disabled error dialog (Android only)"
+    "defaultMessage": "ຈຳເປັນຕ້ອງເປີດບໍລິການຕຳແໜ່ງ"
   },
   "main-menu": {
-    "defaultMessage": "ເມນູຫຼັກ",
-    "description": "Main menu label"
+    "defaultMessage": "ເມນູຫຼັກ"
   },
   "makecode-back-alt": {
-    "defaultMessage": "ໄອຄອນລູກສອນຊ້າຍສຳລັບກັບຄືນໃນ MakeCode",
-    "description": "Testing model page title"
+    "defaultMessage": "ໄອຄອນລູກສອນຊ້າຍສຳລັບກັບຄືນໃນ MakeCode"
   },
   "makecode-block-alt-prefix": {
-    "defaultMessage": "ບລັອກ MakeCode:",
-    "description": "Makecode block alt text prefix"
+    "defaultMessage": "ບລັອກ MakeCode:"
   },
   "makecode-block-show-icon": {
-    "defaultMessage": "ສະແດງໄອຄອນ",
-    "description": "Makecode block text. The translation should match MakeCode translations."
+    "defaultMessage": "ສະແດງໄອຄອນ"
   },
   "makecode-load-error-dialog-body": {
-    "defaultMessage": "{appNameFull} ບໍ່ສາມາດໂຫຼດ MakeCode ໄດ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດ, ໂຫຼດໜ້າໃໝ່ ແລ້ວລອງອີກຄັ້ງ.",
-    "description": "Content of MakeCode load error dialog"
+    "defaultMessage": "{appNameFull} ບໍ່ສາມາດໂຫຼດ MakeCode ໄດ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດ, ໂຫຼດໜ້າໃໝ່ ແລ້ວລອງອີກຄັ້ງ."
   },
   "makecode-load-error-dialog-title": {
-    "defaultMessage": "ບໍ່ສາມາດໂຫຼດ Microsoft MakeCode ໄດ້",
-    "description": "Title of MakeCode load error dialog"
+    "defaultMessage": "ບໍ່ສາມາດໂຫຼດ Microsoft MakeCode ໄດ້"
   },
   "microbit-name-label": {
-    "defaultMessage": "ຊື່ micro:bit: {name}",
-    "description": "Screen reader text for micro:bit name"
+    "defaultMessage": "ຊື່ micro:bit: {name}"
   },
   "microbit-not-connected": {
-    "defaultMessage": "micro:bit ຂອງທ່ານຍັງບໍ່ໄດ້ເຊື່ອມຕໍ່",
-    "description": "Live graph disconnected micro:bit status message"
+    "defaultMessage": "micro:bit ຂອງທ່ານຍັງບໍ່ໄດ້ເຊື່ອມຕໍ່"
   },
   "ml.onStart|block": {
-    "defaultMessage": "ໃນ ML ເມື່ອ $event ເລີ່ມຕົ້ນ",
-    "description": "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation."
+    "defaultMessage": "ໃນ ML ເມື່ອ $event ເລີ່ມຕົ້ນ"
   },
   "more-edit-in-makecode-options": {
-    "defaultMessage": "ຕົວເລືອກແກ້ໄຂເພີ່ມເຕີມໃນ MakeCode",
-    "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+    "defaultMessage": "ຕົວເລືອກແກ້ໄຂເພີ່ມເຕີມໃນ MakeCode"
   },
   "move-hint": {
-    "defaultMessage": "ເຄື່ອນ micro:bit ເພື່ອສຳຫຼວດວ່າການກະທຳຕ່າງໆປ່ຽນແປງກຣາຟແນວໃດ",
-    "description": "Hint when you have just connected a micro:bit"
+    "defaultMessage": "ເຄື່ອນ micro:bit ເພື່ອສຳຫຼວດວ່າການກະທຳຕ່າງໆປ່ຽນແປງກຣາຟແນວໃດ"
   },
   "my-projects-row-carousel": {
-    "defaultMessage": "ລາຍຊື່ໂຄງການຂອງຂ້ອຍ",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "ລາຍຊື່ໂຄງການຂອງຂ້ອຍ"
   },
   "my-projects-row-title": {
-    "defaultMessage": "ໂຄງການຂອງຂ້ອຍ",
-    "description": "Title for home page row"
+    "defaultMessage": "ໂຄງການຂອງຂ້ອຍ"
   },
   "name-action-hint": {
-    "defaultMessage": "ຕັ້ງຊື່ການກະທຳທີ່ທ່ານຕ້ອງການໃຫ້ CreateAI ຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ກະໂດດ’",
-    "description": "Hint shown when you have an unnamed action"
+    "defaultMessage": "ຕັ້ງຊື່ການກະທຳທີ່ທ່ານຕ້ອງການໃຫ້ CreateAI ຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ກະໂດດ’"
   },
   "name-project": {
-    "defaultMessage": "ຕັ້ງຊື່ໂຄງການຂອງທ່ານ",
-    "description": "Name your project header"
+    "defaultMessage": "ຕັ້ງຊື່ໂຄງການຂອງທ່ານ"
   },
   "name-text": {
-    "defaultMessage": "ຊື່",
-    "description": "Header for name field"
+    "defaultMessage": "ຊື່"
   },
   "name-used-when": {
-    "defaultMessage": "ຊື່ນີ້ຈະຖືກໃຊ້ເມື່ອທ່ານບັນທຶກໄຟລ໌.",
-    "description": "Text under project name field"
+    "defaultMessage": "ຊື່ນີ້ຈະຖືກໃຊ້ເມື່ອທ່ານບັນທຶກໄຟລ໌."
   },
   "native-bluetooth-error-body": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ລົ້ມເຫຼວ.",
-    "description": "Body text for native Bluetooth connection error dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ກັບ micro:bit ລົ້ມເຫຼວ."
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "ກະລຸນາກວດສອບວ່າ:",
-    "description": "Heading for list of things to check in native Bluetooth error dialog"
+    "defaultMessage": "ກະລຸນາກວດສອບວ່າ:"
   },
   "native-bluetooth-error-check-distance": {
-    "defaultMessage": "micro:bit ຢູ່ໃກ້ກັບອຸປະກອນນີ້",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "micro:bit ຢູ່ໃກ້ກັບອຸປະກອນນີ້"
   },
   "native-bluetooth-error-check-mode": {
-    "defaultMessage": "micro:bit ຢູ່ໃນໂໝດ Bluetooth (ສະແດງຮູບແບບການຈັບຄູ່)",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "micro:bit ຢູ່ໃນໂໝດ Bluetooth (ສະແດງຮູບແບບການຈັບຄູ່)"
   },
   "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "ຮູບແບບທີ່ທ່ານໃສ່ຖືກຕ້ອງແລ້ວ",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "ຮູບແບບທີ່ທ່ານໃສ່ຖືກຕ້ອງແລ້ວ"
   },
   "native-bluetooth-error-forget-device": {
-    "defaultMessage": "ກະລຸນາລຶບອຸປະກອນນີ້ອອກຈາກການຕັ້ງຄ່າ Bluetooth ຂອງທ່ານ ແລ້ວລອງອີກຄັ້ງ",
-    "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
+    "defaultMessage": "ກະລຸນາລຶບອຸປະກອນນີ້ອອກຈາກການຕັ້ງຄ່າ Bluetooth ຂອງທ່ານ ແລ້ວລອງອີກຄັ້ງ"
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "ໄປທີ່ Bluetooth ໃນແອັບ Settings",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "ໄປທີ່ Bluetooth ໃນແອັບ Settings"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "ກົດ <infoIcon>ຂໍ້ມູນ</infoIcon> ໄອຄອນຂໍ້ມູນ ທີ່ຢູ່ຂ້າງອຸປະກອນ BBC micro:bit",
-    "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
+    "defaultMessage": "ກົດ <infoIcon>ຂໍ້ມູນ</infoIcon> ໄອຄອນຂໍ້ມູນ ທີ່ຢູ່ຂ້າງອຸປະກອນ BBC micro:bit"
   },
   "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "ແຕະ ‘ລືມອຸປະກອນນີ້’",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "ແຕະ ‘ລືມອຸປະກອນນີ້’"
   },
   "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "ກັບຄືນໄປທີ່ແອັບນີ້ເພື່ອລອງໃໝ່ອີກຄັ້ງ",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "ກັບຄືນໄປທີ່ແອັບນີ້ເພື່ອລອງໃໝ່ອີກຄັ້ງ"
   },
   "native-bluetooth-error-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ໄດ້",
-    "description": "Heading for native Bluetooth connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ໄດ້"
   },
   "new-project-setup-title": {
-    "defaultMessage": "ການຕັ້ງຄ່າໂຄງການໃໝ່",
-    "description": "New project setup title"
+    "defaultMessage": "ການຕັ້ງຄ່າໂຄງການໃໝ່"
   },
   "newpage-new-project-title": {
-    "defaultMessage": "ໂຄງການໃໝ່",
-    "description": "Start new project title"
+    "defaultMessage": "ໂຄງການໃໝ່"
   },
   "next-action": {
-    "defaultMessage": "ຕໍ່ໄປ",
-    "description": "Next button text for dialogs and similar"
+    "defaultMessage": "ຕໍ່ໄປ"
   },
   "no-projects": {
-    "defaultMessage": "ບໍ່ມີໂຄງການໃຫ້ສະແດງ",
-    "description": "Shown on all projects page when the user has no projects"
+    "defaultMessage": "ບໍ່ມີໂຄງການໃຫ້ສະແດງ"
   },
   "not-create-ai-hex-import-dialog-content": {
-    "defaultMessage": "ໂຄງການນີ້ບໍ່ມີຕົວຢ່າງຂໍ້ມູນ, ດັ່ງນັ້ນ ໄດ້ເປີດແຕ່ໂຄດເທົ່ານັ້ນ. ທ່ານຈຳເປັນຕ້ອງຝຶກໂມເດວກ່ອນ ເພື່ອຈະໃຊ້ໂຄດນີ້ໄດ້.",
-    "description": "Content of import non-CreateAI hex dialog"
+    "defaultMessage": "ໂຄງການນີ້ບໍ່ມີຕົວຢ່າງຂໍ້ມູນ, ດັ່ງນັ້ນ ໄດ້ເປີດແຕ່ໂຄດເທົ່ານັ້ນ. ທ່ານຈຳເປັນຕ້ອງຝຶກໂມເດວກ່ອນ ເພື່ອຈະໃຊ້ໂຄດນີ້ໄດ້."
   },
   "not-create-ai-hex-import-dialog-title": {
-    "defaultMessage": "ໂຄງການ MakeCode ຂອງທ່ານໄດ້ຖືກນຳເຂົ້າແລ້ວ",
-    "description": "Title of import non-CreateAI hex dialog"
+    "defaultMessage": "ໂຄງການ MakeCode ຂອງທ່ານໄດ້ຖືກນຳເຂົ້າແລ້ວ"
   },
   "not-found": {
-    "defaultMessage": "{appNameFull} ໜ້າຫຼັກ",
-    "description": "Page not found link text"
+    "defaultMessage": "{appNameFull} ໜ້າຫຼັກ"
   },
   "not-found-title": {
-    "defaultMessage": "ບໍ່ພົບໜ້າ",
-    "description": "Page not found page title"
+    "defaultMessage": "ບໍ່ພົບໜ້າ"
   },
   "open-file-dropped": {
-    "defaultMessage": "ເປີດໄຟລ໌ເມື່ອຖືກວາງ",
-    "description": "Aria label for file drop target"
+    "defaultMessage": "ເປີດໄຟລ໌ເມື່ອຖືກວາງ"
   },
   "open-project-action": {
-    "defaultMessage": "ເປີດ",
-    "description": "Open project action"
+    "defaultMessage": "ເປີດ"
   },
   "open-shared-project-action": {
-    "defaultMessage": "ເປີດໂຄງການ",
-    "description": "Open project button text"
+    "defaultMessage": "ເປີດໂຄງການ"
   },
   "open-shared-project-blocks-preview-description": {
-    "defaultMessage": "ຕົວຢ່າງການເບິ່ງໂຄດ MakeCode ທີ່ຢູ່ໃນໂຄງການນີ້.",
-    "description": "Blocks preview description text"
+    "defaultMessage": "ຕົວຢ່າງການເບິ່ງໂຄດ MakeCode ທີ່ຢູ່ໃນໂຄງການນີ້."
   },
   "open-shared-project-data-preview-description": {
-    "defaultMessage": "ຕົວຢ່າງການເບິ່ງການກະທຳ ແລະ ຂໍ້ມູນທີ່ຢູ່ໃນໂຄງການນີ້.",
-    "description": "Data preview description text"
+    "defaultMessage": "ຕົວຢ່າງການເບິ່ງການກະທຳ ແລະ ຂໍ້ມູນທີ່ຢູ່ໃນໂຄງການນີ້."
   },
   "open-shared-project-description": {
-    "defaultMessage": "ນີ້ແມ່ນໂຄງການທີ່ແບ່ງປັນຈາກ Microsoft MakeCode ທີ່ສາມາດໃຊ້ກັບ CreateAI ໄດ້.",
-    "description": "Import shared CreateAI project description"
+    "defaultMessage": "ນີ້ແມ່ນໂຄງການທີ່ແບ່ງປັນຈາກ Microsoft MakeCode ທີ່ສາມາດໃຊ້ກັບ CreateAI ໄດ້."
   },
   "open-shared-project-error-description": {
-    "defaultMessage": "ກວດສອບວ່າລິ້ງທີ່ທ່ານກົດເຂົ້າມາຖືກຕ້ອງຫຼືບໍ່ ແລະກວດວ່າທ່ານເຊື່ອມຕໍ່ອິນເທີເນັດຢູ່ກ່ອນຈະລອງໃໝ່ອີກຄັ້ງ.",
-    "description": "Import shared CreateAI error description"
+    "defaultMessage": "ກວດສອບວ່າລິ້ງທີ່ທ່ານກົດເຂົ້າມາຖືກຕ້ອງຫຼືບໍ່ ແລະກວດວ່າທ່ານເຊື່ອມຕໍ່ອິນເທີເນັດຢູ່ກ່ອນຈະລອງໃໝ່ອີກຄັ້ງ."
   },
   "open-shared-project-title": {
-    "defaultMessage": "ເປີດໂຄງການ CreateAI ທີ່ຖືກແບ່ງປັນ",
-    "description": "Import shared CreateAI project title"
+    "defaultMessage": "ເປີດໂຄງການ CreateAI ທີ່ຖືກແບ່ງປັນ"
   },
   "other-tabs-body1": {
-    "defaultMessage": "ມີຂະບວນການອື່ນກຳລັງເຊື່ອມກັບອຸປະກອນນີ້ຢູ່.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ມີຂະບວນການອື່ນກຳລັງເຊື່ອມກັບອຸປະກອນນີ້ຢູ່."
   },
   "other-tabs-body2": {
-    "defaultMessage": "ປິດແທັບອື່ນໆທີ່ອາດກຳລັງໃຊ້ WebUSB (ເຊັ່ນ: MakeCode, Python Editor, {appNameShort}) ຫຼື ຖອດສາຍ micro:bit ແລ້ວຕໍ່ໃໝ່ ກ່ອນລອງອີກຄັ້ງ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ປິດແທັບອື່ນໆທີ່ອາດກຳລັງໃຊ້ WebUSB (ເຊັ່ນ: MakeCode, Python Editor, {appNameShort}) ຫຼື ຖອດສາຍ micro:bit ແລ້ວຕໍ່ໃໝ່ ກ່ອນລອງອີກຄັ້ງ."
   },
   "other-tabs-heading": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ຜ່ານ WebUSB",
-    "description": "Connection error dialog"
+    "defaultMessage": "ເຊື່ອມຕໍ່ຜ່ານ WebUSB"
   },
   "privacy": {
-    "defaultMessage": "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ",
-    "description": "Link to view privacy policy"
+    "defaultMessage": "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ"
   },
   "project-ideas-row-carousel": {
-    "defaultMessage": "ລາຍການໄອເດຍໂຄງການ",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "ລາຍການໄອເດຍໂຄງການ"
   },
   "project-ideas-row-title": {
-    "defaultMessage": "ໄອເດຍໂຄງການ",
-    "description": "Title for home page row"
+    "defaultMessage": "ໄອເດຍໂຄງການ"
   },
   "project-label": {
-    "defaultMessage": "ໂຄງການ",
-    "description": "Label for project input"
+    "defaultMessage": "ໂຄງການ"
   },
   "project-loaded": {
-    "defaultMessage": "ໂຄງການຖືກໂຫຼດແລ້ວ",
-    "description": "Toast when a new project is loaded"
+    "defaultMessage": "ໂຄງການຖືກໂຫຼດແລ້ວ"
   },
   "project-menu-action": {
-    "defaultMessage": "{name} ເມນູການກະທຳ",
-    "description": "Label for project actions menu button"
+    "defaultMessage": "{name} ເມນູການກະທຳ"
   },
   "project-name-not-empty": {
-    "defaultMessage": "ຊື່ໂຄງການບໍ່ສາມາດວ່າງໄດ້",
-    "description": "Validation message for project name"
+    "defaultMessage": "ຊື່ໂຄງການບໍ່ສາມາດວ່າງໄດ້"
   },
   "project-name-text": {
-    "defaultMessage": "ຊື່ໂຄງການ",
-    "description": "Label for project name input"
+    "defaultMessage": "ຊື່ໂຄງການ"
   },
   "project-name-tooltip": {
-    "defaultMessage": "ຄລິກເພື່ອແກ້ໄຂຊື່ໂຄງການ",
-    "description": "Tooltip for the project name editable input"
+    "defaultMessage": "ຄລິກເພື່ອແກ້ໄຂຊື່ໂຄງການ"
   },
   "project-skip-to-toolbar": {
-    "defaultMessage": "ຂ້າມໄປທີ່ແຖບເຄື່ອງມື",
-    "description": "Button to skip focus to the projects toolbar"
+    "defaultMessage": "ຂ້າມໄປທີ່ແຖບເຄື່ອງມື"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "ຂໍ້ມູນຂອງທ່ານຖືກບັນທຶກໄວ້ໃນບຣາວເຊີນີ້ໃນອຸປະກອນນີ້. ການລຶບຄຸກກີ້ ຫຼື ຂໍ້ມູນເວັບໄຊທ໌ຂອງບຣາວເຊີຈະເຮັດໃຫ້ຂໍ້ມູນນີ້ຖືກລຶບໄປນຳ. ມັນອາດຈະຖືກລຶບອອກອັດຕະໂນມັດໂດຍບຣາວເຊີ ຖ້າອຸປະກອນຂອງທ່ານມີພື້ນທີ່ຈັດເກັບເຫຼືອນ້ອຍລົງ.\n",
-    "description": "Tooltip for my projects row"
+    "defaultMessage": "ຂໍ້ມູນຂອງທ່ານຖືກບັນທຶກໄວ້ໃນບຣາວເຊີນີ້ໃນອຸປະກອນນີ້. ການລຶບຄຸກກີ້ ຫຼື ຂໍ້ມູນເວັບໄຊທ໌ຂອງບຣາວເຊີຈະເຮັດໃຫ້ຂໍ້ມູນນີ້ຖືກລຶບໄປນຳ. ມັນອາດຈະຖືກລຶບອອກອັດຕະໂນມັດໂດຍບຣາວເຊີ ຖ້າອຸປະກອນຂອງທ່ານມີພື້ນທີ່ຈັດເກັບເຫຼືອນ້ອຍລົງ.\n"
   },
   "projects-page-title": {
-    "defaultMessage": "ໂຄງການທັງໝົດ",
-    "description": "Projects page title"
+    "defaultMessage": "ໂຄງການທັງໝົດ"
   },
   "radio-link-microbit": {
-    "defaultMessage": "ລິ້ງວິທະຍຸຂອງ micro:bit",
-    "description": "Radio link micro:bit image caption"
+    "defaultMessage": "ລິ້ງວິທະຍຸຂອງ micro:bit"
   },
   "radio-link-microbit-label": {
-    "defaultMessage": "ແຜນວາດສະແດງລິ້ງວິທະຍຸ micro:bit ທີ່ຖືກເຊື່ອມຕໍ່ກັບຄອມພິວເຕີ",
-    "description": "Aria label for radio link image"
+    "defaultMessage": "ແຜນວາດສະແດງລິ້ງວິທະຍຸ micro:bit ທີ່ຖືກເຊື່ອມຕໍ່ກັບຄອມພິວເຕີ"
   },
   "recognition-point-label": {
-    "defaultMessage": "ຈຸດການຮັບຮູ້:",
-    "description": "Label for the slider for the recognition point"
+    "defaultMessage": "ຈຸດການຮັບຮູ້:"
   },
   "reconnect-action": {
-    "defaultMessage": "ເຊື່ອມຕໍ່ໃໝ່",
-    "description": "Button text to reconnect a micro:bit over Bluetooth/radio"
+    "defaultMessage": "ເຊື່ອມຕໍ່ໃໝ່"
   },
   "reconnect-failed-bluetooth-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່"
   },
   "reconnect-failed-bluetooth1": {
-    "defaultMessage": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້ອີກຄັ້ງ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້ອີກຄັ້ງ."
   },
   "reconnect-failed-bridge-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ micro:bit ໄດ້ໃໝ່",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ micro:bit ໄດ້ໃໝ່"
   },
   "reconnect-failed-bridge1": {
-    "defaultMessage": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້ອີກຄັ້ງ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ເຊື່ອມກັບຄອມພິວເຕີຂອງທ່ານໄດ້ອີກຄັ້ງ."
   },
   "reconnect-failed-native-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່",
-    "description": "Connection error dialog for native Bluetooth reconnection failure"
+    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່"
   },
   "reconnect-failed-radio-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ micro:bits ໄດ້ໃໝ່",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ micro:bits ໄດ້ໃໝ່"
   },
   "reconnect-failed-remote-heading": {
-    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ micro:bit ສຳລັບການເກັບຂໍ້ມູນໄດ້ໃໝ່"
   },
   "reconnect-failed-remote1": {
-    "defaultMessage": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້ອີກຄັ້ງ.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ບໍ່ສາມາດກູ້ການເຊື່ອມຕໍ່ກັບ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນໄດ້ອີກຄັ້ງ."
   },
   "reconnect-failed-subtitle": {
-    "defaultMessage": "ກະລຸນາປະຕິບັດຕາມຄຳແນະນຳເຫຼົ່ານີ້ເພື່ອເລີ່ມຂັ້ນຕອນການເຊື່ອມຕໍ່ໃໝ່.",
-    "description": "Connection error dialog"
+    "defaultMessage": "ກະລຸນາປະຕິບັດຕາມຄຳແນະນຳເຫຼົ່ານີ້ເພື່ອເລີ່ມຂັ້ນຕອນການເຊື່ອມຕໍ່ໃໝ່."
   },
   "reconnecting": {
-    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ຄືນ…",
-    "description": "Shown while reconnecting"
+    "defaultMessage": "ກຳລັງເຊື່ອມຕໍ່ຄືນ…"
   },
   "record-action": {
-    "defaultMessage": "ບັນທຶກ",
-    "description": "Record button text"
+    "defaultMessage": "ບັນທຶກ"
   },
   "record-action-aria": {
-    "defaultMessage": "ບັນທຶກຂໍ້ມູນສຳລັບການກະທຳ \"{action}\"",
-    "description": "Aria label for record button"
+    "defaultMessage": "ບັນທຶກຂໍ້ມູນສຳລັບການກະທຳ \"{action}\""
   },
   "record-hint": {
-    "defaultMessage": "ກົດບັນທຶກ ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນການເຄື່ອນໄຫວ.",
-    "description": "Hint when you have named the first action but not recorded any data samples"
+    "defaultMessage": "ກົດບັນທຶກ ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນການເຄື່ອນໄຫວ."
   },
   "record-hint-button-b": {
-    "defaultMessage": "ກົດບັນທຶກ <mark>ຫຼື</mark> ປຸ່ມ B ຢູ່ micro:bit ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນການເຄື່ອນໄຫວ.",
-    "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+    "defaultMessage": "ກົດບັນທຶກ <mark>ຫຼື</mark> ປຸ່ມ B ຢູ່ micro:bit ເພື່ອເກັບຕົວຢ່າງຂໍ້ມູນການເຄື່ອນໄຫວ."
   },
   "record-more-hint": {
-    "defaultMessage": "ບັນທຶກຢ່າງນ້ອຍ {numSamples, plural, one {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ} other {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ}}",
-    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+    "defaultMessage": "ບັນທຶກຢ່າງນ້ອຍ {numSamples, plural, one {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ} other {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ}}"
   },
   "record-more-hint-label": {
-    "defaultMessage": "ບັນທຶກຢ່າງນ້ອຍ {numSamples, plural, one {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ} other {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ}} ສຳລັບ {actionName}",
-    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+    "defaultMessage": "ບັນທຶກຢ່າງນ້ອຍ {numSamples, plural, one {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ} other {{numSamples} ຕົວຢ່າງຂໍ້ມູນເພີ່ມ}} ສຳລັບ {actionName}"
   },
   "record-samples": {
-    "defaultMessage": "ບັນທຶກ {numSamples} ຕົວຢ່າງ",
-    "description": "Additional recording action text"
+    "defaultMessage": "ບັນທຶກ {numSamples} ຕົວຢ່າງ"
   },
   "record-samples-help": {
-    "defaultMessage": "ແຕ່ລະຕົວຢ່າງມີການນັບຖອຍຫຼັງຂອງຕົວເອງ",
-    "description": "Help text for additional recording action"
+    "defaultMessage": "ແຕ່ລະຕົວຢ່າງມີການນັບຖອຍຫຼັງຂອງຕົວເອງ"
   },
   "record-seconds": {
-    "defaultMessage": "ບັນທຶກເປັນເວລາ {numSeconds} ວິນາທີ",
-    "description": "Additional recording action text"
+    "defaultMessage": "ບັນທຶກເປັນເວລາ {numSeconds} ວິນາທີ"
   },
   "record-seconds-help": {
-    "defaultMessage": "ເຄື່ອນໄຫວຢ່າງຕໍ່ເນື່ອງເພື່ອຮັບເອົາ {numSamples} ຕົວຢ່າງ",
-    "description": "Help text for additional recording action"
+    "defaultMessage": "ເຄື່ອນໄຫວຢ່າງຕໍ່ເນື່ອງເພື່ອຮັບເອົາ {numSamples} ຕົວຢ່າງ"
   },
   "recording": {
-    "defaultMessage": "ກຳລັງບັນທຶກ",
-    "description": "Shown during recording"
+    "defaultMessage": "ກຳລັງບັນທຶກ"
   },
   "recording-complete": {
-    "defaultMessage": "ສຳເລັດແລ້ວ",
-    "description": "Text shown when data recording complete"
+    "defaultMessage": "ສຳເລັດແລ້ວ"
   },
   "recording-data-for": {
-    "defaultMessage": "ບັນທຶກຂໍ້ມູນສຳລັບການກະທຳ \"{action}\"",
-    "description": "Text in recording dialog"
+    "defaultMessage": "ບັນທຶກຂໍ້ມູນສຳລັບການກະທຳ \"{action}\""
   },
   "recording-data-for-numbered": {
-    "defaultMessage": "ບັນທຶກ {sample} ຈາກທັງໝົດ {numSamples} ສຳລັບການກະທຳ \"{action}\"",
-    "description": "Text in recording dialog"
+    "defaultMessage": "ບັນທຶກ {sample} ຈາກທັງໝົດ {numSamples} ສຳລັບການກະທຳ \"{action}\""
   },
   "recording-fingerprint-label": {
-    "defaultMessage": "ຮູບສະແດງແຜນທີ່ຄວາມຮ້ອນ (heatmap) ທີ່ສະແດງຄຸນສົມບັດຂໍ້ມູນມາດວັດການເລັ່ງ x, y, z ຂອງ micro:bit ສຳລັບການບັນທຶກໜຶ່ງຄັ້ງ",
-    "description": "Label for recording fingerprint heatmap"
+    "defaultMessage": "ຮູບສະແດງແຜນທີ່ຄວາມຮ້ອນ (heatmap) ທີ່ສະແດງຄຸນສົມບັດຂໍ້ມູນມາດວັດການເລັ່ງ x, y, z ຂອງ micro:bit ສຳລັບການບັນທຶກໜຶ່ງຄັ້ງ"
   },
   "recording-graph-label": {
-    "defaultMessage": "ກຣາຟທີ່ສະແດງຂໍ້ມູນມາດວັດການເລັ່ງ x, y, z ຈາກ micro:bit ສຳລັບການບັນທຶກດຽວ",
-    "description": "Label for recording graph"
+    "defaultMessage": "ກຣາຟທີ່ສະແດງຂໍ້ມູນມາດວັດການເລັ່ງ x, y, z ຈາກ micro:bit ສຳລັບການບັນທຶກດຽວ"
   },
   "recording-options-aria": {
-    "defaultMessage": "ຕົວເລືອກການບັນທຶກເພີ່ມເຕີມສຳລັບການກະທຳ \"{action}\"",
-    "description": "Aria label for more recording options button"
+    "defaultMessage": "ຕົວເລືອກການບັນທຶກເພີ່ມເຕີມສຳລັບການກະທຳ \"{action}\""
   },
   "reload-action": {
-    "defaultMessage": "ໂຫຼດໃໝ່",
-    "description": "Reload button text"
+    "defaultMessage": "ໂຫຼດໃໝ່"
   },
   "rename-project-action": {
-    "defaultMessage": "ປ່ຽນຊື່",
-    "description": "Rename project action"
+    "defaultMessage": "ປ່ຽນຊື່"
   },
   "rename-project-heading": {
-    "defaultMessage": "ປ່ຽນຊື່ໂຄງການ",
-    "description": "Heading for rename project dialog"
+    "defaultMessage": "ປ່ຽນຊື່ໂຄງການ"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
-    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
+    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "ກົດ A + B ແລ້ວກົດ RESET ຄ້າງໄວ້. ໃຫ້ສືບຕໍ່ກົດ A + B ຄ້າງໄວ້ຈົນກວ່າໄອຄອນ Bluetooth ຈະປາກົດ.",
-    "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
+    "defaultMessage": "ກົດ A + B ແລ້ວກົດ RESET ຄ້າງໄວ້. ໃຫ້ສືບຕໍ່ກົດ A + B ຄ້າງໄວ້ຈົນກວ່າໄອຄອນ Bluetooth ຈະປາກົດ."
   },
   "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "ຣີເຊັດໄປໂໝດ Bluetooth",
-    "description": "Title for dialog with instructures on using "
+    "defaultMessage": "ຣີເຊັດໄປໂໝດ Bluetooth"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "ກະລຸນາກົດ RESET ສາມຄັ້ງ.",
-    "description": "Instructions to press the physical reset button on the micro:bit"
+    "defaultMessage": "ກະລຸນາກົດ RESET ສາມຄັ້ງ."
   },
   "reset-to-default-action": {
-    "defaultMessage": "ຣີເຊັດໄປຫາບລັອກຄ່າເລີ່ມຕົ້ນ",
-    "description": "Reset to default blocks button text"
+    "defaultMessage": "ຣີເຊັດໄປຫາບລັອກຄ່າເລີ່ມຕົ້ນ"
   },
   "restore-defaults-action": {
-    "defaultMessage": "ກູ້ຄືນຄ່າເລີ່ມຕົ້ນສຳລັບການຕັ້ງຄ່າທັງໝົດ",
-    "description": "Restore default button text"
+    "defaultMessage": "ກູ້ຄືນຄ່າເລີ່ມຕົ້ນສຳລັບການຕັ້ງຄ່າທັງໝົດ"
   },
   "restore-defaults-confirm-action": {
-    "defaultMessage": "ກູ້ຄືນຄ່າເລີ່ມຕົ້ນ",
-    "description": "Restore default settings confirm button text"
+    "defaultMessage": "ກູ້ຄືນຄ່າເລີ່ມຕົ້ນ"
   },
   "restore-defaults-confirm-body": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການກູ້ຄືນຄ່າເລີ່ມຕົ້ນຂອງການຕັ້ງຄ່າທັງໝົດ?",
-    "description": "Restore default settings confirmation dialog body text"
+    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການກູ້ຄືນຄ່າເລີ່ມຕົ້ນຂອງການຕັ້ງຄ່າທັງໝົດ?"
   },
   "restore-defaults-confirm-heading": {
-    "defaultMessage": "ກູ້ຄືນການຕັ້ງຄ່າເລີ່ມຕົ້ນ",
-    "description": "Restore default settings confirmation dialog title"
+    "defaultMessage": "ກູ້ຄືນການຕັ້ງຄ່າເລີ່ມຕົ້ນ"
   },
   "restore-defaults-helper": {
-    "defaultMessage": "ເນື້ອຫາຊ່ວຍເຫຼືອທີ່ເຄີຍຖືກປິດໄວ້ອາດຈະຖືກສະແດງອີກຄັ້ງ.",
-    "description": "Restore default settings helper text"
+    "defaultMessage": "ເນື້ອຫາຊ່ວຍເຫຼືອທີ່ເຄີຍຖືກປິດໄວ້ອາດຈະຖືກສະແດງອີກຄັ້ງ."
   },
   "save-action": {
-    "defaultMessage": "ບັນທຶກ",
-    "description": "Label for action that saves the project as a file the user downloads"
+    "defaultMessage": "ບັນທຶກ"
   },
   "save-hex-dialog-heading": {
-    "defaultMessage": "ບັນທຶກໂຄງການເປັນໄຟລ໌ hex",
-    "description": "Heading for the dialog shown when saving a hex file"
+    "defaultMessage": "ບັນທຶກໂຄງການເປັນໄຟລ໌ hex"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "ການດາວໂຫຼດນີ້ມີການກະທຳຂອງທ່ານ, ຕົວຢ່າງຂໍ້ມູນ ແລະ ໂຄງການ MakeCode ຂອງທ່ານ. ເປີດມັນໃນ {appNameFull} ເພື່ອສືບຕໍ່ເຮັດວຽກ.",
-    "description": "Text in the dialog shown when saving a hex file"
+    "defaultMessage": "ການດາວໂຫຼດນີ້ມີການກະທຳຂອງທ່ານ, ຕົວຢ່າງຂໍ້ມູນ ແລະ ໂຄງການ MakeCode ຂອງທ່ານ. ເປີດມັນໃນ {appNameFull} ເພື່ອສືບຕໍ່ເຮັດວຽກ."
   },
   "save-hex-dialog-message2": {
-    "defaultMessage": "ທ່ານຍັງສາມາດເປີດມັນດ້ວຍ Microsoft MakeCode ໄດ້ ຖ້າທ່ານບໍ່ຈຳເປັນຕ້ອງແກ້ໄຂການກະທຳ ແລະ ຕົວຢ່າງຂໍ້ມູນ.",
-    "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
+    "defaultMessage": "ທ່ານຍັງສາມາດເປີດມັນດ້ວຍ Microsoft MakeCode ໄດ້ ຖ້າທ່ານບໍ່ຈຳເປັນຕ້ອງແກ້ໄຂການກະທຳ ແລະ ຕົວຢ່າງຂໍ້ມູນ."
   },
   "save-to-files-action": {
-    "defaultMessage": "ບັນທຶກໄປທີ່ໄຟລ໌",
-    "description": "Label for action that saves the project to the device file system on Android"
+    "defaultMessage": "ບັນທຶກໄປທີ່ໄຟລ໌"
   },
   "saving-dataset-toast-title": {
-    "defaultMessage": "ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ",
-    "description": "Notification after a dataset has been downloaded"
+    "defaultMessage": "ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ"
   },
   "saving-description": {
-    "defaultMessage": "ການດາວໂຫຼດຂອງທ່ານຈະພ້ອມໃຊ້ໃນໄວໆນີ້.",
-    "description": "Saving progress dialog text"
+    "defaultMessage": "ການດາວໂຫຼດຂອງທ່ານຈະພ້ອມໃຊ້ໃນໄວໆນີ້."
   },
   "saving-title": {
-    "defaultMessage": "ກຳລັງບັນທຶກ…",
-    "description": "Saving progress title"
+    "defaultMessage": "ກຳລັງບັນທຶກ…"
   },
   "saving-toast-title": {
-    "defaultMessage": "ໄຟລ໌ hex ຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ",
-    "description": "Notification after a hex file has been downloaded"
+    "defaultMessage": "ໄຟລ໌ hex ຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ"
   },
   "search": {
-    "defaultMessage": "ຄົ້ນຫາ",
-    "description": "Aria label for searching projects"
+    "defaultMessage": "ຄົ້ນຫາ"
   },
   "select-icon-action-aria": {
-    "defaultMessage": "ເລືອກໄອຄອນສຳລັບການກະທຳ \"{action}\"",
-    "description": "Aria label for pick icon button"
+    "defaultMessage": "ເລືອກໄອຄອນສຳລັບການກະທຳ \"{action}\""
   },
   "select-icon-action-untitled-aria": {
-    "defaultMessage": "ເລືອກໄອຄອນສຳລັບການກະທຳທີ່ຍັງບໍ່ມີຊື່",
-    "description": "Aria label for pick icon button"
+    "defaultMessage": "ເລືອກໄອຄອນສຳລັບການກະທຳທີ່ຍັງບໍ່ມີຊື່"
   },
   "select-icon-option-action-aria": {
-    "defaultMessage": "ເລືອກໄອຄອນ “{iconName}”",
-    "description": "Aria label for icon option"
+    "defaultMessage": "ເລືອກໄອຄອນ “{iconName}”"
   },
   "select-project-action": {
-    "defaultMessage": "ເລືອກ {name}",
-    "description": "Label for project selection checkbox"
+    "defaultMessage": "ເລືອກ {name}"
   },
   "selection-actions-group": {
-    "defaultMessage": "ການເລືອກການກະທຳ",
-    "description": "Accessible label for the group of actions available when projects are selected"
+    "defaultMessage": "ການເລືອກການກະທຳ"
   },
   "settings": {
-    "defaultMessage": "ການຕັ້ງຄ່າ",
-    "description": "Text for settings dialog header and menu item"
+    "defaultMessage": "ການຕັ້ງຄ່າ"
   },
   "settings-menu-action": {
-    "defaultMessage": "ເມນູການກະທຳການຕັ້ງຄ່າ",
-    "description": "Label for settings actions menu button"
+    "defaultMessage": "ເມນູການກະທຳການຕັ້ງຄ່າ"
   },
   "share-action": {
-    "defaultMessage": "ແບ່ງປັນ",
-    "description": "Label for action that initiates sharing the project on mobile"
+    "defaultMessage": "ແບ່ງປັນ"
   },
   "share-file-description": {
-    "defaultMessage": "ໂຄງການ {appNameFull}: {name}",
-    "description": "Label for a hex file with app name context"
+    "defaultMessage": "ໂຄງການ {appNameFull}: {name}"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "ແບ່ງປັນໂຄງການເປັນໄຟລ໌ hex",
-    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+    "defaultMessage": "ແບ່ງປັນໂຄງການເປັນໄຟລ໌ hex"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "ໄຟລ໌ hex ມີການກະທຳຂອງທ່ານ, ຕົວຢ່າງຂໍ້ມູນ ແລະໂຄງການ MakeCode ຂອງທ່ານ. ເປີດມັນໃນ {appNameFull} ເພື່ອສືບຕໍ່ເຮັດວຽກ.",
-    "description": "Text in the dialog shown when sharing a hex file on mobile"
+    "defaultMessage": "ໄຟລ໌ hex ມີການກະທຳຂອງທ່ານ, ຕົວຢ່າງຂໍ້ມູນ ແລະໂຄງການ MakeCode ຂອງທ່ານ. ເປີດມັນໃນ {appNameFull} ເພື່ອສືບຕໍ່ເຮັດວຽກ."
   },
   "share-named-file": {
-    "defaultMessage": "ແບ່ງປັນ {name}",
-    "description": "Label for sharing a named file"
+    "defaultMessage": "ແບ່ງປັນ {name}"
   },
   "sharing-description": {
-    "defaultMessage": "ໂຄງການຂອງທ່ານຈະພ້ອມໃຫ້ແບ່ງປັນໃນໄວໆນີ້.",
-    "description": "Sharing progress dialog text for mobile"
+    "defaultMessage": "ໂຄງການຂອງທ່ານຈະພ້ອມໃຫ້ແບ່ງປັນໃນໄວໆນີ້."
   },
   "sharing-title": {
-    "defaultMessage": "ກຳລັງແບ່ງປັນ…",
-    "description": "Sharing progress title"
+    "defaultMessage": "ກຳລັງແບ່ງປັນ…"
   },
   "show-graphs-checkbox-label-text": {
-    "defaultMessage": "ສະແດງກຣາຟ",
-    "description": "Show graphs checkbox label text"
+    "defaultMessage": "ສະແດງກຣາຟ"
   },
   "simple-ai-exercise-timer-resource-title": {
-    "defaultMessage": "ໂມງຈັບເວລາອອກກຳລັງກາຍແບບ AI ງ່າຍດາຍ",
-    "description": "Home page resource card title"
+    "defaultMessage": "ໂມງຈັບເວລາອອກກຳລັງກາຍແບບ AI ງ່າຍດາຍ"
   },
   "skip-tour-action": {
-    "defaultMessage": "ຂ້າມການນຳທ່ຽວ",
-    "description": "Skip tour button text"
+    "defaultMessage": "ຂ້າມການນຳທ່ຽວ"
   },
   "software-versions": {
-    "defaultMessage": "ເວີຊັນຂອງຊອບແວ",
-    "description": "Software versions text"
+    "defaultMessage": "ເວີຊັນຂອງຊອບແວ"
   },
   "sort-option-last-modified": {
-    "defaultMessage": "ແກ້ໄຂລ່າສຸດ",
-    "description": "Option for project sort select element / dropdown"
+    "defaultMessage": "ແກ້ໄຂລ່າສຸດ"
   },
   "sort-option-name": {
-    "defaultMessage": "ຊື່",
-    "description": "Option for project sort select element / dropdown"
+    "defaultMessage": "ຊື່"
   },
   "sort-option-relevance": {
-    "defaultMessage": "ຄວາມກ່ຽວຂ້ອງ",
-    "description": "Option for project sort select element / dropdown"
+    "defaultMessage": "ຄວາມກ່ຽວຂ້ອງ"
   },
   "sort-order-ascending-label": {
-    "defaultMessage": "ລຳດັບຈາກນ້ອຍໄປຫາໃຫຍ່",
-    "description": "Label for sort order toggle button"
+    "defaultMessage": "ລຳດັບຈາກນ້ອຍໄປຫາໃຫຍ່"
   },
   "sort-order-descending-label": {
-    "defaultMessage": "ລຳດັບຈາກໃຫຍ່ໄປຫານ້ອຍ",
-    "description": "Label for sort order toggle button"
+    "defaultMessage": "ລຳດັບຈາກໃຫຍ່ໄປຫານ້ອຍ"
   },
   "sort-select-label": {
-    "defaultMessage": "ຈັດລຳດັບໂຄງການ",
-    "description": "Label for select element to sort projects"
+    "defaultMessage": "ຈັດລຳດັບໂຄງການ"
   },
   "start-training-action": {
-    "defaultMessage": "ເລີ່ມຝຶກອົບຮົມ",
-    "description": "Start training button text"
+    "defaultMessage": "ເລີ່ມຝຶກອົບຮົມ"
   },
   "steps-code": {
-    "defaultMessage": "ຂຽນໂຄດ",
-    "description": "Step in home page diagram"
+    "defaultMessage": "ຂຽນໂຄດ"
   },
   "steps-collect-data": {
-    "defaultMessage": "ເກັບຂໍ້ມູນ",
-    "description": "Step in home page diagram"
+    "defaultMessage": "ເກັບຂໍ້ມູນ"
   },
   "steps-improve": {
-    "defaultMessage": "ປັບປຸງ",
-    "description": "Step in home page diagram"
+    "defaultMessage": "ປັບປຸງ"
   },
   "steps-test-model": {
-    "defaultMessage": "ທົດສອບໂມເດວ",
-    "description": "Step in home page diagram"
+    "defaultMessage": "ທົດສອບໂມເດວ"
   },
   "steps-train": {
-    "defaultMessage": "ຝຶກ",
-    "description": "Step in home page diagram"
+    "defaultMessage": "ຝຶກ"
   },
   "stop-recording-action": {
-    "defaultMessage": "ຢຸດການບັນທຶກ",
-    "description": "Button label to stop recording movement data while recording multiple samples"
+    "defaultMessage": "ຢຸດການບັນທຶກ"
   },
   "storage-error-device-other": {
-    "defaultMessage": "ບັນທຶກໂຄງການຂອງທ່ານໄປຍັງພື້ນທີ່ເກັບຂໍ້ມູນອຸປະກອນບໍ່ສຳເລັດ",
-    "description": "Toast shown when a SQLite storage write fails on a native device"
+    "defaultMessage": "ບັນທຶກໂຄງການຂອງທ່ານໄປຍັງພື້ນທີ່ເກັບຂໍ້ມູນອຸປະກອນບໍ່ສຳເລັດ"
   },
   "storage-error-other": {
-    "defaultMessage": "ບັນທຶກໂຄງການຂອງທ່ານໄປຍັງພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີບໍ່ສຳເລັດ",
-    "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
+    "defaultMessage": "ບັນທຶກໂຄງການຂອງທ່ານໄປຍັງພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີບໍ່ສຳເລັດ"
   },
   "storage-error-quota-description": {
-    "defaultMessage": "ການແກ້ໄຂໂຄງການຂອງທ່ານອາດຈະບໍ່ຖືກບັນທຶກ.",
-    "description": "Toast description when browser storage quota is exceeded"
+    "defaultMessage": "ການແກ້ໄຂໂຄງການຂອງທ່ານອາດຈະບໍ່ຖືກບັນທຶກ."
   },
   "storage-error-quota-title": {
-    "defaultMessage": "ພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີເຕັມແລ້ວ",
-    "description": "Toast title when browser storage quota is exceeded"
+    "defaultMessage": "ພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີເຕັມແລ້ວ"
   },
   "support-request": {
-    "defaultMessage": "ກະລຸນາພິຈາລະນາ <link>ສົ່ງຄຳຮ້ອງຂໍສະໜັບສະໜູນ</link>.",
-    "description": "Support request link text"
+    "defaultMessage": "ກະລຸນາພິຈາລະນາ <link>ສົ່ງຄຳຮ້ອງຂໍສະໜັບສະໜູນ</link>."
   },
   "teacher-resources-row-carousel": {
-    "defaultMessage": "ລາຍການຊັບພະຍາກອນສຳລັບຄູ",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "ລາຍການຊັບພະຍາກອນສຳລັບຄູ"
   },
   "teacher-resources-row-title": {
-    "defaultMessage": "ຊັບພະຍາກອນສຳລັບຄູ",
-    "description": "Title for home page row"
+    "defaultMessage": "ຊັບພະຍາກອນສຳລັບຄູ"
   },
   "terms": {
-    "defaultMessage": "ເງື່ອນໄຂການໃຊ້ງານ",
-    "description": "Link or menu item link to view terms of use"
+    "defaultMessage": "ເງື່ອນໄຂການໃຊ້ງານ"
   },
   "testing-model-actions-region": {
-    "defaultMessage": "ແຖບເຄື່ອງມືການທົດສອບໂມເດວ",
-    "description": "Region label for testing model actions"
+    "defaultMessage": "ແຖບເຄື່ອງມືການທົດສອບໂມເດວ"
   },
   "testing-model-title": {
-    "defaultMessage": "ການທົດສອບໂມເດວ",
-    "description": "Testing model page title"
+    "defaultMessage": "ການທົດສອບໂມເດວ"
   },
   "third-party-content-description": {
-    "defaultMessage": "ໂຄງການນີ້ຖືກສະໜອງໂດຍຜູ້ໃຊ້ ແລະ ບໍ່ໄດ້ຮັບການຮັບຮອງໂດຍ Microsoft ຫຼື Micro:bit Educational Foundation. ເຂົ້າໄປທີ່ <link>ໂຄງການທີ່ແບ່ງປັນຂອງ MakeCode</link> ເພື່ອລາຍງານການໃຊ້ງານທີ່ບໍ່ເໝາະສົມກັບ Microsoft MakeCode ຖ້າທ່ານຄິດວ່າມັນບໍ່ເໝາະສົມ.",
-    "description": "Notify user of third party content"
+    "defaultMessage": "ໂຄງການນີ້ຖືກສະໜອງໂດຍຜູ້ໃຊ້ ແລະ ບໍ່ໄດ້ຮັບການຮັບຮອງໂດຍ Microsoft ຫຼື Micro:bit Educational Foundation. ເຂົ້າໄປທີ່ <link>ໂຄງການທີ່ແບ່ງປັນຂອງ MakeCode</link> ເພື່ອລາຍງານການໃຊ້ງານທີ່ບໍ່ເໝາະສົມກັບ Microsoft MakeCode ຖ້າທ່ານຄິດວ່າມັນບໍ່ເໝາະສົມ."
   },
   "timestamp-now": {
-    "defaultMessage": "ຕອນນີ້",
-    "description": "The last edit time of a project"
+    "defaultMessage": "ຕອນນີ້"
   },
   "timestamp-seconds": {
-    "defaultMessage": "ສອງສາມວິນາທີກ່ອນ",
-    "description": "The last edit time of a project"
+    "defaultMessage": "ສອງສາມວິນາທີກ່ອນ"
   },
   "tour-action": {
-    "defaultMessage": "ການນຳທ່ຽວ",
-    "description": "Button label that starts a tour of the app's features"
+    "defaultMessage": "ການນຳທ່ຽວ"
   },
   "tour-collect-addActions-content": {
-    "defaultMessage": "ຕັດສິນໃຈວ່າ ການກະທຳອື່ນໆຂອງທ່ານຈະເປັນຫຍັງ ແລະ ຈະຕັ້ງຊື່ມັນວ່າຫຍັງ. ທ່ານຈຳເປັນຕ້ອງມີຢ່າງນ້ອຍ 2 ການກະທຳ ແລະ 3 ຕົວຢ່າງຂໍ້ມູນ ເພື່ອຝຶກໂມເດວ. ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານຖືກເກັບໄວ້ໃນຄອມພິວເຕີຂອງທ່ານເທົ່ານັ້ນ ແລະ ບໍ່ຖືກສົ່ງໄປຫາຜູ້ອື່ນໃດໆ.",
-    "description": "Tour step description"
+    "defaultMessage": "ຕັດສິນໃຈວ່າ ການກະທຳອື່ນໆຂອງທ່ານຈະເປັນຫຍັງ ແລະ ຈະຕັ້ງຊື່ມັນວ່າຫຍັງ. ທ່ານຈຳເປັນຕ້ອງມີຢ່າງນ້ອຍ 2 ການກະທຳ ແລະ 3 ຕົວຢ່າງຂໍ້ມູນ ເພື່ອຝຶກໂມເດວ. ຕົວຢ່າງຂໍ້ມູນຂອງທ່ານຖືກເກັບໄວ້ໃນຄອມພິວເຕີຂອງທ່ານເທົ່ານັ້ນ ແລະ ບໍ່ຖືກສົ່ງໄປຫາຜູ້ອື່ນໃດໆ."
   },
   "tour-collect-addActions-title": {
-    "defaultMessage": "ເພີ່ມການກະທຳເພີ່ມເຕີມ",
-    "description": "Tour step title"
+    "defaultMessage": "ເພີ່ມການກະທຳເພີ່ມເຕີມ"
   },
   "tour-collect-afterFirst-content": {
-    "defaultMessage": "ເພື່ອຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ ທ່ານຈຳເປັນຕ້ອງມີຢ່າງນ້ອຍ 3 ຕົວຢ່າງຂໍ້ມູນ ສຳລັບ 2 ການກະທຳທີ່ແຕກຕ່າງກັນ.",
-    "description": "Tour step description"
+    "defaultMessage": "ເພື່ອຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ ທ່ານຈຳເປັນຕ້ອງມີຢ່າງນ້ອຍ 3 ຕົວຢ່າງຂໍ້ມູນ ສຳລັບ 2 ການກະທຳທີ່ແຕກຕ່າງກັນ."
   },
   "tour-collect-afterFirst-title": {
-    "defaultMessage": "ທ່ານໄດ້ບັນທຶກຕົວຢ່າງທຳອິດແລ້ວ {recordingCount, plural, one {ຕົວຢ່າງ} other {ຕົວຢ່າງ}}!",
-    "description": "Tour step title. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+    "defaultMessage": "ທ່ານໄດ້ບັນທຶກຕົວຢ່າງທຳອິດແລ້ວ {recordingCount, plural, one {ຕົວຢ່າງ} other {ຕົວຢ່າງ}}!"
   },
   "tour-collect-collectMore-explanation-content": {
-    "defaultMessage": "ການເກັບຕົວຢ່າງເພີ່ມເຕີມຈະຊ່ວຍໃຫ້ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກມີຄວາມແມ່ນຍຳດີຂຶ້ນ.",
-    "description": "Tour step description"
+    "defaultMessage": "ການເກັບຕົວຢ່າງເພີ່ມເຕີມຈະຊ່ວຍໃຫ້ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກມີຄວາມແມ່ນຍຳດີຂຶ້ນ."
   },
   "tour-collect-collectMore-hasRecordings-content": {
-    "defaultMessage": "ບັນທຶກຕົວຢ່າງຂໍ້ມູນສຳລັບການກະທຳຂອງທ່ານ.",
-    "description": "Tour step description"
+    "defaultMessage": "ບັນທຶກຕົວຢ່າງຂໍ້ມູນສຳລັບການກະທຳຂອງທ່ານ."
   },
   "tour-collect-collectMore-noRecordings-content": {
-    "defaultMessage": "ບັນທຶກຕົວຢ່າງເພີ່ມເຕີມສຳລັບການກະທຳນີ້.",
-    "description": "Tour step description"
+    "defaultMessage": "ບັນທຶກຕົວຢ່າງເພີ່ມເຕີມສຳລັບການກະທຳນີ້."
   },
   "tour-collect-collectMore-title": {
-    "defaultMessage": "ເກັບຕົວຢ່າງຂໍ້ມູນເພີ່ມເຕີມ",
-    "description": "Tour step title"
+    "defaultMessage": "ເກັບຕົວຢ່າງຂໍ້ມູນເພີ່ມເຕີມ"
   },
   "tour-collect-trainModel-content": {
-    "defaultMessage": "ເມື່ອທ່ານເກັບຕົວຢ່າງຂໍ້ມູນພຽງພໍແລ້ວ ທ່ານສາມາດຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກໄດ້. ທ່ານສາມາດກັບມາພາຍຫຼັງເພື່ອລຶບ ຫຼື ເພີ່ມຂໍ້ມູນ ແລະ ຝຶກໃໝ່ເພື່ອໃຫ້ໂມເດວມີຄວາມເຊື່ອຖືໄດ້ຫຼາຍຂຶ້ນ.",
-    "description": "Tour step description"
+    "defaultMessage": "ເມື່ອທ່ານເກັບຕົວຢ່າງຂໍ້ມູນພຽງພໍແລ້ວ ທ່ານສາມາດຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກໄດ້. ທ່ານສາມາດກັບມາພາຍຫຼັງເພື່ອລຶບ ຫຼື ເພີ່ມຂໍ້ມູນ ແລະ ຝຶກໃໝ່ເພື່ອໃຫ້ໂມເດວມີຄວາມເຊື່ອຖືໄດ້ຫຼາຍຂຶ້ນ."
   },
   "tour-dataSamples-actions-common-content": {
-    "defaultMessage": "ການກະທຳ ແມ່ນປະເພດການເຄື່ອນໄຫວທີ່ທ່ານຕ້ອງການໃຫ້ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ຕົບມື’.",
-    "description": "Tour step content"
+    "defaultMessage": "ການກະທຳ ແມ່ນປະເພດການເຄື່ອນໄຫວທີ່ທ່ານຕ້ອງການໃຫ້ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ຕົບມື’."
   },
   "tour-dataSamples-actions-noRecordings-content": {
-    "defaultMessage": "ຕັດສິນໃຈວ່າ ການກະທຳທຳອິດຂອງທ່ານຈະເປັນຫຍັງ ຕັ້ງຊື່ມັນແລ້ວເລີ່ມບັນທຶກຕົວຢ່າງຂໍ້ມູນ.",
-    "description": "Tour step content"
+    "defaultMessage": "ຕັດສິນໃຈວ່າ ການກະທຳທຳອິດຂອງທ່ານຈະເປັນຫຍັງ ຕັ້ງຊື່ມັນແລ້ວເລີ່ມບັນທຶກຕົວຢ່າງຂໍ້ມູນ."
   },
   "tour-dataSamples-connected-content": {
-    "defaultMessage": "ຕອນນີ້ ທ່ານສາມາດເລີ່ມເກັບຕົວຢ່າງຂໍ້ມູນ ເພື່ອຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ (ML) ໃຫ້ຈຳແນກການເຄື່ອນໄຫວ ຫຼື ການກະທຳທີ່ແຕກຕ່າງກັນໄດ້.",
-    "description": "Tour step content"
+    "defaultMessage": "ຕອນນີ້ ທ່ານສາມາດເລີ່ມເກັບຕົວຢ່າງຂໍ້ມູນ ເພື່ອຝຶກໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກ (ML) ໃຫ້ຈຳແນກການເຄື່ອນໄຫວ ຫຼື ການກະທຳທີ່ແຕກຕ່າງກັນໄດ້."
   },
   "tour-dataSamples-connected-title": {
-    "defaultMessage": "micro:bit ສຳລັບເກັບຂໍ້ມູນຂອງທ່ານໄດ້ເຊື່ອມຕໍ່ແລ້ວ!",
-    "description": "Tour step title"
+    "defaultMessage": "micro:bit ສຳລັບເກັບຂໍ້ມູນຂອງທ່ານໄດ້ເຊື່ອມຕໍ່ແລ້ວ!"
   },
   "tour-dataSamples-liveGraph-content": {
-    "defaultMessage": "ເສັ້ນກຣາຟສະແດງຂໍ້ມູນການເຄື່ອນໄຫວຈາກມາດວັດການເລັ່ງຂອງ micro:bit. ຍ້າຍ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນຂອງທ່ານ ແລະ ເບິ່ງວ່າກຣາຟປ່ຽນແປງແນວໃດ.",
-    "description": "Tour step content"
+    "defaultMessage": "ເສັ້ນກຣາຟສະແດງຂໍ້ມູນການເຄື່ອນໄຫວຈາກມາດວັດການເລັ່ງຂອງ micro:bit. ຍ້າຍ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນຂອງທ່ານ ແລະ ເບິ່ງວ່າກຣາຟປ່ຽນແປງແນວໃດ."
   },
   "tour-makecode-intro-content1": {
-    "defaultMessage": "ດາວໂຫຼດໂມເດວ ແລະ ໂຄດເພື່ອທົດສອບໂຄງການຂອງທ່ານໃນ micro:bit ໄດ້. ທ່ານຍັງສາມາດເພີ່ມບລັອກໂຄດເພີ່ມເຕີມ ເພື່ອສ້າງໂປຣແກຣມຂອງທ່ານເອງຈາກໂມເດວນີ້ໄດ້.",
-    "description": "Tour step description"
+    "defaultMessage": "ດາວໂຫຼດໂມເດວ ແລະ ໂຄດເພື່ອທົດສອບໂຄງການຂອງທ່ານໃນ micro:bit ໄດ້. ທ່ານຍັງສາມາດເພີ່ມບລັອກໂຄດເພີ່ມເຕີມ ເພື່ອສ້າງໂປຣແກຣມຂອງທ່ານເອງຈາກໂມເດວນີ້ໄດ້."
   },
   "tour-makecode-intro-content2": {
-    "defaultMessage": "ຕ້ອງການປັບປຸງໂມເດວ ML ບໍ? ",
-    "description": "Tour step description"
+    "defaultMessage": "ຕ້ອງການປັບປຸງໂມເດວ ML ບໍ? "
   },
   "tour-makecode-intro-content3": {
-    "defaultMessage": "ໃຊ້ປຸ່ມກັບຄືນຢູ່ມຸມຊ້າຍເທິງ.",
-    "description": "Tour step description"
+    "defaultMessage": "ໃຊ້ປຸ່ມກັບຄືນຢູ່ມຸມຊ້າຍເທິງ."
   },
   "tour-makecode-intro-title": {
-    "defaultMessage": "Microsoft MakeCode",
-    "description": "Tour step title"
+    "defaultMessage": "Microsoft MakeCode"
   },
   "tour-trainModel-afterTrain-alreadyConnected-title": {
-    "defaultMessage": "ທ່ານໄດ້ຝຶກໂມເດວ ML ສຳເລັດແລ້ວ!",
-    "description": "Tour step title"
+    "defaultMessage": "ທ່ານໄດ້ຝຶກໂມເດວ ML ສຳເລັດແລ້ວ!"
   },
   "tour-trainModel-afterTrain-content": {
-    "defaultMessage": "ຕອນນີ້ໃຫ້ທົດສອບໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານ. ລອງແຕ່ລະການກະທຳໂດຍການຍ້າຍ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນ. ໂມເດວສາມາດປະເມີນການກະທຳໄດ້ຖືກຕ້ອງບໍ?",
-    "description": "Tour step description"
+    "defaultMessage": "ຕອນນີ້ໃຫ້ທົດສອບໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກຂອງທ່ານ. ລອງແຕ່ລະການກະທຳໂດຍການຍ້າຍ micro:bit ທີ່ໃຊ້ເກັບຂໍ້ມູນ. ໂມເດວສາມາດປະເມີນການກະທຳໄດ້ຖືກຕ້ອງບໍ?"
   },
   "tour-trainModel-afterTrain-delayedUntilConnected-title": {
-    "defaultMessage": "ທົດສອບໂມເດວ ML ຂອງທ່ານ",
-    "description": "Tour step title"
+    "defaultMessage": "ທົດສອບໂມເດວ ML ຂອງທ່ານ"
   },
   "tour-trainModel-certaintyRecognition-content": {
-    "defaultMessage": "ແຜນວາດແທ່ງສະແດງຄວາມໝັ້ນໃຈຂອງໂມເດວວ່າທ່ານກຳລັງເຮັດແຕ່ລະການກະທຳໃດ. ເລື່ອນຕົວສະໄລ້ເພື່ອປັບຈຸດ ຫຼື ເກນຂອງການຮັບຮູ້.\n\n\n",
-    "description": "Tour step description"
+    "defaultMessage": "ແຜນວາດແທ່ງສະແດງຄວາມໝັ້ນໃຈຂອງໂມເດວວ່າທ່ານກຳລັງເຮັດແຕ່ລະການກະທຳໃດ. ເລື່ອນຕົວສະໄລ້ເພື່ອປັບຈຸດ ຫຼື ເກນຂອງການຮັບຮູ້.\n\n\n"
   },
   "tour-trainModel-certaintyRecognition-title": {
-    "defaultMessage": "ຄວາມແນ່ໃຈ ແລະ ຈຸດການຮັບຮູ້",
-    "description": "Tour step title"
+    "defaultMessage": "ຄວາມແນ່ໃຈ ແລະ ຈຸດການຮັບຮູ້"
   },
   "tour-trainModel-editInMakeCode-content": {
-    "defaultMessage": "ເປີດໂຄງການຂອງທ່ານໃນ MakeCode ເພື່ອດາວໂຫຼດໂປຣແກຣມ ແລະ ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກໄປຍັງ micro:bit. ທ່ານສາມາດເພີ່ມບລັອກເພື່ອສ້າງໂປຣແກຣມຂອງທ່ານເອງໂດຍໃຊ້ໂມເດວນີ້ໄດ້.",
-    "description": "Tour step description"
+    "defaultMessage": "ເປີດໂຄງການຂອງທ່ານໃນ MakeCode ເພື່ອດາວໂຫຼດໂປຣແກຣມ ແລະ ໂມເດວການຮຽນຮູ້ຂອງເຄື່ອງຈັກໄປຍັງ micro:bit. ທ່ານສາມາດເພີ່ມບລັອກເພື່ອສ້າງໂປຣແກຣມຂອງທ່ານເອງໂດຍໃຊ້ໂມເດວນີ້ໄດ້."
   },
   "tour-trainModel-estimatedAction-content": {
-    "defaultMessage": "ການກະທຳທີ່ໂມເດວຄາດຄະເນວ່າທ່ານກຳລັງເຮັດ ຈະຖືກສະແດງຢູ່ຂ້າງລຸ່ມໄອຄອນ micro:bit ຂອງການກະທຳນັ້ນ.",
-    "description": "Tour step description"
+    "defaultMessage": "ການກະທຳທີ່ໂມເດວຄາດຄະເນວ່າທ່ານກຳລັງເຮັດ ຈະຖືກສະແດງຢູ່ຂ້າງລຸ່ມໄອຄອນ micro:bit ຂອງການກະທຳນັ້ນ."
   },
   "tour-trainModel-makeCodeBlocks-content": {
-    "defaultMessage": "ບລັອກ MakeCode ເຫຼົ່ານີ້ຈະສະແດງໄອຄອນສຳລັບແຕ່ລະການກະທຳທີ່ຖືກຈຳແນກ ເມື່ອທ່ານໂອນໂຄດ ແລະ ໂມເດວໄປຍັງ micro:bit.",
-    "description": "Tour step description"
+    "defaultMessage": "ບລັອກ MakeCode ເຫຼົ່ານີ້ຈະສະແດງໄອຄອນສຳລັບແຕ່ລະການກະທຳທີ່ຖືກຈຳແນກ ເມື່ອທ່ານໂອນໂຄດ ແລະ ໂມເດວໄປຍັງ micro:bit."
   },
   "tour-trainModel-makeCodeBlocks-title": {
-    "defaultMessage": "ບລັອກ Microsoft MakeCode",
-    "description": "Tour step title"
+    "defaultMessage": "ບລັອກ Microsoft MakeCode"
   },
   "train-description": {
-    "defaultMessage": "ໂປຣແກຣມໃນຄອມພິວເຕີຈະຄົ້ນຫາຮູບແບບ ຫຼື ຄວາມແຕກຕ່າງໃນຕົວຢ່າງຂໍ້ມູນຂອງທ່ານ ແລະນຳມາໃຊ້ເພື່ອສ້າງໂມເດວທາງຄະນິດສາດ ທີ່ເຮັດໃຫ້ {appNameFull} ສາມາດຈຳແນກການກະທຳຕ່າງໆໄດ້ ເມື່ອທ່ານຍ້າຍ micro:bit ຂອງທ່ານ.",
-    "description": "Explanation on training dialog"
+    "defaultMessage": "ໂປຣແກຣມໃນຄອມພິວເຕີຈະຄົ້ນຫາຮູບແບບ ຫຼື ຄວາມແຕກຕ່າງໃນຕົວຢ່າງຂໍ້ມູນຂອງທ່ານ ແລະນຳມາໃຊ້ເພື່ອສ້າງໂມເດວທາງຄະນິດສາດ ທີ່ເຮັດໃຫ້ {appNameFull} ສາມາດຈຳແນກການກະທຳຕ່າງໆໄດ້ ເມື່ອທ່ານຍ້າຍ micro:bit ຂອງທ່ານ."
   },
   "train-error-body": {
-    "defaultMessage": "ການຝຶກບໍ່ໄດ້ຜົນເປັນໂມເດວທີ່ໃຊ້ງານໄດ້. ເຫດຜົນອາດເປັນເພາະຂໍ້ມູນທີ່ໃຊ້ຝຶກ. ຖ້າຕົວຢ່າງຂໍ້ມູນຂອງແຕ່ລະການກະທຳຄ້າຍກັນເກີນໄປ ອາດເຮັດໃຫ້ມີບັນຫາໃນຂະບວນການຝຶກໄດ້.",
-    "description": "Training error dialog"
+    "defaultMessage": "ການຝຶກບໍ່ໄດ້ຜົນເປັນໂມເດວທີ່ໃຊ້ງານໄດ້. ເຫດຜົນອາດເປັນເພາະຂໍ້ມູນທີ່ໃຊ້ຝຶກ. ຖ້າຕົວຢ່າງຂໍ້ມູນຂອງແຕ່ລະການກະທຳຄ້າຍກັນເກີນໄປ ອາດເຮັດໃຫ້ມີບັນຫາໃນຂະບວນການຝຶກໄດ້."
   },
   "train-error-header": {
-    "defaultMessage": "ການຝຶກໂມເດວລົ້ມເຫຼວ",
-    "description": "Training error dialog"
+    "defaultMessage": "ການຝຶກໂມເດວລົ້ມເຫຼວ"
   },
   "train-error-todo": {
-    "defaultMessage": "ກັບໄປທີ່ໜ້າ Add data ແລະ ປ່ຽນຂໍ້ມູນຂອງທ່ານ.",
-    "description": "Training error dialog"
+    "defaultMessage": "ກັບໄປທີ່ໜ້າ Add data ແລະ ປ່ຽນຂໍ້ມູນຂອງທ່ານ."
   },
   "train-header": {
-    "defaultMessage": "ກຳລັງຝຶກໂມເດວ",
-    "description": "Training dialog"
+    "defaultMessage": "ກຳລັງຝຶກໂມເດວ"
   },
   "train-hint": {
-    "defaultMessage": "ບັນທຶກເສັດແລ້ວບໍ? <mark>ຝຶກໂມເດວ</mark>",
-    "description": "Hint when you have recorded enough data samples to train a model"
+    "defaultMessage": "ບັນທຶກເສັດແລ້ວບໍ? <mark>ຝຶກໂມເດວ</mark>"
   },
   "train-hint-label": {
-    "defaultMessage": "ບັນທຶກເສັດແລ້ວບໍ? ກົດປຸ່ມ “ຝຶກໂມເດວ” ເພື່ອຝຶກໂມເດວ",
-    "description": "Hint when you have recorded enough data samples to train a model aria label"
+    "defaultMessage": "ບັນທຶກເສັດແລ້ວບໍ? ກົດປຸ່ມ “ຝຶກໂມເດວ” ເພື່ອຝຶກໂມເດວ"
   },
   "train-model": {
-    "defaultMessage": "ຝຶກໂມເດວ",
-    "description": "Action to train a model"
+    "defaultMessage": "ຝຶກໂມເດວ"
   },
   "training-model": {
-    "defaultMessage": "ກຳລັງຝຶກໂມເດວ…",
-    "description": "Progress title"
+    "defaultMessage": "ກຳລັງຝຶກໂມເດວ…"
   },
   "transfer-hex-alt": {
-    "defaultMessage": "ອະນິເມຊັນສະແດງການລາກໄຟລ໌ hex ຈາກໂຟນເດີຕາວໂຫຼດໄປວາງໃສ່ໄດຣຟ micro:bit ຫຼື ອຸປະກອນທີ່ສະແດງຢູ່ໃນຕົວສຳຫຼວດໄຟລ໌",
-    "description": "Alt text"
+    "defaultMessage": "ອະນິເມຊັນສະແດງການລາກໄຟລ໌ hex ຈາກໂຟນເດີຕາວໂຫຼດໄປວາງໃສ່ໄດຣຟ micro:bit ຫຼື ອຸປະກອນທີ່ສະແດງຢູ່ໃນຕົວສຳຫຼວດໄຟລ໌"
   },
   "transfer-hex-heading": {
-    "defaultMessage": "ໂອນໄຟລ໌ hex ທີ່ບັນທຶກໄວ້ໄປຍັງ micro:bit",
-    "description": "Dialog shown when WebUSB fails"
+    "defaultMessage": "ໂອນໄຟລ໌ hex ທີ່ບັນທຶກໄວ້ໄປຍັງ micro:bit"
   },
   "transfer-hex-manual-download": {
-    "defaultMessage": "ຖ້າໄຟລ໌ບໍ່ໄດ້ດາວໂຫຼດອັດຕະໂນມັດ <link>ກະລຸນາດາວໂຫຼດໄຟລ໌ທີ່ນີ້</link>.",
-    "description": "Dialog shown when WebUSB fails"
+    "defaultMessage": "ຖ້າໄຟລ໌ບໍ່ໄດ້ດາວໂຫຼດອັດຕະໂນມັດ <link>ກະລຸນາດາວໂຫຼດໄຟລ໌ທີ່ນີ້</link>."
   },
   "transfer-hex-message": {
-    "defaultMessage": "ລາກໄຟລ໌ hex ຈາກໂຟນເດີ Downloads ໄປວາງໃສ່ໄດຣຟ MICROBIT.",
-    "description": "Dialog shown when WebUSB fails"
+    "defaultMessage": "ລາກໄຟລ໌ hex ຈາກໂຟນເດີ Downloads ໄປວາງໃສ່ໄດຣຟ MICROBIT."
   },
   "troubleshooting-resource-title": {
-    "defaultMessage": "ການແກ້ໄຂບັນຫາ",
-    "description": "Home page resource card title"
+    "defaultMessage": "ການແກ້ໄຂບັນຫາ"
   },
   "try-again-action": {
-    "defaultMessage": "ລອງໃໝ່ອີກຄັ້ງ",
-    "description": "Button label"
+    "defaultMessage": "ລອງໃໝ່ອີກຄັ້ງ"
   },
   "unknown": {
-    "defaultMessage": "ບໍ່ຮູ້ຈັກ",
-    "description": "Label for unknown ML event"
+    "defaultMessage": "ບໍ່ຮູ້ຈັກ"
   },
   "unplug-radio-link-microbit-description": {
-    "defaultMessage": "ຖອດ micro:bit ທີ່ໃຊ້ລິ້ງວິທະຍຸອອກຈາກຄອມພິວເຕີ. ຖ້າທ່ານຕ້ອງການເກັບຂໍ້ມູນຕົວຢ່າງເພີ່ມ ຈະຕ້ອງເຊື່ອມຕໍ່ micro:bit ໃໝ່ອີກຄັ້ງ.",
-    "description": "Unplug radio link micro:bit dialog description"
+    "defaultMessage": "ຖອດ micro:bit ທີ່ໃຊ້ລິ້ງວິທະຍຸອອກຈາກຄອມພິວເຕີ. ຖ້າທ່ານຕ້ອງການເກັບຂໍ້ມູນຕົວຢ່າງເພີ່ມ ຈະຕ້ອງເຊື່ອມຕໍ່ micro:bit ໃໝ່ອີກຄັ້ງ."
   },
   "unplug-radio-link-microbit-label": {
-    "defaultMessage": "ອະນິເມຊັນສະແດງການຖອດສາຍ USB ອອກຈາກດ້ານເທິງຂອງ micro:bit",
-    "description": "Unplug radio link micro:bit dialog aria label"
+    "defaultMessage": "ອະນິເມຊັນສະແດງການຖອດສາຍ USB ອອກຈາກດ້ານເທິງຂອງ micro:bit"
   },
   "unplug-radio-link-microbit-title": {
-    "defaultMessage": "ຖອດ micro:bit ທີ່ໃຊ້ລິ້ງວິທະຍຸອອກ",
-    "description": "Unplug radio link micro:bit dialog title"
+    "defaultMessage": "ຖອດ micro:bit ທີ່ໃຊ້ລິ້ງວິທະຍຸອອກ"
   },
   "unsupported-device-explain": {
-    "defaultMessage": "ຂໍໂທດ, ພວກເຮົາຮອງຮັບການໃຊ້ micro:bit V2 ເທົ່ານັ້ນໃນການເຊື່ອມຕໍ່ຜ່ານວິທະຍຸ micro:bit. ທ່ານໄດ້ເຊື່ອມຕໍ່ <link>micro:bit V1</link> ແລ້ວ.",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "ຂໍໂທດ, ພວກເຮົາຮອງຮັບການໃຊ້ micro:bit V2 ເທົ່ານັ້ນໃນການເຊື່ອມຕໍ່ຜ່ານວິທະຍຸ micro:bit. ທ່ານໄດ້ເຊື່ອມຕໍ່ <link>micro:bit V1</link> ແລ້ວ."
   },
   "unsupported-device-header": {
-    "defaultMessage": "ການເຊື່ອມຕໍ່ຜ່ານ micro:bit ວິທະຍຸ ບໍ່ຮອງຮັບ micro:bit V1",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "ການເຊື່ອມຕໍ່ຜ່ານ micro:bit ວິທະຍຸ ບໍ່ຮອງຮັບ micro:bit V1"
   },
   "unsupported-device-with-bluetooth": {
-    "defaultMessage": "ກະລຸນາໃຊ້ Web Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit V1 ຂອງທ່ານແທນ.",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "ກະລຸນາໃຊ້ Web Bluetooth ເພື່ອເຊື່ອມຕໍ່ກັບ micro:bit V1 ຂອງທ່ານແທນ."
   },
   "unsupported-device-without-bluetooth": {
-    "defaultMessage": "ທ່ານສາມາດເຊື່ອມຕໍ່ micro:bit V1 ໂດຍໃຊ້ Web Bluetooth ໄດ້, ແຕ່ບຣາວເຊີ ຫຼື ອຸປະກອນນີ້ບໍ່ໄດ້ເປີດ Bluetooth ໃຊ້ງານຢູ່. <link>ວິທີເປີດໃຊ້ງານ Bluetooth</link>.",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "ທ່ານສາມາດເຊື່ອມຕໍ່ micro:bit V1 ໂດຍໃຊ້ Web Bluetooth ໄດ້, ແຕ່ບຣາວເຊີ ຫຼື ອຸປະກອນນີ້ບໍ່ໄດ້ເປີດ Bluetooth ໃຊ້ງານຢູ່. <link>ວິທີເປີດໃຊ້ງານ Bluetooth</link>."
   },
   "user-guide": {
-    "defaultMessage": "ຄູ່ມືຜູ້ໃຊ້",
-    "description": "Used for link to user guide page on microbit.org"
+    "defaultMessage": "ຄູ່ມືຜູ້ໃຊ້"
   },
   "view-all-projects": {
-    "defaultMessage": "ເບິ່ງທັງໝົດ",
-    "description": "View all projects button / card text"
+    "defaultMessage": "ເບິ່ງທັງໝົດ"
   },
   "webusb-retry-no-select": {
-    "defaultMessage": "ທ່ານຍັງບໍ່ໄດ້ເລືອກ micro:bit. ທ່ານຕ້ອງການລອງອີກຄັ້ງບໍ?",
-    "description": "Shown if the user fails to choose a micro:bit"
+    "defaultMessage": "ທ່ານຍັງບໍ່ໄດ້ເລືອກ micro:bit. ທ່ານຕ້ອງການລອງອີກຄັ້ງບໍ?"
   },
   "webusb-retry-replug1": {
-    "defaultMessage": "ເກີດຂໍ້ຜິດພາດ WebUSB.",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "ເກີດຂໍ້ຜິດພາດ WebUSB."
   },
   "webusb-retry-replug2": {
-    "defaultMessage": "ກະລຸນາ:",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "ກະລຸນາ:"
   },
   "webusb-retry-replug3": {
-    "defaultMessage": "ກວດສອບວ່າ micro:bit ນີ້ບໍ່ໄດ້ຕໍ່ກັບຊຸດແບດເຕີຣີ",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "ກວດສອບວ່າ micro:bit ນີ້ບໍ່ໄດ້ຕໍ່ກັບຊຸດແບດເຕີຣີ"
   },
   "webusb-retry-replug4": {
-    "defaultMessage": "ຖອດສາຍ USB ອອກ ແລ້ວສຽບກັບເຂົ້າໃໝ່",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "ຖອດສາຍ USB ອອກ ແລ້ວສຽບກັບເຂົ້າໃໝ່"
   },
   "welcome-title": {
-    "defaultMessage": "CreateAI ເຮັດວຽກແນວໃດ",
-    "description": "Welcome dialog"
+    "defaultMessage": "CreateAI ເຮັດວຽກແນວໃດ"
   }
 }

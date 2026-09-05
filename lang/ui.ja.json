@@ -1,2186 +1,1640 @@
 {
   "aarhus-university-alt": {
-    "defaultMessage": "オーフス大学",
-    "description": "Alt text for Aarhus University logo in about dialog"
+    "defaultMessage": "オーフス大学"
   },
   "about": {
-    "defaultMessage": "micro:bitについて",
-    "description": "Menu item link to view information about app; also the accessible name of the about dialog"
+    "defaultMessage": "micro:bitについて"
   },
   "about-dialog-alt": {
-    "defaultMessage": "micro:bit でLEDディスプレイにハートを表示する",
-    "description": "Alt text for image in about dialog"
+    "defaultMessage": "micro:bit でLEDディスプレイにハートを表示する"
   },
   "about-dialog-title": {
-    "defaultMessage": "<link>オーフス大学 Center for Computational Thinking and Design</link>とのパートナーシップにより開発されています",
-    "description": "Title of about dialog"
+    "defaultMessage": "<link>オーフス大学 Center for Computational Thinking and Design</link>とのパートナーシップにより開発されています"
   },
   "accelerometer-image-alt": {
-    "defaultMessage": "micro:bitでは、X軸が前面を横切る方向、Y軸が下から上方向、Z軸が裏面から前面の方向を示しています。",
-    "description": "Alt text for image showing the board-relative directions of the X/Y/Z dimensions of the micro:bit accelerometer"
+    "defaultMessage": "micro:bitでは、X軸が前面を横切る方向、Y軸が下から上方向、Z軸が裏面から前面の方向を示しています。"
   },
   "accessibility": {
-    "defaultMessage": "アクセシビリティ",
-    "description": "Menu item for link to accessibility site"
+    "defaultMessage": "アクセシビリティ"
   },
   "accessibility-resource-title": {
-    "defaultMessage": "アクセシビリティ",
-    "description": "Accessibility resource card title"
+    "defaultMessage": "アクセシビリティ"
   },
   "action-label": {
-    "defaultMessage": "アクション",
-    "description": "Label for a movement-related action, e.g. clapping"
+    "defaultMessage": "アクション"
   },
   "action-label-tooltip-aria": {
-    "defaultMessage": "アクションのツールチップ",
-    "description": "Aria label for action tooltip icon"
+    "defaultMessage": "アクションのツールチップ"
   },
   "action-length-error": {
-    "defaultMessage": "アクション名は {maxLen} 文字より長くできません。",
-    "description": "Error message shown when an action name is too long"
+    "defaultMessage": "アクション名は {maxLen} 文字より長くできません。"
   },
   "action-name-placeholder": {
-    "defaultMessage": "アクション名",
-    "description": "Placeholder text for user supplied name of a movement-related action, e.g. clapping"
+    "defaultMessage": "アクション名"
   },
   "action-region": {
-    "defaultMessage": "アクション「{action}」",
-    "description": "Region label for action row"
+    "defaultMessage": "アクション「{action}」"
   },
   "action-tooltip": {
-    "defaultMessage": "{appNameFull} に認識させたい動きの種類(例: 手を振る、拍手する)",
-    "description": "Tooltip explaining action"
+    "defaultMessage": "{appNameFull} に認識させたい動きの種類(例: 手を振る、拍手する)"
   },
   "actions-label": {
-    "defaultMessage": "アクション",
-    "description": "Label for Actions"
+    "defaultMessage": "アクション"
   },
   "add-action-action": {
-    "defaultMessage": "アクションを追加",
-    "description": "Button to add an action (movement related, e.g. clapping)"
+    "defaultMessage": "アクションを追加"
   },
   "add-action-hint": {
-    "defaultMessage": "{actionName}の記録が完了しましたか？<mark>別のアクションを追加</mark>",
-    "description": "Hint when you have recorded enough data samples for one action"
+    "defaultMessage": "{actionName}の記録が完了しましたか？<mark>別のアクションを追加</mark>"
   },
   "add-action-hint-label": {
-    "defaultMessage": "{actionName}の記録が完了しましたか？別のアクションを追加するには、「アクションを追加」ボタンを押してください",
-    "description": "Hint when you have recorded enough data samples for one action aria label"
+    "defaultMessage": "{actionName}の記録が完了しましたか？別のアクションを追加するには、「アクションを追加」ボタンを押してください"
   },
   "ai-activity-timer-resource-title": {
-    "defaultMessage": "AI活動タイマー",
-    "description": "Home page resource card title"
+    "defaultMessage": "AI活動タイマー"
   },
   "ai-light-switch-resource-title": {
-    "defaultMessage": "AIライトスイッチ",
-    "description": "Home page resource card title"
+    "defaultMessage": "AIライトスイッチ"
   },
   "ai-sports-data-logger-resource-title": {
-    "defaultMessage": "AIスポーツデータ記録装置",
-    "description": "Home page resource card title"
+    "defaultMessage": "AIスポーツデータ記録装置"
   },
   "ai-storytelling-friend-resource-title": {
-    "defaultMessage": "AIストーリーテリングの友達",
-    "description": "Home page resource card title"
+    "defaultMessage": "AIストーリーテリングの友達"
   },
   "analytics-consent-allow-action": {
-    "defaultMessage": "アナリティクスの許可",
-    "description": "Accept button on the analytics consent dialog"
+    "defaultMessage": "アナリティクスの許可"
   },
   "analytics-consent-analytics": {
-    "defaultMessage": "アプリの改善に役立てるため、お客様のアプリ利用状況に関する匿名データを収集させていただきたいと考えております。個人データを共有したり、サードパーティーの広告を掲載したりすることはありません。",
-    "description": "Body of the analytics consent dialog explaining the optional analytics collection"
+    "defaultMessage": "アプリの改善に役立てるため、お客様のアプリ利用状況に関する匿名データを収集させていただきたいと考えております。個人データを共有したり、サードパーティーの広告を掲載したりすることはありません。"
   },
   "analytics-consent-change-later": {
-    "defaultMessage": "これは後でこれらの設定を変更できます。",
-    "description": "Reassurance line on the analytics consent dialog about reversibility"
+    "defaultMessage": "これは後でこれらの設定を変更できます。"
   },
   "analytics-consent-decline-action": {
-    "defaultMessage": "同意しない",
-    "description": "Decline button on the analytics consent dialog"
+    "defaultMessage": "同意しない"
   },
   "analytics-consent-learn-more": {
-    "defaultMessage": "さらに詳しく",
-    "description": "Link on the analytics consent dialog to the privacy policy"
+    "defaultMessage": "さらに詳しく"
   },
   "analytics-consent-setting-helper": {
-    "defaultMessage": "匿名の使用データでアプリの改善に役立ちます。",
-    "description": "Helper text for the analytics consent toggle in the settings dialog"
+    "defaultMessage": "匿名の使用データでアプリの改善に役立ちます。"
   },
   "analytics-consent-setting-label": {
-    "defaultMessage": "匿名の利用データを提供する",
-    "description": "Label for the analytics consent toggle in the settings dialog"
+    "defaultMessage": "匿名の利用データを提供する"
   },
   "analytics-consent-title": {
-    "defaultMessage": "{appNameFull}の改善にご協力をお願いします。",
-    "description": "Title of the first-run analytics consent dialog on mobile"
+    "defaultMessage": "{appNameFull}の改善にご協力をお願いします。"
   },
   "animation-bluetooth-mode-label": {
-    "defaultMessage": "Bluetoothモードにリセットする方法を説明しているアニメーション。",
-    "description": "Aria label for animation"
+    "defaultMessage": "Bluetoothモードにリセットする方法を説明しているアニメーション。"
   },
   "animation-label": {
-    "defaultMessage": "「CreateAI」のワークフローの5つのステップ（「Connect」「Collect Data」「Test Model」「Code」「Use」）を示すアニメーションです。\nConnect： micro:bit デバイスをコンピューターに接続し、両者のコミュニケーションを確立します。\nCollect Data： micro:bit を手首に装着し、2種類のジェスチャー（ハートのアイコンで表すウェーブと、十字のアイコンで表すシェイク）の動作を記録します。モデルを学習させるために、各ジェスチャーのデータを複数回収集します。\nTest Model： 十分なデータが集まると、機械学習モデルがトレーニングされます。コンピューターはリアルタイムでウェーブとシェイクのジェスチャーを認識しようとします。必要に応じて「Collect Data」にリターンし、追加データを収集して再テストを行うことができます。\nCode： ユーザーは MakeCode ブロックを使って、学習済みモデルを組み込んだプログラムを作成します。完成したプログラムを micro:bit にダウンロードします。\nUse： micro:bit はユーザーの動作に反応し、ウェーブまたはシェイクのどちらが検知されたかに応じて、LED 画面に異なるアイコンを表示します。",
-    "description": "Aria label for animation"
+    "defaultMessage": "「CreateAI」のワークフローの5つのステップ（「Connect」「Collect Data」「Test Model」「Code」「Use」）を示すアニメーションです。\nConnect： micro:bit デバイスをコンピューターに接続し、両者のコミュニケーションを確立します。\nCollect Data： micro:bit を手首に装着し、2種類のジェスチャー（ハートのアイコンで表すウェーブと、十字のアイコンで表すシェイク）の動作を記録します。モデルを学習させるために、各ジェスチャーのデータを複数回収集します。\nTest Model： 十分なデータが集まると、機械学習モデルがトレーニングされます。コンピューターはリアルタイムでウェーブとシェイクのジェスチャーを認識しようとします。必要に応じて「Collect Data」にリターンし、追加データを収集して再テストを行うことができます。\nCode： ユーザーは MakeCode ブロックを使って、学習済みモデルを組み込んだプログラムを作成します。完成したプログラムを micro:bit にダウンロードします。\nUse： micro:bit はユーザーの動作に反応し、ウェーブまたはシェイクのどちらが検知されたかに応じて、LED 画面に異なるアイコンを表示します。"
   },
   "animation-pause-action": {
-    "defaultMessage": "アニメーションを一時停止",
-    "description": "Pause animation button text"
+    "defaultMessage": "アニメーションを一時停止"
   },
   "animation-resume-action": {
-    "defaultMessage": "アニメーションを再開",
-    "description": "Resume animation button text"
+    "defaultMessage": "アニメーションを再開"
   },
   "animation-step-1": {
-    "defaultMessage": "接続",
-    "description": "Step 1 of how it works animation"
+    "defaultMessage": "接続"
   },
   "animation-step-2": {
-    "defaultMessage": "データを集める",
-    "description": "Step 2 of how it works animation"
+    "defaultMessage": "データを集める"
   },
   "animation-step-3": {
-    "defaultMessage": "モデルをテスト",
-    "description": "Step 3 of how it works animation"
+    "defaultMessage": "モデルをテスト"
   },
   "animation-step-4": {
-    "defaultMessage": "コードを書く",
-    "description": "Step 4 of how it works animation"
+    "defaultMessage": "コードを書く"
   },
   "animation-step-5": {
-    "defaultMessage": "使用",
-    "description": "Step 5 of how it works animation"
+    "defaultMessage": "使用"
   },
   "animation-training": {
-    "defaultMessage": "トレーニング",
-    "description": "Machine learning training on computer screen of how it works animation"
+    "defaultMessage": "トレーニング"
   },
   "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store",
-    "description": "Alt text for the Apple App Store badge in the homepage footer"
+    "defaultMessage": "Download on the App Store"
   },
   "back-action": {
-    "defaultMessage": "戻る",
-    "description": "Back button text"
+    "defaultMessage": "戻る"
   },
   "back-to-data-samples-action": {
-    "defaultMessage": "データサンプルを編集",
-    "description": "Back button text"
+    "defaultMessage": "データサンプルを編集"
   },
   "blocks-preview-title": {
-    "defaultMessage": "ブロックのプレビュー",
-    "description": "Blocks preview heading text"
+    "defaultMessage": "ブロックのプレビュー"
   },
   "bluetooth-disabled-body": {
-    "defaultMessage": "Bluetoothを有効にしてもう一度お試しください。",
-    "description": "Body text for Bluetooth disabled error dialog"
+    "defaultMessage": "Bluetoothを有効にしてもう一度お試しください。"
   },
   "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetoothがオフになっています",
-    "description": "Heading for Bluetooth disabled error dialog"
+    "defaultMessage": "Bluetoothがオフになっています"
   },
   "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>.",
-    "description": "Body text for Bluetooth permission denied error dialog on Android"
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>."
   },
   "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>.",
-    "description": "Body text for Bluetooth permission denied error dialog on iOS"
+    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>."
   },
   "bluetooth-permission-denied-heading": {
-    "defaultMessage": "Bluetoothの権限が必要です",
-    "description": "Heading for Bluetooth permission denied error dialog"
+    "defaultMessage": "Bluetoothの権限が必要です"
   },
   "bluetooth-unsupported-advice": {
-    "defaultMessage": "micro:bitに直接接続できるように、Google ChromeまたはMicrosoft Edgeをお勧めします。",
-    "description": "Note on supported browsers"
+    "defaultMessage": "micro:bitに直接接続できるように、Google ChromeまたはMicrosoft Edgeをお勧めします。"
   },
   "bluetooth-unsupported-explain": {
-    "defaultMessage": "残念ながら、WebUSBとWeb Bluetoothはこのブラウザではサポートされていません。 これは、機械学習モデルを訓練するために必要なデータサンプルを記録するためにmicro:bitに接続できないことを意味します。",
-    "description": "Note on supported browsers"
+    "defaultMessage": "残念ながら、WebUSBとWeb Bluetoothはこのブラウザではサポートされていません。 これは、機械学習モデルを訓練するために必要なデータサンプルを記録するためにmicro:bitに接続できないことを意味します。"
   },
   "bluetooth-unsupported-header": {
-    "defaultMessage": "お使いのブラウザーはサポートされていません。",
-    "description": "Heading for browser support dialog"
+    "defaultMessage": "お使いのブラウザーはサポートされていません。"
   },
   "cancel-action": {
-    "defaultMessage": "キャンセル",
-    "description": "Cancel button text"
+    "defaultMessage": "キャンセル"
   },
   "cancel-recording-action": {
-    "defaultMessage": "記録をキャンセル",
-    "description": "Button label to cancel a movement data recording"
+    "defaultMessage": "記録をキャンセル"
   },
   "carousel-role": {
-    "defaultMessage": "カルーセル",
-    "description": "aria-roledescription for carousel"
+    "defaultMessage": "カルーセル"
   },
   "carousel-slide-label": {
-    "defaultMessage": "{totalSlides}枚中{slideNum} 枚目",
-    "description": "Label for carousel slide / item"
+    "defaultMessage": "{totalSlides}枚中{slideNum} 枚目"
   },
   "carousel-slide-role": {
-    "defaultMessage": "slide",
-    "description": "aria-roledescription for carousel slide / item"
+    "defaultMessage": "slide"
   },
   "certainty-label": {
-    "defaultMessage": "確実性",
-    "description": "Heading for certainty column"
+    "defaultMessage": "確実性"
   },
   "certainty-label-tooltip-aria": {
-    "defaultMessage": "確実性のツールチップ",
-    "description": "Aria label for code certainty icon"
+    "defaultMessage": "確実性のツールチップ"
   },
   "certainty-percentage-label": {
-    "defaultMessage": "{action}の確実性: {currentConfidence}%",
-    "description": "Label for certainty of an action"
+    "defaultMessage": "{action}の確実性: {currentConfidence}%"
   },
   "certainty-tooltip": {
-    "defaultMessage": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。",
-    "description": "Tooltip for certainty column"
+    "defaultMessage": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。"
   },
   "clear": {
-    "defaultMessage": "クリア",
-    "description": "Aria label for the search input and project toolbar (clears selection/search text)"
+    "defaultMessage": "クリア"
   },
   "click-to-reload-page-action": {
-    "defaultMessage": "ページをリロードするにはクリックします",
-    "description": "Reload page button text"
+    "defaultMessage": "ページをリロードするにはクリックします"
   },
   "close-action": {
-    "defaultMessage": "閉じる",
-    "description": "Close button text or label"
+    "defaultMessage": "閉じる"
   },
   "code-download-error": {
-    "defaultMessage": "プロジェクトのプログラムのダウンロードに失敗しました",
-    "description": "Title for error message relating to project loading"
+    "defaultMessage": "プロジェクトのプログラムのダウンロードに失敗しました"
   },
   "code-label": {
-    "defaultMessage": "コードを書く",
-    "description": "Code column heading"
+    "defaultMessage": "コードを書く"
   },
   "code-label-tooltip-aria": {
-    "defaultMessage": "プログラムのツールチップ",
-    "description": "Aria label for code tooltip icon"
+    "defaultMessage": "プログラムのツールチップ"
   },
   "code-tooltip": {
-    "defaultMessage": "micro:bitにMLモデルとプログラムを転送する際に検出されたアクションごとのMakeCodeブロックです。",
-    "description": "Code column heading tooltip"
+    "defaultMessage": "micro:bitにMLモデルとプログラムを転送する際に検出されたアクションごとのMakeCodeブロックです。"
   },
   "confirm-action": {
-    "defaultMessage": "確認",
-    "description": "Confirm button text"
+    "defaultMessage": "確認"
   },
   "confirm-save-action": {
-    "defaultMessage": "確認して保存",
-    "description": "Confirm and save action label"
+    "defaultMessage": "確認して保存"
   },
   "confirm-share-action": {
-    "defaultMessage": "確認して共有",
-    "description": "Confirm and share action label"
+    "defaultMessage": "確認して共有"
   },
   "connect-action": {
-    "defaultMessage": "接続",
-    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+    "defaultMessage": "接続"
   },
   "connect-action-aria": {
-    "defaultMessage": "micro:bitに接続中",
-    "description": "Connect action to connect to data collection micro:bit via Bluetooth or micro:bit radio"
+    "defaultMessage": "micro:bitに接続中"
   },
   "connect-battery-heading": {
-    "defaultMessage": "USBケーブルを外して、電池ボックスを繋げます",
-    "description": "Battery connection dialog "
+    "defaultMessage": "USBケーブルを外して、電池ボックスを繋げます"
   },
   "connect-battery-holder": {
-    "defaultMessage": "電池ボックスホルダー",
-    "description": "Label for battery holder icon"
+    "defaultMessage": "電池ボックスホルダー"
   },
   "connect-battery-link": {
-    "defaultMessage": "micro:bitを手首や物に取り付けられます。。",
-    "description": "Battery connection dialog"
+    "defaultMessage": "micro:bitを手首や物に取り付けられます。。"
   },
   "connect-battery-subtitle": {
-    "defaultMessage": "micro:bitをコンピュータから取り外し、電池ボックスを繋げます。",
-    "description": "Battery connection dialog"
+    "defaultMessage": "micro:bitをコンピュータから取り外し、電池ボックスを繋げます。"
   },
   "connect-bluetooth-cancelled-connection": {
-    "defaultMessage": "micro:bitを選択していません。もう一度試しますか？",
-    "description": "Error when the user cancelled the Web Bluetooth permission/device selection dialog"
+    "defaultMessage": "micro:bitを選択していません。もう一度試しますか？"
   },
   "connect-bluetooth-enabled": {
-    "defaultMessage": "Bluetooth enabled",
-    "description": "Label indicating Bluetooth needs to be enabled"
+    "defaultMessage": "Bluetooth enabled"
   },
   "connect-bluetooth-heading": {
-    "defaultMessage": "Web Bluetooth を使って繋げる",
-    "description": "Connection dialogs"
+    "defaultMessage": "Web Bluetooth を使って繋げる"
   },
   "connect-bluetooth-invalid-pattern": {
-    "defaultMessage": "描画したパターンは無効です。",
-    "description": "Error when the bluetooth pattern is incomplete "
+    "defaultMessage": "描画したパターンは無効です。"
   },
   "connect-bluetooth-start-heading": {
-    "defaultMessage": "Web Bluetooth で繋げるのに必要なもの",
-    "description": "Connection dialog heading"
+    "defaultMessage": "Web Bluetooth で繋げるのに必要なもの"
   },
   "connect-bluetooth-start-requirements1": {
-    "defaultMessage": "micro:bit 1台",
-    "description": "Label for icon of single micro:bit"
+    "defaultMessage": "micro:bit 1台"
   },
   "connect-bluetooth-start-requirements2-subtitle": {
-    "defaultMessage": "インターネット、USB ポート、 Web  Bluetooth",
-    "description": "Under heading 'Computer' this lists the features the computer needs"
+    "defaultMessage": "インターネット、USB ポート、 Web  Bluetooth"
   },
   "connect-bluetooth-start-switch-radio": {
-    "defaultMessage": "代わりにmicro:bit無線機能を使って接続",
-    "description": "Link to alternative connection method"
+    "defaultMessage": "代わりにmicro:bit無線機能を使って接続"
   },
   "connect-cable-alt": {
-    "defaultMessage": "micro:bitの上部にUSBケーブルが繋げられていることを示すアニメーション",
-    "description": "Alt text"
+    "defaultMessage": "micro:bitの上部にUSBケーブルが繋げられていることを示すアニメーション"
   },
   "connect-cable-download-project-subtitle": {
-    "defaultMessage": "micro:bitをUSBケーブルでこのコンピュータに繋いで、機械学習MakeCodeプログラムをダウンロードします。",
-    "description": "Download project dialog"
+    "defaultMessage": "micro:bitをUSBケーブルでこのコンピュータに繋いで、機械学習MakeCodeプログラムをダウンロードします。"
   },
   "connect-cable-heading": {
-    "defaultMessage": "USBケーブルをmicro:bitに繋げます",
-    "description": "Connect cable dialog heading"
+    "defaultMessage": "USBケーブルをmicro:bitに繋げます"
   },
   "connect-cable-skip": {
-    "defaultMessage": "スキップ: プログラムは既にダウンロードされていませんか？",
-    "description": "Link to skip"
+    "defaultMessage": "スキップ: プログラムは既にダウンロードされていませんか？"
   },
   "connect-cable-subtitle": {
-    "defaultMessage": "データ収集プログラムをダウンロードできるように、micro:bitをUSBケーブルでこのコンピュータに繋げます。",
-    "description": "Project download instructions"
+    "defaultMessage": "データ収集プログラムをダウンロードできるように、micro:bitをUSBケーブルでこのコンピュータに繋げます。"
   },
   "connect-cannot-see-pattern": {
-    "defaultMessage": "パターンが表示されません",
-    "description": "Link to troubleshooting not seeing Bluetooth pattern"
+    "defaultMessage": "パターンが表示されません"
   },
   "connect-computer": {
-    "defaultMessage": "コンピュータ",
-    "description": "Label for computer icon in connection dialog"
+    "defaultMessage": "コンピュータ"
   },
   "connect-data-collection-heading": {
-    "defaultMessage": "USBケーブルをmicro:bit 1に繋げます",
-    "description": "Connection dialog heading"
+    "defaultMessage": "USBケーブルをmicro:bit 1に繋げます"
   },
   "connect-data-collection-subtitle": {
-    "defaultMessage": "最初のmicro:bitをUSBケーブルでコンピュータに繋げて、データ収集プログラムをダウンロードできます。 これは、データサンプルの収集に使うmicro:bitです。",
-    "description": "Connection dialog subtitle"
+    "defaultMessage": "最初のmicro:bitをUSBケーブルでコンピュータに繋げて、データ収集プログラムをダウンロードできます。 これは、データサンプルの収集に使うmicro:bitです。"
   },
   "connect-failed-bluetooth-heading": {
-    "defaultMessage": "micro:bitへの接続に失敗しました",
-    "description": "Bluetooth connection error message"
+    "defaultMessage": "micro:bitへの接続に失敗しました"
   },
   "connect-failed-bluetooth1": {
-    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。",
-    "description": "Bluetooth connection error message"
+    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。"
   },
   "connect-failed-bridge-heading": {
-    "defaultMessage": "無線リンク用micro:bitへの接続に失敗しました",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "無線リンク用micro:bitへの接続に失敗しました"
   },
   "connect-failed-bridge1": {
-    "defaultMessage": "コンピューターに接続されたmicro:bitとの接続を確立できませんでした。",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "コンピューターに接続されたmicro:bitとの接続を確立できませんでした。"
   },
   "connect-failed-remote-heading": {
-    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました"
   },
   "connect-failed-remote1": {
-    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。",
-    "description": "micro:bit radio connection error message"
+    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。"
   },
   "connect-help-alt": {
-    "defaultMessage": "「1」のラベルが付いたBBC micro:bitエントリと「2」のラベルが付いた接続ボタンを持つWebUSB接続ダイアログ",
-    "description": "Alt text for image in connect help dialog"
+    "defaultMessage": "「1」のラベルが付いたBBC micro:bitエントリと「2」のラベルが付いた接続ボタンを持つWebUSB接続ダイアログ"
   },
   "connect-micro-usb-cable": {
-    "defaultMessage": "マイクロUSBケーブル",
-    "description": "Label for cable icon in list of requirements"
+    "defaultMessage": "マイクロUSBケーブル"
   },
   "connect-native-change-pattern": {
-    "defaultMessage": "自分のパターンが違う",
-    "description": "Change Bluetooth pattern link"
+    "defaultMessage": "自分のパターンが違う"
   },
   "connect-native-pattern-heading": {
-    "defaultMessage": "micro:bitにマッチするパターンを確認する",
-    "description": "Native Bluetooth pattern dialog heading"
+    "defaultMessage": "micro:bitにマッチするパターンを確認する"
   },
   "connect-native-pattern-subtitle": {
-    "defaultMessage": "必要に応じて、以下のパターンをそれに合わせて変更してください。",
-    "description": "Native Bluetooth pattern dialog subtitle"
+    "defaultMessage": "必要に応じて、以下のパターンをそれに合わせて変更してください。"
   },
   "connect-native-start-battery-check": {
-    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on.",
-    "description": "Instruction to check the micro:bit is powered on via the battery pack"
+    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on."
   },
   "connect-native-start-heading": {
-    "defaultMessage": "micro:bitの電池パックを接続する",
-    "description": "Connection dialog heading"
+    "defaultMessage": "micro:bitの電池パックを接続する"
   },
   "connect-pattern-heading": {
-    "defaultMessage": "パターンをコピー",
-    "description": "Heading for Bluetooth pattern connection dialog"
+    "defaultMessage": "パターンをコピー"
   },
   "connect-pattern-input-label": {
-    "defaultMessage": "{colNum} 列 - micro:bitディスプレイで点灯したLEDの数",
-    "description": "Screen reader text for numeric pattern input"
+    "defaultMessage": "{colNum} 列 - micro:bitディスプレイで点灯したLEDの数"
   },
   "connect-pattern-label": {
-    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}.",
-    "description": "Screen reader text for numeric pattern input"
+    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}."
   },
   "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}",
-    "description": "Screen reader label for a pattern option, stating the column and how many LEDs would be lit in it"
+    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
-    "defaultMessage": "micro:bitに表示されているパターンをコピーします。",
-    "description": "Instruction for bluetooth pattern dialog"
+    "defaultMessage": "micro:bitに表示されているパターンをコピーします。"
   },
   "connect-popup": {
-    "defaultMessage": "micro:bitを選択",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "micro:bitを選択"
   },
   "connect-popup-bluetooth-alt": {
-    "defaultMessage": "ラベル 1 で示している BBC micro:bit のエントリとラベル 2 で示しているペアリングボタンのあるWeb Bluetooth ダイアログ",
-    "description": "Alt text"
+    "defaultMessage": "ラベル 1 で示している BBC micro:bit のエントリとラベル 2 で示しているペアリングボタンのあるWeb Bluetooth ダイアログ"
   },
   "connect-popup-bluetooth-instruction2": {
-    "defaultMessage": "「ペアリング」(Pair)を選択",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "「ペアリング」(Pair)を選択"
   },
   "connect-popup-bluetooth-title": {
-    "defaultMessage": "Web Bluetoothでmicro:bitに接続",
-    "description": "Instruction for dialog that previews the Bluetooth permission dialog"
+    "defaultMessage": "Web Bluetoothでmicro:bitに接続"
   },
   "connect-popup-instruction-heading": {
-    "defaultMessage": "次のポップアップ",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "次のポップアップ"
   },
   "connect-popup-instruction1": {
-    "defaultMessage": "micro:bitを選ぶ",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "micro:bitを選ぶ"
   },
   "connect-popup-usb-bluetooth-data-collection-title": {
-    "defaultMessage": "データ収集プログラムをmicro:bitにダウンロード",
-    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+    "defaultMessage": "データ収集プログラムをmicro:bitにダウンロード"
   },
   "connect-popup-usb-radio-data-collection-title": {
-    "defaultMessage": "データ収集プログラムをmicro:bit 1にダウンロードする",
-    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+    "defaultMessage": "データ収集プログラムをmicro:bit 1にダウンロードする"
   },
   "connect-popup-usb-radio-link-title": {
-    "defaultMessage": "micro:bit 2に無線リンクプログラムをダウンロードする",
-    "description": "Instruction for dialog that previews the WebUSB permission dialog"
+    "defaultMessage": "micro:bit 2に無線リンクプログラムをダウンロードする"
   },
   "connect-popup-webusb-instruction2": {
-    "defaultMessage": "「接続」(Connect)を選択",
-    "description": "Instruction for dialog that previews the Bluetooth/WebUSB permission dialog"
+    "defaultMessage": "「接続」(Connect)を選択"
   },
   "connect-radio-data-collection-microbit-description": {
-    "defaultMessage": "データ収集用micro:bitをこのコンピュータに接続して、機械学習MakeCodeプログラムをダウンロードします。 データ収集用micro:bitを身につけている場合は、取り外す必要があります。",
-    "description": "Connect radio data collection micro:bit dialog description"
+    "defaultMessage": "データ収集用micro:bitをこのコンピュータに接続して、機械学習MakeCodeプログラムをダウンロードします。 データ収集用micro:bitを身につけている場合は、取り外す必要があります。"
   },
   "connect-radio-data-collection-microbit-title": {
-    "defaultMessage": "USBケーブルをデータ収集micro:bitにつなぐ",
-    "description": "Connect radio data collection micro:bit dialog title"
+    "defaultMessage": "USBケーブルをデータ収集micro:bitにつなぐ"
   },
   "connect-radio-heading": {
-    "defaultMessage": "micro:bitに接続中",
-    "description": "Text shown while radio link and data connection micro:bit are being connected"
+    "defaultMessage": "micro:bitに接続中"
   },
   "connect-radio-link-heading": {
-    "defaultMessage": "USBケーブルをmicro:bit 2に繋げます",
-    "description": "Heading for connecting radio link micro:bit cable"
+    "defaultMessage": "USBケーブルをmicro:bit 2に繋げます"
   },
   "connect-radio-link-subtitle": {
-    "defaultMessage": "無線リンクプログラムをダウンロードできるように、2つ目のmicro:bitをUSBケーブルでこのコンピュータに繋ぎます。この無線リンクmicro:bitはデータ収集micro:bitと通信します。",
-    "description": "Instruction for connecting radio link micro:bit cable"
+    "defaultMessage": "無線リンクプログラムをダウンロードできるように、2つ目のmicro:bitをUSBケーブルでこのコンピュータに繋ぎます。この無線リンクmicro:bitはデータ収集micro:bitと通信します。"
   },
   "connect-radio-start-heading": {
-    "defaultMessage": "micro:bit無線機能で接続するために必要なもの",
-    "description": "Connection dialog heading"
+    "defaultMessage": "micro:bit無線機能で接続するために必要なもの"
   },
   "connect-radio-start-requirements1": {
-    "defaultMessage": "micro:bit 2個",
-    "description": "Label for icon of two micro:bits"
+    "defaultMessage": "micro:bit 2個"
   },
   "connect-radio-start-requirements1-subtitle": {
-    "defaultMessage": "V2のみ",
-    "description": "Shown below 2 micro:bit label for micro:bit radio approach"
+    "defaultMessage": "V2のみ"
   },
   "connect-radio-start-requirements2-subtitle": {
-    "defaultMessage": "インターネットとUSBポート",
-    "description": "Shown below 'Computer' heading listing additional requirements"
+    "defaultMessage": "インターネットとUSBポート"
   },
   "connect-radio-start-switch-bluetooth": {
-    "defaultMessage": "Web Bluetooth で接続",
-    "description": "Link to alternative connection method"
+    "defaultMessage": "Web Bluetooth で接続"
   },
   "connect-to-record": {
-    "defaultMessage": "データサンプルを記録するための接続",
-    "description": "Live graph disconnected micro:bit status message for data samples page"
+    "defaultMessage": "データサンプルを記録するための接続"
   },
   "connect-to-record-body": {
-    "defaultMessage": "データサンプルを記録するためにmicro:bitを接続します。",
-    "description": "Insufficient data modal content"
+    "defaultMessage": "データサンプルを記録するためにmicro:bitを接続します。"
   },
   "connect-to-test-model": {
-    "defaultMessage": "接続して MLモデルをテストする",
-    "description": "Live graph disconnected micro:bit status message for test model page"
+    "defaultMessage": "接続して MLモデルをテストする"
   },
   "connect-to-tour-body": {
-    "defaultMessage": "ツアーを見るには、データ収集用micro:bitを接続する必要があります。",
-    "description": "Prompt to connect the app to a micro:bit"
+    "defaultMessage": "ツアーを見るには、データ収集用micro:bitを接続する必要があります。"
   },
   "connect-troubleshoot": {
-    "defaultMessage": "micro:bit接続時に発生する問題のトラブルシューティング",
-    "description": "Link to support article for troubleshooting"
+    "defaultMessage": "micro:bit接続時に発生する問題のトラブルシューティング"
   },
   "connect-troubleshooting": {
-    "defaultMessage": "トラブルシューティング",
-    "description": "Troubleshooting heading"
+    "defaultMessage": "トラブルシューティング"
   },
   "connect-try-another-way": {
-    "defaultMessage": "別の方法を試してみてください",
-    "description": "Link to alternative connection method"
+    "defaultMessage": "別の方法を試してみてください"
   },
   "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "Bluetooth モードにできませんか？",
-    "description": "Link to troubleshooting entering Bluetooth mode"
+    "defaultMessage": "Bluetooth モードにできませんか？"
   },
   "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "Bluetooth モードにできませんか？",
-    "description": "Unable to enter Bluetooth mode dialog heading"
+    "defaultMessage": "Bluetooth モードにできませんか？"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
-    "defaultMessage": "以下をお試しください。",
-    "description": "Heading for list of things to try to enter Bluetooth mode dialog"
+    "defaultMessage": "以下をお試しください。"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "micro:bitの電源を取り外して、再度、接続してください。",
-    "description": "List item in things to try to enter Bluetooth mode dialog"
+    "defaultMessage": "micro:bitの電源を取り外して、再度、接続してください。"
   },
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again.",
-    "description": "List item in things to try to enter Bluetooth mode dialog"
+    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
   },
   "connect-with-batteries": {
-    "defaultMessage": "電池と",
-    "description": "Under header 'Battery holder' this notes that batteries are required"
+    "defaultMessage": "電池と"
   },
   "connect-with-web-bluetooth": {
-    "defaultMessage": "Web Bluetooth で接続",
-    "description": "Connection dialog title"
+    "defaultMessage": "Web Bluetooth で接続"
   },
   "connecting": {
-    "defaultMessage": "接続中...",
-    "description": "Text shown while waiting for bluetooth/radio connection"
+    "defaultMessage": "接続中..."
   },
   "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit",
-    "description": "Connection dialogs"
+    "defaultMessage": "Connecting to data collection micro:bit"
   },
   "continue-makecode-action": {
-    "defaultMessage": "MakeCodeに進む",
-    "description": "Continue to MakeCode editor button text"
+    "defaultMessage": "MakeCodeに進む"
   },
   "cookies-action": {
-    "defaultMessage": "Cookieについて",
-    "description": "Action to show dialog to choose website cookie preferences"
+    "defaultMessage": "Cookieについて"
   },
   "copied": {
-    "defaultMessage": "コピーしました",
-    "description": "Displayed as copy button text briefly after successful copy action"
+    "defaultMessage": "コピーしました"
   },
   "copy-action": {
-    "defaultMessage": "コピー",
-    "description": "Copy button text"
+    "defaultMessage": "コピー"
   },
   "create-project": {
-    "defaultMessage": "プロジェクトを作成",
-    "description": "Create project button text"
+    "defaultMessage": "プロジェクトを作成"
   },
   "create-project-dialog-heading": {
-    "defaultMessage": "プロジェクトを作成",
-    "description": "Create project dialog heading"
+    "defaultMessage": "プロジェクトを作成"
   },
   "createai-taster-lessons-resource-title": {
-    "defaultMessage": "体験レッスン",
-    "description": "Home page resource card title"
+    "defaultMessage": "体験レッスン"
   },
   "data-actions-menu": {
-    "defaultMessage": "データアクション",
-    "description": "Aria label for menu"
+    "defaultMessage": "データアクション"
   },
   "data-collection-microbit": {
-    "defaultMessage": "データ収集用micro:bit",
-    "description": "Data collection micro:bit image caption"
+    "defaultMessage": "データ収集用micro:bit"
   },
   "data-collection-microbit-label": {
-    "defaultMessage": "データ収集用micro:bitを人の手首につけていることを示す図",
-    "description": "Aria label for data collection image"
+    "defaultMessage": "データ収集用micro:bitを人の手首につけていることを示す図"
   },
   "data-connection-region": {
-    "defaultMessage": "micro:bitデータ接続",
-    "description": "Region label for data connection area"
+    "defaultMessage": "micro:bitデータ接続"
   },
   "data-features-hide-action": {
-    "defaultMessage": "データ機能を隠す",
-    "description": "Hide data features button text"
+    "defaultMessage": "データ機能を隠す"
   },
   "data-features-show-action": {
-    "defaultMessage": "データ機能を表示",
-    "description": "Show data features button text"
+    "defaultMessage": "データ機能を表示"
   },
   "data-preview-title": {
-    "defaultMessage": "データプレビュー",
-    "description": "Data preview heading text"
+    "defaultMessage": "データプレビュー"
   },
   "data-samples-actions-region": {
-    "defaultMessage": "データサンプルツールバー",
-    "description": "Region label for data samples actions"
+    "defaultMessage": "データサンプルツールバー"
   },
   "data-samples-label": {
-    "defaultMessage": "データサンプル",
-    "description": "Heading for data samples column"
+    "defaultMessage": "データサンプル"
   },
   "data-samples-label-tooltip-aria": {
-    "defaultMessage": "データサンプルツールチップ",
-    "description": "Aria label for data samples tooltip icon"
+    "defaultMessage": "データサンプルツールチップ"
   },
   "data-samples-status-count": {
-    "defaultMessage": "{numSamples} 個のサンプルを記録",
-    "description": "Data samples status text"
+    "defaultMessage": "{numSamples} 個のサンプルを記録"
   },
   "data-samples-status-not-enough": {
-    "defaultMessage": "少なくとも3個必要",
-    "description": "Data samples status text"
+    "defaultMessage": "少なくとも3個必要"
   },
   "data-samples-title": {
-    "defaultMessage": "データサンプル",
-    "description": "Data samples page title"
+    "defaultMessage": "データサンプル"
   },
   "data-samples-tooltip": {
-    "defaultMessage": "1秒間の短い動きデータを収集。あなたのデータサンプルはあなたのPCにのみ保存され、他の誰にも送信されません。",
-    "description": "Tooltip for data samples heading"
+    "defaultMessage": "1秒間の短い動きデータを収集。あなたのデータサンプルはあなたのPCにのみ保存され、他の誰にも送信されません。"
   },
   "default-project-name": {
-    "defaultMessage": "名称未設定",
-    "description": "Default project name"
+    "defaultMessage": "名称未設定"
   },
   "delete-action-aria": {
-    "defaultMessage": "アクション \"{action}\" を削除",
-    "description": "Aria label for action delete icon"
+    "defaultMessage": "アクション \"{action}\" を削除"
   },
   "delete-action-confirm-heading": {
-    "defaultMessage": "アクション削除を確認",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "アクション削除を確認"
   },
   "delete-action-confirm-text": {
-    "defaultMessage": "アクション \"{action}\" を削除してもよろしいですか？",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "アクション \"{action}\" を削除してもよろしいですか？"
   },
   "delete-data-samples-action": {
-    "defaultMessage": "すべてのデータサンプルを削除",
-    "description": "Menu item to delete data samples"
+    "defaultMessage": "すべてのデータサンプルを削除"
   },
   "delete-data-samples-confirm-heading": {
-    "defaultMessage": "すべてのデータサンプル削除を確認",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "すべてのデータサンプル削除を確認"
   },
   "delete-data-samples-confirm-text": {
-    "defaultMessage": "すべてのデータサンプルを削除してもよろしいですか？",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "すべてのデータサンプルを削除してもよろしいですか？"
   },
   "delete-project-action": {
-    "defaultMessage": "{count, plural, other {{count}件のプロジェクトを削除}}",
-    "description": "Delete project button"
+    "defaultMessage": "{count, plural, other {{count}件のプロジェクトを削除}}"
   },
   "delete-project-confirm-heading": {
-    "defaultMessage": "プロジェクトの削除の確認",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "プロジェクトの削除の確認"
   },
   "delete-project-confirm-text": {
-    "defaultMessage": "プロジェクト「{project}」を削除してよろしいですか？",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "プロジェクト「{project}」を削除してよろしいですか？"
   },
   "delete-projects-confirm-heading": {
-    "defaultMessage": "プロジェクトの削除の確認",
-    "description": "Confirmation dialog heading"
+    "defaultMessage": "プロジェクトの削除の確認"
   },
   "delete-projects-confirm-text": {
-    "defaultMessage": "{numProjects}件のプロジェクトを削除してよろしいですか？",
-    "description": "Confirmation dialog text"
+    "defaultMessage": "{numProjects}件のプロジェクトを削除してよろしいですか？"
   },
   "delete-recording-aria": {
-    "defaultMessage": "アクション \"{action}\" の {numSamples} 個の記録 {sample} を削除",
-    "description": "Aria label for data sample delete action"
+    "defaultMessage": "アクション \"{action}\" の {numSamples} 個の記録 {sample} を削除"
   },
   "disconnect-action": {
-    "defaultMessage": "切断",
-    "description": "Disconnect (from bluetooth/radio) action"
+    "defaultMessage": "切断"
   },
   "disconnected-during-recording": {
-    "defaultMessage": "記録中にmicro:bitが切断されました",
-    "description": "Error when the micro:bit is disconnected during recording"
+    "defaultMessage": "記録中にmicro:bitが切断されました"
   },
   "disconnected-warning-bluetooth-heading": {
-    "defaultMessage": "データ収集用micro:bitの接続が失われました",
-    "description": "Dialog heading"
+    "defaultMessage": "データ収集用micro:bitの接続が失われました"
   },
   "disconnected-warning-bluetooth1": {
-    "defaultMessage": "データ収集用micro:bitへの接続が失われました。",
-    "description": "Dialog text"
+    "defaultMessage": "データ収集用micro:bitへの接続が失われました。"
   },
   "disconnected-warning-bluetooth2": {
-    "defaultMessage": "micro:bitを確認してください。",
-    "description": "Heading for list of things to check"
+    "defaultMessage": "micro:bitを確認してください。"
   },
   "disconnected-warning-bluetooth3": {
-    "defaultMessage": "電源が入っているか(micro:bit の背面にある赤いライトが点灯している必要があります)",
-    "description": "List item, one of several things to check about the micro:bit"
+    "defaultMessage": "電源が入っているか(micro:bit の背面にある赤いライトが点灯している必要があります)"
   },
   "disconnected-warning-bluetooth4": {
-    "defaultMessage": "PCが近くにあるか",
-    "description": "List item, one of several things to check about the micro:bit"
+    "defaultMessage": "PCが近くにあるか"
   },
   "disconnected-warning-bridge-heading": {
-    "defaultMessage": "データ収集用micro:bitの接続が失われました",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitの接続が失われました"
   },
   "disconnected-warning-bridge1": {
-    "defaultMessage": "PCに接続されたmicro:bitへの接続が失われました。",
-    "description": "Connection error dialog"
+    "defaultMessage": "PCに接続されたmicro:bitへの接続が失われました。"
   },
   "disconnected-warning-remote-heading": {
-    "defaultMessage": "データ収集用micro:bitの接続が失われました",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitの接続が失われました"
   },
   "disconnected-warning-remote1": {
-    "defaultMessage": "データ収集用micro:bitへの接続が失われました。",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitへの接続が失われました。"
   },
   "dont-show-again": {
-    "defaultMessage": "今後表示しない",
-    "description": "Text to never show a dialog again"
+    "defaultMessage": "今後表示しない"
   },
   "download-data-samples-action": {
-    "defaultMessage": "すべてのデータサンプルをダウンロード",
-    "description": "Download action"
+    "defaultMessage": "すべてのデータサンプルをダウンロード"
   },
   "download-project-choose-microbit-subtitle": {
-    "defaultMessage": "プロジェクトを同じmicro:bitにダウンロードすると、micro:bitがツールから切断されます。 データサンプルをもっと記録したい場合は、micro:bitを再接続する必要があります。",
-    "description": "Download project choose micro:bit dialog subtitle"
+    "defaultMessage": "プロジェクトを同じmicro:bitにダウンロードすると、micro:bitがツールから切断されます。 データサンプルをもっと記録したい場合は、micro:bitを再接続する必要があります。"
   },
   "download-project-choose-microbit-title": {
-    "defaultMessage": "どのmicro:bitを使いますか？",
-    "description": "Download project choose micro:bit dialog title"
+    "defaultMessage": "どのmicro:bitを使いますか？"
   },
   "download-project-different-microbit-option": {
-    "defaultMessage": "別のmicro:bit",
-    "description": "Download project different micro:bit option"
+    "defaultMessage": "別のmicro:bit"
   },
   "download-project-intro-description": {
-    "defaultMessage": "プログラムには、作成した機械学習モデルが含まれます。 モデルはmicro:bit上で動作するので、 {appNameFull} に接続せずに使えます。",
-    "description": "Download project intro dialog description"
+    "defaultMessage": "プログラムには、作成した機械学習モデルが含まれます。 モデルはmicro:bit上で動作するので、 {appNameFull} に接続せずに使えます。"
   },
   "download-project-intro-title": {
-    "defaultMessage": "機械学習のMakeCodeプロジェクトをダウンロード",
-    "description": "Download project intro dialog title"
+    "defaultMessage": "機械学習のMakeCodeプロジェクトをダウンロード"
   },
   "download-project-same-microbit-option": {
-    "defaultMessage": "同じmicro:bit",
-    "description": "Download project same micro:bit option"
+    "defaultMessage": "同じmicro:bit"
   },
   "downloading-data-collection-header": {
-    "defaultMessage": "データ収集プログラムのダウンロード",
-    "description": "Progress text"
+    "defaultMessage": "データ収集プログラムのダウンロード"
   },
   "downloading-data-collection-microbit-header": {
-    "defaultMessage": "Downloading data collection program to micro:bit",
-    "description": "Progress text"
+    "defaultMessage": "Downloading data collection program to micro:bit"
   },
   "downloading-header": {
-    "defaultMessage": "micro:bitへのプログラムのダウンロード",
-    "description": "Progress text"
+    "defaultMessage": "micro:bitへのプログラムのダウンロード"
   },
   "downloading-radio-link-header": {
-    "defaultMessage": "無線リンクプログラムのダウンロード",
-    "description": "Progress text"
+    "defaultMessage": "無線リンクプログラムのダウンロード"
   },
   "downloading-stage-checking-bond": {
-    "defaultMessage": "質問された場合は「ペアリング」を選択してください",
-    "description": "Progress text when ensuring device is paired before flashing"
+    "defaultMessage": "質問された場合は「ペアリング」を選択してください"
   },
   "downloading-stage-connecting": {
-    "defaultMessage": "micro:bitに接続中",
-    "description": "Progress text during connection stage of flashing"
+    "defaultMessage": "micro:bitに接続中"
   },
   "downloading-stage-finding-device": {
-    "defaultMessage": "micro:bitを探す…",
-    "description": "Progress text during device discovery stage of flashing"
+    "defaultMessage": "micro:bitを探す…"
   },
   "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the download is complete.",
-    "description": "Progress text during native flashing stage"
+    "defaultMessage": "Please do not interact with the micro:bit before the download is complete."
   },
   "downloading-stage-resetting-device": {
-    "defaultMessage": "Waiting for micro:bit to reboot...",
-    "description": "Progress text when rebooting micro:bit before flashing"
+    "defaultMessage": "Waiting for micro:bit to reboot..."
   },
   "downloading-subtitle": {
-    "defaultMessage": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。",
-    "description": "Progress text during actual flashing stage"
+    "defaultMessage": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
   },
   "duplicate-project-action": {
-    "defaultMessage": "複製",
-    "description": "Duplicate project action"
+    "defaultMessage": "複製"
   },
   "duplicate-project-heading": {
-    "defaultMessage": "プロジェクトを複製",
-    "description": "Heading for duplicate project dialog"
+    "defaultMessage": "プロジェクトを複製"
   },
   "edit-in-makecode-action": {
-    "defaultMessage": "MakeCodeで編集",
-    "description": "Edit in MakeCode button text"
+    "defaultMessage": "MakeCodeで編集"
   },
   "estimated-action-aria": {
-    "defaultMessage": "推定アクション: \"{action}\"",
-    "description": "Aria live text for the current estimated action"
+    "defaultMessage": "推定アクション: \"{action}\""
   },
   "estimated-action-label": {
-    "defaultMessage": "推定アクション",
-    "description": "Heading for estimated action area next to the live graph"
+    "defaultMessage": "推定アクション"
   },
   "estimated-action-label-tooltip-aria": {
-    "defaultMessage": "推定アクションツールチップ",
-    "description": "Aria label for estimated action tooltip icon"
+    "defaultMessage": "推定アクションツールチップ"
   },
   "estimated-action-tooltip": {
-    "defaultMessage": "これは、モデルが現在行っていると判断したアクションです。",
-    "description": "Tooltip for the estimated action heading"
+    "defaultMessage": "これは、モデルが現在行っていると判断したアクションです。"
   },
   "feedback": {
-    "defaultMessage": "フィードバック",
-    "description": "Action to open a feedback dialog; also the accessible name of the feedback dialog"
+    "defaultMessage": "フィードバック"
   },
   "fingerprint-acc-x-tooltip": {
-    "defaultMessage": "X 方向データの合計",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "X 方向データの合計"
   },
   "fingerprint-acc-y-tooltip": {
-    "defaultMessage": "Y 方向データの合計",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Y 方向データの合計"
   },
   "fingerprint-acc-z-tooltip": {
-    "defaultMessage": "Z 方向データの合計",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Z 方向データの合計"
   },
   "fingerprint-max-x-tooltip": {
-    "defaultMessage": "すべての X 方向データポイントの最大値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての X 方向データポイントの最大値"
   },
   "fingerprint-max-y-tooltip": {
-    "defaultMessage": "すべての Y 方向のデータポイントの最大値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての Y 方向のデータポイントの最大値"
   },
   "fingerprint-max-z-tooltip": {
-    "defaultMessage": "すべてのZ方向データポイントの最大値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべてのZ方向データポイントの最大値"
   },
   "fingerprint-mean-x-tooltip": {
-    "defaultMessage": "X 方向データの平均値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "X 方向データの平均値"
   },
   "fingerprint-mean-y-tooltip": {
-    "defaultMessage": "Y 方向データの平均値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Y 方向データの平均値"
   },
   "fingerprint-mean-z-tooltip": {
-    "defaultMessage": "Z方向データの平均値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Z方向データの平均値"
   },
   "fingerprint-min-x-tooltip": {
-    "defaultMessage": "すべての X 方向データポイントの最小値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての X 方向データポイントの最小値"
   },
   "fingerprint-min-y-tooltip": {
-    "defaultMessage": "すべての Y 方向データポイントの最小値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての Y 方向データポイントの最小値"
   },
   "fingerprint-min-z-tooltip": {
-    "defaultMessage": "すべてのZ方向データポイントの最小値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべてのZ方向データポイントの最小値"
   },
   "fingerprint-peaks-x-tooltip": {
-    "defaultMessage": "すべての X 方向データポイントの中の極値の数",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての X 方向データポイントの中の極値の数"
   },
   "fingerprint-peaks-y-tooltip": {
-    "defaultMessage": "Y 方向のすべてのデータポイントの中の極値の数",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Y 方向のすべてのデータポイントの中の極値の数"
   },
   "fingerprint-peaks-z-tooltip": {
-    "defaultMessage": "Z方向のすべてのデータポイント間の極値の数",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Z方向のすべてのデータポイント間の極値の数"
   },
   "fingerprint-rms-x-tooltip": {
-    "defaultMessage": "すべての X 方向データポイントの二乗平均平方根値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての X 方向データポイントの二乗平均平方根値"
   },
   "fingerprint-rms-y-tooltip": {
-    "defaultMessage": "すべての Y 方向データポイントの二乗平均平方根値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての Y 方向データポイントの二乗平均平方根値"
   },
   "fingerprint-rms-z-tooltip": {
-    "defaultMessage": "すべての Z 方向データポイントの二乗平均平方根値",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "すべての Z 方向データポイントの二乗平均平方根値"
   },
   "fingerprint-std-x-tooltip": {
-    "defaultMessage": "X方向のすべてのデータポイントの0からの平均偏差",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "X方向のすべてのデータポイントの0からの平均偏差"
   },
   "fingerprint-std-y-tooltip": {
-    "defaultMessage": "Y方向のすべてのデータポイントの0からの平均偏差",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Y方向のすべてのデータポイントの0からの平均偏差"
   },
   "fingerprint-std-z-tooltip": {
-    "defaultMessage": "Z方向のすべてのデータポイントの0からの平均偏差",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Z方向のすべてのデータポイントの0からの平均偏差"
   },
   "fingerprint-zcr-x-tooltip": {
-    "defaultMessage": "X方向のデータポイントの正と負の間で加速度が遷移するレート",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "X方向のデータポイントの正と負の間で加速度が遷移するレート"
   },
   "fingerprint-zcr-y-tooltip": {
-    "defaultMessage": "Y方向のデータポイントの正と負の間で加速度が遷移するレート",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Y方向のデータポイントの正と負の間で加速度が遷移するレート"
   },
   "fingerprint-zcr-z-tooltip": {
-    "defaultMessage": "Z方向のデータポイントの正と負の間で加速度が遷移するレート",
-    "description": "Tooltip for data feature of a recording"
+    "defaultMessage": "Z方向のデータポイントの正と負の間で加速度が遷移するレート"
   },
   "firmware-outdated-content1": {
-    "defaultMessage": "micro:bitのファームウェアが古すぎるため、micro:bitへの接続に失敗しました。",
-    "description": "Connection error dialog"
+    "defaultMessage": "micro:bitのファームウェアが古すぎるため、micro:bitへの接続に失敗しました。"
   },
   "firmware-outdated-content2": {
-    "defaultMessage": "このmicro:bitに接続するには、<link>ファームウェアを更新する</link>必要があります。",
-    "description": "Connection error dialog"
+    "defaultMessage": "このmicro:bitに接続するには、<link>ファームウェアを更新する</link>必要があります。"
   },
   "firmware-outdated-heading": {
-    "defaultMessage": "ファームウェアの更新が必要です",
-    "description": "Connection error dialog"
+    "defaultMessage": "ファームウェアの更新が必要です"
   },
   "first-lessons-with-microbit-createai-resource-title": {
-    "defaultMessage": "最初のレッスン",
-    "description": "Home page resource card title"
+    "defaultMessage": "最初のレッスン"
   },
   "go-action": {
-    "defaultMessage": "実行",
-    "description": "Go action"
+    "defaultMessage": "実行"
   },
   "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play",
-    "description": "Alt text for the Google Play badge in the homepage footer"
+    "defaultMessage": "Get it on Google Play"
   },
   "graph-color-scheme": {
-    "defaultMessage": "グラフの配色設定",
-    "description": "Graph colour scheme setting label"
+    "defaultMessage": "グラフの配色設定"
   },
   "graph-color-scheme-color-blind-1": {
-    "defaultMessage": "カラーブラインド代替案 1",
-    "description": "Graph colour scheme option"
+    "defaultMessage": "カラーブラインド代替案 1"
   },
   "graph-color-scheme-color-blind-2": {
-    "defaultMessage": "カラーブラインド代替案 2",
-    "description": "Graph colour scheme option"
+    "defaultMessage": "カラーブラインド代替案 2"
   },
   "graph-color-scheme-default": {
-    "defaultMessage": "デフォルト (赤、青、緑)",
-    "description": "Graph colour scheme option"
+    "defaultMessage": "デフォルト (赤、青、緑)"
   },
   "graph-line-scheme": {
-    "defaultMessage": "グラフ線のスタイル",
-    "description": "Graph line scheme setting label"
+    "defaultMessage": "グラフ線のスタイル"
   },
   "graph-line-scheme-accessible": {
-    "defaultMessage": "利用できる線 (実線、破線、点線)",
-    "description": "Graph line scheme option"
+    "defaultMessage": "利用できる線 (実線、破線、点線)"
   },
   "graph-line-scheme-solid": {
-    "defaultMessage": "実線",
-    "description": "Graph line scheme option"
+    "defaultMessage": "実線"
   },
   "graph-line-weight": {
-    "defaultMessage": "グラフ線の太さ",
-    "description": "Graph line weight setting label"
+    "defaultMessage": "グラフ線の太さ"
   },
   "graph-line-weight-default": {
-    "defaultMessage": "初期値",
-    "description": "Graph line weight option"
+    "defaultMessage": "初期値"
   },
   "graph-line-weight-thick": {
-    "defaultMessage": "太い",
-    "description": "Graph line weight option"
+    "defaultMessage": "太い"
   },
   "graph-preview": {
-    "defaultMessage": "グラフのプレビュー",
-    "description": "Label for preview of the graph shown in the settings dialog"
+    "defaultMessage": "グラフのプレビュー"
   },
   "help-label": {
-    "defaultMessage": "ヘルプ",
-    "description": "Help icon aria label"
+    "defaultMessage": "ヘルプ"
   },
   "help-resources-row-carousel": {
-    "defaultMessage": "ヘルプリソースのリスト",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "ヘルプリソースのリスト"
   },
   "help-resources-row-title": {
-    "defaultMessage": "ヘルプ",
-    "description": "Title for home page row"
+    "defaultMessage": "ヘルプ"
   },
   "help-support": {
-    "defaultMessage": "ヘルプとサポート",
-    "description": "Link or menu item link to support site"
+    "defaultMessage": "ヘルプとサポート"
   },
   "home-action": {
-    "defaultMessage": "ホーム",
-    "description": "Home button text"
+    "defaultMessage": "ホーム"
   },
   "homepage": {
-    "defaultMessage": "ホームページ",
-    "description": "Link to home page"
+    "defaultMessage": "ホームページ"
   },
   "homepage-banner-heading": {
-    "defaultMessage": "{appName}は初めてですか？",
-    "description": "Homepage banner heading"
+    "defaultMessage": "{appName}は初めてですか？"
   },
   "homepage-banner-subtitle": {
-    "defaultMessage": "動作とmicro:bitを使った機械学習",
-    "description": "Homepage banner subtitle"
+    "defaultMessage": "動作とmicro:bitを使った機械学習"
   },
   "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads",
-    "description": "Homepage footer text advertising the mobile apps"
+    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
-    "defaultMessage": "データサンプルをインポート",
-    "description": "Data samples action"
+    "defaultMessage": "データサンプルをインポート"
   },
   "import-error-dialog-content": {
-    "defaultMessage": "{appNameFull}で開くことができるのはMakeCodeのhexファイルまたはデータサンプルファイル(.json)だけです。",
-    "description": "Content of import error dialog"
+    "defaultMessage": "{appNameFull}で開くことができるのはMakeCodeのhexファイルまたはデータサンプルファイル(.json)だけです。"
   },
   "import-error-dialog-title": {
-    "defaultMessage": "対応していないファイル形式です",
-    "description": "Title of import error dialog"
+    "defaultMessage": "対応していないファイル形式です"
   },
   "import-file-action": {
-    "defaultMessage": "インポート",
-    "description": "Import file action"
+    "defaultMessage": "インポート"
   },
   "incompatible-device-body-alt": {
-    "defaultMessage": "戻って別のmicro:bitを選ぶか、<link>プロジェクトのhexを保存して</link>、micro:bit V2にダウンロードしてください。",
-    "description": "Incompatible device dialog body text"
+    "defaultMessage": "戻って別のmicro:bitを選ぶか、<link>プロジェクトのhexを保存して</link>、micro:bit V2にダウンロードしてください。"
   },
   "incompatible-device-body1": {
-    "defaultMessage": "プログラムを編集するには、MakeCodeに進んでください。その後、micro:bit V2にダウンロードできるプロジェクトのhexファイルを保存できます。",
-    "description": "Incompatible device dialog body text"
+    "defaultMessage": "プログラムを編集するには、MakeCodeに進んでください。その後、micro:bit V2にダウンロードできるプロジェクトのhexファイルを保存できます。"
   },
   "incompatible-device-body2": {
-    "defaultMessage": "別の方法として、 <link>MakeCode を使用せずにプロジェクトの hex</link> を保存します。",
-    "description": "Incompatible device dialog body text"
+    "defaultMessage": "別の方法として、 <link>MakeCode を使用せずにプロジェクトの hex</link> を保存します。"
   },
   "incompatible-device-heading": {
-    "defaultMessage": "互換性のないデバイス",
-    "description": "Incompatible device dialog heading"
+    "defaultMessage": "互換性のないデバイス"
   },
   "incompatible-device-subtitle": {
-    "defaultMessage": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 <link>micro:bitのバージョンについてもっと調べる。</link>",
-    "description": "Incompatible device dialog subtitle"
+    "defaultMessage": "micro:bit V1を使っていますが、機械学習プロジェクトでは micro:bit V2 に載っている、より速いプロセッサが必要となります。 <link>micro:bitのバージョンについてもっと調べる。</link>"
   },
   "insufficient-data-body": {
-    "defaultMessage": "モデルをトレーニングするには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。",
-    "description": "Insufficient data modal content"
+    "defaultMessage": "モデルをトレーニングするには、少なくとも 2 個のアクションと、それぞれのアクションに対して 3 個のデータサンプルが必要です。"
   },
   "insufficient-data-title": {
-    "defaultMessage": "十分なデータがありません",
-    "description": "Insufficient data modal title"
+    "defaultMessage": "十分なデータがありません"
   },
   "language": {
-    "defaultMessage": "言語",
-    "description": "Language option text"
+    "defaultMessage": "言語"
   },
   "learn-about-firewall-requirements-action": {
-    "defaultMessage": "ファイアウォール要件について調べる",
-    "description": "Link to support article for firewall requirements"
+    "defaultMessage": "ファイアウォール要件について調べる"
   },
   "learn-more-action": {
-    "defaultMessage": "さらに詳しく",
-    "description": "Learn more button text"
+    "defaultMessage": "さらに詳しく"
   },
   "led-icon-option-angry": {
-    "defaultMessage": "おこり顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "おこり顔"
   },
   "led-icon-option-asleep": {
-    "defaultMessage": "ねてる顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ねてる顔"
   },
   "led-icon-option-butterfly": {
-    "defaultMessage": "ちょうちょ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ちょうちょ"
   },
   "led-icon-option-chessboard": {
-    "defaultMessage": "チェスボード",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "チェスボード"
   },
   "led-icon-option-confused": {
-    "defaultMessage": "こまり顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "こまり顔"
   },
   "led-icon-option-cow": {
-    "defaultMessage": "うし",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "うし"
   },
   "led-icon-option-diamond": {
-    "defaultMessage": "ダイアモンド",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ダイアモンド"
   },
   "led-icon-option-duck": {
-    "defaultMessage": "あひる",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "あひる"
   },
   "led-icon-option-eighthnote": {
-    "defaultMessage": "８分音符",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "８分音符"
   },
   "led-icon-option-fabulous": {
-    "defaultMessage": "すばらしい",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "すばらしい"
   },
   "led-icon-option-ghost": {
-    "defaultMessage": "おばけ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "おばけ"
   },
   "led-icon-option-giraffe": {
-    "defaultMessage": "きりん",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "きりん"
   },
   "led-icon-option-happy": {
-    "defaultMessage": "うれしい顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "うれしい顔"
   },
   "led-icon-option-heart": {
-    "defaultMessage": "ハート",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ハート"
   },
   "led-icon-option-house": {
-    "defaultMessage": "家",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "家"
   },
   "led-icon-option-lefttriangle": {
-    "defaultMessage": "左向き三角",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "左向き三角"
   },
   "led-icon-option-meh": {
-    "defaultMessage": "ふーん",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ふーん"
   },
   "led-icon-option-no": {
-    "defaultMessage": "いいえ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "いいえ"
   },
   "led-icon-option-off": {
-    "defaultMessage": "オフ",
-    "description": "Icon option."
+    "defaultMessage": "オフ"
   },
   "led-icon-option-pitchfork": {
-    "defaultMessage": "くまで",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "くまで"
   },
   "led-icon-option-quarternote": {
-    "defaultMessage": "４分音符",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "４分音符"
   },
   "led-icon-option-rabbit": {
-    "defaultMessage": "うさぎ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "うさぎ"
   },
   "led-icon-option-rollerskate": {
-    "defaultMessage": "ローラースケート",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "ローラースケート"
   },
   "led-icon-option-sad": {
-    "defaultMessage": "かなしい顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "かなしい顔"
   },
   "led-icon-option-scissors": {
-    "defaultMessage": "はさみ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "はさみ"
   },
   "led-icon-option-silly": {
-    "defaultMessage": "へん顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "へん顔"
   },
   "led-icon-option-skull": {
-    "defaultMessage": "がいこつ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "がいこつ"
   },
   "led-icon-option-smalldiamond": {
-    "defaultMessage": "小さいダイアモンド",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "小さいダイアモンド"
   },
   "led-icon-option-smallheart": {
-    "defaultMessage": "小さいハート",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "小さいハート"
   },
   "led-icon-option-smallsquare": {
-    "defaultMessage": "小さいしかく",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "小さいしかく"
   },
   "led-icon-option-snake": {
-    "defaultMessage": "へび",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "へび"
   },
   "led-icon-option-square": {
-    "defaultMessage": "しかく",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "しかく"
   },
   "led-icon-option-stickfigure": {
-    "defaultMessage": "棒人間",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "棒人間"
   },
   "led-icon-option-surprised": {
-    "defaultMessage": "びっくり顔",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "びっくり顔"
   },
   "led-icon-option-sword": {
-    "defaultMessage": "剣",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "剣"
   },
   "led-icon-option-target": {
-    "defaultMessage": "まと",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "まと"
   },
   "led-icon-option-tortoise": {
-    "defaultMessage": "かめ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "かめ"
   },
   "led-icon-option-triangle": {
-    "defaultMessage": "三角",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "三角"
   },
   "led-icon-option-tshirt": {
-    "defaultMessage": "Tシャツ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "Tシャツ"
   },
   "led-icon-option-umbrella": {
-    "defaultMessage": "かさ",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "かさ"
   },
   "led-icon-option-yes": {
-    "defaultMessage": "はい",
-    "description": "Makecode icon option. The translation should match MakeCode translations."
+    "defaultMessage": "はい"
   },
   "live-data-graph": {
-    "defaultMessage": "ライブデータグラフ",
-    "description": "Title for live data graph"
+    "defaultMessage": "ライブデータグラフ"
   },
   "live-graph": {
-    "defaultMessage": "ライブグラフ",
-    "description": "Heading for live graph"
+    "defaultMessage": "ライブグラフ"
   },
   "live-graph-tooltip": {
-    "defaultMessage": "このグラフは、micro:bitの加速度センサーの動きデータをリアルタイムで表示しています。 データ収集用micro:bitを動かして、X、Y、Z軸の変化を見てみましょう。 各色の線は、micro:bitを動かしている方向(軸)を表します。",
-    "description": "Tooltip for live graph heading"
+    "defaultMessage": "このグラフは、micro:bitの加速度センサーの動きデータをリアルタイムで表示しています。 データ収集用micro:bitを動かして、X、Y、Z軸の変化を見てみましょう。 各色の線は、micro:bitを動かしている方向(軸)を表します。"
   },
   "live-graph-tooltip-aria": {
-    "defaultMessage": "ライブグラフツールチップ",
-    "description": "Aria label for live graph tooltip icon"
+    "defaultMessage": "ライブグラフツールチップ"
   },
   "loading": {
-    "defaultMessage": "読み込み中",
-    "description": "Aria label for loading spinner"
+    "defaultMessage": "読み込み中"
   },
   "location-disabled-body": {
-    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again.",
-    "description": "Body text for location disabled error dialog (Android only)"
+    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again."
   },
   "location-disabled-heading": {
-    "defaultMessage": "Location services required",
-    "description": "Heading for location disabled error dialog (Android only)"
+    "defaultMessage": "Location services required"
   },
   "main-menu": {
-    "defaultMessage": "メインメニュー",
-    "description": "Main menu label"
+    "defaultMessage": "メインメニュー"
   },
   "makecode-back-alt": {
-    "defaultMessage": "MakeCodeを戻すための左矢印アイコン",
-    "description": "Testing model page title"
+    "defaultMessage": "MakeCodeを戻すための左矢印アイコン"
   },
   "makecode-block-alt-prefix": {
-    "defaultMessage": "MakeCodeブロック:",
-    "description": "Makecode block alt text prefix"
+    "defaultMessage": "MakeCodeブロック:"
   },
   "makecode-block-show-icon": {
-    "defaultMessage": "アイコンを表示",
-    "description": "Makecode block text. The translation should match MakeCode translations."
+    "defaultMessage": "アイコンを表示"
   },
   "makecode-load-error-dialog-body": {
-    "defaultMessage": "{appNameFull} は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。",
-    "description": "Content of MakeCode load error dialog"
+    "defaultMessage": "{appNameFull} は MakeCode の読み込みに失敗しました。インターネット接続を確認し、ページを更新してからもう一度お試しください。"
   },
   "makecode-load-error-dialog-title": {
-    "defaultMessage": "Microsoft MakeCode を読み込めませんでした",
-    "description": "Title of MakeCode load error dialog"
+    "defaultMessage": "Microsoft MakeCode を読み込めませんでした"
   },
   "microbit-name-label": {
-    "defaultMessage": "micro:bit name: {name}",
-    "description": "Screen reader text for micro:bit name"
+    "defaultMessage": "micro:bit name: {name}"
   },
   "microbit-not-connected": {
-    "defaultMessage": "micro:bitが接続されていません",
-    "description": "Live graph disconnected micro:bit status message"
+    "defaultMessage": "micro:bitが接続されていません"
   },
   "ml.onStart|block": {
-    "defaultMessage": "ML の $event が開始したとき",
-    "description": "This string should be a Crowdin duplicate of the MakeCode extension block with the same text and use the same translation."
+    "defaultMessage": "ML の $event が開始したとき"
   },
   "more-edit-in-makecode-options": {
-    "defaultMessage": "MakeCodeのオプションをさらに編集する",
-    "description": "Aria label for the additional actions menu to the right of the Edit in MakeCode button"
+    "defaultMessage": "MakeCodeのオプションをさらに編集する"
   },
   "move-hint": {
-    "defaultMessage": "micro:bitを動かして、さまざまなアクションでグラフがどのように変化するか見てみましょう",
-    "description": "Hint when you have just connected a micro:bit"
+    "defaultMessage": "micro:bitを動かして、さまざまなアクションでグラフがどのように変化するか見てみましょう"
   },
   "my-projects-row-carousel": {
-    "defaultMessage": "自分のプロジェクトのリスト",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "自分のプロジェクトのリスト"
   },
   "my-projects-row-title": {
-    "defaultMessage": "自分のプロジェクト",
-    "description": "Title for home page row"
+    "defaultMessage": "自分のプロジェクト"
   },
   "name-action-hint": {
-    "defaultMessage": "「手を振る」、「ジャンプ」など、CreateAIに認識させるアクションに名前を付けます",
-    "description": "Hint shown when you have an unnamed action"
+    "defaultMessage": "「手を振る」、「ジャンプ」など、CreateAIに認識させるアクションに名前を付けます"
   },
   "name-project": {
-    "defaultMessage": "プロジェクトに名前を付ける",
-    "description": "Name your project header"
+    "defaultMessage": "プロジェクトに名前を付ける"
   },
   "name-text": {
-    "defaultMessage": "名前",
-    "description": "Header for name field"
+    "defaultMessage": "名前"
   },
   "name-used-when": {
-    "defaultMessage": "この名前は hex ファイルを保存するときに使用されます。",
-    "description": "Text under project name field"
+    "defaultMessage": "この名前は hex ファイルを保存するときに使用されます。"
   },
   "native-bluetooth-error-body": {
-    "defaultMessage": "The connection to the micro:bit failed.",
-    "description": "Body text for native Bluetooth connection error dialog"
+    "defaultMessage": "The connection to the micro:bit failed."
   },
   "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:",
-    "description": "Heading for list of things to check in native Bluetooth error dialog"
+    "defaultMessage": "Please check that:"
   },
   "native-bluetooth-error-check-distance": {
-    "defaultMessage": "micro:bit を接続したい機器に近づけてください。",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "micro:bit を接続したい機器に近づけてください。"
   },
   "native-bluetooth-error-check-mode": {
-    "defaultMessage": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。"
   },
   "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "the pattern you entered is correct",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "the pattern you entered is correct"
   },
   "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Please forget this device in your Bluetooth settings and try again.",
-    "description": "Heading for instructions on how to forget device in Bluetooth error dialog"
+    "defaultMessage": "Please forget this device in your Bluetooth settings and try again."
   },
   "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Go to Bluetooth in the Settings app",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "Go to Bluetooth in the Settings app"
   },
   "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device",
-    "description": "List item in native Bluetooth error dialog. infoIcon is an inline SVG icon, the text inside is used as alt text."
+    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device"
   },
   "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "Tap ‘Forget This Device’",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "Tap ‘Forget This Device’"
   },
   "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "Return to this app to try again",
-    "description": "List item in native Bluetooth error dialog"
+    "defaultMessage": "Return to this app to try again"
   },
   "native-bluetooth-error-heading": {
-    "defaultMessage": "Could not connect to micro:bit",
-    "description": "Heading for native Bluetooth connection error dialog"
+    "defaultMessage": "Could not connect to micro:bit"
   },
   "new-project-setup-title": {
-    "defaultMessage": "新しいプロジェクトのセットアップ",
-    "description": "New project setup title"
+    "defaultMessage": "新しいプロジェクトのセットアップ"
   },
   "newpage-new-project-title": {
-    "defaultMessage": "新しいプロジェクト",
-    "description": "Start new project title"
+    "defaultMessage": "新しいプロジェクト"
   },
   "next-action": {
-    "defaultMessage": "次",
-    "description": "Next button text for dialogs and similar"
+    "defaultMessage": "次"
   },
   "no-projects": {
-    "defaultMessage": "表示するプロジェクトがありません",
-    "description": "Shown on all projects page when the user has no projects"
+    "defaultMessage": "表示するプロジェクトがありません"
   },
   "not-create-ai-hex-import-dialog-content": {
-    "defaultMessage": "このプロジェクトにはデータサンプルが含まれていないため、プログラムだけが開かれています。 プログラムを使う前に、モデルを訓練する必要があります。",
-    "description": "Content of import non-CreateAI hex dialog"
+    "defaultMessage": "このプロジェクトにはデータサンプルが含まれていないため、プログラムだけが開かれています。 プログラムを使う前に、モデルを訓練する必要があります。"
   },
   "not-create-ai-hex-import-dialog-title": {
-    "defaultMessage": "MakeCodeプロジェクトがインポートされました",
-    "description": "Title of import non-CreateAI hex dialog"
+    "defaultMessage": "MakeCodeプロジェクトがインポートされました"
   },
   "not-found": {
-    "defaultMessage": "{appNameFull} ホームページ",
-    "description": "Page not found link text"
+    "defaultMessage": "{appNameFull} ホームページ"
   },
   "not-found-title": {
-    "defaultMessage": "ページが見つかりません",
-    "description": "Page not found page title"
+    "defaultMessage": "ページが見つかりません"
   },
   "open-file-dropped": {
-    "defaultMessage": "ドロップ時にファイルを開く",
-    "description": "Aria label for file drop target"
+    "defaultMessage": "ドロップ時にファイルを開く"
   },
   "open-project-action": {
-    "defaultMessage": "開く",
-    "description": "Open project action"
+    "defaultMessage": "開く"
   },
   "open-shared-project-action": {
-    "defaultMessage": "プロジェクトを開く",
-    "description": "Open project button text"
+    "defaultMessage": "プロジェクトを開く"
   },
   "open-shared-project-blocks-preview-description": {
-    "defaultMessage": "このプロジェクトに含まれている MakeCode コードのプレビュー。",
-    "description": "Blocks preview description text"
+    "defaultMessage": "このプロジェクトに含まれている MakeCode コードのプレビュー。"
   },
   "open-shared-project-data-preview-description": {
-    "defaultMessage": "このプロジェクトに含まれているアクションとデータのプレビュー。",
-    "description": "Data preview description text"
+    "defaultMessage": "このプロジェクトに含まれているアクションとデータのプレビュー。"
   },
   "open-shared-project-description": {
-    "defaultMessage": "これは、CreateAIと互換性のあるMicrosoft MakeCode 共有プロジェクトです。",
-    "description": "Import shared CreateAI project description"
+    "defaultMessage": "これは、CreateAIと互換性のあるMicrosoft MakeCode 共有プロジェクトです。"
   },
   "open-shared-project-error-description": {
-    "defaultMessage": "あなたがフォローしたリンクが正しいことを確認し、インターネットに接続していることをチェックしてください。",
-    "description": "Import shared CreateAI error description"
+    "defaultMessage": "あなたがフォローしたリンクが正しいことを確認し、インターネットに接続していることをチェックしてください。"
   },
   "open-shared-project-title": {
-    "defaultMessage": "共有CreateAIプロジェクトを開く",
-    "description": "Import shared CreateAI project title"
+    "defaultMessage": "共有CreateAIプロジェクトを開く"
   },
   "other-tabs-body1": {
-    "defaultMessage": "別のプロセスがこのデバイスに接続されています。",
-    "description": "Connection error dialog"
+    "defaultMessage": "別のプロセスがこのデバイスに接続されています。"
   },
   "other-tabs-body2": {
-    "defaultMessage": "WebUSBを使っている他のタブ(例: MakeCode、Pythonエディター、 {appNameShort})を閉じるか、micro:bitを抜き差ししてやり直してください。",
-    "description": "Connection error dialog"
+    "defaultMessage": "WebUSBを使っている他のタブ(例: MakeCode、Pythonエディター、 {appNameShort})を閉じるか、micro:bitを抜き差ししてやり直してください。"
   },
   "other-tabs-heading": {
-    "defaultMessage": "WebUSBで接続",
-    "description": "Connection error dialog"
+    "defaultMessage": "WebUSBで接続"
   },
   "privacy": {
-    "defaultMessage": "プライバシーポリシー",
-    "description": "Link to view privacy policy"
+    "defaultMessage": "プライバシーポリシー"
   },
   "project-ideas-row-carousel": {
-    "defaultMessage": "プロジェクトアイデアのリスト",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "プロジェクトアイデアのリスト"
   },
   "project-ideas-row-title": {
-    "defaultMessage": "プロジェクトアイデア",
-    "description": "Title for home page row"
+    "defaultMessage": "プロジェクトアイデア"
   },
   "project-label": {
-    "defaultMessage": "プロジェクト",
-    "description": "Label for project input"
+    "defaultMessage": "プロジェクト"
   },
   "project-loaded": {
-    "defaultMessage": "プロジェクトが読み込まれました",
-    "description": "Toast when a new project is loaded"
+    "defaultMessage": "プロジェクトが読み込まれました"
   },
   "project-menu-action": {
-    "defaultMessage": "{name}アクションメニュー",
-    "description": "Label for project actions menu button"
+    "defaultMessage": "{name}アクションメニュー"
   },
   "project-name-not-empty": {
-    "defaultMessage": "プロジェクト名は空にできません",
-    "description": "Validation message for project name"
+    "defaultMessage": "プロジェクト名は空にできません"
   },
   "project-name-text": {
-    "defaultMessage": "プロジェクト名",
-    "description": "Label for project name input"
+    "defaultMessage": "プロジェクト名"
   },
   "project-name-tooltip": {
-    "defaultMessage": "クリックしてプロジェクト名を編集",
-    "description": "Tooltip for the project name editable input"
+    "defaultMessage": "クリックしてプロジェクト名を編集"
   },
   "project-skip-to-toolbar": {
-    "defaultMessage": "ツールバーにスキップ",
-    "description": "Button to skip focus to the projects toolbar"
+    "defaultMessage": "ツールバーにスキップ"
   },
   "project-storage-tooltip": {
-    "defaultMessage": "データはこのデバイスのこのブラウザに保存されます。ブラウザのCookieやサイトのデータを消去すると、データも削除されます。デバイスのストレージ容量が少ない場合も、ブラウザによって自動的に削除される場合があります。",
-    "description": "Tooltip for my projects row"
+    "defaultMessage": "データはこのデバイスのこのブラウザに保存されます。ブラウザのCookieやサイトのデータを消去すると、データも削除されます。デバイスのストレージ容量が少ない場合も、ブラウザによって自動的に削除される場合があります。"
   },
   "projects-page-title": {
-    "defaultMessage": "サンプルプロジェクト",
-    "description": "Projects page title"
+    "defaultMessage": "サンプルプロジェクト"
   },
   "radio-link-microbit": {
-    "defaultMessage": "無線リンク用micro:bit",
-    "description": "Radio link micro:bit image caption"
+    "defaultMessage": "無線リンク用micro:bit"
   },
   "radio-link-microbit-label": {
-    "defaultMessage": "無線リンク用micro:bitがPCに接続しているところを示す図",
-    "description": "Aria label for radio link image"
+    "defaultMessage": "無線リンク用micro:bitがPCに接続しているところを示す図"
   },
   "recognition-point-label": {
-    "defaultMessage": "認識ポイント:",
-    "description": "Label for the slider for the recognition point"
+    "defaultMessage": "認識ポイント:"
   },
   "reconnect-action": {
-    "defaultMessage": "再接続",
-    "description": "Button text to reconnect a micro:bit over Bluetooth/radio"
+    "defaultMessage": "再接続"
   },
   "reconnect-failed-bluetooth-heading": {
-    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました"
   },
   "reconnect-failed-bluetooth1": {
-    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。"
   },
   "reconnect-failed-bridge-heading": {
-    "defaultMessage": "無線リンク用micro:bitへの接続に失敗しました",
-    "description": "Connection error dialog"
+    "defaultMessage": "無線リンク用micro:bitへの接続に失敗しました"
   },
   "reconnect-failed-bridge1": {
-    "defaultMessage": "コンピューターに接続されたmicro:bitとの接続を再確立できませんでした。",
-    "description": "Connection error dialog"
+    "defaultMessage": "コンピューターに接続されたmicro:bitとの接続を再確立できませんでした。"
   },
   "reconnect-failed-native-heading": {
-    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました",
-    "description": "Connection error dialog for native Bluetooth reconnection failure"
+    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました"
   },
   "reconnect-failed-radio-heading": {
-    "defaultMessage": "micro:bitへの接続に失敗しました",
-    "description": "Connection error dialog"
+    "defaultMessage": "micro:bitへの接続に失敗しました"
   },
   "reconnect-failed-remote-heading": {
-    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitへの接続に失敗しました"
   },
   "reconnect-failed-remote1": {
-    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。",
-    "description": "Connection error dialog"
+    "defaultMessage": "データ収集用micro:bitへの接続を確立できませんでした。"
   },
   "reconnect-failed-subtitle": {
-    "defaultMessage": "接続プロセスを再起動するには、次の手順に従ってください。",
-    "description": "Connection error dialog"
+    "defaultMessage": "接続プロセスを再起動するには、次の手順に従ってください。"
   },
   "reconnecting": {
-    "defaultMessage": "再接続中…",
-    "description": "Shown while reconnecting"
+    "defaultMessage": "再接続中…"
   },
   "record-action": {
-    "defaultMessage": "記録",
-    "description": "Record button text"
+    "defaultMessage": "記録"
   },
   "record-action-aria": {
-    "defaultMessage": "アクション「{action}」のデータを記録",
-    "description": "Aria label for record button"
+    "defaultMessage": "アクション「{action}」のデータを記録"
   },
   "record-hint": {
-    "defaultMessage": "記録を押して、動作データサンプルを収集します。",
-    "description": "Hint when you have named the first action but not recorded any data samples"
+    "defaultMessage": "記録を押して、動作データサンプルを収集します。"
   },
   "record-hint-button-b": {
-    "defaultMessage": "動作データサンプルを収集するには、micro:bitの記録<mark>または</mark>ボタンBを押します。",
-    "description": "Hint when you have named the first action but not recorded any data samples and have a micro:bit connected"
+    "defaultMessage": "動作データサンプルを収集するには、micro:bitの記録<mark>または</mark>ボタンBを押します。"
   },
   "record-more-hint": {
-    "defaultMessage": "少なくとも{numSamples, plural, other {あと{numSamples}個のデータサンプル}}を記録してください",
-    "description": "Hint when you have not recorded enough data samples. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+    "defaultMessage": "少なくとも{numSamples, plural, other {あと{numSamples}個のデータサンプル}}を記録してください"
   },
   "record-more-hint-label": {
-    "defaultMessage": "{actionName}に少なくとも{numSamples, plural, other {あと{numSamples}個のデータサンプル}}を記録してください",
-    "description": "Hint when you have not recorded enough data samples aria label. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+    "defaultMessage": "{actionName}に少なくとも{numSamples, plural, other {あと{numSamples}個のデータサンプル}}を記録してください"
   },
   "record-samples": {
-    "defaultMessage": "{numSamples} サンプルを記録",
-    "description": "Additional recording action text"
+    "defaultMessage": "{numSamples} サンプルを記録"
   },
   "record-samples-help": {
-    "defaultMessage": "各サンプルにはそれぞれにカウントダウンがあります",
-    "description": "Help text for additional recording action"
+    "defaultMessage": "各サンプルにはそれぞれにカウントダウンがあります"
   },
   "record-seconds": {
-    "defaultMessage": "{numSeconds} 秒の記録",
-    "description": "Additional recording action text"
+    "defaultMessage": "{numSeconds} 秒の記録"
   },
   "record-seconds-help": {
-    "defaultMessage": "{numSamples} サンプルを取得するには、動き続けてください",
-    "description": "Help text for additional recording action"
+    "defaultMessage": "{numSamples} サンプルを取得するには、動き続けてください"
   },
   "recording": {
-    "defaultMessage": "記録中",
-    "description": "Shown during recording"
+    "defaultMessage": "記録中"
   },
   "recording-complete": {
-    "defaultMessage": "完了",
-    "description": "Text shown when data recording complete"
+    "defaultMessage": "完了"
   },
   "recording-data-for": {
-    "defaultMessage": "アクション「{action}」のデータを記録",
-    "description": "Text in recording dialog"
+    "defaultMessage": "アクション「{action}」のデータを記録"
   },
   "recording-data-for-numbered": {
-    "defaultMessage": "アクション「{action}」の {numSamples} 個の {sample} を記録",
-    "description": "Text in recording dialog"
+    "defaultMessage": "アクション「{action}」の {numSamples} 個の {sample} を記録"
   },
   "recording-fingerprint-label": {
-    "defaultMessage": "記録について、micro:bitのx、y、z加速度センサーデータ特性を表示するヒートマップ",
-    "description": "Label for recording fingerprint heatmap"
+    "defaultMessage": "記録について、micro:bitのx、y、z加速度センサーデータ特性を表示するヒートマップ"
   },
   "recording-graph-label": {
-    "defaultMessage": "micro:bit の加速度センサーのx軸、y軸、z軸の各データを示しているグラフ",
-    "description": "Label for recording graph"
+    "defaultMessage": "micro:bit の加速度センサーのx軸、y軸、z軸の各データを示しているグラフ"
   },
   "recording-options-aria": {
-    "defaultMessage": "アクション「{action}」の他の記録オプション",
-    "description": "Aria label for more recording options button"
+    "defaultMessage": "アクション「{action}」の他の記録オプション"
   },
   "reload-action": {
-    "defaultMessage": "再読み込み",
-    "description": "Reload button text"
+    "defaultMessage": "再読み込み"
   },
   "rename-project-action": {
-    "defaultMessage": "名前を変更",
-    "description": "Rename project action"
+    "defaultMessage": "名前を変更"
   },
   "rename-project-heading": {
-    "defaultMessage": "プロジェクト名を変更",
-    "description": "Heading for rename project dialog"
+    "defaultMessage": "プロジェクト名を変更"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit.",
-    "description": "Instructions to hold A and B buttons while powering on the micro:bit"
+    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press reset. Keep holding A+B until the Bluetooth icon appears.",
-    "description": "Instructions to hold A and B buttons while pressing reset on the micro:bit"
+    "defaultMessage": "Hold A+B and press reset. Keep holding A+B until the Bluetooth icon appears."
   },
   "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Reset to Bluetooth mode",
-    "description": "Title for dialog with instructures on using "
+    "defaultMessage": "Reset to Bluetooth mode"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press reset 3 times quickly.",
-    "description": "Instructions to press the physical reset button on the micro:bit"
+    "defaultMessage": "Press reset 3 times quickly."
   },
   "reset-to-default-action": {
-    "defaultMessage": "初期ブロックにリセット",
-    "description": "Reset to default blocks button text"
+    "defaultMessage": "初期ブロックにリセット"
   },
   "restore-defaults-action": {
-    "defaultMessage": "すべての設定を初期値に復元",
-    "description": "Restore default button text"
+    "defaultMessage": "すべての設定を初期値に復元"
   },
   "restore-defaults-confirm-action": {
-    "defaultMessage": "初期値に復元",
-    "description": "Restore default settings confirm button text"
+    "defaultMessage": "初期値に復元"
   },
   "restore-defaults-confirm-body": {
-    "defaultMessage": "すべての設定を初期値に復元してもよろしいですか？",
-    "description": "Restore default settings confirmation dialog body text"
+    "defaultMessage": "すべての設定を初期値に復元してもよろしいですか？"
   },
   "restore-defaults-confirm-heading": {
-    "defaultMessage": "初期設定に復元",
-    "description": "Restore default settings confirmation dialog title"
+    "defaultMessage": "初期設定に復元"
   },
   "restore-defaults-helper": {
-    "defaultMessage": "以前に却下されたヘルプコンテンツが再び表示される場合があります。",
-    "description": "Restore default settings helper text"
+    "defaultMessage": "以前に却下されたヘルプコンテンツが再び表示される場合があります。"
   },
   "save-action": {
-    "defaultMessage": "保存",
-    "description": "Label for action that saves the project as a file the user downloads"
+    "defaultMessage": "保存"
   },
   "save-hex-dialog-heading": {
-    "defaultMessage": "プロジェクトをhexファイルとして保存",
-    "description": "Heading for the dialog shown when saving a hex file"
+    "defaultMessage": "プロジェクトをhexファイルとして保存"
   },
   "save-hex-dialog-message1": {
-    "defaultMessage": "ダウンロードには、アクション、データサンプル、MakeCodeプロジェクトが含まれています。作業を続けるには {appNameFull} で開いてください。",
-    "description": "Text in the dialog shown when saving a hex file"
+    "defaultMessage": "ダウンロードには、アクション、データサンプル、MakeCodeプロジェクトが含まれています。作業を続けるには {appNameFull} で開いてください。"
   },
   "save-hex-dialog-message2": {
-    "defaultMessage": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。",
-    "description": "Text in the save/share hex dialog explaining MakeCode compatibility"
+    "defaultMessage": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。"
   },
   "save-to-files-action": {
-    "defaultMessage": "Save to Files",
-    "description": "Label for action that saves the project to the device file system on Android"
+    "defaultMessage": "Save to Files"
   },
   "saving-dataset-toast-title": {
-    "defaultMessage": "Your data samples have been downloaded",
-    "description": "Notification after a dataset has been downloaded"
+    "defaultMessage": "Your data samples have been downloaded"
   },
   "saving-description": {
-    "defaultMessage": "ダウンロードはまもなく完了します。",
-    "description": "Saving progress dialog text"
+    "defaultMessage": "ダウンロードはまもなく完了します。"
   },
   "saving-title": {
-    "defaultMessage": "保存中…",
-    "description": "Saving progress title"
+    "defaultMessage": "保存中…"
   },
   "saving-toast-title": {
-    "defaultMessage": "hexファイルをダウンロードしました",
-    "description": "Notification after a hex file has been downloaded"
+    "defaultMessage": "hexファイルをダウンロードしました"
   },
   "search": {
-    "defaultMessage": "検索",
-    "description": "Aria label for searching projects"
+    "defaultMessage": "検索"
   },
   "select-icon-action-aria": {
-    "defaultMessage": "アクション「{action}」のアイコンを選択",
-    "description": "Aria label for pick icon button"
+    "defaultMessage": "アクション「{action}」のアイコンを選択"
   },
   "select-icon-action-untitled-aria": {
-    "defaultMessage": "無題アクションのアイコンを選択",
-    "description": "Aria label for pick icon button"
+    "defaultMessage": "無題アクションのアイコンを選択"
   },
   "select-icon-option-action-aria": {
-    "defaultMessage": "「{iconName}」アイコンを選択",
-    "description": "Aria label for icon option"
+    "defaultMessage": "「{iconName}」アイコンを選択"
   },
   "select-project-action": {
-    "defaultMessage": "{name}を選択",
-    "description": "Label for project selection checkbox"
+    "defaultMessage": "{name}を選択"
   },
   "selection-actions-group": {
-    "defaultMessage": "選択アクション",
-    "description": "Accessible label for the group of actions available when projects are selected"
+    "defaultMessage": "選択アクション"
   },
   "settings": {
-    "defaultMessage": "設定",
-    "description": "Text for settings dialog header and menu item"
+    "defaultMessage": "設定"
   },
   "settings-menu-action": {
-    "defaultMessage": "設定アクションメニュー",
-    "description": "Label for settings actions menu button"
+    "defaultMessage": "設定アクションメニュー"
   },
   "share-action": {
-    "defaultMessage": "共有",
-    "description": "Label for action that initiates sharing the project on mobile"
+    "defaultMessage": "共有"
   },
   "share-file-description": {
-    "defaultMessage": "{appNameFull} project: {name}",
-    "description": "Label for a hex file with app name context"
+    "defaultMessage": "{appNameFull} project: {name}"
   },
   "share-hex-dialog-heading": {
-    "defaultMessage": "hexファイルとしてプロジェクトを共有します。",
-    "description": "Heading for the dialog shown when sharing a hex file on mobile"
+    "defaultMessage": "hexファイルとしてプロジェクトを共有します。"
   },
   "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working.",
-    "description": "Text in the dialog shown when sharing a hex file on mobile"
+    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working."
   },
   "share-named-file": {
-    "defaultMessage": "{name}を共有",
-    "description": "Label for sharing a named file"
+    "defaultMessage": "{name}を共有"
   },
   "sharing-description": {
-    "defaultMessage": "Your project will be ready to share soon.",
-    "description": "Sharing progress dialog text for mobile"
+    "defaultMessage": "Your project will be ready to share soon."
   },
   "sharing-title": {
-    "defaultMessage": "共有しています…",
-    "description": "Sharing progress title"
+    "defaultMessage": "共有しています…"
   },
   "show-graphs-checkbox-label-text": {
-    "defaultMessage": "グラフを表示",
-    "description": "Show graphs checkbox label text"
+    "defaultMessage": "グラフを表示"
   },
   "simple-ai-exercise-timer-resource-title": {
-    "defaultMessage": "簡単なAI運動タイマー",
-    "description": "Home page resource card title"
+    "defaultMessage": "簡単なAI運動タイマー"
   },
   "skip-tour-action": {
-    "defaultMessage": "ツアーをスキップ",
-    "description": "Skip tour button text"
+    "defaultMessage": "ツアーをスキップ"
   },
   "software-versions": {
-    "defaultMessage": "ソフトウェアのバージョン",
-    "description": "Software versions text"
+    "defaultMessage": "ソフトウェアのバージョン"
   },
   "sort-option-last-modified": {
-    "defaultMessage": "更新日時",
-    "description": "Option for project sort select element / dropdown"
+    "defaultMessage": "更新日時"
   },
   "sort-option-name": {
-    "defaultMessage": "名前",
-    "description": "Option for project sort select element / dropdown"
+    "defaultMessage": "名前"
   },
   "sort-option-relevance": {
-    "defaultMessage": "関係度",
-    "description": "Option for project sort select element / dropdown"
+    "defaultMessage": "関係度"
   },
   "sort-order-ascending-label": {
-    "defaultMessage": "昇順で並べ替え",
-    "description": "Label for sort order toggle button"
+    "defaultMessage": "昇順で並べ替え"
   },
   "sort-order-descending-label": {
-    "defaultMessage": "降順で並び替え",
-    "description": "Label for sort order toggle button"
+    "defaultMessage": "降順で並び替え"
   },
   "sort-select-label": {
-    "defaultMessage": "プロジェクトの並び替え",
-    "description": "Label for select element to sort projects"
+    "defaultMessage": "プロジェクトの並び替え"
   },
   "start-training-action": {
-    "defaultMessage": "トレーニング開始",
-    "description": "Start training button text"
+    "defaultMessage": "トレーニング開始"
   },
   "steps-code": {
-    "defaultMessage": "コードを書く",
-    "description": "Step in home page diagram"
+    "defaultMessage": "コードを書く"
   },
   "steps-collect-data": {
-    "defaultMessage": "データを集める",
-    "description": "Step in home page diagram"
+    "defaultMessage": "データを集める"
   },
   "steps-improve": {
-    "defaultMessage": "改善する",
-    "description": "Step in home page diagram"
+    "defaultMessage": "改善する"
   },
   "steps-test-model": {
-    "defaultMessage": "モデルのテスト",
-    "description": "Step in home page diagram"
+    "defaultMessage": "モデルのテスト"
   },
   "steps-train": {
-    "defaultMessage": "トレーニング",
-    "description": "Step in home page diagram"
+    "defaultMessage": "トレーニング"
   },
   "stop-recording-action": {
-    "defaultMessage": "記録の停止",
-    "description": "Button label to stop recording movement data while recording multiple samples"
+    "defaultMessage": "記録の停止"
   },
   "storage-error-device-other": {
-    "defaultMessage": "Failed to save your project to device storage",
-    "description": "Toast shown when a SQLite storage write fails on a native device"
+    "defaultMessage": "Failed to save your project to device storage"
   },
   "storage-error-other": {
-    "defaultMessage": "Failed to save your project to browser storage",
-    "description": "Toast shown when an IndexedDB storage write fails for an unknown reason"
+    "defaultMessage": "Failed to save your project to browser storage"
   },
   "storage-error-quota-description": {
-    "defaultMessage": "Your project edit may not be saved.",
-    "description": "Toast description when browser storage quota is exceeded"
+    "defaultMessage": "Your project edit may not be saved."
   },
   "storage-error-quota-title": {
-    "defaultMessage": "Browser storage full",
-    "description": "Toast title when browser storage quota is exceeded"
+    "defaultMessage": "Browser storage full"
   },
   "support-request": {
-    "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。",
-    "description": "Support request link text"
+    "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。"
   },
   "teacher-resources-row-carousel": {
-    "defaultMessage": "先生向けのリソースのリストを表示",
-    "description": "Label for home page row carousel"
+    "defaultMessage": "先生向けのリソースのリストを表示"
   },
   "teacher-resources-row-title": {
-    "defaultMessage": "教育者用リソース",
-    "description": "Title for home page row"
+    "defaultMessage": "教育者用リソース"
   },
   "terms": {
-    "defaultMessage": "利用規約",
-    "description": "Link or menu item link to view terms of use"
+    "defaultMessage": "利用規約"
   },
   "testing-model-actions-region": {
-    "defaultMessage": "モデルツールバーのテスト",
-    "description": "Region label for testing model actions"
+    "defaultMessage": "モデルツールバーのテスト"
   },
   "testing-model-title": {
-    "defaultMessage": "モデルのテスト",
-    "description": "Testing model page title"
+    "defaultMessage": "モデルのテスト"
   },
   "third-party-content-description": {
-    "defaultMessage": "このプロジェクトはユーザーによって提供されたものであり、 Microsoft または Micro:bit Educational Foundation によって承認されたものではありません。不適切だと思われる場合は、 <link> MakeCode 共有プロジェクト</link> のリンクにアクセスして、 Microsoft MakeCode に不正を報告してください。",
-    "description": "Notify user of third party content"
+    "defaultMessage": "このプロジェクトはユーザーによって提供されたものであり、 Microsoft または Micro:bit Educational Foundation によって承認されたものではありません。不適切だと思われる場合は、 <link> MakeCode 共有プロジェクト</link> のリンクにアクセスして、 Microsoft MakeCode に不正を報告してください。"
   },
   "timestamp-now": {
-    "defaultMessage": "現在",
-    "description": "The last edit time of a project"
+    "defaultMessage": "現在"
   },
   "timestamp-seconds": {
-    "defaultMessage": "数秒前",
-    "description": "The last edit time of a project"
+    "defaultMessage": "数秒前"
   },
   "tour-action": {
-    "defaultMessage": "ツアー",
-    "description": "Button label that starts a tour of the app's features"
+    "defaultMessage": "ツアー"
   },
   "tour-collect-addActions-content": {
-    "defaultMessage": "他のアクションとその名前を決めてください。モデルをトレーニングするには、少なくとも2個のアクションと3個のデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。",
-    "description": "Tour step description"
+    "defaultMessage": "他のアクションとその名前を決めてください。モデルをトレーニングするには、少なくとも2個のアクションと3個のデータサンプルが必要です。データサンプルはPCにのみ保存され、他の人に送信されることはありません。"
   },
   "tour-collect-addActions-title": {
-    "defaultMessage": "さらにアクションを追加",
-    "description": "Tour step title"
+    "defaultMessage": "さらにアクションを追加"
   },
   "tour-collect-afterFirst-content": {
-    "defaultMessage": "機械学習モデルを訓練するには、少なくとも２つの異なるアクションと、アクションそれぞれについて少なくとも3つのデータサンプルが必要となります。",
-    "description": "Tour step description"
+    "defaultMessage": "機械学習モデルを訓練するには、少なくとも２つの異なるアクションと、アクションそれぞれについて少なくとも3つのデータサンプルが必要となります。"
   },
   "tour-collect-afterFirst-title": {
-    "defaultMessage": "最初の{recordingCount, plural, one {サンプル} other {サンプル}}を記録しました！",
-    "description": "Tour step title. Uses ICU syntax for pluralisation: https://formatjs.io/docs/core-concepts/icu-syntax/#plural-format."
+    "defaultMessage": "最初の{recordingCount, plural, one {サンプル} other {サンプル}}を記録しました！"
   },
   "tour-collect-collectMore-explanation-content": {
-    "defaultMessage": "さらにデータサンプルを収集すると、より良い機械学習モデルになります。",
-    "description": "Tour step description"
+    "defaultMessage": "さらにデータサンプルを収集すると、より良い機械学習モデルになります。"
   },
   "tour-collect-collectMore-hasRecordings-content": {
-    "defaultMessage": "アクションのデータサンプルを記録します。",
-    "description": "Tour step description"
+    "defaultMessage": "アクションのデータサンプルを記録します。"
   },
   "tour-collect-collectMore-noRecordings-content": {
-    "defaultMessage": "アクションのデータサンプルを記録。",
-    "description": "Tour step description"
+    "defaultMessage": "アクションのデータサンプルを記録。"
   },
   "tour-collect-collectMore-title": {
-    "defaultMessage": "さらにデータサンプルを収集",
-    "description": "Tour step title"
+    "defaultMessage": "さらにデータサンプルを収集"
   },
   "tour-collect-trainModel-content": {
-    "defaultMessage": "十分なデータサンプルを収集したら、機械学習モデルのトレーニングができます。 後でもう一度、データを削除またはさらに追加し、モデルの信頼性を高めるためにトレーニングを続けられます。",
-    "description": "Tour step description"
+    "defaultMessage": "十分なデータサンプルを収集したら、機械学習モデルのトレーニングができます。 後でもう一度、データを削除またはさらに追加し、モデルの信頼性を高めるためにトレーニングを続けられます。"
   },
   "tour-dataSamples-actions-common-content": {
-    "defaultMessage": "アクションは、機械学習モデルに認識させたい動きの種類です。たとえば、「手を振る」や「手をたたく」などです。",
-    "description": "Tour step content"
+    "defaultMessage": "アクションは、機械学習モデルに認識させたい動きの種類です。たとえば、「手を振る」や「手をたたく」などです。"
   },
   "tour-dataSamples-actions-noRecordings-content": {
-    "defaultMessage": "最初のアクションを決め、名前を付けてから、データサンプルの記録を開始します。",
-    "description": "Tour step content"
+    "defaultMessage": "最初のアクションを決め、名前を付けてから、データサンプルの記録を開始します。"
   },
   "tour-dataSamples-connected-content": {
-    "defaultMessage": "データサンプルの収集を開始して、さまざまな動きや行動を認識する機械学習(ML)モデルをトレーニングしましょう。",
-    "description": "Tour step content"
+    "defaultMessage": "データサンプルの収集を開始して、さまざまな動きや行動を認識する機械学習(ML)モデルをトレーニングしましょう。"
   },
   "tour-dataSamples-connected-title": {
-    "defaultMessage": "データ収集用micro:bitが接続されています！",
-    "description": "Tour step title"
+    "defaultMessage": "データ収集用micro:bitが接続されています！"
   },
   "tour-dataSamples-liveGraph-content": {
-    "defaultMessage": "グラフはmicro:bitの加速度センサーからの動きのデータを示しています。データ収集用micro:bitを動かして、グラフがどのように変化するか見てください。",
-    "description": "Tour step content"
+    "defaultMessage": "グラフはmicro:bitの加速度センサーからの動きのデータを示しています。データ収集用micro:bitを動かして、グラフがどのように変化するか見てください。"
   },
   "tour-makecode-intro-content1": {
-    "defaultMessage": "micro:bitでプロジェクトをテストするために、モデルとコードをダウンロードします。 さらにコードブロックを追加して、モデルを使った独自のプログラムを作ることもできます。",
-    "description": "Tour step description"
+    "defaultMessage": "micro:bitでプロジェクトをテストするために、モデルとコードをダウンロードします。 さらにコードブロックを追加して、モデルを使った独自のプログラムを作ることもできます。"
   },
   "tour-makecode-intro-content2": {
-    "defaultMessage": "MLモデルを改善する必要がありますか？ ",
-    "description": "Tour step description"
+    "defaultMessage": "MLモデルを改善する必要がありますか？ "
   },
   "tour-makecode-intro-content3": {
-    "defaultMessage": "左上にあるこの戻るボタンを使ってください。",
-    "description": "Tour step description"
+    "defaultMessage": "左上にあるこの戻るボタンを使ってください。"
   },
   "tour-makecode-intro-title": {
-    "defaultMessage": "Microsoft MakeCode",
-    "description": "Tour step title"
+    "defaultMessage": "Microsoft MakeCode"
   },
   "tour-trainModel-afterTrain-alreadyConnected-title": {
-    "defaultMessage": "MLモデルをトレーニングしました！",
-    "description": "Tour step title"
+    "defaultMessage": "MLモデルをトレーニングしました！"
   },
   "tour-trainModel-afterTrain-content": {
-    "defaultMessage": "では、機械学習モデルをテストしましょう。データ収集用micro:bitを動かして、それぞれのアクションを試してみましょう。モデルはそれぞれのアクションを正しく推定しますか？",
-    "description": "Tour step description"
+    "defaultMessage": "では、機械学習モデルをテストしましょう。データ収集用micro:bitを動かして、それぞれのアクションを試してみましょう。モデルはそれぞれのアクションを正しく推定しますか？"
   },
   "tour-trainModel-afterTrain-delayedUntilConnected-title": {
-    "defaultMessage": "MLモデルをテスト",
-    "description": "Tour step title"
+    "defaultMessage": "MLモデルをテスト"
   },
   "tour-trainModel-certaintyRecognition-content": {
-    "defaultMessage": "棒グラフは、モデルが各アクションを実行していることを示しています。スライダーを動かして認識ポイントまたはしきい値を調整します。",
-    "description": "Tour step description"
+    "defaultMessage": "棒グラフは、モデルが各アクションを実行していることを示しています。スライダーを動かして認識ポイントまたはしきい値を調整します。"
   },
   "tour-trainModel-certaintyRecognition-title": {
-    "defaultMessage": "確実性と認識ポイント",
-    "description": "Tour step title"
+    "defaultMessage": "確実性と認識ポイント"
   },
   "tour-trainModel-editInMakeCode-content": {
-    "defaultMessage": "プログラムと機械学習モデルをmicro:bitにダウンロードするには、MakeCodeでプロジェクトを開きます。 さらにブロックを追加して、モデルを使った独自のプログラムを作れます。",
-    "description": "Tour step description"
+    "defaultMessage": "プログラムと機械学習モデルをmicro:bitにダウンロードするには、MakeCodeでプロジェクトを開きます。 さらにブロックを追加して、モデルを使った独自のプログラムを作れます。"
   },
   "tour-trainModel-estimatedAction-content": {
-    "defaultMessage": "現在あなたが実行しているとモデルが推定しているアクションは、そのアクションのmicro:bitアイコンの下に表示されます。",
-    "description": "Tour step description"
+    "defaultMessage": "現在あなたが実行しているとモデルが推定しているアクションは、そのアクションのmicro:bitアイコンの下に表示されます。"
   },
   "tour-trainModel-makeCodeBlocks-content": {
-    "defaultMessage": "これらのMakeCodeブロックは、プログラムとモデルをmicro:bitに転送すると検出されるようになるアクションのアイコンを表示します。",
-    "description": "Tour step description"
+    "defaultMessage": "これらのMakeCodeブロックは、プログラムとモデルをmicro:bitに転送すると検出されるようになるアクションのアイコンを表示します。"
   },
   "tour-trainModel-makeCodeBlocks-title": {
-    "defaultMessage": "Microsoft MakeCode ブロック",
-    "description": "Tour step title"
+    "defaultMessage": "Microsoft MakeCode ブロック"
   },
   "train-description": {
-    "defaultMessage": "コンピュータプログラムは、データサンプルのパターンや違いを特定します。 そしてこれらを使って、 {appNameFull} がmicro:bitを動かすときに異なる動きを認識できる数学モデルを構築します。",
-    "description": "Explanation on training dialog"
+    "defaultMessage": "コンピュータプログラムは、データサンプルのパターンや違いを特定します。 そしてこれらを使って、 {appNameFull} がmicro:bitを動かすときに異なる動きを認識できる数学モデルを構築します。"
   },
   "train-error-body": {
-    "defaultMessage": "トレーニングの結果、モデルは使用可能になりませんでした。その理由は、トレーニングに使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、トレーニングの処理に問題が生じる可能性があります。",
-    "description": "Training error dialog"
+    "defaultMessage": "トレーニングの結果、モデルは使用可能になりませんでした。その理由は、トレーニングに使われたデータにある可能性が高いです。 異なるアクションのデータサンプルがあまりにも類似している場合、トレーニングの処理に問題が生じる可能性があります。"
   },
   "train-error-header": {
-    "defaultMessage": "トレーニングが失敗しました",
-    "description": "Training error dialog"
+    "defaultMessage": "トレーニングが失敗しました"
   },
   "train-error-todo": {
-    "defaultMessage": "データ追加のページに戻り、データを変更してください。",
-    "description": "Training error dialog"
+    "defaultMessage": "データ追加のページに戻り、データを変更してください。"
   },
   "train-header": {
-    "defaultMessage": "モデルのトレーニング",
-    "description": "Training dialog"
+    "defaultMessage": "モデルのトレーニング"
   },
   "train-hint": {
-    "defaultMessage": "記録は完了しましたか？<mark>モデルをトレーニングする</mark>",
-    "description": "Hint when you have recorded enough data samples to train a model"
+    "defaultMessage": "記録は完了しましたか？<mark>モデルをトレーニングする</mark>"
   },
   "train-hint-label": {
-    "defaultMessage": "記録は完了しましたか？モデルをトレーニングするには、「モデルをトレーニングする」ボタンを押してください。",
-    "description": "Hint when you have recorded enough data samples to train a model aria label"
+    "defaultMessage": "記録は完了しましたか？モデルをトレーニングするには、「モデルをトレーニングする」ボタンを押してください。"
   },
   "train-model": {
-    "defaultMessage": "モデルのトレーニング",
-    "description": "Action to train a model"
+    "defaultMessage": "モデルのトレーニング"
   },
   "training-model": {
-    "defaultMessage": "モデルをトレーニング中...",
-    "description": "Progress title"
+    "defaultMessage": "モデルをトレーニング中..."
   },
   "transfer-hex-alt": {
-    "defaultMessage": "ダウンロードフォルダからmicro:bitドライブまたはファイルエクスプローラにリストされているデバイスにhexファイルをドラッグするアニメーション",
-    "description": "Alt text"
+    "defaultMessage": "ダウンロードフォルダからmicro:bitドライブまたはファイルエクスプローラにリストされているデバイスにhexファイルをドラッグするアニメーション"
   },
   "transfer-hex-heading": {
-    "defaultMessage": "保存された hex ファイルをmicro:bitに転送する",
-    "description": "Dialog shown when WebUSB fails"
+    "defaultMessage": "保存された hex ファイルをmicro:bitに転送する"
   },
   "transfer-hex-manual-download": {
-    "defaultMessage": "ファイルが自動でダウンロードされない場合は<link>ここにファイルをダウンロードしてください</link>。",
-    "description": "Dialog shown when WebUSB fails"
+    "defaultMessage": "ファイルが自動でダウンロードされない場合は<link>ここにファイルをダウンロードしてください</link>。"
   },
   "transfer-hex-message": {
-    "defaultMessage": "hex ファイルをダウンロードフォルダからMICROBITドライブへドラッグします。",
-    "description": "Dialog shown when WebUSB fails"
+    "defaultMessage": "hex ファイルをダウンロードフォルダからMICROBITドライブへドラッグします。"
   },
   "troubleshooting-resource-title": {
-    "defaultMessage": "トラブルシューティング",
-    "description": "Home page resource card title"
+    "defaultMessage": "トラブルシューティング"
   },
   "try-again-action": {
-    "defaultMessage": "もう一度やり直す",
-    "description": "Button label"
+    "defaultMessage": "もう一度やり直す"
   },
   "unknown": {
-    "defaultMessage": "不明",
-    "description": "Label for unknown ML event"
+    "defaultMessage": "不明"
   },
   "unplug-radio-link-microbit-description": {
-    "defaultMessage": "無線リンク用micro:bitをPCから取り外します。データサンプルをもっと記録したい場合は、micro:bitを再接続する必要があります。",
-    "description": "Unplug radio link micro:bit dialog description"
+    "defaultMessage": "無線リンク用micro:bitをPCから取り外します。データサンプルをもっと記録したい場合は、micro:bitを再接続する必要があります。"
   },
   "unplug-radio-link-microbit-label": {
-    "defaultMessage": "micro:bit上部からUSBケーブルが取り外されていることを示すアニメーション",
-    "description": "Unplug radio link micro:bit dialog aria label"
+    "defaultMessage": "micro:bit上部からUSBケーブルが取り外されていることを示すアニメーション"
   },
   "unplug-radio-link-microbit-title": {
-    "defaultMessage": "無線リンク用micro:bitを外す",
-    "description": "Unplug radio link micro:bit dialog title"
+    "defaultMessage": "無線リンク用micro:bitを外す"
   },
   "unsupported-device-explain": {
-    "defaultMessage": "残念ながら、micro:bit 無線を使った接続は micro:bit V2 だけでサポートされています。接続されているのは <link>micro:bit V1</link> です。 ",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "残念ながら、micro:bit 無線を使った接続は micro:bit V2 だけでサポートされています。接続されているのは <link>micro:bit V1</link> です。 "
   },
   "unsupported-device-header": {
-    "defaultMessage": "micro:bit無線接続はmicro:bit V1をサポートしていません",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "micro:bit無線接続はmicro:bit V1をサポートしていません"
   },
   "unsupported-device-with-bluetooth": {
-    "defaultMessage": "代わりにWeb Bluetoothを使ってmicro:bitに接続してください。",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "代わりにWeb Bluetoothを使ってmicro:bitに接続してください。"
   },
   "unsupported-device-without-bluetooth": {
-    "defaultMessage": "Web Bluetoothを使ってmicro:bit V1に接続できますが、このブラウザやデバイスはBluetoothを有効にしていません。 <link>Bluetooth を有効にする方法</link>。",
-    "description": "Unsupported device dialog"
+    "defaultMessage": "Web Bluetoothを使ってmicro:bit V1に接続できますが、このブラウザやデバイスはBluetoothを有効にしていません。 <link>Bluetooth を有効にする方法</link>。"
   },
   "user-guide": {
-    "defaultMessage": "ユーザーガイド",
-    "description": "Used for link to user guide page on microbit.org"
+    "defaultMessage": "ユーザーガイド"
   },
   "view-all-projects": {
-    "defaultMessage": "すべて表示",
-    "description": "View all projects button / card text"
+    "defaultMessage": "すべて表示"
   },
   "webusb-retry-no-select": {
-    "defaultMessage": "micro:bitが選択されていません。もう一度試しますか？",
-    "description": "Shown if the user fails to choose a micro:bit"
+    "defaultMessage": "micro:bitが選択されていません。もう一度試しますか？"
   },
   "webusb-retry-replug1": {
-    "defaultMessage": "WebUSBエラーが発生しました。",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "WebUSBエラーが発生しました。"
   },
   "webusb-retry-replug2": {
-    "defaultMessage": "次のことを行ってください:",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "次のことを行ってください:"
   },
   "webusb-retry-replug3": {
-    "defaultMessage": "このmicro:bitにバッテリーパックが接続されていないことを確認",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "このmicro:bitにバッテリーパックが接続されていないことを確認"
   },
   "webusb-retry-replug4": {
-    "defaultMessage": "USBケーブルを抜いて再接続",
-    "description": "WebUSB error dialog"
+    "defaultMessage": "USBケーブルを抜いて再接続"
   },
   "welcome-title": {
-    "defaultMessage": "CreateAIのやり方",
-    "description": "Welcome dialog"
+    "defaultMessage": "CreateAIのやり方"
   }
 }
