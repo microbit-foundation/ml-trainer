@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "Entrenamiento"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "Volver"
   },
@@ -316,9 +313,6 @@
   },
   "connect-pattern-label": {
     "defaultMessage": "El número de LEDs encendidos en cada columna de la pantalla de la micro:bit, de izquierda a derecha, es {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} y {numLedsOnCol5}."
-  },
-  "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "Copia el patrón que aparece en el micro:bit."
@@ -731,9 +725,6 @@
   "go-action": {
     "defaultMessage": "Ir"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de colores del gráfico"
   },
@@ -787,9 +778,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Aprendizaje automático con movimiento y micro:bit"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importar muestras de datos"
@@ -1250,17 +1238,14 @@
   "rename-project-heading": {
     "defaultMessage": "Renombrar Proyecto"
   },
-  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
-  },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Mantén presionados A+B y presiona RESET. Sigue presionando A+B hasta que aparezca el icono de Bluetooth."
+    "defaultMessage": "Mantén presionados A+B y presiona restablecer. Sigue presionando A+B hasta que aparezca el icono de Bluetooth."
   },
   "reset-to-bluetooth-mode-heading": {
     "defaultMessage": "Restablecer al modo Bluetooth"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Pulsa RESET tres veces."
+    "defaultMessage": "Pulsa restablecer 3 veces rápidamente."
   },
   "reset-to-default-action": {
     "defaultMessage": "Restablecer bloques por defecto"

@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "トレーニング"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "戻る"
   },
@@ -133,12 +130,6 @@
   },
   "bluetooth-disabled-heading": {
     "defaultMessage": "Bluetoothがオフになっています"
-  },
-  "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>."
-  },
-  "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>."
   },
   "bluetooth-permission-denied-heading": {
     "defaultMessage": "Bluetoothの権限が必要です"
@@ -221,9 +212,6 @@
   "connect-bluetooth-cancelled-connection": {
     "defaultMessage": "micro:bitを選択していません。もう一度試しますか？"
   },
-  "connect-bluetooth-enabled": {
-    "defaultMessage": "Bluetooth enabled"
-  },
   "connect-bluetooth-heading": {
     "defaultMessage": "Web Bluetooth を使って繋げる"
   },
@@ -302,9 +290,6 @@
   "connect-native-pattern-subtitle": {
     "defaultMessage": "必要に応じて、以下のパターンをそれに合わせて変更してください。"
   },
-  "connect-native-start-battery-check": {
-    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on."
-  },
   "connect-native-start-heading": {
     "defaultMessage": "micro:bitの電池パックを接続する"
   },
@@ -313,12 +298,6 @@
   },
   "connect-pattern-input-label": {
     "defaultMessage": "{colNum} 列 - micro:bitディスプレイで点灯したLEDの数"
-  },
-  "connect-pattern-label": {
-    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}."
-  },
-  "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "micro:bitに表示されているパターンをコピーします。"
@@ -416,9 +395,6 @@
   "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
     "defaultMessage": "micro:bitの電源を取り外して、再度、接続してください。"
   },
-  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
-  },
   "connect-with-batteries": {
     "defaultMessage": "電池と"
   },
@@ -427,9 +403,6 @@
   },
   "connecting": {
     "defaultMessage": "接続中..."
-  },
-  "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit"
   },
   "continue-makecode-action": {
     "defaultMessage": "MakeCodeに進む"
@@ -593,9 +566,6 @@
   "downloading-data-collection-header": {
     "defaultMessage": "データ収集プログラムのダウンロード"
   },
-  "downloading-data-collection-microbit-header": {
-    "defaultMessage": "Downloading data collection program to micro:bit"
-  },
   "downloading-header": {
     "defaultMessage": "micro:bitへのプログラムのダウンロード"
   },
@@ -610,12 +580,6 @@
   },
   "downloading-stage-finding-device": {
     "defaultMessage": "micro:bitを探す…"
-  },
-  "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the download is complete."
-  },
-  "downloading-stage-resetting-device": {
-    "defaultMessage": "Waiting for micro:bit to reboot..."
   },
   "downloading-subtitle": {
     "defaultMessage": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
@@ -731,9 +695,6 @@
   "go-action": {
     "defaultMessage": "実行"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "グラフの配色設定"
   },
@@ -787,9 +748,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "動作とmicro:bitを使った機械学習"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "データサンプルをインポート"
@@ -971,12 +929,6 @@
   "loading": {
     "defaultMessage": "読み込み中"
   },
-  "location-disabled-body": {
-    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again."
-  },
-  "location-disabled-heading": {
-    "defaultMessage": "Location services required"
-  },
   "main-menu": {
     "defaultMessage": "メインメニュー"
   },
@@ -994,9 +946,6 @@
   },
   "makecode-load-error-dialog-title": {
     "defaultMessage": "Microsoft MakeCode を読み込めませんでした"
-  },
-  "microbit-name-label": {
-    "defaultMessage": "micro:bit name: {name}"
   },
   "microbit-not-connected": {
     "defaultMessage": "micro:bitが接続されていません"
@@ -1025,38 +974,11 @@
   "name-used-when": {
     "defaultMessage": "この名前は hex ファイルを保存するときに使用されます。"
   },
-  "native-bluetooth-error-body": {
-    "defaultMessage": "The connection to the micro:bit failed."
-  },
-  "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:"
-  },
   "native-bluetooth-error-check-distance": {
     "defaultMessage": "micro:bit を接続したい機器に近づけてください。"
   },
   "native-bluetooth-error-check-mode": {
     "defaultMessage": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。"
-  },
-  "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "the pattern you entered is correct"
-  },
-  "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Please forget this device in your Bluetooth settings and try again."
-  },
-  "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Go to Bluetooth in the Settings app"
-  },
-  "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device"
-  },
-  "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "Tap ‘Forget This Device’"
-  },
-  "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "Return to this app to try again"
-  },
-  "native-bluetooth-error-heading": {
-    "defaultMessage": "Could not connect to micro:bit"
   },
   "new-project-setup-title": {
     "defaultMessage": "新しいプロジェクトのセットアップ"
@@ -1250,18 +1172,6 @@
   "rename-project-heading": {
     "defaultMessage": "プロジェクト名を変更"
   },
-  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
-  },
-  "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press reset. Keep holding A+B until the Bluetooth icon appears."
-  },
-  "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Reset to Bluetooth mode"
-  },
-  "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press reset 3 times quickly."
-  },
   "reset-to-default-action": {
     "defaultMessage": "初期ブロックにリセット"
   },
@@ -1291,12 +1201,6 @@
   },
   "save-hex-dialog-message2": {
     "defaultMessage": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。"
-  },
-  "save-to-files-action": {
-    "defaultMessage": "Save to Files"
-  },
-  "saving-dataset-toast-title": {
-    "defaultMessage": "Your data samples have been downloaded"
   },
   "saving-description": {
     "defaultMessage": "ダウンロードはまもなく完了します。"
@@ -1334,20 +1238,11 @@
   "share-action": {
     "defaultMessage": "共有"
   },
-  "share-file-description": {
-    "defaultMessage": "{appNameFull} project: {name}"
-  },
   "share-hex-dialog-heading": {
     "defaultMessage": "hexファイルとしてプロジェクトを共有します。"
   },
-  "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working."
-  },
   "share-named-file": {
     "defaultMessage": "{name}を共有"
-  },
-  "sharing-description": {
-    "defaultMessage": "Your project will be ready to share soon."
   },
   "sharing-title": {
     "defaultMessage": "共有しています…"
@@ -1402,18 +1297,6 @@
   },
   "stop-recording-action": {
     "defaultMessage": "記録の停止"
-  },
-  "storage-error-device-other": {
-    "defaultMessage": "Failed to save your project to device storage"
-  },
-  "storage-error-other": {
-    "defaultMessage": "Failed to save your project to browser storage"
-  },
-  "storage-error-quota-description": {
-    "defaultMessage": "Your project edit may not be saved."
-  },
-  "storage-error-quota-title": {
-    "defaultMessage": "Browser storage full"
   },
   "support-request": {
     "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。"

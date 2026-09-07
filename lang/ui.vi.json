@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "Huấn luyện"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "Quay lại"
   },
@@ -316,9 +313,6 @@
   },
   "connect-pattern-label": {
     "defaultMessage": "Số đèn LED được bật trong mỗi cột của màn hình micro:bit, từ trái sang phải, là {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, và {numLedsOnCol5}."
-  },
-  "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "Sao chép mẫu được hiển thị trên micro:bit."
@@ -731,9 +725,6 @@
   "go-action": {
     "defaultMessage": "Bắt đầu"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "Bảng màu của biểu đồ"
   },
@@ -787,9 +778,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Học máy với chuyển động và micro:bit"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "Nhập các mẫu dữ liệu"
@@ -1249,9 +1237,6 @@
   },
   "rename-project-heading": {
     "defaultMessage": "Đổi tên dự án"
-  },
-  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Giữ A+B và nhấn RESET. Tiếp tục giữ A+B cho đến khi biểu tượng Bluetooth xuất hiện."

@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "Treinar"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "Voltar"
   },
@@ -171,7 +168,7 @@
     "defaultMessage": "Quão confiante o modelo está de que você está realizando cada ação no momento."
   },
   "clear": {
-    "defaultMessage": "Limpar/Apagar"
+    "defaultMessage": "Limpar"
   },
   "click-to-reload-page-action": {
     "defaultMessage": "Clique para recarregar a página"
@@ -316,9 +313,6 @@
   },
   "connect-pattern-label": {
     "defaultMessage": "O número de LEDs acesos em cada coluna da tela do micro:bit, da esquerda para a direita, é {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} e {numLedsOnCol5}."
-  },
-  "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "Copie o padrão exibido no micro:bit."
@@ -731,9 +725,6 @@
   "go-action": {
     "defaultMessage": "Ir"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de cores do gráfico"
   },
@@ -787,9 +778,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Aprendizado de máquina com movimento e micro:bit"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importar amostras de dados"
@@ -1116,7 +1104,7 @@
     "defaultMessage": "Conectar usando WebUSB"
   },
   "privacy": {
-    "defaultMessage": "Política de Privacidade"
+    "defaultMessage": "Política de privacidade"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Ideias de projetos"
@@ -1251,7 +1239,7 @@
     "defaultMessage": "Renomear projeto"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
+    "defaultMessage": "Se você não puder acessar o botão de reinicialização, segure A+B enquanto você liga o micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Segure A+B e pressione RESET. Continue segurando A+B até o ícone do Bluetooth aparecer."
@@ -1260,7 +1248,7 @@
     "defaultMessage": "Redefinir para o modo Bluetooth"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Pressione RESET três vezes."
+    "defaultMessage": "Pressione redefinir 3 vezes rapidamente."
   },
   "reset-to-default-action": {
     "defaultMessage": "Resetar para os blocos padrão"
@@ -1588,6 +1576,9 @@
   },
   "unsupported-device-with-bluetooth": {
     "defaultMessage": "Por favor, use o Web Bluetooth para se conectar ao seu micro:bit V1 em vez disso."
+  },
+  "unsupported-device-without-bluetooth": {
+    "defaultMessage": "Você pode se conectar ao micro:bit V1 usando o Web Bluetooth, no entanto, este navegador ou dispositivo não tem o Bluetooth ativado. <link>Como ativar o Bluetooth</link>."
   },
   "user-guide": {
     "defaultMessage": "Guia do utilizador"

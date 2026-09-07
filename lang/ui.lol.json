@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "crwdns369297:0crwdne369297:0"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "crwdns362676:0crwdne362676:0"
   },
@@ -731,9 +728,6 @@
   "go-action": {
     "defaultMessage": "crwdns363004:0crwdne363004:0"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "crwdns363006:0crwdne363006:0"
   },
@@ -787,9 +781,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "crwdns369335:0crwdne369335:0"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "crwdns363044:0crwdne363044:0"
