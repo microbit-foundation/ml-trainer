@@ -211,18 +211,6 @@
     "defaultMessage": "crwdns362688:0crwdne362688:0",
     "description": "Button label to cancel a movement data recording"
   },
-  "carousel-role": {
-    "defaultMessage": "crwdns369299:0crwdne369299:0",
-    "description": "aria-roledescription for carousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "crwdns369301:0{slideNum}crwdnd369301:0{totalSlides}crwdne369301:0",
-    "description": "Label for carousel slide / item"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "crwdns369303:0crwdne369303:0",
-    "description": "aria-roledescription for carousel slide / item"
-  },
   "certainty-label": {
     "defaultMessage": "crwdns362690:0crwdne362690:0",
     "description": "Heading for certainty column"
@@ -1039,10 +1027,6 @@
     "defaultMessage": "crwdns363014:0crwdne363014:0",
     "description": "Help icon aria label"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "crwdns369329:0crwdne369329:0",
-    "description": "Label for home page row carousel"
-  },
   "help-resources-row-title": {
     "defaultMessage": "crwdns369331:0crwdne369331:0",
     "description": "Title for home page row"
@@ -1363,10 +1347,6 @@
     "defaultMessage": "crwdns369341:0crwdne369341:0",
     "description": "Hint when you have just connected a micro:bit"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "crwdns369343:0crwdne369343:0",
-    "description": "Label for home page row carousel"
-  },
   "my-projects-row-title": {
     "defaultMessage": "crwdns369345:0crwdne369345:0",
     "description": "Title for home page row"
@@ -1510,10 +1490,6 @@
   "privacy": {
     "defaultMessage": "crwdns363236:0crwdne363236:0",
     "description": "Link to view privacy policy"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "crwdns369359:0crwdne369359:0",
-    "description": "Label for home page row carousel"
   },
   "project-ideas-row-title": {
     "defaultMessage": "crwdns369361:0crwdne369361:0",
@@ -1914,10 +1890,6 @@
   "support-request": {
     "defaultMessage": "crwdns363362:0crwdne363362:0",
     "description": "Support request link text"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "crwdns369407:0crwdne369407:0",
-    "description": "Label for home page row carousel"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "crwdns369409:0crwdne369409:0",
