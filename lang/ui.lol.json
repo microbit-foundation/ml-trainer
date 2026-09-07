@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "crwdns362688:0crwdne362688:0"
   },
-  "carousel-role": {
-    "defaultMessage": "crwdns369299:0crwdne369299:0"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "crwdns369301:0{slideNum}crwdnd369301:0{totalSlides}crwdne369301:0"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "crwdns369303:0crwdne369303:0"
-  },
   "certainty-label": {
     "defaultMessage": "crwdns362690:0crwdne362690:0"
   },
@@ -779,9 +770,6 @@
   "help-label": {
     "defaultMessage": "crwdns363014:0crwdne363014:0"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "crwdns369329:0crwdne369329:0"
-  },
   "help-resources-row-title": {
     "defaultMessage": "crwdns369331:0crwdne369331:0"
   },
@@ -1022,9 +1010,6 @@
   "move-hint": {
     "defaultMessage": "crwdns369341:0crwdne369341:0"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "crwdns369343:0crwdne369343:0"
-  },
   "my-projects-row-title": {
     "defaultMessage": "crwdns369345:0crwdne369345:0"
   },
@@ -1132,9 +1117,6 @@
   },
   "privacy": {
     "defaultMessage": "crwdns363236:0crwdne363236:0"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "crwdns369359:0crwdne369359:0"
   },
   "project-ideas-row-title": {
     "defaultMessage": "crwdns369361:0crwdne369361:0"
@@ -1435,9 +1417,6 @@
   },
   "support-request": {
     "defaultMessage": "crwdns363362:0crwdne363362:0"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "crwdns369407:0crwdne369407:0"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "crwdns369409:0crwdne369409:0"

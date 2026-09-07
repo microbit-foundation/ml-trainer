@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "Opname annuleren"
   },
-  "carousel-role": {
-    "defaultMessage": "carrousel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum} van {totalSlides}"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "Veeg"
-  },
   "certainty-label": {
     "defaultMessage": "Zekerheid"
   },
@@ -779,9 +770,6 @@
   "help-label": {
     "defaultMessage": "Help"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "Lijst van hulpbronnen"
-  },
   "help-resources-row-title": {
     "defaultMessage": "Help"
   },
@@ -1022,9 +1010,6 @@
   "move-hint": {
     "defaultMessage": "Beweeg de micro:bit om te ontdekken hoe verschillende acties de grafiek veranderen"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "Lijst van mijn projecten"
-  },
   "my-projects-row-title": {
     "defaultMessage": "Mijn projecten"
   },
@@ -1132,9 +1117,6 @@
   },
   "privacy": {
     "defaultMessage": "Privacybeleid"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "Lijst van projectideeën"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Projectideeën"
@@ -1435,9 +1417,6 @@
   },
   "support-request": {
     "defaultMessage": "Overweeg <link>een ondersteuningsverzoek</link> in te dienen."
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "Lijst van hulpbronnen voor leraren"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Middelen voor onderwijzers"

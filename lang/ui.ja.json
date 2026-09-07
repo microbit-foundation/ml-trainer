@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "記録をキャンセル"
   },
-  "carousel-role": {
-    "defaultMessage": "カルーセル"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{totalSlides}枚中{slideNum} 枚目"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "slide"
-  },
   "certainty-label": {
     "defaultMessage": "確実性"
   },
@@ -779,9 +770,6 @@
   "help-label": {
     "defaultMessage": "ヘルプ"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "ヘルプリソースのリスト"
-  },
   "help-resources-row-title": {
     "defaultMessage": "ヘルプ"
   },
@@ -1022,9 +1010,6 @@
   "move-hint": {
     "defaultMessage": "micro:bitを動かして、さまざまなアクションでグラフがどのように変化するか見てみましょう"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "自分のプロジェクトのリスト"
-  },
   "my-projects-row-title": {
     "defaultMessage": "自分のプロジェクト"
   },
@@ -1132,9 +1117,6 @@
   },
   "privacy": {
     "defaultMessage": "プライバシーポリシー"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "プロジェクトアイデアのリスト"
   },
   "project-ideas-row-title": {
     "defaultMessage": "プロジェクトアイデア"
@@ -1435,9 +1417,6 @@
   },
   "support-request": {
     "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "先生向けのリソースのリストを表示"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "教育者用リソース"

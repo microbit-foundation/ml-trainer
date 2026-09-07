@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "Cancel·la l'enregistrament"
   },
-  "carousel-role": {
-    "defaultMessage": "Carrusel"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum}de{totalSlides}"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "so lliscant"
-  },
   "certainty-label": {
     "defaultMessage": "Certesa"
   },
@@ -776,9 +767,6 @@
   "help-label": {
     "defaultMessage": "Ajuda"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "Llista de recursos d'ajuda"
-  },
   "help-resources-row-title": {
     "defaultMessage": "Ajuda"
   },
@@ -1019,9 +1007,6 @@
   "move-hint": {
     "defaultMessage": "Mou la micro:bit per explorar com diferents accions canvien el gràfic"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "Llista dels meus projectes"
-  },
   "my-projects-row-title": {
     "defaultMessage": "Els meus projectes"
   },
@@ -1129,9 +1114,6 @@
   },
   "privacy": {
     "defaultMessage": "Política de privadesa"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "Llista d'idees de projectes"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Idees de projectes"
@@ -1432,9 +1414,6 @@
   },
   "support-request": {
     "defaultMessage": "Si us plau, considera<link>fer una sol·licitud d'assistència</link>."
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "Llista de recursos docents"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Recursos del professor"

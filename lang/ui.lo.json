@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "ຍົກເລີກການບັນທຶກ"
   },
-  "carousel-role": {
-    "defaultMessage": "ຮູບແບບເລື່ອນຮູບ"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum} ຂອງ {totalSlides}"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "ສະໄລ້"
-  },
   "certainty-label": {
     "defaultMessage": "ຄວາມແນ່ນອນ"
   },
@@ -779,9 +770,6 @@
   "help-label": {
     "defaultMessage": "ຊ່ວຍເຫຼືອ"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "ລາຍການແຫຼ່ງຂໍ້ມູນຊ່ວຍເຫຼືອ"
-  },
   "help-resources-row-title": {
     "defaultMessage": "ຊ່ວຍເຫຼືອ"
   },
@@ -1022,9 +1010,6 @@
   "move-hint": {
     "defaultMessage": "ເຄື່ອນ micro:bit ເພື່ອສຳຫຼວດວ່າການກະທຳຕ່າງໆປ່ຽນແປງກຣາຟແນວໃດ"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "ລາຍຊື່ໂຄງການຂອງຂ້ອຍ"
-  },
   "my-projects-row-title": {
     "defaultMessage": "ໂຄງການຂອງຂ້ອຍ"
   },
@@ -1132,9 +1117,6 @@
   },
   "privacy": {
     "defaultMessage": "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "ລາຍການໄອເດຍໂຄງການ"
   },
   "project-ideas-row-title": {
     "defaultMessage": "ໄອເດຍໂຄງການ"
@@ -1435,9 +1417,6 @@
   },
   "support-request": {
     "defaultMessage": "ກະລຸນາພິຈາລະນາ <link>ສົ່ງຄຳຮ້ອງຂໍສະໜັບສະໜູນ</link>."
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "ລາຍການຊັບພະຍາກອນສຳລັບຄູ"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "ຊັບພະຍາກອນສຳລັບຄູ"

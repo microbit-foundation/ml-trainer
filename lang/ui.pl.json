@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "Anuluj nagrywanie"
   },
-  "carousel-role": {
-    "defaultMessage": "karuzela"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "{slideNum} z {totalSlides}"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "slide"
-  },
   "certainty-label": {
     "defaultMessage": "Pewność"
   },
@@ -779,9 +770,6 @@
   "help-label": {
     "defaultMessage": "Pomoc"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "Lista zasobów pomocy"
-  },
   "help-resources-row-title": {
     "defaultMessage": "Pomoc"
   },
@@ -1022,9 +1010,6 @@
   "move-hint": {
     "defaultMessage": "Poruszaj micro:bitem, aby zobaczyć, jak różne akcje zmieniają wykres"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "Lista moich projektów"
-  },
   "my-projects-row-title": {
     "defaultMessage": "Moje projekty"
   },
@@ -1132,9 +1117,6 @@
   },
   "privacy": {
     "defaultMessage": "Polityka prywatności"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "Lista pomysłów na projekt"
   },
   "project-ideas-row-title": {
     "defaultMessage": "Pomysły na projekt"
@@ -1432,9 +1414,6 @@
   },
   "support-request": {
     "defaultMessage": "Rozważ <link>złożenie prośby o pomoc</link>."
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "Lista zasobów nauczyciela"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Materiały dla nauczycieli"

@@ -29,7 +29,11 @@ export default defineConfig({
     {
       source: "lang/ui.en.json",
       out: "src/messages/ui.{lang}.json",
-      packages: ["@microbit/ui", "@microbit/ui-patterns"],
+      packages: [
+        "@microbit/ui",
+        "@microbit/ui-carousel",
+        "@microbit/ui-patterns",
+      ],
       local: ["en-US"],
       // The "on ML start" block label is shown in CodeViewDefaultBlock and
       // must read exactly as the MakeCode extension's block does, so take
@@ -37,7 +41,7 @@ export default defineConfig({
       afterDownload: async ({ messages, download }) => {
         const id = "ml.onStart|block";
         const strings = await download(
-          "makecode-extensions/pxt-microbit-ml/machine-learning-strings.json",
+          "makecode-extensions/pxt-microbit-ml/machine-learning-strings.json"
         );
         const block = strings[id];
         if (typeof block === "string" && block) {

@@ -158,15 +158,6 @@
   "cancel-recording-action": {
     "defaultMessage": "取消錄製"
   },
-  "carousel-role": {
-    "defaultMessage": "順序播放"
-  },
-  "carousel-slide-label": {
-    "defaultMessage": "第 {slideNum} 張，共 {totalSlides} 張"
-  },
-  "carousel-slide-role": {
-    "defaultMessage": "slide"
-  },
   "certainty-label": {
     "defaultMessage": "確定性"
   },
@@ -779,9 +770,6 @@
   "help-label": {
     "defaultMessage": "幫助"
   },
-  "help-resources-row-carousel": {
-    "defaultMessage": "協助資源列表"
-  },
   "help-resources-row-title": {
     "defaultMessage": "幫助"
   },
@@ -1022,9 +1010,6 @@
   "move-hint": {
     "defaultMessage": "移動 micro:bit，探索不同動作如何變更圖表"
   },
-  "my-projects-row-carousel": {
-    "defaultMessage": "我的專案列表"
-  },
   "my-projects-row-title": {
     "defaultMessage": "我的專案"
   },
@@ -1132,9 +1117,6 @@
   },
   "privacy": {
     "defaultMessage": "隱私權政策"
-  },
-  "project-ideas-row-carousel": {
-    "defaultMessage": "專案構想列表"
   },
   "project-ideas-row-title": {
     "defaultMessage": "專案構想"
@@ -1435,9 +1417,6 @@
   },
   "support-request": {
     "defaultMessage": "請考慮<link>提出支援請求</link>。"
-  },
-  "teacher-resources-row-carousel": {
-    "defaultMessage": "教師資源列表"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "教師資源"
