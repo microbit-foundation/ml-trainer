@@ -116,6 +116,9 @@
   "animation-training": {
     "defaultMessage": "crwdns369297:0crwdne369297:0"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "crwdns370198:0crwdne370198:0"
+  },
   "back-action": {
     "defaultMessage": "crwdns362676:0crwdne362676:0"
   },
@@ -728,6 +731,9 @@
   "go-action": {
     "defaultMessage": "crwdns363004:0crwdne363004:0"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "crwdns370200:0crwdne370200:0"
+  },
   "graph-color-scheme": {
     "defaultMessage": "crwdns363006:0crwdne363006:0"
   },
@@ -781,6 +787,9 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "crwdns369335:0crwdne369335:0"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "crwdns370202:0crwdne370202:0"
   },
   "import-data-samples-action": {
     "defaultMessage": "crwdns363044:0crwdne363044:0"
