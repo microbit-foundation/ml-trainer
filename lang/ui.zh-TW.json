@@ -62,32 +62,8 @@
   "ai-storytelling-friend-resource-title": {
     "defaultMessage": "AI 說故事夥伴"
   },
-  "analytics-consent-allow-action": {
-    "defaultMessage": "Allow analytics"
-  },
-  "analytics-consent-analytics": {
-    "defaultMessage": "We'd like to collect anonymous data about how you use the app to help us improve it. We don't share personal data or use third-party ads."
-  },
-  "analytics-consent-change-later": {
-    "defaultMessage": "You can change this in Settings later."
-  },
-  "analytics-consent-decline-action": {
-    "defaultMessage": "No thanks"
-  },
   "analytics-consent-learn-more": {
     "defaultMessage": "瞭解詳情"
-  },
-  "analytics-consent-setting-helper": {
-    "defaultMessage": "Helps us improve the app with anonymous usage data."
-  },
-  "analytics-consent-setting-label": {
-    "defaultMessage": "Share anonymous usage data"
-  },
-  "analytics-consent-title": {
-    "defaultMessage": "Help improve {appNameFull}"
-  },
-  "animation-bluetooth-mode-label": {
-    "defaultMessage": "Animation demonstrating how to reset to Bluetooth mode."
   },
   "animation-label": {
     "defaultMessage": "動畫展示 CreateAI 工作流程的五個步驟：連線、收集資料、測試模型、程式碼，以及使用。連線：將 micro:bit 裝置連線到電腦，建立兩者之間的通訊。收集資料：將 micro:bit 綁在手腕上。記錄兩種手勢的移動資料：揮手（以愛心圖示表示）與搖動（以叉叉圖示表示）。每種手勢都會收集多筆範例來訓練模型。測試模型：收集到足夠範例後，便會訓練機器學習模型。接著，電腦會嘗試即時辨識揮手與搖動手勢。使用者可以返回「收集資料」步驟，收集更多範例並再次測試。程式碼：使用者利用 MakeCode 程式積木寫入整合已訓練模型的程式。完成的程式會下載到 micro:bit。使用：micro:bit 會回應使用者的實際移動，並依據偵測到的是揮手還是搖動手勢，在 LED 螢幕上顯示不同圖示。"
@@ -116,9 +92,6 @@
   "animation-training": {
     "defaultMessage": "訓練"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "返回"
   },
@@ -127,21 +100,6 @@
   },
   "blocks-preview-title": {
     "defaultMessage": "程式積木預覽"
-  },
-  "bluetooth-disabled-body": {
-    "defaultMessage": "Please turn on Bluetooth and try again."
-  },
-  "bluetooth-disabled-heading": {
-    "defaultMessage": "Bluetooth is turned off"
-  },
-  "bluetooth-permission-denied-body-android": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable the Nearby devices permission in <link>{appNameShort} settings</link>."
-  },
-  "bluetooth-permission-denied-body-ios": {
-    "defaultMessage": "{appNameShort} uses Bluetooth to connect to your micro:bit. Please enable Bluetooth access in <link>{appNameShort} settings</link>."
-  },
-  "bluetooth-permission-denied-heading": {
-    "defaultMessage": "Bluetooth permission required"
   },
   "bluetooth-unsupported-advice": {
     "defaultMessage": "我們建議您使用 Google Chrome 或 Microsoft Edge，以便您能夠直接連線到您的 micro:bit。"
@@ -197,9 +155,6 @@
   "confirm-save-action": {
     "defaultMessage": "確認並儲存"
   },
-  "confirm-share-action": {
-    "defaultMessage": "Confirm and share"
-  },
   "connect-action": {
     "defaultMessage": "連線"
   },
@@ -220,9 +175,6 @@
   },
   "connect-bluetooth-cancelled-connection": {
     "defaultMessage": "您沒有選擇 micro:bit。您想再試一次嗎？"
-  },
-  "connect-bluetooth-enabled": {
-    "defaultMessage": "Bluetooth enabled"
   },
   "connect-bluetooth-heading": {
     "defaultMessage": "使用網路藍牙來連線"
@@ -257,9 +209,6 @@
   "connect-cable-subtitle": {
     "defaultMessage": "使用 USB 纜線將 micro:bit 連線到這台電腦，以便將數據收集程式下載到其中。"
   },
-  "connect-cannot-see-pattern": {
-    "defaultMessage": "I do not see a pattern"
-  },
   "connect-computer": {
     "defaultMessage": "電腦"
   },
@@ -293,32 +242,11 @@
   "connect-micro-usb-cable": {
     "defaultMessage": "微型 USB 纜線"
   },
-  "connect-native-change-pattern": {
-    "defaultMessage": "My pattern is different"
-  },
-  "connect-native-pattern-heading": {
-    "defaultMessage": "Confirm this pattern matches your micro:bit"
-  },
-  "connect-native-pattern-subtitle": {
-    "defaultMessage": "If needed, change the pattern below to match."
-  },
-  "connect-native-start-battery-check": {
-    "defaultMessage": "Connect the battery pack, then check the light on the back of the micro:bit is on."
-  },
-  "connect-native-start-heading": {
-    "defaultMessage": "Connect micro:bit battery pack"
-  },
   "connect-pattern-heading": {
     "defaultMessage": "複製圖案"
   },
   "connect-pattern-input-label": {
     "defaultMessage": "第 {colNum} 欄 - micro:bit 顯示器上亮起的 LED 數量"
-  },
-  "connect-pattern-label": {
-    "defaultMessage": "The number of LEDs lit in each column of the micro:bit display, from left to right, are {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, and {numLedsOnCol5}."
-  },
-  "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "複製 micro:bit 上顯示的圖案。"
@@ -401,24 +329,6 @@
   "connect-troubleshooting": {
     "defaultMessage": "疑難排解"
   },
-  "connect-try-another-way": {
-    "defaultMessage": "Try another way"
-  },
-  "connect-unable-to-enter-bluetooth-mode": {
-    "defaultMessage": "Unable to enter Bluetooth mode?"
-  },
-  "connect-unable-to-enter-bluetooth-mode-heading": {
-    "defaultMessage": "Unable to enter Bluetooth mode?"
-  },
-  "connect-unable-to-enter-bluetooth-mode-troubleshooting": {
-    "defaultMessage": "Try the following:"
-  },
-  "connect-unable-to-enter-bluetooth-mode-troubleshooting-1": {
-    "defaultMessage": "Disconnect and then reconnect the micro:bit with the power source."
-  },
-  "connect-unable-to-enter-bluetooth-mode-troubleshooting-2": {
-    "defaultMessage": "If your micro:bit shows a ‘+’ icon, connect the micro:bit to a computer with a USB cable and download a simple program. Unpair/Forget the micro:bit in the Settings app before trying again."
-  },
   "connect-with-batteries": {
     "defaultMessage": "需要電池"
   },
@@ -427,9 +337,6 @@
   },
   "connecting": {
     "defaultMessage": "正在連線…"
-  },
-  "connecting-data-collection-microbit-heading": {
-    "defaultMessage": "Connecting to data collection micro:bit"
   },
   "continue-makecode-action": {
     "defaultMessage": "繼續前往 MakeCode"
@@ -593,29 +500,11 @@
   "downloading-data-collection-header": {
     "defaultMessage": "下載數據收集程式"
   },
-  "downloading-data-collection-microbit-header": {
-    "defaultMessage": "Downloading data collection program to micro:bit"
-  },
   "downloading-header": {
     "defaultMessage": "將程式下載至 micro:bit"
   },
   "downloading-radio-link-header": {
     "defaultMessage": "下載無線電連結程式"
-  },
-  "downloading-stage-checking-bond": {
-    "defaultMessage": "Choose ‘Pair’ if asked"
-  },
-  "downloading-stage-connecting": {
-    "defaultMessage": "Connecting to micro:bit…"
-  },
-  "downloading-stage-finding-device": {
-    "defaultMessage": "Finding micro:bit…"
-  },
-  "downloading-stage-flashing-native": {
-    "defaultMessage": "Please do not interact with the micro:bit before the download is complete."
-  },
-  "downloading-stage-resetting-device": {
-    "defaultMessage": "Waiting for micro:bit to reboot..."
   },
   "downloading-subtitle": {
     "defaultMessage": "請稍等。正在將程式下載至 micro:bit。"
@@ -731,9 +620,6 @@
   "go-action": {
     "defaultMessage": "進行"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "圖表顏色方案"
   },
@@ -787,9 +673,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "結合移動與 micro:bit 的機器學習"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "匯入數據樣本"
@@ -971,12 +854,6 @@
   "loading": {
     "defaultMessage": "正在載入"
   },
-  "location-disabled-body": {
-    "defaultMessage": "Location services are required for Bluetooth on this device. Please enable location services in <link>Settings</link> and try again."
-  },
-  "location-disabled-heading": {
-    "defaultMessage": "Location services required"
-  },
   "main-menu": {
     "defaultMessage": "主選單"
   },
@@ -994,9 +871,6 @@
   },
   "makecode-load-error-dialog-title": {
     "defaultMessage": "無法載入 Microsoft MakeCode"
-  },
-  "microbit-name-label": {
-    "defaultMessage": "micro:bit name: {name}"
   },
   "microbit-not-connected": {
     "defaultMessage": "您的 micro:bit 未連線"
@@ -1024,39 +898,6 @@
   },
   "name-used-when": {
     "defaultMessage": "儲存 HEX 檔案時，使用該名稱。"
-  },
-  "native-bluetooth-error-body": {
-    "defaultMessage": "The connection to the micro:bit failed."
-  },
-  "native-bluetooth-error-check": {
-    "defaultMessage": "Please check that:"
-  },
-  "native-bluetooth-error-check-distance": {
-    "defaultMessage": "the micro:bit is close to this device"
-  },
-  "native-bluetooth-error-check-mode": {
-    "defaultMessage": "the micro:bit is in Bluetooth mode (showing the pairing pattern)"
-  },
-  "native-bluetooth-error-check-pattern": {
-    "defaultMessage": "the pattern you entered is correct"
-  },
-  "native-bluetooth-error-forget-device": {
-    "defaultMessage": "Please forget this device in your Bluetooth settings and try again."
-  },
-  "native-bluetooth-error-forget-device-step-1": {
-    "defaultMessage": "Go to Bluetooth in the Settings app"
-  },
-  "native-bluetooth-error-forget-device-step-2": {
-    "defaultMessage": "Tap the <infoIcon>information</infoIcon> icon next to the BBC micro:bit device"
-  },
-  "native-bluetooth-error-forget-device-step-3": {
-    "defaultMessage": "Tap ‘Forget This Device’"
-  },
-  "native-bluetooth-error-forget-device-step-4": {
-    "defaultMessage": "Return to this app to try again"
-  },
-  "native-bluetooth-error-heading": {
-    "defaultMessage": "Could not connect to micro:bit"
   },
   "new-project-setup-title": {
     "defaultMessage": "新專案設定"
@@ -1250,18 +1091,6 @@
   "rename-project-heading": {
     "defaultMessage": "重新命名專案"
   },
-  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
-  },
-  "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Hold A+B and press reset. Keep holding A+B until the Bluetooth icon appears."
-  },
-  "reset-to-bluetooth-mode-heading": {
-    "defaultMessage": "Reset to Bluetooth mode"
-  },
-  "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Press reset 3 times quickly."
-  },
   "reset-to-default-action": {
     "defaultMessage": "重設為預設區塊"
   },
@@ -1291,12 +1120,6 @@
   },
   "save-hex-dialog-message2": {
     "defaultMessage": "如果您不需要變更動作和數據樣本，您也可以使用 Microsoft MakeCode 開啟它。"
-  },
-  "save-to-files-action": {
-    "defaultMessage": "Save to Files"
-  },
-  "saving-dataset-toast-title": {
-    "defaultMessage": "Your data samples have been downloaded"
   },
   "saving-description": {
     "defaultMessage": "您的下載很快就會準備就緒。"
@@ -1333,24 +1156,6 @@
   },
   "share-action": {
     "defaultMessage": "分享"
-  },
-  "share-file-description": {
-    "defaultMessage": "{appNameFull} project: {name}"
-  },
-  "share-hex-dialog-heading": {
-    "defaultMessage": "Share project as a hex file"
-  },
-  "share-hex-dialog-message1": {
-    "defaultMessage": "The hex file contains your actions, data samples and your MakeCode project. Open it in {appNameFull} to continue working."
-  },
-  "share-named-file": {
-    "defaultMessage": "Share {name}"
-  },
-  "sharing-description": {
-    "defaultMessage": "Your project will be ready to share soon."
-  },
-  "sharing-title": {
-    "defaultMessage": "Sharing…"
   },
   "show-graphs-checkbox-label-text": {
     "defaultMessage": "顯示圖表"
@@ -1402,18 +1207,6 @@
   },
   "stop-recording-action": {
     "defaultMessage": "停止錄製"
-  },
-  "storage-error-device-other": {
-    "defaultMessage": "Failed to save your project to device storage"
-  },
-  "storage-error-other": {
-    "defaultMessage": "Failed to save your project to browser storage"
-  },
-  "storage-error-quota-description": {
-    "defaultMessage": "Your project edit may not be saved."
-  },
-  "storage-error-quota-title": {
-    "defaultMessage": "Browser storage full"
   },
   "support-request": {
     "defaultMessage": "請考慮<link>提出支援請求</link>。"

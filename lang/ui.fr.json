@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "Entrainement"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "Précédent"
   },
@@ -731,9 +728,6 @@
   "go-action": {
     "defaultMessage": "Aller"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "Schéma de couleurs du graphique"
   },
@@ -787,9 +781,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Apprentissage automatique avec le mouvement et le micro:bit"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importer des échantillons de données"

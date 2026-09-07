@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "ການຝຶກຝົນໂມເດວ"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "ກັບຄືນ"
   },
@@ -316,9 +313,6 @@
   },
   "connect-pattern-label": {
     "defaultMessage": "ຈຳນວນ LED ທີ່ຕິດຢູ່ໃນແຕ່ລະຖັນຂອງໜ້າຈໍ micro:bit ຈາກຊ້າຍໄປຂວາ ແມ່ນ {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4}, ແລະ {numLedsOnCol5}."
-  },
-  "connect-pattern-led-option-label": {
-    "defaultMessage": "Column {colNum}, {numLeds, plural, one {# LED lit} other {# LEDs lit}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "ຄັດລອກຮູບແບບທີ່ສະແດງຢູ່ໃນ micro:bit."
@@ -731,9 +725,6 @@
   "go-action": {
     "defaultMessage": "ໄປ"
   },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
-  },
   "graph-color-scheme": {
     "defaultMessage": "ຊຸດສີຂອງກຣາຟ"
   },
@@ -787,9 +778,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "ການຮຽນຮູ້ເຄື່ອງຈັກດ້ວຍການເຄື່ອນໄຫວ ແລະ micro:bit"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "ນຳເຂົ້າຕົວຢ່າງຂໍ້ມູນ"
@@ -1249,9 +1237,6 @@
   },
   "rename-project-heading": {
     "defaultMessage": "ປ່ຽນຊື່ໂຄງການ"
-  },
-  "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "If you cannot access the reset button, hold A+B while you power on the micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "ກົດ A + B ແລ້ວກົດ RESET ຄ້າງໄວ້. ໃຫ້ສືບຕໍ່ກົດ A + B ຄ້າງໄວ້ຈົນກວ່າໄອຄອນ Bluetooth ຈະປາກົດ."

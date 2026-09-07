@@ -116,9 +116,6 @@
   "animation-training": {
     "defaultMessage": "Entrenament"
   },
-  "app-store-badge-alt": {
-    "defaultMessage": "Download on the App Store"
-  },
   "back-action": {
     "defaultMessage": "Enrera"
   },
@@ -719,6 +716,9 @@
   "firmware-outdated-content1": {
     "defaultMessage": "La connexió a la micro:bit ha fallat perquè el microprogramari de la teva micro:bit és massa antic."
   },
+  "firmware-outdated-content2": {
+    "defaultMessage": "Has d''<link>actualitzar el teu microprogramari</link> abans de poder connectar amb aquesta micro:bit."
+  },
   "firmware-outdated-heading": {
     "defaultMessage": "Cal actualitzar el firmware"
   },
@@ -727,9 +727,6 @@
   },
   "go-action": {
     "defaultMessage": "Ves"
-  },
-  "google-play-badge-alt": {
-    "defaultMessage": "Get it on Google Play"
   },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de colors del gràfic"
@@ -784,9 +781,6 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Aprenentatge automàtic amb moviment i la micro:bit"
-  },
-  "homepage-footer-title": {
-    "defaultMessage": "Available on Android tablets and iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importa mostres de dades"
@@ -1251,13 +1245,13 @@
     "defaultMessage": "Si no pots accedir al botó de restabliment, manté premut A+B mentre engegues la micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Manté premut A+B i prem RESTABLECIR. Manté premut A+B fins que aparegui la icona de Bluetooth."
+    "defaultMessage": "Manté premut A+B i prem REINICIAR. Manté premut A+B fins que aparegui la icona de Bluetooth."
   },
   "reset-to-bluetooth-mode-heading": {
     "defaultMessage": "Restableix la micro:bit en mode Bluetooth"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Prem el botó REINICIAR tres vegades."
+    "defaultMessage": "Prem REINICIAR 3 vegades RÀPIDAMENT\n."
   },
   "reset-to-default-action": {
     "defaultMessage": "Restableix els blocs predeterminats"
