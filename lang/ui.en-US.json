@@ -1,0 +1,38 @@
+{
+  "action-tooltip": {
+    "defaultMessage": "The type of movement you want {appNameFull} to recognize e.g. ‘waving’ or ‘clapping’."
+  },
+  "animation-label": {
+    "defaultMessage": "Animation demonstrating the five steps of the CreateAI workflow: Connect, Collect Data, Test Model, Code, and Use. Connect: A micro:bit device is connected to a computer, establishing communication between the two. Collect Data: A micro:bit is strapped to a wrist. Movement data is recorded for two gestures: a wave (represented by a heart icon) and a shake (represented by a cross icon). Multiple samples are collected for each gesture to train the model. Test Model: Once enough samples are gathered, a machine learning model is trained. The computer then attempts to recognize wave and shake gestures in real time. The user can return to the Collect Data step to gather additional samples and do subsequent testing. Code: The user writes a program using MakeCode blocks that incorporates the trained model. The finished program is downloaded to the micro:bit. Use: The micro:bit responds to the user's physical movements, displaying different icons on its LED screen depending on whether a wave or shake gesture is detected."
+  },
+  "connect-help-alt": {
+    "defaultMessage": "WebUSB connection dialog with BBC micro:bit entry labeled 1 and Connect button labeled 2"
+  },
+  "connect-popup-bluetooth-alt": {
+    "defaultMessage": "Web Bluetooth connection dialog with BBC micro:bit entry labeled 1 and Pair button labeled 2"
+  },
+  "graph-color-scheme": {
+    "defaultMessage": "Graph color scheme"
+  },
+  "graph-color-scheme-color-blind-1": {
+    "defaultMessage": "Color blind alternative 1"
+  },
+  "graph-color-scheme-color-blind-2": {
+    "defaultMessage": "Color blind alternative 2"
+  },
+  "live-graph-tooltip": {
+    "defaultMessage": "This graph shows movement data from the micro:bit's accelerometer in real time. Try moving your data collection micro:bit to see the X, Y and Z axes change. Each colored line represents a different direction (dimension) you are moving the micro:bit in."
+  },
+  "name-action-hint": {
+    "defaultMessage": "Name an action you want CreateAI to recognize, like ‘waving’ or ‘jumping’"
+  },
+  "tour-dataSamples-actions-common-content": {
+    "defaultMessage": "An action is the type of movement you want the machine learning model to recognize e.g. ‘waving’ or ‘clapping’."
+  },
+  "tour-dataSamples-connected-content": {
+    "defaultMessage": "Now you can start collecting data samples to train a machine learning (ML) model to recognize different movements, or actions."
+  },
+  "train-description": {
+    "defaultMessage": "The computer program spots patterns or differences in your data samples, and uses these to build a mathematical model that allows {appNameFull} to recognize different actions when you move your micro:bit."
+  }
+}

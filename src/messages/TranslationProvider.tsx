@@ -10,20 +10,27 @@ import { retryAsyncLoad } from "./chunk-util";
 import { allLanguages, isUiEnabled } from "../settings";
 
 async function loadLocaleData(locale: string): Promise<LocaleData> {
-  const lang = locale.toLowerCase();
-  const languageSetting = allLanguages.find(l => l.id.toLowerCase() === lang);
+  // Matched case-insensitively: stored settings and ?l= links predate
+  // canonical id casing. The catalog file takes the canonical id.
+  const lower = locale.toLowerCase();
+  const languageSetting = allLanguages.find(
+    (l) => l.id.toLowerCase() === lower
+  );
   // Keyed on isUiEnabled (the catalog decision), not the dialog's uiSupported:
   // languages the native builds demote to "partially supported" still load
   // their catalog and mostly render in it, with only the native-extra strings
   // falling back per-message, so they keep their own locale below.
-  const importLanguage =
-    (languageSetting !== undefined && isUiEnabled(languageSetting)) ||
-    lang === inContextTranslationLangId;
-  if (importLanguage) {
+  const id =
+    languageSetting !== undefined && isUiEnabled(languageSetting)
+      ? languageSetting.id
+      : lower === inContextTranslationLangId
+        ? inContextTranslationLangId
+        : undefined;
+  if (id) {
     return {
-      locale,
+      locale: id,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      messages: (await import(`./ui.${lang}.json`)).default as Messages,
+      messages: (await import(`./ui.${id}.json`)).default as Messages,
     };
   }
   // Wholesale English fallback (no UI translation for this language): claim
