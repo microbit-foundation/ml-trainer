@@ -42,17 +42,20 @@ test("trains a model, reporting progress and returning artifacts and machine cod
   const result = await client.train(features, labels, trainOptions, (v) =>
     progress.push(v)
   );
-  expect(result).toBeDefined();
-  expect(result!.artifacts.modelTopology).toBeDefined();
-  expect(result!.artifacts.weightData).toBeDefined();
-  expect(result!.machineCode.length).toBeGreaterThan(0);
+  expect(result.success).toBe(true);
+  if (!result.success) {
+    throw new Error("expected training to succeed");
+  }
+  expect(result.result.artifacts.modelTopology).toBeDefined();
+  expect(result.result.artifacts.weightData).toBeDefined();
+  expect(result.result.machineCode.length).toBeGreaterThan(0);
   expect(progress.length).toBeGreaterThan(0);
   expect(progress[progress.length - 1]).toBe(1);
 });
 
-test("train with no data resolves with undefined", async () => {
+test("train with no data fails with a requestError reason", async () => {
   const result = await client.train([], [], trainOptions, () => {});
-  expect(result).toBeUndefined();
+  expect(result).toEqual({ success: false, reason: "requestError" });
 });
 
 test("predicts using the model kept live in the worker after training", async () => {
@@ -72,19 +75,22 @@ test("predict returns undefined when no model is loaded", async () => {
 test("predict during training is dropped rather than queued", async () => {
   const trainPromise = client.train(features, labels, trainOptions, () => {});
   expect(await client.predict(features[0])).toBeUndefined();
-  expect(await trainPromise).toBeDefined();
+  expect((await trainPromise).success).toBe(true);
 });
 
 test("loadModel restores a trained model for prediction with identical machine code", async () => {
   const trained = await client.train(features, labels, trainOptions, () => {});
+  if (!trained.success) {
+    throw new Error("expected training to succeed");
+  }
   const original = await client.predict(features[0]);
 
   // Fresh client/worker as after a page reload with artifacts from storage.
   const reloadClient = new MlWorkerClient();
-  const loaded = await reloadClient.loadModel(trained!.artifacts);
+  const loaded = await reloadClient.loadModel(trained.result.artifacts);
   expect(loaded).toBeDefined();
   expect(Array.from(loaded!.machineCode)).toEqual(
-    Array.from(trained!.machineCode)
+    Array.from(trained.result.machineCode)
   );
 
   const reloaded = await reloadClient.predict(features[0]);
