@@ -167,9 +167,6 @@
   "certainty-tooltip": {
     "defaultMessage": "Độ tự tin của mô hình khi xác định bạn đang thực hiện từng chuyển động."
   },
-  "clear": {
-    "defaultMessage": "Xóa"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "Bấm để tải lại trang"
   },
@@ -509,21 +506,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "Bạn có chắc chắn muốn xóa tất cả các mẫu dữ liệu không?"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, one {Xóa} other {Xóa {count} dự án}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "Xác nhận xóa dự án"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "Bạn có chắc chắn muốn xóa dự án \"{project}\" không?"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "Xác nhận xóa dự án"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "Bạn có chắc chắn muốn xóa {numProjects} dự án không?"
-  },
   "delete-recording-aria": {
     "defaultMessage": "Xóa bản ghi {sample} trong số {numSamples} của chuyển động \"{action}\""
   },
@@ -613,12 +595,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "Vui lòng chờ. Đang tải chương trình xuống micro:bit."
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "Sao chép"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "Sao chép dự án"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Chỉnh sửa trong MakeCode"
@@ -1004,9 +980,6 @@
   "name-action-hint": {
     "defaultMessage": "Hãy đặt tên cho một chuyển động mà bạn muốn CreateAI nhận diện, ví dụ như “vẫy tay” hoặc “nhảy”"
   },
-  "name-project": {
-    "defaultMessage": "Đặt tên cho dự án của bạn"
-  },
   "name-text": {
     "defaultMessage": "Tên"
   },
@@ -1073,9 +1046,6 @@
   "open-file-dropped": {
     "defaultMessage": "Mở tệp khi được thả vào"
   },
-  "open-project-action": {
-    "defaultMessage": "Mở"
-  },
   "open-shared-project-action": {
     "defaultMessage": "Mở dự án"
   },
@@ -1115,20 +1085,11 @@
   "project-loaded": {
     "defaultMessage": "Dự án đã được tải"
   },
-  "project-menu-action": {
-    "defaultMessage": "Menu chuyển động {name}"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "Không được để trống tên dự án"
-  },
   "project-name-text": {
     "defaultMessage": "Tên dự án"
   },
   "project-name-tooltip": {
     "defaultMessage": "Nhấn để chỉnh sửa tên dự án"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "Bỏ qua tới thanh công cụ"
   },
   "project-storage-tooltip": {
     "defaultMessage": "Dữ liệu của bạn được lưu trong trình duyệt này trên thiết bị này. Nếu bạn xóa cookie hoặc dữ liệu trang web của trình duyệt, dữ liệu đó sẽ bị xóa. Dữ liệu cũng có thể bị trình duyệt tự động xóa nếu thiết bị của bạn sắp hết dung lượng lưu trữ."
@@ -1232,12 +1193,6 @@
   "reload-action": {
     "defaultMessage": "Tải lại"
   },
-  "rename-project-action": {
-    "defaultMessage": "Đổi tên"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "Đổi tên dự án"
-  },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Giữ A+B và nhấn RESET. Tiếp tục giữ A+B cho đến khi biểu tượng Bluetooth xuất hiện."
   },
@@ -1292,9 +1247,6 @@
   "saving-toast-title": {
     "defaultMessage": "Tệp hex của bạn đã được tải xuống"
   },
-  "search": {
-    "defaultMessage": "Tìm kiếm"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "Chọn biểu tượng cho chuyển động \"{action}\"="
   },
@@ -1303,12 +1255,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "Chọn biểu tượng \"{iconName}\""
-  },
-  "select-project-action": {
-    "defaultMessage": "Chọn {name}"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "Các chuyển động lựa chọn"
   },
   "settings": {
     "defaultMessage": "Cài đặt"
@@ -1348,24 +1294,6 @@
   },
   "software-versions": {
     "defaultMessage": "Phiên bản phần mềm"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "Sửa đổi lần gần nhất"
-  },
-  "sort-option-name": {
-    "defaultMessage": "Tên"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "Mức độ liên quan"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "Thứ tự tăng dần"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "Thứ tự giảm dần"
-  },
-  "sort-select-label": {
-    "defaultMessage": "Sắp xếp dự án"
   },
   "start-training-action": {
     "defaultMessage": "Bắt đầu huấn luyện"
@@ -1417,12 +1345,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "Dự án này do một người dùng cung cấp và không được Microsoft hoặc Micro:bit Educational Foundation xác nhận. Hãy truy cập <link>dự án MakeCode được chia sẻ</link> để báo cáo nội dung không phù hợp cho Microsoft MakeCode nếu bạn cho rằng nội dung đó không thích hợp."
-  },
-  "timestamp-now": {
-    "defaultMessage": "bây giờ"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "vài giây trước đây"
   },
   "tour-action": {
     "defaultMessage": "Hướng dẫn"

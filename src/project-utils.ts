@@ -8,8 +8,6 @@ import { v4 as uuid } from "uuid";
 import { filenames, generateProject } from "./makecode/utils";
 import { ActionData, OldActionData } from "./model";
 
-export type ProjectNameDialogReason = "rename" | "duplicate";
-
 export const untitledProjectName = "Untitled";
 
 export const validateProjectName = (name: string): boolean => {

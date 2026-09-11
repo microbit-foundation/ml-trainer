@@ -1,18 +1,8 @@
-import orderBy from "lodash.orderby";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router";
-import { ConfirmDialog } from "../components/ConfirmDialog";
-import DefaultPageLayout, {
-  HomeToolbarItem,
-} from "../components/DefaultPageLayout";
-import { NameProjectDialog } from "../components/NameProjectDialog";
-import ProjectCard from "../components/ProjectCard";
-import ProjectsToolbar from "../components/ProjectsToolbar";
-import Search from "../components/Search";
-import SortInput from "../components/SortInput";
-import { useProjectCardActions } from "../hooks/use-project-card-actions";
-import { useLogging } from "../logging/logging-hooks";
+/**
+ * (c) 2024, Micro:bit Educational Foundation and contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 import {
   Box,
   css,
@@ -26,109 +16,105 @@ import {
   useBreakpointValue,
   VStack,
 } from "@microbit/ui";
+import {
+  defaultSortDirection,
+  ProjectCard,
+  ProjectSortField,
+  ProjectsToolbar,
+  rankProjects,
+  SearchInput,
+  SortDirection,
+  SortInput,
+  sortProjects,
+  useProjectActions,
+  useProjectSelection,
+} from "@microbit/ui-patterns";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useNavigate } from "react-router";
+import DefaultPageLayout, {
+  HomeToolbarItem,
+} from "../components/DefaultPageLayout";
+import ProjectIcon from "../components/ProjectIcon";
+import { useLogging } from "../logging/logging-hooks";
 import { ProjectDataWithActions } from "../storage";
 import { loadProjectAndModelFromStorage, useStore } from "../store";
 import { createDataSamplesPageUrl, createHomePageUrl } from "../urls";
 
-type OrderByField = "timestamp" | "name";
-
-interface RankedProject extends ProjectDataWithActions {
-  score: number;
-}
+const actionNames = (project: ProjectDataWithActions) =>
+  project.actions.map((a) => a.name);
 
 const ProjectsPage = () => {
   const navigate = useNavigate();
-  const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
+  const renameProject = useStore((s) => s.setProjectName);
+  const duplicateProject = useStore((s) => s.duplicateProject);
   const deleteProjects = useStore((s) => s.deleteProjects);
-  const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
-  const mobileIconOnly = useBreakpointValue({ base: true, md: false });
   const logging = useLogging();
+  const mobileIconOnly = useBreakpointValue({ base: true, md: false });
 
-  useEffect(() => {
-    const projectIds = new Set(allProjectData.map((p) => p.id));
-    setSelectedProjectIds((prev) => prev.filter((id) => projectIds.has(id)));
-  }, [allProjectData]);
+  const selection = useProjectSelection(allProjectData);
+  const { selectedIds } = selection;
 
-  const [orderByField, setOrderByField] = useState<OrderByField>("timestamp");
-  const [orderByDirection, setOrderByDirection] = useState<"asc" | "desc">(
-    "desc"
-  );
-  const handleOrderByFieldChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const value = e.target.value as OrderByField;
-    const direction = value === "name" ? "asc" : "desc";
-    setOrderByDirection(direction);
-    setOrderByField(value);
+  const [field, setField] = useState<ProjectSortField>("timestamp");
+  const [direction, setDirection] = useState<SortDirection>("desc");
+  const handleFieldChange = (next: ProjectSortField) => {
+    const nextDirection = defaultSortDirection(next);
+    setDirection(nextDirection);
+    setField(next);
     logging.event({
       type: "project_sort",
-      detail: { field: value, direction },
+      detail: { field: next, direction: nextDirection },
     });
   };
-  const toggleOrderByDirection = () => {
-    setOrderByDirection((prev) => {
+  const toggleDirection = () => {
+    setDirection((prev) => {
       const next = prev === "asc" ? "desc" : "asc";
       logging.event({
         type: "project_sort",
-        detail: { field: orderByField, direction: next },
+        detail: { field, direction: next },
       });
       return next;
     });
   };
 
   const handleOpenProject = useCallback(
-    async (id?: string) => {
+    async (id: string) => {
       logging.event({
         type: "project_open",
         detail: { surface: "projects" },
       });
-      await loadProjectAndModelFromStorage(id ?? selectedProjectIds[0]);
+      await loadProjectAndModelFromStorage(id);
       void navigate(createDataSamplesPageUrl());
     },
-    [logging, navigate, selectedProjectIds]
+    [logging, navigate]
   );
 
-  const {
-    projectName,
-    projectNameReason,
-    nameDialogIsOpen,
-    confirmDialogIsOpen,
-    finalFocusRef,
-    setFinalFocusRef,
-    clearFinalFocusRef,
-    handleOpenNameProjectDialog,
-    handleNameProjectDialogClose,
-    handleNameProjectSave,
-    handleOpenConfirmDialog,
-    handleCloseConfirmDialog,
-    handleDeleteProject,
-  } = useProjectCardActions({
-    surface: "projects",
-    getSelectedProjectId: () =>
-      selectedProjectIds.length === 1 ? selectedProjectIds[0] : undefined,
-    getSelectedProjectIds: () => selectedProjectIds,
-    onDeleteSelected: () => deleteProjects(selectedProjectIds),
+  const actions = useProjectActions({
+    projects: allProjectData,
+    getSelectedIds: () => selectedIds,
+    onRename: async (id, name) => {
+      logging.event({
+        type: "project_rename",
+        detail: { surface: "projects" },
+      });
+      await renameProject(name, id);
+    },
+    onDuplicate: async (id, name) => {
+      logging.event({
+        type: "project_duplicate",
+        detail: { surface: "projects" },
+      });
+      await duplicateProject(id, name);
+    },
+    onDelete: async (ids) => {
+      logging.event({
+        type: "project_delete",
+        detail: { surface: "projects", count: ids.length },
+      });
+      await deleteProjects(ids);
+    },
   });
-
-  const updateSelectedProjects = useCallback((id: string) => {
-    setSelectedProjectIds((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((v) => v !== id);
-      }
-      return [...prev, id];
-    });
-  }, []);
-
-  const clearSelection = useCallback(() => {
-    setSelectedProjectIds([]);
-  }, []);
-
-  const hasSelection = selectedProjectIds.length > 0;
-  const lastSelectionRef = useRef(selectedProjectIds);
-  if (hasSelection) {
-    lastSelectionRef.current = selectedProjectIds;
-  }
 
   const desktopToolbarRef = useRef<HTMLDivElement>(null);
   const mobileToolbarRef = useRef<HTMLDivElement>(null);
@@ -141,18 +127,14 @@ const ProjectsPage = () => {
 
   const [query, setQuery] = useState("");
   const handleQueryChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.trim()) {
-        setSelectedProjectIds([]);
+    (value: string) => {
+      if (value.trim()) {
+        selection.clear();
       }
-      setQuery(e.target.value);
+      setQuery(value);
     },
-    []
+    [selection]
   );
-
-  const handleQueryClear = useCallback(() => {
-    setQuery("");
-  }, []);
 
   // Debounced project_search log: emit one event per intentional search,
   // not per keystroke. The trailing 400ms idle window is long enough that
@@ -166,141 +148,17 @@ const ProjectsPage = () => {
     return () => clearTimeout(handle);
   }, [logging, query]);
 
-  const getSearchResults = useCallback(() => {
-    const normalizedQuery = query.toLowerCase().trim();
-    const queryTerms = normalizedQuery.split(/\s+/);
-
-    const rankedProjects: RankedProject[] = allProjectData
-      .map((project) => {
-        let score = 0;
-        const normalizedTitle = project.name.toLowerCase();
-        const normalizedActions = project.actions.map((action) =>
-          action.name.toLowerCase()
-        );
-
-        // Check if all query terms match somewhere in the project.
-        const allTermsMatch = queryTerms.every((term) => {
-          const titleMatches = normalizedTitle.includes(term);
-          const actionMatches = normalizedActions.some((action) =>
-            action.includes(term)
-          );
-          return titleMatches || actionMatches;
-        });
-
-        // If not all terms match, exclude this project.
-        if (!allTermsMatch) {
-          return { ...project, score: 0 };
-        }
-
-        // Score for title matches (higher weight).
-        queryTerms.forEach((term) => {
-          // Exact title match - highest score.
-          if (normalizedTitle === term) {
-            score += 100;
-          }
-          // Title starts with term - high score.
-          else if (normalizedTitle.startsWith(term)) {
-            score += 50;
-          }
-          // Title contains term - good score.
-          else if (normalizedTitle.includes(term)) {
-            score += 30;
-          }
-        });
-
-        // Score for action matches (lower weight).
-        normalizedActions.forEach((action) => {
-          queryTerms.forEach((term) => {
-            // Exact action match
-            if (action === term) {
-              score += 15;
-            }
-            // Action starts with term.
-            else if (action.startsWith(term)) {
-              score += 8;
-            }
-            // Action contains term.
-            else if (action.includes(term)) {
-              score += 5;
-            }
-          });
-        });
-
-        return { ...project, score };
-      })
-      .filter((project) => project.score > 0)
-      .sort((a, b) => b.score - a.score);
-
-    return rankedProjects.map(({ score: _, ...project }) => project);
-  }, [allProjectData, query]);
-
-  const processedProjects = useMemo((): ProjectDataWithActions[] => {
-    if (query.trim()) {
-      return getSearchResults();
-    }
-    return orderBy(
-      allProjectData,
-      orderByField === "name" ? (p) => p.name.toLowerCase() : orderByField,
-      orderByDirection
-    );
-  }, [allProjectData, getSearchResults, orderByDirection, orderByField, query]);
+  const processedProjects = useMemo(
+    () =>
+      query.trim()
+        ? rankProjects(allProjectData, query, actionNames)
+        : sortProjects(allProjectData, field, direction),
+    [allProjectData, direction, field, query]
+  );
 
   return (
     <>
-      <NameProjectDialog
-        projectName={projectName}
-        isOpen={nameDialogIsOpen}
-        onClose={handleNameProjectDialogClose}
-        onCloseComplete={clearFinalFocusRef}
-        onSave={handleNameProjectSave}
-        finalFocusRef={finalFocusRef}
-        heading={
-          <FormattedMessage
-            id={
-              projectNameReason === "rename"
-                ? "rename-project-heading"
-                : "duplicate-project-heading"
-            }
-          />
-        }
-        helperText={null}
-        confirmText={
-          <FormattedMessage
-            id={
-              projectNameReason === "rename"
-                ? "rename-project-action"
-                : "duplicate-project-action"
-            }
-          />
-        }
-      />
-      <ConfirmDialog
-        isOpen={confirmDialogIsOpen}
-        heading={intl.formatMessage({
-          id: projectName
-            ? "delete-project-confirm-heading"
-            : "delete-projects-confirm-heading",
-        })}
-        body={
-          <Text>
-            {projectName ? (
-              <FormattedMessage
-                id="delete-project-confirm-text"
-                values={{ project: projectName }}
-              />
-            ) : (
-              <FormattedMessage
-                id="delete-projects-confirm-text"
-                values={{ numProjects: selectedProjectIds.length }}
-              />
-            )}
-          </Text>
-        }
-        onConfirm={() => handleDeleteProject()}
-        onCancel={handleCloseConfirmDialog}
-        onCloseComplete={clearFinalFocusRef}
-        finalFocusRef={finalFocusRef}
-      />
+      {actions.dialogs}
       <DefaultPageLayout
         titleId="projects-page-title"
         showPageTitle
@@ -321,13 +179,12 @@ const ProjectsPage = () => {
             flexGrow={1}
           >
             <HStack mb={4} justifyContent="space-between" alignItems="center">
-              <Search
-                query={query}
+              <SearchInput
+                value={query}
                 onChange={handleQueryChange}
-                onClear={handleQueryClear}
                 className={css({ maxW: "30ch", my: "1px" })}
               />
-              {hasSelection && (
+              {selection.hasSelection && (
                 <Box
                   ref={desktopToolbarRef}
                   display={{ base: "none", lg: "block" }}
@@ -338,24 +195,25 @@ const ProjectsPage = () => {
                   marginLeft="auto"
                 >
                   <ProjectsToolbar
-                    selectedProjectIds={selectedProjectIds}
-                    onDeleteProject={handleOpenConfirmDialog}
-                    onRenameDuplicateProject={handleOpenNameProjectDialog}
-                    onClearSelection={clearSelection}
+                    selectedCount={selectedIds.length}
+                    onDelete={actions.requestDelete}
+                    onRename={actions.rename}
+                    onDuplicate={actions.duplicate}
+                    onClearSelection={selection.clear}
                   />
                 </Box>
               )}
               <SortInput
                 className={cx(
                   css({ marginLeft: "auto" }),
-                  hasSelection
+                  selection.hasSelection
                     ? css({ display: { base: "flex", lg: "none" } })
                     : undefined
                 )}
-                value={orderByField}
-                onSelectChange={handleOrderByFieldChange}
-                order={orderByDirection}
-                toggleOrder={toggleOrderByDirection}
+                field={field}
+                onFieldChange={handleFieldChange}
+                direction={direction}
+                onToggleDirection={toggleDirection}
                 hasSearchQuery={!!query}
               />
             </HStack>
@@ -369,20 +227,23 @@ const ProjectsPage = () => {
                   md: "repeat(3, minmax(0, 1fr))",
                   lg: "repeat(4, minmax(0, 1fr))",
                 }}
-                pb={hasSelection ? { base: 16, lg: 0 } : 0}
+                pb={selection.hasSelection ? { base: 16, lg: 0 } : 0}
               >
                 {processedProjects.map((projectData) => (
                   <ProjectCard
                     key={projectData.id}
-                    projectData={projectData}
-                    isSelected={selectedProjectIds.includes(projectData.id)}
-                    onSelected={updateSelectedProjects}
-                    onDeleteProject={handleOpenConfirmDialog}
-                    onRenameDuplicateProject={handleOpenNameProjectDialog}
-                    onOpenProject={handleOpenProject}
-                    setFinalFocusRef={setFinalFocusRef}
+                    project={projectData}
+                    description={actionNames(projectData).join(", ")}
+                    isSelected={selection.isSelected(projectData.id)}
+                    onSelected={selection.toggle}
+                    onDelete={actions.requestDelete}
+                    onRename={actions.rename}
+                    onDuplicate={actions.duplicate}
+                    onOpen={handleOpenProject}
                     onSkipToToolbar={handleSkipToToolbar}
-                  />
+                  >
+                    <ProjectIcon hasCheckbox />
+                  </ProjectCard>
                 ))}
               </Grid>
             ) : (
@@ -400,7 +261,7 @@ const ProjectsPage = () => {
           </Box>
         </VStack>
       </DefaultPageLayout>
-      <Slide isOpen={hasSelection} css={{ zIndex: 10 }}>
+      <Slide isOpen={selection.hasSelection} css={{ zIndex: 10 }}>
         <Flex
           justifyContent="center"
           display={{ base: "flex", lg: "none" }}
@@ -413,10 +274,11 @@ const ProjectsPage = () => {
           px={4}
         >
           <ProjectsToolbar
-            selectedProjectIds={lastSelectionRef.current}
-            onDeleteProject={handleOpenConfirmDialog}
-            onRenameDuplicateProject={handleOpenNameProjectDialog}
-            onClearSelection={clearSelection}
+            selectedCount={selection.lastSelectedIds.length}
+            onDelete={actions.requestDelete}
+            onRename={actions.rename}
+            onDuplicate={actions.duplicate}
+            onClearSelection={selection.clear}
             isAttached={false}
             iconOnly={mobileIconOnly}
             size="lg"

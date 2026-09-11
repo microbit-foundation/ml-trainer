@@ -161,9 +161,6 @@
   "certainty-tooltip": {
     "defaultMessage": "現在各アクションを実行しているかどうかについて、モデルがどの程度確信を持っているか。"
   },
-  "clear": {
-    "defaultMessage": "クリア"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "ページをリロードするにはクリックします"
   },
@@ -488,21 +485,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "すべてのデータサンプルを削除してもよろしいですか？"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, other {{count}件のプロジェクトを削除}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "プロジェクトの削除の確認"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "プロジェクト「{project}」を削除してよろしいですか？"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "プロジェクトの削除の確認"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "{numProjects}件のプロジェクトを削除してよろしいですか？"
-  },
   "delete-recording-aria": {
     "defaultMessage": "アクション \"{action}\" の {numSamples} 個の記録 {sample} を削除"
   },
@@ -583,12 +565,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "しばらくお待ちください。micro:bitにプログラムをダウンロードしています。"
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "複製"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "プロジェクトを複製"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "MakeCodeで編集"
@@ -965,9 +941,6 @@
   "name-action-hint": {
     "defaultMessage": "「手を振る」、「ジャンプ」など、CreateAIに認識させるアクションに名前を付けます"
   },
-  "name-project": {
-    "defaultMessage": "プロジェクトに名前を付ける"
-  },
   "name-text": {
     "defaultMessage": "名前"
   },
@@ -1006,9 +979,6 @@
   },
   "open-file-dropped": {
     "defaultMessage": "ドロップ時にファイルを開く"
-  },
-  "open-project-action": {
-    "defaultMessage": "開く"
   },
   "open-shared-project-action": {
     "defaultMessage": "プロジェクトを開く"
@@ -1049,20 +1019,11 @@
   "project-loaded": {
     "defaultMessage": "プロジェクトが読み込まれました"
   },
-  "project-menu-action": {
-    "defaultMessage": "{name}アクションメニュー"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "プロジェクト名は空にできません"
-  },
   "project-name-text": {
     "defaultMessage": "プロジェクト名"
   },
   "project-name-tooltip": {
     "defaultMessage": "クリックしてプロジェクト名を編集"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "ツールバーにスキップ"
   },
   "project-storage-tooltip": {
     "defaultMessage": "データはこのデバイスのこのブラウザに保存されます。ブラウザのCookieやサイトのデータを消去すると、データも削除されます。デバイスのストレージ容量が少ない場合も、ブラウザによって自動的に削除される場合があります。"
@@ -1166,12 +1127,6 @@
   "reload-action": {
     "defaultMessage": "再読み込み"
   },
-  "rename-project-action": {
-    "defaultMessage": "名前を変更"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "プロジェクト名を変更"
-  },
   "reset-to-default-action": {
     "defaultMessage": "初期ブロックにリセット"
   },
@@ -1211,9 +1166,6 @@
   "saving-toast-title": {
     "defaultMessage": "hexファイルをダウンロードしました"
   },
-  "search": {
-    "defaultMessage": "検索"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "アクション「{action}」のアイコンを選択"
   },
@@ -1222,12 +1174,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "「{iconName}」アイコンを選択"
-  },
-  "select-project-action": {
-    "defaultMessage": "{name}を選択"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "選択アクション"
   },
   "settings": {
     "defaultMessage": "設定"
@@ -1258,24 +1204,6 @@
   },
   "software-versions": {
     "defaultMessage": "ソフトウェアのバージョン"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "更新日時"
-  },
-  "sort-option-name": {
-    "defaultMessage": "名前"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "関係度"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "昇順で並べ替え"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "降順で並び替え"
-  },
-  "sort-select-label": {
-    "defaultMessage": "プロジェクトの並び替え"
   },
   "start-training-action": {
     "defaultMessage": "トレーニング開始"
@@ -1315,12 +1243,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "このプロジェクトはユーザーによって提供されたものであり、 Microsoft または Micro:bit Educational Foundation によって承認されたものではありません。不適切だと思われる場合は、 <link> MakeCode 共有プロジェクト</link> のリンクにアクセスして、 Microsoft MakeCode に不正を報告してください。"
-  },
-  "timestamp-now": {
-    "defaultMessage": "現在"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "数秒前"
   },
   "tour-action": {
     "defaultMessage": "ツアー"

@@ -167,9 +167,6 @@
   "certainty-tooltip": {
     "defaultMessage": "Cómo de seguro está el modelo de que estás realizando cada acción."
   },
-  "clear": {
-    "defaultMessage": "Borrar"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "Haga clic para recargar la página"
   },
@@ -509,21 +506,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "¿Estás seguro de que quieres eliminar todas las muestras de datos?"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, one {Borrar {count} proyecto} other {Borrar {count} proyectos}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "Confirmar eliminación del proyecto"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "¿Estás seguro de que deseas eliminar el proyecto «{project}»?"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "Confirmar eliminación de proyectos"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "¿Estás seguro de que deseas eliminar {numProjects} proyectos?"
-  },
   "delete-recording-aria": {
     "defaultMessage": "Eliminar la grabación {sample} de {numSamples} para la acción \"{action}\""
   },
@@ -613,12 +595,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "Espera, por favor. Descargando el programa al micro:bit."
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "Duplicado"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "Proyecto duplicado"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Editar en MakeCode"
@@ -1004,9 +980,6 @@
   "name-action-hint": {
     "defaultMessage": "Nombra una acción que quieras que CreateAI reconozca, como «saludar con la mano» o «saltar»."
   },
-  "name-project": {
-    "defaultMessage": "Pon un nombre al proyecto"
-  },
   "name-text": {
     "defaultMessage": "Nombre"
   },
@@ -1073,9 +1046,6 @@
   "open-file-dropped": {
     "defaultMessage": "Abrir archivo al soltarlo"
   },
-  "open-project-action": {
-    "defaultMessage": "Abrir"
-  },
   "open-shared-project-action": {
     "defaultMessage": "Abrir proyecto"
   },
@@ -1115,20 +1085,11 @@
   "project-loaded": {
     "defaultMessage": "Proyecto cargado"
   },
-  "project-menu-action": {
-    "defaultMessage": "{name} menú de acciones"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "El nombre del proyecto no puede estar en blanco"
-  },
   "project-name-text": {
     "defaultMessage": "Nombre del proyecto"
   },
   "project-name-tooltip": {
     "defaultMessage": "Pulsar para editar el nombre del proyecto."
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "Ir a la barra de herramientas"
   },
   "project-storage-tooltip": {
     "defaultMessage": "Tus datos se guardan en el navegador de este dispositivo. Si borras las cookies o los datos del sitio web de tu navegador, se eliminarán. También es posible que tu navegador los elimine automáticamente si tu dispositivo tiene poco espacio de almacenamiento."
@@ -1232,12 +1193,6 @@
   "reload-action": {
     "defaultMessage": "Recargar"
   },
-  "rename-project-action": {
-    "defaultMessage": "Renombrar"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "Renombrar Proyecto"
-  },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Mantén presionados A+B y presiona restablecer. Sigue presionando A+B hasta que aparezca el icono de Bluetooth."
   },
@@ -1292,9 +1247,6 @@
   "saving-toast-title": {
     "defaultMessage": "Se ha descargado tu archivo hexadecimal"
   },
-  "search": {
-    "defaultMessage": "Buscar"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "Elige un icono para la acción \"{action}\""
   },
@@ -1303,12 +1255,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "Selecciona el icono \"{iconName}\""
-  },
-  "select-project-action": {
-    "defaultMessage": "Seleccionar {name}"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "Acciones de selección"
   },
   "settings": {
     "defaultMessage": "Configuración"
@@ -1348,24 +1294,6 @@
   },
   "software-versions": {
     "defaultMessage": "Versiones de software"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "Última modificación"
-  },
-  "sort-option-name": {
-    "defaultMessage": "Nombre"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "Relevancia"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "En orden ascendente"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "Orden descendente"
-  },
-  "sort-select-label": {
-    "defaultMessage": "Ordenar proyectos"
   },
   "start-training-action": {
     "defaultMessage": "Empieza a entrenar"
@@ -1417,12 +1345,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "Este proyecto es proporcionado por un usuario y no está respaldado por Microsoft ni por Micro:bit Educational Foundation. Visita el <link>proyecto compartido de MakeCode</link> para reportar abuso a Microsoft MakeCode si crees que no es apropiado."
-  },
-  "timestamp-now": {
-    "defaultMessage": "ahora"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "hace algunos segundos"
   },
   "tour-action": {
     "defaultMessage": "Recorrido"

@@ -167,9 +167,6 @@
   "certainty-tooltip": {
     "defaultMessage": "Quina confiança té el model que actualment esteu fent cada acció."
   },
-  "clear": {
-    "defaultMessage": "Esborra"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "Fes clic per tornar a carregar la pàgina"
   },
@@ -512,21 +509,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "Estàs segur que vols suprimir totes les mostres de dades?"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, one {Esborra} other {Esborra {count} projectes}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "Confirma l'eliminació del projecte"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "Estàs segur que vols suprimir el projecte \"{project}\"?"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "Confirma l'eliminació del projecte"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "Estàs segur que vols suprimir el projecte{numProjects}?"
-  },
   "delete-recording-aria": {
     "defaultMessage": "Suprimeix l'enregistrament {sample} de {numSamples} per a l'acció \"{action}\""
   },
@@ -616,12 +598,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "Si us plau, espera. Transferint el programa a la micro:bit."
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "Duplica"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "Duplicar el projecte"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Edita a MakeCode"
@@ -1007,9 +983,6 @@
   "name-action-hint": {
     "defaultMessage": "Anomena una acció que vulguis que CreateAI reconegui, com ara \"sacsejar la mà\" o \"saltar\"."
   },
-  "name-project": {
-    "defaultMessage": "Anomena el teu projecte"
-  },
   "name-text": {
     "defaultMessage": "Nom"
   },
@@ -1076,9 +1049,6 @@
   "open-file-dropped": {
     "defaultMessage": "Obre el fitxer quan es deixa anar"
   },
-  "open-project-action": {
-    "defaultMessage": "Obert"
-  },
   "open-shared-project-action": {
     "defaultMessage": "Obre un projecte"
   },
@@ -1118,20 +1088,11 @@
   "project-loaded": {
     "defaultMessage": "Projecte desat"
   },
-  "project-menu-action": {
-    "defaultMessage": "Menú d'accions {name}"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "El nom del projecte no pot estar buit"
-  },
   "project-name-text": {
     "defaultMessage": "Nom del projecte"
   },
   "project-name-tooltip": {
     "defaultMessage": "Fes clic per editar el nom del projecte"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "Salta a la barra d'eines"
   },
   "project-storage-tooltip": {
     "defaultMessage": "Les teves dades es guarden en aquest navegador en aquest dispositiu. Si esborres les galetes del teu navegador o les dades del lloc, s'eliminarà. El teu navegador també pot eliminar-lo automàticament si el teu dispositiu té poc emmagatzematge."
@@ -1235,12 +1196,6 @@
   "reload-action": {
     "defaultMessage": "Torna a carregar"
   },
-  "rename-project-action": {
-    "defaultMessage": "Reanomena"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "Reanomena el projecte"
-  },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
     "defaultMessage": "Si no pots accedir al botó de restabliment, manté premut A+B mentre engegues la micro:bit."
   },
@@ -1298,9 +1253,6 @@
   "saving-toast-title": {
     "defaultMessage": "S'ha transferit el teu fitxer hexadecimal"
   },
-  "search": {
-    "defaultMessage": "Cerca"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "Tria la icona per a l'acció \"{action}\""
   },
@@ -1309,12 +1261,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "Selecciona la icona \"{iconName}\"."
-  },
-  "select-project-action": {
-    "defaultMessage": "Selecciona {name}"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "Selecció d'accions"
   },
   "settings": {
     "defaultMessage": "Configuració"
@@ -1354,24 +1300,6 @@
   },
   "software-versions": {
     "defaultMessage": "Versions de programari"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "Darrer modificat"
-  },
-  "sort-option-name": {
-    "defaultMessage": "Nom"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "Rellevància"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "Ordre ascendent"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "Ordre descendent"
-  },
-  "sort-select-label": {
-    "defaultMessage": "Ordena els projectes"
   },
   "start-training-action": {
     "defaultMessage": "Comença l'entrenament"
@@ -1423,12 +1351,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "Aquest projecte és proporcionat per un usuari i no està avalat per Microsoft o la Micro:bit Educational Foundation. Visita el <link>Projecte compartit de MakeCode</link> per informar d'un abús a Microsoft MakeCode si creus que no és apropiat."
-  },
-  "timestamp-now": {
-    "defaultMessage": "ara"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "fa uns segons"
   },
   "tour-action": {
     "defaultMessage": "Tour"
