@@ -917,12 +917,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "MakeCode 프로젝트를 가져왔습니다."
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} 홈페이지"
-  },
-  "not-found-title": {
-    "defaultMessage": "페이지를 찾을 수 없습니다."
-  },
   "open-file-dropped": {
     "defaultMessage": "드롭될 때 파일 열기"
   },
@@ -1207,9 +1201,6 @@
   },
   "stop-recording-action": {
     "defaultMessage": "기록 중단"
-  },
-  "support-request": {
-    "defaultMessage": "<link>지원 요청</link>을 생각해 보세요."
   },
   "teacher-resources-row-title": {
     "defaultMessage": "교사용 자료"

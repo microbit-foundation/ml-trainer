@@ -998,12 +998,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "MakeCodeプロジェクトがインポートされました"
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} ホームページ"
-  },
-  "not-found-title": {
-    "defaultMessage": "ページが見つかりません"
-  },
   "open-file-dropped": {
     "defaultMessage": "ドロップ時にファイルを開く"
   },
@@ -1297,9 +1291,6 @@
   },
   "stop-recording-action": {
     "defaultMessage": "記録の停止"
-  },
-  "support-request": {
-    "defaultMessage": "<link>サポートリクエストの提出</link> を検討してください。"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "教育者用リソース"

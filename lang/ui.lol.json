@@ -1076,12 +1076,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "crwdns363220:0crwdne363220:0"
   },
-  "not-found": {
-    "defaultMessage": "crwdns363222:0{appNameFull}crwdne363222:0"
-  },
-  "not-found-title": {
-    "defaultMessage": "crwdns363224:0crwdne363224:0"
-  },
   "open-file-dropped": {
     "defaultMessage": "crwdns363228:0crwdne363228:0"
   },
@@ -1414,9 +1408,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "crwdns369753:0crwdne369753:0"
-  },
-  "support-request": {
-    "defaultMessage": "crwdns363362:0crwdne363362:0"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "crwdns369409:0crwdne369409:0"

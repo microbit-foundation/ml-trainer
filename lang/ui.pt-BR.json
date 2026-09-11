@@ -1064,12 +1064,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "Seu projeto MakeCode foi importado."
   },
-  "not-found": {
-    "defaultMessage": "Página inicial do {appNameFull}."
-  },
-  "not-found-title": {
-    "defaultMessage": "Página não encontrada"
-  },
   "open-file-dropped": {
     "defaultMessage": "Abrir arquivo quando solto"
   },
@@ -1402,9 +1396,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "Armazenamento do navegador cheio"
-  },
-  "support-request": {
-    "defaultMessage": "Por favor, considere <link>abrir uma solicitação de suporte</link>"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Recursos para professores"

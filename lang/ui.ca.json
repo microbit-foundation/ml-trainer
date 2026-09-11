@@ -1067,12 +1067,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "S'ha importat el teu projecte MakeCode"
   },
-  "not-found": {
-    "defaultMessage": "Pàgina d'inici {appNameFull}"
-  },
-  "not-found-title": {
-    "defaultMessage": "No s'ha trobat la pàgina"
-  },
   "open-file-dropped": {
     "defaultMessage": "Obre el fitxer quan es deixa anar"
   },
@@ -1405,9 +1399,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "La memòria del navegador és plena"
-  },
-  "support-request": {
-    "defaultMessage": "Si us plau, considera<link>fer una sol·licitud d'assistència</link>."
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Recursos del professor"

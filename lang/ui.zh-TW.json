@@ -917,12 +917,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "您的 MakeCode 專案已匯入"
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} 首頁"
-  },
-  "not-found-title": {
-    "defaultMessage": "找不到頁面"
-  },
   "open-file-dropped": {
     "defaultMessage": "放置時開啟檔案"
   },
@@ -1207,9 +1201,6 @@
   },
   "stop-recording-action": {
     "defaultMessage": "停止錄製"
-  },
-  "support-request": {
-    "defaultMessage": "請考慮<link>提出支援請求</link>。"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "教師資源"

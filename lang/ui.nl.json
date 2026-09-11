@@ -1067,12 +1067,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "Je MakeCode project is geïmporteerd"
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} startpagina"
-  },
-  "not-found-title": {
-    "defaultMessage": "Pagina niet gevonden"
-  },
   "open-file-dropped": {
     "defaultMessage": "Open bestand wanneer gedropt"
   },
@@ -1405,9 +1399,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "Browseropslag is vol"
-  },
-  "support-request": {
-    "defaultMessage": "Overweeg <link>een ondersteuningsverzoek</link> in te dienen."
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Middelen voor onderwijzers"

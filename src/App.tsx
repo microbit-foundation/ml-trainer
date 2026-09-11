@@ -30,10 +30,10 @@ import {
 } from "./broadcast-channel";
 import { BufferedDataProvider } from "./buffered-data-hooks";
 import EditCodeDialog from "./components/EditCodeDialog";
-import ErrorBoundary from "./components/ErrorBoundary";
+import { ErrorBoundary, NotFoundPage } from "@microbit/ui-patterns";
 import ErrorHandlerErrorView from "./components/ErrorHandlerErrorView";
+import { referenceFor, reported } from "./route-error-reference";
 import LoadingOverlay from "./components/LoadingOverlay";
-import NotFound from "./components/NotFound";
 import { SharedUIProvider, ToastProvider, useToast } from "@microbit/ui";
 import { ConnectionsProvider } from "./connections-hooks";
 import { DataConnectionEventProvider } from "./data-connection-flow";
@@ -299,8 +299,9 @@ const Layout = () => {
 
   const isLoadingOverlayVisible = useStore((s) => s.isLoadingOverlayVisible);
   return (
-    // We use this even though we have errorElement as this does logging.
-    <ErrorBoundary>
+    // Alongside the errorElement: this catches render errors, that catches
+    // loader errors.
+    <ErrorBoundary onError={reportRenderError} fallback={renderErrorPage}>
       <ScrollRestoration />
       <ProjectProvider driverRef={driverRef}>
         <EditCodeDialog ref={driverRef} />
@@ -326,9 +327,21 @@ const commonLoaderFunction = async () => {
   return null;
 };
 
+const reportRenderError = (error: unknown) =>
+  logging.error("Uncaught render error", error);
+
+const renderErrorPage = (error: unknown, reference: string | undefined) => (
+  <ErrorHandlerErrorView error={error} reference={reference} />
+);
+
+const reportedLoader = <T,>(loader: () => Promise<T>) =>
+  reported((e) => logging.error("Route error", e), loader);
+
 const RouteErrorView = () => {
   const error = useRouteError();
-  return <ErrorHandlerErrorView error={error} />;
+  return (
+    <ErrorHandlerErrorView error={error} reference={referenceFor(error)} />
+  );
 };
 
 const createRouter = () => {
@@ -336,10 +349,10 @@ const createRouter = () => {
     {
       id: "root",
       path: "",
-      loader: async () => {
+      loader: reportedLoader(async () => {
         await loadSettingsFromStorage();
         return null;
-      },
+      }),
       element: <Layout />,
       // This one gets used for loader errors (typically offline)
       // We set an error boundary inside the routes too that logs render-time errors.
@@ -349,28 +362,28 @@ const createRouter = () => {
         {
           path: createHomePageUrl(),
           element: <HomePage />,
-          loader: () => getAllProjectsFromStorage(),
+          loader: reportedLoader(() => getAllProjectsFromStorage()),
         },
         {
           path: createProjectsPageUrl(),
           element: <ProjectsPage />,
-          loader: () => getAllProjectsFromStorage(),
+          loader: reportedLoader(() => getAllProjectsFromStorage()),
         },
         { path: createImportPageUrl(), element: <ImportPage /> },
         {
           path: createDataSamplesPageUrl(),
           element: <DataSamplesPage />,
-          loader: () => commonLoaderFunction(),
+          loader: reportedLoader(commonLoaderFunction),
         },
         {
           path: createTestingModelPageUrl(),
           element: <TestingModelPage />,
-          loader: commonLoaderFunction,
+          loader: reportedLoader(commonLoaderFunction),
         },
         {
           path: createCodePageUrl(),
           element: <CodePage />,
-          loader: commonLoaderFunction,
+          loader: reportedLoader(commonLoaderFunction),
         },
         {
           path: createOpenSharedProjectPageUrl(),
@@ -384,7 +397,7 @@ const createRouter = () => {
             return null;
           },
           element: <OpenSharedProjectPage />,
-          errorElement: <NotFound />,
+          errorElement: <NotFoundPage homeUrl={createHomePageUrl()} />,
         },
         {
           path: createLegacyNewPageUrl(),
@@ -392,7 +405,7 @@ const createRouter = () => {
         },
         {
           path: "*",
-          element: <NotFound />,
+          element: <NotFoundPage homeUrl={createHomePageUrl()} />,
         },
       ],
     },

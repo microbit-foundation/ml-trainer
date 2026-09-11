@@ -3,51 +3,30 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ReactNode } from "react";
 import { Button, Text, VStack } from "@microbit/ui";
-import { FormattedMessage } from "react-intl";
+import { ErrorPage, UnexpectedErrorPage } from "@microbit/ui-patterns";
+import { useDeployment } from "../deployment";
 import { isPublicFacingStage } from "../environment";
-import ErrorPage from "./ErrorPage";
-import Link from "./Link";
 
 interface ErrorHandlerErrorViewProps {
   error?: unknown;
+  /** The Sentry event id, when the error was reported. */
+  reference?: string;
 }
 
 const isVersionError = (error: unknown): boolean =>
   error instanceof DOMException && error.name === "VersionError";
 
-const ErrorHandlerErrorView = ({ error }: ErrorHandlerErrorViewProps) => {
+const ErrorHandlerErrorView = ({
+  error,
+  reference,
+}: ErrorHandlerErrorViewProps) => {
+  const { supportLinks } = useDeployment();
   if (error && isVersionError(error) && !isPublicFacingStage()) {
     return <StorageVersionErrorView />;
   }
   return (
-    <ErrorPage title="An unexpected error occurred">
-      <VStack gap={3}>
-        <Text>
-          <FormattedMessage
-            id="support-request"
-            values={{
-              link: (chunks: ReactNode) => (
-                <Link
-                  color="brand.600"
-                  href="https://support.microbit.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {chunks}
-                </Link>
-              ),
-            }}
-          />
-        </Text>
-        <Text>
-          <Button variant="primary" onPress={() => window.location.reload()}>
-            <FormattedMessage id="click-to-reload-page-action" />
-          </Button>
-        </Text>
-      </VStack>
-    </ErrorPage>
+    <UnexpectedErrorPage supportUrl={supportLinks.main} reference={reference} />
   );
 };
 
