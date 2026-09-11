@@ -128,9 +128,6 @@
   "certainty-tooltip": {
     "defaultMessage": "模型對您目前正在執行的各個動作的信心程度。"
   },
-  "clear": {
-    "defaultMessage": "清除"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "點擊重新載入頁面"
   },
@@ -422,21 +419,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "您確定您要刪除所有的數據樣本嗎？"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, one {刪除} other {刪除 {count} 個專案}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "確認刪除專案"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "您確定您要刪除專案「{project}」嗎？"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "確認刪除專案"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "您確定要刪除 {numProjects} 個專案嗎？"
-  },
   "delete-recording-aria": {
     "defaultMessage": "刪除對於動作「{action}」的 {numSamples} 個記錄 {sample}"
   },
@@ -508,12 +490,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "請稍等。正在將程式下載至 micro:bit。"
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "複製"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "複製專案"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "在 MakeCode 內編輯"
@@ -890,9 +866,6 @@
   "name-action-hint": {
     "defaultMessage": "為您希望 CreateAI 識別的動作命名，例如「揮手」或「跳躍」"
   },
-  "name-project": {
-    "defaultMessage": "為您的專案命名"
-  },
   "name-text": {
     "defaultMessage": "名稱"
   },
@@ -919,9 +892,6 @@
   },
   "open-file-dropped": {
     "defaultMessage": "放置時開啟檔案"
-  },
-  "open-project-action": {
-    "defaultMessage": "開啟"
   },
   "open-shared-project-action": {
     "defaultMessage": "開啟專案"
@@ -962,20 +932,11 @@
   "project-loaded": {
     "defaultMessage": "專案已載入"
   },
-  "project-menu-action": {
-    "defaultMessage": " {name} 動作選單"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "專案名稱不可為空白"
-  },
   "project-name-text": {
     "defaultMessage": "專案名稱"
   },
   "project-name-tooltip": {
     "defaultMessage": "點擊以編輯專案名稱"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "跳至工具列"
   },
   "project-storage-tooltip": {
     "defaultMessage": "您的資料會儲存在此裝置上的瀏覽器中。清除瀏覽器的 Cookie 或網站資料將會刪除這些資料。若您的裝置儲存空間不足，瀏覽器也可能會自動將其移除。"
@@ -1079,12 +1040,6 @@
   "reload-action": {
     "defaultMessage": "重新載入"
   },
-  "rename-project-action": {
-    "defaultMessage": "重新命名"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "重新命名專案"
-  },
   "reset-to-default-action": {
     "defaultMessage": "重設為預設區塊"
   },
@@ -1124,9 +1079,6 @@
   "saving-toast-title": {
     "defaultMessage": "您的十六進位檔案已下載"
   },
-  "search": {
-    "defaultMessage": "搜尋"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "挑選動作「{action}」的圖標"
   },
@@ -1135,12 +1087,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "選擇「{iconName}」圖標"
-  },
-  "select-project-action": {
-    "defaultMessage": "選擇 {name}"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "選擇動作"
   },
   "settings": {
     "defaultMessage": "設置"
@@ -1162,24 +1108,6 @@
   },
   "software-versions": {
     "defaultMessage": "軟體版本"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "上次修改"
-  },
-  "sort-option-name": {
-    "defaultMessage": "名稱"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "相關性"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "升序排序"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "降序排序"
-  },
-  "sort-select-label": {
-    "defaultMessage": "排序專案"
   },
   "start-training-action": {
     "defaultMessage": "開始訓練"
@@ -1216,12 +1144,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "此專案由使用者提供，未經 Microsoft 或 Micro:bit Educational Foundation 認可。若您認為內容不適當，請前往 <link>MakeCode 共用專案</link> 向 Microsoft MakeCode 檢舉不當內容。"
-  },
-  "timestamp-now": {
-    "defaultMessage": "現在"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "幾秒前"
   },
   "tour-action": {
     "defaultMessage": "導覽"

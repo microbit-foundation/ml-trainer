@@ -4,7 +4,6 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import orderBy from "lodash.orderby";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
 import {
@@ -16,7 +15,11 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link as RouterLink, useNavigate } from "react-router";
 import { CarouselRow } from "@microbit/ui-carousel";
-import { ConfirmDialog } from "../components/ConfirmDialog";
+import {
+  ProjectCard,
+  sortProjects,
+  useProjectActions,
+} from "@microbit/ui-patterns";
 import DefaultPageLayout, {
   HomeToolbarItem,
 } from "../components/DefaultPageLayout";
@@ -28,9 +31,8 @@ import LoadProjectInput, {
   LoadProjectInputRef,
 } from "../components/LoadProjectInput";
 import { NameProjectDialog } from "../components/NameProjectDialog";
-import ProjectCard from "../components/ProjectCard";
+import ProjectIcon from "../components/ProjectIcon";
 import { createProjectIdeaCards } from "../components/ProjectIdeaCards";
-import { useProjectCardActions } from "../hooks/use-project-card-actions";
 import { useLogging } from "../logging/logging-hooks";
 import { isNativePlatform } from "../platform";
 import {
@@ -100,87 +102,46 @@ const ProjectRow = () => {
     sm: "right",
   });
   const navigate = useNavigate();
-  const intl = useIntl();
   const allProjectData = useStore((s) => s.allProjectData);
-
+  const renameProject = useStore((s) => s.setProjectName);
+  const duplicateProject = useStore((s) => s.duplicateProject);
+  const deleteProjects = useStore((s) => s.deleteProjects);
   const logging = useLogging();
+
   const handleOpenProject = useCallback(
-    async (id?: string) => {
-      if (id) {
-        logging.event({
-          type: "project_open",
-          detail: { surface: "home" },
-        });
-        await loadProjectAndModelFromStorage(id);
-        void navigate(createDataSamplesPageUrl());
-      }
+    async (id: string) => {
+      logging.event({
+        type: "project_open",
+        detail: { surface: "home" },
+      });
+      await loadProjectAndModelFromStorage(id);
+      void navigate(createDataSamplesPageUrl());
     },
     [logging, navigate]
   );
 
-  const {
-    projectName,
-    projectNameReason,
-    nameDialogIsOpen,
-    confirmDialogIsOpen,
-    finalFocusRef,
-    setFinalFocusRef,
-    clearFinalFocusRef,
-    handleOpenNameProjectDialog,
-    handleNameProjectDialogClose,
-    handleNameProjectSave,
-    handleOpenConfirmDialog,
-    handleCloseConfirmDialog,
-    handleDeleteProject,
-  } = useProjectCardActions({ surface: "home" });
+  const actions = useProjectActions({
+    projects: allProjectData,
+    onRename: async (id, name) => {
+      logging.event({ type: "project_rename", detail: { surface: "home" } });
+      await renameProject(name, id);
+    },
+    onDuplicate: async (id, name) => {
+      logging.event({ type: "project_duplicate", detail: { surface: "home" } });
+      await duplicateProject(id, name);
+    },
+    onDelete: async (ids) => {
+      logging.event({
+        type: "project_delete",
+        detail: { surface: "home", count: ids.length },
+      });
+      await deleteProjects(ids);
+    },
+  });
 
   return (
     <>
-      <NameProjectDialog
-        projectName={projectName}
-        isOpen={nameDialogIsOpen}
-        onClose={handleNameProjectDialogClose}
-        onCloseComplete={clearFinalFocusRef}
-        onSave={handleNameProjectSave}
-        finalFocusRef={finalFocusRef}
-        heading={
-          <FormattedMessage
-            id={
-              projectNameReason === "rename"
-                ? "rename-project-heading"
-                : "duplicate-project-heading"
-            }
-          />
-        }
-        helperText={null}
-        confirmText={
-          <FormattedMessage
-            id={
-              projectNameReason === "rename"
-                ? "rename-project-action"
-                : "duplicate-project-action"
-            }
-          />
-        }
-      />
-      <ConfirmDialog
-        isOpen={confirmDialogIsOpen}
-        heading={intl.formatMessage({
-          id: "delete-project-confirm-heading",
-        })}
-        body={
-          <Text>
-            <FormattedMessage
-              id="delete-project-confirm-text"
-              values={{ project: projectName }}
-            />
-          </Text>
-        }
-        onConfirm={() => handleDeleteProject()}
-        onCancel={handleCloseConfirmDialog}
-        onCloseComplete={clearFinalFocusRef}
-        finalFocusRef={finalFocusRef}
-      />
+      {actions.dialogs}
       <CarouselRow
         actions={[
           <ImportProjectButton key="importProject" />,
@@ -189,17 +150,22 @@ const ProjectRow = () => {
         carouselItems={
           [
             <NewProjectCard key="new-project" />,
-            ...orderBy(allProjectData, "timestamp", "desc")
+            ...sortProjects(allProjectData, "timestamp", "desc")
               .map((projectData) => (
                 <ProjectCard
                   key={projectData.id}
-                  short
-                  projectData={projectData}
-                  onDeleteProject={handleOpenConfirmDialog}
-                  onRenameDuplicateProject={handleOpenNameProjectDialog}
-                  onOpenProject={handleOpenProject}
-                  setFinalFocusRef={setFinalFocusRef}
-                />
+                  project={projectData}
+                  description={projectData.actions
+                    .map((a) => a.name)
+                    .join(", ")}
+                  bodyCss={{ _shortHeight: { p: 3 } }}
+                  onDelete={actions.requestDelete}
+                  onRename={actions.rename}
+                  onDuplicate={actions.duplicate}
+                  onOpen={handleOpenProject}
+                >
+                  <ProjectIcon short />
+                </ProjectCard>
               ))
               .slice(0, numCardsDisplayed),
             allProjectData.length > numCardsDisplayed ? (

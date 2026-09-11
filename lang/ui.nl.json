@@ -167,9 +167,6 @@
   "certainty-tooltip": {
     "defaultMessage": "Hoeveel vertrouwen het model erin heeft dat je momenteel elke actie uitvoert."
   },
-  "clear": {
-    "defaultMessage": "Verwijderen"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "Klik om de pagina te herladen"
   },
@@ -512,21 +509,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "Weet je zeker dat je alle data samples wil verwijderen?"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, one {Verwijder} other {Verwijder {count} projecten}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "Verwijderen van project bevestigen"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "Weet je zeker dat je project \"{project}\" wilt verwijderen?"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "Verwijderen van projecten bevestigen"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "Weet je zeker dat je {numProjects} projecten wilt verwijderen?"
-  },
   "delete-recording-aria": {
     "defaultMessage": "Verwijder opname {sample} van {numSamples} voor actie \"{action}\""
   },
@@ -616,12 +598,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "Even geduld. Programma is aan het downloaden naar de micro:bit."
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "Kopiëren"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "Kopieer project"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "Bewerken in MakeCode"
@@ -1007,9 +983,6 @@
   "name-action-hint": {
     "defaultMessage": "Noem een actie die je wilt aanmaken om door CreateAI te laten herkennen, zoals ‘zwaaien’ of ‘springen’"
   },
-  "name-project": {
-    "defaultMessage": "Geef een naam aan je project"
-  },
   "name-text": {
     "defaultMessage": "Naam"
   },
@@ -1070,9 +1043,6 @@
   "open-file-dropped": {
     "defaultMessage": "Open bestand wanneer gedropt"
   },
-  "open-project-action": {
-    "defaultMessage": "Open"
-  },
   "open-shared-project-action": {
     "defaultMessage": "Open project"
   },
@@ -1112,20 +1082,11 @@
   "project-loaded": {
     "defaultMessage": "Project geladen"
   },
-  "project-menu-action": {
-    "defaultMessage": "{name} actiesmenu"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "De projectnaam kan niet leeg zijn"
-  },
   "project-name-text": {
     "defaultMessage": "Projectnaam"
   },
   "project-name-tooltip": {
     "defaultMessage": "Klik om de projectnaam te bewerken"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "Ga naar werkbalk"
   },
   "project-storage-tooltip": {
     "defaultMessage": "Jouw gegevens worden opgeslagen in deze browser op dit apparaat. Het wissen van je browsercookies of sitegegevens zal deze verwijderen. Het kan ook automatisch worden verwijderd door je browser als jouw apparaat weinig opslagruimte heeft."
@@ -1229,12 +1190,6 @@
   "reload-action": {
     "defaultMessage": "Herladen"
   },
-  "rename-project-action": {
-    "defaultMessage": "Hernoemen"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "Hernoem project"
-  },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
     "defaultMessage": "Als je geen toegang hebt tot de resetknop, houd dan A+B ingedrukt terwijl je de micro:bit inschakelt."
   },
@@ -1292,9 +1247,6 @@
   "saving-toast-title": {
     "defaultMessage": "Je hex bestand is gedownload"
   },
-  "search": {
-    "defaultMessage": "Zoeken"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "Kies pictogram voor actie \"{action}\""
   },
@@ -1303,12 +1255,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "Selecteer \"{iconName}\" pictogram"
-  },
-  "select-project-action": {
-    "defaultMessage": "Selecteer {name}"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "Selectie-acties"
   },
   "settings": {
     "defaultMessage": "Instellingen"
@@ -1348,24 +1294,6 @@
   },
   "software-versions": {
     "defaultMessage": "Software versies"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "Laatst gewijzigd"
-  },
-  "sort-option-name": {
-    "defaultMessage": "Naam"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "Relevantie"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "Oplopende volgorde"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "Aflopende volgorde"
-  },
-  "sort-select-label": {
-    "defaultMessage": "Projecten sorteren"
   },
   "start-training-action": {
     "defaultMessage": "Start de training"
@@ -1414,12 +1342,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "Dit project wordt aangeboden door een gebruiker, en wordt niet ondersteund door Microsoft of de Micro:bit Educational Foundation. Bezoek het <link>gedeelde MakeCode project</link> om misbruik aan Microsoft MakeCode te melden als je denkt dat het niet gepast is."
-  },
-  "timestamp-now": {
-    "defaultMessage": "nu"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "een paar seconden geleden"
   },
   "tour-action": {
     "defaultMessage": "Rondleiding"

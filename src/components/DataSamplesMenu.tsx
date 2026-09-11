@@ -26,7 +26,7 @@ import {
 } from "@microbit/ui";
 import { useStore } from "../store";
 import { getTotalNumSamples } from "../utils/actions";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from "@microbit/ui";
 import LoadProjectInput, { LoadProjectInputRef } from "./LoadProjectInput";
 import { NameProjectDialog } from "./NameProjectDialog";
 import ViewDataFeaturesMenuItem from "./ViewDataFeaturesMenuItem";
@@ -114,6 +114,7 @@ const DataSamplesMenu = () => {
             <FormattedMessage id="delete-data-samples-confirm-text" />
           </Text>
         }
+        confirmText={intl.formatMessage({ id: "confirm-action" })}
         onConfirm={handleDeleteAllActions}
         onCancel={closeDialog}
       />

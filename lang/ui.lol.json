@@ -170,9 +170,6 @@
   "certainty-tooltip": {
     "defaultMessage": "crwdns362696:0crwdne362696:0"
   },
-  "clear": {
-    "defaultMessage": "crwdns369305:0crwdne369305:0"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "crwdns362698:0crwdne362698:0"
   },
@@ -515,21 +512,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "crwdns362884:0crwdne362884:0"
   },
-  "delete-project-action": {
-    "defaultMessage": "crwdns369313:0count={count}crwdnd369313:0count={count}crwdne369313:0"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "crwdns369315:0crwdne369315:0"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "crwdns369317:0{project}crwdne369317:0"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "crwdns369319:0crwdne369319:0"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "crwdns369321:0{numProjects}crwdne369321:0"
-  },
   "delete-recording-aria": {
     "defaultMessage": "crwdns362886:0{sample}crwdnd362886:0{numSamples}crwdnd362886:0{action}crwdne362886:0"
   },
@@ -619,12 +601,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "crwdns362932:0crwdne362932:0"
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "crwdns369323:0crwdne369323:0"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "crwdns369325:0crwdne369325:0"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "crwdns362934:0crwdne362934:0"
@@ -1016,9 +992,6 @@
   "name-action-hint": {
     "defaultMessage": "crwdns369347:0crwdne369347:0"
   },
-  "name-project": {
-    "defaultMessage": "crwdns363182:0crwdne363182:0"
-  },
   "name-text": {
     "defaultMessage": "crwdns363184:0crwdne363184:0"
   },
@@ -1079,9 +1052,6 @@
   "open-file-dropped": {
     "defaultMessage": "crwdns363228:0crwdne363228:0"
   },
-  "open-project-action": {
-    "defaultMessage": "crwdns369355:0crwdne369355:0"
-  },
   "open-shared-project-action": {
     "defaultMessage": "crwdns369357:0crwdne369357:0"
   },
@@ -1121,20 +1091,11 @@
   "project-loaded": {
     "defaultMessage": "crwdns363238:0crwdne363238:0"
   },
-  "project-menu-action": {
-    "defaultMessage": "crwdns369365:0{name}crwdne369365:0"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "crwdns363240:0crwdne363240:0"
-  },
   "project-name-text": {
     "defaultMessage": "crwdns369367:0crwdne369367:0"
   },
   "project-name-tooltip": {
     "defaultMessage": "crwdns369369:0crwdne369369:0"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "crwdns369371:0crwdne369371:0"
   },
   "project-storage-tooltip": {
     "defaultMessage": "crwdns369373:0crwdne369373:0"
@@ -1238,12 +1199,6 @@
   "reload-action": {
     "defaultMessage": "crwdns363298:0crwdne363298:0"
   },
-  "rename-project-action": {
-    "defaultMessage": "crwdns369385:0crwdne369385:0"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "crwdns369387:0crwdne369387:0"
-  },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
     "defaultMessage": "crwdns370184:0crwdne370184:0"
   },
@@ -1301,9 +1256,6 @@
   "saving-toast-title": {
     "defaultMessage": "crwdns363324:0crwdne363324:0"
   },
-  "search": {
-    "defaultMessage": "crwdns369389:0crwdne369389:0"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "crwdns363326:0{action}crwdne363326:0"
   },
@@ -1312,12 +1264,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "crwdns363330:0{iconName}crwdne363330:0"
-  },
-  "select-project-action": {
-    "defaultMessage": "crwdns369391:0{name}crwdne369391:0"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "crwdns369393:0crwdne369393:0"
   },
   "settings": {
     "defaultMessage": "crwdns363332:0crwdne363332:0"
@@ -1357,24 +1303,6 @@
   },
   "software-versions": {
     "defaultMessage": "crwdns363342:0crwdne363342:0"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "crwdns369395:0crwdne369395:0"
-  },
-  "sort-option-name": {
-    "defaultMessage": "crwdns369397:0crwdne369397:0"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "crwdns369399:0crwdne369399:0"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "crwdns369401:0crwdne369401:0"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "crwdns369403:0crwdne369403:0"
-  },
-  "sort-select-label": {
-    "defaultMessage": "crwdns369405:0crwdne369405:0"
   },
   "start-training-action": {
     "defaultMessage": "crwdns363346:0crwdne363346:0"
@@ -1423,12 +1351,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "crwdns368597:0crwdne368597:0"
-  },
-  "timestamp-now": {
-    "defaultMessage": "crwdns369411:0crwdne369411:0"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "crwdns369413:0crwdne369413:0"
   },
   "tour-action": {
     "defaultMessage": "crwdns363370:0crwdne363370:0"
