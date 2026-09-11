@@ -71,10 +71,10 @@ export const reportError = (
   dsn: string | undefined,
   message: string,
   e: unknown
-): void => {
+): string | undefined => {
   console.error(message, e);
   if (!dsn) {
-    return;
+    return undefined;
   }
   try {
     sentryAddBreadcrumb({
@@ -82,9 +82,10 @@ export const reportError = (
       type: "error-message",
       level: "error",
     });
-    sentryCaptureException(e);
+    return sentryCaptureException(e);
   } catch (err) {
     console.error(err);
+    return undefined;
   }
 };
 

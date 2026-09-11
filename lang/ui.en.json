@@ -1435,14 +1435,6 @@
     "defaultMessage": "Your MakeCode project has been imported",
     "description": "Title of import non-CreateAI hex dialog"
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} home page",
-    "description": "Page not found link text"
-  },
-  "not-found-title": {
-    "defaultMessage": "Page not found",
-    "description": "Page not found page title"
-  },
   "open-file-dropped": {
     "defaultMessage": "Open file when dropped",
     "description": "Aria label for file drop target"
@@ -1886,10 +1878,6 @@
   "storage-error-quota-title": {
     "defaultMessage": "Browser storage full",
     "description": "Toast title when browser storage quota is exceeded"
-  },
-  "support-request": {
-    "defaultMessage": "Please consider <link>raising a support request</link>.",
-    "description": "Support request link text"
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Teacher resources",

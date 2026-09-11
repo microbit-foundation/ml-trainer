@@ -20,7 +20,11 @@ export interface Navigation {
 
 export interface Logging {
   event(event: Event): void;
-  error(message: string, e: unknown): void;
+  /**
+   * Returns a reference for the report (the Sentry event id) when one was
+   * sent, for showing to the user so support can find the report.
+   */
+  error(message: string, e: unknown): string | undefined;
   log(e: any): void;
   /**
    * Update the user's analytics consent.

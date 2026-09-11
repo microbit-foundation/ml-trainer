@@ -1067,12 +1067,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "Twój projekt MakeCode został zaimportowany"
   },
-  "not-found": {
-    "defaultMessage": "Strona główna  {appNameFull}"
-  },
-  "not-found-title": {
-    "defaultMessage": "Nie znaleziono strony"
-  },
   "open-file-dropped": {
     "defaultMessage": "Otwórz plik po upuszczeniu"
   },
@@ -1402,9 +1396,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "Pamięć przeglądarki jest pełna"
-  },
-  "support-request": {
-    "defaultMessage": "Rozważ <link>złożenie prośby o pomoc</link>."
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Materiały dla nauczycieli"

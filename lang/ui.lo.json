@@ -1064,12 +1064,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "ໂຄງການ MakeCode ຂອງທ່ານໄດ້ຖືກນຳເຂົ້າແລ້ວ"
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} ໜ້າຫຼັກ"
-  },
-  "not-found-title": {
-    "defaultMessage": "ບໍ່ພົບໜ້າ"
-  },
   "open-file-dropped": {
     "defaultMessage": "ເປີດໄຟລ໌ເມື່ອຖືກວາງ"
   },
@@ -1399,9 +1393,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "ພື້ນທີ່ເກັບຂໍ້ມູນໃນບຣາວເຊີເຕັມແລ້ວ"
-  },
-  "support-request": {
-    "defaultMessage": "ກະລຸນາພິຈາລະນາ <link>ສົ່ງຄຳຮ້ອງຂໍສະໜັບສະໜູນ</link>."
   },
   "teacher-resources-row-title": {
     "defaultMessage": "ຊັບພະຍາກອນສຳລັບຄູ"
