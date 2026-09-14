@@ -116,6 +116,9 @@
   "animation-training": {
     "defaultMessage": "Treinar"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Baixe na App Store"
+  },
   "back-action": {
     "defaultMessage": "Voltar"
   },
@@ -313,6 +316,9 @@
   },
   "connect-pattern-label": {
     "defaultMessage": "O número de LEDs acesos em cada coluna da tela do micro:bit, da esquerda para a direita, é {numLedsOnCol1}, {numLedsOnCol2}, {numLedsOnCol3}, {numLedsOnCol4} e {numLedsOnCol5}."
+  },
+  "connect-pattern-led-option-label": {
+    "defaultMessage": "Coluna {colNum}, {numLeds, plural, one {# LED acende} other {# LEDs acendem}}"
   },
   "connect-pattern-subtitle": {
     "defaultMessage": "Copie o padrão exibido no micro:bit."
@@ -725,6 +731,9 @@
   "go-action": {
     "defaultMessage": "Ir"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Baixe na Google Play"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Esquema de cores do gráfico"
   },
@@ -778,6 +787,9 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Aprendizado de máquina com movimento e micro:bit"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Disponível em tablets Android e iPads "
   },
   "import-data-samples-action": {
     "defaultMessage": "Importar amostras de dados"

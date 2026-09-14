@@ -116,6 +116,9 @@
   "animation-training": {
     "defaultMessage": "トレーニング"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "アプリストアからダウンロードする"
+  },
   "back-action": {
     "defaultMessage": "戻る"
   },

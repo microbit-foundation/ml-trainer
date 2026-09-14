@@ -116,6 +116,9 @@
   "animation-training": {
     "defaultMessage": "Trenowanie"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Pobierz z App Store"
+  },
   "back-action": {
     "defaultMessage": "Wróć"
   },
@@ -728,6 +731,9 @@
   "go-action": {
     "defaultMessage": "Dalej"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Pobierz z Google Play"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Schemat kolorów wykresu"
   },
@@ -781,6 +787,9 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Uczenie maszynowe z poruszaniem się i micro:bitem"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Dostępne na tabletach z systemem Android i iPadach"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importuj próbki danych"
