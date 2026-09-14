@@ -159,7 +159,7 @@ const ProjectRow = () => {
                     .map((a) => a.name)
                     .join(", ")}
                   bodyCss={{ _shortHeight: { p: 3 } }}
-                  onDelete={actions.requestDelete}
+                  onDelete={actions.delete}
                   onRename={actions.rename}
                   onDuplicate={actions.duplicate}
                   onOpen={handleOpenProject}

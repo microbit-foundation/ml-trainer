@@ -19,18 +19,19 @@ import {
 import {
   defaultSortDirection,
   ProjectCard,
+  ProjectSearchInput,
+  ProjectSortDirection,
   ProjectSortField,
+  ProjectSortInput,
   ProjectsToolbar,
+  ProjectsToolbarHandle,
   rankProjects,
-  SearchInput,
-  SortDirection,
-  SortInput,
   sortProjects,
   useProjectActions,
   useProjectSelection,
 } from "@microbit/ui-patterns";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import DefaultPageLayout, {
   HomeToolbarItem,
@@ -51,13 +52,14 @@ const ProjectsPage = () => {
   const duplicateProject = useStore((s) => s.duplicateProject);
   const deleteProjects = useStore((s) => s.deleteProjects);
   const logging = useLogging();
+  const intl = useIntl();
   const mobileIconOnly = useBreakpointValue({ base: true, md: false });
 
   const selection = useProjectSelection(allProjectData);
   const { selectedIds } = selection;
 
   const [field, setField] = useState<ProjectSortField>("timestamp");
-  const [direction, setDirection] = useState<SortDirection>("desc");
+  const [direction, setDirection] = useState<ProjectSortDirection>("desc");
   const handleFieldChange = (next: ProjectSortField) => {
     const nextDirection = defaultSortDirection(next);
     setDirection(nextDirection);
@@ -92,7 +94,7 @@ const ProjectsPage = () => {
 
   const actions = useProjectActions({
     projects: allProjectData,
-    getSelectedIds: () => selectedIds,
+    selectedIds,
     onRename: async (id, name) => {
       logging.event({
         type: "project_rename",
@@ -116,13 +118,12 @@ const ProjectsPage = () => {
     },
   });
 
-  const desktopToolbarRef = useRef<HTMLDivElement>(null);
-  const mobileToolbarRef = useRef<HTMLDivElement>(null);
+  const desktopToolbarRef = useRef<ProjectsToolbarHandle>(null);
+  const mobileToolbarRef = useRef<ProjectsToolbarHandle>(null);
   const handleSkipToToolbar = useCallback(() => {
-    const toolbar = desktopToolbarRef.current?.offsetParent
-      ? desktopToolbarRef.current
-      : mobileToolbarRef.current;
-    toolbar?.querySelector<HTMLElement>("button")?.focus();
+    if (!desktopToolbarRef.current?.focus()) {
+      mobileToolbarRef.current?.focus();
+    }
   }, []);
 
   const [query, setQuery] = useState("");
@@ -152,8 +153,8 @@ const ProjectsPage = () => {
     () =>
       query.trim()
         ? rankProjects(allProjectData, query, actionNames)
-        : sortProjects(allProjectData, field, direction),
-    [allProjectData, direction, field, query]
+        : sortProjects(allProjectData, field, direction, intl.locale),
+    [allProjectData, direction, field, intl.locale, query]
   );
 
   return (
@@ -179,14 +180,13 @@ const ProjectsPage = () => {
             flexGrow={1}
           >
             <HStack mb={4} justifyContent="space-between" alignItems="center">
-              <SearchInput
+              <ProjectSearchInput
                 value={query}
                 onChange={handleQueryChange}
                 className={css({ maxW: "30ch", my: "1px" })}
               />
               {selection.hasSelection && (
                 <Box
-                  ref={desktopToolbarRef}
                   display={{ base: "none", lg: "block" }}
                   bg="white"
                   borderWidth="1px"
@@ -195,15 +195,16 @@ const ProjectsPage = () => {
                   marginLeft="auto"
                 >
                   <ProjectsToolbar
+                    ref={desktopToolbarRef}
                     selectedCount={selectedIds.length}
-                    onDelete={actions.requestDelete}
+                    onDelete={actions.delete}
                     onRename={actions.rename}
                     onDuplicate={actions.duplicate}
                     onClearSelection={selection.clear}
                   />
                 </Box>
               )}
-              <SortInput
+              <ProjectSortInput
                 className={cx(
                   css({ marginLeft: "auto" }),
                   selection.hasSelection
@@ -235,8 +236,8 @@ const ProjectsPage = () => {
                     project={projectData}
                     description={actionNames(projectData).join(", ")}
                     isSelected={selection.isSelected(projectData.id)}
-                    onSelected={selection.toggle}
-                    onDelete={actions.requestDelete}
+                    onToggleSelected={selection.toggle}
+                    onDelete={actions.delete}
                     onRename={actions.rename}
                     onDuplicate={actions.duplicate}
                     onOpen={handleOpenProject}
@@ -265,7 +266,6 @@ const ProjectsPage = () => {
         <Flex
           justifyContent="center"
           display={{ base: "flex", lg: "none" }}
-          ref={mobileToolbarRef}
           bg="white"
           boxShadow="0 -2px 8px rgba(0,0,0,0.1)"
           borderTop="1px solid"
@@ -274,8 +274,9 @@ const ProjectsPage = () => {
           px={4}
         >
           <ProjectsToolbar
+            ref={mobileToolbarRef}
             selectedCount={selection.lastSelectedIds.length}
-            onDelete={actions.requestDelete}
+            onDelete={actions.delete}
             onRename={actions.rename}
             onDuplicate={actions.duplicate}
             onClearSelection={selection.clear}
