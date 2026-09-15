@@ -16,7 +16,7 @@ export class ProjectsPage {
   constructor(public readonly page: Page) {
     this.url = `${appUrl()}projects`;
     this.heading = this.page.getByRole("heading", { name: "Projects" });
-    this.searchInput = this.page.getByRole("textbox", { name: "Search" });
+    this.searchInput = this.page.getByRole("searchbox", { name: "Search" });
     this.homeButton = this.page.getByRole("button", { name: "Home page" });
     this.selectionToolbar = this.page.getByRole("group", {
       name: "Selection actions",
@@ -206,7 +206,8 @@ export class ProjectsPage {
   private async confirmDelete() {
     const dialog = this.page.getByRole("alertdialog");
     await expect(dialog).toBeVisible();
-    await dialog.getByRole("button", { name: "Confirm" }).click();
+    // "Delete", or "Delete N projects" for a selection.
+    await dialog.getByRole("button", { name: /^Delete/ }).click();
     await expect(dialog).toBeHidden();
   }
 

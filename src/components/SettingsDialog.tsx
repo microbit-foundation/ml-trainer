@@ -31,7 +31,7 @@ import {
 } from "../settings";
 import { useSettings } from "../store";
 import { previewGraphData } from "../utils/preview-graph-data";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from "@microbit/ui";
 import RecordingGraph from "./RecordingGraph";
 
 interface SettingsDialogProps {

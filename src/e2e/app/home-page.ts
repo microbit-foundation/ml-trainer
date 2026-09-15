@@ -185,7 +185,8 @@ export class HomePage {
   private async confirmDelete() {
     const dialog = this.page.getByRole("alertdialog");
     await expect(dialog).toBeVisible();
-    await dialog.getByRole("button", { name: "Confirm" }).click();
+    // "Delete", or "Delete N projects" for a selection.
+    await dialog.getByRole("button", { name: /^Delete/ }).click();
     await expect(dialog).toBeHidden();
   }
 }
