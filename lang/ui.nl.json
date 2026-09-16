@@ -116,6 +116,9 @@
   "animation-training": {
     "defaultMessage": "Training"
   },
+  "app-store-badge-alt": {
+    "defaultMessage": "Downloaden in de App Store"
+  },
   "back-action": {
     "defaultMessage": "Terug"
   },
@@ -704,6 +707,9 @@
   "go-action": {
     "defaultMessage": "Gaan"
   },
+  "google-play-badge-alt": {
+    "defaultMessage": "Download het op Google Play"
+  },
   "graph-color-scheme": {
     "defaultMessage": "Grafiek kleurschema"
   },
@@ -757,6 +763,9 @@
   },
   "homepage-banner-subtitle": {
     "defaultMessage": "Machine learning met beweging en de micro:bit"
+  },
+  "homepage-footer-title": {
+    "defaultMessage": "Beschikbaar op Android-tablets en iPads"
   },
   "import-data-samples-action": {
     "defaultMessage": "Importeer data samples"
@@ -1040,12 +1049,6 @@
   "not-create-ai-hex-import-dialog-title": {
     "defaultMessage": "Je MakeCode project is geïmporteerd"
   },
-  "not-found": {
-    "defaultMessage": "{appNameFull} startpagina"
-  },
-  "not-found-title": {
-    "defaultMessage": "Pagina niet gevonden"
-  },
   "open-file-dropped": {
     "defaultMessage": "Open bestand wanneer gedropt"
   },
@@ -1206,7 +1209,7 @@
     "defaultMessage": "Reset naar Bluetooth modus"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Druk drie keer op RESET."
+    "defaultMessage": "Druk drie keer vlug achter elkaar op RESET."
   },
   "reset-to-default-action": {
     "defaultMessage": "Herstel naar standaardblokken"
@@ -1333,9 +1336,6 @@
   },
   "storage-error-quota-title": {
     "defaultMessage": "Browseropslag is vol"
-  },
-  "support-request": {
-    "defaultMessage": "Overweeg <link>een ondersteuningsverzoek</link> in te dienen."
   },
   "teacher-resources-row-title": {
     "defaultMessage": "Middelen voor onderwijzers"

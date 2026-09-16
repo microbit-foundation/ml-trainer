@@ -52,8 +52,8 @@ export class Logger implements Logging {
     this.sink.navigate(path);
   }
 
-  error(message: string, e: unknown): void {
-    reportError(this.sentryDsn, message, e);
+  error(message: string, e: unknown): string | undefined {
+    return reportError(this.sentryDsn, message, e);
   }
 
   log(v: unknown): void {

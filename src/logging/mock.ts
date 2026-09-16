@@ -17,8 +17,9 @@ export class MockLogging implements Logging {
   event(event: Event): void {
     this.events.push(event);
   }
-  error(e: any): void {
+  error(e: any): string | undefined {
     this.errors.push(e);
+    return undefined;
   }
   log(e: any): void {
     this.logs.push(e);
