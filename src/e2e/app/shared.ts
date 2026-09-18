@@ -18,7 +18,7 @@ export const getAbsoluteFilePath = (filePathFromProjectRoot: string) => {
  * avoid colliding with a dev server already on the default one.
  */
 export const appUrl = (): string =>
-  `http://localhost:${process.env.E2E_PORT ?? "5173"}${
+  `http://localhost:${process.env.E2E_PORT ?? "3003"}${
     process.env.CI ? process.env.BASE_URL : "/"
   }`;
 

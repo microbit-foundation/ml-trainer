@@ -73,12 +73,12 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 3
-      - run: npx website-deploy-aws
+      - run: npm run deploy
         if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || (env.OFFICIAL_REPO == 'true' && success()))
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DEPLOY_ML_AWS_SECRET_ACCESS_KEY }}
-      - run: npx invalidate-cloudfront-distribution
+      - run: npm run invalidate
         if: github.repository_owner == 'microbit-foundation' && (env.STAGE == 'REVIEW' || (env.OFFICIAL_REPO == 'true' && success()))
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DEPLOY_ML_AWS_ACCESS_KEY_ID }}

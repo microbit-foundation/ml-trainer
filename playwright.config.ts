@@ -5,6 +5,12 @@
  */
 import { defineConfig, devices } from "@playwright/test";
 
+// The page objects build their absolute URLs from E2E_PORT, so it has to
+// name whichever server this run starts: the dev server locally, or
+// `vite preview` on the production build in CI.
+const port = process.env.CI ? 4003 : 3003;
+process.env.E2E_PORT ??= String(port);
+
 // Sandboxed environments (Claude's cage): Chromium honours HTTP_PROXY but
 // drops the credential in it, so pass it explicitly; localhost bypasses the
 // proxy to reach the same-namespace dev server. No-op when HTTP_PROXY is
@@ -45,12 +51,12 @@ export default defineConfig({
   webServer: {
     ...(process.env.CI
       ? {
-          command: `npx vite preview --port 5173 --base ${process.env.BASE_URL}`,
-          url: `http://localhost:5173${process.env.BASE_URL}`,
+          command: `npx vite preview --port ${port} --base ${process.env.BASE_URL}`,
+          url: `http://localhost:${port}${process.env.BASE_URL}`,
         }
       : {
-          command: "npx vite dev",
-          url: "http://localhost:5173/",
+          command: "npm run dev",
+          url: `http://localhost:${port}/`,
         }),
     reuseExistingServer: !process.env.CI,
     stdout: "pipe",
