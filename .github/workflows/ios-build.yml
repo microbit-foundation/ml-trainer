@@ -28,6 +28,8 @@ jobs:
       packages: read
     env:
       OFFICIAL_REPO: ${{ github.repository == 'microbit-foundation/ml-trainer' }}
+      # Not really secret but worth keeping out the repo to prevent unintended use
+      VITE_SENTRY_DSN: ${{ secrets.PROTOTYPE_SENTRY_DSN }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -95,6 +97,9 @@ jobs:
 
       - run: node ./bin/print-apps-ci-env.cjs >> $GITHUB_ENV
       - run: npm run build:apps
+        env:
+          # Uploads source maps to Sentry. Review builds don't report to Sentry.
+          SENTRY_AUTH_TOKEN: ${{ env.STAGE != 'REVIEW' && secrets.SENTRY_AUTH_TOKEN || '' }}
 
       - run: npx cap sync ios
 

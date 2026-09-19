@@ -5,6 +5,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 import ejs from "ejs";
 import fs from "node:fs";
@@ -147,6 +148,21 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       react(),
       svgr(),
       themeOptionalImagesPlugin(),
+      // Source maps are public (open source) so there's nothing to delete;
+      // uploading them means Sentry doesn't depend on fetching from the CDN,
+      // which it can't do for the native app builds anyway.
+      process.env.SENTRY_AUTH_TOKEN
+        ? sentryVitePlugin({
+            org: "microbit",
+            project: "createai",
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            telemetry: false,
+            release: {
+              // Must match the release passed to Sentry.init in src/logging/sentry.ts.
+              name: `createai-v${process.env.VITE_VERSION}`,
+            },
+          })
+        : false,
     ],
     assetsInclude: ["**/*.hex"],
     define: {
@@ -158,6 +174,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       target: BUILD_TARGETS,
       cssTarget: BUILD_TARGETS,
       cssMinify: "lightningcss",
+      sourcemap: true,
       rollupOptions: {
         input: "index.html",
       },
