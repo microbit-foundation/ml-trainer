@@ -44,7 +44,7 @@ function getIP() {
 }
 
 if (process.env.CAP_LOCAL_DEV) {
-  config.server = { url: `http://${getIP()}:5173`, cleartext: true };
+  config.server = { url: `http://${getIP()}:3003`, cleartext: true };
 }
 
 export default config;

@@ -42,13 +42,13 @@ Getting up and running:
 1. Ensure you have a working [Node.js environment](https://nodejs.org/en/download/). We recommend using the LTS version of Node.
 2. Checkout this repository with Git. GitHub have some [learning resources for Git](https://docs.github.com/en/get-started/quickstart/git-and-github-learning-resources) that you may find useful.
 3. Install the dependencies by running `npm install` on the command line in the checkout folder.
-4. Choose from the NPM scripts documented below. Try `npm start` if you're not sure.
+4. Choose from the NPM scripts documented below. Try `npm run dev` if you're not sure.
 
 ### `npm run dev`
 
 Runs the app in the development mode.
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3003](http://localhost:3003) to view it in the browser.
 
 The page will reload if you make edits.
 

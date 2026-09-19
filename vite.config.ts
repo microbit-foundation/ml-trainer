@@ -163,6 +163,10 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       },
     },
     server: createServer(mode),
+    preview: {
+      port: 4003,
+      strictPort: true,
+    },
     test: {
       globals: true,
       environment: "jsdom",
@@ -218,7 +222,8 @@ const createServer = (mode: string): ServerOptions => {
     : undefined;
   /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
   const options = {
-    port: 5173,
+    port: 3003,
+    strictPort: true,
     fs: {
       // The theme package and @microbit/ui may be installed as symlinks to
       // sibling checkouts, so their files resolve to real paths outside the

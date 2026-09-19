@@ -10,7 +10,7 @@ describe("isWebUrl", () => {
     expect(isWebUrl("https://mltrainer.microbit.org/import?id=x")).toEqual(
       true
     );
-    expect(isWebUrl("http://localhost:5173/data-samples")).toEqual(true);
+    expect(isWebUrl("http://localhost:3003/data-samples")).toEqual(true);
   });
 
   it("is false for file and content URLs (native file opens)", () => {
