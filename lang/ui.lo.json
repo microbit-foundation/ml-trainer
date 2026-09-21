@@ -167,9 +167,6 @@
   "certainty-tooltip": {
     "defaultMessage": "ຄວາມແນ່ໃຈທີ່ໂມເດວຄິດວ່າມັນກຳລັງດຳເນີນແຕ່ລະການກະທຳຢູ່ໃນຂະນະນີ້ແນວໃດ"
   },
-  "clear": {
-    "defaultMessage": "ລຶບລ້າງ"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "ຄລິກເພື່ອໂຫຼດໜ້າໃໝ່"
   },
@@ -509,21 +506,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບຕົວຢ່າງຂໍ້ມູນທັງໝົດ?"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, one {ລຶບ} other {ລຶບ {count} ໂຄງການ}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "ຢືນຢັນການລຶບໂຄງການ"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບໂຄງການ \"{project}\"?"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "ຢືນຢັນການລຶບໂຄງການ"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລຶບ {numProjects} ໂຄງການ?"
-  },
   "delete-recording-aria": {
     "defaultMessage": "ລຶບການບັນທຶກ {sample} ຈາກທັງໝົດ {numSamples} ສຳລັບການກະທຳ \"{action}\""
   },
@@ -613,12 +595,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "ກະລຸນາລໍຖ້າ. ກຳລັງດາວໂຫຼດໂປຣແກຣມລົງໃນ micro:bit."
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "ສຳເນົາຊ້ຳ"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "ສຳເນົາໂຄງການຊ້ຳ"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "ແກ້ໄຂໃນ MakeCode"
@@ -1004,9 +980,6 @@
   "name-action-hint": {
     "defaultMessage": "ຕັ້ງຊື່ການກະທຳທີ່ທ່ານຕ້ອງການໃຫ້ CreateAI ຈຳແນກ ເຊັ່ນ: ‘ໂບກມື’ ຫຼື ‘ກະໂດດ’"
   },
-  "name-project": {
-    "defaultMessage": "ຕັ້ງຊື່ໂຄງການຂອງທ່ານ"
-  },
   "name-text": {
     "defaultMessage": "ຊື່"
   },
@@ -1067,9 +1040,6 @@
   "open-file-dropped": {
     "defaultMessage": "ເປີດໄຟລ໌ເມື່ອຖືກວາງ"
   },
-  "open-project-action": {
-    "defaultMessage": "ເປີດ"
-  },
   "open-shared-project-action": {
     "defaultMessage": "ເປີດໂຄງການ"
   },
@@ -1109,20 +1079,11 @@
   "project-loaded": {
     "defaultMessage": "ໂຄງການຖືກໂຫຼດແລ້ວ"
   },
-  "project-menu-action": {
-    "defaultMessage": "{name} ເມນູການກະທຳ"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "ຊື່ໂຄງການບໍ່ສາມາດວ່າງໄດ້"
-  },
   "project-name-text": {
     "defaultMessage": "ຊື່ໂຄງການ"
   },
   "project-name-tooltip": {
     "defaultMessage": "ຄລິກເພື່ອແກ້ໄຂຊື່ໂຄງການ"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "ຂ້າມໄປທີ່ແຖບເຄື່ອງມື"
   },
   "project-storage-tooltip": {
     "defaultMessage": "ຂໍ້ມູນຂອງທ່ານຖືກບັນທຶກໄວ້ໃນບຣາວເຊີນີ້ໃນອຸປະກອນນີ້. ການລຶບຄຸກກີ້ ຫຼື ຂໍ້ມູນເວັບໄຊທ໌ຂອງບຣາວເຊີຈະເຮັດໃຫ້ຂໍ້ມູນນີ້ຖືກລຶບໄປນຳ. ມັນອາດຈະຖືກລຶບອອກອັດຕະໂນມັດໂດຍບຣາວເຊີ ຖ້າອຸປະກອນຂອງທ່ານມີພື້ນທີ່ຈັດເກັບເຫຼືອນ້ອຍລົງ.\n"
@@ -1226,12 +1187,6 @@
   "reload-action": {
     "defaultMessage": "ໂຫຼດໃໝ່"
   },
-  "rename-project-action": {
-    "defaultMessage": "ປ່ຽນຊື່"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "ປ່ຽນຊື່ໂຄງການ"
-  },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "ກົດ A + B ແລ້ວກົດ RESET ຄ້າງໄວ້. ໃຫ້ສືບຕໍ່ກົດ A + B ຄ້າງໄວ້ຈົນກວ່າໄອຄອນ Bluetooth ຈະປາກົດ."
   },
@@ -1286,9 +1241,6 @@
   "saving-toast-title": {
     "defaultMessage": "ໄຟລ໌ hex ຂອງທ່ານໄດ້ຖືກດາວໂຫຼດແລ້ວ"
   },
-  "search": {
-    "defaultMessage": "ຄົ້ນຫາ"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "ເລືອກໄອຄອນສຳລັບການກະທຳ \"{action}\""
   },
@@ -1297,12 +1249,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "ເລືອກໄອຄອນ “{iconName}”"
-  },
-  "select-project-action": {
-    "defaultMessage": "ເລືອກ {name}"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "ການເລືອກການກະທຳ"
   },
   "settings": {
     "defaultMessage": "ການຕັ້ງຄ່າ"
@@ -1342,24 +1288,6 @@
   },
   "software-versions": {
     "defaultMessage": "ເວີຊັນຂອງຊອບແວ"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "ແກ້ໄຂລ່າສຸດ"
-  },
-  "sort-option-name": {
-    "defaultMessage": "ຊື່"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "ຄວາມກ່ຽວຂ້ອງ"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "ລຳດັບຈາກນ້ອຍໄປຫາໃຫຍ່"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "ລຳດັບຈາກໃຫຍ່ໄປຫານ້ອຍ"
-  },
-  "sort-select-label": {
-    "defaultMessage": "ຈັດລຳດັບໂຄງການ"
   },
   "start-training-action": {
     "defaultMessage": "ເລີ່ມຝຶກອົບຮົມ"
@@ -1408,12 +1336,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "ໂຄງການນີ້ຖືກສະໜອງໂດຍຜູ້ໃຊ້ ແລະ ບໍ່ໄດ້ຮັບການຮັບຮອງໂດຍ Microsoft ຫຼື Micro:bit Educational Foundation. ເຂົ້າໄປທີ່ <link>ໂຄງການທີ່ແບ່ງປັນຂອງ MakeCode</link> ເພື່ອລາຍງານການໃຊ້ງານທີ່ບໍ່ເໝາະສົມກັບ Microsoft MakeCode ຖ້າທ່ານຄິດວ່າມັນບໍ່ເໝາະສົມ."
-  },
-  "timestamp-now": {
-    "defaultMessage": "ຕອນນີ້"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "ສອງສາມວິນາທີກ່ອນ"
   },
   "tour-action": {
     "defaultMessage": "ການນຳທ່ຽວ"

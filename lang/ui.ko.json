@@ -128,9 +128,6 @@
   "certainty-tooltip": {
     "defaultMessage": "현재 사용자가 각 행동을 수행하고 있는 모델에 대한 확신 정도를 나타냅니다."
   },
-  "clear": {
-    "defaultMessage": "지우기"
-  },
   "click-to-reload-page-action": {
     "defaultMessage": "클릭하여 페이지 새로 고침"
   },
@@ -422,21 +419,6 @@
   "delete-data-samples-confirm-text": {
     "defaultMessage": "모든 데이터 샘플을 삭제하시겠습니까?"
   },
-  "delete-project-action": {
-    "defaultMessage": "{count, plural, other {프로젝트 {count}개 삭제}}"
-  },
-  "delete-project-confirm-heading": {
-    "defaultMessage": "프로젝트 삭제 확인"
-  },
-  "delete-project-confirm-text": {
-    "defaultMessage": "''{project}'' 프로젝트를 정말 삭제할까요?"
-  },
-  "delete-projects-confirm-heading": {
-    "defaultMessage": "프로젝트 삭제 확인"
-  },
-  "delete-projects-confirm-text": {
-    "defaultMessage": "프로젝트 {numProjects}개를 정말 삭제할까요?"
-  },
   "delete-recording-aria": {
     "defaultMessage": "\"{action}\" 행동에 대한 {numSamples}개의 기록 {sample} 삭제"
   },
@@ -508,12 +490,6 @@
   },
   "downloading-subtitle": {
     "defaultMessage": "잠시만 기다리세요. micro:bit에 프로그램을 다운로드하는 중입니다."
-  },
-  "duplicate-project-action": {
-    "defaultMessage": "복제"
-  },
-  "duplicate-project-heading": {
-    "defaultMessage": "프로젝트 복제"
   },
   "edit-in-makecode-action": {
     "defaultMessage": "MakeCode에서 편집하기"
@@ -890,9 +866,6 @@
   "name-action-hint": {
     "defaultMessage": "'손 젓기' 또는 '점프하기' 등 CreateAI가 인식할 행동의 이름을 지정하세요."
   },
-  "name-project": {
-    "defaultMessage": "프로젝트 이름을 지정하세요"
-  },
   "name-text": {
     "defaultMessage": "이름"
   },
@@ -919,9 +892,6 @@
   },
   "open-file-dropped": {
     "defaultMessage": "드롭될 때 파일 열기"
-  },
-  "open-project-action": {
-    "defaultMessage": "열기"
   },
   "open-shared-project-action": {
     "defaultMessage": "프로젝트 열기"
@@ -962,20 +932,11 @@
   "project-loaded": {
     "defaultMessage": "프로젝트 불러오기 완료"
   },
-  "project-menu-action": {
-    "defaultMessage": "{name} 행동 메뉴"
-  },
-  "project-name-not-empty": {
-    "defaultMessage": "프로젝트 이름을 입력해야 합니다"
-  },
   "project-name-text": {
     "defaultMessage": "프로젝트 이름"
   },
   "project-name-tooltip": {
     "defaultMessage": "클릭하여 프로젝트 이름 수정"
-  },
-  "project-skip-to-toolbar": {
-    "defaultMessage": "도구 모음으로 건너뛰기"
   },
   "project-storage-tooltip": {
     "defaultMessage": "사용자의 데이터는 이 기기의 이 브라우저에 저장됩니다. 브라우저의 쿠키나 사이트 데이터를 삭제하면 해당 데이터도 함께 삭제됩니다. 기기의 저장 공간이 부족할 경우 브라우저에서 데이터가 자동으로 삭제될 수도 있습니다."
@@ -1079,12 +1040,6 @@
   "reload-action": {
     "defaultMessage": "새로 고침"
   },
-  "rename-project-action": {
-    "defaultMessage": "이름 변경"
-  },
-  "rename-project-heading": {
-    "defaultMessage": "프로젝트 이름 변경"
-  },
   "reset-to-default-action": {
     "defaultMessage": "기본 블록으로 초기화"
   },
@@ -1124,9 +1079,6 @@
   "saving-toast-title": {
     "defaultMessage": "hex 파일이 다운로드되었습니다."
   },
-  "search": {
-    "defaultMessage": "찾기"
-  },
   "select-icon-action-aria": {
     "defaultMessage": "\"{action}\" 행동에 대한 아이콘 선택"
   },
@@ -1135,12 +1087,6 @@
   },
   "select-icon-option-action-aria": {
     "defaultMessage": "\"{iconName}\" 아이콘 선택"
-  },
-  "select-project-action": {
-    "defaultMessage": "{name} 선택"
-  },
-  "selection-actions-group": {
-    "defaultMessage": "선택 항목 행동"
   },
   "settings": {
     "defaultMessage": "설정"
@@ -1162,24 +1108,6 @@
   },
   "software-versions": {
     "defaultMessage": "소프트웨어 버전"
-  },
-  "sort-option-last-modified": {
-    "defaultMessage": "최근 수정 날짜"
-  },
-  "sort-option-name": {
-    "defaultMessage": "이름"
-  },
-  "sort-option-relevance": {
-    "defaultMessage": "연관성"
-  },
-  "sort-order-ascending-label": {
-    "defaultMessage": "오름차순"
-  },
-  "sort-order-descending-label": {
-    "defaultMessage": "내림차순"
-  },
-  "sort-select-label": {
-    "defaultMessage": "프로젝트 정렬"
   },
   "start-training-action": {
     "defaultMessage": "훈련 시작"
@@ -1216,12 +1144,6 @@
   },
   "third-party-content-description": {
     "defaultMessage": "이 프로젝트는 Microsoft 또는 Micro:bit Educational Foundation의 승인을 받지 않은 사용자가 제공한 것으로 부적절하다고 판단되는 경우 <link>MakeCode 공유 프로젝트</link>를 방문해 Microsoft MakeCode에 신고해 주세요."
-  },
-  "timestamp-now": {
-    "defaultMessage": "지금"
-  },
-  "timestamp-seconds": {
-    "defaultMessage": "몇 초 전"
   },
   "tour-action": {
     "defaultMessage": "투어"

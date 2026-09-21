@@ -18,7 +18,7 @@ import { css, Grid, HStack, Text } from "@microbit/ui";
 import { useStore } from "../store";
 import { recordButtonId } from "./ActionDataSamplesCard";
 import { actionNameInputId } from "./ActionNameCard";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from "@microbit/ui";
 import ConnectFirstDialog from "./ConnectFirstDialog";
 import DataSamplesMenu from "./DataSamplesMenu";
 import DataSamplesTableRow from "./DataSamplesTableRow";
@@ -228,6 +228,7 @@ const DataSamplesTable = ({
                 />
               </Text>
             }
+            confirmText={intl.formatMessage({ id: "confirm-action" })}
             onConfirm={handleConfirm}
             onCancel={closeDialog}
           />
