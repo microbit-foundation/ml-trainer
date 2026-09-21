@@ -60,6 +60,9 @@ jobs:
       - run: npm run apply-brand
       - run: node ./bin/print-web-ci-env.cjs >> $GITHUB_ENV
       - run: npm run ci
+        env:
+          # Uploads source maps to Sentry. Review builds don't report to Sentry.
+          SENTRY_AUTH_TOKEN: ${{ env.STAGE != 'REVIEW' && secrets.SENTRY_AUTH_TOKEN || '' }}
       - name: Run Playwright tests
         if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA'
         timeout-minutes: 10
