@@ -15,7 +15,7 @@ env:
   # renovate: datasource=npm depName=npm
   NPM_VERSION: "11"
   # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
-  ML_THEME_VERSION: 0.4.1
+  ML_THEME_VERSION: 0.4.2
 
 jobs:
   build-ios:
@@ -80,7 +80,6 @@ jobs:
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
       - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }}
         if: github.repository_owner == 'microbit-foundation'
