@@ -39,10 +39,11 @@ module.exports = {
     },
     "**/assets/**": { CacheControl: "public, max-age=31536000, immutable" },
     // Just the favicon, other images via bundler/assets
-    "imgs/**": {
+    "**/imgs/**": {
       CacheControl: "public, max-age=0, must-revalidate",
     },
-    "**/.well-known/apple-app-site-association": {
+    // apple-app-site-association has no extension, so set the type explicitly
+    "**/.well-known/**": {
       ContentType: "application/json",
       CacheControl: "public, max-age=0, must-revalidate",
     },
