@@ -253,7 +253,7 @@ const createServer = (mode: string): ServerOptions => {
     },
     proxy: {
       "/microbit-org-proxy/": {
-        target: "https://microbit.org/",
+        target: "https://downloads.microbit.org/",
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/microbit-org-proxy/, ""),
         ...proxyAgent,
