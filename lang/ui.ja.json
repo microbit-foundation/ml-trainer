@@ -950,11 +950,20 @@
   "name-used-when": {
     "defaultMessage": "この名前は hex ファイルを保存するときに使用されます。"
   },
+  "native-bluetooth-error-body": {
+    "defaultMessage": "micro:bitとの接続が失敗しました。"
+  },
+  "native-bluetooth-error-check": {
+    "defaultMessage": "次の内容を確認してください。"
+  },
   "native-bluetooth-error-check-distance": {
     "defaultMessage": "micro:bit を接続したい機器に近づけてください。"
   },
   "native-bluetooth-error-check-mode": {
     "defaultMessage": "micro:bitはBluetoothモードです（ペアリングするためのパターンがLEDに表示されています）。"
+  },
+  "native-bluetooth-error-check-pattern": {
+    "defaultMessage": "正しいパターンを入力してください。"
   },
   "new-project-setup-title": {
     "defaultMessage": "新しいプロジェクトのセットアップ"
@@ -1153,6 +1162,9 @@
   },
   "save-hex-dialog-message2": {
     "defaultMessage": "アクションとデータサンプルを変更する必要がない場合は、Microsoft MakeCode で開くこともできます。"
+  },
+  "save-to-files-action": {
+    "defaultMessage": "ファイルを保存します。"
   },
   "saving-description": {
     "defaultMessage": "ダウンロードはまもなく完了します。"
