@@ -1,8 +1,8 @@
 diff --git a/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java b/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
-index dcfa338..9174fba 100644
+index 9b97dc0..6fb1f13 100644
 --- a/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
 +++ b/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
-@@ -148,7 +148,7 @@ public class SharePlugin extends Plugin {
+@@ -174,7 +174,7 @@ public class SharePlugin extends Plugin {
                  if (isFileUrl(file)) {
                      String type = getMimeType(file);
                      if (type == null || filesList.size() > 1) {
