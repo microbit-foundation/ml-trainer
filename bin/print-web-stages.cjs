@@ -12,4 +12,12 @@
 const { webStages } = require("./ci-stage.cjs");
 
 const stages = webStages(process.env.BETA_BRANCH_EXISTS === "true");
-console.log(`matrix=${JSON.stringify({ stage: stages })}`);
+// Playwright runs once per ref. When main also builds beta, it tests beta:
+// users see beta, and it's the build under a non-root base path.
+const playwright = (stage) =>
+  stage !== "PRODUCTION" && (stage === "BETA" || !stages.includes("BETA"));
+const include = stages.map((stage) => ({
+  stage,
+  playwright: playwright(stage),
+}));
+console.log(`matrix=${JSON.stringify({ include })}`);

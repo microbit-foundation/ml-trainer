@@ -79,14 +79,15 @@ jobs:
         env:
           # Uploads source maps to Sentry. Review builds don't report to Sentry.
           SENTRY_AUTH_TOKEN: ${{ env.STAGE != 'REVIEW' && secrets.SENTRY_AUTH_TOKEN || '' }}
+      # One stage per ref runs Playwright (bin/print-web-stages.cjs).
       - name: Run Playwright tests
-        if: env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA'
+        if: matrix.playwright
         timeout-minutes: 10
         uses: docker://mcr.microsoft.com/playwright:v1.63.0-noble
         with:
           args: npx playwright test
       - name: Store reports
-        if: (env.STAGE == 'REVIEW' || env.STAGE == 'STAGING' || env.STAGE == 'BETA') && failure()
+        if: matrix.playwright && failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: playwright-report
