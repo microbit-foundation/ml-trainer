@@ -207,7 +207,14 @@ Use GitHub's generated release notes as a starting point, but set the "Previous 
 
 Most users should use the supported Foundation deployment at https://createai.microbit.org/
 
-The editor is deployed by [GitHub actions](https://github.com/microbit-foundation/ml-trainer/actions).
+The editor is deployed by [GitHub actions](https://github.com/microbit-foundation/ml-trainer/actions):
+
+- A `v` tag deploys production, https://createai.microbit.org/
+- `main` deploys staging, https://stage-createai.microbit.org/, and beta, https://createai.microbit.org/v/beta/
+- While a `beta` branch exists, it deploys beta instead of `main`. Use one to show disruptive work before it merges, or to hold beta still. Beta shares production's origin, and so its IndexedDB: a storage schema change goes through a `beta` branch and ships to production soon after. Delete the branch when it's done, and beta follows `main` again.
+- Other branches deploy a preview to https://review-createai.microbit.org/<branch>/, behind sign-in.
+
+The hosting infrastructure is defined in the Foundation's private microbit-org repository (`apps/createai`).
 
 ## License
 

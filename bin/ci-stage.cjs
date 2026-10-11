@@ -19,4 +19,11 @@ if (ref === "refs/heads/beta") {
   stage = "REVIEW";
 }
 
-module.exports = { stage };
+/**
+ * The web stages a ref deploys, each its own build. main also deploys beta,
+ * unless a beta branch exists to hold beta ahead of or behind main.
+ */
+const webStages = (betaBranchExists) =>
+  stage === "STAGING" && !betaBranchExists ? ["STAGING", "BETA"] : [stage];
+
+module.exports = { stage, webStages };
