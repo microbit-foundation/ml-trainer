@@ -7,22 +7,25 @@ const {
   createDeploymentDetailsFromOptions,
 } = require("@microbit-foundation/website-deploy-aws");
 
+// The buckets and their distributions are defined in
+// microbit-foundation/microbit-org (apps/createai).
 const { s3Config } = createDeploymentDetailsFromOptions({
   production: {
-    bucket: "createai.microbit.org",
-    mode: "root",
-    allowPrerelease: false,
+    bucket: "createai-microbit-org-production",
+    hostname: "createai.microbit.org",
   },
   staging: {
-    bucket: "stage-createai.microbit.org",
+    bucket: "createai-microbit-org-staging",
+    hostname: "stage-createai.microbit.org",
   },
   beta: {
-    bucket: "review-createai.microbit.org",
+    bucket: "createai-microbit-org-production",
     hostname: "createai.microbit.org",
     prefix: "v/beta",
   },
   review: {
-    bucket: "review-createai.microbit.org",
+    bucket: "createai-microbit-org-review",
+    hostname: "review-createai.microbit.org",
     mode: "branch-prefix",
   },
 });
@@ -31,8 +34,14 @@ module.exports = {
   deploymentDir: "./dist",
   ...s3Config,
   region: "eu-west-1",
+  // The buckets are private (BucketOwnerEnforced), so objects take no ACL.
+  acl: null,
+  findDistribution: true,
   removeNonexistentObjects: true,
-  redirects: [],
+  // Beta is deployed under v/beta/ in production's bucket.
+  retainObjectsPatterns: ["v/beta/**"],
+  // Pages already open or cached may still ask for the previous build's.
+  staleObjectsPatterns: ["assets/**"],
   params: {
     "**/**.html": {
       CacheControl: "public, max-age=0, must-revalidate",
