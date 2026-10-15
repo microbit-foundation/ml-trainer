@@ -1200,7 +1200,7 @@
     "defaultMessage": "Recarregar"
   },
   "reset-to-bluetooth-mode-ab-power-on-subtitle": {
-    "defaultMessage": "Se você não puder acessar o botão de reinicialização, segure A+B enquanto você liga o micro:bit."
+    "defaultMessage": "Se você não conseguir acessar o botão de reinicialização, segure A+B enquanto você liga o micro:bit."
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
     "defaultMessage": "Segure A+B e pressione RESET. Continue segurando A+B até o ícone do Bluetooth aparecer."
@@ -1209,7 +1209,7 @@
     "defaultMessage": "Redefinir para o modo Bluetooth"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Pressione redefinir 3 vezes rapidamente."
+    "defaultMessage": "Pressione o reset 3 vezes rapidamente."
   },
   "reset-to-default-action": {
     "defaultMessage": "Resetar para os blocos padrão"

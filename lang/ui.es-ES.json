@@ -1197,13 +1197,13 @@
     "defaultMessage": "Recargar"
   },
   "reset-to-bluetooth-mode-ab-subtitle": {
-    "defaultMessage": "Mantén presionados A+B y presiona restablecer. Sigue presionando A+B hasta que aparezca el icono de Bluetooth."
+    "defaultMessage": "Mantén presionados A+B y presiona RESET. Sigue presionando A+B hasta que aparezca el icono de Bluetooth."
   },
   "reset-to-bluetooth-mode-heading": {
     "defaultMessage": "Restablecer al modo Bluetooth"
   },
   "reset-to-bluetooth-mode-subtitle": {
-    "defaultMessage": "Pulsa restablecer 3 veces rápidamente."
+    "defaultMessage": "Pulsa RESET tres veces."
   },
   "reset-to-default-action": {
     "defaultMessage": "Restablecer bloques por defecto"
