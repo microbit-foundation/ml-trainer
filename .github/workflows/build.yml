@@ -16,8 +16,6 @@ env:
   NPM_VERSION: "11"
   # renovate: datasource=npm depName=@microbit-foundation/ml-trainer-microbit registryUrl=https://npm.pkg.github.com
   ML_THEME_VERSION: 0.4.2
-  # renovate: datasource=npm depName=@microbit-foundation/website-deploy-aws registryUrl=https://npm.pkg.github.com
-  DEPLOY_AWS_VERSION: "1.1"
 
 jobs:
   stages:
@@ -69,7 +67,7 @@ jobs:
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }} @microbit-foundation/website-deploy-aws@${{ env.DEPLOY_AWS_VERSION }}
+      - run: npm install --no-save @microbit-foundation/ml-trainer-microbit@${{ env.ML_THEME_VERSION }}
         if: github.repository_owner == 'microbit-foundation'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

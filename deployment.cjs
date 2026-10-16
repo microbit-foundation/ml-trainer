@@ -5,7 +5,7 @@
  */
 const {
   createDeploymentDetailsFromOptions,
-} = require("@microbit-foundation/website-deploy-aws");
+} = require("@microbit/website-deploy-s3");
 
 // The buckets and their distributions are defined in
 // microbit-foundation/microbit-org (apps/createai).
