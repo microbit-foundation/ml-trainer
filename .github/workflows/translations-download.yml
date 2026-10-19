@@ -20,6 +20,9 @@ env:
 
 jobs:
   download:
+    # Copies of this repo pull synced translations from here and have no
+    # Crowdin or app secrets.
+    if: github.repository == 'microbit-foundation/ml-trainer'
     runs-on: ubuntu-latest
     permissions:
       contents: read
