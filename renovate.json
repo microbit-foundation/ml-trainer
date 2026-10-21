@@ -3,7 +3,7 @@
   "extends": ["github>microbit-foundation/renovate"],
   "packageRules": [
     {
-      "description": "@sentry/capacitor is held below 4.4.0 where there is CocoaPods support. package.json is pinned to ~4.3.0 to match.",
+      "description": "4.4.0 removed CocoaPods support. package.json is pinned to ~4.3.0 to match.",
       "matchPackageNames": ["@sentry/capacitor"],
       "allowedVersions": "<4.4.0"
     }
