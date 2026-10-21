@@ -1,12 +1,12 @@
 PODS:
-  - Capacitor (8.5.0):
+  - Capacitor (8.5.2):
     - CapacitorCordova
   - CapacitorApp (8.1.1):
     - Capacitor
   - CapacitorCommunityBluetoothLe (8.3.0):
     - Capacitor
-  - CapacitorCordova (8.5.0)
-  - CapacitorFilesystem (8.1.2):
+  - CapacitorCordova (8.5.2)
+  - CapacitorFilesystem (8.1.3):
     - Capacitor
     - IONFilesystemLib (~> 1.1.1)
   - CapacitorFirebaseAnalytics (7.5.0):
@@ -19,7 +19,7 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (8.0.5):
     - Capacitor
-  - CapacitorShare (8.0.1):
+  - CapacitorShare (8.0.2):
     - Capacitor
   - FirebaseAnalytics/WithoutAdIdSupport (11.7.0):
     - FirebaseCore (~> 11.7.0)
@@ -150,14 +150,14 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 00b87168591cc006ea6f5c0de681ec5c39a2c8eb
+  Capacitor: 89067779e14fb7ea56af07b4817f45d1f0c2a269
   CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
   CapacitorCommunityBluetoothLe: f9c76baa5338d206b7418c48d945d93d47800af3
-  CapacitorCordova: 9d3acbb574048e7167d2af127a0af2123e619f2f
-  CapacitorFilesystem: 2db285a1ac6e475cc27cae2e1bea999000f9e2be
+  CapacitorCordova: 5bec5648cbd09a176ce34ce5e7b6cdabb2c8a327
+  CapacitorFilesystem: b2bbd84bb91c177906c9dbc252864cb71ab9957b
   CapacitorFirebaseAnalytics: 27ad621b8f41c2cd2b2169f2db6f476cdac49011
   CapacitorKeyboard: b6b0744890cdb1d9a96e2cafcc9253fdcc55de3b
-  CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
+  CapacitorShare: 2fde721d06a6f83ff5c7578e6a91b190d341ac6a
   FirebaseAnalytics: bc9e565af9044ba8d6c6e4157e4edca8e5fdf7ec
   FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
   FirebaseCoreInternal: d6c17dafc8dc33614733a8b52df78fcb4394c881
