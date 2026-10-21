@@ -1,4 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>microbit-foundation/renovate"]
+  "extends": ["github>microbit-foundation/renovate"],
+  "packageRules": [
+    {
+      "description": "4.4.0 removed CocoaPods support. package.json is pinned to ~4.3.0 to match.",
+      "matchPackageNames": ["@sentry/capacitor"],
+      "allowedVersions": "<4.4.0"
+    }
+  ]
 }
