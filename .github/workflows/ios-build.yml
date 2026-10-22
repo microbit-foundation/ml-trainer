@@ -22,7 +22,7 @@ jobs:
     # Only run for apps releases, or pushes to main or branches whose name ends with -apps
     if: ${{ (github.event_name != 'release' && (github.ref_name == 'main' || endsWith(github.ref_name, '-apps'))) || (github.event_name == 'release' && contains(github.event.release.tag_name, '-apps')) }}
     timeout-minutes: 25
-    runs-on: macos-26
+    runs-on: xcode-27
     permissions:
       contents: read
       packages: read
@@ -33,20 +33,27 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      # The runner image pins macOS, not Xcode: GitHub bumps an image's
-      # default Xcode over its lifetime, including across majors. Xcode 27
-      # builds against the iOS 27 SDK, which refuses to launch an app that
-      # hasn't adopted the UIScene lifecycle, so let that upgrade be a
-      # deliberate change here rather than an image refresh. The image only
-      # symlinks exact minors, so take the newest 26.x present.
-      - name: Pin Xcode 26
+      # Pin to the newest released Xcode 27 on the image rather than inheriting
+      # its default. The image carries prerelease minors and which one is the 
+      # default can change.
+      - name: Pin released Xcode 27
         run: |
-          xcode="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
-          if [ -z "$xcode" ]; then
-            echo "::error::No Xcode 26.x on this runner image"
+          best="" best_version=""
+          for app in /Applications/Xcode*.app; do
+            real="$(cd "$app" 2>/dev/null && pwd -P)" || continue
+            case "$real" in *beta*|*Release_Candidate*) continue ;; esac
+            version="$(defaults read "$real/Contents/Info" CFBundleShortVersionString 2>/dev/null)" || continue
+            case "$version" in 27.*) ;; *) continue ;; esac
+            if [ -z "$best_version" ] ||
+               [ "$(printf '%s\n%s\n' "$best_version" "$version" | sort -V | tail -1)" = "$version" ]; then
+              best="$real" best_version="$version"
+            fi
+          done
+          if [ -z "$best" ]; then
+            echo "::error::No released Xcode 27.x on this runner image"
             exit 1
           fi
-          sudo xcode-select -s "$xcode"
+          sudo xcode-select -s "$best"
           xcodebuild -version
 
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
