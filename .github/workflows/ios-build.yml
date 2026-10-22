@@ -32,6 +32,31 @@ jobs:
       VITE_SENTRY_DSN: ${{ secrets.PROTOTYPE_SENTRY_DSN }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      # Pin to the newest released Xcode 27 on the image rather than inheriting
+      # its default. The image deliberately carries prerelease minors (today an
+      # RC and a beta) beside the release, and which one is the default moves as
+      # the image refreshes weekly.
+      - name: Pin released Xcode 27
+        run: |
+          best="" best_version=""
+          for app in /Applications/Xcode*.app; do
+            real="$(cd "$app" 2>/dev/null && pwd -P)" || continue
+            case "$real" in *beta*|*Release_Candidate*) continue ;; esac
+            version="$(defaults read "$real/Contents/Info" CFBundleShortVersionString 2>/dev/null)" || continue
+            case "$version" in 27.*) ;; *) continue ;; esac
+            if [ -z "$best_version" ] ||
+               [ "$(printf '%s\n%s\n' "$best_version" "$version" | sort -V | tail -1)" = "$version" ]; then
+              best="$real" best_version="$version"
+            fi
+          done
+          if [ -z "$best" ]; then
+            echo "::error::No released Xcode 27.x on this runner image"
+            exit 1
+          fi
+          sudo xcode-select -s "$best"
+          xcodebuild -version
+
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
