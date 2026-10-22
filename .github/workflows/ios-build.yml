@@ -34,9 +34,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       # Pin to the newest released Xcode 27 on the image rather than inheriting
-      # its default. The image deliberately carries prerelease minors (today an
-      # RC and a beta) beside the release, and which one is the default moves as
-      # the image refreshes weekly.
+      # its default. The image carries prerelease minors and which one is the 
+      # default can change.
       - name: Pin released Xcode 27
         run: |
           best="" best_version=""
