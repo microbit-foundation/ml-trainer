@@ -1,14 +1,14 @@
 PODS:
-  - Capacitor (8.5.2):
+  - Capacitor (8.5.3):
     - CapacitorCordova
-  - CapacitorApp (8.1.1):
+  - CapacitorApp (8.1.2):
     - Capacitor
   - CapacitorCommunityBluetoothLe (8.3.0):
     - Capacitor
-  - CapacitorCordova (8.5.2)
-  - CapacitorFilesystem (8.1.3):
+  - CapacitorCordova (8.5.3)
+  - CapacitorFilesystem (8.1.4):
     - Capacitor
-    - IONFilesystemLib (~> 1.1.1)
+    - IONFilesystemLib (~> 2.0.0)
   - CapacitorFirebaseAnalytics (7.5.0):
     - Capacitor
     - CapacitorFirebaseAnalytics/Lite (= 7.5.0)
@@ -17,9 +17,9 @@ PODS:
     - FirebaseAnalytics/WithoutAdIdSupport (~> 11.7.0)
   - CapacitorFirebaseAnalytics/Lite (7.5.0):
     - Capacitor
-  - CapacitorKeyboard (8.0.5):
+  - CapacitorKeyboard (8.0.6):
     - Capacitor
-  - CapacitorShare (8.0.2):
+  - CapacitorShare (8.0.3):
     - Capacitor
   - FirebaseAnalytics/WithoutAdIdSupport (11.7.0):
     - FirebaseCore (~> 11.7.0)
@@ -47,34 +47,34 @@ PODS:
     - GoogleUtilities/Network (~> 8.0)
     - "GoogleUtilities/NSData+zlib (~> 8.0)"
     - nanopb (~> 3.30910.0)
-  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
+  - GoogleUtilities/AppDelegateSwizzler (8.1.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Environment (8.1.0):
+  - GoogleUtilities/Environment (8.1.5):
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.1.0):
+  - GoogleUtilities/Logger (8.1.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
-  - GoogleUtilities/MethodSwizzler (8.1.0):
+  - GoogleUtilities/MethodSwizzler (8.1.5):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Network (8.1.0):
+  - GoogleUtilities/Network (8.1.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (8.1.0)":
+  - "GoogleUtilities/NSData+zlib (8.1.5)":
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.1.0)
-  - GoogleUtilities/Reachability (8.1.0):
+  - GoogleUtilities/Privacy (8.1.5)
+  - GoogleUtilities/Reachability (8.1.5):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GoogleUtilities/UserDefaults (8.1.0):
+  - GoogleUtilities/UserDefaults (8.1.5):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - IONFilesystemLib (1.1.2)
+  - IONFilesystemLib (2.0.1)
   - MicrobitCapacitorCommunityNordicDfu (8.0.0-microbit.1):
     - Capacitor
     - NordicDFU (~> 4.16.0)
@@ -87,7 +87,7 @@ PODS:
   - nanopb/encode (3.30910.0)
   - NordicDFU (4.16.0):
     - ZIPFoundation (= 0.9.19)
-  - PromisesObjC (2.4.0)
+  - PromisesObjC (2.4.1)
   - Sentry (9.16.1):
     - Sentry/Core (= 9.16.1)
   - Sentry/Core (9.16.1)
@@ -150,26 +150,26 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 89067779e14fb7ea56af07b4817f45d1f0c2a269
-  CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
+  Capacitor: 2f67eaeb8ed79909cd35b5e7439a5c2a9ca58e0f
+  CapacitorApp: 7b7e43debe505bc61beedb83796aa1368c86078b
   CapacitorCommunityBluetoothLe: f9c76baa5338d206b7418c48d945d93d47800af3
-  CapacitorCordova: 5bec5648cbd09a176ce34ce5e7b6cdabb2c8a327
-  CapacitorFilesystem: b2bbd84bb91c177906c9dbc252864cb71ab9957b
+  CapacitorCordova: 0b7326439c7a09fc5d20eced5e0dab986327a493
+  CapacitorFilesystem: 17ee1862a45ef2e5012311a87e18de1d45a6811b
   CapacitorFirebaseAnalytics: 27ad621b8f41c2cd2b2169f2db6f476cdac49011
-  CapacitorKeyboard: b6b0744890cdb1d9a96e2cafcc9253fdcc55de3b
-  CapacitorShare: 2fde721d06a6f83ff5c7578e6a91b190d341ac6a
+  CapacitorKeyboard: f9e85e685082e9f63404de15db4a4291448b0912
+  CapacitorShare: 5b5e53347556bee89ae6163ed20b5b3c25fe75f1
   FirebaseAnalytics: bc9e565af9044ba8d6c6e4157e4edca8e5fdf7ec
   FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
   FirebaseCoreInternal: d6c17dafc8dc33614733a8b52df78fcb4394c881
   FirebaseInstallations: 9347e719c3d52d8d7b9074b2c32407dd027305e9
   GoogleAppMeasurement: 0471a5b5bff51f3a91b1e76df22c952d04c63967
-  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
+  GoogleUtilities: 7dc09b3fa9ecb5c2298b952313d14628b61b9da3
+  IONFilesystemLib: 306469e4c563f61de82d7bca2bbfed9e64d1b2d2
   MicrobitCapacitorCommunityNordicDfu: c68ca3803e6f771f645fa74a3745f52a6bdb4f58
   MicrobitCapacitorSqliteVanilla: 20d31db6cb14e3ad0c2c4d61d13bda4ca6337cba
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NordicDFU: 116a4ec458945889f8e0e71759e03b23c39c3482
-  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  PromisesObjC: 752c3227f599e3467650e47ea36f433eeb10c273
   Sentry: e5d82a3c1f2d951f75c04c57215a0abb1facbd51
   SentryCapacitor: 0561def7ada7e47d0437324e7aa3db60d52bfe40
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
