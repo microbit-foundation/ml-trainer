@@ -29,6 +29,23 @@ const config: CapacitorConfig = {
       resize: "none",
     },
   },
+  experimental: {
+    ios: {
+      spm: {
+        // Package traits need Swift tools 6.1+.
+        swiftToolsVersion: "6.1",
+        packageTraits: {
+          // Pull the IDFA-free Analytics variant.
+          "@capacitor-firebase/analytics": ["AnalyticsWithoutAdIdSupport"],
+        },
+        packageOptions: {
+          // Avoids a SwiftPM package identity collision, per the plugin
+          // README (capawesome-team/capacitor-firebase#959).
+          "@capacitor-firebase/analytics": { symlink: true },
+        },
+      },
+    },
+  },
 };
 
 function getIP() {
