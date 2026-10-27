@@ -22,7 +22,8 @@
     "@sentry/capacitor": false,
     "@sentry/cli": true,
     "protobufjs": false,
-    "@firebase/util": false
+    "@firebase/util": false,
+    "file:/Users/grace/Code/nordic-dfu/microbit-capacitor-community-nordic-dfu-8.0.0-spm.1.tgz": false
   },
   "engines": {
     "node": ">=24.0.0",
@@ -113,8 +114,8 @@
     "@capacitor/ios": "^8.5.0",
     "@capacitor/keyboard": "^8.0.0",
     "@capacitor/share": "^8.0.0",
-    "@microbit/capacitor-community-nordic-dfu": "^8.0.0-microbit.1",
-    "@microbit/capacitor-sqlite-vanilla": "^0.1.0",
+    "@microbit/capacitor-community-nordic-dfu": "file:../nordic-dfu/microbit-capacitor-community-nordic-dfu-8.0.0-spm.1.tgz",
+    "@microbit/capacitor-sqlite-vanilla": "file:../capacitor-sqlite-vanilla/microbit-capacitor-sqlite-vanilla-0.0.0.tgz",
     "@microbit/makecode-embed": "^0.7.3",
     "@microbit/microbit-connection": "^1.0.0",
     "@microbit/ml-header-generator": "^0.4.3",
