@@ -25,6 +25,10 @@ export type Flag =
    */
   | "preReleaseNotice"
   /**
+   * Wraps generated variable names in $$.
+   */
+  | "tokenizeNames"
+  /**
    * Enables in-context Crowdin translating.
    */
   | "translate"
@@ -52,6 +56,7 @@ const allFlags: FlagMetadata[] = [
     name: "preReleaseNotice",
     defaultOnStages: ["staging"],
   },
+  { name: "tokenizeNames", defaultOnStages: [] },
   { name: "translate", defaultOnStages: [] },
   {
     name: "websiteContent",

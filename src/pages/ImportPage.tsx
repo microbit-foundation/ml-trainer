@@ -60,7 +60,21 @@ const ImportPage = () => {
           resource,
           intl
         );
-        setProject(project);
+
+        const escape = (str: string) => {
+          const a = new RegExp("\\$", "g");
+          return str.replace(a, "\\$");
+        };
+
+        let projectAsString = JSON.stringify(project);
+        for (const [key, value] of params.entries()) {
+          if (/^\$\$.*\$\$$/.test(key)) {
+            const tokenRegex = new RegExp(escape(key), "g");
+            projectAsString = projectAsString.replace(tokenRegex, value);
+          }
+        }
+
+        setProject(JSON.parse(projectAsString) as MakeCodeProject);
         setName(resourceName ?? defaultProjectName);
       } catch (e) {
         // Log the fetch error, but fallback to new blank session by default.
