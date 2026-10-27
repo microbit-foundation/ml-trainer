@@ -124,7 +124,7 @@
     "@microbit/ui": "^0.5.1",
     "@microbit/ui-carousel": "^0.4.2",
     "@microbit/ui-patterns": "^0.7.1",
-    "@sentry/capacitor": "~4.3.0",
+    "@sentry/capacitor": "^4.4.0",
     "@tensorflow/tfjs": "^4.20.0",
     "@tensorflow/tfjs-backend-wasm": "^4.20.0",
     "@types/w3c-web-serial": "^1.0.6",
