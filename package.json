@@ -117,7 +117,7 @@
     "@microbit/capacitor-community-nordic-dfu": "file:../nordic-dfu/microbit-capacitor-community-nordic-dfu-8.0.0-spm.1.tgz",
     "@microbit/capacitor-sqlite-vanilla": "file:../capacitor-sqlite-vanilla/microbit-capacitor-sqlite-vanilla-0.0.0.tgz",
     "@microbit/makecode-embed": "^0.7.3",
-    "@microbit/microbit-connection": "^1.0.0",
+    "@microbit/microbit-connection": "file:../microbit-connection/packages/microbit-connection/microbit-microbit-connection-0.0.0.tgz",
     "@microbit/ml-header-generator": "^0.4.3",
     "@microbit/ml4f": "^2.0.0-beta.0",
     "@microbit/smoothie": "^1.37.0-microbit.2",
