@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useState, Ref } from "react";
 import { createPortal } from "react-dom";
 import { RiHashtag, RiTimerLine } from "react-icons/ri";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -190,6 +190,7 @@ const GraphAndDataFeaturesDataSampleCard = ({
 };
 
 interface DataSamplesRowCardProps {
+  ref?: Ref<HTMLDivElement>;
   selected: boolean;
   onSelectRow?: () => void;
   children: ReactNode;
@@ -197,35 +198,37 @@ interface DataSamplesRowCardProps {
   className?: string;
 }
 
-const DataSamplesRowCard = forwardRef<HTMLDivElement, DataSamplesRowCardProps>(
-  function DataSamplesRowCard(
-    { selected, onSelectRow, children, variant, className },
-    ref
-  ) {
-    return (
-      <RowCard
-        ref={ref}
-        onClick={onSelectRow}
-        variant={variant}
-        selected={selected}
-        css={{ width: "fit-content" }}
-        className={className}
+const DataSamplesRowCard = ({
+  selected,
+  onSelectRow,
+  children,
+  variant,
+  className,
+  ref,
+}: DataSamplesRowCardProps) => {
+  return (
+    <RowCard
+      ref={ref}
+      onClick={onSelectRow}
+      variant={variant}
+      selected={selected}
+      css={{ width: "fit-content" }}
+      className={className}
+    >
+      <CardBody
+        css={{
+          display: "flex",
+          flexDirection: "row",
+          px: 1,
+          py: 1,
+          gap: 3,
+        }}
       >
-        <CardBody
-          css={{
-            display: "flex",
-            flexDirection: "row",
-            px: 1,
-            py: 1,
-            gap: 3,
-          }}
-        >
-          {children}
-        </CardBody>
-      </RowCard>
-    );
-  }
-);
+        {children}
+      </CardBody>
+    </RowCard>
+  );
+};
 
 interface RecordingAreaProps {
   action: ActionData;

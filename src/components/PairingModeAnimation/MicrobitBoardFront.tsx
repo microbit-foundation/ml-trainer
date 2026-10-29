@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CSSProperties,
-  forwardRef,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { CSSProperties, useImperativeHandle, useState, Ref } from "react";
 import { SystemStyleObject, Svg, token } from "@microbit/ui";
 import { icons } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
@@ -57,6 +52,7 @@ const clearGridSequence = [
 const bluetoothPattern = "0010000110101101011111111";
 
 interface MicrobitBoardFrontProps {
+  ref?: Ref<MicrobitBoardFrontRef>;
   /** A resolved CSS colour (not a token name). */
   buttonStrokeColor?: string;
   /** Sizing/positioning from the call site, merged as one literal. */
@@ -77,17 +73,12 @@ const durations = {
   bluetoothPattern: 1,
 };
 
-export const MicrobitBoardFront = forwardRef<
-  MicrobitBoardFrontRef,
-  MicrobitBoardFrontProps
->(function MicrobitBoard(
-  {
-    buttonStrokeColor = "transparent",
-    css: cssProp,
-    style,
-  }: MicrobitBoardFrontProps,
-  ref
-) {
+export const MicrobitBoardFront = ({
+  buttonStrokeColor = "transparent",
+  css: cssProp,
+  style,
+  ref,
+}: MicrobitBoardFrontProps) => {
   const { delayInSec } = useAnimation();
   const [ledPattern, setLedPattern] = useState<string>(icons.off);
   const litLedColor = token("colors.pink.500");
@@ -273,4 +264,4 @@ export const MicrobitBoardFront = forwardRef<
       ))}
     </Svg>
   );
-});
+};

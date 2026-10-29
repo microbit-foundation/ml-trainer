@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import React, { ComponentType, ReactNode, useContext } from "react";
+import React, { ComponentType, ReactNode, use } from "react";
 import { createNativeCompliance } from "../compliance/native";
 import { createWebCompliance } from "../compliance/web";
 import { flags } from "../flags";
@@ -99,7 +99,7 @@ export interface DeploymentConfig extends BrandConfig {
     /**
      * A provider that will be used to wrap the app UI.
      */
-    ConsentProvider: (props: { children: ReactNode }) => JSX.Element;
+    ConsentProvider: (props: { children: ReactNode }) => React.JSX.Element;
     /**
      * Context that will be used to read the current consent value.
      * The provider is not used directly.
@@ -172,5 +172,5 @@ export const useDeployment = (): DeploymentConfig => deployment;
 
 export const useCookieConsent = (): CookieConsent | undefined => {
   const { compliance } = useDeployment();
-  return useContext(compliance.consentContext);
+  return use(compliance.consentContext);
 };

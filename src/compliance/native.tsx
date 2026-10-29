@@ -17,7 +17,7 @@ import { NativeConsentDialog } from "./NativeConsentDialog";
  * "manage cookies" link is hidden in the navigation drawer on native.
  */
 export const createNativeCompliance = () => {
-  const consentContext = createContext<CookieConsent | undefined>(undefined);
+  const ConsentContext = createContext<CookieConsent | undefined>(undefined);
 
   const ConsentProvider = ({ children }: { children: ReactNode }) => {
     const [settings, setSettings] = useSettings();
@@ -54,7 +54,7 @@ export const createNativeCompliance = () => {
     }, [decision]);
 
     return (
-      <consentContext.Provider value={value}>
+      <ConsentContext value={value}>
         {children}
         <NativeConsentDialog
           isOpen={isOpen}
@@ -63,13 +63,13 @@ export const createNativeCompliance = () => {
           onAllow={() => choose(true)}
           onDecline={() => choose(false)}
         />
-      </consentContext.Provider>
+      </ConsentContext>
     );
   };
 
   return {
     ConsentProvider,
-    consentContext,
+    consentContext: ConsentContext,
     // Settings dialog owns the reversal affordance on native; the
     // "manage cookies" nav-drawer link is hidden when this is undefined.
     manageCookies: undefined,

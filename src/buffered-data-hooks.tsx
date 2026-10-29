@@ -9,7 +9,7 @@ import {
   ReactNode,
   createContext,
   useCallback,
-  useContext,
+  use,
   useEffect,
   useRef,
 } from "react";
@@ -28,14 +28,12 @@ interface ConnectProviderProps {
 export const BufferedDataProvider = ({ children }: ConnectProviderProps) => {
   const bufferedData = useBufferedDataInternal();
   return (
-    <BufferedDataContext.Provider value={bufferedData}>
-      {children}
-    </BufferedDataContext.Provider>
+    <BufferedDataContext value={bufferedData}>{children}</BufferedDataContext>
   );
 };
 
 export const useBufferedData = (): BufferedData => {
-  const value = useContext(BufferedDataContext);
+  const value = use(BufferedDataContext);
   if (!value) {
     throw new Error("Missing provider");
   }
@@ -44,7 +42,7 @@ export const useBufferedData = (): BufferedData => {
 
 const useBufferedDataInternal = (): BufferedData => {
   const dataWindow = useStore((s) => s.dataWindow);
-  const bufferRef = useRef<BufferedData>();
+  const bufferRef = useRef<BufferedData>(undefined);
   const getBuffer = useCallback(() => {
     if (bufferRef.current) {
       return bufferRef.current;

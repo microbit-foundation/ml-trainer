@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 import { IconButton } from "@microbit/ui";
 
 interface ActionBarMenuButtonProps {
+  ref?: Ref<HTMLButtonElement>;
   "aria-label": string;
   /** Remove from layout (used at the native tablet breakpoint). */
   hidden?: boolean;
@@ -22,10 +23,12 @@ interface ActionBarMenuButtonProps {
  * `size="lg"` recipe variant (48px) rather than utility overrides, which the
  * recipe's size variant would otherwise beat.
  */
-export const ActionBarMenuButton = forwardRef<
-  HTMLButtonElement,
-  ActionBarMenuButtonProps
->(function ActionBarMenuButton({ hidden, children, ...rest }, ref) {
+export const ActionBarMenuButton = ({
+  hidden,
+  children,
+  ref,
+  ...rest
+}: ActionBarMenuButtonProps) => {
   return (
     <IconButton
       ref={ref}
@@ -40,4 +43,4 @@ export const ActionBarMenuButton = forwardRef<
       {children}
     </IconButton>
   );
-});
+};

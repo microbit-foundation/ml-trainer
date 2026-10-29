@@ -6,9 +6,9 @@
 import {
   CSSProperties,
   useImperativeHandle,
-  forwardRef,
   useState,
   useMemo,
+  Ref,
 } from "react";
 import { Box, HStack, useBreakpointValue } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
@@ -84,7 +84,7 @@ const getSettledOpacity = (i: number, total: number): number => {
 const keyframeSignalEnter = `signalEnter ${signalFadeInDuration}s ease-in-out forwards`;
 
 // ─── Component ───────────────────────────────────────────────────────────────
-const Signal = forwardRef<SignalRef>(function Signal(_, ref) {
+const Signal = ({ ref }: { ref?: Ref<SignalRef> }) => {
   const { delayInSec, withPlayState } = useAnimation();
   const [phase, setPhase] = useState<Phase>("idle");
   const [visible, setVisible] = useState<boolean>(false);
@@ -252,7 +252,7 @@ const Signal = forwardRef<SignalRef>(function Signal(_, ref) {
       />
     </HStack>
   );
-});
+};
 
 const SignalIcon = (props: AnimationIconProps) => (
   <AnimationIcon

@@ -40,7 +40,7 @@ const LiveGraph = ({ paused }: LiveGraphProps) => {
   const [chart, setChart] = useState<SmoothieChart | undefined>(undefined);
   const lineWidth = graphLineWeight === "default" ? 2 : 3;
 
-  const liveGraphContainerRef = useRef(null);
+  const liveGraphContainerRef = useRef<HTMLDivElement>(null);
   const { width, height } = useElementSize(liveGraphContainerRef) ?? {
     width: 100,
     height: 100,

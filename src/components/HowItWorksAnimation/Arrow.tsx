@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { useImperativeHandle, useState, Ref } from "react";
 import { Box, HStack, Svg, VStack } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
@@ -34,7 +34,7 @@ export interface ArrowRef {
   reset(): void;
 }
 
-const Arrow = forwardRef<ArrowRef>(function Arrow(_, ref) {
+const Arrow = ({ ref }: { ref?: Ref<ArrowRef> }) => {
   const { delayInSec, withPlayState } = useAnimation();
   const [visible, setVisible] = useState<boolean>(false);
   const [duration, setDuration] = useState<null | number>(null);
@@ -108,7 +108,7 @@ const Arrow = forwardRef<ArrowRef>(function Arrow(_, ref) {
       </HStack>
     </VStack>
   );
-});
+};
 
 const StarIcon = (props: AnimationIconProps) => (
   <AnimationIcon

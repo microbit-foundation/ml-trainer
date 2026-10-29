@@ -31,7 +31,7 @@ import microbitHeartImage from "../images/microbit-heart.png";
 interface AboutDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 /**

@@ -14,7 +14,7 @@ import TrainModelIntroDialog from "./TrainModelHelpDialog";
 import TrainModelInsufficientDataDialog from "./TrainModelInsufficientDataDialog";
 
 interface TrainModelDialogsProps {
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 const TrainModelDialogs = ({ finalFocusRef }: TrainModelDialogsProps) => {

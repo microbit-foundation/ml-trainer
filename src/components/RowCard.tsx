@@ -3,12 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef } from "react";
+import { Ref } from "react";
 import { Card, CardProps } from "@microbit/ui";
 import { css, cx } from "styled-system/css";
 import { SystemStyleObject } from "styled-system/types";
 
 export interface RowCardProps extends Omit<CardProps, "css"> {
+  ref?: Ref<HTMLDivElement>;
   /** Shows the brand selection border. */
   selected?: boolean;
   /** Per-instance style overrides, merged after the base. */
@@ -20,10 +21,13 @@ export interface RowCardProps extends Omit<CardProps, "css"> {
  * cards (action name, recordings, certainty). Always reserves a 1px border
  * so toggling `selected` doesn't shift layout.
  */
-const RowCard = forwardRef<HTMLDivElement, RowCardProps>(function RowCard(
-  { selected = false, css: cssProp, className, ...rest },
-  ref
-) {
+const RowCard = ({
+  selected = false,
+  css: cssProp,
+  className,
+  ref,
+  ...rest
+}: RowCardProps) => {
   return (
     <Card
       ref={ref}
@@ -46,6 +50,6 @@ const RowCard = forwardRef<HTMLDivElement, RowCardProps>(function RowCard(
       {...rest}
     />
   );
-});
+};
 
 export default RowCard;

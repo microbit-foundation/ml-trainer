@@ -82,7 +82,7 @@ const DataSamplesPage = () => {
     void navigate(createTestingModelPageUrl());
   }, [navigate]);
 
-  const trainButtonRef = useRef(null);
+  const trainButtonRef = useRef<HTMLButtonElement>(null);
   const handleAddNewAction = useCallback(async () => {
     setSelectedActionIdx(actions.length);
     await addNewAction();
@@ -148,7 +148,7 @@ const DataSamplesPage = () => {
     [hasMoved, hint, isConnected, isDialogOpen]
   );
 
-  const pageRef = useRef(null);
+  const pageRef = useRef<HTMLDivElement>(null);
   const region = useLiveRegion(pageRef.current);
 
   // To avoid aria-live interruptions, particularly when inputting action name.

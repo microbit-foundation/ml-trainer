@@ -37,7 +37,7 @@ import RecordingGraph from "./RecordingGraph";
 interface SettingsDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 /**

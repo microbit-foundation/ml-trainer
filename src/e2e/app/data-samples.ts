@@ -117,22 +117,24 @@ export class DataSamplesPage {
 }
 
 class WelcomeDialog {
-  private heading: Locator;
+  // Scoped to the dialog so a "Close" in the outgoing create-project dialog
+  // can't be clicked instead.
+  private dialog: Locator;
 
   constructor(public readonly page: Page) {
     this.page = page;
-    this.heading = this.page.getByText("Welcome to micro:bit CreateAI");
+    this.dialog = this.page.getByRole("dialog", { name: "How CreateAI works" });
   }
 
   async expectOpen() {
-    await expect(this.heading).toBeVisible();
+    await expect(this.dialog).toBeVisible();
   }
 
   async close() {
-    await this.page.getByRole("button", { name: "Close" }).click();
+    await this.dialog.getByRole("button", { name: "Close" }).click();
   }
 
   async connect() {
-    await this.page.getByRole("button", { name: "Connect" }).click();
+    await this.dialog.getByRole("button", { name: "Connect" }).click();
   }
 }

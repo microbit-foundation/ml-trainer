@@ -5,10 +5,10 @@
  */
 import {
   CSSProperties,
-  forwardRef,
   useImperativeHandle,
   useRef,
   useState,
+  Ref,
 } from "react";
 import { FormattedMessage } from "react-intl";
 import {
@@ -29,6 +29,7 @@ import CodeBlock, { CodeBlockRef } from "./CodeBlocks";
 import { useAnimation } from "../AnimationProvider";
 
 interface ComputerProps {
+  ref?: Ref<ComputerRef>;
   isTablet: boolean;
   /** Per-instance style overrides for the computer svg. */
   css?: SystemStyleObject;
@@ -52,10 +53,7 @@ export interface ComputerRef {
   reset(): void;
 }
 
-const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
-  { isTablet, css: cssProp, style }: ComputerProps,
-  ref
-) {
+const Computer = ({ isTablet, css: cssProp, style, ref }: ComputerProps) => {
   const { withPlayState } = useAnimation();
   const testModelRef = useRef<TestModelScreenRef>(null);
   const codeBlockRef = useRef<CodeBlockRef>(null);
@@ -184,6 +182,6 @@ const Computer = forwardRef<ComputerRef, ComputerProps>(function Computer(
       </Stack>
     </Box>
   );
-});
+};
 
 export default Computer;

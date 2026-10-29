@@ -7,7 +7,7 @@ import {
   MakeCodeFrame,
   MakeCodeFrameDriver,
 } from "@microbit/makecode-embed/react";
-import React, { forwardRef } from "react";
+import React, { Ref } from "react";
 import { getEditorVersionOverride } from "../editor-version";
 import { useProject } from "../hooks/project-hooks";
 import { getMakeCodeLang } from "../settings";
@@ -16,13 +16,11 @@ import { useSettings } from "../store";
 const controllerId = "MicrobitMachineLearningTool";
 
 interface EditorProps {
+  ref?: Ref<MakeCodeFrameDriver>;
   style?: React.CSSProperties;
 }
 
-const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
-  props,
-  ref
-) {
+const Editor = ({ ref, ...props }: EditorProps) => {
   const { editorCallbacks } = useProject();
   const [{ languageId }] = useSettings();
   return (
@@ -38,6 +36,6 @@ const Editor = forwardRef<MakeCodeFrameDriver, EditorProps>(function Editor(
       {...props}
     />
   );
-});
+};
 
 export default Editor;

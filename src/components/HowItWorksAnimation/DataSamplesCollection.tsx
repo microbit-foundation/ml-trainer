@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { useCallback, useImperativeHandle, useState, Ref } from "react";
 import { Grid, GridItem, HStack } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
@@ -27,111 +27,113 @@ export const dataCollectionDurationInSec =
   sampleTransitionDelay * numSamplesPerRow +
   sampleTransitionDuration * numSamplesPerRow;
 
-const DataSamplesCollection = forwardRef<DataSamplesCollectionRef>(
-  function DataSamplesCollection(_, ref) {
-    const { delayInSec, withPlayState } = useAnimation();
-    const [topVisible, setTopVisible] = useState(false);
-    const [bottomVisible, setBottomVisible] = useState(false);
+const DataSamplesCollection = ({
+  ref,
+}: {
+  ref?: Ref<DataSamplesCollectionRef>;
+}) => {
+  const { delayInSec, withPlayState } = useAnimation();
+  const [topVisible, setTopVisible] = useState(false);
+  const [bottomVisible, setBottomVisible] = useState(false);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        async playTopSamples() {
-          setTopVisible(true);
-          await delayInSec(dataCollectionDurationInSec);
-        },
-        async playBottomSamples() {
-          setBottomVisible(true);
-          await delayInSec(dataCollectionDurationInSec);
-        },
-        reset() {
-          setTopVisible(false);
-          setBottomVisible(false);
-        },
-      }),
-      [delayInSec]
-    );
-
-    // Helper to build the animation CSS value for a given sample order and visibility.
-    const getSampleAnimation = useCallback(
-      (order: number, visible: boolean): string | undefined => {
-        if (!visible) {
-          return undefined;
-        }
-        const delay = order * sampleTransitionDelay;
-        const animation = `fadeIn ${sampleTransitionDuration}s ease-in-out ${delay}s both`;
-        return withPlayState(animation);
+  useImperativeHandle(
+    ref,
+    () => ({
+      async playTopSamples() {
+        setTopVisible(true);
+        await delayInSec(dataCollectionDurationInSec);
       },
-      [withPlayState]
-    );
+      async playBottomSamples() {
+        setBottomVisible(true);
+        await delayInSec(dataCollectionDurationInSec);
+      },
+      reset() {
+        setTopVisible(false);
+        setBottomVisible(false);
+      },
+    }),
+    [delayInSec]
+  );
 
-    if (!topVisible && !bottomVisible) {
-      return null;
-    }
+  // Helper to build the animation CSS value for a given sample order and visibility.
+  const getSampleAnimation = useCallback(
+    (order: number, visible: boolean): string | undefined => {
+      if (!visible) {
+        return undefined;
+      }
+      const delay = order * sampleTransitionDelay;
+      const animation = `fadeIn ${sampleTransitionDuration}s ease-in-out ${delay}s both`;
+      return withPlayState(animation);
+    },
+    [withPlayState]
+  );
 
-    return (
-      <Grid
-        gridTemplateColumns={{
-          base: "1em 1fr",
-          sm: "1.25em 1fr",
-          md: "1.25em 1fr",
-        }}
-        columnGap={2}
-        rowGap={{ sm: 1, md: 2 }}
-        alignItems="center"
-        display={topVisible || bottomVisible ? "grid" : "none"}
-      >
-        <GridItem w="auto">
-          <HeartLedIcon
-            css={{
-              width: { base: "1em", sm: "1.25em" },
-              height: { base: "1em", sm: "1.25em" },
-              color: "gray.500",
-            }}
-          />
-        </GridItem>
-        <GridItem>
-          <HStack gap={1}>
-            {topVisible &&
-              topSamples.map(({ order }, i) => (
-                <DataSample1
-                  // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
-                  key={i}
-                  style={{
-                    animation: getSampleAnimation(order, topVisible),
-                  }}
-                />
-              ))}
-          </HStack>
-        </GridItem>
-        <GridItem>
-          <CrossLedIcon
-            css={{
-              width: { base: "1em", sm: "1.25em" },
-              height: { base: "1em", sm: "1.25em" },
-              color: "gray.500",
-            }}
-          />
-        </GridItem>
-        <GridItem>
-          <HStack gap={1}>
-            {bottomVisible &&
-              bottomSamples.map(({ order }, i) => (
-                <DataSample2
-                  // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
-                  key={i}
-                  css={{ opacity: 0 }}
-                  style={{
-                    animation: getSampleAnimation(order, bottomVisible),
-                  }}
-                />
-              ))}
-          </HStack>
-        </GridItem>
-      </Grid>
-    );
+  if (!topVisible && !bottomVisible) {
+    return null;
   }
-);
+
+  return (
+    <Grid
+      gridTemplateColumns={{
+        base: "1em 1fr",
+        sm: "1.25em 1fr",
+        md: "1.25em 1fr",
+      }}
+      columnGap={2}
+      rowGap={{ sm: 1, md: 2 }}
+      alignItems="center"
+      display={topVisible || bottomVisible ? "grid" : "none"}
+    >
+      <GridItem w="auto">
+        <HeartLedIcon
+          css={{
+            width: { base: "1em", sm: "1.25em" },
+            height: { base: "1em", sm: "1.25em" },
+            color: "gray.500",
+          }}
+        />
+      </GridItem>
+      <GridItem>
+        <HStack gap={1}>
+          {topVisible &&
+            topSamples.map(({ order }, i) => (
+              <DataSample1
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
+                key={i}
+                style={{
+                  animation: getSampleAnimation(order, topVisible),
+                }}
+              />
+            ))}
+        </HStack>
+      </GridItem>
+      <GridItem>
+        <CrossLedIcon
+          css={{
+            width: { base: "1em", sm: "1.25em" },
+            height: { base: "1em", sm: "1.25em" },
+            color: "gray.500",
+          }}
+        />
+      </GridItem>
+      <GridItem>
+        <HStack gap={1}>
+          {bottomVisible &&
+            bottomSamples.map(({ order }, i) => (
+              <DataSample2
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
+                key={i}
+                css={{ opacity: 0 }}
+                style={{
+                  animation: getSampleAnimation(order, bottomVisible),
+                }}
+              />
+            ))}
+        </HStack>
+      </GridItem>
+    </Grid>
+  );
+};
 
 const DataSample1 = (props: AnimationIconProps) => (
   <AnimationIcon
