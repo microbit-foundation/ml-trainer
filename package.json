@@ -88,7 +88,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^5.2.0",
-    "@vitest/web-worker": "^4.1.9",
+    "@vitest/web-worker": "^5.0.5",
     "better-sqlite3": "^12.6.2",
     "cross-env": "^7.0.3",
     "ejs": "^3.1.9",
@@ -101,8 +101,7 @@
     "typescript": "^5.9.3",
     "vite": "^7.3.6",
     "vite-plugin-svgr": "^4.5.0",
-    "vitest": "^5.0.5",
-    "vitest-dom": "^0.1.1"
+    "vitest": "^5.0.5"
   },
   "dependencies": {
     "@capacitor-community/bluetooth-le": "^8.0.0",
