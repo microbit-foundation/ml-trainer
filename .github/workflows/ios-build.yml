@@ -109,9 +109,6 @@ jobs:
 
       - run: npx cap sync ios
 
-      - run: pod install
-        working-directory: ios/App
-
       - name: Build with Fastlane
         run: bundle exec fastlane ios build
         env:
