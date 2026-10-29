@@ -5,6 +5,7 @@
  */
 /// <reference types="vite-plugin-svgr/client" />
 /// <reference types="vite/client" />
+/// <reference types="vitest/globals" />
 
 /**
  * Brand-optional theme images (see resolveThemeImage in vite.config.ts):
