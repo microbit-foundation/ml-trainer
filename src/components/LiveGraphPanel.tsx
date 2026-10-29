@@ -124,9 +124,7 @@ const LiveGraphPanel = ({
             : undefined
         )}
         // Nothing behind the "not connected" overlay should be reachable.
-        // React 18 neither types nor coerces `inert`, hence the HTML boolean
-        // form.
-        {...(isDisconnected ? ({ inert: "" } as { inert?: string }) : {})}
+        inert={isDisconnected}
       >
         <HStack
           position="absolute"

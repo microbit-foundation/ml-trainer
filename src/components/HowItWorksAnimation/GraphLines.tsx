@@ -5,10 +5,10 @@
  */
 import {
   CSSProperties,
-  forwardRef,
   useImperativeHandle,
   useMemo,
   useState,
+  Ref,
 } from "react";
 import { Box, Flex, Svg, useBreakpointValue } from "@microbit/ui";
 import { useGraphColors } from "../../hooks/use-graph-colors";
@@ -58,7 +58,7 @@ export interface GraphLinesRef {
   reset(): void;
 }
 
-const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
+const GraphLines = ({ ref }: { ref?: Ref<GraphLinesRef> }) => {
   const { delayInSec, withPlayState } = useAnimation();
   const [{ graphColorScheme }] = useSettings();
   const [visible, setVisible] = useState<boolean>(false);
@@ -174,6 +174,6 @@ const GraphLines = forwardRef<GraphLinesRef>(function GraphLines(_, ref) {
       </Box>
     </Flex>
   );
-});
+};
 
 export default GraphLines;

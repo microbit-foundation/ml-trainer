@@ -16,7 +16,7 @@ import { tourElClassname } from "../tours";
 
 interface CodeViewCardProps {
   project: MakeCodeProject;
-  parentRef: React.RefObject<HTMLDivElement>;
+  parentRef: React.RefObject<HTMLDivElement | null>;
   className?: string;
 }
 

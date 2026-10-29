@@ -3,11 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { ReactNode, forwardRef, useImperativeHandle, useState } from "react";
+import { ReactNode, useImperativeHandle, useState, Ref } from "react";
 import { HStack, Stack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
 interface LayoutProps {
+  ref?: Ref<LayoutRef>;
   leftItems: ReactNode;
   middleItems: ReactNode;
   rightItems: ReactNode;
@@ -18,10 +19,7 @@ export interface LayoutRef {
   reset(): void;
 }
 
-const Layout = forwardRef<LayoutRef, LayoutProps>(function Layout(
-  { leftItems, middleItems, rightItems }: LayoutProps,
-  ref
-) {
+const Layout = ({ leftItems, middleItems, rightItems, ref }: LayoutProps) => {
   const { delayInSec } = useAnimation();
   const [centerLeftDuration, setCenterLeftDuration] = useState<number | null>(
     null
@@ -100,6 +98,6 @@ const Layout = forwardRef<LayoutRef, LayoutProps>(function Layout(
       </Stack>
     </HStack>
   );
-});
+};
 
 export default Layout;

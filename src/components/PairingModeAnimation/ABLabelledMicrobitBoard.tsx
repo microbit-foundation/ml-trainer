@@ -3,14 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { CSSProperties } from "react";
-import {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { CSSProperties, Ref } from "react";
+import { useCallback, useImperativeHandle, useRef, useState } from "react";
 import {
   MicrobitBoardFront,
   MicrobitBoardFrontRef,
@@ -32,6 +26,7 @@ export interface ABLabelledMicrobitBoardRef {
 }
 
 interface ABLabelledMicrobitBoardProps {
+  ref?: Ref<ABLabelledMicrobitBoardRef>;
   /** A resolved CSS colour (not a token name). */
   activeColor: string;
   /** Sizing from the call site, merged as one literal. */
@@ -40,10 +35,11 @@ interface ABLabelledMicrobitBoardProps {
 
 const inactiveColor = token("colors.gray.200");
 
-const ABLabelledMicrobitBoard = forwardRef<
-  ABLabelledMicrobitBoardRef,
-  ABLabelledMicrobitBoardProps
->(function ABLabelledMicrobitBoard({ activeColor, css: cssProp }, ref) {
+const ABLabelledMicrobitBoard = ({
+  activeColor,
+  css: cssProp,
+  ref,
+}: ABLabelledMicrobitBoardProps) => {
   const microbitBoardFrontRef = useRef<MicrobitBoardFrontRef>(null);
   const buttonLabelARef = useRef<ButtonLabelRef>(null);
   const buttonLabelBRef = useRef<ButtonLabelRef>(null);
@@ -95,9 +91,10 @@ const ABLabelledMicrobitBoard = forwardRef<
       />
     </VStack>
   );
-});
+};
 
 interface ButtonLabelProps {
+  ref?: Ref<ButtonLabelRef>;
   text: string;
   /** A resolved CSS colour (not a token name). */
   activeColor: string;
@@ -110,86 +107,84 @@ interface ButtonLabelRef {
 
 const buttonLabelFillDuration = 0.75; // sec
 
-const ButtonLabel = forwardRef<ButtonLabelRef, ButtonLabelProps>(
-  function ButtonLabel({ activeColor, text }, ref) {
-    const { delayInSec, withPlayState, prefersReducedMotion } = useAnimation();
-    const [playing, setPlaying] = useState<boolean>(false);
+const ButtonLabel = ({ activeColor, text, ref }: ButtonLabelProps) => {
+  const { delayInSec, withPlayState, prefersReducedMotion } = useAnimation();
+  const [playing, setPlaying] = useState<boolean>(false);
 
-    // Fill effect: a bottom-anchored gradient in the active colour grows via
-    // the preset's textBoxFillUp/lineScaleUp keyframes. Colour and play state
-    // are runtime values, so the whole lot is an inline style.
-    const buttonLabelAnimationStyle = useCallback(
-      (keyframeName: string): CSSProperties => {
-        return {
-          backgroundImage: `linear-gradient(to top, ${activeColor}, ${activeColor})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "bottom",
-          backgroundSize: "100% 0%",
-          animation: withPlayState(
-            `${keyframeName} ${buttonLabelFillDuration}s ease-in-out forwards`
-          ),
-        };
-      },
-      [activeColor, withPlayState]
-    );
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          async play() {
-            setPlaying(true);
-            await delayInSec(buttonLabelFillDuration);
-          },
-          reset() {
-            setPlaying(false);
-          },
-        };
-      },
-      [delayInSec]
-    );
-    return (
-      <Box position="relative" w="27%">
-        <Text
-          px="3%"
-          py="5%"
-          textAlign="center"
-          borderRadius="0.5rem"
-          fontWeight="bold"
-          fontSize="lg"
-          color="white"
-          style={{
-            backgroundColor:
-              prefersReducedMotion && playing ? activeColor : inactiveColor,
-            ...(playing ? buttonLabelAnimationStyle("textBoxFillUp") : {}),
-          }}
-        >
-          {text}
-        </Text>
-        <Box
-          position="absolute"
-          top="100%"
-          w="15%"
-          h="195%"
-          left="42.5%"
-          style={{ backgroundColor: inactiveColor }}
-        />
-        <Box
-          position="absolute"
-          top="100%"
-          w="16%"
-          h="196%"
-          left="42.5%"
-          transformOrigin="bottom"
-          style={{
-            transform:
-              prefersReducedMotion && playing ? "scaleY(1)" : "scaleY(0)",
-            backgroundColor: activeColor,
-            ...(playing ? buttonLabelAnimationStyle("lineScaleUp") : {}),
-          }}
-        />
-      </Box>
-    );
-  }
-);
+  // Fill effect: a bottom-anchored gradient in the active colour grows via
+  // the preset's textBoxFillUp/lineScaleUp keyframes. Colour and play state
+  // are runtime values, so the whole lot is an inline style.
+  const buttonLabelAnimationStyle = useCallback(
+    (keyframeName: string): CSSProperties => {
+      return {
+        backgroundImage: `linear-gradient(to top, ${activeColor}, ${activeColor})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "bottom",
+        backgroundSize: "100% 0%",
+        animation: withPlayState(
+          `${keyframeName} ${buttonLabelFillDuration}s ease-in-out forwards`
+        ),
+      };
+    },
+    [activeColor, withPlayState]
+  );
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        async play() {
+          setPlaying(true);
+          await delayInSec(buttonLabelFillDuration);
+        },
+        reset() {
+          setPlaying(false);
+        },
+      };
+    },
+    [delayInSec]
+  );
+  return (
+    <Box position="relative" w="27%">
+      <Text
+        px="3%"
+        py="5%"
+        textAlign="center"
+        borderRadius="0.5rem"
+        fontWeight="bold"
+        fontSize="lg"
+        color="white"
+        style={{
+          backgroundColor:
+            prefersReducedMotion && playing ? activeColor : inactiveColor,
+          ...(playing ? buttonLabelAnimationStyle("textBoxFillUp") : {}),
+        }}
+      >
+        {text}
+      </Text>
+      <Box
+        position="absolute"
+        top="100%"
+        w="15%"
+        h="195%"
+        left="42.5%"
+        style={{ backgroundColor: inactiveColor }}
+      />
+      <Box
+        position="absolute"
+        top="100%"
+        w="16%"
+        h="196%"
+        left="42.5%"
+        transformOrigin="bottom"
+        style={{
+          transform:
+            prefersReducedMotion && playing ? "scaleY(1)" : "scaleY(0)",
+          backgroundColor: activeColor,
+          ...(playing ? buttonLabelAnimationStyle("lineScaleUp") : {}),
+        }}
+      />
+    </Box>
+  );
+};
 
 export default ABLabelledMicrobitBoard;

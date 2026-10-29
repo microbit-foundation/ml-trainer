@@ -3,16 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CSSProperties,
-  forwardRef,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { CSSProperties, useImperativeHandle, useState, Ref } from "react";
 import { Svg, SystemStyleObject, token } from "@microbit/ui";
 import { icons, Off } from "../../utils/icons";
 
 interface HandHoldingMicrobitProps {
+  ref?: Ref<HandHoldingMicrobitRef>;
   /** Per-instance style overrides, merged after the base. */
   css?: SystemStyleObject;
   style?: CSSProperties;
@@ -27,13 +23,11 @@ export interface HandHoldingMicrobitRef {
 const ledDim = 5; // 5-by-5 led grid.
 const ledSpacing = 10; // Distance between led.
 
-const HandHoldingMicrobit = forwardRef<
-  HandHoldingMicrobitRef,
-  HandHoldingMicrobitProps
->(function HandHoldingMicrobit(
-  { css: cssProp, style }: HandHoldingMicrobitProps,
-  ref
-) {
+const HandHoldingMicrobit = ({
+  css: cssProp,
+  style,
+  ref,
+}: HandHoldingMicrobitProps) => {
   const litLedColor = token("colors.pink.500");
   const unlitLedColor = token("colors.gray.200");
   const [ledPattern, setLedPattern] = useState<string>(Off);
@@ -119,6 +113,6 @@ const HandHoldingMicrobit = forwardRef<
       />
     </Svg>
   );
-});
+};
 
 export default HandHoldingMicrobit;

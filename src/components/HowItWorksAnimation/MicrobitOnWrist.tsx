@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { useImperativeHandle, useState, Ref } from "react";
 import { Stack, Svg, token } from "@microbit/ui";
 import { icons, LedIconType, Off } from "../../utils/icons";
 import { useAnimation } from "../AnimationProvider";
@@ -34,10 +34,7 @@ export interface MicrobitOnWristRef {
   setMove(type: MoveType): void;
 }
 
-const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
-  _,
-  ref
-) {
+const MicrobitOnWrist = ({ ref }: { ref?: Ref<MicrobitOnWristRef> }) => {
   const litLedColor = token("colors.pink.500");
   const unlitLedColor = token("colors.gray.200");
   const { withPlayState, delayInSec } = useAnimation();
@@ -301,6 +298,6 @@ const MicrobitOnWrist = forwardRef<MicrobitOnWristRef>(function MicrobitOnWrist(
       </Svg>
     </Stack>
   );
-});
+};
 
 export default MicrobitOnWrist;

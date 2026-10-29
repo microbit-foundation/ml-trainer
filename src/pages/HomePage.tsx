@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
 import {
   RiAddLine,
@@ -171,7 +171,7 @@ const ProjectRow = () => {
             allProjectData.length > numCardsDisplayed ? (
               <ViewAllProjectsCard key="view-all" />
             ) : undefined,
-          ].filter(Boolean) as JSX.Element[]
+          ].filter(Boolean) as React.JSX.Element[]
         }
         navigation={!isNativePlatform()}
         className={carouselRowClassName}
