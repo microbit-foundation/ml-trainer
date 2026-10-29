@@ -5,7 +5,7 @@
  */
 import { Ref, forwardRef } from "react";
 import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router";
-import { styled } from "@microbit/ui";
+import { styled } from "styled-system/jsx";
 import { link } from "styled-system/recipes";
 
 // Adapter to deal with to vs href.

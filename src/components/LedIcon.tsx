@@ -5,7 +5,8 @@
  */
 import { forwardRef, memo, useImperativeHandle, useRef } from "react";
 import { useIntl } from "react-intl";
-import { AspectRatio, Box, css, cx, HStack, token, VStack } from "@microbit/ui";
+import { AspectRatio, Box, HStack, token, VStack } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import { icons, LedIconType } from "../utils/icons";
 
 export interface LedIconHandle {

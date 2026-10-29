@@ -22,15 +22,8 @@ import {
   microbitNameToBluetoothPattern,
   microbitPatternToName,
 } from "../bt-pattern-utils";
-import {
-  Box,
-  css,
-  cx,
-  HStack,
-  Text,
-  VisuallyHidden,
-  VStack,
-} from "@microbit/ui";
+import { Box, HStack, Text, VisuallyHidden, VStack } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 
 interface BluetoothPatternInputProps {
   onChange?: (name: string) => void;

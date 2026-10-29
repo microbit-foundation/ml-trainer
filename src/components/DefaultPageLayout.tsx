@@ -25,7 +25,6 @@ import { isIOS, isNativePlatform } from "../platform";
 import {
   Box,
   Button,
-  css,
   Flex,
   Heading,
   HStack,
@@ -36,6 +35,7 @@ import {
   MenuTrigger,
   VStack,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import ActionBar from "./ActionBar/ActionBar";

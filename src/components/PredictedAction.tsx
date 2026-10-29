@@ -6,7 +6,8 @@
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { css, HStack, Text, VisuallyHidden, VStack } from "@microbit/ui";
+import { HStack, Text, VisuallyHidden, VStack } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
 import InfoToolTip from "./InfoToolTip";

@@ -24,7 +24,6 @@ import { SaveType, TourTrigger } from "../model";
 import { isAndroid, isIOS, isNativePlatform } from "../platform";
 import {
   Box,
-  css,
   Divider,
   Drawer,
   DrawerBody,
@@ -37,6 +36,7 @@ import {
   Text,
   VStack,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useStore } from "../store";
 import { createHomePageUrl } from "../urls";
 import { userGuideUrl } from "../utils/external-links";

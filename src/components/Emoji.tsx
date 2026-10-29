@@ -1,4 +1,4 @@
-import { css, cx } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 
 type Eye = "round" | "tick" | "heart";
 

@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css, SystemStyleObject } from "@microbit/ui";
+import { SystemStyleObject } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 interface StraightArrowProps {
   /**

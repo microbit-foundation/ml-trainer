@@ -5,7 +5,8 @@
  */
 import { memo } from "react";
 import { ActionData } from "../model";
-import { Card, css, cx } from "@microbit/ui";
+import { Card } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import { tourElClassname } from "../tours";
 import CodeViewDefaultBlock from "./CodeViewDefaultBlock";
 

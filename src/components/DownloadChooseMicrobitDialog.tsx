@@ -16,7 +16,8 @@ import {
 } from "../download-flow/download-types";
 import microbitImage from "../images/stylised-microbit-black.svg";
 import twoMicrobitsImage from "../images/stylised-two-microbits-black.svg";
-import { Box, css, cx, HStack, Icon, Image, Text, VStack } from "@microbit/ui";
+import { Box, HStack, Icon, Image, Text, VStack } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import ConnectContainerDialog, {
   ConnectContainerDialogProps,
 } from "./ConnectContainerDialog";

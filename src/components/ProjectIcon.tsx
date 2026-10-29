@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css, cx } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 
 interface ProjectIconProps {
   /** Tighter on short viewports, for the home page carousel. */

@@ -10,13 +10,12 @@ import { Action } from "../model";
 import {
   CardBody,
   CloseButton,
-  css,
-  cx,
   HStack,
   Input,
   useBreakpointValue,
   useToast,
 } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";
