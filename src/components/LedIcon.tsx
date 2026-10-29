@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, memo, useImperativeHandle, useRef } from "react";
+import { memo, useImperativeHandle, useRef, Ref } from "react";
 import { useIntl } from "react-intl";
-import { AspectRatio, Box, css, cx, HStack, token, VStack } from "@microbit/ui";
+import { AspectRatio, Box, HStack, token, VStack } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import { icons, LedIconType } from "../utils/icons";
 
 export interface LedIconHandle {
@@ -16,76 +17,81 @@ export interface LedIconHandle {
 }
 
 interface LedIconProps {
+  ref?: Ref<LedIconHandle>;
   colorScheme?: string;
   icon: LedIconType;
   initiallyOn?: boolean;
   size?: string | number;
 }
 
-const LedIcon = forwardRef<LedIconHandle, LedIconProps>(
-  ({ colorScheme = "brand", icon, initiallyOn = true, size = 20 }, ref) => {
-    const iconData = icons[icon];
-    const intl = useIntl();
-    const vstackRef = useRef<HTMLDivElement>(null);
-    // Runtime token lookup (the colour scheme is dynamic).
-    const activeColor = token(
-      `colors.${colorScheme}.500` as Parameters<typeof token>[0]
-    );
-    const offColor = token("colors.gray.500");
+const LedIcon = ({
+  colorScheme = "brand",
+  icon,
+  initiallyOn = true,
+  size = 20,
+  ref,
+}: LedIconProps) => {
+  const iconData = icons[icon];
+  const intl = useIntl();
+  const vstackRef = useRef<HTMLDivElement>(null);
+  // Runtime token lookup (the colour scheme is dynamic).
+  const activeColor = token(
+    `colors.${colorScheme}.500` as Parameters<typeof token>[0]
+  );
+  const offColor = token("colors.gray.500");
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        setLedsOn(on: boolean) {
-          vstackRef.current?.style.setProperty(
-            "--led-color",
-            on ? activeColor : offColor
-          );
-        },
-      }),
-      [activeColor, offColor]
-    );
+  useImperativeHandle(
+    ref,
+    () => ({
+      setLedsOn(on: boolean) {
+        vstackRef.current?.style.setProperty(
+          "--led-color",
+          on ? activeColor : offColor
+        );
+      },
+    }),
+    [activeColor, offColor]
+  );
 
-    return (
-      <AspectRatio
-        ratio={1}
-        role="img"
-        aria-label={intl.formatMessage({
-          id: `led-icon-option-${icon.toLowerCase()}`,
-        })}
-        // Spacing-scale number (0.25rem units) or CSS length; dynamic, so an
-        // inline style.
-        style={{
-          width: typeof size === "number" ? `${size * 0.25}rem` : size,
-          height: typeof size === "number" ? `${size * 0.25}rem` : size,
-        }}
+  return (
+    <AspectRatio
+      ratio={1}
+      role="img"
+      aria-label={intl.formatMessage({
+        id: `led-icon-option-${icon.toLowerCase()}`,
+      })}
+      // Spacing-scale number (0.25rem units) or CSS length; dynamic, so an
+      // inline style.
+      style={{
+        width: typeof size === "number" ? `${size * 0.25}rem` : size,
+        height: typeof size === "number" ? `${size * 0.25}rem` : size,
+      }}
+    >
+      <VStack
+        w="100%"
+        h="100%"
+        gap={0.5}
+        ref={vstackRef}
+        style={
+          {
+            "--led-color": initiallyOn ? activeColor : offColor,
+          } as React.CSSProperties
+        }
       >
-        <VStack
-          w="100%"
-          h="100%"
-          gap={0.5}
-          ref={vstackRef}
-          style={
-            {
-              "--led-color": initiallyOn ? activeColor : offColor,
-            } as React.CSSProperties
-          }
-        >
-          {Array.from(Array(5)).map((_, idx) => {
-            const start = idx * 5;
-            return (
-              <LedIconRow
-                // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
-                key={idx}
-                data={iconData.substring(start, start + 5)}
-              />
-            );
-          })}
-        </VStack>
-      </AspectRatio>
-    );
-  }
-);
+        {Array.from(Array(5)).map((_, idx) => {
+          const start = idx * 5;
+          return (
+            <LedIconRow
+              // eslint-disable-next-line @eslint-react/no-array-index-key -- fixed list, position is identity
+              key={idx}
+              data={iconData.substring(start, start + 5)}
+            />
+          );
+        })}
+      </VStack>
+    </AspectRatio>
+  );
+};
 
 interface LedIconRowProps {
   data: string;
@@ -120,7 +126,5 @@ const LedIconRow = ({ data }: LedIconRowProps) => {
     </HStack>
   );
 };
-
-LedIcon.displayName = "LedIcon";
 
 export default memo(LedIcon);

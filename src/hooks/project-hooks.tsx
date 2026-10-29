@@ -18,7 +18,7 @@ import {
   ReactNode,
   RefObject,
   useCallback,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -106,7 +106,7 @@ interface ProjectContext {
 const ProjectContext = createContext<ProjectContext | undefined>(undefined);
 
 export const useProject = (): ProjectContext => {
-  const project = useContext(ProjectContext);
+  const project = use(ProjectContext);
   if (!project) {
     throw new Error("Missing provider");
   }
@@ -114,7 +114,7 @@ export const useProject = (): ProjectContext => {
 };
 
 interface ProjectProviderProps {
-  driverRef: RefObject<MakeCodeFrameDriver>;
+  driverRef: RefObject<MakeCodeFrameDriver | null>;
   children: ReactNode;
 }
 
@@ -234,7 +234,9 @@ export const ProjectProvider = ({
     [editorStartUp, startUpTimestamp]
   );
 
-  const doAfterEditorUpdatePromise = useRef<Promise<void>>();
+  const doAfterEditorUpdatePromise = useRef<Promise<void> | undefined>(
+    undefined
+  );
   const doAfterEditorUpdate = useCallback(
     async (action: () => Promise<void>) => {
       if (
@@ -644,7 +646,5 @@ export const ProjectProvider = ({
     ]
   );
 
-  return (
-    <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>
-  );
+  return <ProjectContext value={value}>{children}</ProjectContext>;
 };

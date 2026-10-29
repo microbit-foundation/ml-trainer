@@ -16,7 +16,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface DownloadingDialogProps {
   isOpen: boolean;
   progress: number;
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 const TrainingModelProgressDialog = ({

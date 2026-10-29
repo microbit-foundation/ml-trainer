@@ -3,13 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 import { useIntl } from "react-intl";
 import { flags } from "../flags";
-import { Button, ButtonProps, css, Spinner } from "@microbit/ui";
+import { Button, ButtonProps, Spinner } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 export interface ButtonWithLoadingProps
   extends Omit<ButtonProps, "children" | "onPress"> {
+  ref?: Ref<HTMLButtonElement>;
   isLoading?: boolean;
   /** Click handler. */
   onClick?: () => void;
@@ -20,13 +22,14 @@ export interface ButtonWithLoadingProps
  * Button that swaps its label for a centred spinner while loading, keeping
  * its width (the label stays in the layout, hidden).
  */
-export const ButtonWithLoading = forwardRef<
-  HTMLButtonElement,
-  ButtonWithLoadingProps
->(function ButtonWithLoading(
-  { isLoading, isDisabled, onClick, children, ...props },
-  ref
-) {
+export const ButtonWithLoading = ({
+  isLoading,
+  isDisabled,
+  onClick,
+  children,
+  ref,
+  ...props
+}: ButtonWithLoadingProps) => {
   const intl = useIntl();
   // Workaround to avoid error caused by DOM changes when doing in-context
   // translations.
@@ -67,4 +70,4 @@ export const ButtonWithLoading = forwardRef<
       </span>
     </Button>
   );
-});
+};

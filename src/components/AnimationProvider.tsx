@@ -7,7 +7,7 @@ import {
   createContext,
   ReactNode,
   useCallback,
-  useContext,
+  use,
   useEffect,
   useRef,
   useState,
@@ -28,7 +28,7 @@ export const AnimationContext = createContext<AnimationContextValue | null>(
 );
 
 export const useAnimation = () => {
-  const ctx = useContext(AnimationContext);
+  const ctx = use(AnimationContext);
   if (!ctx)
     throw new Error("useAnimation must be used within AnimationProvider");
   return ctx;
@@ -156,7 +156,7 @@ export const AnimationProvider = ({
   );
 
   return (
-    <AnimationContext.Provider
+    <AnimationContext
       value={{
         delayInSec,
         pause,
@@ -168,6 +168,6 @@ export const AnimationProvider = ({
       }}
     >
       <div>{children}</div>
-    </AnimationContext.Provider>
+    </AnimationContext>
   );
 };

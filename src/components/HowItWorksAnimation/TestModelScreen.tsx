@@ -5,10 +5,10 @@
  */
 import {
   CSSProperties,
-  forwardRef,
   useImperativeHandle,
   useRef,
   useState,
+  Ref,
 } from "react";
 import { Grid, GridItem, token } from "@microbit/ui";
 import Gauge, { GaugeRef, totalDuration } from "./Gauge";
@@ -24,10 +24,7 @@ export interface TestModelScreenRef {
 }
 
 export const testModeldurationInSec = totalDuration;
-const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
-  _,
-  ref
-) {
+const TestModelScreen = ({ ref }: { ref?: Ref<TestModelScreenRef> }) => {
   const empty = token("colors.gray.200");
   const filled = token("colors.gray.500");
   const filledDark = token("colors.brand2.500");
@@ -129,6 +126,6 @@ const TestModelScreen = forwardRef<TestModelScreenRef>(function TestModelScreen(
       </GridItem>
     </Grid>
   );
-});
+};
 
 export default TestModelScreen;

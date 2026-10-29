@@ -3,13 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
+import { createContext, ReactNode, use, useEffect, useMemo } from "react";
 import { useConnections } from "../connections-hooks";
 import {
   createFireDataConnectionEvent,
@@ -129,9 +123,9 @@ export const DataConnectionEventProvider = ({
   }, [api, connections]);
 
   return (
-    <DataConnectionMachineContext.Provider value={api}>
+    <DataConnectionMachineContext value={api}>
       {children}
-    </DataConnectionMachineContext.Provider>
+    </DataConnectionMachineContext>
   );
 };
 
@@ -143,7 +137,7 @@ export const DataConnectionEventProvider = ({
  * - `sendEvent`: Async event dispatch that returns a promise
  */
 export const useDataConnectionMachine = (): DataConnectionMachine => {
-  const value = useContext(DataConnectionMachineContext);
+  const value = use(DataConnectionMachineContext);
   if (!value) {
     throw new Error(
       "useDataConnectionMachine must be used within DataConnectionEventProvider"

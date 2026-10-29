@@ -18,7 +18,8 @@ import ActionNameCard, { ActionCardNameViewMode } from "./ActionNameCard";
 import CodeViewCard from "./CodeViewCard";
 import CodeViewDefaultBlockCard from "./CodeViewDefaultBlockCard";
 import HeadingGrid from "./HeadingGrid";
-import { Box, css, Flex, Grid, GridItem, Icon, VStack } from "@microbit/ui";
+import { Box, Flex, Grid, GridItem, Icon, VStack } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useResizeObserverContentRect } from "../hooks/use-resize-observer";
 
 const headings = [

@@ -15,7 +15,6 @@ import { RiEditLine } from "react-icons/ri";
 import { useIntl } from "react-intl";
 import {
   Button,
-  css,
   HStack,
   Icon,
   Input,
@@ -25,6 +24,7 @@ import {
   Text,
   Tooltip,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useLogging } from "../logging/logging-hooks";
 import { useStore } from "../store";
 

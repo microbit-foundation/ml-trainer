@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CSSProperties,
-  useImperativeHandle,
-  forwardRef,
-  useState,
-} from "react";
+import { CSSProperties, useImperativeHandle, useState, Ref } from "react";
 import { Box, SystemStyleObject } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
 import { useAnimation } from "../AnimationProvider";
@@ -20,15 +15,13 @@ export interface CodeBlockRef {
 }
 
 interface CodeBlockProps {
+  ref?: Ref<CodeBlockRef>;
   /** Per-instance overrides for the outer block, merged after the base. */
   css?: SystemStyleObject;
   style?: CSSProperties;
 }
 
-const CodeBlock = forwardRef<CodeBlockRef, CodeBlockProps>(function CodeBlock(
-  { css: cssProp, style },
-  ref
-) {
+const CodeBlock = ({ css: cssProp, style, ref }: CodeBlockProps) => {
   const { delayInSec, isPaused } = useAnimation();
   const [visible, setVisible] = useState<boolean>(false);
   const [duration, setDuration] = useState<number | null>(null);
@@ -83,7 +76,7 @@ const CodeBlock = forwardRef<CodeBlockRef, CodeBlockProps>(function CodeBlock(
       ) : null}
     </Box>
   );
-});
+};
 
 const OuterCodeBlock = (props: AnimationIconProps) => (
   <AnimationIcon viewBox="0 0 210 145.3" baseCss={{ fill: "none" }} {...props}>

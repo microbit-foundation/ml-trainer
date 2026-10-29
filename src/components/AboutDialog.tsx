@@ -10,7 +10,6 @@ import {
   AspectRatio,
   Box,
   Button,
-  css,
   Grid,
   HStack,
   Icon,
@@ -24,6 +23,7 @@ import {
   VisuallyHidden,
   VStack,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useDeployment } from "../deployment";
 import aarhusLogo from "../images/aulogo_uk_var2_blue.png";
 import microbitHeartImage from "../images/microbit-heart.png";
@@ -31,7 +31,7 @@ import microbitHeartImage from "../images/microbit-heart.png";
 interface AboutDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  finalFocusRef?: React.RefObject<HTMLButtonElement>;
+  finalFocusRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 /**

@@ -5,7 +5,7 @@
  */
 import { useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { css } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 interface TourOverlayProps extends SpotlightStyle {
   /**

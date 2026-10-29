@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { useImperativeHandle, useRef, useState, Ref } from "react";
 import { useIntl } from "react-intl";
 import { Stack } from "@microbit/ui";
 import AnimationIcon, { AnimationIconProps } from "./AnimationIcon";
@@ -19,7 +19,7 @@ export interface StepFlowRef {
   reset(): void;
 }
 
-const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
+const StepFlow = ({ ref: stepFlowRef }: { ref?: Ref<StepFlowRef> }) => {
   const intl = useIntl();
   const stepRefs = useRef([
     useRef<StepTickPillRef>(null),
@@ -191,7 +191,7 @@ const StepFlow = forwardRef<StepFlowRef>(function StepFlow(_, stepFlowRef) {
       />
     </Stack>
   );
-});
+};
 
 const ArrowIcon = (props: AnimationIconProps) => (
   <AnimationIcon viewBox="0 0 68 22" baseCss={{ fill: "none" }} {...props}>

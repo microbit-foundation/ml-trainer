@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  CSSProperties,
-  forwardRef,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { CSSProperties, useImperativeHandle, useState, Ref } from "react";
 import { Box, HStack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
@@ -19,6 +14,7 @@ export const totalDuration = 2;
 const segmentCount = 7;
 
 export interface GaugeProps {
+  ref?: Ref<GaugeRef>;
   empty?: string;
   filled?: string;
   filledDark?: string;
@@ -29,10 +25,12 @@ export interface GaugeRef {
   reset(): void;
 }
 
-const Gauge = forwardRef<GaugeRef, GaugeProps>(function Gauge(
-  { empty = "#CBD5E0", filled = "#718096", filledDark = "#48BB78" },
-  ref
-) {
+const Gauge = ({
+  empty = "#CBD5E0",
+  filled = "#718096",
+  filledDark = "#48BB78",
+  ref,
+}: GaugeProps) => {
   const { delayInSec, withPlayState } = useAnimation();
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -76,6 +74,6 @@ const Gauge = forwardRef<GaugeRef, GaugeProps>(function Gauge(
       ))}
     </HStack>
   );
-});
+};
 
 export default Gauge;

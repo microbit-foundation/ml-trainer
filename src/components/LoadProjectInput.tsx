@@ -3,18 +3,13 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import { css } from "@microbit/ui";
+import { useCallback, useImperativeHandle, useRef, useState, Ref } from "react";
+import { css } from "styled-system/css";
 import { LoadAction, useProject } from "../hooks/project-hooks";
 import { isAndroid } from "../platform";
 
 export interface LoadProjectInputProps {
+  ref?: Ref<LoadProjectInputRef>;
   /**
    *
    * File input tag accept attribute.
@@ -27,67 +22,65 @@ export interface LoadProjectInputRef {
   chooseFile(fileAction: LoadAction): void;
 }
 
-const LoadProjectInput = forwardRef<LoadProjectInputRef, LoadProjectInputProps>(
-  function LoadProjectInput({ accept }: LoadProjectInputProps, ref) {
-    const { loadFile } = useProject();
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [action, setAction] = useState<LoadAction>("replaceProject");
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          chooseFile(fileAction) {
-            setAction(fileAction);
-            inputRef.current?.click();
-          },
-        };
-      },
-      []
-    );
+const LoadProjectInput = ({ accept, ref }: LoadProjectInputProps) => {
+  const { loadFile } = useProject();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [action, setAction] = useState<LoadAction>("replaceProject");
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        chooseFile(fileAction) {
+          setAction(fileAction);
+          inputRef.current?.click();
+        },
+      };
+    },
+    []
+  );
 
-    const onOpen = useCallback(
-      async (files: File[]) => {
-        if (files.length === 1) {
-          await loadFile(files[0], "file-upload", action);
+  const onOpen = useCallback(
+    async (files: File[]) => {
+      if (files.length === 1) {
+        await loadFile(files[0], "file-upload", action);
+      }
+    },
+    [action, loadFile]
+  );
+
+  const handleOpenFile = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files) {
+        const filesArray = Array.from(files);
+        // Clear the input so we're triggered if the user opens the same file again.
+        inputRef.current!.value = "";
+        if (filesArray.length > 0) {
+          void onOpen(filesArray);
         }
-      },
-      [action, loadFile]
-    );
+      }
+    },
+    [onOpen]
+  );
 
-    const handleOpenFile = useCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (files) {
-          const filesArray = Array.from(files);
-          // Clear the input so we're triggered if the user opens the same file again.
-          inputRef.current!.value = "";
-          if (filesArray.length > 0) {
-            void onOpen(filesArray);
-          }
-        }
-      },
-      [onOpen]
-    );
+  // On Android, the file picker filters by MIME type rather than extension.
+  // .hex files have no standard MIME type, so we add application/octet-stream
+  // to ensure they appear in the picker.
+  const effectiveAccept =
+    isAndroid() && accept.includes(".hex")
+      ? `${accept},application/octet-stream`
+      : accept;
 
-    // On Android, the file picker filters by MIME type rather than extension.
-    // .hex files have no standard MIME type, so we add application/octet-stream
-    // to ensure they appear in the picker.
-    const effectiveAccept =
-      isAndroid() && accept.includes(".hex")
-        ? `${accept},application/octet-stream`
-        : accept;
-
-    return (
-      <input
-        type="file"
-        className={css({ display: "none" })}
-        multiple={false}
-        accept={effectiveAccept}
-        onChange={handleOpenFile}
-        ref={inputRef}
-      />
-    );
-  }
-);
+  return (
+    <input
+      type="file"
+      className={css({ display: "none" })}
+      multiple={false}
+      accept={effectiveAccept}
+      onChange={handleOpenFile}
+      ref={inputRef}
+    />
+  );
+};
 
 export default LoadProjectInput;

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { useImperativeHandle, useState, Ref } from "react";
 import { Box } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
 
@@ -12,7 +12,7 @@ export interface ProgressBarRef {
   reset(): void;
 }
 
-const ProgressBar = forwardRef<ProgressBarRef>(function ProgressBar(_, ref) {
+const ProgressBar = ({ ref }: { ref?: Ref<ProgressBarRef> }) => {
   const { delayInSec, withPlayState } = useAnimation();
   const [durationInSecs, setDuration] = useState<null | number>(null);
   useImperativeHandle(
@@ -56,6 +56,6 @@ const ProgressBar = forwardRef<ProgressBarRef>(function ProgressBar(_, ref) {
       />
     </Box>
   );
-});
+};
 
 export default ProgressBar;

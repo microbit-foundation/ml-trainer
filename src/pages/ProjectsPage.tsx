@@ -5,8 +5,6 @@
  */
 import {
   Box,
-  css,
-  cx,
   Flex,
   Grid,
   HStack,
@@ -16,6 +14,7 @@ import {
   useBreakpointValue,
   VStack,
 } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import {
   defaultSortDirection,
   ProjectCard,
@@ -268,8 +267,7 @@ const ProjectsPage = () => {
           display={{ base: "flex", lg: "none" }}
           bg="white"
           boxShadow="0 -2px 8px rgba(0,0,0,0.1)"
-          borderTop="1px solid"
-          borderColor="gray.200"
+          borderTop="1px solid {colors.gray.200}"
           py={2}
           px={4}
         >

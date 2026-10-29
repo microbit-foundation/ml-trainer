@@ -41,7 +41,7 @@ type CommonConsentWindow = Window & {
  * handles notices so we no-op there.
  */
 export const createWebCompliance = (env: Record<string, string>) => {
-  const consentContext = createContext<CookieConsent | undefined>(undefined);
+  const ConsentContext = createContext<CookieConsent | undefined>(undefined);
 
   const showConsent = (
     { userTriggered }: { userTriggered: boolean } = { userTriggered: false }
@@ -113,14 +113,10 @@ export const createWebCompliance = (env: Record<string, string>) => {
       };
     }, []);
 
-    return (
-      <consentContext.Provider value={value}>
-        {children}
-      </consentContext.Provider>
-    );
+    return <ConsentContext value={value}>{children}</ConsentContext>;
   };
 
-  return { ConsentProvider, consentContext, manageCookies };
+  return { ConsentProvider, consentContext: ConsentContext, manageCookies };
 };
 
 const inIframe = () => {

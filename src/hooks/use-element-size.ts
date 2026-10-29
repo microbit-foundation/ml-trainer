@@ -13,7 +13,7 @@ import { RefObject, useLayoutEffect, useState } from "react";
  * final dimensions before the chart paints its only frame.
  */
 export const useElementSize = (
-  ref: RefObject<HTMLElement>
+  ref: RefObject<HTMLElement | null>
 ): { width: number; height: number } | undefined => {
   const [size, setSize] = useState<
     { width: number; height: number } | undefined

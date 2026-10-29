@@ -5,11 +5,11 @@
  */
 import {
   CSSProperties,
-  forwardRef,
   ReactNode,
   useCallback,
   useImperativeHandle,
   useState,
+  Ref,
 } from "react";
 import { Heading, SystemStyleObject, Svg, VStack } from "@microbit/ui";
 import { useAnimation } from "../AnimationProvider";
@@ -122,6 +122,7 @@ export interface ResetPressedMicrobitBoardRef {
   reset(): void;
 }
 interface ResetPressedMicrobitBoardProps {
+  ref?: Ref<ResetPressedMicrobitBoardRef>;
   /** A resolved CSS colour (not a token name). */
   activeColor: string;
   /**
@@ -134,13 +135,13 @@ interface ResetPressedMicrobitBoardProps {
   style?: CSSProperties;
 }
 
-const ResetPressedMicrobitBoard = forwardRef<
-  ResetPressedMicrobitBoardRef,
-  ResetPressedMicrobitBoardProps
->(function ResetHighlightedMicrobitBoard(
-  { activeColor, handSide = "right", css: cssProp, style },
-  ref
-) {
+const ResetPressedMicrobitBoard = ({
+  activeColor,
+  handSide = "right",
+  css: cssProp,
+  style,
+  ref,
+}: ResetPressedMicrobitBoardProps) => {
   const { delayInSec, withPlayState } = useAnimation();
   const [showButtonOutline, setShowButtonOutline] = useState<boolean>(false);
   const [showGlowLines, setShowGlowLines] = useState<boolean>(false);
@@ -242,7 +243,7 @@ const ResetPressedMicrobitBoard = forwardRef<
       />
     </VStack>
   );
-});
+};
 
 interface HandSvgProps {
   css?: SystemStyleObject;

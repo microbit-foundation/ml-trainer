@@ -9,7 +9,8 @@ This app uses react-aria-components + Panda CSS via `@microbit/ui`.
   package (`npm run build` there → `dist/panda-preset.js`) and make it
   resolvable as `node_modules/@microbit-foundation/ml-trainer-microbit`
   (symlink or `npm link`). Without it you get the OSS default. CI installs
-  the version pinned in `workflow-config.json`.
+  the version pinned as `ML_THEME_VERSION` in the
+  `.github/workflows` build files.
 - **Local `@microbit/ui` development**: symlink `node_modules/@microbit/ui`
   to `../ui/packages/ui`; a plain `npm i` restores the registry version.
 - **After bumping the pinned `@microbit/ui` version**, follow "Upgrading in

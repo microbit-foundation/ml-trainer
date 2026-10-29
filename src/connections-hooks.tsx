@@ -11,7 +11,7 @@ import {
   MutableRefObject,
   ReactNode,
   createContext,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -208,9 +208,9 @@ export const ConnectionsProvider = ({
   }, [isInitialized, connections]);
 
   return (
-    <ConnectionsContext.Provider value={connections}>
+    <ConnectionsContext value={connections}>
       {isInitialized ? children : <></>}
-    </ConnectionsContext.Provider>
+    </ConnectionsContext>
   );
 };
 
@@ -218,7 +218,7 @@ export const ConnectionsProvider = ({
  * Returns the Connections object.
  */
 export const useConnections = (): Connections => {
-  const context = useContext(ConnectionsContext);
+  const context = use(ConnectionsContext);
   if (!context) {
     throw new Error("Missing ConnectionsProvider");
   }

@@ -68,7 +68,7 @@ const RecordingDialog = ({
   const intl = useIntl();
   const toast = useToast();
   const recordingCountRef = useRef(0);
-  const mostRecentRecordingIdRef = useRef<string | undefined>();
+  const mostRecentRecordingIdRef = useRef<string | undefined>(undefined);
   const recordingStarted = useStore((s) => s.recordingStarted);
   const recordingStopped = useStore((s) => s.recordingStopped);
   const addActionRecording = useStore((s) => s.addActionRecording);
@@ -209,7 +209,7 @@ const RecordingDialog = ({
   ]);
 
   const [progress, setProgress] = useState(0);
-  const doneTimeout = useRef<NodeJS.Timeout>();
+  const doneTimeout = useRef<NodeJS.Timeout>(undefined);
   useEffect(() => {
     if (recordingStatus === RecordingStatus.Countdown) {
       const config = countdownStages[countdownStageIndex];
@@ -368,7 +368,7 @@ interface RecordingDataSource {
 }
 
 const useRecordingDataSource = (): RecordingDataSource => {
-  const ref = useRef<InProgressRecording | undefined>();
+  const ref = useRef<InProgressRecording | undefined>(undefined);
   const dataWindow = useStore((s) => s.dataWindow);
   const bufferedData = useBufferedData();
   useEffect(() => {
