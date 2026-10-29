@@ -11,7 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { css, Tooltip, TooltipProps } from "@microbit/ui";
+import { Tooltip, TooltipProps } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 interface VisualOnlyTooltipProps {
   children: ReactElement;

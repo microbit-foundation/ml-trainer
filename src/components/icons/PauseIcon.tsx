@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { css } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 /** Pause glyph sized like a shared-ui Icon (1em, currentColor). */
 const PauseIcon = () => {

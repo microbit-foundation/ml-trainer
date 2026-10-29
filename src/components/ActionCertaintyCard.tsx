@@ -5,7 +5,8 @@
  */
 import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { CardBody, cx, css, HStack, Slider, Text, VStack } from "@microbit/ui";
+import { CardBody, HStack, Slider, Text, VStack } from "@microbit/ui";
+import { cx, css } from "styled-system/css";
 import RowCard from "./RowCard";
 import { tourElClassname } from "../tours";
 import PercentageDisplay from "./PercentageDisplay";

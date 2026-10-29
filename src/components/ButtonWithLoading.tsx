@@ -6,7 +6,8 @@
 import { forwardRef, ReactNode } from "react";
 import { useIntl } from "react-intl";
 import { flags } from "../flags";
-import { Button, ButtonProps, css, Spinner } from "@microbit/ui";
+import { Button, ButtonProps, Spinner } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 export interface ButtonWithLoadingProps
   extends Omit<ButtonProps, "children" | "onPress"> {

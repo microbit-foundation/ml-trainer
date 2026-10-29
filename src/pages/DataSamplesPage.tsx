@@ -36,7 +36,8 @@ import {
   PostImportDialogState,
 } from "../model";
 import { projectSessionStorage } from "../session-storage";
-import { Button, css, cx, Flex, HStack, Icon } from "@microbit/ui";
+import { Button, Flex, HStack, Icon } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import {
   useHasSufficientDataForTraining,
   useSettings,

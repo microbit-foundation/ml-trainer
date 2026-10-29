@@ -14,8 +14,6 @@ import {
   ButtonGroup,
   CardBody,
   CloseButton,
-  css,
-  cx,
   HStack,
   Icon,
   MenuItem,
@@ -25,6 +23,7 @@ import {
   Text,
   VStack,
 } from "@microbit/ui";
+import { css, cx } from "styled-system/css";
 import RowCard from "./RowCard";
 import { useStore } from "../store";
 import { tourElClassname } from "../tours";

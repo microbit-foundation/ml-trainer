@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { Box, css, VStack } from "@microbit/ui";
+import { Box, VStack } from "@microbit/ui";
+import { css } from "styled-system/css";
 
 /** Pulsing skeleton lines shown while the blocks preview loads. */
 const BlocksLoadingSkeleton = () => (

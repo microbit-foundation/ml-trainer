@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: MIT
  */
-import { AspectRatio, Box, css, Image } from "@microbit/ui";
+import { AspectRatio, Box, Image } from "@microbit/ui";
+import { css } from "styled-system/css";
 import connectorImage from "../../images/micro-usb-connector.png";
 import microbitImage from "../../images/microbit.png";
 import { useAnimation } from "../AnimationProvider";

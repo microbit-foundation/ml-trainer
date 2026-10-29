@@ -11,7 +11,6 @@ import { Action } from "../model";
 import {
   AspectRatio,
   Box,
-  css,
   HStack,
   Image,
   Stack,
@@ -19,6 +18,7 @@ import {
   VisuallyHidden,
   VStack,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import Emoji, { EmojiAi } from "./Emoji";
 import EmojiArrow from "./EmojiArrow";
 import StraightArrow from "./StraightArrow";

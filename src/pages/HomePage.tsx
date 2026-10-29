@@ -39,7 +39,6 @@ import {
   Button,
   Card,
   CardBody,
-  css,
   Icon,
   IconButton,
   darkSurface,
@@ -50,6 +49,7 @@ import {
   useBreakpointValue,
   VStack,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import {
   loadProjectAndModelFromStorage,
   useSettings,

@@ -12,7 +12,6 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
-  css,
   HStack,
   Modal,
   ModalBody,
@@ -21,6 +20,7 @@ import {
   PopoverArrow,
   useBreakpointValue,
 } from "@microbit/ui";
+import { css } from "styled-system/css";
 import { useStore } from "../store";
 import TourOverlay from "./TourOverlay";
 
