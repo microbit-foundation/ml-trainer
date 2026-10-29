@@ -109,6 +109,11 @@ jobs:
 
       - run: npx cap sync ios
 
+      # Resolve SPM packages up front so fastlane's xcodebuild -showBuildSettings
+      # doesn't time out downloading them on a fresh runner.
+      - name: Resolve Swift packages
+        run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj -scheme App
+
       - name: Build with Fastlane
         run: bundle exec fastlane ios build
         env:
