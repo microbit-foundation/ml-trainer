@@ -4,6 +4,8 @@ on:
     types: [opened]
 jobs:
   pr-url:
+    # Fork branches aren't deployed to the review site.
+    if: github.repository_owner == 'microbit-foundation' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: microbit-foundation/action-pr-url-template@v0.1.2
