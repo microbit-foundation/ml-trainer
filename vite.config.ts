@@ -83,6 +83,8 @@ const resolveThemeImage = (id: string): string => {
   return id.startsWith("images/optional/") ? missingOptionalImage : fallback;
 };
 
+process.env.VITE_VERSION ??= process.env.npm_package_version;
+
 // Auto-derive the runtime Firebase-config gate from the theme-package's
 // native/ directory — the source of truth for whether real Firebase
 // config is available for this build. Controls whether `createLogging`
@@ -165,11 +167,6 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         : false,
     ],
     assetsInclude: ["**/*.hex"],
-    define: {
-      "import.meta.env.VITE_APP_VERSION": JSON.stringify(
-        process.env.npm_package_version
-      ),
-    },
     build: {
       target: BUILD_TARGETS,
       cssTarget: BUILD_TARGETS,
