@@ -13,7 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Under the UIScene lifecycle the window, the url/universal link handlers and the
         // foreground/background callbacks all live in SceneDelegate instead of here.
         let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-        config.delegateClass = SceneDelegate.self
+        // Only the app window gets a SceneDelegate (and so a web view). Other roles,
+        // such as external displays and AirPlay, keep the default so iOS mirrors the
+        // device instead of starting a second copy of the app.
+        // See https://github.com/ionic-team/capacitor/issues/8648
+        if connectingSceneSession.role == .windowApplication {
+            config.delegateClass = SceneDelegate.self
+        }
         return config
     }
 }
