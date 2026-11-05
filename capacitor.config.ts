@@ -32,8 +32,7 @@ const config: CapacitorConfig = {
   experimental: {
     ios: {
       spm: {
-        // Package traits need Swift tools 6.1+. Capacitor's own docs for this
-        // option warn that Swift 6 isn't officially supported yet, testing needed. 
+        // Package traits need Swift tools 6.1+.
         swiftToolsVersion: "6.1",
         packageTraits: {
           // Pull the IDFA-free Analytics variant.
