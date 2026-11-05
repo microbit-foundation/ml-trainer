@@ -42,7 +42,7 @@ platform :ios do
 
     app_id = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
     build_app(
-      workspace: "ios/App/App.xcworkspace",
+      project: "ios/App/App.xcodeproj",
       scheme: "App",
       configuration: "Release",
       export_method: "app-store",

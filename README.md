@@ -103,6 +103,8 @@ npx cap sync android
 npx cap open android
 ```
 
+iOS dependencies are managed with Swift Package Manager. The local package the Xcode project depends on (`ios/App/CapApp-SPM`) is checked in, but `npx cap sync ios` rewrites its `Package.swift` and creates the symlinks it points at, so run it before opening Xcode. Open `ios/App/App.xcodeproj` (or use `npx cap open ios`). The first package resolve in Xcode is slow as it clones Firebase, Sentry and other dependencies.
+
 To get a proper dev server for iOS/Android development run:
 
 ```bash
