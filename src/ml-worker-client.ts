@@ -17,9 +17,39 @@ export interface WorkerTrainResult {
   machineCode: Uint8Array;
 }
 
+/**
+ * Why a model operation failed, for diagnostics:
+ * - `timeout`: the worker went silent past the inactivity watchdog.
+ * - `workerError`: the worker itself crashed (onerror — script/wasm failure).
+ * - `requestError`: the worker ran the request but reported an error (e.g. an
+ *   exception during training, or empty training data).
+ */
+export type WorkerFailureReason = "timeout" | "workerError" | "requestError";
+
+export type WorkerTrainOutcome =
+  | { success: true; result: WorkerTrainResult }
+  | { success: false; reason: WorkerFailureReason };
+
+/**
+ * What a pending request settles to: a real worker response, or a synthetic
+ * failure carrying the reason when the worker never delivered one (watchdog
+ * timeout or a fatal worker error).
+ */
+type RequestOutcome =
+  | MlWorkerResponse
+  | { kind: "failure"; reason: WorkerFailureReason };
+
+const workerInactivityTimeoutMs = 60000;
+
 interface PendingRequest {
-  resolve(response: MlWorkerResponse | undefined): void;
+  resolve(outcome: RequestOutcome): void;
   onProgress?: (value: number) => void;
+  /**
+   * Inactivity timeout, if this request is watchdogged. Reset on every
+   * message (including progress) and cleared when the request settles.
+   */
+  timeoutMs?: number;
+  timer?: ReturnType<typeof setTimeout>;
 }
 
 export class MlWorkerClient {
@@ -62,7 +92,7 @@ export class MlWorkerClient {
       });
       this.worker.onmessage = (event: MessageEvent<MlWorkerResponse>) =>
         this.handleMessage(event.data);
-      this.worker.onerror = () => this.handleFatalError();
+      this.worker.onerror = () => this.handleFatalError("workerError");
       if (this.loadedArtifacts) {
         // Restore the model after a respawn so prediction can resume.
         this.postRequest(
@@ -86,35 +116,73 @@ export class MlWorkerClient {
       return;
     }
     if (message.kind === "progress") {
+      // The worker is alive and making progress; restart the watchdog.
+      this.resetWatchdog(message.id);
       pending.onProgress?.(message.value);
       return;
     }
+    this.cancelWatchdog(message.id);
     this.pending.delete(message.id);
     pending.resolve(message);
   }
 
   /**
-   * Called when the worker itself fails (e.g. its script or wasm binary
-   * failed to load). Fail all pending requests and discard the worker so
-   * the next request respawns it.
+   * Start (or restart) the inactivity watchdog for a request that opted into
+   * one. Any message from the worker restarts the countdown; silence past the
+   * timeout fails the request via handleFatalError.
    */
-  private handleFatalError() {
+  private resetWatchdog(id: number) {
+    const pending = this.pending.get(id);
+    if (!pending?.timeoutMs) {
+      return;
+    }
+    if (pending.timer !== undefined) {
+      clearTimeout(pending.timer);
+    }
+    pending.timer = setTimeout(
+      () => this.handleFatalError("timeout"),
+      pending.timeoutMs
+    );
+  }
+
+  private cancelWatchdog(id: number) {
+    const pending = this.pending.get(id);
+    if (pending?.timer !== undefined) {
+      clearTimeout(pending.timer);
+      pending.timer = undefined;
+    }
+  }
+
+  /**
+   * Called when the worker fails fatally: it crashed (onerror — e.g. its
+   * script or wasm binary failed to load) or went silent past the watchdog.
+   * Fail all pending requests with the reason and discard the worker so the
+   * next request respawns it.
+   */
+  private handleFatalError(reason: WorkerFailureReason) {
     const pending = Array.from(this.pending.values());
+    pending.forEach((p) => {
+      if (p.timer !== undefined) {
+        clearTimeout(p.timer);
+      }
+    });
     this.pending.clear();
     this.worker?.terminate();
     this.worker = undefined;
-    pending.forEach((p) => p.resolve(undefined));
+    pending.forEach((p) => p.resolve({ kind: "failure", reason }));
   }
 
   private postRequest(
     createRequest: (id: number) => MlWorkerRequest,
     worker: Worker = this.ensureWorker(),
-    onProgress?: (value: number) => void
-  ): Promise<MlWorkerResponse | undefined> {
+    onProgress?: (value: number) => void,
+    timeoutMs?: number
+  ): Promise<RequestOutcome> {
     const id = this.nextRequestId++;
     return new Promise((resolve) => {
-      this.pending.set(id, { resolve, onProgress });
+      this.pending.set(id, { resolve, onProgress, timeoutMs });
       worker.postMessage(createRequest(id));
+      this.resetWatchdog(id);
     });
   }
 
@@ -123,28 +191,36 @@ export class MlWorkerClient {
    * prediction; the returned artifacts and ml4f machine code are for
    * persistence and MakeCode project generation.
    *
-   * Returns undefined on training or worker failure.
+   * On failure returns `{ success: false, reason }` so callers can report why
+   * (a watchdog timeout, a worker crash, or a training error).
    */
   async train(
     features: number[][],
     labels: number[][],
     options: TrainModelOptions,
     onProgress: (value: number) => void
-  ): Promise<WorkerTrainResult | undefined> {
+  ): Promise<WorkerTrainOutcome> {
     this.modelOpInFlight = true;
     try {
-      const response = await this.postRequest(
+      const outcome = await this.postRequest(
         (id) => ({ kind: "train", id, features, labels, options }),
         this.ensureWorker(),
-        onProgress
+        onProgress,
+        workerInactivityTimeoutMs
       );
-      if (response?.kind !== "trainComplete") {
-        return undefined;
+      if (outcome.kind === "trainComplete") {
+        this.loadedArtifacts = outcome.artifacts;
+        return {
+          success: true,
+          result: {
+            artifacts: outcome.artifacts,
+            machineCode: outcome.machineCode,
+          },
+        };
       }
-      this.loadedArtifacts = response.artifacts;
       return {
-        artifacts: response.artifacts,
-        machineCode: response.machineCode,
+        success: false,
+        reason: outcome.kind === "failure" ? outcome.reason : "requestError",
       };
     } finally {
       this.modelOpInFlight = false;
@@ -163,12 +239,13 @@ export class MlWorkerClient {
   ): Promise<{ machineCode: Uint8Array } | undefined> {
     this.modelOpInFlight = true;
     try {
-      const response = await this.postRequest((id) => ({
-        kind: "loadModel",
-        id,
-        artifacts,
-      }));
-      if (response?.kind !== "loadModelComplete") {
+      const response = await this.postRequest(
+        (id) => ({ kind: "loadModel", id, artifacts }),
+        this.ensureWorker(),
+        undefined,
+        workerInactivityTimeoutMs
+      );
+      if (response.kind !== "loadModelComplete") {
         return undefined;
       }
       this.loadedArtifacts = artifacts;
@@ -192,7 +269,7 @@ export class MlWorkerClient {
       id,
       features,
     }));
-    return response?.kind === "predictComplete"
+    return response.kind === "predictComplete"
       ? response.confidences
       : undefined;
   }
