@@ -8,7 +8,7 @@ import { Capacitor } from "@capacitor/core";
 import { HexData, HexUrl } from "../model";
 import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 import { isAndroid, isIOS } from "../platform";
-import { shareFile } from "./share-util";
+import { isShareCanceled, shareFile } from "./share-util";
 import { saveToDownloads } from "./save-to-downloads";
 
 export const getFileExtension = (filename: string): string | undefined => {
@@ -55,12 +55,18 @@ export const downloadDataString = async (
   if (isIOS()) {
     // iOS has no user-accessible file system; the share sheet is the
     // standard way to save or send files, so we always use it here.
-    await shareFile(
-      filename,
-      data,
-      shareTitle ?? filename,
-      shareTitle ?? filename
-    );
+    try {
+      await shareFile(
+        filename,
+        data,
+        shareTitle ?? filename,
+        shareTitle ?? filename
+      );
+    } catch (e) {
+      if (!isShareCanceled(e)) {
+        throw e;
+      }
+    }
   } else if (isAndroid()) {
     try {
       await saveToDownloads(filename, data, mimeType);
