@@ -154,6 +154,7 @@ export const expectNoNewAccessibilityViolations = async (
 ): Promise<void> => {
   // A scan part-way through a fade reports the blended colours as contrast
   // failures. Looping animations never finish.
+  const t0 = Date.now();
   await page.evaluate(() =>
     Promise.allSettled(
       document
@@ -169,7 +170,19 @@ export const expectNoNewAccessibilityViolations = async (
   if (!hasFoundationTheme) {
     builder = builder.disableRules(themeDependentRules);
   }
+  const t1 = Date.now();
   const { violations } = await builder.analyze();
+  const t2 = Date.now();
+  // eslint-disable-next-line no-console
+  console.log(
+    `AXE_TIMING ${JSON.stringify({
+      test: test.info().title,
+      path: new URL(page.url()).pathname,
+      anim: t1 - t0,
+      analyze: t2 - t1,
+      frames: page.frames().length,
+    })}`
+  );
 
   const candidates = violations.flatMap((v) =>
     v.nodes.map((n) => ({
