@@ -111,6 +111,12 @@ export class HomePage {
 
   async expectOnHomePage() {
     await this.page.waitForURL(this.url);
+    // The URL changes before the home page renders. Until it does, the
+    // previous page is still there to be clicked, including its project name
+    // button, which has the same accessible name as the project's card.
+    await expect(
+      this.page.getByRole("heading", { name: "My projects" })
+    ).toBeVisible();
   }
 
   // Card actions (carousel project cards)
