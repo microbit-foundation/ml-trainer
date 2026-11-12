@@ -15,12 +15,12 @@ test.describe("import shared page", () => {
     dataSamplesPage,
     openSharedProjectPage,
   }) => {
-    const finishLoading = await openSharedProjectPage.holdProjectLoad();
+    const resumeLoading = await openSharedProjectPage.pauseProjectLoading();
     await openSharedProjectPage.goto("_fDpWJaY67cgR");
     await openSharedProjectPage
       .expectMain()
       .toHaveAttribute("aria-busy", "true");
-    finishLoading();
+    resumeLoading();
     await openSharedProjectPage.expectMain().not.toHaveAttribute("aria-busy");
 
     await openSharedProjectPage.expectTitle().toBeVisible();
@@ -42,12 +42,12 @@ test.describe("import shared page", () => {
   });
 
   test("error", async ({ openSharedProjectPage }) => {
-    const finishLoading = await openSharedProjectPage.holdProjectLoad();
+    const resumeLoading = await openSharedProjectPage.pauseProjectLoading();
     await openSharedProjectPage.goto("_aaBadSh0rt1d");
     await openSharedProjectPage
       .expectMain()
       .toHaveAttribute("aria-busy", "true");
-    finishLoading();
+    resumeLoading();
     await openSharedProjectPage.expectMain().not.toHaveAttribute("aria-busy");
 
     // we didn't load any project elements
