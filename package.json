@@ -66,6 +66,7 @@
     "i18n:new-strings": "microbit-i18n new-strings"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@capacitor/cli": "^8.5.0",
     "@csstools/postcss-cascade-layers": "^6.0.0",
     "@microbit/eslint-config": "^0.2.1",

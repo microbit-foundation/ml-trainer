@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("home page", () => {
@@ -13,6 +14,7 @@ test.describe("home page", () => {
   test("start new project", async ({ homePage, dataSamplesPage }) => {
     await homePage.newProject();
     await dataSamplesPage.expectOnPage();
+    await expectNoNewAccessibilityViolations(homePage.page);
   });
 
   test("import a saved project (.json file)", async ({
@@ -21,6 +23,7 @@ test.describe("home page", () => {
   }) => {
     await homePage.importProject("test-data/dataset.json");
     await dataSamplesPage.expectOnPage();
+    await expectNoNewAccessibilityViolations(homePage.page);
   });
 });
 
@@ -55,6 +58,7 @@ test.describe("home page project card actions", () => {
     // Rename
     await homePage.menuRename("Untitled", "Renamed project");
     await homePage.expectProjectVisible("Renamed project");
+    await expectNoNewAccessibilityViolations(homePage.page);
 
     // Duplicate the renamed project
     await homePage.menuDuplicate("Renamed project", "Copy of project");

@@ -1,3 +1,4 @@
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("test model page", () => {
@@ -8,10 +9,13 @@ test.describe("test model page", () => {
   });
 
   test("initial state", async ({ dataSamplesPage, testModelPage }) => {
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     const trainModelDialog = await dataSamplesPage.trainModel();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await trainModelDialog.train();
     await testModelPage.expectOnPage();
     await testModelPage.expectDefaultCodeView();
+    await expectNoNewAccessibilityViolations(testModelPage.page);
   });
 
   test("model restored when reopening project from home page", async ({

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect } from "@playwright/test";
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("home page", () => {
@@ -22,6 +23,7 @@ test.describe("home page", () => {
     await expect(
       homePage.page.getByRole("button", { name: "Import" })
     ).toBeVisible();
+    await expectNoNewAccessibilityViolations(homePage.page);
   });
 
   test("shows project ideas section", async ({ homePage }) => {

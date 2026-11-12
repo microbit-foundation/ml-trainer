@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("import shared page", () => {
@@ -29,6 +30,7 @@ test.describe("import shared page", () => {
     await openSharedProjectPage.expectAction("idle").toBeVisible();
     await openSharedProjectPage.expectAction("fist").toBeVisible();
     await openSharedProjectPage.expectMakecodePreview().toBeVisible();
+    await expectNoNewAccessibilityViolations(openSharedProjectPage.page);
 
     await openSharedProjectPage.expectErrorMessage().not.toBeVisible();
 
@@ -54,5 +56,6 @@ test.describe("import shared page", () => {
 
     // we did load an error message
     await openSharedProjectPage.expectErrorMessage().toBeVisible();
+    await expectNoNewAccessibilityViolations(openSharedProjectPage.page);
   });
 });
