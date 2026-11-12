@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("import shared page", () => {
@@ -14,11 +15,12 @@ test.describe("import shared page", () => {
     dataSamplesPage,
     openSharedProjectPage,
   }) => {
+    const resumeLoading = await openSharedProjectPage.pauseProjectLoading();
     await openSharedProjectPage.goto("_fDpWJaY67cgR");
     await openSharedProjectPage
       .expectMain()
       .toHaveAttribute("aria-busy", "true");
-    // loading header
+    resumeLoading();
     await openSharedProjectPage.expectMain().not.toHaveAttribute("aria-busy");
 
     await openSharedProjectPage.expectTitle().toBeVisible();
@@ -29,6 +31,7 @@ test.describe("import shared page", () => {
     await openSharedProjectPage.expectAction("idle").toBeVisible();
     await openSharedProjectPage.expectAction("fist").toBeVisible();
     await openSharedProjectPage.expectMakecodePreview().toBeVisible();
+    await expectNoNewAccessibilityViolations(openSharedProjectPage.page);
 
     await openSharedProjectPage.expectErrorMessage().not.toBeVisible();
 
@@ -39,11 +42,12 @@ test.describe("import shared page", () => {
   });
 
   test("error", async ({ openSharedProjectPage }) => {
+    const resumeLoading = await openSharedProjectPage.pauseProjectLoading();
     await openSharedProjectPage.goto("_aaBadSh0rt1d");
     await openSharedProjectPage
       .expectMain()
       .toHaveAttribute("aria-busy", "true");
-    // loading...
+    resumeLoading();
     await openSharedProjectPage.expectMain().not.toHaveAttribute("aria-busy");
 
     // we didn't load any project elements
@@ -54,5 +58,6 @@ test.describe("import shared page", () => {
 
     // we did load an error message
     await openSharedProjectPage.expectErrorMessage().toBeVisible();
+    await expectNoNewAccessibilityViolations(openSharedProjectPage.page);
   });
 });

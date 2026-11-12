@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { downloadDialogTitles as dialog } from "./app/download-dialogs";
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("browser default download flow", () => {
@@ -23,10 +24,13 @@ test.describe("browser default download flow", () => {
     await makecodeEditor.closeTourDialog();
     const downloadDialogs = await makecodeEditor.clickDownload();
     await downloadDialogs.waitForText(dialog.browserDefault.help);
+    await expectNoNewAccessibilityViolations(testModelPage.page);
     await downloadDialogs.clickNext();
     await downloadDialogs.waitForText(dialog.browserDefault.connectCable);
+    await expectNoNewAccessibilityViolations(testModelPage.page);
     await downloadDialogs.clickNext();
     await downloadDialogs.waitForText(dialog.browserDefault.selectMicrobit);
+    await expectNoNewAccessibilityViolations(testModelPage.page);
     await downloadDialogs.clickNext();
     // With mock device, should complete successfully
     await downloadDialogs.expectDialogClosed();
@@ -65,6 +69,7 @@ test.describe("browser default download flow", () => {
     await downloadDialogs.waitForText(dialog.browserDefault.selectMicrobit);
     await downloadDialogs.clickNext();
     await downloadDialogs.expectManualFlashingDialog();
+    await expectNoNewAccessibilityViolations(testModelPage.page);
   });
 });
 
