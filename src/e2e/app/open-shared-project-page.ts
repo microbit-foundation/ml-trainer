@@ -37,7 +37,11 @@ export class OpenSharedProjectPage {
   }
 
   expectMakecodePreview() {
-    return expect(this.page.getByAltText("ml.onStart"));
+    // MakeCode renders the preview in an iframe, which can take longer than
+    // the default timeout when CI runs tests in parallel.
+    return expect.configure({ timeout: 15_000 })(
+      this.page.getByAltText("ml.onStart")
+    );
   }
 
   expectMain() {
