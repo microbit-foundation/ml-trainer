@@ -25,6 +25,23 @@ export class OpenSharedProjectPage {
     return response;
   }
 
+  /**
+   * Holds the request for the shared project's header until the returned
+   * function is called, so the loading state it ends can be observed. Call
+   * before goto.
+   */
+  async holdProjectLoad(): Promise<() => void> {
+    let release = () => {};
+    const released = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await this.page.route(/makecode\.com\/api\/[^/]+$/, async (route) => {
+      await released;
+      await route.continue();
+    });
+    return release;
+  }
+
   expectName() {
     return expect(this.nameInputField);
   }
