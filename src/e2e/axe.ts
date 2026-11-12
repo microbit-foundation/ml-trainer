@@ -173,7 +173,6 @@ export const expectNoNewAccessibilityViolations = async (
   const t1 = Date.now();
   const { violations } = await builder.analyze();
   const t2 = Date.now();
-  // eslint-disable-next-line no-console
   console.log(
     `AXE_TIMING ${JSON.stringify({
       test: test.info().title,
