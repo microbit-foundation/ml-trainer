@@ -23,7 +23,7 @@
 # Capacitor annotations: required below Capacitor 8.6.0 in R8 full mode (ionic-team/capacitor#8589)
 -keep @interface com.getcapacitor.** { *; }
 
-# Plugin-specific rules from each plugin's README should be added here. 
+# Plugin-specific rules from each plugin's README should be added here.
 # There are none thus far.
 
 # Optional backends that plugins probe for at runtime (see missing_rules.txt).
