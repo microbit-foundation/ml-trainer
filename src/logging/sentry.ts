@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { Capacitor } from "@capacitor/core";
 import {
   addBreadcrumb as sentryAddBreadcrumb,
   captureException as sentryCaptureException,
@@ -82,12 +83,26 @@ export const reportError = (
       type: "error-message",
       level: "error",
     });
-    return sentryCaptureException(e);
+    // Some callers only have a message to report.
+    const error = e ?? new Error(message);
+    return sentryCaptureException(error, {
+      tags: { log_message: message },
+      // Capacitor plugin rejections have no useful JS stack, so default
+      // grouping splits or merges them arbitrarily (on Android, everything
+      // that rejects via the bridge lands in one issue). Group by what we
+      // were doing and what the plugin said instead.
+      fingerprint: Capacitor.isNativePlatform()
+        ? [message, errorSummary(error)]
+        : undefined,
+    });
   } catch (err) {
     console.error(err);
     return undefined;
   }
 };
+
+const errorSummary = (e: unknown): string =>
+  e instanceof Error ? `${e.name}: ${e.message}` : String(e);
 
 /**
  * Add a breadcrumb to Sentry, or console-log it as a fallback when
