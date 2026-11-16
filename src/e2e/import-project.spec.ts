@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("import project (microbit.org case)", () => {
@@ -14,6 +15,8 @@ test.describe("import project (microbit.org case)", () => {
     await importPage.gotoSimpleAIExerciseTimer();
     await importPage.expectOnPage();
     await importPage.expectName("Simple AI exercise timer");
+    await importPage.expectLoaded();
+    await expectNoNewAccessibilityViolations(importPage.page);
     await importPage.openProject();
 
     await dataSamplesPage.expectOnPage();

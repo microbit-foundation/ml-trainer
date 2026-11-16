@@ -65,4 +65,6 @@ npm test -- download-machine-browser-default
 
 If you run the e2e tests, be sure to run them headlessly via `npm run test:e2e:headless`.
 
+E2e scenarios call `expectNoNewAccessibilityViolations(page)` (axe, in `src/e2e/axe.ts`) on the states they reach. It fails only on violations missing from `knownViolations` in that file: delete an entry when you fix it, and scan new UI states from the scenario that reaches them. The known list is recorded against the Foundation's private theme. Without the theme package installed the colour contrast rule is skipped, as the open source default colours give different results.
+
 When updating `@playwright/test` in package.json, also update the Docker image version in `.github/workflows/build.yml` to match.

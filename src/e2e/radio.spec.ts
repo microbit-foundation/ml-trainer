@@ -8,6 +8,7 @@
 import { ConnectionStatus } from "@microbit/microbit-connection";
 import { dialogTitles as dialog } from "./app/connection-dialogs";
 import { downloadDialogTitles as downloadDialog } from "./app/download-dialogs";
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("radio connection", () => {
@@ -20,16 +21,22 @@ test.describe("radio connection", () => {
     const connectionDialogs = await dataSamplesPage.connect();
     await connectionDialogs.switchToRadio();
     await connectionDialogs.waitForText(dialog.radio.whatYouNeed);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.radio.connect1);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.radio.download1);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.radio.connectBattery);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.radio.connect2);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.radio.download2);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await dataSamplesPage.expectConnected();
   });
@@ -47,6 +54,7 @@ test.describe("radio connection", () => {
     await connectionDialogs.waitForText(dialog.radio.download1);
     await connectionDialogs.clickNext();
     await connectionDialogs.expectConnectWebUsbErrorDialog();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
   });
 
   test("no device selected for flashing bridge", async ({

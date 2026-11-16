@@ -25,6 +25,23 @@ export class OpenSharedProjectPage {
     return response;
   }
 
+  /**
+   * Pauses loading of the shared project so a test can check the loading
+   * state. Call before goto. Loading continues when the returned function is
+   * called.
+   */
+  async pauseProjectLoading(): Promise<() => void> {
+    let resume = () => {};
+    const resumed = new Promise<void>((resolve) => {
+      resume = resolve;
+    });
+    await this.page.route(/makecode\.com\/api\/[^/]+$/, async (route) => {
+      await resumed;
+      await route.continue();
+    });
+    return resume;
+  }
+
   expectName() {
     return expect(this.nameInputField);
   }
@@ -37,7 +54,11 @@ export class OpenSharedProjectPage {
   }
 
   expectMakecodePreview() {
-    return expect(this.page.getByAltText("ml.onStart"));
+    // MakeCode renders the preview in an iframe, which can take longer than
+    // the default timeout when CI runs tests in parallel.
+    return expect.configure({ timeout: 15_000 })(
+      this.page.getByAltText("ml.onStart")
+    );
   }
 
   expectMain() {

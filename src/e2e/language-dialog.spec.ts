@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { expect } from "@playwright/test";
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 import { modalDialog } from "./app/shared";
 
@@ -15,6 +16,7 @@ test.describe("language dialog", () => {
       .click();
     await homePage.page.getByRole("menuitem", { name: "Language" }).click();
     await expect(modalDialog(homePage.page)).toBeVisible();
+    await expectNoNewAccessibilityViolations(homePage.page);
   });
 
   // The tooltip's own behaviour belongs to @microbit/ui's TooltipButton. What

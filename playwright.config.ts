@@ -33,7 +33,9 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // More than two overloads the CI runner: with four, the tests that load
+  // MakeCode time out.
+  workers: process.env.CI ? 2 : undefined,
   reporter: "html",
   use: {
     trace: "on-first-retry",

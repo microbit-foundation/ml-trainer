@@ -27,11 +27,15 @@ export class ImportPage {
     return expect(this.nameInputField).toHaveValue(expected);
   }
 
-  async openProject() {
-    // Might still be loading.
+  async expectLoaded() {
     await expect(this.openProjectBtn).toBeEnabled({
       timeout: 5_000,
     });
+  }
+
+  async openProject() {
+    // Might still be loading.
+    await this.expectLoaded();
     await this.openProjectBtn.click();
   }
 

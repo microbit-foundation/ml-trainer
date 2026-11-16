@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: MIT
  */
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("projects page", () => {
@@ -14,6 +15,7 @@ test.describe("projects page", () => {
     await projectsPage.goto();
     await projectsPage.expectOnPage();
     await projectsPage.expectNoProjects();
+    await expectNoNewAccessibilityViolations(projectsPage.page);
   });
 
   test("shows project after creating one via import", async ({
@@ -28,6 +30,7 @@ test.describe("projects page", () => {
     await projectsPage.goto();
     await projectsPage.expectOnPage();
     await projectsPage.expectProjectCount(1);
+    await expectNoNewAccessibilityViolations(projectsPage.page);
   });
 
   test("navigate home from projects page", async ({
@@ -117,6 +120,7 @@ test.describe("projects page toolbar actions", () => {
   }) => {
     await projectsPage.selectProject("Untitled");
     await projectsPage.expectToolbarVisible();
+    await expectNoNewAccessibilityViolations(projectsPage.page);
   });
 
   test("single select shows rename, duplicate, delete, clear", async ({

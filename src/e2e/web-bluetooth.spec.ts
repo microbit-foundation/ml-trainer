@@ -7,6 +7,7 @@
  */
 import { ConnectionStatus } from "@microbit/microbit-connection";
 import { dialogTitles as dialog } from "./app/connection-dialogs";
+import { expectNoNewAccessibilityViolations } from "./axe";
 import { test } from "./fixtures";
 
 test.describe("web bluetooth connection", () => {
@@ -18,19 +19,26 @@ test.describe("web bluetooth connection", () => {
   test("happy flow", async ({ dataSamplesPage }) => {
     const connectionDialogs = await dataSamplesPage.connect();
     await connectionDialogs.waitForText(dialog.bluetooth.whatYouNeed);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.connectUsb);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.download);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.connectBattery);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.copyPattern);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.enterBluetoothPattern();
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.connectBluetooth);
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await dataSamplesPage.expectConnected();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
   });
 
   test("no device selected for flashing", async ({ dataSamplesPage }) => {
@@ -43,6 +51,7 @@ test.describe("web bluetooth connection", () => {
     await connectionDialogs.waitForText(dialog.bluetooth.download);
     await connectionDialogs.clickNext();
     await connectionDialogs.expectManualTransferProgramDialog();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
   });
 
   test("no device selected for connecting", async ({ dataSamplesPage }) => {
@@ -62,6 +71,7 @@ test.describe("web bluetooth connection", () => {
     await connectionDialogs.waitForText(dialog.bluetooth.connectBluetooth);
     await connectionDialogs.clickNext();
     await connectionDialogs.expectDidntChooseMicrobitDialog();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
   });
 
   test("fresh connection failure shows connect-failed text", async ({
@@ -89,6 +99,7 @@ test.describe("web bluetooth connection", () => {
     // Fresh connection failure shows "connect failed" (not "reconnect failed")
     // because user has never connected successfully
     await connectionDialogs.expectConnectFailedDialog();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
@@ -133,6 +144,7 @@ test.describe("web bluetooth reconnection", () => {
     await connectionDialogs.simulateBluetoothDisconnect();
     // First failure shows "connection lost" dialog
     await connectionDialogs.expectConnectionLostDialog();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickTryAgainButton();
     await dataSamplesPage.expectConnected();
   });
@@ -153,6 +165,7 @@ test.describe("web bluetooth reconnection", () => {
     await connectionDialogs.expectConnectionLostDialog();
     await connectionDialogs.clickTryAgainButton();
     await connectionDialogs.expectStartOverDialog();
+    await expectNoNewAccessibilityViolations(dataSamplesPage.page);
     await connectionDialogs.clickNext();
     await connectionDialogs.waitForText(dialog.bluetooth.connectUsb);
   });
