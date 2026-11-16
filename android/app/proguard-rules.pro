@@ -26,6 +26,5 @@
 # Plugin-specific rules from each plugin's README should be added here. 
 # There are none thus far.
 
-# Optional backends that plugins probe for at runtime (see missing_rules.txt)
--dontwarn io.requery.android.database.**
--dontwarn net.zetetic.database.**
+# Optional backends that plugins probe for at runtime (see missing_rules.txt).
+# None needed with current plugins.
