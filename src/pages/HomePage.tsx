@@ -48,6 +48,7 @@ import {
   Text,
   TooltipButton,
   useBreakpointValue,
+  VisuallyHidden,
   VStack,
 } from "@microbit/ui";
 import { css } from "styled-system/css";
@@ -57,6 +58,7 @@ import {
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
+import { useDeployment } from "../deployment";
 import { useDefaultProjectName } from "../hooks/project-hooks";
 
 const carouselRowClassName = css({ _shortHeight: { py: 4 } });
@@ -64,6 +66,7 @@ const carouselRowClassName = css({ _shortHeight: { py: 4 } });
 const HomePage = () => {
   const intl = useIntl();
   const [{ languageId }] = useSettings();
+  const { appNameFull } = useDeployment();
   const resetWelcomeDialog = useStore((s) => s.resetWelcomeDialog);
   useEffect(() => {
     resetWelcomeDialog();
@@ -72,6 +75,7 @@ const HomePage = () => {
   return (
     <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
       <Flex as="main" flexDir="column">
+        <VisuallyHidden as="h1">{appNameFull}</VisuallyHidden>
         <HomepageBanner />
         <ProjectRow />
         <CarouselRow
