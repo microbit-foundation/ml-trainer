@@ -9,7 +9,7 @@ import {
   MakeCodeBlocksRendering,
   MakeCodeRenderBlocksProvider,
 } from "@microbit/makecode-embed";
-import { ReactNode } from "react";
+import { ReactNode, useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Box,
@@ -216,27 +216,36 @@ interface MakeCodePreviewProps {
 const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
+  const headingId = useId();
   return (
     <>
-      <Heading size="md" as="h2" pt={{ base: 1, sm: 3, md: 5 }}>
+      <Heading id={headingId} size="md" as="h2" pt={{ base: 1, sm: 3, md: 5 }}>
         <FormattedMessage id="blocks-preview-title" />
       </Heading>
       <Text>
         <FormattedMessage id="open-shared-project-blocks-preview-description" />
       </Text>
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
-        <Box
-          css={{
-            ...previewFrameOuter,
-            "& > div": previewFrame,
-            "& img": { maxWidth: "unset", height: "unset" },
-          }}
-        >
-          <MakeCodeBlocksRendering
-            code={project}
-            layout={BlockLayout.Clean}
-            loaderCmp={<BlocksLoadingSkeleton />}
-          />
+        <Box css={previewFrameOuter}>
+          {/* The rendering's own div scrolls too, but we can't make it
+              focusable, so it grows to fit the image and this box scrolls. */}
+          <Box
+            role="region"
+            aria-labelledby={headingId}
+            tabIndex={0}
+            css={{
+              ...previewFrame,
+              _focusVisible: { focusRing: "outline" },
+              "& > div": { width: "max-content", minW: "100%" },
+              "& img": { maxWidth: "unset", height: "unset" },
+            }}
+          >
+            <MakeCodeBlocksRendering
+              code={project}
+              layout={BlockLayout.Clean}
+              loaderCmp={<BlocksLoadingSkeleton />}
+            />
+          </Box>
         </Box>
       </MakeCodeRenderBlocksProvider>
     </>

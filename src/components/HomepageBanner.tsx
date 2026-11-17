@@ -47,6 +47,7 @@ const HomepageBanner = () => {
         >
           <VStack gap={{ base: 1, md: 2 }}>
             <Heading
+              as="h1"
               fontSize={{ base: "2xl", sm: "3xl" }}
               css={{ [bannerShortHeight]: { fontSize: "2xl" } }}
             >

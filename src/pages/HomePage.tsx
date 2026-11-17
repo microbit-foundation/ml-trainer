@@ -39,6 +39,7 @@ import {
   Button,
   Card,
   CardBody,
+  Flex,
   Icon,
   IconButton,
   darkSurface,
@@ -70,26 +71,28 @@ const HomePage = () => {
 
   return (
     <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
-      <HomepageBanner />
-      <ProjectRow />
-      <CarouselRow
-        carouselItems={createProjectIdeaCards(intl, languageId)}
-        title={<FormattedMessage id="project-ideas-row-title" />}
-        navigation={!isNativePlatform()}
-        className={carouselRowClassName}
-      />
-      <CarouselRow
-        carouselItems={createLessonCards(intl)}
-        title={<FormattedMessage id="teacher-resources-row-title" />}
-        navigation={!isNativePlatform()}
-        className={carouselRowClassName}
-      />
-      <CarouselRow
-        carouselItems={createHelpCards(intl)}
-        title={<FormattedMessage id="help-resources-row-title" />}
-        navigation={!isNativePlatform()}
-        className={carouselRowClassName}
-      />
+      <Flex as="main" flexDir="column">
+        <HomepageBanner />
+        <ProjectRow />
+        <CarouselRow
+          carouselItems={createProjectIdeaCards(intl, languageId)}
+          title={<FormattedMessage id="project-ideas-row-title" />}
+          navigation={!isNativePlatform()}
+          className={carouselRowClassName}
+        />
+        <CarouselRow
+          carouselItems={createLessonCards(intl)}
+          title={<FormattedMessage id="teacher-resources-row-title" />}
+          navigation={!isNativePlatform()}
+          className={carouselRowClassName}
+        />
+        <CarouselRow
+          carouselItems={createHelpCards(intl)}
+          title={<FormattedMessage id="help-resources-row-title" />}
+          navigation={!isNativePlatform()}
+          className={carouselRowClassName}
+        />
+      </Flex>
       <HomepageFooter />
     </DefaultPageLayout>
   );
