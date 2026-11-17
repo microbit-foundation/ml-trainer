@@ -56,11 +56,8 @@ android {
 }
 
 // Uploads the R8 mapping file so native crashes and ANRs from release builds
-// deobfuscate in Sentry. Sentry matches a crash to its mapping via the
-// io.sentry.proguard-uuid this plugin injects into the manifest, which
-// SentryAndroid.init reads — the native SDK is initialised by @sentry/capacitor
-// (see src/logging/sentry.ts). The AAB carries its own copy of the mapping for
-// Play Console, which is unaffected by any of this.
+// deobfuscate in Sentry. Sentry matches a crash to its mapping via a Proguard
+// UUID this plugin generates.
 //
 // An empty token counts as no token: CI passes an empty one for REVIEW builds,
 // matching how sentryVitePlugin is gated in vite.config.ts.
@@ -70,17 +67,10 @@ def sentryAuthToken = providers.environmentVariable("SENTRY_AUTH_TOKEN")
 sentry {
     org = "microbit"
     projectName = "createai"
-
-    // sentry-cli would find SENTRY_AUTH_TOKEN in the environment by itself, but
-    // Sentry's docs set it here explicitly and it keeps the build's use of the
-    // variable in one place. Read through a provider rather than System.getenv
-    // so it stays lazy and is declared as a build input.
     authToken = sentryAuthToken
 
-    // Without a token the upload task still runs, but with --no-upload: the
-    // UUID is injected and the mapping written as usual, nothing leaves the
-    // machine. Local and OSS release builds therefore produce the same artifact
-    // CI does, minus the upload.
+    // Without a token the upload task still runs, a Proguard UUID is generated 
+    // but without uploading. Only release builds upload the Proguard mapping.
     autoUploadProguardMapping = sentryAuthToken.map { true }.orElse(false)
 
     // The Sentry Android SDK version is pinned by @sentry/capacitor. Leaving
