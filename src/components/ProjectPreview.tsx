@@ -169,10 +169,15 @@ const previewFrameOuter: SystemStyleObject = {
   borderRadius: "sm",
 };
 
+/**
+ * A scrolling preview box. It needs its own tab stop even when it has
+ * focusable content, as Chrome won't scroll it from the keyboard otherwise.
+ */
 const previewFrame: SystemStyleObject = {
   overflow: "auto",
   h: 96,
   minW: "100%",
+  _focusVisible: { focusRing: "outline" },
 };
 
 interface DataPreviewProps {
@@ -180,16 +185,22 @@ interface DataPreviewProps {
 }
 
 const DataPreview = ({ dataset }: DataPreviewProps) => {
+  const headingId = useId();
   return (
     <>
-      <Heading size="md" as="h2">
+      <Heading id={headingId} size="md" as="h2">
         <FormattedMessage id="data-preview-title" />
       </Heading>
       <Text>
         <FormattedMessage id="open-shared-project-data-preview-description" />
       </Text>
       <Box css={previewFrameOuter}>
-        <Box css={previewFrame}>
+        <Box
+          role="region"
+          aria-labelledby={headingId}
+          tabIndex={0}
+          css={previewFrame}
+        >
           <Grid gap={3} gridTemplateColumns="290px 1fr">
             {dataset.map((action, idx) => (
               <DataSamplesTableRow
@@ -235,7 +246,6 @@ const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
             tabIndex={0}
             css={{
               ...previewFrame,
-              _focusVisible: { focusRing: "outline" },
               "& > div": { width: "max-content", minW: "100%" },
               "& img": { maxWidth: "unset", height: "unset" },
             }}
