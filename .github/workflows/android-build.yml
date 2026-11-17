@@ -98,6 +98,9 @@ jobs:
           SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_PASSWORD }}
           BUILD_NUMBER: ${{ github.run_number }}
           MARKETING_VERSION: ${{ env.MARKETING_VERSION }}
+          # Uploads the R8 mapping file to Sentry. Empty for REVIEW builds,
+          # which turns the upload off (see android/app/build.gradle).
+          SENTRY_AUTH_TOKEN: ${{ env.STAGE != 'REVIEW' && secrets.SENTRY_AUTH_TOKEN || '' }}
 
       - name: Clean up keystore
         run: rm -f "$RUNNER_TEMP/keystore.jks"
