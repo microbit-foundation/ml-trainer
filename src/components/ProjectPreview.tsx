@@ -9,7 +9,7 @@ import {
   MakeCodeBlocksRendering,
   MakeCodeRenderBlocksProvider,
 } from "@microbit/makecode-embed";
-import { ReactNode } from "react";
+import { ReactNode, useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   Box,
@@ -169,10 +169,15 @@ const previewFrameOuter: SystemStyleObject = {
   borderRadius: "sm",
 };
 
+/**
+ * A scrolling preview box. It needs its own tab stop even when it has
+ * focusable content, as Chrome won't scroll it from the keyboard otherwise.
+ */
 const previewFrame: SystemStyleObject = {
   overflow: "auto",
   h: 96,
   minW: "100%",
+  _focusVisible: { focusRing: "outline" },
 };
 
 interface DataPreviewProps {
@@ -180,16 +185,22 @@ interface DataPreviewProps {
 }
 
 const DataPreview = ({ dataset }: DataPreviewProps) => {
+  const headingId = useId();
   return (
     <>
-      <Heading size="md" as="h2">
+      <Heading id={headingId} size="md" as="h2">
         <FormattedMessage id="data-preview-title" />
       </Heading>
       <Text>
         <FormattedMessage id="open-shared-project-data-preview-description" />
       </Text>
       <Box css={previewFrameOuter}>
-        <Box css={previewFrame}>
+        <Box
+          role="region"
+          aria-labelledby={headingId}
+          tabIndex={0}
+          css={previewFrame}
+        >
           <Grid gap={3} gridTemplateColumns="290px 1fr">
             {dataset.map((action, idx) => (
               <DataSamplesTableRow
@@ -216,27 +227,35 @@ interface MakeCodePreviewProps {
 const MakeCodePreview = ({ project }: MakeCodePreviewProps) => {
   const [{ languageId }] = useSettings();
   const makeCodeLang = getMakeCodeLang(languageId);
+  const headingId = useId();
   return (
     <>
-      <Heading size="md" as="h2" pt={{ base: 1, sm: 3, md: 5 }}>
+      <Heading id={headingId} size="md" as="h2" pt={{ base: 1, sm: 3, md: 5 }}>
         <FormattedMessage id="blocks-preview-title" />
       </Heading>
       <Text>
         <FormattedMessage id="open-shared-project-blocks-preview-description" />
       </Text>
       <MakeCodeRenderBlocksProvider key={makeCodeLang} lang={makeCodeLang}>
-        <Box
-          css={{
-            ...previewFrameOuter,
-            "& > div": previewFrame,
-            "& img": { maxWidth: "unset", height: "unset" },
-          }}
-        >
-          <MakeCodeBlocksRendering
-            code={project}
-            layout={BlockLayout.Clean}
-            loaderCmp={<BlocksLoadingSkeleton />}
-          />
+        <Box css={previewFrameOuter}>
+          {/* The rendering's own div scrolls too, but we can't make it
+              focusable, so it grows to fit the image and this box scrolls. */}
+          <Box
+            role="region"
+            aria-labelledby={headingId}
+            tabIndex={0}
+            css={{
+              ...previewFrame,
+              "& > div": { width: "max-content", minW: "100%" },
+              "& img": { maxWidth: "unset", height: "unset" },
+            }}
+          >
+            <MakeCodeBlocksRendering
+              code={project}
+              layout={BlockLayout.Clean}
+              loaderCmp={<BlocksLoadingSkeleton />}
+            />
+          </Box>
         </Box>
       </MakeCodeRenderBlocksProvider>
     </>

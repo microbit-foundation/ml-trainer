@@ -199,6 +199,7 @@ const DefaultPageLayout = ({
                                   }}
                                 />
                                 <Heading
+                                  as="h1"
                                   size="md"
                                   fontWeight="normal"
                                   color="white"
@@ -214,6 +215,7 @@ const DefaultPageLayout = ({
                     {/* Mobile: page title only (project name is in drawer) */}
                     {showPageTitle && showProjectName && (
                       <Heading
+                        as="h1"
                         display={{ base: "block", md: "none" }}
                         size="md"
                         fontWeight="normal"
@@ -224,7 +226,12 @@ const DefaultPageLayout = ({
                     )}
                     {/* All breakpoints: page title when no project name */}
                     {showPageTitle && !showProjectName && (
-                      <Heading size="md" fontWeight="normal" color="white">
+                      <Heading
+                        as="h1"
+                        size="md"
+                        fontWeight="normal"
+                        color="white"
+                      >
                         <FormattedMessage id={titleId} />
                       </Heading>
                     )}

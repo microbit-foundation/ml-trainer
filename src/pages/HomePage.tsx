@@ -39,6 +39,7 @@ import {
   Button,
   Card,
   CardBody,
+  Flex,
   Icon,
   IconButton,
   darkSurface,
@@ -47,6 +48,7 @@ import {
   Text,
   TooltipButton,
   useBreakpointValue,
+  VisuallyHidden,
   VStack,
 } from "@microbit/ui";
 import { css } from "styled-system/css";
@@ -56,6 +58,7 @@ import {
   useStore,
 } from "../store";
 import { createDataSamplesPageUrl, createProjectsPageUrl } from "../urls";
+import { useDeployment } from "../deployment";
 import { useDefaultProjectName } from "../hooks/project-hooks";
 
 const carouselRowClassName = css({ _shortHeight: { py: 4 } });
@@ -63,6 +66,7 @@ const carouselRowClassName = css({ _shortHeight: { py: 4 } });
 const HomePage = () => {
   const intl = useIntl();
   const [{ languageId }] = useSettings();
+  const { appNameFull } = useDeployment();
   const resetWelcomeDialog = useStore((s) => s.resetWelcomeDialog);
   useEffect(() => {
     resetWelcomeDialog();
@@ -70,26 +74,29 @@ const HomePage = () => {
 
   return (
     <DefaultPageLayout toolbarItemsRight={<HomeToolbarItem />}>
-      <HomepageBanner />
-      <ProjectRow />
-      <CarouselRow
-        carouselItems={createProjectIdeaCards(intl, languageId)}
-        title={<FormattedMessage id="project-ideas-row-title" />}
-        navigation={!isNativePlatform()}
-        className={carouselRowClassName}
-      />
-      <CarouselRow
-        carouselItems={createLessonCards(intl)}
-        title={<FormattedMessage id="teacher-resources-row-title" />}
-        navigation={!isNativePlatform()}
-        className={carouselRowClassName}
-      />
-      <CarouselRow
-        carouselItems={createHelpCards(intl)}
-        title={<FormattedMessage id="help-resources-row-title" />}
-        navigation={!isNativePlatform()}
-        className={carouselRowClassName}
-      />
+      <Flex as="main" flexDir="column">
+        <VisuallyHidden as="h1">{appNameFull}</VisuallyHidden>
+        <HomepageBanner />
+        <ProjectRow />
+        <CarouselRow
+          carouselItems={createProjectIdeaCards(intl, languageId)}
+          title={<FormattedMessage id="project-ideas-row-title" />}
+          navigation={!isNativePlatform()}
+          className={carouselRowClassName}
+        />
+        <CarouselRow
+          carouselItems={createLessonCards(intl)}
+          title={<FormattedMessage id="teacher-resources-row-title" />}
+          navigation={!isNativePlatform()}
+          className={carouselRowClassName}
+        />
+        <CarouselRow
+          carouselItems={createHelpCards(intl)}
+          title={<FormattedMessage id="help-resources-row-title" />}
+          navigation={!isNativePlatform()}
+          className={carouselRowClassName}
+        />
+      </Flex>
       <HomepageFooter />
     </DefaultPageLayout>
   );

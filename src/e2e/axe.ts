@@ -35,14 +35,6 @@ interface KnownViolation {
  */
 const knownViolations: KnownViolation[] = [
   {
-    rule: "scrollable-region-focusable",
-    level: "A",
-    criterion: "2.1.1 Keyboard",
-    selector: 'div[style*="overflow: auto"]',
-    reason:
-      "The code preview on the shared project page scrolls but can't be reached from the keyboard.",
-  },
-  {
     rule: "color-contrast",
     level: "AA",
     criterion: "1.4.3 Contrast (Minimum)",
@@ -72,26 +64,6 @@ const knownViolations: KnownViolation[] = [
     selector: ".certainty-threshold *",
     reason:
       "The recognition point label and its percentage are 1.94:1 for an action that isn't being detected.",
-  },
-  {
-    rule: "landmark-one-main",
-    level: "best-practice",
-    selector: "html",
-    reason: "The home page has no main landmark.",
-  },
-  {
-    rule: "region",
-    level: "best-practice",
-    // Every other page has a main landmark, so this is the home page.
-    selector: ":root:not(:has(main)) body *",
-    reason:
-      "With no main landmark, the home page's content is outside any landmark.",
-  },
-  {
-    rule: "page-has-heading-one",
-    level: "best-practice",
-    selector: "html",
-    reason: "Pages have no level-one heading.",
   },
 ];
 
