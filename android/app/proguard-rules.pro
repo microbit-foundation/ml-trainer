@@ -20,11 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Capacitor annotations: required below Capacitor 8.6.0 in R8 full mode (ionic-team/capacitor#8589)
--keep @interface com.getcapacitor.** { *; }
-
 # Plugin-specific rules from each plugin's README should be added here.
-# There are none thus far.
+# None needed with current plugins.
 
 # Optional backends that plugins probe for at runtime (see missing_rules.txt).
 # None needed with current plugins.
