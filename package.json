@@ -58,6 +58,7 @@
     "deploy": "website-deploy-s3",
     "invalidate": "invalidate-cloudfront-distribution",
     "dev:link-ui": "rm -rf node_modules/@microbit/ui node_modules/@microbit/ui-patterns node_modules/@microbit/ui-carousel && ln -s ../../../ui/packages/ui node_modules/@microbit/ui && ln -s ../../../ui/packages/ui-patterns node_modules/@microbit/ui-patterns && ln -s ../../../ui/packages/ui-carousel node_modules/@microbit/ui-carousel && rm -rf styled-system node_modules/.vite && npm run panda",
+    "dev:link-theme": "rm -rf node_modules/@microbit-foundation/ml-trainer-microbit && mkdir -p node_modules/@microbit-foundation && ln -s ../../../ml-trainer-microbit node_modules/@microbit-foundation/ml-trainer-microbit && npm run build --prefix ../ml-trainer-microbit && rm -rf styled-system node_modules/.vite && npm run panda",
     "i18n:compile": "microbit-i18n compile",
     "i18n:tidy": "microbit-i18n tidy",
     "i18n:download": "microbit-i18n download",
