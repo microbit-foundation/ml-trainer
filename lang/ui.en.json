@@ -687,6 +687,10 @@
     "defaultMessage": "Delete recording {sample} of {numSamples} for action \"{action}\"",
     "description": "Aria label for data sample delete action"
   },
+  "developing-ai-literacy-with-the-microbit-resource-title": {
+    "defaultMessage": "Developing AI literacy",
+    "description": "Home page resource card title"
+  },
   "disconnect-action": {
     "defaultMessage": "Disconnect",
     "description": "Disconnect (from bluetooth/radio) action"
@@ -934,10 +938,6 @@
   "firmware-outdated-heading": {
     "defaultMessage": "Firmware update required",
     "description": "Connection error dialog"
-  },
-  "developing-ai-literacy-with-the-microbit-resource-title": {
-    "defaultMessage": "Developing AI literacy",
-    "description": "Home page resource card title"
   },
   "first-lessons-with-microbit-createai-resource-title": {
     "defaultMessage": "First lessons",
