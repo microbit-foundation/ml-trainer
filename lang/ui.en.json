@@ -935,6 +935,10 @@
     "defaultMessage": "Firmware update required",
     "description": "Connection error dialog"
   },
+  "developing-ai-literacy-with-the-microbit-resource-title": {
+    "defaultMessage": "Developing AI literacy",
+    "description": "Home page resource card title"
+  },
   "first-lessons-with-microbit-createai-resource-title": {
     "defaultMessage": "First lessons",
     "description": "Home page resource card title"

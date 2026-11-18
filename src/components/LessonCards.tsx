@@ -1,6 +1,7 @@
 import ResourceCard from "./ResourceCard";
 import lessonImage1 from "theme-package/images/createai-taster-lessons.svg";
 import lessonImage2 from "theme-package/images/first-lessons-with-microbit-createai.svg";
+import lessonImage3 from "theme-package/images/developing-ai-literacy-with-the-microbit.svg";
 import { lessonUrl } from "../utils/external-links";
 import { IntlShape } from "react-intl";
 
@@ -20,6 +21,11 @@ const lessons: LessonConfig[] = [
     titleId: "first-lessons-with-microbit-createai-resource-title",
     url: "first-lessons-with-microbit-createai",
     imgSrc: lessonImage2,
+  },
+  {
+    titleId: "developing-ai-literacy-with-the-microbit-resource-title",
+    url: "developing-ai-literacy-with-the-microbit",
+    imgSrc: lessonImage3,
   },
 ];
 
