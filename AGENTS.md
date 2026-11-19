@@ -5,10 +5,10 @@
 This app uses react-aria-components + Panda CSS via `@microbit/ui`.
 **Read `../ui/docs/hints.md` before styling/theming/UI work.**
 
-- **Branded build locally**: build the sibling `../ml-trainer-microbit`
-  package (`npm run build` there → `dist/panda-preset.js`) and make it
-  resolvable as `node_modules/@microbit-foundation/ml-trainer-microbit`
-  (symlink or `npm link`). Without it you get the OSS default. CI installs
+- **Branded build locally**: run `npm run dev:link-theme`, which builds the
+  sibling `../ml-trainer-microbit` package, symlinks it into `node_modules`
+  and regenerates Panda clean; re-run after `npm install` or after changing
+  the theme package. Without it you get the OSS default. CI installs
   the version pinned as `ML_THEME_VERSION` in the
   `.github/workflows` build files.
 - **Local `@microbit/ui` development**: symlink `node_modules/@microbit/ui`
