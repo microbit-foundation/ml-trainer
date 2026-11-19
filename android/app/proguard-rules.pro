@@ -20,8 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Plugin-specific rules from each plugin's README should be added here.
-# None needed with current plugins.
-
-# Optional backends that plugins probe for at runtime (see missing_rules.txt).
-# None needed with current plugins.
+# Plugin-specific rules from each plugin's documentation should be added here.

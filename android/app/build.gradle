@@ -69,7 +69,7 @@ sentry {
     projectName = "createai"
     authToken = sentryAuthToken
 
-    // Without a token the upload task still runs, a Proguard UUID is generated 
+    // Without a token the upload task still runs, a Proguard UUID is generated
     // but without uploading. Only release builds upload the Proguard mapping.
     autoUploadProguardMapping = sentryAuthToken.map { true }.orElse(false)
 
