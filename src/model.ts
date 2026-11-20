@@ -251,3 +251,9 @@ export enum PostImportDialogState {
 }
 
 export type EditorStartUp = "in-progress" | "timed out" | "done";
+
+export enum WaitForEditorResult {
+  Ready = "ready",
+  TimedOut = "timed-out",
+  Offline = "offline",
+}
