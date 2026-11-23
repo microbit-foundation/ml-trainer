@@ -1277,15 +1277,19 @@ const createMlStore = (logging: Logging) => {
               trainModelDialogStage: TrainModelDialogStage.Help,
             });
           } else {
-            await trainModel();
-            callback?.();
-            // Push the trainModelDialogStage change to the back of the event queue so it happens
-            // after navigation changes.
-            setTimeout(
-              () =>
-                set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
-              0
-            );
+            const success = await trainModel();
+            // On failure, the stage is already TrainingError, so leave that
+            // dialog up rather than navigating away and closing it.
+            if (success) {
+              callback?.();
+              // Push the trainModelDialogStage change to the back of the event queue so it happens
+              // after navigation changes.
+              setTimeout(
+                () =>
+                  set({ trainModelDialogStage: TrainModelDialogStage.Closed }),
+                0
+              );
+            }
           }
         },
 
@@ -1303,44 +1307,58 @@ const createMlStore = (logging: Logging) => {
             trainModelDialogStage: TrainModelDialogStage.TrainingInProgress,
             trainModelProgress: 0,
           });
-          const trainingResult = await trainModel(
-            actions,
-            dataWindow,
-            (trainModelProgress) =>
-              set({ trainModelProgress }, false, "trainModelProgress")
-          );
-          const model = trainingResult.error ? undefined : trainingResult.model;
-          const updatedProject = updateProject(
-            project,
-            projectEdited,
-            actions,
-            model,
-            dataWindow
-          );
-          const timestamp = Date.now();
-          set(
-            {
+          try {
+            const trainingResult = await trainModel(
+              actions,
+              dataWindow,
+              (trainModelProgress) =>
+                set({ trainModelProgress }, false, "trainModelProgress")
+            );
+            if (trainingResult.error) {
+              logging.error(
+                "Model training failed",
+                new Error(`Model training failed: ${trainingResult.reason}`)
+              );
+            }
+            const model = trainingResult.error
+              ? undefined
+              : trainingResult.model;
+            const updatedProject = updateProject(
+              project,
+              projectEdited,
+              actions,
               model,
-              trainModelDialogStage: model
-                ? TrainModelDialogStage.TrainingInProgress
-                : TrainModelDialogStage.TrainingError,
-              timestamp,
-              ...updatedProject,
-            },
-            false,
-            actionName
-          );
-          await storageWriteWithErrHandling(() =>
-            storage.updateMakeCodeProject(
-              id,
+              dataWindow
+            );
+            const timestamp = Date.now();
+            set(
               {
-                project: updatedProject.project,
-                projectEdited: updatedProject.projectEdited,
+                model,
+                trainModelDialogStage: model
+                  ? TrainModelDialogStage.TrainingInProgress
+                  : TrainModelDialogStage.TrainingError,
+                timestamp,
+                ...updatedProject,
               },
-              timestamp
-            )
-          );
-          return !trainingResult.error;
+              false,
+              actionName
+            );
+            await storageWriteWithErrHandling(() =>
+              storage.updateMakeCodeProject(
+                id,
+                {
+                  project: updatedProject.project,
+                  projectEdited: updatedProject.projectEdited,
+                },
+                timestamp
+              )
+            );
+            return !trainingResult.error;
+          } catch (e) {
+            logging.error("Model training failed", e);
+            set({ trainModelDialogStage: TrainModelDialogStage.TrainingError });
+            return false;
+          }
         },
 
         removeModel(): void {
@@ -2214,20 +2232,46 @@ const storageWithErrHandling = async <T>(
   return value;
 };
 
+const storageWriteTimeoutMs = 15000;
+
+/**
+ * A promise that rejects with {@link message} after {@link ms}, plus a cancel
+ * to clear its timer once the operation it guards has settled (preventing a
+ * late rejection).
+ */
+const rejectAfter = (
+  ms: number,
+  message: string
+): { promise: Promise<never>; cancel: () => void } => {
+  let timer: ReturnType<typeof setTimeout>;
+  const promise = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(message)), ms);
+  });
+  return { promise, cancel: () => clearTimeout(timer) };
+};
+
 /**
  * Like {@link storageWithErrHandling} but sets a storage error in the
  * store (triggering a toast) and swallows the error. Use for
  * fire-and-forget writes where the in-memory state has already been
  * optimistically updated.
+ *
+ * Bounded by {@link storageWriteTimeoutMs}.
  */
 const storageWriteWithErrHandling = async (
   callback: () => Promise<void>,
   broadcastEvent: boolean | "settings" = true
 ) => {
+  const timeout = rejectAfter(storageWriteTimeoutMs, "Storage write timed out");
   try {
-    await storageWithErrHandling(callback, broadcastEvent);
+    await Promise.race([
+      storageWithErrHandling(callback, broadcastEvent),
+      timeout.promise,
+    ]);
   } catch (err) {
     setStorageError(err);
+  } finally {
+    timeout.cancel();
   }
 };
 
