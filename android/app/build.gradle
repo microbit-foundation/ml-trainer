@@ -1,5 +1,6 @@
 apply from: 'brand.gradle'
 apply plugin: 'com.android.application'
+apply plugin: 'io.sentry.android.gradle'
 
 android {
     // Pinned to the Java source layout (org.microbit.mltrainer) so the
@@ -47,11 +48,39 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
+}
+
+// Uploads the R8 mapping file so native crashes and ANRs from release builds
+// deobfuscate in Sentry. Sentry matches a crash to its mapping via a Proguard
+// UUID this plugin generates.
+//
+// An empty token counts as no token: CI passes an empty one for REVIEW builds,
+// matching how sentryVitePlugin is gated in vite.config.ts.
+def sentryAuthToken = providers.environmentVariable("SENTRY_AUTH_TOKEN")
+    .filter { !it.isEmpty() }
+
+sentry {
+    org = "microbit"
+    projectName = "createai"
+    authToken = sentryAuthToken
+
+    // Without a token the upload task still runs, a Proguard UUID is generated
+    // but without uploading. Only release builds upload the Proguard mapping.
+    autoUploadProguardMapping = sentryAuthToken.map { true }.orElse(false)
+
+    // The Sentry Android SDK version is pinned by @sentry/capacitor. Leaving
+    // auto-installation on would add a second, plugin-chosen version alongside it.
+    autoInstallation { enabled = false }
+
+    // For performance tracing, which we don't use.
+    tracingInstrumentation { enabled = false }
+
+    telemetry = false
 }
 
 repositories {
